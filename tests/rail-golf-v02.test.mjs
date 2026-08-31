@@ -35,6 +35,7 @@ test("AMBER ROOST stays in the readable portrait address frame from every rail",
   const horizontalFov = 0.92;
   const horizontalScale = Math.tan(horizontalFov / 2);
   const verticalScale = horizontalScale / aspect;
+  const failures = [];
 
   for (const railX of RAIL_RULES.railPositions) {
     const frame = addressCameraFrame({
@@ -68,11 +69,18 @@ test("AMBER ROOST stays in the readable portrait address frame from every rail",
     const screenX = 0.5 + (offset.x * right.x + offset.z * right.z) / (depth * horizontalScale) / 2;
     const screenY = 0.5 - (offset.x * up.x + offset.y * up.y + offset.z * up.z) / (depth * verticalScale) / 2;
 
-    assert.ok(
-      screenX >= 0.38 && screenX <= 0.62 && screenY >= 0.2 && screenY <= 0.8,
-      `AMBER ROOST from rail ${railX} projects outside the portrait center frame: (${screenX.toFixed(3)}, ${screenY.toFixed(3)})`,
-    );
+    if (!(screenX >= 0.38 && screenX <= 0.62 && screenY >= 0.2 && screenY <= 0.8)) {
+      failures.push(
+        `rail ${railX}: (${screenX.toFixed(3)}, ${screenY.toFixed(3)})`,
+      );
+    }
   }
+
+  assert.deepEqual(
+    failures,
+    [],
+    `AMBER ROOST is outside the portrait center frame from these rails: ${failures.join("; ")}`,
+  );
 });
 
 test("each authored trick asks for a distinct readable mechanism", () => {
