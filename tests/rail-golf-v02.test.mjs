@@ -7,6 +7,7 @@ import {
   RANGE_TARGETS,
   RAIL_RULES,
   REFERENCE_SHOTS,
+  addressCameraFrame,
   classifyChallengeRuling,
   landingIntersection,
   mergeHoleRecord,
@@ -34,20 +35,16 @@ test("AMBER ROOST stays in the readable portrait address frame from every rail",
   const horizontalFov = 0.92;
   const horizontalScale = Math.tan(horizontalFov / 2);
   const verticalScale = horizontalScale / aspect;
-  const yaw = (-14.7 * Math.PI) / 180;
-  const direction = { x: Math.sin(yaw), z: Math.cos(yaw) };
 
   for (const railX of RAIL_RULES.railPositions) {
-    const camera = {
-      x: railX - direction.x * 15,
-      y: 7.4,
-      z: -direction.z * 15,
-    };
-    const lookAt = {
-      x: target.x,
-      y: 3.2,
-      z: target.z,
-    };
+    const frame = addressCameraFrame({
+      railX,
+      yawDegrees: -14.7,
+      target,
+      portrait: true,
+    });
+    const camera = frame.position;
+    const lookAt = frame.target;
     const forward = {
       x: lookAt.x - camera.x,
       y: lookAt.y - camera.y,
@@ -72,8 +69,8 @@ test("AMBER ROOST stays in the readable portrait address frame from every rail",
     const screenY = 0.5 - (offset.x * up.x + offset.y * up.y + offset.z * up.z) / (depth * verticalScale) / 2;
 
     assert.ok(
-      screenX >= 0.18 && screenX <= 0.82 && screenY >= 0.2 && screenY <= 0.8,
-      `AMBER ROOST from rail ${railX} projects outside the portrait readable frame: (${screenX.toFixed(3)}, ${screenY.toFixed(3)})`,
+      screenX >= 0.38 && screenX <= 0.62 && screenY >= 0.2 && screenY <= 0.8,
+      `AMBER ROOST from rail ${railX} projects outside the portrait center frame: (${screenX.toFixed(3)}, ${screenY.toFixed(3)})`,
     );
   }
 });
