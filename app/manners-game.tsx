@@ -1585,8 +1585,11 @@ export function MannersGame() {
           const horizontalAim = getHorizontalDirection();
           const addressPosition = launcherPosition.subtract(horizontalAim.scale(15)).add(new Vector3(0, 7.4, 0));
           const addressTarget = launcherPosition.add(horizontalAim.scale(34)).add(new Vector3(0, 3.2, 0));
+          const portrait = window.innerWidth < window.innerHeight;
           let desiredCameraPosition = addressPosition;
-          let desiredCameraTarget = addressTarget;
+          let desiredCameraTarget = portrait
+            ? new Vector3(hole.target.x, 3.2, hole.target.z)
+            : addressTarget;
 
           if (surveyRef.current && (phaseRef.current === "ready" || phaseRef.current === "charging")) {
             desiredCameraPosition = new Vector3(hole.survey.x, hole.survey.y, hole.survey.z);

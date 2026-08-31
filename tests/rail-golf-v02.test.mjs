@@ -26,6 +26,58 @@ test("the product is one mechanism range with four visible target cards", () => 
   assert.ok(HOLES.every((hole) => hole.breach === RANGE_MECHANISMS.breach));
 });
 
+test("AMBER ROOST stays in the readable portrait address frame from every rail", () => {
+  const target = RANGE_TARGETS.find((item) => item.id === "amber");
+  assert.ok(target);
+
+  const aspect = 390 / 844;
+  const horizontalFov = 0.92;
+  const horizontalScale = Math.tan(horizontalFov / 2);
+  const verticalScale = horizontalScale / aspect;
+  const yaw = (-14.7 * Math.PI) / 180;
+  const direction = { x: Math.sin(yaw), z: Math.cos(yaw) };
+
+  for (const railX of RAIL_RULES.railPositions) {
+    const camera = {
+      x: railX - direction.x * 15,
+      y: 7.4,
+      z: -direction.z * 15,
+    };
+    const lookAt = {
+      x: target.x,
+      y: 3.2,
+      z: target.z,
+    };
+    const forward = {
+      x: lookAt.x - camera.x,
+      y: lookAt.y - camera.y,
+      z: lookAt.z - camera.z,
+    };
+    const forwardLength = Math.hypot(forward.x, forward.y, forward.z);
+    forward.x /= forwardLength;
+    forward.y /= forwardLength;
+    forward.z /= forwardLength;
+    const right = { x: forward.z, z: -forward.x };
+    const rightLength = Math.hypot(right.x, right.z);
+    right.x /= rightLength;
+    right.z /= rightLength;
+    const up = {
+      x: -right.z * forward.y,
+      y: right.z * forward.x - right.x * forward.z,
+      z: right.x * forward.y,
+    };
+    const offset = { x: target.x - camera.x, y: 0.36 - camera.y, z: target.z - camera.z };
+    const depth = offset.x * forward.x + offset.y * forward.y + offset.z * forward.z;
+    const screenX = 0.5 + (offset.x * right.x + offset.z * right.z) / (depth * horizontalScale) / 2;
+    const screenY = 0.5 - (offset.x * up.x + offset.y * up.y + offset.z * up.z) / (depth * verticalScale) / 2;
+
+    assert.ok(
+      screenX >= 0.18 && screenX <= 0.82 && screenY >= 0.2 && screenY <= 0.8,
+      `AMBER ROOST from rail ${railX} projects outside the portrait readable frame: (${screenX.toFixed(3)}, ${screenY.toFixed(3)})`,
+    );
+  }
+});
+
 test("each authored trick asks for a distinct readable mechanism", () => {
   assert.deepEqual(HOLES[0].requiredTags, []);
   assert.deepEqual(HOLES[1].requiredTags, ["bank"]);
