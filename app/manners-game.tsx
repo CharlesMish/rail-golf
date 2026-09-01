@@ -65,6 +65,8 @@ import {
   verticalRecoveryImpulse,
 } from "@/lib/rail-golf-v02";
 import type { Hole, HoleRecord, MechanismTag, Outcome, ShotSetup } from "@/lib/rail-golf-v02";
+import { createRailGolfAudio } from "@/lib/rail-golf-audio";
+import type { RailGolfAudioEngine } from "@/lib/rail-golf-audio";
 
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
 
@@ -148,11 +150,6 @@ type GameActions = {
   toggleSurvey: () => void;
   selectHole: (index: number) => void;
   nextHole: () => void;
-};
-
-type LiveTone = {
-  oscillator: OscillatorNode;
-  gain: GainNode;
 };
 
 const STORAGE_KEY = "rail-golf-mechanism-range-v03";
@@ -365,7 +362,7 @@ export function MannersGame() {
     let disposed = false;
     let engine: Engine | null = null;
     let scene: Scene | null = null;
-    let audioContext: AudioContext | null = null;
+    const audio: RailGolfAudioEngine = createRailGolfAudio({ muted: mutedRef.current });
 
     const initialize = async () => {
       try {
@@ -509,144 +506,8 @@ export function MannersGame() {
         let dragPointer: number | null = null;
         let dragX = 0;
         let dragY = 0;
-        let chargeTone: LiveTone | null = null;
-        let flightTone: LiveTone | null = null;
 
         worldRef.current = { ghostLine };
-
-        const ensureAudio = () => {
-          if (!audioContext) audioContext = new AudioContext();
-          if (audioContext.state === "suspended") void audioContext.resume();
-          return audioContext;
-        };
-
-        const stopLiveTone = (live: LiveTone | null) => {
-          if (!live) return;
-          const now = audioContext?.currentTime ?? 0;
-          live.gain.gain.cancelScheduledValues(now);
-          live.gain.gain.setTargetAtTime(0.0001, now, 0.02);
-          try {
-            live.oscillator.stop(now + 0.09);
-          } catch {
-            // An oscillator may already be stopping after a phase transition.
-          }
-        };
-
-        const stopChargeTone = () => {
-          stopLiveTone(chargeTone);
-          chargeTone = null;
-        };
-
-        const stopFlightTone = () => {
-          stopLiveTone(flightTone);
-          flightTone = null;
-        };
-
-        const tone = (
-          startFrequency: number,
-          endFrequency: number,
-          duration: number,
-          gainValue: number,
-          type: OscillatorType = "sine",
-          delay = 0,
-        ) => {
-          if (mutedRef.current) return;
-          const context = ensureAudio();
-          const now = context.currentTime + delay;
-          const oscillator = context.createOscillator();
-          const gain = context.createGain();
-          oscillator.type = type;
-          oscillator.frequency.setValueAtTime(startFrequency, now);
-          oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, endFrequency), now + duration);
-          gain.gain.setValueAtTime(gainValue, now);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-          oscillator.connect(gain).connect(context.destination);
-          oscillator.start(now);
-          oscillator.stop(now + duration + 0.03);
-        };
-
-        const noise = (duration: number, gainValue: number, delay = 0) => {
-          if (mutedRef.current) return;
-          const context = ensureAudio();
-          const buffer = context.createBuffer(1, Math.ceil(context.sampleRate * duration), context.sampleRate);
-          const channel = buffer.getChannelData(0);
-          for (let i = 0; i < channel.length; i += 1) {
-            channel[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / channel.length, 1.8);
-          }
-          const source = context.createBufferSource();
-          const gain = context.createGain();
-          gain.gain.value = gainValue;
-          source.buffer = buffer;
-          source.connect(gain).connect(context.destination);
-          source.start(context.currentTime + delay);
-        };
-
-        const startChargeTone = () => {
-          if (mutedRef.current) return;
-          stopChargeTone();
-          const context = ensureAudio();
-          const oscillator = context.createOscillator();
-          const gain = context.createGain();
-          oscillator.type = "sawtooth";
-          oscillator.frequency.value = 62;
-          gain.gain.value = 0.025;
-          oscillator.connect(gain).connect(context.destination);
-          oscillator.start();
-          chargeTone = { oscillator, gain };
-        };
-
-        const startFlightTone = () => {
-          if (mutedRef.current) return;
-          stopFlightTone();
-          const context = ensureAudio();
-          const oscillator = context.createOscillator();
-          const gain = context.createGain();
-          oscillator.type = "triangle";
-          oscillator.frequency.value = 96;
-          gain.gain.value = 0.018;
-          oscillator.connect(gain).connect(context.destination);
-          oscillator.start();
-          flightTone = { oscillator, gain };
-        };
-
-        const playLaunch = (power: number) => {
-          tone(76 + power * 54, 25, 0.58, 0.24, "sawtooth");
-          tone(760, 115, 0.27, 0.06, "square");
-          noise(0.32, 0.12);
-        };
-
-        const playBreach = () => {
-          tone(138, 42, 0.55, 0.22, "square");
-          noise(0.58, 0.18);
-        };
-
-        const playRuling = (outcome: Outcome) => {
-          stopFlightTone();
-          if (outcome === "wet") {
-            noise(0.86, 0.13);
-            tone(210, 52, 0.84, 0.09, "sine");
-            return;
-          }
-          if (outcome === "double") {
-            tone(164, 656, 0.62, 0.09, "triangle");
-            tone(246, 984, 0.72, 0.065, "triangle", 0.08);
-            noise(0.46, 0.16);
-            return;
-          }
-          if (outcome === "ace") {
-            tone(196, 392, 0.38, 0.075, "triangle");
-            tone(294, 588, 0.5, 0.055, "triangle", 0.12);
-            noise(0.3, 0.085);
-            return;
-          }
-          if (outcome === "breach") {
-            tone(84, 31, 0.66, 0.2, "sawtooth");
-            noise(0.62, 0.16);
-            return;
-          }
-          tone(74, 35, 0.42, 0.12, "sine");
-          noise(0.28, 0.075);
-        };
 
         const getAimDirection = () => {
           const raw = directionFromAim(yawRef.current, elevationRef.current);
@@ -1057,7 +918,7 @@ export function MannersGame() {
           flight.visual.dispose(false, false);
           flight.bodyMesh.dispose();
           flight = null;
-          stopFlightTone();
+          audio.stopFlightTone();
         };
 
         const createTheatreRing = (position: Vector3, outcome: Outcome) => {
@@ -1112,7 +973,7 @@ export function MannersGame() {
             setMechanismInFlight(tag === "bank" ? "TIMBER BANK" : "HOT SKIP");
           }
           impactFocus.copyFrom(at);
-          playBreach();
+          audio.playBreach();
           createTheatreRing(at, "breach");
           return true;
         };
@@ -1186,7 +1047,7 @@ export function MannersGame() {
           };
           persistRecords(next);
           createTheatreRing(at, outcome);
-          playRuling(outcome);
+          audio.playRuling(outcome);
           setCharge(0);
           chargeRef.current = 0;
           setGamePhase("theatre");
@@ -1231,14 +1092,14 @@ export function MannersGame() {
           chargeStartedAt = performance.now();
           chargeRef.current = 0;
           setCharge(0);
-          startChargeTone();
-          tone(54, 92, 0.16, 0.025, "triangle");
+          audio.startChargeTone();
+          audio.playChargeStart();
           setGamePhase("charging");
         };
 
         const cancelCharge = () => {
           if (phaseRef.current !== "charging") return;
-          stopChargeTone();
+          audio.stopChargeTone();
           chargeRef.current = 0;
           setCharge(0);
           setGamePhase("ready");
@@ -1246,7 +1107,7 @@ export function MannersGame() {
 
         const fire = () => {
           if (phaseRef.current !== "charging") return;
-          stopChargeTone();
+          audio.stopChargeTone();
           const setup: ShotSetup = {
             yaw: yawRef.current,
             elevation: elevationRef.current,
@@ -1327,8 +1188,8 @@ export function MannersGame() {
           setMechanismInFlight(null);
           setSurvey(false);
           surveyRef.current = false;
-          playLaunch(setup.charge);
-          startFlightTone();
+          audio.playLaunch(setup.charge);
+          audio.startFlightTone();
           aggregate.body.applyImpulse(
             direction.scale(chargeToSpeed(setup.charge) * RAIL_RULES.projectileMass),
             bodyMesh.position,
@@ -1558,10 +1419,7 @@ export function MannersGame() {
           const now = performance.now();
           const deltaSeconds = Math.min(0.04, engine!.getDeltaTime() / 1000);
 
-          if (mutedRef.current) {
-            stopChargeTone();
-            stopFlightTone();
-          }
+          audio.setMuted(mutedRef.current);
 
           if (phaseRef.current === "charging") {
             const nextCharge = clamp(
@@ -1570,10 +1428,7 @@ export function MannersGame() {
               1,
             );
             chargeRef.current = nextCharge;
-            if (chargeTone && audioContext) {
-              chargeTone.oscillator.frequency.setTargetAtTime(62 + nextCharge * 330, audioContext.currentTime, 0.025);
-              chargeTone.gain.gain.setTargetAtTime(0.022 + nextCharge * 0.035, audioContext.currentTime, 0.025);
-            }
+            audio.updateChargeTone(nextCharge);
             if (now - lastRenderUiAt > 24) {
               setCharge(nextCharge);
               lastRenderUiAt = now;
@@ -1607,12 +1462,8 @@ export function MannersGame() {
               flight.visual.rotation.x = -Math.atan2(velocity.y, horizontalSpeed);
             }
 
-            if (flightTone && audioContext && !flight.locked) {
-              flightTone.oscillator.frequency.setTargetAtTime(
-                72 + Math.min(180, velocity.length() * 2.7),
-                audioContext.currentTime,
-                0.04,
-              );
+            if (!flight.locked) {
+              audio.updateFlightTone(velocity.length());
             }
 
             if (!flight.locked && now - flight.lastTrailSampleAt > 42) {
@@ -1769,7 +1620,7 @@ export function MannersGame() {
       removeListeners?.();
       actionsRef.current = {};
       worldRef.current = null;
-      audioContext?.close().catch(() => undefined);
+      audio.dispose();
       scene?.dispose();
       engine?.dispose();
     };
