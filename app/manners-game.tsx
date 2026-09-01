@@ -6,7 +6,6 @@ import {
   Color4,
   Camera,
   DirectionalLight,
-  DynamicTexture,
   Engine,
   FreeCamera,
   GlowLayer,
@@ -800,7 +799,30 @@ export function MannersGame() {
             ));
             beacon.position.set(rangeTarget.x, active ? 6.45 : 4.55, rangeTarget.z + 1.25);
             beacon.material = targetMaterial;
-            if (active) flagPennant = beacon;
+            if (active) {
+              // A non-colliding destination crown makes the active disk readable at range.
+              // Every placement derives from the target record, so the marker remains tied
+              // to its existing landing and scoring position.
+              const crownDepth = rangeTarget.radius + 0.9;
+              const crownWidth = rangeTarget.radius * 2 + 2.5;
+              for (const x of [rangeTarget.x - crownWidth / 2, rangeTarget.x + crownWidth / 2]) {
+                const standard = place(MeshBuilder.CreateBox(
+                  `${hole.id}-${rangeTarget.id}-destination-standard-${x}`,
+                  { width: 0.24, height: 4.9, depth: 0.24 },
+                  scene!,
+                ));
+                standard.position.set(x, 2.45, rangeTarget.z + crownDepth);
+                standard.material = targetMaterial;
+              }
+              const crown = place(MeshBuilder.CreateBox(
+                `${hole.id}-${rangeTarget.id}-destination-crown`,
+                { width: crownWidth + 0.24, height: 0.28, depth: 0.24 },
+                scene!,
+              ));
+              crown.position.set(rangeTarget.x, 4.9, rangeTarget.z + crownDepth);
+              crown.material = targetMaterial;
+              flagPennant = beacon;
+            }
           }
 
           const railBed = place(MeshBuilder.CreateBox(
@@ -906,16 +928,6 @@ export function MannersGame() {
             const volume = hole.breach;
             const barWidth = 0.17;
             const height = volume.maxY - volume.minY;
-            const gateFaceZ = volume.z - volume.halfDepth - 0.11;
-
-            // This is a presentation-only witness for the unchanged swept scoring volume:
-            // its frame traces the gate's front face, while the sign sits directly above it.
-            const breachFrameMaterial = makeMaterial(
-              `${hole.id}-breach-frame-material`,
-              new Color3(0.62, 0.2, 0.035),
-              new Color3(1, 0.2, 0.018),
-              0.16,
-            );
             for (const x of [volume.x - volume.halfWidth, volume.x + volume.halfWidth]) {
               const post = place(MeshBuilder.CreateBox(
                 `${hole.id}-gate-post-${x}`,
@@ -925,15 +937,6 @@ export function MannersGame() {
               post.position.set(x, volume.minY + height / 2, volume.z);
               post.material = materials.amber;
             }
-            for (const x of [volume.x - volume.halfWidth, volume.x + volume.halfWidth]) {
-              const witness = place(MeshBuilder.CreateBox(
-                `${hole.id}-breach-witness-${x}`,
-                { width: 0.26, height: height + 0.3, depth: 0.1 },
-                scene!,
-              ));
-              witness.position.set(x, volume.minY + height / 2, gateFaceZ);
-              witness.material = breachFrameMaterial;
-            }
             const lintel = place(MeshBuilder.CreateBox(
               `${hole.id}-gate-lintel`,
               { width: volume.halfWidth * 2 + barWidth, height: barWidth, depth: volume.halfDepth * 2 },
@@ -941,47 +944,6 @@ export function MannersGame() {
             ));
             lintel.position.set(volume.x, volume.maxY, volume.z);
             lintel.material = materials.amber;
-
-            const witnessLintel = place(MeshBuilder.CreateBox(
-              `${hole.id}-breach-witness-lintel`,
-              { width: volume.halfWidth * 2 + 0.3, height: 0.26, depth: 0.1 },
-              scene!,
-            ));
-            witnessLintel.position.set(volume.x, volume.maxY, gateFaceZ);
-            witnessLintel.material = breachFrameMaterial;
-
-            const breachSign = place(MeshBuilder.CreateBox(
-              `${hole.id}-breach-sign`,
-              { width: 5.9, height: 1.22, depth: 0.16 },
-              scene!,
-            ));
-            breachSign.position.set(volume.x, volume.maxY + 1.05, gateFaceZ + 0.02);
-            breachSign.material = makeMaterial(
-              `${hole.id}-breach-sign-back`,
-              new Color3(0.08, 0.045, 0.02),
-              new Color3(0.11, 0.024, 0.003),
-              0.32,
-            );
-
-            const breachText = new DynamicTexture(
-              `${hole.id}-breach-sign-text`,
-              { width: 1024, height: 192 },
-              scene!,
-              false,
-            );
-            breachText.hasAlpha = true;
-            breachText.drawText("BREACH  GATE", null, 142, "bold 116px monospace", "#ffd0a4", "transparent", true);
-            const breachTextMaterial = new StandardMaterial(`${hole.id}-breach-sign-text-material`, scene!);
-            breachTextMaterial.diffuseTexture = breachText;
-            breachTextMaterial.emissiveTexture = breachText;
-            breachTextMaterial.useAlphaFromDiffuseTexture = true;
-            const signFace = place(MeshBuilder.CreatePlane(
-              `${hole.id}-breach-sign-face`,
-              { width: 5.55, height: 1.04, sideOrientation: Mesh.DOUBLESIDE },
-              scene!,
-            ));
-            signFace.position.set(volume.x, volume.maxY + 1.05, gateFaceZ - 0.075);
-            signFace.material = breachTextMaterial;
 
             for (let row = 0; row < 4; row += 1) {
               const count = row === 3 ? 3 : 4;
