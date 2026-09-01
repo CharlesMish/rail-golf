@@ -799,7 +799,30 @@ export function MannersGame() {
             ));
             beacon.position.set(rangeTarget.x, active ? 6.45 : 4.55, rangeTarget.z + 1.25);
             beacon.material = targetMaterial;
-            if (active) flagPennant = beacon;
+            if (active) {
+              // A non-colliding destination crown makes the active disk readable at range.
+              // Every placement derives from the target record, so the marker remains tied
+              // to its existing landing and scoring position.
+              const crownDepth = rangeTarget.radius + 0.9;
+              const crownWidth = rangeTarget.radius * 2 + 2.5;
+              for (const x of [rangeTarget.x - crownWidth / 2, rangeTarget.x + crownWidth / 2]) {
+                const standard = place(MeshBuilder.CreateBox(
+                  `${hole.id}-${rangeTarget.id}-destination-standard-${x}`,
+                  { width: 0.24, height: 4.9, depth: 0.24 },
+                  scene!,
+                ));
+                standard.position.set(x, 2.45, rangeTarget.z + crownDepth);
+                standard.material = targetMaterial;
+              }
+              const crown = place(MeshBuilder.CreateBox(
+                `${hole.id}-${rangeTarget.id}-destination-crown`,
+                { width: crownWidth + 0.24, height: 0.28, depth: 0.24 },
+                scene!,
+              ));
+              crown.position.set(rangeTarget.x, 4.9, rangeTarget.z + crownDepth);
+              crown.material = targetMaterial;
+              flagPennant = beacon;
+            }
           }
 
           const railBed = place(MeshBuilder.CreateBox(
