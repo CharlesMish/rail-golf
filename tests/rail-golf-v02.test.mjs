@@ -39,6 +39,7 @@ test("the product is one mechanism range with four visible target cards", () => 
 test("AMBER ROOST has a clear portrait line of sight from every rail", () => {
   const target = RANGE_TARGETS.find((item) => item.id === "amber");
   assert.ok(target);
+  const blockedRails = [];
 
   for (const railX of RAIL_RULES.railPositions) {
     const frame = addressCameraFrame({
@@ -52,12 +53,13 @@ test("AMBER ROOST has a clear portrait line of sight from every rail", () => {
       { x: target.x, y: 0.36, z: target.z },
       RANGE_MECHANISMS.breach,
     );
-    assert.equal(
-      blockedByGate,
-      null,
-      `AMBER ROOST line from rail ${railX} crosses the breach gate at z=66`,
-    );
+    if (blockedByGate !== null) blockedRails.push(`${railX} (t=${blockedByGate.toFixed(3)})`);
   }
+  assert.deepEqual(
+    blockedRails,
+    [],
+    `AMBER ROOST line crosses the breach gate from rails: ${blockedRails.join(", ")}`,
+  );
 
   const baselineFrame = addressCameraFrame({
     railX: RAIL_RULES.railPositions[0],
