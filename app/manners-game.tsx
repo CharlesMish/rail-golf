@@ -47,6 +47,7 @@ import {
   RANGE_MECHANISMS,
   RANGE_TARGETS,
   RAIL_RULES,
+  addressLabChipLabel,
   chargeToSpeed,
   clamp,
   clampElevation,
@@ -59,12 +60,15 @@ import {
   mergeHoleRecord,
   normalizeHoleRecord,
   pointOnSegment,
+  resolveAddressLabFromSearch,
+  resolveOpeningAddress,
+  resolveSessionStartHoleIndex,
   segmentSphereAabbIntersection,
   shiftRail,
   stableUnitInterval,
   verticalRecoveryImpulse,
 } from "@/lib/rail-golf-v02";
-import type { Hole, HoleRecord, MechanismTag, Outcome, ShotSetup } from "@/lib/rail-golf-v02";
+import type { AddressLabMode, Hole, HoleRecord, MechanismTag, Outcome, ShotSetup } from "@/lib/rail-golf-v02";
 
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
 
@@ -278,8 +282,10 @@ export function MannersGame() {
   const ghostVisibleRef = useRef(true);
   const recordsRef = useRef<ProgressRecords>({});
   const memoriesRef = useRef<Record<string, ShotMemory | undefined>>({});
+  const addressLabRef = useRef<AddressLabMode | null>(null);
 
   const [phase, setPhase] = useState<Phase>("booting");
+  const [addressLabMode, setAddressLabMode] = useState<AddressLabMode | null>(null);
   const [holeIndex, setHoleIndex] = useState(0);
   const [records, setRecords] = useState<ProgressRecords>({});
   const [yaw, setYaw] = useState(HOLES[0].defaultShot.yaw);
@@ -369,6 +375,9 @@ export function MannersGame() {
 
     const initialize = async () => {
       try {
+        const labMode = resolveAddressLabFromSearch(window.location.search);
+        addressLabRef.current = labMode;
+        setAddressLabMode(labMode);
         setBootMessage("Loading Havok once");
         const havok = await HavokPhysics();
         if (disposed) return;
@@ -1247,7 +1256,7 @@ export function MannersGame() {
           chargeRef.current = 0;
           setCharge(0);
           const memory = memoriesRef.current[hole.id];
-          const setup = restore && memory ? memory : hole.defaultShot;
+          const setup = resolveOpeningAddress(hole, addressLabRef.current, { restore, memory });
           updateSetup(setup);
           createCourse(hole);
           updateLauncher();
@@ -1578,11 +1587,13 @@ export function MannersGame() {
         recordsRef.current = saved;
         setRecords(saved);
         const resumeIndex = chooseResumeHole(saved);
-        createCourse(HOLES[resumeIndex]);
-        holeIndexRef.current = resumeIndex;
-        setHoleIndex(resumeIndex);
-        updateSetup(HOLES[resumeIndex].defaultShot);
-        impactFocus.set(HOLES[resumeIndex].target.x, 0.5, HOLES[resumeIndex].target.z);
+        const startIndex = resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
+        const startHole = HOLES[startIndex];
+        createCourse(startHole);
+        holeIndexRef.current = startIndex;
+        setHoleIndex(startIndex);
+        updateSetup(resolveOpeningAddress(startHole, addressLabRef.current));
+        impactFocus.set(startHole.target.x, 0.5, startHole.target.z);
 
         engine.runRenderLoop(() => {
           if (!scene || disposed) return;
@@ -1807,6 +1818,7 @@ export function MannersGame() {
   }, []);
 
   const hole = HOLES[holeIndex];
+  const labChip = addressLabChipLabel(addressLabMode);
   const record = records[hole.id] ?? EMPTY_RECORD;
   const attempt = phase === "theatre" || phase === "result"
     ? Math.max(1, record.attempts)
@@ -1923,6 +1935,10 @@ export function MannersGame() {
         <strong>{hole.name}</strong>
         <span>{hole.instruction}</span>
       </aside>
+
+      {labChip ? (
+        <div className="address-lab-chip" role="status">{labChip}</div>
+      ) : null}
 
       <Button
         type="button"

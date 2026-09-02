@@ -1146,6 +1146,25 @@ canvas {
   background: rgba(27, 13, 8, 0.76) !important;
 }
 
+.address-lab-chip {
+  position: absolute;
+  top: max(62px, calc(env(safe-area-inset-top) + 42px));
+  left: 50%;
+  z-index: 11;
+  padding: 4px 9px;
+  border: 1px dashed rgba(243, 178, 123, 0.42);
+  color: #f3d0b0;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  background: rgba(18, 10, 7, 0.78);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .skip-calibration svg {
   width: 13px;
 }
@@ -1412,6 +1431,10 @@ canvas {
   .skip-calibration {
     top: 246px;
   }
+
+  .address-lab-chip {
+    top: 118px;
+  }
 }
 
 @media (max-width: 930px) {
@@ -1471,6 +1494,10 @@ canvas {
 
   .skip-calibration {
     display: none;
+  }
+
+  .address-lab-chip {
+    top: max(90px, calc(env(safe-area-inset-top) + 84px));
   }
 
   .wind-witness {
@@ -1554,6 +1581,10 @@ canvas {
   .manners-scorecard {
     top: 7px;
     width: 390px;
+  }
+
+  .address-lab-chip {
+    top: 42px;
   }
 
   .manners-scorecard button {
