@@ -33,8 +33,13 @@ function targetDiskCenter(target) {
   return { x: target.x, y: 0.2, z: target.z };
 }
 
-function targetPinBeacon(target) {
-  return { x: target.x, y: 6.45, z: target.z + 1.25 };
+// Mirrors the active destination beacon in app/manners-game.tsx:
+// destinationScale = max(1, z / 80); pinHeight = 6.4 * destinationScale;
+// beacon sits at the landing disk's own z, not behind it.
+function activeDestinationBeacon(target) {
+  const destinationScale = Math.max(1, target.z / 80);
+  const pinHeight = 6.4 * destinationScale;
+  return { x: target.x, y: pinHeight, z: target.z };
 }
 
 function firstOcclusion(camera, point) {
@@ -50,7 +55,7 @@ function failuresForAddress(hole, railX) {
   const failures = [];
   for (const [part, point] of [
     ["disk", targetDiskCenter(hole.target)],
-    ["pin/beacon", targetPinBeacon(hole.target)],
+    ["beacon", activeDestinationBeacon(hole.target)],
   ]) {
     const hit = firstOcclusion(camera, point);
     if (hit) {
