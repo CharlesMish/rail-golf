@@ -17,4 +17,5 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.match(html, /<title>Rail Golf<\/title>/i);
   assert.match(html, /Babylon\.js artillery trick-shot range/i);
   assert.doesNotMatch(html, /Starter Project|codex-preview/i);
+  assert.doesNotMatch(html, /ADDRESS LAB/);
 });
