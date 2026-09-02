@@ -9,6 +9,7 @@ import {
   NullEngine,
   PhysicsAggregate,
   PhysicsShapeType,
+  Quaternion,
   Scene,
   Vector3,
 } from "@babylonjs/core";
@@ -24,12 +25,19 @@ import {
   isAceLanding,
   landingIntersection,
   muzzleFromShot,
+  pointOnSegment,
   segmentSphereAabbIntersection,
+  verticalRecoveryImpulse,
 } from "../lib/rail-golf-v02.js";
 
 const PHYSICS_STEP = 1 / 120;
 
-test("verified Timber Bank and Hot Skip lines remain reachable in Havok", async () => {
+// This suite is the reachability gate for every REFERENCE_SHOTS entry: it
+// runs the exact authored aim through real Havok physics (not the simplified
+// no-bounce lib/rail-golf-v02.js `simulateShot`) so bank bounces, boost
+// impulses, and gate-brick collisions all behave as they do in the live app.
+// If a course-layout change breaks any of the four cards, this test fails.
+test("all four REFERENCE_SHOTS remain reachable and clear their intended cards in Havok", async () => {
   const wasmBinary = await readFile(
     new URL("../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm", import.meta.url),
   );
@@ -66,6 +74,47 @@ test("verified Timber Bank and Hot Skip lines remain reachable in Havok", async 
     { mass: 0, friction: 0.18, restitution: 0.86 },
     scene,
   );
+
+  // Mirrors app/manners-game.tsx's brick grid for the breach gate: dynamic
+  // boxes the ball must physically punch through, not just a trigger volume.
+  // Reachability for Ruckus Line has to survive real collisions with these,
+  // the same as it must in the running game.
+  const breach = RANGE_MECHANISMS.breach;
+  const brickAggregates = [];
+  for (let row = 0; row < 4; row += 1) {
+    const count = row === 3 ? 3 : 4;
+    for (let column = 0; column < count; column += 1) {
+      const brick = MeshBuilder.CreateBox(
+        `verified-brick-${row}-${column}`,
+        { width: 1.04, height: 1.02, depth: 1.35 },
+        scene,
+      );
+      const rowShift = row % 2 === 0 ? 0 : 0.48;
+      const initialPosition = new Vector3(
+        breach.x - 1.65 + column * 1.08 + rowShift,
+        0.54 + row * 1.04,
+        breach.z,
+      );
+      brick.position.copyFrom(initialPosition);
+      brick.rotationQuaternion = Quaternion.Identity();
+      const aggregate = new PhysicsAggregate(
+        brick,
+        PhysicsShapeType.BOX,
+        { mass: 0.78, friction: 0.64, restitution: 0.14 },
+        scene,
+      );
+      brickAggregates.push({ aggregate, mesh: brick, initialPosition });
+    }
+  }
+
+  const resetBricks = () => {
+    for (const item of brickAggregates) {
+      item.mesh.position.copyFrom(item.initialPosition);
+      item.mesh.rotationQuaternion = Quaternion.Identity();
+      item.aggregate.body.setLinearVelocity(Vector3.Zero());
+      item.aggregate.body.setAngularVelocity(Vector3.Zero());
+    }
+  };
 
   const runReference = (hole) => {
     const shot = REFERENCE_SHOTS[hole.id];
@@ -135,6 +184,30 @@ test("verified Timber Bank and Hot Skip lines remain reachable in Havok", async 
           }
         }
 
+        if (!tags.includes("breach") && hole.breach) {
+          const amount = segmentSphereAabbIntersection(start, end, hole.breach);
+          if (amount !== null) {
+            tags.push("breach");
+            const point = pointOnSegment(start, end, amount);
+            if (hole.breachRecoveryY !== null) {
+              const velocity = aggregate.body.getLinearVelocity();
+              const verticalImpulse = verticalRecoveryImpulse(velocity.y, hole.breachRecoveryY);
+              if (verticalImpulse > 0) {
+                aggregate.body.applyImpulse(new Vector3(0, verticalImpulse, 0), projectile.position);
+                boostedThisStep = true;
+              }
+            }
+            for (const item of brickAggregates) {
+              const away = item.mesh.position.subtract(new Vector3(point.x, point.y, point.z));
+              away.y = Math.max(0.45, away.y + 0.9);
+              if (away.lengthSquared() < 0.04) away.set(0.2, 1, 0.1);
+              away.normalize();
+              const impulse = away.scale(1.6);
+              item.aggregate.body.applyImpulse(impulse, item.mesh.absolutePosition);
+            }
+          }
+        }
+
         if (!boostedThisStep) {
           const landing = landingIntersection(start, end);
           if (landing) {
@@ -159,16 +232,31 @@ test("verified Timber Bank and Hot Skip lines remain reachable in Havok", async 
   };
 
   try {
+    const openSeatResult = runReference(HOLES[0]);
+    assert.equal(openSeatResult.outcome, "ace");
+    assert.deepEqual(openSeatResult.tags, []);
+    resetBricks();
+
     const bankResult = runReference(HOLES[1]);
     assert.equal(bankResult.outcome, "double");
     assert.deepEqual(bankResult.tags, ["bank"]);
+    resetBricks();
 
     const skipResult = runReference(HOLES[2]);
     assert.equal(skipResult.outcome, "double");
     assert.deepEqual(skipResult.tags, ["boost"]);
+    resetBricks();
+
+    const ruckusResult = runReference(HOLES[3]);
+    assert.equal(ruckusResult.outcome, "double");
+    assert.deepEqual(ruckusResult.tags, ["breach"]);
   } finally {
     bankAggregate.dispose();
     bankMesh.dispose();
+    for (const item of brickAggregates) {
+      item.aggregate.dispose();
+      item.mesh.dispose();
+    }
     scene.dispose();
     engine.dispose();
   }
