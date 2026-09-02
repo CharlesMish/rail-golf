@@ -59,6 +59,12 @@ export function clampElevation(value: number): number;
 export function chargeToSpeed(charge: number): number;
 export function verticalRecoveryImpulse(currentYVelocity: number, targetYVelocity: number, mass?: number): number;
 export function directionFromAim(yawDegrees: number, elevationDegrees: number): VectorLike;
+export function addressCameraFrame(input: {
+  railX: number;
+  yawDegrees: number;
+  target: Pick<RangeTarget, "x" | "z">;
+  portrait?: boolean;
+}): { position: VectorLike; target: VectorLike };
 export function muzzleFromShot(shot: ShotSetup): VectorLike;
 export function shiftRail(index: number, direction: number): number;
 export function pointInsideAabb(point: VectorLike, box: VolumeBox): boolean;

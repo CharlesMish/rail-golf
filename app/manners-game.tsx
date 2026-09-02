@@ -47,6 +47,7 @@ import {
   RANGE_MECHANISMS,
   RANGE_TARGETS,
   RAIL_RULES,
+  addressCameraFrame,
   chargeToSpeed,
   clamp,
   clampElevation,
@@ -1606,8 +1607,23 @@ export function MannersGame() {
           const hole = HOLES[holeIndexRef.current];
           const launcherPosition = new Vector3(RAIL_RULES.railPositions[railRef.current], 0.4, 0);
           const horizontalAim = getHorizontalDirection();
-          const addressPosition = launcherPosition.subtract(horizontalAim.scale(15)).add(new Vector3(0, 7.4, 0));
-          const addressTarget = launcherPosition.add(horizontalAim.scale(34)).add(new Vector3(0, 3.2, 0));
+          const portrait = window.innerWidth < window.innerHeight;
+          const addressFrame = addressCameraFrame({
+            railX: RAIL_RULES.railPositions[railRef.current],
+            yawDegrees: yawRef.current,
+            target: hole.target,
+            portrait,
+          });
+          const addressPosition = new Vector3(
+            addressFrame.position.x,
+            addressFrame.position.y,
+            addressFrame.position.z,
+          );
+          const addressTarget = new Vector3(
+            addressFrame.target.x,
+            addressFrame.target.y,
+            addressFrame.target.z,
+          );
           let desiredCameraPosition = addressPosition;
           let desiredCameraTarget = addressTarget;
 

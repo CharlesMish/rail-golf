@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import * as railGolf from "../lib/rail-golf-v02.js";
 import {
   HOLES,
   RANGE_MECHANISMS,
@@ -19,11 +20,62 @@ import {
   verticalRecoveryImpulse,
 } from "../lib/rail-golf-v02.js";
 
+const addressCameraFrame = railGolf.addressCameraFrame ?? (({ railX, yawDegrees }) => {
+  const yaw = (yawDegrees * Math.PI) / 180;
+  const horizontal = { x: Math.sin(yaw), z: Math.cos(yaw) };
+  return {
+    position: { x: railX - horizontal.x * 15, y: 7.8, z: -horizontal.z * 15 },
+    target: { x: railX + horizontal.x * 34, y: 3.6, z: horizontal.z * 34 },
+  };
+});
+
 test("the product is one mechanism range with four visible target cards", () => {
   assert.deepEqual(HOLES.map((hole) => hole.id), ["open-seat", "timber-bank", "hot-skip", "ruckus-line"]);
   assert.equal(RANGE_TARGETS.length, 4);
   assert.ok(HOLES.every((hole) => hole.courseLength === 132));
   assert.ok(HOLES.every((hole) => hole.breach === RANGE_MECHANISMS.breach));
+});
+
+test("AMBER ROOST has a clear portrait line of sight from every rail", () => {
+  const target = RANGE_TARGETS.find((item) => item.id === "amber");
+  assert.ok(target);
+  const blockedRails = [];
+
+  for (const railX of RAIL_RULES.railPositions) {
+    const frame = addressCameraFrame({
+      railX,
+      yawDegrees: -14.7,
+      target,
+      portrait: true,
+    });
+    const blockedByGate = segmentAabbIntersection(
+      frame.position,
+      { x: target.x, y: 0.36, z: target.z },
+      RANGE_MECHANISMS.breach,
+    );
+    if (blockedByGate !== null) blockedRails.push(`${railX} (t=${blockedByGate.toFixed(3)})`);
+  }
+  assert.deepEqual(
+    blockedRails,
+    [],
+    `AMBER ROOST line crosses the breach gate from rails: ${blockedRails.join(", ")}`,
+  );
+
+  const baselineFrame = addressCameraFrame({
+    railX: RAIL_RULES.railPositions[0],
+    yawDegrees: -14.7,
+    target,
+    portrait: false,
+  });
+  assert.notEqual(
+    segmentAabbIntersection(
+      baselineFrame.position,
+      { x: target.x, y: 0.36, z: target.z },
+      RANGE_MECHANISMS.breach,
+    ),
+    null,
+    "the baseline rail-forward input remains a detectable blocked-line case",
+  );
 });
 
 test("each authored trick asks for a distinct readable mechanism", () => {
