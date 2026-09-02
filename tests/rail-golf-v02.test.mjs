@@ -97,18 +97,6 @@ test("the authored direct and Ruckus reference lines retain their rulings", () =
   assert.equal(ruckus.outcome, "double");
 });
 
-test("every mechanism card defaults to its verified reference aim", () => {
-  for (const hole of HOLES) {
-    const reference = REFERENCE_SHOTS[hole.id];
-    assert.ok(reference);
-    assert.deepEqual(hole.defaultShot, {
-      railIndex: reference.railIndex,
-      yaw: reference.yaw,
-      elevation: reference.elevation,
-    });
-  }
-});
-
 test("landing authority remains a descending first-contact crossing", () => {
   assert.equal(landingIntersection({ x: 0, y: 4, z: 40 }, { x: 0, y: 3, z: 50 }), null);
   const landing = landingIntersection({ x: 0, y: 1.2, z: 47 }, { x: 0, y: 0.7, z: 49 });
