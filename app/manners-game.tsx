@@ -785,41 +785,49 @@ export function MannersGame() {
             ring.position.set(rangeTarget.x, active ? 0.36 : 0.28, rangeTarget.z);
             ring.material = targetMaterial;
 
+            // Keep an active destination legible at address without giving a
+            // near target extra visual weight. The target's authored distance
+            // determines the witness scale; its footprint remains the anchor.
+            const destinationScale = active ? Math.max(1, rangeTarget.z / 80) : 1;
+            const pinHeight = active ? 6.4 * destinationScale : 4.5;
             const pin = place(MeshBuilder.CreateCylinder(
               `${hole.id}-${rangeTarget.id}-pin`,
-              { height: active ? 6.4 : 4.5, diameter: active ? 0.18 : 0.11, tessellation: 12 },
+              { height: pinHeight, diameter: active ? 0.22 * destinationScale : 0.11, tessellation: 12 },
               scene!,
             ));
-            pin.position.set(rangeTarget.x, active ? 3.25 : 2.3, rangeTarget.z + 1.25);
+            pin.position.set(rangeTarget.x, pinHeight / 2, active ? rangeTarget.z : rangeTarget.z + 1.25);
             pin.material = active ? targetMaterial : materials.steel;
             const beacon = place(MeshBuilder.CreateSphere(
               `${hole.id}-${rangeTarget.id}-beacon`,
-              { diameter: active ? 0.72 : 0.36 },
+              { diameter: active ? 0.72 * destinationScale : 0.36 },
               scene!,
             ));
-            beacon.position.set(rangeTarget.x, active ? 6.45 : 4.55, rangeTarget.z + 1.25);
+            beacon.position.set(rangeTarget.x, pinHeight, active ? rangeTarget.z : rangeTarget.z + 1.25);
             beacon.material = targetMaterial;
             if (active) {
-              // A non-colliding destination crown makes the active disk readable at range.
-              // Every placement derives from the target record, so the marker remains tied
-              // to its existing landing and scoring position.
-              const crownDepth = rangeTarget.radius + 0.9;
-              const crownWidth = rangeTarget.radius * 2 + 2.5;
+              // A distance-compensated goal frame is rooted on the landing ring,
+              // preserving the disk-to-witness read even for far destinations.
+              const crownHeight = 4.9 * destinationScale;
+              const crownWidth = rangeTarget.radius * 2 + 2.5 * destinationScale;
               for (const x of [rangeTarget.x - crownWidth / 2, rangeTarget.x + crownWidth / 2]) {
                 const standard = place(MeshBuilder.CreateBox(
                   `${hole.id}-${rangeTarget.id}-destination-standard-${x}`,
-                  { width: 0.24, height: 4.9, depth: 0.24 },
+                  { width: 0.24 * destinationScale, height: crownHeight, depth: 0.24 * destinationScale },
                   scene!,
                 ));
-                standard.position.set(x, 2.45, rangeTarget.z + crownDepth);
+                standard.position.set(x, crownHeight / 2, rangeTarget.z);
                 standard.material = targetMaterial;
               }
               const crown = place(MeshBuilder.CreateBox(
                 `${hole.id}-${rangeTarget.id}-destination-crown`,
-                { width: crownWidth + 0.24, height: 0.28, depth: 0.24 },
+                {
+                  width: crownWidth + 0.24 * destinationScale,
+                  height: 0.28 * destinationScale,
+                  depth: 0.24 * destinationScale,
+                },
                 scene!,
               ));
-              crown.position.set(rangeTarget.x, 4.9, rangeTarget.z + crownDepth);
+              crown.position.set(rangeTarget.x, crownHeight, rangeTarget.z);
               crown.material = targetMaterial;
               flagPennant = beacon;
             }
