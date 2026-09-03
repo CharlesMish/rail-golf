@@ -24,6 +24,8 @@ export type Hole = {
   defaultShot: { railIndex: number; yaw: number; elevation: number };
   survey: { x: number; y: number; z: number; targetX: number; targetY: number; targetZ: number };
 };
+export type AimAddress = { readonly railIndex: number; readonly yaw: number; readonly elevation: number };
+export type AddressLabMode = "gifted" | "near" | "neutral";
 export type HoleRecord = {
   attempts: number;
   bestOutcome: Outcome | null;
@@ -52,6 +54,22 @@ export const HOLES: readonly Hole[];
 export const RANGE_TARGETS: readonly RangeTarget[];
 export const RANGE_MECHANISMS: Readonly<Record<MechanismTag, VolumeBox>>;
 export const REFERENCE_SHOTS: Readonly<Record<string, Readonly<ShotSetup>>>;
+export const ADDRESS_LAB_QUERY_KEY: "addressLab";
+export const ADDRESS_LAB_HOLE_ID: "timber-bank";
+export const ADDRESS_LAB_MODES: readonly AddressLabMode[];
+export const ADDRESS_LAB_ADDRESSES: Readonly<Record<AddressLabMode, Readonly<AimAddress>>>;
+export function parseAddressLabMode(value: unknown): AddressLabMode | null;
+export function resolveAddressLabFromSearch(search: unknown): AddressLabMode | null;
+export function resolveOpeningAddress(
+  hole: Pick<Hole, "id" | "defaultShot">,
+  labMode?: AddressLabMode | string | null,
+  restoration?: { restore?: boolean; memory?: AimAddress | null },
+): AimAddress;
+export function resolveSessionStartHoleIndex(
+  labMode: AddressLabMode | string | null | undefined,
+  resumeIndex?: number,
+): number;
+export function addressLabChipLabel(labMode: AddressLabMode | string | null | undefined): string | null;
 export function clamp(value: number, minimum: number, maximum: number): number;
 export function stableUnitInterval(value: unknown): number;
 export function clampYaw(value: number): number;
