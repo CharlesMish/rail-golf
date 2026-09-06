@@ -75,6 +75,8 @@ export function stableUnitInterval(value: unknown): number;
 export function clampYaw(value: number): number;
 export function clampElevation(value: number): number;
 export function chargeToSpeed(charge: number): number;
+export function chargeFromHold(milliseconds: number): number;
+export function collectShotStepEvents(start: { x: number; y: number; z: number }, end: { x: number; y: number; z: number }, hole: Hole, tags?: MechanismTag[]): Array<{ kind: MechanismTag | "wet" | "first-kiss"; amount: number; point: { x: number; y: number; z: number } }>;
 export function verticalRecoveryImpulse(currentYVelocity: number, targetYVelocity: number, mass?: number): number;
 export function directionFromAim(yawDegrees: number, elevationDegrees: number): VectorLike;
 export function muzzleFromShot(shot: ShotSetup): VectorLike;

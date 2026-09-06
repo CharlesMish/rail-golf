@@ -6,6 +6,8 @@ import {
   Color4,
   Camera,
   DirectionalLight,
+  DynamicTexture,
+  ImageProcessingConfiguration,
   Engine,
   FreeCamera,
   GlowLayer,
@@ -49,21 +51,20 @@ import {
   RAIL_RULES,
   addressLabChipLabel,
   chargeToSpeed,
+  chargeFromHold,
   clamp,
   clampElevation,
   clampYaw,
   classifyChallengeRuling,
+  collectShotStepEvents,
   directionFromAim,
   formatMiss,
   isAceLanding,
-  landingIntersection,
   mergeHoleRecord,
   normalizeHoleRecord,
-  pointOnSegment,
   resolveAddressLabFromSearch,
   resolveOpeningAddress,
   resolveSessionStartHoleIndex,
-  segmentSphereAabbIntersection,
   shiftRail,
   stableUnitInterval,
   verticalRecoveryImpulse,
@@ -258,7 +259,7 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   }
   return {
     outcome,
-    headline: "NO RULING",
+    headline: "MISSED THE SEAT",
     detail: `${formatMiss(hole, point)}. The live trail is now your survey instrument.`,
     point,
     clear: false,
@@ -268,6 +269,8 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
 export function MannersGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const resultCardRef = useRef<HTMLElement>(null);
+  const destinationRef = useRef<HTMLDivElement>(null);
+  const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
   const actionsRef = useRef<Partial<GameActions>>({});
   const worldRef = useRef<WorldHandles | null>(null);
@@ -343,8 +346,7 @@ export function MannersGame() {
       if (event.code === "KeyM") setMuted((value) => !value);
     };
     const onKeyUp = (event: KeyboardEvent) => {
-      if (isInteractiveTarget(event.target)) return;
-      if (event.code !== "Space") return;
+      if (event.code !== "Space" || phaseRef.current !== "charging" || chargePointerRef.current !== null) return;
       event.preventDefault();
       actionsRef.current.release?.();
     };
@@ -390,11 +392,15 @@ export function MannersGame() {
         });
         engine.setHardwareScalingLevel(Math.max(1, window.devicePixelRatio / 1.5));
         scene = new Scene(engine);
-        scene.clearColor = new Color4(0.048, 0.09, 0.105, 1);
+        scene.clearColor = new Color4(0.075, 0.115, 0.135, 1);
+        scene.imageProcessingConfiguration.toneMappingEnabled = true;
+        scene.imageProcessingConfiguration.toneMappingType = ImageProcessingConfiguration.TONEMAPPING_ACES;
+        scene.imageProcessingConfiguration.exposure = 1.05;
+        scene.imageProcessingConfiguration.contrast = 1.08;
         scene.fogMode = Scene.FOGMODE_LINEAR;
-        scene.fogStart = 94;
-        scene.fogEnd = 172;
-        scene.fogColor = new Color3(0.048, 0.09, 0.105);
+        scene.fogStart = 105;
+        scene.fogEnd = 230;
+        scene.fogColor = new Color3(0.075, 0.115, 0.135);
         scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), new HavokPlugin(true, havok));
         const physicsEngine = scene.getPhysicsEngine();
         physicsEngine?.setTimeStep(1 / 120);
@@ -411,21 +417,22 @@ export function MannersGame() {
         scene.activeCamera = camera;
 
         const sky = new HemisphericLight("range-sky", new Vector3(-0.2, 1, -0.1), scene);
-        sky.intensity = 0.82;
-        sky.diffuse = new Color3(0.58, 0.79, 0.75);
+        sky.intensity = 0.9;
+        sky.diffuse = new Color3(0.7, 0.81, 0.91);
         sky.groundColor = new Color3(0.075, 0.11, 0.07);
 
         const sun = new DirectionalLight("range-sun", new Vector3(-0.42, -0.85, 0.35), scene);
         sun.position = new Vector3(38, 54, -34);
-        sun.intensity = 2;
-        sun.diffuse = new Color3(1, 0.77, 0.51);
-        const shadows = new ShadowGenerator(1024, sun);
+        sun.intensity = 1.65;
+        sun.diffuse = new Color3(1, 0.83, 0.62);
+        const shadows = new ShadowGenerator(window.innerWidth > 930 ? 2048 : 1024, sun);
         shadows.useBlurExponentialShadowMap = true;
-        shadows.blurKernel = 18;
+        shadows.blurKernel = 12;
+        shadows.setDarkness(0.2);
         shadows.bias = 0.001;
 
         const glow = new GlowLayer("range-glow", scene, { blurKernelSize: 32 });
-        glow.intensity = 0.48;
+        glow.intensity = 0.3;
 
         const makeMaterial = (
           name: string,
@@ -442,9 +449,9 @@ export function MannersGame() {
 
         const materials = {
           rough: makeMaterial("rough", new Color3(0.045, 0.155, 0.09)),
-          fairwayA: makeMaterial("fairway-a", new Color3(0.105, 0.31, 0.165)),
-          fairwayB: makeMaterial("fairway-b", new Color3(0.075, 0.255, 0.135)),
-          green: makeMaterial("green", new Color3(0.075, 0.37, 0.18)),
+          fairwayA: makeMaterial("fairway-a", new Color3(0.115, 0.23, 0.14)),
+          fairwayB: makeMaterial("fairway-b", new Color3(0.095, 0.205, 0.12)),
+          green: makeMaterial("green", new Color3(0.095, 0.285, 0.18)),
           steel: makeMaterial("steel", new Color3(0.29, 0.35, 0.34), new Color3(0.02, 0.025, 0.024), 0.24),
           machine: makeMaterial("machine", new Color3(0.085, 0.13, 0.135), new Color3(0.006, 0.01, 0.01), 0.35),
           cyan: makeMaterial("cyan", new Color3(0.025, 0.4, 0.44), new Color3(0.045, 0.82, 0.92), 0.18),
@@ -453,13 +460,39 @@ export function MannersGame() {
           lime: makeMaterial("lime", new Color3(0.16, 0.4, 0.08), new Color3(0.48, 1, 0.16), 0.18),
           boost: makeMaterial("boost", new Color3(0.42, 0.04, 0.22), new Color3(1, 0.08, 0.52), 0.14),
           hot: makeMaterial("hot", new Color3(0.39, 0.045, 0.012), new Color3(1, 0.075, 0.012), 0.14),
-          brick: makeMaterial("brick", new Color3(0.26, 0.18, 0.095), new Color3(0.014, 0.007, 0.002)),
-          bark: makeMaterial("bark", new Color3(0.16, 0.09, 0.045)),
-          leaf: makeMaterial("leaf", new Color3(0.035, 0.18, 0.085)),
+          brick: makeMaterial("brick", new Color3(0.42, 0.265, 0.13), new Color3(0.014, 0.007, 0.002)),
+          bark: makeMaterial("bark", new Color3(0.31, 0.18, 0.095)),
+          timber: makeMaterial("timber", new Color3(0.62, 0.40, 0.23)),
+          leaf: makeMaterial("leaf", new Color3(0.075, 0.20, 0.13)),
+          leafLight: makeMaterial("leaf-light", new Color3(0.13, 0.255, 0.17)),
           sand: makeMaterial("sand", new Color3(0.47, 0.39, 0.23)),
           water: makeMaterial("water", new Color3(0.025, 0.22, 0.28), new Color3(0.01, 0.1, 0.15), 0.2),
         };
         materials.water.alpha = 0.82;
+
+        // Subtle procedural grain; shared once by the timber and crates.
+        const woodTexture = new DynamicTexture("timber-grain", { width: 128, height: 512 }, scene, false);
+        const grain = woodTexture.getContext() as CanvasRenderingContext2D;
+        grain.fillStyle = "#bba383";
+        grain.fillRect(0, 0, 128, 512);
+        for (let i = 0; i < 100; i += 1) {
+          const seed = stableUnitInterval(`grain-${i}`);
+          grain.strokeStyle = `rgba(48, 29, 15, ${0.035 + seed * 0.13})`;
+          grain.lineWidth = 0.5 + seed * 1.4;
+          grain.beginPath();
+          grain.moveTo(seed * 128, 0);
+          grain.bezierCurveTo(seed * 128 + 5, 180, seed * 128 - 4, 320, seed * 128 + 1, 512);
+          grain.stroke();
+        }
+        woodTexture.update();
+        materials.timber.diffuseTexture = woodTexture;
+        materials.brick.diffuseTexture = woodTexture;
+        const targetSurfaces = {
+          cyan: makeMaterial("cyan-seat-surface", new Color3(0.05, 0.32, 0.34), new Color3(0.01, 0.12, 0.14)),
+          amber: makeMaterial("amber-seat-surface", new Color3(0.46, 0.24, 0.055), new Color3(0.16, 0.065, 0.005)),
+          violet: makeMaterial("violet-seat-surface", new Color3(0.25, 0.12, 0.34), new Color3(0.075, 0.02, 0.11)),
+          lime: makeMaterial("lime-seat-surface", new Color3(0.24, 0.36, 0.07), new Color3(0.07, 0.11, 0.01)),
+        };
 
         const launcher = new TransformNode("shared-launcher", scene);
         const yawPivot = new TransformNode("launcher-yaw", scene);
@@ -520,6 +553,7 @@ export function MannersGame() {
         let dragY = 0;
         let chargeTone: LiveTone | null = null;
         let flightTone: LiveTone | null = null;
+        let followDirection = new Vector3(0, 0, 1);
 
         worldRef.current = { ghostLine };
 
@@ -695,6 +729,7 @@ export function MannersGame() {
           breachBodies = [];
           dustMotes = [];
           flagPennant = null;
+          for (const mesh of courseRoot?.getChildMeshes() ?? []) shadows.removeShadowCaster(mesh);
           courseRoot?.dispose(false, false);
           courseRoot = null;
         };
@@ -773,7 +808,7 @@ export function MannersGame() {
               scene!,
             ));
             target.position.set(rangeTarget.x, active ? 0.2 : 0.16, rangeTarget.z);
-            target.material = targetMaterial;
+            target.material = targetSurfaces[rangeTarget.material];
             target.receiveShadows = true;
             registerAggregate(new PhysicsAggregate(
               target,
@@ -792,7 +827,7 @@ export function MannersGame() {
               scene!,
             ));
             ring.position.set(rangeTarget.x, active ? 0.36 : 0.28, rangeTarget.z);
-            ring.material = targetMaterial;
+            ring.material = active ? targetMaterial : targetSurfaces[rangeTarget.material];
 
             // Keep an active destination legible at address without giving a
             // near target extra visual weight. The target's authored distance
@@ -814,30 +849,20 @@ export function MannersGame() {
             beacon.position.set(rangeTarget.x, pinHeight, active ? rangeTarget.z : rangeTarget.z + 1.25);
             beacon.material = targetMaterial;
             if (active) {
-              // A distance-compensated goal frame is rooted on the landing ring,
-              // preserving the disk-to-witness read even for far destinations.
-              const crownHeight = 4.9 * destinationScale;
-              const crownWidth = rangeTarget.radius * 2 + 2.5 * destinationScale;
-              for (const x of [rangeTarget.x - crownWidth / 2, rangeTarget.x + crownWidth / 2]) {
-                const standard = place(MeshBuilder.CreateBox(
-                  `${hole.id}-${rangeTarget.id}-destination-standard-${x}`,
-                  { width: 0.24 * destinationScale, height: crownHeight, depth: 0.24 * destinationScale },
-                  scene!,
-                ));
-                standard.position.set(x, crownHeight / 2, rangeTarget.z);
-                standard.material = targetMaterial;
-              }
-              const crown = place(MeshBuilder.CreateBox(
-                `${hole.id}-${rangeTarget.id}-destination-crown`,
-                {
-                  width: crownWidth + 0.24 * destinationScale,
-                  height: 0.28 * destinationScale,
-                  depth: 0.24 * destinationScale,
-                },
+              // A flag over a landing halo has a different silhouette from the breach gate.
+              const pennant = place(MeshBuilder.CreateBox(
+                `${hole.id}-${rangeTarget.id}-destination-flag`,
+                { width: 2.1 * destinationScale, height: 0.9 * destinationScale, depth: 0.055 },
                 scene!,
               ));
-              crown.position.set(rangeTarget.x, crownHeight, rangeTarget.z);
-              crown.material = targetMaterial;
+              pennant.position.set(rangeTarget.x + 1.05 * destinationScale, pinHeight - 0.65 * destinationScale, rangeTarget.z);
+              pennant.material = targetMaterial;
+              const innerRing = place(MeshBuilder.CreateTorus(
+                `${hole.id}-${rangeTarget.id}-landing-halo`,
+                { diameter: rangeTarget.radius * 2 - 0.38, thickness: 0.065, tessellation: 64 }, scene!,
+              ));
+              innerRing.position.set(rangeTarget.x, 0.33, rangeTarget.z);
+              innerRing.material = targetMaterial;
               flagPennant = beacon;
             }
           }
@@ -875,7 +900,7 @@ export function MannersGame() {
             bankVolume.minY + (bankVolume.maxY - bankVolume.minY) / 2,
             bankVolume.z,
           );
-          bankFace.material = materials.bark;
+          bankFace.material = materials.timber;
           bankFace.receiveShadows = true;
           shadows.addShadowCaster(bankFace);
           registerAggregate(new PhysicsAggregate(
@@ -884,6 +909,15 @@ export function MannersGame() {
             { mass: 0, friction: 0.18, restitution: 0.86 },
             scene!,
           ));
+          for (let plank = 0; plank < 12; plank += 1) {
+            const board = place(MeshBuilder.CreateBox(
+              `${hole.id}-bank-board-${plank}`,
+              { width: 0.04, height: 7.98, depth: 1.60 }, scene!,
+            ));
+            board.position.set(bankVolume.x + bankVolume.halfWidth + 0.015, 4.24, bankVolume.z - 9.1 + plank * 1.655);
+            board.material = plank % 3 === 0 ? materials.brick : materials.timber;
+            board.receiveShadows = true;
+          }
           for (let brace = -4; brace <= 4; brace += 1) {
             const timber = place(MeshBuilder.CreateBox(
               `${hole.id}-bank-timber-${brace}`,
@@ -908,7 +942,7 @@ export function MannersGame() {
             scene!,
           ));
           boostPad.position.set(boostVolume.x, 0.15, boostVolume.z);
-          boostPad.material = materials.boost;
+          boostPad.material = materials.machine;
           for (let stripe = -2; stripe <= 2; stripe += 1) {
             const boostStripe = place(MeshBuilder.CreateBox(
               `${hole.id}-boost-stripe-${stripe}`,
@@ -916,7 +950,7 @@ export function MannersGame() {
               scene!,
             ));
             boostStripe.position.set(boostVolume.x + stripe * 1.45, 0.33, boostVolume.z);
-            boostStripe.material = stripe % 2 === 0 ? materials.lime : materials.violet;
+            boostStripe.material = materials.boost;
           }
           for (const side of [-1, 1]) {
             const edge = place(MeshBuilder.CreateBox(
@@ -1030,7 +1064,10 @@ export function MannersGame() {
             ));
             crown.position.set(x, 3 * scale, z);
             crown.scaling.y = 1.35;
-            crown.material = materials.leaf;
+            crown.material = stableUnitInterval(name) > 0.5 ? materials.leaf : materials.leafLight;
+            crown.receiveShadows = true;
+            shadows.addShadowCaster(crown);
+            shadows.addShadowCaster(trunk);
           };
 
           const treePattern = [
@@ -1038,6 +1075,20 @@ export function MannersGame() {
             [-17, 67, 1.02], [18, 79, 1.25], [-12, hole.courseLength + 4, 1.1],
           ] as const;
           treePattern.forEach(([x, z, scale], index) => makeTree(x, z, scale, String(index)));
+          // Low boundary timber gives the strip scale without obstructing any shot.
+          for (const side of [-1, 1]) {
+            for (let bay = 0; bay < 11; bay += 1) {
+              const post = place(MeshBuilder.CreateBox(`${hole.id}-boundary-post-${side}-${bay}`, { width: 0.23, height: 1.35, depth: 0.23 }, scene!));
+              post.position.set(side * 26, 0.675, bay * 12 + 4);
+              post.material = materials.timber;
+              shadows.addShadowCaster(post);
+              if (bay < 10) {
+                const beam = place(MeshBuilder.CreateBox(`${hole.id}-boundary-rail-${side}-${bay}`, { width: 0.12, height: 0.17, depth: 12 }, scene!));
+                beam.position.set(side * 26, 0.98, bay * 12 + 10);
+                beam.material = materials.brick;
+              }
+            }
+          }
 
           for (let index = 0; index < 7; index += 1) {
             const hill = place(MeshBuilder.CreateCylinder(
@@ -1094,14 +1145,17 @@ export function MannersGame() {
           if (!flight) return;
           flight.aggregate.dispose();
           flight.trail?.dispose();
+          for (const mesh of flight.visual.getChildMeshes()) shadows.removeShadowCaster(mesh);
           flight.visual.dispose(false, false);
           flight.bodyMesh.dispose();
           flight = null;
           stopFlightTone();
         };
 
-        const createTheatreRing = (position: Vector3, outcome: Outcome) => {
-          const color = outcome === "wet"
+        const createTheatreRing = (position: Vector3, outcome: Outcome, kind?: EvidenceKind) => {
+          const color = kind === "boost"
+            ? new Color3(0.75, 0.2, 1)
+            : outcome === "wet"
             ? new Color3(0.04, 0.55, 0.72)
             : outcome === "ace" || outcome === "double"
               ? new Color3(0.09, 0.8, 0.86)
@@ -1114,7 +1168,9 @@ export function MannersGame() {
             scene!,
           );
           ring.position.copyFrom(position);
-          ring.rotation.x = Math.PI / 2;
+          if (kind === "bank") ring.rotation.z = Math.PI / 2;
+          else if (kind === "breach") ring.rotation.x = Math.PI / 2;
+          else ring.position.y = Math.min(position.y, 0.42);
           ring.material = material;
           theatreFx.push({ mesh: ring, material, bornAt: performance.now(), lifetime: 760, growth: 10 });
           if (outcome === "double") {
@@ -1130,8 +1186,8 @@ export function MannersGame() {
               { diameter: 1.05, thickness: 0.1, tessellation: 36 },
               scene!,
             );
-            second.position.copyFrom(position).addInPlace(new Vector3(0, 0.12, 0));
-            second.rotation.x = Math.PI / 2;
+            second.position.copyFrom(position);
+            second.position.y = 0.54;
             second.material = secondMaterial;
             theatreFx.push({ mesh: second, material: secondMaterial, bornAt: performance.now(), lifetime: 820, growth: 13 });
           }
@@ -1140,6 +1196,7 @@ export function MannersGame() {
         const registerMechanism = (tag: MechanismTag, at: Vector3) => {
           if (!flight || flight.locked || flight.mechanismTags.has(tag)) return false;
           flight.mechanismTags.add(tag);
+          flight.points.push(at.clone());
           flight.contacts.push({
             id: `${flight.projectileId}-${tag}-${flight.contacts.length}`,
             kind: tag,
@@ -1152,18 +1209,29 @@ export function MannersGame() {
             setMechanismInFlight(tag === "bank" ? "TIMBER BANK" : "HOT SKIP");
           }
           impactFocus.copyFrom(at);
-          playBreach();
-          createTheatreRing(at, "breach");
+          if (tag === "bank") {
+            tone(180, 65, 0.2, 0.13, "triangle");
+            tone(390, 170, 0.13, 0.04, "sine", 0.018);
+            noise(0.11, 0.055);
+          } else if (tag === "boost") {
+            tone(140, 720, 0.3, 0.075, "sine");
+            tone(280, 1100, 0.24, 0.035, "triangle", 0.025);
+          } else {
+            playBreach();
+          }
+          createTheatreRing(at, "breach", tag);
           return true;
         };
 
         const triggerBreach = (at: Vector3) => {
-          if (!registerMechanism("breach", at)) return;
+          if (!registerMechanism("breach", at)) return false;
+          let relaunched = false;
           const hole = HOLES[holeIndexRef.current];
           if (flight && hole.breachRecoveryY !== null) {
             const velocity = flight.aggregate.body.getLinearVelocity();
             const verticalImpulse = verticalRecoveryImpulse(velocity.y, hole.breachRecoveryY);
             if (verticalImpulse > 0) {
+              relaunched = true;
               flight.aggregate.body.applyImpulse(
                 new Vector3(0, verticalImpulse, 0),
                 flight.bodyMesh.position,
@@ -1178,6 +1246,7 @@ export function MannersGame() {
             const impulse = away.scale(1.6 + stableUnitInterval(item.mesh.name) * 1.7);
             item.aggregate.body.applyImpulse(impulse, item.mesh.absolutePosition);
           }
+          return relaunched;
         };
 
         const persistRecords = (next: ProgressRecords) => {
@@ -1197,6 +1266,11 @@ export function MannersGame() {
           flight.lockedAt = performance.now();
           impactFocus.copyFrom(at);
           flight.points.push(at.clone());
+          flight.trail?.dispose();
+          flight.trail = MeshBuilder.CreateLines(`ruled-trail-${flight.projectileId}`, { points: flight.points }, scene!);
+          flight.trail.color = new Color3(1, 0.48, 0.17);
+          flight.trail.alpha = 0.8;
+          flight.trail.isPickable = false;
           if (contactKind) {
             flight.contacts.push({
               id: `${flight.projectileId}-${contactKind}-${flight.contacts.length}`,
@@ -1225,7 +1299,7 @@ export function MannersGame() {
             [hole.id]: mergeHoleRecord(recordsRef.current[hole.id], outcome),
           };
           persistRecords(next);
-          createTheatreRing(at, outcome);
+          createTheatreRing(at, outcome, contactKind);
           playRuling(outcome);
           setCharge(0);
           chargeRef.current = 0;
@@ -1246,6 +1320,8 @@ export function MannersGame() {
           if (!holeUnlocked(index)) return;
           disposeFlight();
           disposeGhost();
+          for (const effect of theatreFx) { effect.mesh.dispose(); effect.material.dispose(); }
+          theatreFx = [];
           const hole = HOLES[index];
           holeIndexRef.current = index;
           setHoleIndex(index);
@@ -1279,6 +1355,7 @@ export function MannersGame() {
         const cancelCharge = () => {
           if (phaseRef.current !== "charging") return;
           stopChargeTone();
+          chargePointerRef.current = null;
           chargeRef.current = 0;
           setCharge(0);
           setGamePhase("ready");
@@ -1291,10 +1368,11 @@ export function MannersGame() {
             yaw: yawRef.current,
             elevation: elevationRef.current,
             railIndex: railRef.current,
-            charge: chargeRef.current,
+            charge: chargeFromHold(performance.now() - chargeStartedAt),
           };
           const direction = getAimDirection();
           const muzzle = getMuzzle();
+          followDirection = getHorizontalDirection();
           const bodyMesh = MeshBuilder.CreateSphere(
             `round-body-${projectileCounter + 1}`,
             { diameter: RAIL_RULES.projectileRadius * 2, segments: 12 },
@@ -1322,7 +1400,7 @@ export function MannersGame() {
           );
           shell.parent = visual;
           shell.rotation.x = Math.PI / 2;
-          shell.material = materials.hot;
+          shell.material = materials.steel;
           shadows.addShadowCaster(shell);
           const nose = MeshBuilder.CreateCylinder(
             `round-nose-${projectileCounter + 1}`,
@@ -1446,7 +1524,7 @@ export function MannersGame() {
 
         const onPointerDown = (event: PointerEvent) => {
           if (phaseRef.current !== "ready" && phaseRef.current !== "charging") return;
-          if (event.pointerType === "mouse" && event.button !== 0) return;
+          if (dragPointer !== null || (event.pointerType === "mouse" && event.button !== 0)) return;
           event.preventDefault();
           dragPointer = event.pointerId;
           dragX = event.clientX;
@@ -1478,11 +1556,14 @@ export function MannersGame() {
           if (event.pointerId === dragPointer) dragPointer = null;
         };
 
+        const clearAimDrag = () => { dragPointer = null; };
+        window.addEventListener("blur", clearAimDrag);
         const preventContext = (event: MouseEvent) => event.preventDefault();
         canvas.addEventListener("pointerdown", onPointerDown);
         canvas.addEventListener("pointermove", onPointerMove);
         canvas.addEventListener("pointerup", onPointerUp);
         canvas.addEventListener("pointercancel", onPointerUp);
+        canvas.addEventListener("lostpointercapture", onPointerUp);
         canvas.addEventListener("contextmenu", preventContext);
 
         scene.onBeforePhysicsObservable.add(() => {
@@ -1505,58 +1586,31 @@ export function MannersGame() {
           const current = flight.bodyMesh.position.clone();
           const previousLike = { x: previous.x, y: previous.y, z: previous.z };
           const currentLike = { x: current.x, y: current.y, z: current.z };
-          let boostedThisStep = false;
-
-          if (!flight.mechanismTags.has("bank")) {
-            const amount = segmentSphereAabbIntersection(previousLike, currentLike, RANGE_MECHANISMS.bank);
-            if (amount !== null) {
-              const point = pointOnSegment(previousLike, currentLike, amount);
-              registerMechanism("bank", new Vector3(point.x, point.y, point.z));
+          const events = collectShotStepEvents(previousLike, currentLike, hole, [...flight.mechanismTags]);
+          for (const event of events) {
+            const point = new Vector3(event.point.x, event.point.y, event.point.z);
+            if (event.kind === "wet") {
+              lockRuling("wet", point, "wet");
+              break;
             }
-          }
-
-          if (!flight.mechanismTags.has("boost")) {
-            const amount = segmentSphereAabbIntersection(previousLike, currentLike, RANGE_MECHANISMS.boost);
-            const velocity = flight.aggregate.body.getLinearVelocity();
-            if (amount !== null && velocity.y < 0) {
-              const point = pointOnSegment(previousLike, currentLike, amount);
-              if (registerMechanism("boost", new Vector3(point.x, Math.max(0.3, point.y), point.z))) {
-                const verticalKick = Math.max(0, 15 - velocity.y) * RAIL_RULES.projectileMass;
+            if (event.kind === "first-kiss") {
+              const outcome = classifyChallengeRuling({ hole, targetHit: isAceLanding(hole, event.point), tags: [...flight.mechanismTags] });
+              lockRuling(outcome, point, "first-kiss");
+              break;
+            }
+            if (event.kind === "bank") {
+              registerMechanism("bank", point);
+            } else if (event.kind === "boost") {
+              const velocity = flight.aggregate.body.getLinearVelocity();
+              if (velocity.y < 0 && registerMechanism("boost", point)) {
                 flight.aggregate.body.applyImpulse(
-                  new Vector3(0, verticalKick, 4.8 * RAIL_RULES.projectileMass),
+                  new Vector3(0, verticalRecoveryImpulse(velocity.y, 15), 4.8 * RAIL_RULES.projectileMass),
                   flight.bodyMesh.position,
                 );
-                boostedThisStep = true;
+                break;
               }
-            }
-          }
-
-          if (!flight.breached && hole.breach) {
-            const amount = segmentSphereAabbIntersection(previousLike, currentLike, hole.breach);
-            if (amount !== null) {
-              const point = pointOnSegment(previousLike, currentLike, amount);
-              triggerBreach(new Vector3(point.x, point.y, point.z));
-            }
-          }
-
-          if (!flight.locked && hole.water) {
-            const amount = segmentSphereAabbIntersection(previousLike, currentLike, hole.water);
-            if (amount !== null) {
-              const point = pointOnSegment(previousLike, currentLike, amount);
-              lockRuling("wet", new Vector3(point.x, Math.max(0.14, point.y), point.z), "wet");
-            }
-          }
-
-          if (!flight.locked && !boostedThisStep) {
-            const landing = landingIntersection(previousLike, currentLike);
-            if (landing) {
-              const targetHit = isAceLanding(hole, landing);
-              const outcome = classifyChallengeRuling({
-                hole,
-                targetHit,
-                tags: [...flight.mechanismTags],
-              });
-              lockRuling(outcome, new Vector3(landing.x, landing.y, landing.z), "first-kiss");
+            } else if (triggerBreach(point)) {
+              break;
             }
           }
 
@@ -1606,11 +1660,7 @@ export function MannersGame() {
           }
 
           if (phaseRef.current === "charging") {
-            const nextCharge = clamp(
-              (now - chargeStartedAt) / (RAIL_RULES.chargeSeconds * 1000),
-              0,
-              1,
-            );
+            const nextCharge = chargeFromHold(now - chargeStartedAt);
             chargeRef.current = nextCharge;
             if (chargeTone && audioContext) {
               chargeTone.oscillator.frequency.setTargetAtTime(62 + nextCharge * 330, audioContext.currentTime, 0.025);
@@ -1622,6 +1672,10 @@ export function MannersGame() {
             }
           }
 
+          const recoilAge = flight ? (now - flight.launchedAt) / 1000 : 10;
+          const recoil = recoilAge < 0.5 ? Math.sin(Math.min(1, recoilAge / 0.075) * Math.PI / 2) * Math.exp(-recoilAge * 10) : 0;
+          elevationPivot.position.z = -recoil * 0.48;
+          elevationPivot.position.y = -recoil * 0.055;
           const hole = HOLES[holeIndexRef.current];
           const launcherPosition = new Vector3(RAIL_RULES.railPositions[railRef.current], 0.4, 0);
           const horizontalAim = getHorizontalDirection();
@@ -1679,13 +1733,16 @@ export function MannersGame() {
               const travelDirection = horizontalVelocity.lengthSquared() > 0.01
                 ? horizontalVelocity.normalize()
                 : horizontalAim;
-              let followTarget = position.add(travelDirection.scale(9)).add(new Vector3(0, 1.2, 0));
-              let followPosition = position.subtract(travelDirection.scale(12)).add(new Vector3(0, 5.5, 0));
+              followDirection = Vector3.Lerp(followDirection, travelDirection, 1 - Math.exp(-deltaSeconds * 5)).normalize();
+              let followTarget = position.add(followDirection.scale(7)).add(new Vector3(0, 1.2, 0));
+              let followPosition = position.subtract(followDirection.scale(12)).add(new Vector3(0, 5.5, 0));
               if (velocity.y < 0 && position.z > Math.max(12, hole.target.z - 24)) {
                 const green = new Vector3(hole.target.x, 0.75, hole.target.z);
                 const focus = Vector3.Lerp(position, green, 0.48);
-                followTarget = focus.add(new Vector3(0, 1.2, 0));
-                followPosition = focus.add(new Vector3(13, 9.2, -18));
+                const landingBlend = clamp((position.z - (hole.target.z - 24)) / 18, 0, 1);
+                const easedBlend = landingBlend * landingBlend * (3 - 2 * landingBlend);
+                followTarget = Vector3.Lerp(followTarget, focus.add(new Vector3(0, 1.2, 0)), easedBlend);
+                followPosition = Vector3.Lerp(followPosition, focus.add(new Vector3(13, 9.2, -18)), easedBlend);
               }
               if (age <= 120) {
                 desiredCameraPosition = addressPosition;
@@ -1744,7 +1801,21 @@ export function MannersGame() {
           camera.position = Vector3.Lerp(camera.position, desiredCameraPosition, cameraEase);
           cameraTarget = Vector3.Lerp(cameraTarget, desiredCameraTarget, cameraEase);
           camera.setTarget(cameraTarget);
+          camera.getViewMatrix();
+          camera.getProjectionMatrix();
+          const viewProjection = camera.getTransformationMatrix();
 
+          const destination = destinationRef.current;
+          if (destination) {
+            const renderWidth = engine!.getRenderWidth();
+            const renderHeight = engine!.getRenderHeight();
+            const marker = new Vector3(hole.target.x, 6.4 * Math.max(1, hole.target.z / 80) + 0.8, hole.target.z);
+            const projected = Vector3.Project(marker, identityMatrix, viewProjection, camera.viewport.toGlobal(renderWidth, renderHeight));
+            const visible = (phaseRef.current === "ready" || phaseRef.current === "charging") && projected.z > 0 && projected.z < 1 && projected.x > 0 && projected.x < renderWidth && projected.y > 0 && projected.y < renderHeight;
+            destination.dataset.visible = String(visible);
+            destination.style.left = `${projected.x / renderWidth * 100}%`;
+            destination.style.top = `${projected.y / renderHeight * 100}%`;
+          }
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
             const renderWidth = engine!.getRenderWidth();
@@ -1756,7 +1827,7 @@ export function MannersGame() {
               const projected = Vector3.Project(
                 contact.point,
                 identityMatrix,
-                scene.getTransformMatrix(),
+                viewProjection,
                 viewport,
               );
               const visible =
@@ -1788,15 +1859,19 @@ export function MannersGame() {
 
         return () => {
           window.removeEventListener("resize", onResize);
+          window.removeEventListener("blur", clearAimDrag);
           canvas.removeEventListener("pointerdown", onPointerDown);
           canvas.removeEventListener("pointermove", onPointerMove);
           canvas.removeEventListener("pointerup", onPointerUp);
           canvas.removeEventListener("pointercancel", onPointerUp);
+          canvas.removeEventListener("lostpointercapture", onPointerUp);
           canvas.removeEventListener("contextmenu", preventContext);
         };
       } catch (error) {
         console.error(error);
-        setBootMessage("The range failed to arm. Reload to try again.");
+        setBootMessage(error instanceof Error && /WebGL not supported/i.test(error.message)
+          ? "3D graphics are unavailable in this browser. Try a browser with WebGL enabled."
+          : "The range failed to arm. Reload to try again.");
         setGamePhase("error");
       }
     };
@@ -1818,7 +1893,7 @@ export function MannersGame() {
   }, []);
 
   const hole = HOLES[holeIndex];
-  const labChip = addressLabChipLabel(addressLabMode);
+  const labChip = hole.id === "timber-bank" ? addressLabChipLabel(addressLabMode) : null;
   const record = records[hole.id] ?? EMPTY_RECORD;
   const attempt = phase === "theatre" || phase === "result"
     ? Math.max(1, record.attempts)
@@ -1828,6 +1903,8 @@ export function MannersGame() {
 
   const beginButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (phaseRef.current !== "ready" || chargePointerRef.current !== null || (event.pointerType === "mouse" && event.button !== 0)) return;
+    chargePointerRef.current = event.pointerId;
     try {
       event.currentTarget.setPointerCapture(event.pointerId);
     } catch {
@@ -1838,22 +1915,26 @@ export function MannersGame() {
 
   const releaseButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (chargePointerRef.current !== event.pointerId) return;
+    chargePointerRef.current = null;
     actionsRef.current.release?.();
   };
 
   const cancelButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (chargePointerRef.current !== event.pointerId) return;
+    chargePointerRef.current = null;
     actionsRef.current.cancelCharge?.();
   };
 
   const beginButtonKeyCharge = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.code !== "Space" && event.code !== "Enter") return;
+    if ((event.code !== "Space" && event.code !== "Enter") || chargePointerRef.current !== null) return;
     event.preventDefault();
     if (!event.repeat) actionsRef.current.beginCharge?.();
   };
 
   const releaseButtonKeyCharge = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.code !== "Space" && event.code !== "Enter") return;
+    if ((event.code !== "Space" && event.code !== "Enter") || chargePointerRef.current !== null) return;
     event.preventDefault();
     actionsRef.current.release?.();
   };
@@ -1866,7 +1947,7 @@ export function MannersGame() {
   const resultCanAdvance = Boolean(result?.clear);
 
   return (
-    <main className="rail-golf-shell manners-shell">
+    <main className="rail-golf-shell manners-shell" data-phase={phase}>
       <canvas
         ref={canvasRef}
         className="rail-canvas"
@@ -1951,6 +2032,11 @@ export function MannersGame() {
         <Map /> {survey ? "Address view" : "Survey hole"}
       </Button>
 
+      <div ref={destinationRef} className="destination-label" data-visible="false" data-color={hole.target.material} aria-hidden={!canAim}>
+        <span>LAND HERE · {Math.round(hole.target.z)} m</span>
+        <strong>{hole.target.label}</strong>
+      </div>
+
       <section className="aim-console manners-console" aria-label="Rail shot controls">
         <div className="aim-metrics downrange-metrics">
           <div className="metric-block">
@@ -2023,6 +2109,7 @@ export function MannersGame() {
             onPointerDown={beginButtonCharge}
             onPointerUp={releaseButtonCharge}
             onPointerCancel={cancelButtonCharge}
+            onLostPointerCapture={cancelButtonCharge}
             onKeyDown={beginButtonKeyCharge}
             onKeyUp={releaseButtonKeyCharge}
             onBlur={() => actionsRef.current.cancelCharge?.()}
@@ -2112,7 +2199,7 @@ export function MannersGame() {
       {lastShot && phase === "ready" ? (
         <button className="last-line-chip" onClick={() => actionsRef.current.restoreLine?.()} type="button">
           LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {displayPercent(lastShot.charge)}
-          <span>restore exact setup</span>
+          <span>restore aim · match the power mark</span>
         </button>
       ) : null}
 
