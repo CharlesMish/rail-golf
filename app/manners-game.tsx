@@ -270,6 +270,7 @@ export function MannersGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const resultCardRef = useRef<HTMLElement>(null);
   const destinationRef = useRef<HTMLDivElement>(null);
+  const mechanismRef = useRef<HTMLDivElement>(null);
   const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
   const actionsRef = useRef<Partial<GameActions>>({});
@@ -801,6 +802,14 @@ export function MannersGame() {
             green.position.set(rangeTarget.x, 0.07, rangeTarget.z);
             green.material = materials.green;
             green.receiveShadows = true;
+            // A dark outer curb gives each landing disk a clear physical edge.
+            const curb = place(MeshBuilder.CreateTorus(
+              `${hole.id}-${rangeTarget.id}-curb`,
+              { diameter: rangeTarget.radius * 2 + 0.65, thickness: 0.24, tessellation: 64 }, scene!,
+            ));
+            curb.position.set(rangeTarget.x, 0.14, rangeTarget.z);
+            curb.material = materials.machine;
+            curb.receiveShadows = true;
 
             const target = place(MeshBuilder.CreateCylinder(
               `${hole.id}-${rangeTarget.id}-target`,
@@ -942,7 +951,14 @@ export function MannersGame() {
             scene!,
           ));
           bankSign.position.set(bankVolume.x + 0.82, 7.2, bankVolume.z);
-          bankSign.material = materials.amber;
+          bankSign.material = hole.requiredTags.includes("bank") ? materials.amber : materials.brick;
+          // Repeated inset strike marks make the working face readable along its length.
+          for (let z = bankVolume.z - bankVolume.halfDepth + 5; z < bankVolume.z + bankVolume.halfDepth; z += 8) {
+            const strike = place(MeshBuilder.CreateBox(`${hole.id}-bank-strike-${z}`,
+              { width: 0.055, height: 0.16, depth: 3.4 }, scene!));
+            strike.position.set(bankVolume.x + bankVolume.halfWidth + 0.05, 4.5, z);
+            strike.material = hole.requiredTags.includes("bank") ? materials.amber : materials.brick;
+          }
 
           const boostVolume = RANGE_MECHANISMS.boost;
           const boostPad = place(MeshBuilder.CreateBox(
@@ -959,7 +975,7 @@ export function MannersGame() {
               scene!,
             ));
             boostStripe.position.set(boostVolume.x + stripe * 1.45, 0.33, boostVolume.z);
-            boostStripe.material = materials.boost;
+            boostStripe.material = hole.requiredTags.includes("boost") ? materials.boost : targetSurfaces.violet;
           }
           for (const side of [-1, 1]) {
             const edge = place(MeshBuilder.CreateBox(
@@ -995,7 +1011,7 @@ export function MannersGame() {
                 scene!,
               ));
               post.position.set(x, volume.minY + height / 2, volume.z);
-              post.material = materials.amber;
+              post.material = hole.requiredTags.includes("breach") ? materials.amber : materials.brick;
             }
             const lintel = place(MeshBuilder.CreateBox(
               `${hole.id}-gate-lintel`,
@@ -1003,7 +1019,7 @@ export function MannersGame() {
               scene!,
             ));
             lintel.position.set(volume.x, volume.maxY, volume.z);
-            lintel.material = materials.amber;
+            lintel.material = hole.requiredTags.includes("breach") ? materials.amber : materials.brick;
 
             for (let row = 0; row < 4; row += 1) {
               const count = row === 3 ? 3 : 4;
@@ -1030,6 +1046,14 @@ export function MannersGame() {
                   scene!,
                 ));
                 breachBodies.push({ aggregate, mesh: brick });
+                // Render-only battens travel with each crate; collision boxes stay unchanged.
+                for (const bandY of [-0.32, 0.32]) {
+                  const batten = MeshBuilder.CreateBox(`${brick.name}-batten-${bandY}`,
+                    { width: 1.03, height: 0.11, depth: 0.055 }, scene!);
+                  batten.parent = brick;
+                  batten.position.set(0, bandY, -0.70);
+                  batten.material = materials.timber;
+                }
               }
             }
           }
@@ -1814,17 +1838,32 @@ export function MannersGame() {
           camera.getProjectionMatrix();
           const viewProjection = camera.getTransformationMatrix();
 
-          const destination = destinationRef.current;
-          if (destination) {
-            const renderWidth = engine!.getRenderWidth();
-            const renderHeight = engine!.getRenderHeight();
-            const marker = new Vector3(hole.target.x, 6.4 * Math.max(1, hole.target.z / 80) + 0.8, hole.target.z);
-            const projected = Vector3.Project(marker, identityMatrix, viewProjection, camera.viewport.toGlobal(renderWidth, renderHeight));
+          const renderWidth = engine!.getRenderWidth();
+          const renderHeight = engine!.getRenderHeight();
+          const labelViewport = camera.viewport.toGlobal(renderWidth, renderHeight);
+          const projectLabel = (element: HTMLDivElement | null, marker: Vector3 | null) => {
+            if (!element) return;
+            if (!marker) { element.dataset.visible = "false"; return; }
+            const projected = Vector3.Project(marker, identityMatrix, viewProjection, labelViewport);
             const visible = (phaseRef.current === "ready" || phaseRef.current === "charging") && projected.z > 0 && projected.z < 1 && projected.x > 0 && projected.x < renderWidth && projected.y > 0 && projected.y < renderHeight;
-            destination.dataset.visible = String(visible);
-            destination.style.left = `${projected.x / renderWidth * 100}%`;
-            destination.style.top = `${projected.y / renderHeight * 100}%`;
-          }
+            element.dataset.visible = String(visible);
+            const screenX = projected.x / renderWidth * canvas.clientWidth;
+            const halfWidth = element.offsetWidth / 2;
+            const labelX = clamp(screenX, halfWidth + 8, canvas.clientWidth - halfWidth - 8);
+            element.style.left = `${labelX}px`;
+            element.style.top = `${projected.y / renderHeight * 100}%`;
+            element.style.setProperty("--pin-offset", `${screenX - labelX}px`);
+          };
+          projectLabel(destinationRef.current,
+            new Vector3(hole.target.x, 6.4 * Math.max(1, hole.target.z / 80) + 0.8, hole.target.z));
+          const mechanism = hole.requiredTags[0];
+          const bank = RANGE_MECHANISMS.bank;
+          const pad = RANGE_MECHANISMS.boost;
+          projectLabel(mechanismRef.current, mechanism === "bank"
+            ? new Vector3(bank.x + bank.halfWidth, 4.5, bank.z - bank.halfDepth + 13)
+            : mechanism === "boost" ? new Vector3(pad.x, 1.5, pad.z)
+            : mechanism === "breach" && hole.breach ? new Vector3(hole.breach.x, hole.breach.maxY, hole.breach.z)
+            : null);
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
             const renderWidth = engine!.getRenderWidth();
@@ -1987,7 +2026,7 @@ export function MannersGame() {
         </div>
       </header>
 
-      <nav className="manners-scorecard" aria-label="Mechanism Range trick cards">
+      <nav className="manners-scorecard" aria-label="Practice Range lessons">
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];
           const unlocked = holeUnlocked(index);
@@ -2021,29 +2060,33 @@ export function MannersGame() {
       </nav>
 
       <aside className="hole-brief manners-brief">
-        <p className="eyebrow">{hole.kicker}</p>
+        <p className="eyebrow">Practice Range · {hole.number} / 04</p>
         <strong>{hole.name}</strong>
         <span>{hole.instruction}</span>
+        <Button
+          type="button"
+          variant="outline"
+          className="survey-chip manners-survey"
+          onClick={() => actionsRef.current.toggleSurvey?.()}
+          disabled={!canAim}
+          aria-pressed={survey}
+        >
+          <Map /> {survey ? "Address view" : "Survey hole"}
+        </Button>
       </aside>
 
       {labChip ? (
         <div className="address-lab-chip" role="status">{labChip}</div>
       ) : null}
 
-      <Button
-        type="button"
-        variant="outline"
-        className="survey-chip manners-survey"
-        onClick={() => actionsRef.current.toggleSurvey?.()}
-        disabled={!canAim}
-        aria-pressed={survey}
-      >
-        <Map /> {survey ? "Address view" : "Survey hole"}
-      </Button>
-
       <div ref={destinationRef} className="destination-label" data-visible="false" data-color={hole.target.material} aria-hidden={!canAim}>
-        <span>LAND HERE · {Math.round(hole.target.z)} m</span>
+        <span>{hole.requiredTags.length ? "2 · " : ""}LAND HERE · {Math.round(hole.target.z)} m</span>
         <strong>{hole.target.label}</strong>
+      </div>
+
+      <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
+        data-color={hole.requiredTags[0] === "boost" ? "boost" : "amber"} aria-hidden={!canAim || !hole.requiredTags.length}>
+        <strong>1 · {hole.requiredTags[0] === "bank" ? "BANK HERE" : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</strong>
       </div>
 
       <section className="aim-console manners-console" aria-label="Rail shot controls">
