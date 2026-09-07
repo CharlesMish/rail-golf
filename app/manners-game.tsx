@@ -909,22 +909,31 @@ export function MannersGame() {
             { mass: 0, friction: 0.18, restitution: 0.86 },
             scene!,
           ));
-          for (let plank = 0; plank < 12; plank += 1) {
+          const bankDepth = bankVolume.halfDepth * 2;
+          const bankHeight = bankVolume.maxY - bankVolume.minY;
+          const plankCount = Math.ceil(bankDepth / 1.67);
+          const plankPitch = bankDepth / plankCount;
+          for (let plank = 0; plank < plankCount; plank += 1) {
             const board = place(MeshBuilder.CreateBox(
               `${hole.id}-bank-board-${plank}`,
-              { width: 0.04, height: 7.98, depth: 1.60 }, scene!,
+              { width: 0.04, height: bankHeight - 0.27, depth: plankPitch - 0.055 }, scene!,
             ));
-            board.position.set(bankVolume.x + bankVolume.halfWidth + 0.015, 4.24, bankVolume.z - 9.1 + plank * 1.655);
+            board.position.set(
+              bankVolume.x + bankVolume.halfWidth + 0.015,
+              (bankVolume.minY + bankVolume.maxY) / 2,
+              bankVolume.z - bankVolume.halfDepth + (plank + 0.5) * plankPitch,
+            );
             board.material = plank % 3 === 0 ? materials.brick : materials.timber;
             board.receiveShadows = true;
           }
-          for (let brace = -4; brace <= 4; brace += 1) {
+          const braceCount = Math.ceil(bankDepth / 2.15);
+          for (let brace = 0; brace <= braceCount; brace += 1) {
             const timber = place(MeshBuilder.CreateBox(
               `${hole.id}-bank-timber-${brace}`,
               { width: 1.06, height: 8.8, depth: 0.24 },
               scene!,
             ));
-            timber.position.set(bankVolume.x - 0.82, 4.4, bankVolume.z + brace * 2.15);
+            timber.position.set(bankVolume.x - 0.82, 4.4, bankVolume.z - bankVolume.halfDepth + brace * bankDepth / braceCount);
             timber.material = brace % 2 === 0 ? materials.brick : materials.bark;
           }
           const bankSign = place(MeshBuilder.CreateBox(

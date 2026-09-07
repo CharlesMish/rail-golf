@@ -40,10 +40,15 @@ test("authored reference shots clear the grounded Havok range", async (t) => {
   const fixtures = [
     ...HOLES.map((hole) => ({ hole, addressSeconds: 0 })),
     { hole: HOLES[3], addressSeconds: 5 },
+    // A neighborhood of side-face banks, not a single lucky top-edge collision.
+    ...[-16, -15.5, -15].flatMap((yaw) => [0.70, 0.72, 0.73].map((charge) => ({
+      hole: HOLES[1], addressSeconds: 0,
+      shotOverride: { railIndex: 0, yaw, elevation: 20, charge },
+    }))),
   ];
 
-  for (const { hole, addressSeconds } of fixtures) {
-    await t.test(`${hole.id}, ${addressSeconds}s at address`, () => {
+  for (const { hole, addressSeconds, shotOverride } of fixtures) {
+    await t.test(`${hole.id}, ${addressSeconds}s at address${shotOverride ? `, yaw ${shotOverride.yaw}, charge ${shotOverride.charge}` : ""}`, () => {
       // Fresh worlds avoid carrying contact caches or debris transforms between
       // attempts. Updating a mesh alone does not teleport its Havok body.
       const engine = new NullEngine();
@@ -135,7 +140,7 @@ test("authored reference shots clear the grounded Havok range", async (t) => {
           physics._step(PHYSICS_STEP);
         }
 
-        const shot = REFERENCE_SHOTS[hole.id];
+        const shot = shotOverride ?? REFERENCE_SHOTS[hole.id];
         const aim = directionFromAim(shot.yaw, shot.elevation);
         const muzzle = muzzleFromShot(shot);
         const projectile = MeshBuilder.CreateSphere(
@@ -164,6 +169,7 @@ test("authored reference shots clear the grounded Havok range", async (t) => {
         let previous = projectile.position.clone();
         let result = null;
         let supportedGateAtBreach = false;
+        let bankContact = null;
         for (let step = 0; step < 13 / PHYSICS_STEP && !result; step += 1) {
           if (hole.wind.x !== 0 || hole.wind.z !== 0) {
             aggregate.body.applyForce(
@@ -190,6 +196,7 @@ test("authored reference shots clear the grounded Havok range", async (t) => {
               break;
             }
             if (event.kind === "bank") {
+              bankContact = event.point;
               tags.push("bank");
             } else if (event.kind === "boost") {
               const velocity = aggregate.body.getLinearVelocity();
@@ -230,6 +237,10 @@ test("authored reference shots clear the grounded Havok range", async (t) => {
         assert.deepEqual(tags, [...hole.requiredTags]);
         if (hole.id === "timber-bank") {
           assert.ok(collisions.has(`${hole.id}-bank-wall`), "the bank tag must include an actual wall collision");
+          assert.ok(bankContact.y < bank.maxY - RAIL_RULES.projectileRadius,
+            "the bank must strike below the top edge");
+          assert.ok(bankContact.z < 44 - RAIL_RULES.projectileRadius,
+            "the new line must use the wall extension toward the tee");
         }
         if (hole.id === "ruckus-line") {
           assert.ok(supportedGateAtBreach, "the full gate must still stand on the ground at breach");

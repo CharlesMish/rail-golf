@@ -156,7 +156,7 @@ test("lab resolution does not mutate frozen hole or reference data", () => {
   assert.ok(Object.isFrozen(TIMBER_BANK.defaultShot));
   assert.ok(Object.isFrozen(REFERENCE_SHOTS));
   assert.ok(Object.isFrozen(REFERENCE_SHOTS["timber-bank"]));
-  assert.deepEqual(TIMBER_BANK.defaultShot, { railIndex: 2, yaw: -14.7, elevation: 36 });
+  assert.deepEqual(TIMBER_BANK.defaultShot, { railIndex: 0, yaw: -15.5, elevation: 20 });
   assert.throws(() => {
     TIMBER_BANK.defaultShot.yaw = 0;
   });
@@ -171,6 +171,6 @@ test("the lab preserves reference data and basic ballistic reachability", () => 
   assert.equal(ruckus.breached, true);
   // Physical reachability is checked by the grounded Havok suite, not this ballistic helper.
   assert.ok(ruckus.point.z > HOLES[3].target.z);
-  assert.equal(REFERENCE_SHOTS["timber-bank"].railIndex, 2);
+  assert.equal(REFERENCE_SHOTS["timber-bank"].railIndex, 0);
   assert.equal(REFERENCE_SHOTS["hot-skip"].elevation, 64);
 });
