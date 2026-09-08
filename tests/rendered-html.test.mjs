@@ -18,4 +18,16 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.match(html, /Babylon\.js artillery trick-shot range/i);
   assert.doesNotMatch(html, /Starter Project|codex-preview/i);
   assert.doesNotMatch(html, /ADDRESS LAB/);
+
+  const courtyard = await worker.fetch(
+    new Request("http://localhost/courtyard", { headers: { accept: "text/html" } }),
+    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+    { waitUntil() {}, passThroughOnException() {} },
+  );
+  assert.equal(courtyard.status, 200);
+  const yardHtml = await courtyard.text();
+  assert.match(yardHtml, /Across the Yard/);
+  assert.match(yardHtml, /Switchback Gallery, LOCKED/);
+  assert.match(yardHtml, /Timber Courtyard/);
+
 });

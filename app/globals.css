@@ -1380,6 +1380,8 @@ canvas {
 }
 
 .shot-evidence-layer span[data-kind="bank"],
+.shot-evidence-layer span[data-kind="bank-a"],
+.shot-evidence-layer span[data-kind="bank-b"],
 .shot-evidence-layer span[data-kind="breach"] {
   border-color: rgba(255, 116, 53, 0.78);
   color: #ffd2b7;
@@ -1739,3 +1741,6 @@ canvas {
   .destination-label span { font-size: 11px; }
   .destination-label strong { font-size: 13px; }
 }
+
+/* A quiet route between the familiar instrument and its first shared yard. */
+.courtyard-link { display: block; margin-top: 8px; color: #d9c4a1; font: 13px/1.5 var(--font-mono, monospace); text-decoration: underline; text-underline-offset: 3px; pointer-events: auto; }

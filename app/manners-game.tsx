@@ -45,9 +45,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
-  HOLES,
+  HOLES as PRACTICE_HOLES,
   RANGE_MECHANISMS,
-  RANGE_TARGETS,
+  RANGE_TARGETS as PRACTICE_TARGETS,
   RAIL_RULES,
   addressLabChipLabel,
   chargeToSpeed,
@@ -70,6 +70,9 @@ import {
   verticalRecoveryImpulse,
 } from "@/lib/rail-golf-v02";
 import type { AddressLabMode, Hole, HoleRecord, MechanismTag, Outcome, ShotSetup } from "@/lib/rail-golf-v02";
+
+import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
+import { buildCourtyard } from "@/lib/courtyard-scene";
 
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
 
@@ -160,7 +163,7 @@ type LiveTone = {
   gain: GainNode;
 };
 
-const STORAGE_KEY = "rail-golf-mechanism-range-v03";
+
 
 const EMPTY_RECORD: HoleRecord = {
   attempts: 0,
@@ -178,14 +181,16 @@ function displayPercent(value: number) {
 function evidenceLabel(kind: EvidenceKind) {
   if (kind === "first-kiss") return "FIRST KISS";
   if (kind === "bank") return "TIMBER BANK";
+  if (kind === "bank-a") return "BANK A";
+  if (kind === "bank-b") return "BANK B";
   if (kind === "boost") return "HOT SKIP";
   if (kind === "wet") return "WET";
   return "BREACH";
 }
 
-function loadProgress(): ProgressRecords {
+function loadProgress(HOLES: readonly Hole[], storageKey: string): ProgressRecords {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(storageKey);
     if (!raw) return {};
     const parsed = JSON.parse(raw) as Record<string, unknown>;
     const records: ProgressRecords = {};
@@ -199,14 +204,11 @@ function loadProgress(): ProgressRecords {
   }
 }
 
-function chooseResumeHole(records: ProgressRecords) {
+function chooseResumeHole(records: ProgressRecords, HOLES: readonly Hole[]) {
   const firstUnstamped = HOLES.findIndex((hole) => !records[hole.id]?.perfect && !records[hole.id]?.cleared);
   return firstUnstamped < 0 ? 0 : firstUnstamped;
 }
 
-function holeUnlocked(index: number) {
-  return index >= 0 && index < HOLES.length;
-}
 
 function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: MechanismTag[] = []): ShotResult {
   const tagReceipt = tags.length ? tags.map((tag) => tag.toUpperCase()).join(" + ") : "DIRECT";
@@ -266,11 +268,17 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame() {
+export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
+  const HOLES = courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
+  const RANGE_TARGETS = courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
+  const STORAGE_KEY = courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
+    (!courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const resultCardRef = useRef<HTMLElement>(null);
   const destinationRef = useRef<HTMLDivElement>(null);
   const mechanismRef = useRef<HTMLDivElement>(null);
+  const secondBankRef = useRef<HTMLDivElement>(null);
   const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
   const actionsRef = useRef<Partial<GameActions>>({});
@@ -283,6 +291,7 @@ export function MannersGame() {
   const chargeRef = useRef(0);
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
+  const audioMasterRef = useRef<GainNode | null>(null);
   const ghostVisibleRef = useRef(true);
   const recordsRef = useRef<ProgressRecords>({});
   const memoriesRef = useRef<Record<string, ShotMemory | undefined>>({});
@@ -316,6 +325,8 @@ export function MannersGame() {
 
   useEffect(() => {
     mutedRef.current = muted;
+    const master = audioMasterRef.current;
+    if (master) master.gain.setTargetAtTime(muted ? 0 : 1, master.context.currentTime, .01);
   }, [muted]);
 
   useEffect(() => {
@@ -378,7 +389,7 @@ export function MannersGame() {
 
     const initialize = async () => {
       try {
-        const labMode = resolveAddressLabFromSearch(window.location.search);
+        const labMode = courtyard ? null : resolveAddressLabFromSearch(window.location.search);
         addressLabRef.current = labMode;
         setAddressLabMode(labMode);
         setBootMessage("Loading Havok once");
@@ -488,6 +499,11 @@ export function MannersGame() {
         woodTexture.update();
         materials.timber.diffuseTexture = woodTexture;
         materials.brick.diffuseTexture = woodTexture;
+        if (courtyard) {
+          materials.rough.diffuseColor = new Color3(.20, .18, .125);
+          materials.fairwayA.diffuseColor = new Color3(.26, .24, .17);
+          materials.fairwayB.diffuseColor = new Color3(.24, .22, .155);
+        }
         const targetSurfaces = {
           cyan: makeMaterial("cyan-seat-surface", new Color3(0.05, 0.32, 0.34), new Color3(0.01, 0.12, 0.14)),
           amber: makeMaterial("amber-seat-surface", new Color3(0.46, 0.24, 0.055), new Color3(0.16, 0.065, 0.005)),
@@ -559,7 +575,12 @@ export function MannersGame() {
         worldRef.current = { ghostLine };
 
         const ensureAudio = () => {
-          if (!audioContext) audioContext = new AudioContext();
+          if (!audioContext) {
+            audioContext = new AudioContext({ latencyHint: "interactive" });
+            audioMasterRef.current = audioContext.createGain();
+            audioMasterRef.current.gain.value = mutedRef.current ? 0 : 1;
+            audioMasterRef.current.connect(audioContext.destination);
+          }
           if (audioContext.state === "suspended") void audioContext.resume();
           return audioContext;
         };
@@ -604,9 +625,10 @@ export function MannersGame() {
           oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, endFrequency), now + duration);
           gain.gain.setValueAtTime(gainValue, now);
           gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-          oscillator.connect(gain).connect(context.destination);
+          oscillator.connect(gain).connect(audioMasterRef.current!);
           oscillator.start(now);
           oscillator.stop(now + duration + 0.03);
+          oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
         };
 
         const noise = (duration: number, gainValue: number, delay = 0) => {
@@ -621,8 +643,9 @@ export function MannersGame() {
           const gain = context.createGain();
           gain.gain.value = gainValue;
           source.buffer = buffer;
-          source.connect(gain).connect(context.destination);
+          source.connect(gain).connect(audioMasterRef.current!);
           source.start(context.currentTime + delay);
+          source.onended = () => { source.disconnect(); gain.disconnect(); };
         };
 
         const startChargeTone = () => {
@@ -634,7 +657,8 @@ export function MannersGame() {
           oscillator.type = "sawtooth";
           oscillator.frequency.value = 62;
           gain.gain.value = 0.025;
-          oscillator.connect(gain).connect(context.destination);
+          oscillator.connect(gain).connect(audioMasterRef.current!);
+          oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
           oscillator.start();
           chargeTone = { oscillator, gain };
         };
@@ -648,7 +672,8 @@ export function MannersGame() {
           oscillator.type = "triangle";
           oscillator.frequency.value = 96;
           gain.gain.value = 0.018;
-          oscillator.connect(gain).connect(context.destination);
+          oscillator.connect(gain).connect(audioMasterRef.current!);
+          oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
           oscillator.start();
           flightTone = { oscillator, gain };
         };
@@ -665,31 +690,13 @@ export function MannersGame() {
         };
 
         const playRuling = (outcome: Outcome) => {
-          stopFlightTone();
-          if (outcome === "wet") {
-            noise(0.86, 0.13);
-            tone(210, 52, 0.84, 0.09, "sine");
-            return;
-          }
           if (outcome === "double") {
-            tone(164, 656, 0.62, 0.09, "triangle");
-            tone(246, 984, 0.72, 0.065, "triangle", 0.08);
-            noise(0.46, 0.16);
-            return;
+            tone(262, 524, .42, .055, "triangle");
+            tone(392, 784, .52, .04, "triangle", .08);
+          } else if (outcome === "ace") {
+            tone(196, 392, .32, .045, "triangle");
+            tone(294, 588, .4, .03, "triangle", .1);
           }
-          if (outcome === "ace") {
-            tone(196, 392, 0.38, 0.075, "triangle");
-            tone(294, 588, 0.5, 0.055, "triangle", 0.12);
-            noise(0.3, 0.085);
-            return;
-          }
-          if (outcome === "breach") {
-            tone(84, 31, 0.66, 0.2, "sawtooth");
-            noise(0.62, 0.16);
-            return;
-          }
-          tone(74, 35, 0.42, 0.12, "sine");
-          noise(0.28, 0.075);
         };
 
         const getAimDirection = () => {
@@ -751,7 +758,7 @@ export function MannersGame() {
 
           const rough = place(MeshBuilder.CreateBox(
             `${hole.id}-rough`,
-            { width: 64, height: 1, depth: hole.courseLength + 42 },
+            { width: hole.courseWidth ?? 64, height: 1, depth: hole.courseLength + 42 },
             scene!,
           ));
           rough.position.set(0, -0.5, (hole.courseLength + 8) / 2);
@@ -894,6 +901,9 @@ export function MannersGame() {
             rail.material = railIndex === railRef.current ? materials.cyan : materials.steel;
           }
 
+          if (courtyard) {
+            buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole);
+          } else {
           const bankVolume = RANGE_MECHANISMS.bank;
           const bankFace = place(MeshBuilder.CreateBox(
             `${hole.id}-timber-bank-face`,
@@ -1000,6 +1010,8 @@ export function MannersGame() {
             beacon.material = materials.violet;
           }
 
+          }
+
           if (hole.breach) {
             const volume = hole.breach;
             const barWidth = 0.17;
@@ -1068,6 +1080,7 @@ export function MannersGame() {
             water.material = materials.water;
           }
 
+          if (!courtyard) {
           for (const bunker of [
             { x: -8.5, z: 87, sx: 2.1, sz: 1.1 },
             { x: 9.5, z: 108, sx: 2.6, sz: 1.25 },
@@ -1138,7 +1151,9 @@ export function MannersGame() {
             hill.material = index % 2 === 0 ? materials.rough : materials.fairwayB;
           }
 
-          if (hole.wind.id !== "calm") {
+          }
+
+          if (hole.wind.x !== 0 || hole.wind.z !== 0) {
             for (let index = 0; index < 16; index += 1) {
               const mote = place(MeshBuilder.CreateSphere(
                 `${hole.id}-dust-${index}`,
@@ -1201,7 +1216,10 @@ export function MannersGame() {
             scene!,
           );
           ring.position.copyFrom(position);
-          if (kind === "bank") ring.rotation.z = Math.PI / 2;
+          if (kind?.startsWith("bank")) {
+            ring.rotation.z = Math.PI / 2;
+            ring.rotation.y = ((HOLES[holeIndexRef.current].banks?.find(bank => bank.id === kind)?.yaw) ?? 0) * Math.PI / 180;
+          }
           else if (kind === "breach") ring.rotation.x = Math.PI / 2;
           else ring.position.y = Math.min(position.y, 0.42);
           ring.material = material;
@@ -1239,10 +1257,10 @@ export function MannersGame() {
             flight.breached = true;
             setMechanismInFlight("BREACH");
           } else {
-            setMechanismInFlight(tag === "bank" ? "TIMBER BANK" : "HOT SKIP");
+            setMechanismInFlight(evidenceLabel(tag));
           }
           impactFocus.copyFrom(at);
-          if (tag === "bank") {
+          if (tag.startsWith("bank")) {
             tone(180, 65, 0.2, 0.13, "triangle");
             tone(390, 170, 0.13, 0.04, "sine", 0.018);
             noise(0.11, 0.055);
@@ -1333,7 +1351,12 @@ export function MannersGame() {
           };
           persistRecords(next);
           createTheatreRing(at, outcome, contactKind);
-          playRuling(outcome);
+          stopFlightTone();
+          if (outcome === "wet") {
+            noise(.65, .1); tone(210, 52, .65, .07);
+          } else {
+            tone(110, 45, .18, .075, "triangle"); noise(.14, .045);
+          }
           setCharge(0);
           chargeRef.current = 0;
           setGamePhase("theatre");
@@ -1631,8 +1654,8 @@ export function MannersGame() {
               lockRuling(outcome, point, "first-kiss");
               break;
             }
-            if (event.kind === "bank") {
-              registerMechanism("bank", point);
+            if (event.kind === "bank" || event.kind === "bank-a" || event.kind === "bank-b") {
+              registerMechanism(event.kind, point);
             } else if (event.kind === "boost") {
               const velocity = flight.aggregate.body.getLinearVelocity();
               if (velocity.y < 0 && registerMechanism("boost", point)) {
@@ -1649,7 +1672,7 @@ export function MannersGame() {
 
           if (!flight.locked) {
             const outOfBounds =
-              Math.abs(current.x) > 45 ||
+              Math.abs(current.x) > (hole.courseWidth ? hole.courseWidth / 2 : 45) ||
               current.z > hole.courseLength + 24 ||
               current.z < -15 ||
               current.y < -8 ||
@@ -1670,10 +1693,10 @@ export function MannersGame() {
           if (flight && !flight.locked) flight.previousPhysicsPosition.copyFrom(current);
         });
 
-        const saved = loadProgress();
+        const saved = loadProgress(HOLES, STORAGE_KEY);
         recordsRef.current = saved;
         setRecords(saved);
-        const resumeIndex = chooseResumeHole(saved);
+        const resumeIndex = chooseResumeHole(saved, HOLES);
         const startIndex = resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
         createCourse(startHole);
@@ -1796,6 +1819,7 @@ export function MannersGame() {
               flight.pendingResult &&
               now - flight.lockedAt >= RAIL_RULES.theatreMilliseconds
             ) {
+              playRuling(flight.pendingResult.outcome);
               setResult(flight.pendingResult);
               setGamePhase("result");
             }
@@ -1857,13 +1881,15 @@ export function MannersGame() {
           projectLabel(destinationRef.current,
             new Vector3(hole.target.x, 6.4 * Math.max(1, hole.target.z / 80) + 0.8, hole.target.z));
           const mechanism = hole.requiredTags[0];
-          const bank = RANGE_MECHANISMS.bank;
+          const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
-          projectLabel(mechanismRef.current, mechanism === "bank"
-            ? new Vector3(bank.x + bank.halfWidth, 4.5, bank.z - bank.halfDepth + 13)
+          projectLabel(mechanismRef.current, mechanism?.startsWith("bank")
+            ? new Vector3(bank.x + bank.halfWidth, courtyard ? 10 : 4.5, courtyard ? bank.z : bank.z - bank.halfDepth + 13)
             : mechanism === "boost" ? new Vector3(pad.x, 1.5, pad.z)
             : mechanism === "breach" && hole.breach ? new Vector3(hole.breach.x, hole.breach.maxY, hole.breach.z)
             : null);
+          const secondBank = hole.requiredTags.length > 1 ? hole.banks?.[1] : null;
+          projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
             const renderWidth = engine!.getRenderWidth();
@@ -1934,6 +1960,7 @@ export function MannersGame() {
       removeListeners?.();
       actionsRef.current = {};
       worldRef.current = null;
+      audioMasterRef.current = null;
       audioContext?.close().catch(() => undefined);
       scene?.dispose();
       engine?.dispose();
@@ -2026,7 +2053,7 @@ export function MannersGame() {
         </div>
       </header>
 
-      <nav className="manners-scorecard" aria-label="Practice Range lessons">
+      <nav className="manners-scorecard" aria-label={courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];
           const unlocked = holeUnlocked(index);
@@ -2060,7 +2087,7 @@ export function MannersGame() {
       </nav>
 
       <aside className="hole-brief manners-brief">
-        <p className="eyebrow">Practice Range · {hole.number} / 04</p>
+        <p className="eyebrow">{courtyard ? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
         <strong>{hole.name}</strong>
         <span>{hole.instruction}</span>
         <Button
@@ -2073,6 +2100,7 @@ export function MannersGame() {
         >
           <Map /> {survey ? "Address view" : "Survey hole"}
         </Button>
+        {canAim && <a className="courtyard-link" href={courtyard ? "/" : "/courtyard"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
       </aside>
 
       {labChip ? (
@@ -2080,14 +2108,16 @@ export function MannersGame() {
       ) : null}
 
       <div ref={destinationRef} className="destination-label" data-visible="false" data-color={hole.target.material} aria-hidden={!canAim}>
-        <span>{hole.requiredTags.length ? "2 · " : ""}LAND HERE · {Math.round(hole.target.z)} m</span>
+        <span>{hole.requiredTags.length ? `${hole.requiredTags.length + 1} · ` : ""}LAND HERE · {Math.round(hole.target.z)} m</span>
         <strong>{hole.target.label}</strong>
       </div>
 
       <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
         data-color={hole.requiredTags[0] === "boost" ? "boost" : "amber"} aria-hidden={!canAim || !hole.requiredTags.length}>
-        <strong>1 · {hole.requiredTags[0] === "bank" ? "BANK HERE" : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</strong>
+        <strong>1 · {hole.requiredTags[0]?.startsWith("bank") ? (courtyard ? "BANK A · THEN B" : "BANK HERE") : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</strong>
       </div>
+
+      {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || !hole.requiredTags.length}><strong>2 · BANK B</strong></div>}
 
       <section className="aim-console manners-console" aria-label="Rail shot controls">
         <div className="aim-metrics downrange-metrics">

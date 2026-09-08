@@ -1,8 +1,8 @@
 export type VectorLike = { x: number; y: number; z: number };
 export type ShotSetup = { railIndex: number; yaw: number; elevation: number; charge: number };
 export type Outcome = "ace" | "breach" | "double" | "wet" | "oob" | "miss";
-export type MechanismTag = "bank" | "boost" | "breach";
-export type VolumeBox = { x: number; z: number; halfWidth: number; halfDepth: number; minY: number; maxY: number };
+export type MechanismTag = "bank" | "boost" | "breach" | "bank-a" | "bank-b";
+export type VolumeBox = { yaw?: number; x: number; z: number; halfWidth: number; halfDepth: number; minY: number; maxY: number };
 export type RangeTarget = { id: string; label: string; x: number; z: number; radius: number; material: "cyan" | "amber" | "violet" | "lime" };
 export type Hole = {
   id: string;
@@ -13,6 +13,9 @@ export type Hole = {
   parLabel: string;
   instruction: string;
   courseLength: number;
+  courseWidth?: number;
+  banks?: readonly (VolumeBox & { id: MechanismTag })[];
+  orderedTags?: boolean;
   target: RangeTarget;
   requiredTags: readonly MechanismTag[];
   breach: VolumeBox | null;
@@ -52,7 +55,7 @@ export const RAIL_RULES: Readonly<{
 }>;
 export const HOLES: readonly Hole[];
 export const RANGE_TARGETS: readonly RangeTarget[];
-export const RANGE_MECHANISMS: Readonly<Record<MechanismTag, VolumeBox>>;
+export const RANGE_MECHANISMS: Readonly<Record<"bank" | "boost" | "breach", VolumeBox>>;
 export const REFERENCE_SHOTS: Readonly<Record<string, Readonly<ShotSetup>>>;
 export const ADDRESS_LAB_QUERY_KEY: "addressLab";
 export const ADDRESS_LAB_HOLE_ID: "timber-bank";
