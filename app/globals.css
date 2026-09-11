@@ -1776,3 +1776,12 @@ canvas {
 .shot-tools-body button[aria-pressed="true"] { border-color:#eab77d; background:#342e24; }
 /* Allow the tools popover to extend above the console's decorative outline. */
 .manners-console { clip-path:none; border-radius:12px 12px 0 0; }
+
+/* Stations are places; the existing three rails remain fine position controls. */
+.station-picker { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; pointer-events:auto; }
+.station-picker button { min-height:32px; padding:5px 8px; border:1px solid #52655d; background:#172a2ceb; color:#d6c4a6; font:11px var(--font-mono); cursor:pointer; }
+.station-picker button[aria-pressed="true"] { border-color:#b5dbad; color:#dcf3d1; background:#243a30; }
+.station-picker button:disabled { opacity:.5; cursor:default; }
+.cascade-label { padding:4px 7px; pointer-events:none; }
+.cascade-label strong { font-size:11px; }
+@media (orientation:landscape) and (max-height:520px) { .station-picker { margin-top:4px; gap:4px; } .station-picker button { min-height:28px; font-size:10px; } .manners-brief .courtyard-link { font-size:10px; margin-top:4px; } }

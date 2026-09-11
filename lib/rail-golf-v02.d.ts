@@ -1,10 +1,11 @@
 export type VectorLike = { x: number; y: number; z: number };
 export type ShotSetup = { railIndex: number; yaw: number; elevation: number; charge: number };
 export type Outcome = "ace" | "breach" | "double" | "wet" | "oob" | "miss";
-export type MechanismTag = "bank" | "boost" | "breach" | "bank-a" | "bank-b";
+export type MechanismTag = "bank" | "boost" | "breach" | "bank-a" | "bank-b" | "step-a" | "step-b" | "step-c";
 export type VolumeBox = { yaw?: number; x: number; z: number; halfWidth: number; halfDepth: number; minY: number; maxY: number };
-export type RangeTarget = { id: string; label: string; x: number; z: number; radius: number; material: "cyan" | "amber" | "violet" | "lime" };
+export type RangeTarget = { beaconHeight?: number; id: string; label: string; x: number; z: number; radius: number; material: "cyan" | "amber" | "violet" | "lime" };
 export type Hole = {
+  station?: import("./stations").YardStation;
   id: string;
   number: string;
   shortName: string;
