@@ -1,7 +1,8 @@
 import { NullEngine, Scene, Vector3, MeshBuilder, HavokPlugin, PhysicsAggregate, PhysicsShapeType, TransformNode, StandardMaterial } from '@babylonjs/core';
+import { collectDeliveryStepEvents, padImpulse } from '../../lib/delivery-routes.js';
 import { buildCourtyard } from '../../lib/courtyard-scene.js';
 import { COURTYARD_TARGETS } from '../../lib/courtyard.js';
-import { RAIL_RULES, muzzleFromShot, directionFromAim, chargeToSpeed, collectShotStepEvents, classifyChallengeRuling, isAceLanding } from '../../lib/rail-golf-v02.js';
+import { RAIL_RULES, muzzleFromShot, directionFromAim, chargeToSpeed, classifyChallengeRuling, isAceLanding } from '../../lib/rail-golf-v02.js';
 export function courtyardShot(havok, hole, shot) {
   const engine = new NullEngine();
   const scene = new Scene(engine);
@@ -25,16 +26,17 @@ export function courtyardShot(havok, hole, shot) {
       add(mesh, PhysicsShapeType.CYLINDER, { mass: 0, friction: .74, restitution: .12 });
     }
     const material = new StandardMaterial('fixture', scene);
-    const materials = Object.fromEntries(['timber','brick','machine','bark','sand','steel','amber'].map(k => [k, material]));
+    const materials = Object.fromEntries(['timber','brick','machine','bark','sand','steel','amber','boost'].map(k => [k, material]));
     buildCourtyard(scene, new TransformNode('yard', scene), materials, { addShadowCaster() {} }, b => bodies.push(b), hole);
     const muzzle = muzzleFromShot(shot), aim = directionFromAim(shot.yaw, shot.elevation);
     const ball = MeshBuilder.CreateSphere('round', { diameter: RAIL_RULES.projectileRadius * 2 }, scene);
     ball.position.set(muzzle.x, muzzle.y, muzzle.z);
     const body = add(ball, PhysicsShapeType.SPHERE, { mass: 1.5, friction: .28, restitution: .38 });
-    const collisions = [];
+    const collisions = [], routes = [];
     body.body.setCollisionCallbackEnabled(true);
     body.body.getCollisionObservable().add(e => {
       const other = e.collider === body.body ? e.collidedAgainst : e.collider;
+      if (other.transformNode.metadata?.deliveryRoute === 'mill' && !routes.includes('mill')) routes.push('mill');
       if (!collisions.includes(other.transformNode.name)) collisions.push(other.transformNode.name);
     });
     body.body.applyImpulse(new Vector3(aim.x, aim.y, aim.z).scale(chargeToSpeed(shot.charge) * 1.5), ball.position);
@@ -42,9 +44,16 @@ export function courtyardShot(havok, hole, shot) {
     const tags = [], contacts = [];
     for (let i = 0; i < 1560; i++) {
       physics._step(1 / 120);
-      for (const e of collectShotStepEvents(previous, ball.position, hole, tags)) {
-        if (e.kind === 'first-kiss') return { point: e.point, tags, contacts, collisions, outcome: classifyChallengeRuling({ hole, targetHit: isAceLanding(hole, e.point), tags }) };
+      for (const e of collectDeliveryStepEvents(previous, ball.position, hole, tags, routes)) {
+        if (e.kind === 'first-kiss') return { point: e.point, tags, contacts, collisions, routes, outcome: classifyChallengeRuling({ hole, targetHit: isAceLanding(hole, e.point), tags }) };
+        if (e.kind === 'sky') { routes.push('sky'); continue; }
         tags.push(e.kind); contacts.push(e);
+        if (e.kind === 'boost') {
+          routes.push('skip');
+          const kick = padImpulse(body.body.getLinearVelocity(), hole);
+          body.body.applyImpulse(new Vector3(kick.x, kick.y, kick.z), ball.position);
+          break;
+        }
       }
       previous.copyFrom(ball.position);
     }
