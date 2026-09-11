@@ -1758,3 +1758,21 @@ canvas {
 .shot-evidence-layer span[data-kind="sky"], .shot-evidence-layer span[data-kind="mill"] { color:#ffcf87; border-color:#c39751; }
 @media (orientation:landscape) and (max-height:520px) { .delivery-book { top:58px; right:12px; width:198px; padding:8px; } .delivery-book p { font-size:12px; margin:5px 0; } .delivery-route-tabs { gap:3px; margin-top:5px; } .delivery-route-tabs button { min-height:28px; } .delivery-progress { top:78px; } }
 @media (orientation:portrait) and (max-width:700px) { .delivery-book { top:265px; bottom:auto; right:12px; width:210px; } .delivery-book p { font-size:12px; } .manners-shell[data-phase="result"] .delivery-book { display:none; } .delivery-progress { top:255px; width:max-content; max-width:94vw; font-size:12px; } }
+
+/* Shot tools stay collapsed above the console; opening them never moves the aim. */
+.shot-tools { position:absolute; bottom:100%; left:0; z-index:8; width:min(420px, 100%); color:#d7e8e2; font:12px/1.4 var(--font-mono); }
+.shot-tools summary { width:fit-content; min-height:32px; padding:7px 12px; cursor:pointer; background:#102023f5; border:1px solid #47635d; }
+.shot-tools-body { position:absolute; bottom:100%; left:0; width:100%; max-height:min(260px, 48dvh); overflow:auto; padding:12px; background:#102023fa; border:1px solid #47635d; display:grid; gap:10px; }
+.shot-tools-body label { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.shot-tools-body select { background:#1c3334; color:#f1e5d0; padding:5px; }
+.shot-tools-body input[type="range"] { width:100%; min-height:30px; accent-color:#ff9855; }
+.shot-tools-body button { text-align:left; padding:8px; border:1px solid #4a625c; color:#eed9b5; background:#1b3031; cursor:pointer; }
+.shot-tools-body :disabled { opacity:.5; cursor:default; }
+.quick-retry { position:absolute; z-index:12; bottom:max(22px, env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:10px; min-height:44px; padding:10px 18px; border:1px solid #ffc185; background:#14282af5; color:#ffdab3; font:14px var(--font-mono); cursor:pointer; }
+.quick-retry kbd { font-size:11px; border:1px solid #688079; padding:2px 5px; }
+.retry-notice { position:absolute; bottom:210px; left:50%; transform:translateX(-50%); max-width:90vw; padding:7px 10px; background:#13282aeb; color:#e5d6b8; font:12px/1.4 var(--font-mono); pointer-events:none; }
+@media (orientation:landscape) and (max-height:520px) { .retry-notice { top:58px; bottom:auto; max-width:40vw; } .shot-tools summary { min-height:28px; padding:5px 10px; } }
+@media (orientation:portrait) and (max-width:700px) { .retry-notice { bottom:220px; width:90vw; text-align:center; } }
+.shot-tools-body button[aria-pressed="true"] { border-color:#eab77d; background:#342e24; }
+/* Allow the tools popover to extend above the console's decorative outline. */
+.manners-console { clip-path:none; border-radius:12px 12px 0 0; }
