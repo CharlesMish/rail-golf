@@ -794,7 +794,7 @@ canvas {
   text-shadow: -5px 0 20px rgba(80, 217, 228, 0.28), 5px 0 20px rgba(255, 90, 35, 0.3);
 }
 
-@media (max-width: 930px) {
+@media (max-width: 1120px) {
   .utility-panel,
   .last-line-chip {
     display: none;
@@ -1380,6 +1380,8 @@ canvas {
 }
 
 .shot-evidence-layer span[data-kind="bank"],
+.shot-evidence-layer span[data-kind="bank-a"],
+.shot-evidence-layer span[data-kind="bank-b"],
 .shot-evidence-layer span[data-kind="breach"] {
   border-color: rgba(255, 116, 53, 0.78);
   color: #ffd2b7;
@@ -1635,3 +1637,110 @@ canvas {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Destination cues are fixed to the pin in world space, never a predicted shot. */
+.destination-label {
+  --destination: #78e1e7;
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  gap: 3px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--destination) 55%, transparent);
+  border-bottom: 2px solid var(--destination);
+  border-radius: 3px;
+  color: var(--destination);
+  background: rgba(7, 19, 22, 0.92);
+  box-shadow: 0 3px 16px #0005;
+  font-family: var(--font-mono);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 9px));
+  opacity: 0;
+}
+.destination-label[data-visible="true"] { opacity: 1; }
+.destination-label[data-color="amber"] { --destination: #ffc074; }
+.destination-label[data-color="violet"] { --destination: #d9a7ff; }
+.destination-label[data-color="lime"] { --destination: #cbe986; }
+.destination-label span { font-size: 10px; letter-spacing: 0.08em; }
+.destination-label strong { font-size: 12px; letter-spacing: 0.035em; }
+.destination-label::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 1px);
+  top: 100%;
+  width: 2px;
+  height: 11px;
+  background: var(--destination);
+}
+.manners-shell::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 25%, transparent 78%, rgba(0, 0, 0, 0.2));
+  mix-blend-mode: normal;
+}
+.manners-shell .portrait-notice { display: none; }
+.manners-shell[data-phase="flight"] .manners-console,
+.manners-shell[data-phase="theatre"] .manners-console,
+.manners-shell[data-phase="result"] .manners-console {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.manners-shell[data-phase="result"] .manners-brief,
+.manners-shell[data-phase="result"] .manners-survey { visibility: hidden; }
+.manners-console { transition: opacity 150ms ease; }
+.manners-brief > span { font-size: 13px; line-height: 1.5; }
+.manners-survey { top: 200px; }
+@media (min-width: 701px) and (max-width: 1160px) and (min-height: 521px) {
+  .manners-survey { top: 230px; }
+  .mobile-utility-panel { bottom: 190px; }
+}
+@media (orientation: portrait) and (max-width: 700px) {
+  .manners-brief { width: calc(100vw - 24px); }
+  .manners-brief > span { display: block; max-width: 310px; font-size: 12px; }
+  .manners-survey { top: 202px; }
+  .manners-shell .mobile-utility-panel { bottom: max(168px, calc(env(safe-area-inset-bottom) + 159px)); }
+  .manners-shell .flight-status { top: 188px; }
+  .manners-shell .breach-status { top: 222px; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .manners-hud .course-readout > div:last-child { display: none; }
+  .manners-brief { width: 225px; }
+  .manners-brief > span { font-size: 11px; }
+  .manners-survey { top: 139px; height: 28px !important; }
+  .destination-label { padding: 4px 7px; }
+  .destination-label span { font-size: 9px; }
+  .destination-label strong { font-size: 11px; }
+}
+
+/* Tutorial cues: keep the action and destination distinct at phone scale. */
+.manners-brief .manners-survey {
+  position: static;
+  align-self: flex-start;
+  margin-top: 7px;
+  pointer-events: auto;
+  font-size: 11px;
+}
+.destination-label { max-width: calc(100% - 16px); }
+.destination-label span { font-size: 12px; }
+.destination-label strong { font-size: 14px; }
+.destination-label::after { left: calc(50% - 1px + var(--pin-offset, 0px)); }
+.destination-label[data-color="boost"] { --destination: #ffa0cf; }
+.mechanism-label { transform: translate(-50%, 13px); border-bottom-width: 1px; }
+.mechanism-label::after { top: auto; bottom: 100%; height: 14px; }
+.manners-brief > span { font-size: 14px; }
+@media (max-width: 700px) {
+  .manners-scorecard span { font-size: 11px; }
+  .manners-scorecard small { font-size: 9px; }
+  .manners-scorecard b { font-size: 10px; }
+  .manners-brief > span { font-size: 13px; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .manners-brief > span { font-size: 12px; }
+  .manners-brief .manners-survey { margin-top: 4px; }
+  .destination-label span { font-size: 11px; }
+  .destination-label strong { font-size: 13px; }
+}
+
+/* A quiet route between the familiar instrument and its first shared yard. */
+.courtyard-link { display: block; margin-top: 8px; color: #d9c4a1; font: 13px/1.5 var(--font-mono, monospace); text-decoration: underline; text-underline-offset: 3px; pointer-events: auto; }

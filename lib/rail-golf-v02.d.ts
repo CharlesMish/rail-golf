@@ -1,8 +1,8 @@
 export type VectorLike = { x: number; y: number; z: number };
 export type ShotSetup = { railIndex: number; yaw: number; elevation: number; charge: number };
 export type Outcome = "ace" | "breach" | "double" | "wet" | "oob" | "miss";
-export type MechanismTag = "bank" | "boost" | "breach";
-export type VolumeBox = { x: number; z: number; halfWidth: number; halfDepth: number; minY: number; maxY: number };
+export type MechanismTag = "bank" | "boost" | "breach" | "bank-a" | "bank-b";
+export type VolumeBox = { yaw?: number; x: number; z: number; halfWidth: number; halfDepth: number; minY: number; maxY: number };
 export type RangeTarget = { id: string; label: string; x: number; z: number; radius: number; material: "cyan" | "amber" | "violet" | "lime" };
 export type Hole = {
   id: string;
@@ -13,6 +13,9 @@ export type Hole = {
   parLabel: string;
   instruction: string;
   courseLength: number;
+  courseWidth?: number;
+  banks?: readonly (VolumeBox & { id: MechanismTag })[];
+  orderedTags?: boolean;
   target: RangeTarget;
   requiredTags: readonly MechanismTag[];
   breach: VolumeBox | null;
@@ -52,7 +55,7 @@ export const RAIL_RULES: Readonly<{
 }>;
 export const HOLES: readonly Hole[];
 export const RANGE_TARGETS: readonly RangeTarget[];
-export const RANGE_MECHANISMS: Readonly<Record<MechanismTag, VolumeBox>>;
+export const RANGE_MECHANISMS: Readonly<Record<"bank" | "boost" | "breach", VolumeBox>>;
 export const REFERENCE_SHOTS: Readonly<Record<string, Readonly<ShotSetup>>>;
 export const ADDRESS_LAB_QUERY_KEY: "addressLab";
 export const ADDRESS_LAB_HOLE_ID: "timber-bank";
@@ -75,6 +78,8 @@ export function stableUnitInterval(value: unknown): number;
 export function clampYaw(value: number): number;
 export function clampElevation(value: number): number;
 export function chargeToSpeed(charge: number): number;
+export function chargeFromHold(milliseconds: number): number;
+export function collectShotStepEvents(start: { x: number; y: number; z: number }, end: { x: number; y: number; z: number }, hole: Hole, tags?: MechanismTag[]): Array<{ kind: MechanismTag | "wet" | "first-kiss"; amount: number; point: { x: number; y: number; z: number } }>;
 export function verticalRecoveryImpulse(currentYVelocity: number, targetYVelocity: number, mass?: number): number;
 export function directionFromAim(yawDegrees: number, elevationDegrees: number): VectorLike;
 export function muzzleFromShot(shot: ShotSetup): VectorLike;

@@ -21,6 +21,18 @@ The current **Mechanism Range** contains four cards in one shared course:
 A target hit clears a card. A mechanism plus its target in the same shot earns the
 trick stamp. Mechanism contact by itself is recorded as evidence, not a clear.
 
+## Timber Courtyard — first slice
+
+Open `/courtyard`, or choose **Explore the timber yard** from the practice range.
+The same launcher and physics session now serve a shared mill yard with two challenges:
+
+- **Across the Yard:** a 146-metre carry to the cyan Mill Bell. A normal target clear opens the gallery.
+- **Switchback Gallery:** bank off wall A, then wall B, and land on the amber roost in one shot for a trick stamp. A direct landing still clears.
+
+Courtyard progress is saved separately from the four practice cards. The first slice
+uses one launch station with three rails; more stations, elevated seats, hinges and
+moving reflectors are future authoring work. See [the slice notes](docs/timber-courtyard-slice.md).
+
 ## Controls
 
 | Action | Pointer / touch | Keyboard |
