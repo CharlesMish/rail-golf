@@ -16,6 +16,7 @@ export type Hole = {
   courseWidth?: number;
   banks?: readonly (VolumeBox & { id: MechanismTag })[];
   orderedTags?: boolean;
+  boost?: VolumeBox & { verticalSpeed: number; forwardKick: number };
   target: RangeTarget;
   requiredTags: readonly MechanismTag[];
   breach: VolumeBox | null;

@@ -29,6 +29,13 @@ The same launcher and physics session now serve a shared mill yard with two chal
 - **Across the Yard:** a 146-metre carry to the cyan Mill Bell. A normal target clear opens the gallery.
 - **Switchback Gallery:** bank off wall A, then wall B, and land on the amber roost in one shot for a trick stamp. A direct landing still clears.
 
+Across the Yard now has a **Route Book**: Direct, Sky, Skip and Mill. Collect the
+gold token, use the violet pad, or rebound from the mill, then land on the bell in
+that same shot. A miss gives feedback but does not bank a route. Collect all four
+across different attempts to earn **Yard Explorer**. Each route saves its latest
+successful aim and power; select a collected route and **Recall winning line** to
+restore its setup and charge marker. These routes are optional for progression.
+
 Courtyard progress is saved separately from the four practice cards. The first slice
 uses one launch station with three rails; more stations, elevated seats, hinges and
 moving reflectors are future authoring work. See [the slice notes](docs/timber-courtyard-slice.md).

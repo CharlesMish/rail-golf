@@ -29,5 +29,6 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.match(yardHtml, /Across the Yard/);
   assert.match(yardHtml, /Switchback Gallery, LOCKED/);
   assert.match(yardHtml, /Timber Courtyard/);
+  assert.match(yardHtml, /GOLD SKY TOKEN/);
 
 });

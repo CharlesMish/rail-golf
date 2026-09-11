@@ -56,7 +56,6 @@ import {
   clampElevation,
   clampYaw,
   classifyChallengeRuling,
-  collectShotStepEvents,
   directionFromAim,
   formatMiss,
   isAceLanding,
@@ -74,11 +73,14 @@ import type { AddressLabMode, Hole, HoleRecord, MechanismTag, Outcome, ShotSetup
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
 
+import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, normalizeDeliveryBook } from "@/lib/delivery-routes";
+import type { DeliveryRoute, DeliveryBook } from "@/lib/delivery-routes";
+
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
 
 type ProgressRecords = Record<string, HoleRecord | undefined>;
 type AimSetup = Pick<ShotSetup, "railIndex" | "yaw" | "elevation">;
-type EvidenceKind = MechanismTag | "first-kiss" | "wet";
+type EvidenceKind = MechanismTag | "first-kiss" | "wet" | "sky" | "mill";
 
 type ShotContact = {
   id: string;
@@ -116,6 +118,8 @@ type FlightState = {
   projectileId: number;
   breached: boolean;
   mechanismTags: Set<MechanismTag>;
+  deliveryRoutes: Set<DeliveryRoute>;
+  touchedSolid: boolean;
   contacts: ShotContact[];
   locked: boolean;
   lockedAt: number;
@@ -156,6 +160,7 @@ type GameActions = {
   toggleSurvey: () => void;
   selectHole: (index: number) => void;
   nextHole: () => void;
+  recallRoute: (id: DeliveryRoute) => void;
 };
 
 type LiveTone = {
@@ -179,6 +184,8 @@ function displayPercent(value: number) {
 }
 
 function evidenceLabel(kind: EvidenceKind) {
+  if (kind === "sky") return "SKY TOKEN";
+  if (kind === "mill") return "MILL REBOUND";
   if (kind === "first-kiss") return "FIRST KISS";
   if (kind === "bank") return "TIMBER BANK";
   if (kind === "bank-a") return "BANK A";
@@ -278,6 +285,9 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const resultCardRef = useRef<HTMLElement>(null);
   const destinationRef = useRef<HTMLDivElement>(null);
   const mechanismRef = useRef<HTMLDivElement>(null);
+  const deliveryPadRef = useRef<HTMLDivElement>(null);
+  const skyLabelRef = useRef<HTMLDivElement>(null);
+  const deliveryBookRef = useRef<DeliveryBook>({});
   const secondBankRef = useRef<HTMLDivElement>(null);
   const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
@@ -311,6 +321,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const [lastShot, setLastShot] = useState<ShotMemory | null>(null);
   const [mechanismInFlight, setMechanismInFlight] = useState<string | null>(null);
   const [result, setResult] = useState<ShotResult | null>(null);
+  const [deliveryBook, setDeliveryBook] = useState<DeliveryBook>({});
+  const [deliveryLive, setDeliveryLive] = useState<DeliveryRoute[]>([]);
+  const [routeFocus, setRouteFocus] = useState<DeliveryRoute>('direct');
+  const [recalledPower, setRecalledPower] = useState<number | null>(null);
   const [bootMessage, setBootMessage] = useState("Opening the mechanism range");
 
   const setGamePhase = (next: Phase) => {
@@ -558,6 +572,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         let breachBodies: DynamicBody[] = [];
         let dustMotes: DustMote[] = [];
         let flagPennant: Mesh | null = null;
+        let skyToken: Mesh | null = null;
         let flight: FlightState | null = null;
         let ghostLine: LinesMesh | null = null;
         let theatreFx: TheatreFx[] = [];
@@ -902,7 +917,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           }
 
           if (courtyard) {
-            buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole);
+            skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole).skyToken;
           } else {
           const bankVolume = RANGE_MECHANISMS.bank;
           const bankFace = place(MeshBuilder.CreateBox(
@@ -1221,7 +1236,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             ring.rotation.y = ((HOLES[holeIndexRef.current].banks?.find(bank => bank.id === kind)?.yaw) ?? 0) * Math.PI / 180;
           }
           else if (kind === "breach") ring.rotation.x = Math.PI / 2;
-          else ring.position.y = Math.min(position.y, 0.42);
+          else if (kind !== "sky" && kind !== "mill") ring.position.y = Math.min(position.y, 0.42);
           ring.material = material;
           theatreFx.push({ mesh: ring, material, bornAt: performance.now(), lifetime: 760, growth: 10 });
           if (outcome === "double") {
@@ -1244,9 +1259,25 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           }
         };
 
+        const registerDeliveryRoute = (route: DeliveryRoute, at: Vector3) => {
+          if (!flight || flight.locked || HOLES[holeIndexRef.current].id !== 'mill-delivery' || flight.deliveryRoutes.has(route)) return;
+          flight.deliveryRoutes.add(route);
+          setDeliveryLive([...flight.deliveryRoutes]);
+          if (route === 'sky' || route === 'mill') {
+            flight.contacts.push({ id: `${flight.projectileId}-${route}`, kind: route, point: at.clone() });
+            flight.points.push(at.clone());
+            createTheatreRing(at, 'breach', route);
+            if (route === 'sky') {
+              skyToken?.setEnabled(false);
+              tone(660, 990, .2, .05, 'triangle');
+            } else { tone(180, 65, .2, .08, 'triangle'); noise(.1, .035); }
+          }
+        };
+
         const registerMechanism = (tag: MechanismTag, at: Vector3) => {
           if (!flight || flight.locked || flight.mechanismTags.has(tag)) return false;
           flight.mechanismTags.add(tag);
+          if (tag === 'boost') registerDeliveryRoute('skip', at);
           flight.points.push(at.clone());
           flight.contacts.push({
             id: `${flight.projectileId}-${tag}-${flight.contacts.length}`,
@@ -1344,6 +1375,20 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           setLastShot(memory);
           const tags = [...flight.mechanismTags];
           const shotResult = resultCopy(hole, outcome, at.clone(), tags);
+          if (hole.id === 'mill-delivery') {
+            const earned = earnedDeliveryRoutes(shotResult.clear, [...flight.deliveryRoutes], flight.touchedSolid, tags);
+            if (earned.length) {
+              const book = { ...deliveryBookRef.current };
+              const fresh = earned.filter(id => !book[id]);
+              for (const id of earned) book[id] = { ...flight.setup };
+              deliveryBookRef.current = book; setDeliveryBook(book);
+              try { window.localStorage.setItem(DELIVERY_BOOK_KEY, JSON.stringify(book)); } catch { /* Local storage is optional. */ }
+              shotResult.detail += ` ${earned.map(id => id.toUpperCase()).join(' + ')} route ${fresh.length ? 'collected' : 'repeated'}. ${Object.keys(book).length}/4 routes. Winning line saved.`;
+              if (Object.keys(book).length === 4 && fresh.length) shotResult.headline = 'YARD EXPLORER';
+            } else if (flight.deliveryRoutes.size) {
+              shotResult.detail += ` ${[...flight.deliveryRoutes].join(' + ').toUpperCase()} reached. Land on the bell in this shot to collect the route.`;
+            }
+          }
           flight.pendingResult = shotResult;
           const next = {
             ...recordsRef.current,
@@ -1383,6 +1428,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           setHoleIndex(index);
           setResult(null);
           setMechanismInFlight(null);
+          setDeliveryLive([]);
+          setRecalledPower(null);
           setSurvey(false);
           surveyRef.current = false;
           chargeRef.current = 0;
@@ -1492,13 +1539,24 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             projectileId: projectileCounter,
             breached: false,
             mechanismTags: new Set<MechanismTag>(),
+            deliveryRoutes: new Set<DeliveryRoute>(),
+            touchedSolid: false,
             contacts: [],
             locked: false,
             lockedAt: 0,
             pendingResult: null,
           };
+          aggregate.body.setCollisionCallbackEnabled(true);
+          aggregate.body.getCollisionObservable().add(event => {
+            if (!flight || flight.aggregate !== aggregate || flight.locked) return;
+            flight.touchedSolid = true;
+            const other = event.collider === aggregate.body ? event.collidedAgainst : event.collider;
+            if (other.transformNode.metadata?.deliveryRoute === 'mill') registerDeliveryRoute('mill', (event.point ?? bodyMesh.position).clone());
+          });
           setResult(null);
           setMechanismInFlight(null);
+          setDeliveryLive([]);
+          setRecalledPower(null);
           setSurvey(false);
           surveyRef.current = false;
           playLaunch(setup.charge);
@@ -1564,7 +1622,16 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           loadHole(next, false);
         };
 
+        const recallRoute = (id: DeliveryRoute) => {
+          if (!courtyard || (phaseRef.current !== 'ready' && phaseRef.current !== 'result')) return;
+          const setup = deliveryBookRef.current[id];
+          if (!setup) return;
+          loadHole(0); updateSetup(setup); disposeGhost(); setLastShot(null);
+          setRecalledPower(setup.charge);
+        };
+
         actionsRef.current = {
+          recallRoute,
           beginCharge,
           release: fire,
           cancelCharge,
@@ -1642,9 +1709,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           const current = flight.bodyMesh.position.clone();
           const previousLike = { x: previous.x, y: previous.y, z: previous.z };
           const currentLike = { x: current.x, y: current.y, z: current.z };
-          const events = collectShotStepEvents(previousLike, currentLike, hole, [...flight.mechanismTags]);
+          const events = collectDeliveryStepEvents(previousLike, currentLike, hole, [...flight.mechanismTags], [...flight.deliveryRoutes]);
           for (const event of events) {
             const point = new Vector3(event.point.x, event.point.y, event.point.z);
+            if (event.kind === "sky") { registerDeliveryRoute("sky", point); continue; }
             if (event.kind === "wet") {
               lockRuling("wet", point, "wet");
               break;
@@ -1659,8 +1727,9 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             } else if (event.kind === "boost") {
               const velocity = flight.aggregate.body.getLinearVelocity();
               if (velocity.y < 0 && registerMechanism("boost", point)) {
+                const kick = padImpulse(velocity, hole);
                 flight.aggregate.body.applyImpulse(
-                  new Vector3(0, verticalRecoveryImpulse(velocity.y, 15), 4.8 * RAIL_RULES.projectileMass),
+                  new Vector3(kick.x, kick.y, kick.z),
                   flight.bodyMesh.position,
                 );
                 break;
@@ -1693,6 +1762,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           if (flight && !flight.locked) flight.previousPhysicsPosition.copyFrom(current);
         });
 
+        if (courtyard) {
+          try {
+            const book = normalizeDeliveryBook(JSON.parse(window.localStorage.getItem(DELIVERY_BOOK_KEY) ?? '{}'));
+            deliveryBookRef.current = book; setDeliveryBook(book);
+          } catch { /* Start an empty route book if browser storage is unavailable. */ }
+        }
         const saved = loadProgress(HOLES, STORAGE_KEY);
         recordsRef.current = saved;
         setRecords(saved);
@@ -1890,6 +1965,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             : null);
           const secondBank = hole.requiredTags.length > 1 ? hole.banks?.[1] : null;
           projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
+          projectLabel(deliveryPadRef.current, hole.boost ? new Vector3(hole.boost.x, 2.4, hole.boost.z) : null);
+          projectLabel(skyLabelRef.current, hole.id === 'mill-delivery' ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
             const renderWidth = engine!.getRenderWidth();
@@ -1974,7 +2051,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
     ? Math.max(1, record.attempts)
     : record.attempts + 1;
   const canAim = phase === "ready" || phase === "charging";
-  const previousMarker = lastShot?.charge ?? null;
+  const previousMarker = recalledPower ?? lastShot?.charge ?? null;
 
   const beginButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -2119,6 +2196,21 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
       {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || !hole.requiredTags.length}><strong>2 · BANK B</strong></div>}
 
+      {hole.id === 'mill-delivery' && <>
+        <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>OPTIONAL · SKIP PAD</strong></div>
+        <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim}><strong>GOLD SKY TOKEN</strong></div>
+        {(canAim || phase === 'result') && <section className="delivery-book" aria-label="Delivery route collection">
+          <strong>{Object.keys(deliveryBook).length === 4 ? 'YARD EXPLORER' : 'ROUTE BOOK'} · {Object.keys(deliveryBook).length}/4</strong>
+          <div className="delivery-route-tabs">{DELIVERY_ROUTES.map(route => <button key={route.id} type="button" aria-pressed={routeFocus === route.id} onClick={() => setRouteFocus(route.id)} data-earned={Boolean(deliveryBook[route.id])}>
+            {deliveryBook[route.id] ? '✓ ' : '○ '}{route.label}
+          </button>)}</div>
+          <p>{DELIVERY_ROUTES.find(route => route.id === routeFocus)?.hint}</p>
+          {deliveryBook[routeFocus] && <Button variant="outline" size="sm" disabled={phase === 'charging'} onClick={() => actionsRef.current.recallRoute?.(routeFocus)}>Recall winning line · {displayPercent(deliveryBook[routeFocus]!.charge)}</Button>}
+          {recalledPower !== null && <small>Line recalled. Charge to the {displayPercent(recalledPower)} marker.</small>}
+        </section>}
+        {deliveryLive.length > 0 && phase === 'flight' && <div className="delivery-progress" role="status">{deliveryLive.join(' + ').toUpperCase()} REACHED · LAND TO COLLECT</div>}
+      </>}
+
       <section className="aim-console manners-console" aria-label="Rail shot controls">
         <div className="aim-metrics downrange-metrics">
           <div className="metric-block">
@@ -2149,11 +2241,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           aria-valuetext={displayPercent(charge)}
         >
           <div className="power-fill" style={{ width: `${charge * 100}%` }} />
-          {previousMarker !== null && ghostVisible ? (
+          {previousMarker !== null && (ghostVisible || recalledPower !== null) ? (
             <div
               className="last-power-marker"
               style={{ left: `${previousMarker * 100}%` }}
-              title={`Last shot ${displayPercent(previousMarker)}`}
+              title={`${recalledPower !== null ? "Saved route" : "Last shot"} ${displayPercent(previousMarker)}`}
             />
           ) : null}
         </div>
@@ -2302,7 +2394,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         <div className="flight-status theatre-status" role="status">RULING LOCKED</div>
       ) : null}
 
-      {mechanismInFlight && (phase === "flight" || phase === "theatre") ? (
+      {mechanismInFlight && !(hole.id === "mill-delivery" && deliveryLive.length > 0) && (phase === "flight" || phase === "theatre") ? (
         <div className="breach-status" role="status">
           {mechanismInFlight} REGISTERED · {phase === "flight" ? "TARGET STILL LIVE" : "RULING LOCKED"}
         </div>
@@ -2325,7 +2417,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         </div>
       ) : null}
 
-      {hole.wind.id !== "calm" ? (
+      {hole.wind.x !== 0 || hole.wind.z !== 0 ? (
         <div className="wind-witness" aria-label={`Constant wind ${hole.wind.speedLabel}`}>
           <Wind /> <span>CONSTANT</span> <strong>{hole.wind.label}</strong>
         </div>

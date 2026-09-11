@@ -1744,3 +1744,17 @@ canvas {
 
 /* A quiet route between the familiar instrument and its first shared yard. */
 .courtyard-link { display: block; margin-top: 8px; color: #d9c4a1; font: 13px/1.5 var(--font-mono, monospace); text-decoration: underline; text-underline-offset: 3px; pointer-events: auto; }
+
+.delivery-book { position:absolute; right:20px; top:130px; z-index:5; width:240px; padding:12px; border:1px solid #8d734a; background:#102023ed; color:#eed7b0; font:13px/1.4 var(--font-mono); }
+.delivery-book > strong { font-size:13px; letter-spacing:.05em; }
+.delivery-route-tabs { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-top:8px; }
+.delivery-route-tabs button { min-height:34px; border:1px solid #50605d; background:#15272a; color:#bdc9c6; text-align:left; padding:5px 7px; cursor:pointer; }
+.delivery-route-tabs button[aria-pressed="true"] { border-color:#f2b15f; }
+.delivery-route-tabs button[data-earned="true"] { color:#f6c77e; background:#332b20; }
+.delivery-book p { margin:8px 0; font-size:13px; }
+.delivery-book small { display:block; margin-top:6px; }
+.delivery-book > button { width:100%; font-size:12px; }
+.delivery-progress { position:absolute; top:140px; left:50%; transform:translateX(-50%); z-index:5; padding:8px 12px; color:#ffce85; background:#18221fed; border:1px solid #a2753d; font:13px var(--font-mono); pointer-events:none; }
+.shot-evidence-layer span[data-kind="sky"], .shot-evidence-layer span[data-kind="mill"] { color:#ffcf87; border-color:#c39751; }
+@media (orientation:landscape) and (max-height:520px) { .delivery-book { top:58px; right:12px; width:198px; padding:8px; } .delivery-book p { font-size:12px; margin:5px 0; } .delivery-route-tabs { gap:3px; margin-top:5px; } .delivery-route-tabs button { min-height:28px; } .delivery-progress { top:78px; } }
+@media (orientation:portrait) and (max-width:700px) { .delivery-book { top:265px; bottom:auto; right:12px; width:210px; } .delivery-book p { font-size:12px; } .manners-shell[data-phase="result"] .delivery-book { display:none; } .delivery-progress { top:255px; width:max-content; max-width:94vw; font-size:12px; } }
