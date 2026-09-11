@@ -1,0 +1,3 @@
+rail-golf-public-target=main
+expected-courtyard-route=/courtyard
+purpose=deployment sanity marker; this file should be reachable at /deploy-target.txt when the current main build is active
