@@ -51,7 +51,6 @@ import {
   RAIL_RULES,
   addressLabChipLabel,
   chargeToSpeed,
-  chargeFromHold,
   clamp,
   clampElevation,
   clampYaw,
@@ -75,6 +74,8 @@ import { buildCourtyard } from "@/lib/courtyard-scene";
 
 import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, normalizeDeliveryBook } from "@/lib/delivery-routes";
 import type { DeliveryRoute, DeliveryBook } from "@/lib/delivery-routes";
+
+import { launchCharge, interruptedRecord, rememberAttempt, landingReceipt } from "@/lib/shot-tools";
 
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
 
@@ -102,6 +103,7 @@ type ShotMemory = ShotSetup & {
   projectileId: number;
   points: Vector3[];
   contacts: ShotContact[];
+  receipt: string;
 };
 
 type FlightState = {
@@ -149,6 +151,9 @@ type WorldHandles = {
 };
 
 type GameActions = {
+  retry: () => void;
+  recallAttempt: (id: number) => void;
+  compareAttempts: () => void;
   beginCharge: () => void;
   release: () => void;
   cancelCharge: () => void;
@@ -180,7 +185,7 @@ const EMPTY_RECORD: HoleRecord = {
 };
 
 function displayPercent(value: number) {
-  return `${Math.round(value * 100)}%`;
+  return `${Math.round(value * 1000) / 10}%`;
 }
 
 function evidenceLabel(kind: EvidenceKind) {
@@ -233,7 +238,7 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
       outcome,
       headline: hole.requiredTags.length ? "TARGET HIT" : "CLEAN SEAT",
       detail: hole.requiredTags.length
-        ? `${hole.target.label} registered, but this card still asks for ${hole.requiredTags.join(" + ").toUpperCase()} first.`
+        ? `${hole.target.label} cleared. Optional trick stamp: ${hole.requiredTags.join(" → ").toUpperCase()} → landing.`
         : `First contact landed on ${hole.target.label}. Direct line recorded.`,
       point,
       clear: true,
@@ -243,7 +248,7 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
     return {
       outcome,
       headline: "MECHANISM REGISTERED",
-      detail: `${tagReceipt} fired, but the rail missed ${hole.target.label}. The live trail keeps the evidence.`,
+      detail: `${tagReceipt} → missed ${hole.target.label}. ${formatMiss(hole, point)}.`,
       point,
       clear: false,
     };
@@ -299,6 +304,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const elevationRef = useRef(HOLES[0].defaultShot.elevation);
   const railRef = useRef(HOLES[0].defaultShot.railIndex);
   const chargeRef = useRef(0);
+  const powerModeRef = useRef<"hold" | "set">("hold");
+  const selectedPowerRef = useRef(.5);
+  const compareRef = useRef(false);
+  const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -318,6 +327,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const [survey, setSurvey] = useState(false);
   const [muted, setMuted] = useState(false);
   const [ghostVisible, setGhostVisible] = useState(true);
+  const [powerMode, setPowerMode] = useState<"hold" | "set">("hold");
+  const [selectedPower, setSelectedPower] = useState(.5);
+  const [compare, setCompare] = useState(false);
+  const [history, setHistory] = useState<ShotMemory[]>([]);
+  const [retryNotice, setRetryNotice] = useState("");
   const [lastShot, setLastShot] = useState<ShotMemory | null>(null);
   const [mechanismInFlight, setMechanismInFlight] = useState<string | null>(null);
   const [result, setResult] = useState<ShotResult | null>(null);
@@ -353,7 +367,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
       target instanceof Element && Boolean(target.closest("button, input, select, textarea, a, [role='switch']"));
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.metaKey || event.ctrlKey || event.altKey || isInteractiveTarget(event.target)) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.code === "KeyR" && !event.repeat && !(event.target instanceof Element && event.target.closest("input, select, textarea, [contenteditable='true']"))) {
+        event.preventDefault(); actionsRef.current.retry?.(); return;
+      }
+      if (isInteractiveTarget(event.target)) return;
       if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.code)) {
         event.preventDefault();
       }
@@ -365,7 +383,6 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
       if (event.code === "ArrowDown" || event.code === "KeyS") actionsRef.current.nudgeElevation?.(-0.7);
       if (event.code === "KeyQ") actionsRef.current.shiftRail?.(-1);
       if (event.code === "KeyE") actionsRef.current.shiftRail?.(1);
-      if (event.code === "KeyR") actionsRef.current.reset?.(false);
       if (event.code === "KeyL") actionsRef.current.restoreLine?.();
       if (event.code === "KeyV") actionsRef.current.toggleSurvey?.();
       if (event.code === "KeyG") setGhostVisible((visible) => !visible);
@@ -822,7 +839,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               scene!,
             ));
             green.position.set(rangeTarget.x, 0.07, rangeTarget.z);
-            green.material = materials.green;
+            green.material = materials.bark; // Neutral apron: only the coloured disk is the destination.
             green.receiveShadows = true;
             // A dark outer curb gives each landing disk a clear physical edge.
             const curb = place(MeshBuilder.CreateTorus(
@@ -851,7 +868,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             const ring = place(MeshBuilder.CreateTorus(
               `${hole.id}-${rangeTarget.id}-ring`,
               {
-                diameter: rangeTarget.radius * 2 + (active ? 0.58 : 0.28),
+                diameter: rangeTarget.radius * 2,
                 thickness: active ? 0.19 : 0.08,
                 tessellation: 64,
               },
@@ -1192,13 +1209,26 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         const makeGhost = (memory: ShotMemory | undefined) => {
           disposeGhost();
           if (!memory || memory.points.length < 2 || memory.holeId !== HOLES[holeIndexRef.current].id) return;
-          ghostLine = MeshBuilder.CreateLines(
-            `ghost-${memory.holeId}-${memory.projectileId}`,
-            { points: memory.points.map((point) => point.clone()) },
-            scene!,
+          const attempts = compareRef.current ? historyRef.current[memory.holeId] ?? [memory] : [memory];
+          const lines: Vector3[][] = [];
+          const colors: Color4[][] = [];
+          for (const shot of attempts) {
+            const selected = shot.projectileId === memory.projectileId;
+            const color = selected ? new Color4(1, .7, .35, .65) : new Color4(.28, .82, .86, .25);
+            const addLine = (points: Vector3[]) => { lines.push(points); colors.push(points.map(() => color)); };
+            if (shot.points.length > 1) addLine(shot.points.map(point => point.clone()));
+            const kiss = shot.contacts.find(contact => contact.kind === 'first-kiss');
+            if (kiss) {
+              const { x, z } = kiss.point;
+              addLine([new Vector3(x - .6, .35, z), new Vector3(x + .6, .35, z)]);
+              addLine([new Vector3(x, .35, z - .6), new Vector3(x, .35, z + .6)]);
+            }
+          }
+          ghostLine = MeshBuilder.CreateLineSystem(
+            `ghost-${memory.holeId}-${memory.projectileId}`, { lines, colors }, scene!,
           );
-          ghostLine.color = new Color3(0.28, 0.82, 0.86);
-          ghostLine.alpha = 0.34;
+          ghostLine.color = Color3.White();
+          ghostLine.alpha = 1;
           ghostLine.isPickable = false;
           ghostLine.isVisible = ghostVisibleRef.current;
           if (worldRef.current) worldRef.current.ghostLine = ghostLine;
@@ -1341,6 +1371,21 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           }
         };
 
+        const rememberFlight = (receipt: string): ShotMemory => {
+          const current = flight!;
+          const hole = HOLES[holeIndexRef.current];
+          const memory: ShotMemory = {
+            ...current.setup, holeId: hole.id, windId: hole.wind.id,
+            projectileId: current.projectileId, receipt,
+            points: current.points.map(point => point.clone()),
+            contacts: current.contacts.map(contact => ({ ...contact, point: contact.point.clone() })),
+          };
+          memoriesRef.current[hole.id] = memory;
+          historyRef.current[hole.id] = rememberAttempt(historyRef.current[hole.id] ?? [], memory);
+          setHistory(historyRef.current[hole.id]); setLastShot(memory);
+          return memory;
+        };
+
         const lockRuling = (outcome: Outcome, at: Vector3, contactKind?: EvidenceKind) => {
           if (!flight || flight.locked) return;
           const hole = HOLES[holeIndexRef.current];
@@ -1360,19 +1405,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               point: at.clone(),
             });
           }
-          const memory: ShotMemory = {
-            ...flight.setup,
-            holeId: hole.id,
-            windId: hole.wind.id,
-            projectileId: flight.projectileId,
-            points: flight.points.map((point) => point.clone()),
-            contacts: flight.contacts.map((contact) => ({
-              ...contact,
-              point: contact.point.clone(),
-            })),
-          };
-          memoriesRef.current[hole.id] = memory;
-          setLastShot(memory);
+          const receipt = contactKind === 'first-kiss' ? landingReceipt(hole, at) : outcome.toUpperCase();
+          rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`);
           const tags = [...flight.mechanismTags];
           const shotResult = resultCopy(hole, outcome, at.clone(), tags);
           if (hole.id === 'mill-delivery') {
@@ -1389,6 +1423,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               shotResult.detail += ` ${[...flight.deliveryRoutes].join(' + ').toUpperCase()} reached. Land on the bell in this shot to collect the route.`;
             }
           }
+          if (contactKind === 'first-kiss') shotResult.detail += ` ${receipt}`;
           flight.pendingResult = shotResult;
           const next = {
             ...recordsRef.current,
@@ -1396,6 +1431,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           };
           persistRecords(next);
           createTheatreRing(at, outcome, contactKind);
+          if (contactKind === 'first-kiss') {
+            const footprintMaterial = makeMaterial(`kiss-footprint-${flight.projectileId}`, new Color3(1, .9, .65), new Color3(.5, .4, .15), .2);
+            const footprint = MeshBuilder.CreateTorus(`kiss-footprint-${flight.projectileId}`, { diameter: RAIL_RULES.projectileRadius * 2, thickness: .05, tessellation: 32 }, scene!);
+            footprint.position.set(at.x, .35, at.z); footprint.material = footprintMaterial;
+            theatreFx.push({ mesh: footprint, material: footprintMaterial, bornAt: performance.now(), lifetime: 600000, growth: 0 });
+          }
           stopFlightTone();
           if (outcome === "wet") {
             noise(.65, .1); tone(210, 52, .65, .07);
@@ -1430,11 +1471,16 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           setMechanismInFlight(null);
           setDeliveryLive([]);
           setRecalledPower(null);
+          setRetryNotice("");
           setSurvey(false);
           surveyRef.current = false;
           chargeRef.current = 0;
           setCharge(0);
           const memory = memoriesRef.current[hole.id];
+          setHistory(historyRef.current[hole.id] ?? []);
+          if (restore && memory) {
+            setRecalledPower(memory.charge); selectedPowerRef.current = memory.charge; setSelectedPower(memory.charge);
+          }
           const setup = resolveOpeningAddress(hole, addressLabRef.current, { restore, memory });
           updateSetup(setup);
           createCourse(hole);
@@ -1447,6 +1493,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
         const beginCharge = () => {
           if (phaseRef.current !== "ready") return;
+          setRetryNotice("");
           chargeStartedAt = performance.now();
           chargeRef.current = 0;
           setCharge(0);
@@ -1471,7 +1518,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             yaw: yawRef.current,
             elevation: elevationRef.current,
             railIndex: railRef.current,
-            charge: chargeFromHold(performance.now() - chargeStartedAt),
+            charge: launchCharge(powerModeRef.current, selectedPowerRef.current, performance.now() - chargeStartedAt),
           };
           const direction = getAimDirection();
           const muzzle = getMuzzle();
@@ -1568,6 +1615,28 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           setGamePhase("flight");
         };
 
+        const retry = () => {
+          const phase = phaseRef.current;
+          if (!['ready', 'charging', 'flight', 'theatre', 'result'].includes(phase)) return;
+          let interrupted = false;
+          if (flight && !flight.locked) {
+            flight.points.push(flight.bodyMesh.position.clone());
+            rememberFlight('Interrupted · no landing ruling');
+            const id = HOLES[holeIndexRef.current].id;
+            persistRecords({ ...recordsRef.current, [id]: interruptedRecord(recordsRef.current[id]) });
+            interrupted = true;
+          }
+          cancelCharge(); chargePointerRef.current = null;
+          loadHole(holeIndexRef.current, true);
+          // A retry is immediate; do not spend another second flying the camera home.
+          const direction = getHorizontalDirection();
+          const origin = new Vector3(RAIL_RULES.railPositions[railRef.current], .4, 0);
+          camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
+          cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
+          camera.setTarget(cameraTarget);
+          setRetryNotice(interrupted ? 'Shot interrupted. Aim and power remembered; no landing awarded.' : 'Last setup restored. Adjust and fire when ready.');
+        };
+
         const resetRound = (restore = false) => {
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
           loadHole(holeIndexRef.current, restore);
@@ -1599,6 +1668,16 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           const memory = memoriesRef.current[HOLES[holeIndexRef.current].id];
           if (!memory) return;
           updateSetup(memory);
+          setRecalledPower(memory.charge); selectedPowerRef.current = memory.charge; setSelectedPower(memory.charge);
+        };
+
+        const recallAttempt = (id: number) => {
+          if (phaseRef.current !== 'ready' && phaseRef.current !== 'result') return;
+          const holeId = HOLES[holeIndexRef.current].id;
+          const memory = historyRef.current[holeId]?.find(item => item.projectileId === id);
+          if (!memory) return;
+          memoriesRef.current[holeId] = memory;
+          loadHole(holeIndexRef.current, true);
         };
 
         const toggleSurvey = () => {
@@ -1627,10 +1706,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           const setup = deliveryBookRef.current[id];
           if (!setup) return;
           loadHole(0); updateSetup(setup); disposeGhost(); setLastShot(null);
-          setRecalledPower(setup.charge);
+          setRecalledPower(setup.charge); selectedPowerRef.current = setup.charge; setSelectedPower(setup.charge);
         };
 
         actionsRef.current = {
+          retry, recallAttempt,
+          compareAttempts: () => makeGhost(memoriesRef.current[HOLES[holeIndexRef.current].id]),
           recallRoute,
           beginCharge,
           release: fire,
@@ -1791,7 +1872,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           }
 
           if (phaseRef.current === "charging") {
-            const nextCharge = chargeFromHold(now - chargeStartedAt);
+            const nextCharge = launchCharge(powerModeRef.current, selectedPowerRef.current, now - chargeStartedAt);
             chargeRef.current = nextCharge;
             if (chargeTone && audioContext) {
               chargeTone.oscillator.frequency.setTargetAtTime(62 + nextCharge * 330, audioContext.currentTime, 0.025);
@@ -1825,10 +1906,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           }
 
           if (flight) {
-            const position = flight.bodyMesh.position;
+            const position = flight.locked && flight.pendingResult ? flight.pendingResult.point : flight.bodyMesh.position;
             const velocity = flight.aggregate.body.getLinearVelocity();
             flight.visual.position.copyFrom(position);
-            if (velocity.lengthSquared() > 0.02) {
+            if (!flight.locked && velocity.lengthSquared() > 0.02) {
               const horizontalSpeed = Math.max(0.001, Math.hypot(velocity.x, velocity.z));
               flight.visual.rotation.y = Math.atan2(velocity.x, velocity.z);
               flight.visual.rotation.x = -Math.atan2(velocity.y, horizontalSpeed);
@@ -2051,6 +2132,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
     ? Math.max(1, record.attempts)
     : record.attempts + 1;
   const canAim = phase === "ready" || phase === "charging";
+  const shownPower = powerMode === "set" && phase === "ready" ? selectedPower : charge;
   const previousMarker = recalledPower ?? lastShot?.charge ?? null;
 
   const beginButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
@@ -2206,12 +2288,30 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           </button>)}</div>
           <p>{DELIVERY_ROUTES.find(route => route.id === routeFocus)?.hint}</p>
           {deliveryBook[routeFocus] && <Button variant="outline" size="sm" disabled={phase === 'charging'} onClick={() => actionsRef.current.recallRoute?.(routeFocus)}>Recall winning line · {displayPercent(deliveryBook[routeFocus]!.charge)}</Button>}
-          {recalledPower !== null && <small>Line recalled. Charge to the {displayPercent(recalledPower)} marker.</small>}
+          {recalledPower !== null && <small>Line recalled. {powerMode === "set" ? "Saved power selected." : `Charge to the ${displayPercent(recalledPower)} marker.`}</small>}
         </section>}
         {deliveryLive.length > 0 && phase === 'flight' && <div className="delivery-progress" role="status">{deliveryLive.join(' + ').toUpperCase()} REACHED · LAND TO COLLECT</div>}
       </>}
 
       <section className="aim-console manners-console" aria-label="Rail shot controls">
+        <details className="shot-tools">
+          <summary>Shot tools · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
+          <div className="shot-tools-body">
+            <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
+              const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
+            }}><option value="hold">Timed hold</option><option value="set">Set power</option></select></label>
+            {powerMode === 'set' && <label>Power {displayPercent(selectedPower)}<input type="range" min="0" max="100" step="0.5" aria-label="Set launch power" value={selectedPower * 100} disabled={phase !== 'ready'} onChange={event => {
+              const value = Number(event.target.value) / 100; selectedPowerRef.current = value; setSelectedPower(value);
+            }} /></label>}
+            <label><input type="checkbox" checked={compare} disabled={phase !== 'ready'} onChange={event => {
+              compareRef.current = event.target.checked; setCompare(event.target.checked); actionsRef.current.compareAttempts?.();
+            }} /> Compare three trails · selected amber, others cyan (Previous Line on)</label>
+            {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
+              #{shot.projectileId} · rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
+            </button>)}
+            {!history.length && <small>Your last three attempts will appear here, including interrupted shots.</small>}
+          </div>
+        </details>
         <div className="aim-metrics downrange-metrics">
           <div className="metric-block">
             <span>YAW</span>
@@ -2227,7 +2327,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           </div>
           <div className="metric-block power-number">
             <span>POWER</span>
-            <strong>{displayPercent(charge)}</strong>
+            <strong>{displayPercent(shownPower)}</strong>
           </div>
         </div>
 
@@ -2237,11 +2337,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           aria-label="Launch power"
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={Math.round(charge * 100)}
-          aria-valuetext={displayPercent(charge)}
+          aria-valuenow={Math.round(shownPower * 100)}
+          aria-valuetext={displayPercent(shownPower)}
         >
-          <div className="power-fill" style={{ width: `${charge * 100}%` }} />
-          {previousMarker !== null && (ghostVisible || recalledPower !== null) ? (
+          <div className="power-fill" style={{ width: `${shownPower * 100}%` }} />
+          {previousMarker !== null ? (
             <div
               className="last-power-marker"
               style={{ left: `${previousMarker * 100}%` }}
@@ -2290,7 +2390,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             disabled={!canAim}
           >
             <Crosshair />
-            <span>{phase === "charging" ? "RELEASE ROUND" : "HOLD TO CHARGE"}</span>
+            <span>{powerMode === "set" ? (phase === "charging" ? "RELEASE TO FIRE" : `FIRE AT ${displayPercent(selectedPower)}`) : phase === "charging" ? "RELEASE ROUND" : "HOLD TO CHARGE"}</span>
           </Button>
 
           <div className="aim-nudges" aria-label="Fine aim controls">
@@ -2313,7 +2413,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           <span className="desktop-control-hint">
             Drag the course to aim · hold only the orange control for power · the short muzzle spine is direction, never a landing prediction
           </span>
-          <span className="mobile-control-hint">Drag to aim · hold orange to charge</span>
+          <span className="mobile-control-hint">Drag to aim · {powerMode === "hold" ? "hold orange to charge" : "release orange to fire"}</span>
         </p>
       </section>
 
@@ -2373,7 +2473,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
       {lastShot && phase === "ready" ? (
         <button className="last-line-chip" onClick={() => actionsRef.current.restoreLine?.()} type="button">
           LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {displayPercent(lastShot.charge)}
-          <span>restore aim · match the power mark</span>
+          <span>restore aim and power</span>
         </button>
       ) : null}
 
@@ -2385,6 +2485,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           {phase === "booting" ? <span>One shared Havok session</span> : null}
         </div>
       ) : null}
+
+      {(phase === 'flight' || phase === 'theatre' || phase === 'result') && <button type="button" className="quick-retry" onClick={() => actionsRef.current.retry?.()}>
+        <RotateCcw size={16} /> {phase === 'flight' ? 'Retry now' : 'Retry shot'} <kbd>R</kbd>
+      </button>}
+      {retryNotice && phase === 'ready' && <div className="retry-notice" role="status">{retryNotice}</div>}
 
       {phase === "flight" ? (
         <div className="flight-status" role="status">ROUND DOWNRANGE</div>
