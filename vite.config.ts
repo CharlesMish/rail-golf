@@ -13,7 +13,8 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 const localBindingConfig = {
   main: "./worker/index.ts",
-  compatibility_flags: ["nodejs_compat"],
+  // compatibility_flags come from wrangler.jsonc. Re-declaring nodejs_compat
+  // here makes the Vite-generated deploy config contain the flag twice.
   d1_databases: d1
     ? [
         {
