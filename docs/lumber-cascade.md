@@ -1,5 +1,10 @@
 # Lumber Walk — second courtyard station
 
+> Power-scale update: QA charge values below are on the original 22–43 m/s scale.
+> Convert old charge `q` to current charge with `(16 + 21*q) / 37`.
+> The regression fixtures preserve those exact speeds. Current timed charging
+> takes 2 seconds to reach 80%, then 1 more second to reach 100%.
+
 The third courtyard card, Lumber Cascade, launches from Lumber Walk at (22,154),
 facing back into the same yard. The mill is now on the player's right, and the
 existing gallery wall can participate in the end of a new line. Three local rails

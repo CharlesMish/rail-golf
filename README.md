@@ -11,7 +11,7 @@ Rail Golf is a single-player artillery trick-shot range built with Babylon.js an
 Aim a rail, hold to charge it, then follow the round downstream. The official ruling is
 the first ground contact—not where the projectile eventually comes to rest.
 
-The current **Mechanism Range** contains four cards in one shared course:
+The optional **Mechanism Range** at `/practice` preserves four early prototype cards:
 
 1. **Open Seat** — land directly on the cyan target.
 2. **Timber Bank** — strike the timber wall and seat the same shot on amber.
@@ -23,11 +23,12 @@ trick stamp. Mechanism contact by itself is recorded as evidence, not a clear.
 
 ## Timber Courtyard — first slice
 
-Open `/courtyard`, or choose **Explore the timber yard** from the practice range.
-The same launcher and physics session now serve a shared mill yard with two challenges:
+The front door `/` opens the Timber Courtyard; `/courtyard` remains a working alias.
+Two stations share one physical mill yard with three challenges:
 
-- **Across the Yard:** a 146-metre carry to the cyan Mill Bell. A normal target clear opens the gallery.
+- **Across the Yard:** a 146-metre carry to the cyan Mill Bell. A normal target clear opens both the gallery and Lumber Walk.
 - **Switchback Gallery:** bank off wall A, then wall B, and land on the amber roost in one shot for a trick stamp. A direct landing still clears.
+- **Lumber Cascade:** shoot back from Lumber Walk. Land on the Receiving Bay to clear; rebound across three timber treads for the optional stamp.
 
 Across the Yard now has a **Route Book**: Direct, Sky, Skip and Mill. Collect the
 gold token, use the violet pad, or rebound from the mill, then land on the bell in
@@ -36,8 +37,7 @@ across different attempts to earn **Yard Explorer**. Each route saves its latest
 successful aim and power; select a collected route and **Recall winning line** to
 restore its setup and charge marker. These routes are optional for progression.
 
-Courtyard progress is saved separately from the four practice cards. The first slice
-uses one launch station with three rails; more stations, elevated seats, hinges and
+Courtyard progress is saved separately from the four practice cards. Each station has three rails. Elevated seats, hinges and
 moving reflectors are future authoring work. See [the slice notes](docs/timber-courtyard-slice.md).
 
 ## Controls
@@ -51,13 +51,19 @@ moving reflectors are future authoring work. See [the slice notes](docs/timber-c
 | Survey view | Survey button | V |
 | Toggle previous trajectory | Range option | G |
 | Toggle audio | Range option | M |
-| Reset the current card | Reset address | R |
+| Retry immediately, including during flight | Retry now | R |
+| Recall winning or recent lines | Shot tools & saved lines | Select with keyboard focus |
 
 The short cyan muzzle spine shows direction only. Rail Golf intentionally does not
 draw a predicted landing solution. The previous shot, first-kiss marker, and mechanism
 markers are the survey instruments.
 
-Progress is stored locally in the browser. No account or server-side save is required.
+Progress is stored locally in the browser. Each card now keeps three recent attempts
+and six winning contact families with their actual trails. Timed charge starts at
+6 m/s, reaches 80% in two seconds and full power in three. Aim spans ±70° yaw and
+5–85° elevation. Optional Set power remains available. Old Delivery saves migrate
+to the new scale without changing launch speed. See [shot tools](docs/shot-tools.md).
+No account or server-side save is required.
 
 ## Development
 
@@ -98,9 +104,9 @@ required mechanism; they do not instantiate separate games or physics identities
 
 ## Deployment
 
-The canonical hosted build uses ChatGPT Sites. `.openai/hosting.json` contains an
-opaque project identifier, not a secret, and is retained so the repository can remain
-connected to that deployment. Runtime credentials and local environment files must
+The public game is hosted at [rail-golf.cmish.dev](https://rail-golf.cmish.dev) through
+the repository’s Cloudflare deployment. `.openai/hosting.json` retains the earlier
+ChatGPT Sites project identity; it is not the authority for publishing this build. Runtime credentials and local environment files must
 not be committed.
 
 This source is an application project rather than the separate single-file offline

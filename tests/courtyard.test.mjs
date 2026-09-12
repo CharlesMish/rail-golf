@@ -1,3 +1,4 @@
+import { legacyChargeToCurrent } from '../lib/rail-golf-v02.js';
 import { stationRailPosition } from '../lib/stations.js';
 import { CASCADE_STEPS } from '../lib/lumber-cascade.js';
 import assert from 'node:assert/strict';
@@ -22,13 +23,13 @@ test('courtyard mastery requires two distinct banks in the authored order within
 test('full mill scene supports a long carry and a neighborhood of actual two-wall rebounds', async (t) => {
   const havok = await HavokPhysics({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   for (const charge of [.87,.89,.91]) await t.test(`long carry at ${charge}`, () => {
-    const result = courtyardShot(havok, COURTYARD_HOLES[0], { railIndex: 1, yaw: 0, elevation: 42, charge });
+    const result = courtyardShot(havok, COURTYARD_HOLES[0], { railIndex: 1, yaw: 0, elevation: 42, charge:legacyChargeToCurrent(charge) });
     assert.equal(result.outcome, 'ace');
     assert.deepEqual(result.tags, []);
     assert.ok(result.point.z > 140);
   });
   for (const yaw of [-2,-1,0]) for (const charge of [.85,.9,.95]) await t.test(`two banks, yaw ${yaw}, power ${charge}`, () => {
-    const result = courtyardShot(havok, COURTYARD_HOLES[1], { railIndex: 0, yaw, elevation: 25, charge });
+    const result = courtyardShot(havok, COURTYARD_HOLES[1], { railIndex: 0, yaw, elevation: 25, charge:legacyChargeToCurrent(charge) });
     assert.equal(result.outcome, 'double', JSON.stringify(result));
     assert.deepEqual(result.tags, ['bank-a','bank-b']);
     assert.equal(result.collisions.length, 2);

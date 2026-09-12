@@ -71,10 +71,13 @@ import type { AddressLabMode, Hole, HoleRecord, MechanismTag, Outcome, ShotSetup
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
 
-import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, normalizeDeliveryBook } from "@/lib/delivery-routes";
+import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, readDeliveryBook, LEGACY_DELIVERY_BOOK_KEY } from "@/lib/delivery-routes";
 import type { DeliveryRoute, DeliveryBook } from "@/lib/delivery-routes";
 
 import { launchCharge, interruptedRecord, rememberAttempt, landingReceipt } from "@/lib/shot-tools";
+
+import { SHOT_LIBRARY_KEY, packLine, collectLine, normalizeShotLibrary } from "@/lib/shot-library";
+import type { LineShelf, SavedLine } from "@/lib/shot-library";
 
 import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
 import { CASCADE_STEPS, cascadeContactTag } from "@/lib/lumber-cascade";
@@ -100,6 +103,8 @@ type ShotResult = {
 };
 
 type ShotMemory = ShotSetup & {
+  stationId: string;
+  outcome: Outcome | null;
   holeId: string;
   windId: string;
   projectileId: number;
@@ -202,6 +207,11 @@ function evidenceLabel(kind: EvidenceKind) {
   if (kind === "boost") return "HOT SKIP";
   if (kind === "wet") return "WET";
   return "BREACH";
+}
+
+function readStoredJson(key: string): unknown {
+  try { return JSON.parse(window.localStorage.getItem(key) ?? 'null'); }
+  catch { return null; }
 }
 
 function loadProgress(HOLES: readonly Hole[], storageKey: string): ProgressRecords {
@@ -314,6 +324,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const compareRef = useRef(false);
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
+  const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
+  const libraryKey = `${SHOT_LIBRARY_KEY}-${courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -337,6 +349,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const [selectedPower, setSelectedPower] = useState(.5);
   const [compare, setCompare] = useState(false);
   const [history, setHistory] = useState<ShotMemory[]>([]);
+  const [winningLines, setWinningLines] = useState<ShotMemory[]>([]);
   const [retryNotice, setRetryNotice] = useState("");
   const [lastShot, setLastShot] = useState<ShotMemory | null>(null);
   const [mechanismInFlight, setMechanismInFlight] = useState<string | null>(null);
@@ -1223,7 +1236,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         const makeGhost = (memory: ShotMemory | undefined) => {
           disposeGhost();
           if (!memory || memory.points.length < 2 || memory.holeId !== HOLES[holeIndexRef.current].id) return;
-          const attempts = compareRef.current ? historyRef.current[memory.holeId] ?? [memory] : [memory];
+          const attempts = compareRef.current ? [memory, ...(historyRef.current[memory.holeId] ?? []).filter(s => s.projectileId !== memory.projectileId)].slice(0,3) : [memory];
           const lines: Vector3[][] = [];
           const colors: Color4[][] = [];
           for (const shot of attempts) {
@@ -1385,11 +1398,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           }
         };
 
-        const rememberFlight = (receipt: string): ShotMemory => {
+        const rememberFlight = (receipt: string, outcome: Outcome | null = null): ShotMemory => {
           const current = flight!;
           const hole = HOLES[holeIndexRef.current];
           const memory: ShotMemory = {
-            ...current.setup, holeId: hole.id, windId: hole.wind.id,
+            ...current.setup, holeId: hole.id, windId: hole.wind.id, stationId: hole.station?.id ?? "gate", outcome,
             projectileId: current.projectileId, receipt,
             points: current.points.map(point => point.clone()),
             contacts: current.contacts.map(contact => ({ ...contact, point: contact.point.clone() })),
@@ -1397,6 +1410,14 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           memoriesRef.current[hole.id] = memory;
           historyRef.current[hole.id] = rememberAttempt(historyRef.current[hole.id] ?? [], memory);
           setHistory(historyRef.current[hole.id]); setLastShot(memory);
+          libraryRef.current[hole.id] = collectLine(libraryRef.current[hole.id], memory);
+          setWinningLines(libraryRef.current[hole.id].wins);
+          try {
+            const holes = Object.fromEntries(Object.entries(libraryRef.current).map(([id,shelf]) => [id, {
+              recent:shelf.recent.map(packLine), wins:shelf.wins.map(packLine),
+            }]));
+            window.localStorage.setItem(libraryKey, JSON.stringify({version:1, holes}));
+          } catch { /* A full or blocked storage area must not interrupt a shot. */ }
           return memory;
         };
 
@@ -1420,7 +1441,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             });
           }
           const receipt = contactKind === 'first-kiss' ? landingReceipt(hole, at) : outcome.toUpperCase();
-          rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`);
+          rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, outcome);
           const tags = [...flight.mechanismTags];
           const shotResult = resultCopy(hole, outcome, at.clone(), tags);
           if (hole.id === 'mill-delivery') {
@@ -1493,6 +1514,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           setCharge(0);
           const memory = memoriesRef.current[hole.id];
           setHistory(historyRef.current[hole.id] ?? []);
+          setWinningLines(libraryRef.current[hole.id]?.wins ?? []);
           if (restore && memory) {
             setRecalledPower(memory.charge); selectedPowerRef.current = memory.charge; setSelectedPower(memory.charge);
           }
@@ -1615,7 +1637,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             const other = event.collider === aggregate.body ? event.collidedAgainst : event.collider;
             const step = cascadeContactTag(other.transformNode.metadata?.cascadeStep, event.point);
             if (step) registerMechanism(step, (event.point ?? bodyMesh.position).clone());
-            if (other.transformNode.metadata?.deliveryRoute === 'mill') registerDeliveryRoute('mill', (event.point ?? bodyMesh.position).clone());
+            if (other.transformNode.metadata?.deliveryRoute === 'mill') {
+              const point = (event.point ?? bodyMesh.position).clone();
+              if (HOLES[holeIndexRef.current].id === 'mill-delivery') registerDeliveryRoute('mill', point);
+              else if (!flight.contacts.some(c => c.kind === 'mill')) flight.contacts.push({id:`${flight.projectileId}-mill`, kind:'mill', point});
+            }
           });
           setResult(null);
           setMechanismInFlight(null);
@@ -1692,7 +1718,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         const recallAttempt = (id: number) => {
           if (phaseRef.current !== 'ready' && phaseRef.current !== 'result') return;
           const holeId = HOLES[holeIndexRef.current].id;
-          const memory = historyRef.current[holeId]?.find(item => item.projectileId === id);
+          const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
           if (!memory) return;
           memoriesRef.current[holeId] = memory;
           loadHole(holeIndexRef.current, true);
@@ -1868,10 +1894,24 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
         if (courtyard) {
           try {
-            const book = normalizeDeliveryBook(JSON.parse(window.localStorage.getItem(DELIVERY_BOOK_KEY) ?? '{}'));
+            const book = readDeliveryBook(readStoredJson(DELIVERY_BOOK_KEY), readStoredJson(LEGACY_DELIVERY_BOOK_KEY));
             deliveryBookRef.current = book; setDeliveryBook(book);
+            try { window.localStorage.setItem(DELIVERY_BOOK_KEY, JSON.stringify(book)); } catch { /* Read-only saves still work. */ }
           } catch { /* Start an empty route book if browser storage is unavailable. */ }
         }
+        try {
+          const loaded = normalizeShotLibrary(readStoredJson(libraryKey), HOLES);
+          const hydrate = (line: SavedLine): ShotMemory => ({...line,
+            points:line.points.map(p => new Vector3(p.x,p.y,p.z)),
+            contacts:line.contacts.map(c => ({...c, point:new Vector3(c.point.x,c.point.y,c.point.z)})),
+          });
+          for (const [id,shelf] of Object.entries(loaded)) {
+            const recent = shelf.recent.map(hydrate), wins = shelf.wins.map(hydrate);
+            libraryRef.current[id] = {recent,wins}; historyRef.current[id] = recent;
+            memoriesRef.current[id] = recent[0] ?? wins[0];
+            for (const line of [...recent,...wins]) projectileCounter = Math.max(projectileCounter,line.projectileId);
+          }
+        } catch { /* Malformed or unavailable storage starts an empty collection. */ }
         const saved = loadProgress(HOLES, STORAGE_KEY);
         recordsRef.current = saved;
         setRecords(saved);
@@ -1883,6 +1923,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         setHoleIndex(startIndex);
         updateSetup(resolveOpeningAddress(startHole, addressLabRef.current));
         impactFocus.set(startHole.target.x, 0.5, startHole.target.z);
+        const remembered = memoriesRef.current[startHole.id];
+        setHistory(historyRef.current[startHole.id] ?? []);
+        setWinningLines(libraryRef.current[startHole.id]?.wins ?? []);
+        setLastShot(remembered ?? null); makeGhost(remembered);
 
         engine.runRenderLoop(() => {
           if (!scene || disposed) return;
@@ -2288,7 +2332,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           <Map /> {survey ? "Address view" : "Survey hole"}
         </Button>
 
-        {canAim && <a className="courtyard-link" href={courtyard ? "/" : "/courtyard"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
+        {canAim && <a className="courtyard-link" href={courtyard ? "/practice" : "/"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
       </aside>
 
       {labChip ? (
@@ -2328,7 +2372,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
       <section className="aim-console manners-console" aria-label="Rail shot controls">
         <details className="shot-tools">
-          <summary>Shot tools · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
+          <summary>Shot tools & saved lines · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
       {courtyard && <nav className="station-picker" aria-label="Launcher station">
         {Object.values(YARD_STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
@@ -2344,10 +2388,18 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             <label><input type="checkbox" checked={compare} disabled={phase !== 'ready'} onChange={event => {
               compareRef.current = event.target.checked; setCompare(event.target.checked); actionsRef.current.compareAttempts?.();
             }} /> Compare three trails · selected amber, others cyan (Previous Line on)</label>
+            <small>Gentle start · 80% in 2 seconds · full power in 3. Aim ±70°; loft 5–85°.</small>
+            <strong>Winning lines · {winningLines.length}/6 families</strong>
+            <small>Saved on this browser. Recall restores aim, power marker and the recorded trail; you still fire.</small>
+            {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
+              {shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
+            </button>)}
+            {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
+            <strong>Recent attempts</strong>
             {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
               #{shot.projectileId} · rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
             </button>)}
-            {!history.length && <small>Your last three attempts will appear here, including interrupted shots.</small>}
+            {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
           </div>
         </details>
         <div className="aim-metrics downrange-metrics">
