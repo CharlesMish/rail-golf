@@ -111,3 +111,11 @@ build. A standalone HTML can be generated and distributed independently when nee
 No project reuse license has been granted yet. Public repository visibility alone does
 not grant permission to copy, modify, or redistribute Rail Golf. Third-party materials
 remain under their respective licenses; see `THIRD_PARTY_NOTICES.md`.
+
+### Lumber Walk
+
+The courtyard now includes a second station and third card: **Lumber Cascade**.
+An ordinary Delivery clear opens both the gallery and Lumber Walk. Select card 03
+for a backward view through the yard: carry straight to the lime Receiving Bay,
+or stamp three passive rebounds across descending timber stacks. Quick retry and
+shot tools work at either station. See [the slice notes](docs/lumber-cascade.md).

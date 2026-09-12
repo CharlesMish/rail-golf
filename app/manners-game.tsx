@@ -55,7 +55,6 @@ import {
   clampElevation,
   clampYaw,
   classifyChallengeRuling,
-  directionFromAim,
   formatMiss,
   isAceLanding,
   mergeHoleRecord,
@@ -76,6 +75,9 @@ import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvent
 import type { DeliveryRoute, DeliveryBook } from "@/lib/delivery-routes";
 
 import { launchCharge, interruptedRecord, rememberAttempt, landingReceipt } from "@/lib/shot-tools";
+
+import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
+import { CASCADE_STEPS, cascadeContactTag } from "@/lib/lumber-cascade";
 
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
 
@@ -151,6 +153,7 @@ type WorldHandles = {
 };
 
 type GameActions = {
+  selectStation: (id: string) => void;
   retry: () => void;
   recallAttempt: (id: number) => void;
   compareAttempts: () => void;
@@ -189,6 +192,7 @@ function displayPercent(value: number) {
 }
 
 function evidenceLabel(kind: EvidenceKind) {
+  if (kind.startsWith("step-")) return `TREAD ${{ "step-a": 1, "step-b": 2, "step-c": 3 }[kind as "step-a" | "step-b" | "step-c"]}`;
   if (kind === "sky") return "SKY TOKEN";
   if (kind === "mill") return "MILL REBOUND";
   if (kind === "first-kiss") return "FIRST KISS";
@@ -223,7 +227,7 @@ function chooseResumeHole(records: ProgressRecords, HOLES: readonly Hole[]) {
 
 
 function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: MechanismTag[] = []): ShotResult {
-  const tagReceipt = tags.length ? tags.map((tag) => tag.toUpperCase()).join(" + ") : "DIRECT";
+  const tagReceipt = tags.length ? tags.map(evidenceLabel).join(" + ") : "DIRECT";
   if (outcome === "double") {
     return {
       outcome,
@@ -238,7 +242,7 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
       outcome,
       headline: hole.requiredTags.length ? "TARGET HIT" : "CLEAN SEAT",
       detail: hole.requiredTags.length
-        ? `${hole.target.label} cleared. Optional trick stamp: ${hole.requiredTags.join(" → ").toUpperCase()} → landing.`
+        ? `${hole.target.label} cleared. Optional trick stamp: ${hole.requiredTags.map(evidenceLabel).join(" → ")} → landing.`
         : `First contact landed on ${hole.target.label}. Direct line recorded.`,
       point,
       clear: true,
@@ -293,6 +297,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const deliveryPadRef = useRef<HTMLDivElement>(null);
   const skyLabelRef = useRef<HTMLDivElement>(null);
   const deliveryBookRef = useRef<DeliveryBook>({});
+  const cascadeLabelRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const secondBankRef = useRef<HTMLDivElement>(null);
   const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
@@ -307,6 +312,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const powerModeRef = useRef<"hold" | "set">("hold");
   const selectedPowerRef = useRef(.5);
   const compareRef = useRef(false);
+  const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
@@ -732,22 +738,25 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         };
 
         const getAimDirection = () => {
-          const raw = directionFromAim(yawRef.current, elevationRef.current);
+          const raw = stationAim({yaw:yawRef.current, elevation:elevationRef.current}, HOLES[holeIndexRef.current].station);
           return new Vector3(raw.x, raw.y, raw.z);
         };
 
         const getHorizontalDirection = () => {
-          const yawRadians = (yawRef.current * Math.PI) / 180;
+          const yawRadians = ((yawRef.current + (HOLES[holeIndexRef.current].station?.yaw ?? 0)) * Math.PI) / 180;
           return new Vector3(Math.sin(yawRadians), 0, Math.cos(yawRadians));
         };
 
         const getMuzzle = () => {
-          const origin = new Vector3(RAIL_RULES.railPositions[railRef.current], 1.55, 0);
-          return origin.add(getAimDirection().scale(RAIL_RULES.muzzleLength));
+          const muzzle = stationMuzzle({ railIndex:railRef.current, yaw:yawRef.current, elevation:elevationRef.current }, HOLES[holeIndexRef.current].station);
+          return new Vector3(muzzle.x, muzzle.y, muzzle.z);
         };
 
         const updateLauncher = () => {
-          launcher.position.x = RAIL_RULES.railPositions[railRef.current];
+          const station = HOLES[holeIndexRef.current].station;
+          const rail = stationRailPosition(railRef.current, station);
+          launcher.position.set(rail.x, 0, rail.z);
+          launcher.rotation.y = (station?.yaw ?? 0) * Math.PI / 180;
           yawPivot.rotation.y = (yawRef.current * Math.PI) / 180;
           elevationPivot.rotation.x = (-elevationRef.current * Math.PI) / 180;
           const direction = getAimDirection();
@@ -881,7 +890,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             // near target extra visual weight. The target's authored distance
             // determines the witness scale; its footprint remains the anchor.
             const destinationScale = active ? Math.max(1, rangeTarget.z / 80) : 1;
-            const pinHeight = active ? 6.4 * destinationScale : 4.5;
+            const pinHeight = active ? (rangeTarget.beaconHeight ?? 6.4 * destinationScale) : 4.5;
             const pin = place(MeshBuilder.CreateCylinder(
               `${hole.id}-${rangeTarget.id}-pin`,
               { height: pinHeight, diameter: active ? 0.22 * destinationScale : 0.11, tessellation: 12 },
@@ -915,12 +924,14 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             }
           }
 
+          for (const station of courtyard ? Object.values(YARD_STATIONS) : [YARD_STATIONS.gate]) {
           const railBed = place(MeshBuilder.CreateBox(
             `${hole.id}-rail-bed`,
             { width: 11.2, height: 0.2, depth: 2.6 },
             scene!,
           ));
-          railBed.position.set(0, 0.47, 0);
+          railBed.position.set(station.x, 0.47, station.z);
+          railBed.rotation.y = station.yaw * Math.PI / 180;
           railBed.material = materials.steel;
 
           for (let railIndex = 0; railIndex < RAIL_RULES.railPositions.length; railIndex += 1) {
@@ -929,10 +940,13 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               { width: 0.16, height: 0.08, depth: 6.1 },
               scene!,
             ));
-            rail.position.set(RAIL_RULES.railPositions[railIndex], 0.61, 0.2);
-            rail.material = railIndex === railRef.current ? materials.cyan : materials.steel;
+            const railPosition = stationRailPosition(railIndex, station);
+            rail.position.set(railPosition.x, 0.61, railPosition.z);
+            rail.rotation.y = station.yaw * Math.PI / 180;
+            rail.material = station.id === (hole.station?.id ?? "gate") && railIndex === railRef.current ? materials.cyan : materials.steel;
           }
 
+          }
           if (courtyard) {
             skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole).skyToken;
           } else {
@@ -1266,7 +1280,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             ring.rotation.y = ((HOLES[holeIndexRef.current].banks?.find(bank => bank.id === kind)?.yaw) ?? 0) * Math.PI / 180;
           }
           else if (kind === "breach") ring.rotation.x = Math.PI / 2;
-          else if (kind !== "sky" && kind !== "mill") ring.position.y = Math.min(position.y, 0.42);
+          else if (!kind?.startsWith("step-") && kind !== "sky" && kind !== "mill") ring.position.y = Math.min(position.y, 0.42);
           ring.material = material;
           theatreFx.push({ mesh: ring, material, bornAt: performance.now(), lifetime: 760, growth: 10 });
           if (outcome === "double") {
@@ -1318,10 +1332,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             flight.breached = true;
             setMechanismInFlight("BREACH");
           } else {
-            setMechanismInFlight(evidenceLabel(tag));
+            setMechanismInFlight(tag.startsWith("step-") ? [...flight.mechanismTags].filter(t => t.startsWith("step-")).map(evidenceLabel).join(" → ") : evidenceLabel(tag));
           }
           impactFocus.copyFrom(at);
-          if (tag.startsWith("bank")) {
+          if (tag.startsWith("bank") || tag.startsWith("step-")) {
             tone(180, 65, 0.2, 0.13, "triangle");
             tone(390, 170, 0.13, 0.04, "sine", 0.018);
             noise(0.11, 0.055);
@@ -1466,6 +1480,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           theatreFx = [];
           const hole = HOLES[index];
           holeIndexRef.current = index;
+          stationHoleRef.current[hole.station?.id ?? "gate"] = index;
           setHoleIndex(index);
           setResult(null);
           setMechanismInFlight(null);
@@ -1598,6 +1613,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
             flight.touchedSolid = true;
             const other = event.collider === aggregate.body ? event.collidedAgainst : event.collider;
+            const step = cascadeContactTag(other.transformNode.metadata?.cascadeStep, event.point);
+            if (step) registerMechanism(step, (event.point ?? bodyMesh.position).clone());
             if (other.transformNode.metadata?.deliveryRoute === 'mill') registerDeliveryRoute('mill', (event.point ?? bodyMesh.position).clone());
           });
           setResult(null);
@@ -1630,7 +1647,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           loadHole(holeIndexRef.current, true);
           // A retry is immediate; do not spend another second flying the camera home.
           const direction = getHorizontalDirection();
-          const origin = new Vector3(RAIL_RULES.railPositions[railRef.current], .4, 0);
+          const rail = stationRailPosition(railRef.current, HOLES[holeIndexRef.current].station);
+          const origin = new Vector3(rail.x, .4, rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
           camera.setTarget(cameraTarget);
@@ -1710,6 +1728,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         };
 
         actionsRef.current = {
+          selectStation: (id) => {
+            if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
+            const index = stationHoleRef.current[id];
+            if (index !== undefined) loadHole(index, true);
+          },
           retry, recallAttempt,
           compareAttempts: () => makeGhost(memoriesRef.current[HOLES[holeIndexRef.current].id]),
           recallRoute,
@@ -1889,7 +1912,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           elevationPivot.position.z = -recoil * 0.48;
           elevationPivot.position.y = -recoil * 0.055;
           const hole = HOLES[holeIndexRef.current];
-          const launcherPosition = new Vector3(RAIL_RULES.railPositions[railRef.current], 0.4, 0);
+          const stationRail = stationRailPosition(railRef.current, hole.station);
+          const launcherPosition = new Vector3(stationRail.x, 0.4, stationRail.z);
           const horizontalAim = getHorizontalDirection();
           const addressPosition = launcherPosition.subtract(horizontalAim.scale(15)).add(new Vector3(0, 7.4, 0));
           const addressTarget = launcherPosition.add(horizontalAim.scale(34)).add(new Vector3(0, 3.2, 0));
@@ -1948,13 +1972,14 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               followDirection = Vector3.Lerp(followDirection, travelDirection, 1 - Math.exp(-deltaSeconds * 5)).normalize();
               let followTarget = position.add(followDirection.scale(7)).add(new Vector3(0, 1.2, 0));
               let followPosition = position.subtract(followDirection.scale(12)).add(new Vector3(0, 5.5, 0));
-              if (velocity.y < 0 && position.z > Math.max(12, hole.target.z - 24)) {
+              const destinationDistance = Math.hypot(position.x - hole.target.x, position.z - hole.target.z);
+              if (velocity.y < 0 && destinationDistance < 24) {
                 const green = new Vector3(hole.target.x, 0.75, hole.target.z);
                 const focus = Vector3.Lerp(position, green, 0.48);
-                const landingBlend = clamp((position.z - (hole.target.z - 24)) / 18, 0, 1);
+                const landingBlend = clamp((24 - destinationDistance) / 18, 0, 1);
                 const easedBlend = landingBlend * landingBlend * (3 - 2 * landingBlend);
                 followTarget = Vector3.Lerp(followTarget, focus.add(new Vector3(0, 1.2, 0)), easedBlend);
-                followPosition = Vector3.Lerp(followPosition, focus.add(new Vector3(13, 9.2, -18)), easedBlend);
+                followPosition = Vector3.Lerp(followPosition, focus.subtract(followDirection.scale(18)).add(new Vector3(followDirection.z * 13, 9.2, -followDirection.x * 13)), easedBlend);
               }
               if (age <= 120) {
                 desiredCameraPosition = addressPosition;
@@ -2035,7 +2060,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             element.style.setProperty("--pin-offset", `${screenX - labelX}px`);
           };
           projectLabel(destinationRef.current,
-            new Vector3(hole.target.x, 6.4 * Math.max(1, hole.target.z / 80) + 0.8, hole.target.z));
+            new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z));
           const mechanism = hole.requiredTags[0];
           const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
@@ -2048,6 +2073,9 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
           projectLabel(deliveryPadRef.current, hole.boost ? new Vector3(hole.boost.x, 2.4, hole.boost.z) : null);
           projectLabel(skyLabelRef.current, hole.id === 'mill-delivery' ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
+          for (const step of CASCADE_STEPS) {
+            projectLabel(cascadeLabelRefs.current[step.id] ?? null, hole.id === 'lumber-cascade' ? new Vector3(step.x, step.top+1, step.z) : null);
+          }
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
             const renderWidth = engine!.getRenderWidth();
@@ -2239,14 +2267,14 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               <b>{item.number}</b>
               <span>{item.shortName}</span>
               <small>{stamp}</small>
-              {item.requiredTags.length ? <i aria-label={`Requires ${item.requiredTags.join(" and ")}`}><em data-earned={itemRecord?.perfect}>◆</em></i> : null}
+              {item.requiredTags.length ? <i aria-label={`Optional stamp: ${item.requiredTags.map(evidenceLabel).join(" then ")}`}><em data-earned={itemRecord?.perfect}>◆</em></i> : null}
             </button>
           );
         })}
       </nav>
 
       <aside className="hole-brief manners-brief">
-        <p className="eyebrow">{courtyard ? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
+        <p className="eyebrow">{courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
         <strong>{hole.name}</strong>
         <span>{hole.instruction}</span>
         <Button
@@ -2259,6 +2287,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         >
           <Map /> {survey ? "Address view" : "Survey hole"}
         </Button>
+
         {canAim && <a className="courtyard-link" href={courtyard ? "/" : "/courtyard"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
       </aside>
 
@@ -2293,10 +2322,19 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         {deliveryLive.length > 0 && phase === 'flight' && <div className="delivery-progress" role="status">{deliveryLive.join(' + ').toUpperCase()} REACHED · LAND TO COLLECT</div>}
       </>}
 
+      {hole.id === 'lumber-cascade' && <>
+        {CASCADE_STEPS.map((step, index) => <div key={step.id} ref={node => { cascadeLabelRefs.current[step.id] = node; }} className="destination-label cascade-label" data-color="amber" data-visible="false"><strong>TREAD {index+1}</strong></div>)}
+      </>}
+
       <section className="aim-console manners-console" aria-label="Rail shot controls">
         <details className="shot-tools">
           <summary>Shot tools · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
+      {courtyard && <nav className="station-picker" aria-label="Launcher station">
+        {Object.values(YARD_STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
+          disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : 2)}
+          onClick={() => actionsRef.current.selectStation?.(station.id)}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
+      </nav>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
               const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
             }}><option value="hold">Timed hold</option><option value="set">Set power</option></select></label>
@@ -2541,7 +2579,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           <h2 id="range-result-heading">{result.headline}</h2>
           <p id="range-result-detail">{result.detail}</p>
           {hole.requiredTags.length > 0 && result.outcome !== "double" ? (
-            <div className="perfect-callout"><Flag /> Stamp requires {hole.requiredTags.join(" + ").toUpperCase()} → {hole.target.label} in one shot.</div>
+            <div className="perfect-callout"><Flag /> Stamp requires {hole.requiredTags.map(evidenceLabel).join(" → ")} → {hole.target.label} in one shot.</div>
           ) : null}
           <div
             className="result-actions manners-result-actions"

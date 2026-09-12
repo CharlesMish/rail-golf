@@ -1,3 +1,5 @@
+import { stationRailPosition } from '../lib/stations.js';
+import { CASCADE_STEPS } from '../lib/lumber-cascade.js';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -38,22 +40,24 @@ test('full mill scene supports a long carry and a neighborhood of actual two-wal
   });
 });
 
-test('both courtyard destinations fit the mobile address view without a bank hiding them', () => {
+test('courtyard destination beacons fit the mobile address view without a bank hiding them', () => {
   const engine = new NullEngine({ renderWidth: 844, renderHeight: 390, textureSize: 512, deterministicLockstep: false, lockstepMaxSteps: 4 });
   const scene = new Scene(engine);
   try {
     const camera = new FreeCamera('address', Vector3.Zero(), scene);
     camera.fov = .69; camera.minZ = .1; camera.maxZ = 280;
-    for (const hole of COURTYARD_HOLES) for (const railX of RAIL_RULES.railPositions) {
-      const yaw = hole.defaultShot.yaw * Math.PI / 180;
+    for (const hole of COURTYARD_HOLES) for (const [railIndex, railX] of RAIL_RULES.railPositions.entries()) {
+      const yaw = (hole.defaultShot.yaw + hole.station.yaw) * Math.PI / 180;
       const aim = new Vector3(Math.sin(yaw), 0, Math.cos(yaw));
-      const origin = new Vector3(railX, .4, 0);
+      const rail = stationRailPosition(railIndex,hole.station);
+      const origin = new Vector3(rail.x, .4, rail.z);
       camera.position = origin.subtract(aim.scale(15)).add(new Vector3(0,7.4,0));
       camera.setTarget(origin.add(aim.scale(34)).add(new Vector3(0,3.2,0)));
       camera.getViewMatrix(true); camera.getProjectionMatrix(true);
-      for (const height of [.2, 6.4 * Math.max(1, hole.target.z / 80)]) {
+      for (const height of hole.id === 'lumber-cascade' ? [hole.target.beaconHeight] : [.2, 6.4 * Math.max(1, hole.target.z / 80)]) {
         const point = new Vector3(hole.target.x, height, hole.target.z);
         for (const bank of COURTYARD_BANKS) assert.equal(segmentSphereAabbIntersection(camera.position, point, bank, 0), null, `${hole.id} rail ${railX} hidden by ${bank.id}`);
+        if(hole.id==='lumber-cascade') for(const step of CASCADE_STEPS) assert.equal(segmentSphereAabbIntersection(camera.position,point,{x:step.x,z:step.z,minY:0,maxY:step.top,halfWidth:step.width/2,halfDepth:step.depth/2},0),null,'receiving beacon must clear the stacks');
         const screen = Vector3.Project(point, Matrix.Identity(), camera.getTransformationMatrix(), camera.viewport.toGlobal(844,390));
         assert.ok(screen.z > 0 && screen.z < 1 && screen.x > 0 && screen.x < 844 && screen.y > 60 && screen.y < 263, `${hole.id} rail ${railX}: ${screen}`);
       }
@@ -70,5 +74,5 @@ test('a normal target clear unlocks the next challenge and survives saved-record
   const cleared = normalizeHoleRecord(JSON.parse(JSON.stringify(mergeHoleRecord(missed, 'ace'))));
   assert.equal(cleared.perfect, false);
   assert.equal(isCourtyardChallengeUnlocked(1, { [id]: cleared }), true);
-  assert.equal(isCourtyardChallengeUnlocked(2, { [id]: cleared }), false);
+  assert.equal(isCourtyardChallengeUnlocked(3, { [id]: cleared }), false);
 });
