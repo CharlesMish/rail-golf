@@ -58,9 +58,17 @@ test("serves the Rail Golf experience and metadata", async () => {
     {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},{waitUntil(){},passThroughOnException(){}});
   assert.equal(integrated.status,200);
   const integratedHtml=await integrated.text();
-  assert.match(integratedHtml,/The mill diverter can be switched. Land on Dispatch Bay./);
+  assert.match(integratedHtml,/The loading dock can be switched. Explore a line to the Mill Bell./);
   assert.match(integratedHtml,/FLOOR .*?A/);assert.match(integratedHtml,/BUILD/);
   assert.match(integratedHtml,/SKIP PAD/);assert.match(integratedHtml,/Reset Card/);
   assert.doesNotMatch(integratedHtml,/raises|degrees|LEVEL|RISE|Delivery route collection|Lumber Walk.*locked/);
+
+  const lineResponse=await worker.fetch(new Request("http://localhost/lab/lines",{headers:{accept:"text/html"}}),
+    {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},{waitUntil(){},passThroughOnException(){}});
+  assert.equal(lineResponse.status,200);const lineHtml=await lineResponse.text();
+  assert.match(lineHtml,/NON-CANONICAL PLACEHOLDERS/);assert.match(lineHtml,/LINE TOTAL/);
+  assert.match(lineHtml,/02 Switchback Gallery, OPEN/);assert.match(lineHtml,/03 Lumber Cascade, OPEN/);
+  assert.match(lineHtml,/Copy current Set Power setup/);assert.doesNotMatch(lineHtml,/Dispatch Bay|Delivery route collection/);
+  assert.doesNotMatch(html,/LINE TOTAL|NON-CANONICAL|Copy current Set Power/);
 
 });

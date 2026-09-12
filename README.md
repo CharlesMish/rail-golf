@@ -138,4 +138,8 @@ blind playtest handoffs.
 
 ### Integrated courtyard experiment
 
-`/lab/courtyard-diverter` reuses the real Timber Courtyard with one additive, persistent two-state mill diverter and an experimental Dispatch Bay. It does not enter normal progression. The original Skip Pad is now shared machinery across all three courtyard cards. See [the integration contract](docs/courtyard-diverter-lab.md); winning setups remain in source fixtures for post-discovery verification.
+`/lab/courtyard-diverter` reuses the real Timber Courtyard with a persistent two-state version of the existing mill loading dock, using the existing Mill Bell. It does not enter normal progression. The original Skip Pad is now shared machinery across all three courtyard cards. See [the integration contract](docs/courtyard-diverter-lab.md); winning setups remain in source fixtures for post-discovery verification.
+
+### Provisional line instrument
+
+`/lab/lines` offers the three courtyard objectives with a lab-only receipt and compact shareable setups. **All score values are NON-CANONICAL PLACEHOLDERS.** Totals do not unlock anything. See [the preparatory contract](docs/line-instrument.md).
