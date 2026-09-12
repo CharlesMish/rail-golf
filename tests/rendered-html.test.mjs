@@ -54,4 +54,13 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.match(yardHtml, /Lumber Cascade, LOCKED/);
   assert.match(yardHtml, /Lumber Walk/);
 
+  const integrated = await worker.fetch(new Request("http://localhost/lab/courtyard-diverter",{headers:{accept:"text/html"}}),
+    {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},{waitUntil(){},passThroughOnException(){}});
+  assert.equal(integrated.status,200);
+  const integratedHtml=await integrated.text();
+  assert.match(integratedHtml,/The mill diverter can be switched. Land on Dispatch Bay./);
+  assert.match(integratedHtml,/FLOOR .*?A/);assert.match(integratedHtml,/BUILD/);
+  assert.match(integratedHtml,/SKIP PAD/);assert.match(integratedHtml,/Reset Card/);
+  assert.doesNotMatch(integratedHtml,/raises|degrees|LEVEL|RISE|Delivery route collection|Lumber Walk.*locked/);
+
 });

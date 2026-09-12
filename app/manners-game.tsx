@@ -83,6 +83,8 @@ import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@
 import { BUILD_ID } from "@/lib/build-identity";
 import { DIVERTER_HOLES, DIVERTER_TARGETS, DIVERTER_SWITCH, DIVERTER_FLOOR, FLOOR_STATES, floorForAction } from "@/lib/diverter-lab";
 import type { FloorState, FloorEnvironment } from "@/lib/diverter-lab";
+import { COURTYARD_DIVERTER_HOLES, COURTYARD_DIVERTER_TARGETS, YARD_DIVERTER_OPTIONS, YARD_DIVERTER_SWITCH, YARD_DIVERTER_FLOOR } from "@/lib/courtyard-diverter";
+import { withSharedYardPad } from "@/lib/delivery-routes";
 import { buildDiverterLab } from "@/lib/diverter-scene";
 import type { DiverterHandles, DiverterContact } from "@/lib/diverter-scene";
 import { CASCADE_STEPS, cascadeContactTag } from "@/lib/lumber-cascade";
@@ -304,10 +306,12 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false, diverterLab = false }: { courtyard?: boolean; diverterLab?: boolean }) {
-  const HOLES = diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
-  const RANGE_TARGETS = diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean }) {
+  courtyard = courtyard || courtyardDiverter;
+  diverterLab = diverterLab || courtyardDiverter;
+  const HOLES = courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
+  const RANGE_TARGETS = courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
+  const STORAGE_KEY = courtyardDiverter ? "rail-golf-courtyard-diverter-v1" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (!courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -339,7 +343,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
-  const libraryKey = `${SHOT_LIBRARY_KEY}-${diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
+  const libraryKey = `${SHOT_LIBRARY_KEY}-${courtyardDiverter ? "courtyard-diverter" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -821,7 +825,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
         const createCourse = (hole: Hole) => {
           disposeCourse();
           courseRoot = new TransformNode(`course-${hole.id}`, scene!);
-          if (diverterLab) {
+          if (diverterLab && !courtyardDiverter) {
             diverterHandles = buildDiverterLab(scene!, courseRoot, materials, shadows, floorStateRef.current);
             return;
           }
@@ -837,6 +841,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
             scene!,
           ));
           rough.position.set(0, -0.5, (hole.courseLength + 8) / 2);
+          if (courtyardDiverter) rough.metadata = {yardLanding:"ground"};
           rough.material = materials.rough;
           rough.receiveShadows = true;
           registerAggregate(new PhysicsAggregate(
@@ -864,6 +869,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
             scene!,
           ));
           tee.position.set(0, 0.16, -0.5);
+          if (courtyardDiverter) tee.metadata = {yardLanding:"tee"};
           tee.material = materials.steel;
           tee.receiveShadows = true;
           registerAggregate(new PhysicsAggregate(
@@ -899,6 +905,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
               scene!,
             ));
             target.position.set(rangeTarget.x, active ? 0.2 : 0.16, rangeTarget.z);
+            if (courtyardDiverter) target.metadata = {yardLanding:rangeTarget.id};
             target.material = targetSurfaces[rangeTarget.material];
             target.receiveShadows = true;
             registerAggregate(new PhysicsAggregate(
@@ -983,6 +990,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
           }
           if (courtyard) {
             skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole).skyToken;
+            if (courtyardDiverter) diverterHandles = buildDiverterLab(scene!,courseRoot,materials,shadows,floorStateRef.current,YARD_DIVERTER_OPTIONS);
           } else {
           const bankVolume = RANGE_MECHANISMS.bank;
           const bankFace = place(MeshBuilder.CreateBox(
@@ -1667,8 +1675,9 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
               const contact = diverterHandles.contact(other, event.point, flight.projectileId);
               if (contact?.kind === 'landing') labLanding = contact;
               else if (contact) registerMechanism(contact.kind, contact.point);
-              return;
+              if (!courtyardDiverter) return;
             }
+            if (courtyardDiverter && other.transformNode.metadata?.yardBank && event.point) registerMechanism(other.transformNode.metadata.yardBank, event.point);
             const step = cascadeContactTag(other.transformNode.metadata?.cascadeStep, event.point);
             if (step) registerMechanism(step, (event.point ?? bodyMesh.position).clone());
             if (other.transformNode.metadata?.deliveryRoute === 'mill') {
@@ -1895,16 +1904,20 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
               const contact = labLanding; labLanding = null;
               const point = contact.point.add(new Vector3(0, RAIL_RULES.projectileRadius, 0));
               lockRuling(classifyChallengeRuling({hole,targetHit:contact.targetHit === true,tags:[...flight.mechanismTags]}), point, 'first-kiss');
-            } else if (Math.abs(current.x)>32 || current.z>124 || current.z< -15 || current.y< -8 || flight.physicsElapsed>13) {
+            } else if (Math.abs(current.x)>(courtyardDiverter ? 50 : 32) || current.z>(courtyardDiverter ? 198 : 124) || current.z< -15 || current.y< -8 || flight.physicsElapsed>13) {
               lockRuling('oob',current);
             }
-            if (flight && !flight.locked) flight.previousPhysicsPosition.copyFrom(current);
-            return;
+            if (!courtyardDiverter) {
+              if (flight && !flight.locked) flight.previousPhysicsPosition.copyFrom(current);
+              return;
+            }
+            if (flight.locked) return;
           }
           const previousLike = { x: previous.x, y: previous.y, z: previous.z };
           const currentLike = { x: current.x, y: current.y, z: current.z };
           const events = collectDeliveryStepEvents(previousLike, currentLike, hole, [...flight.mechanismTags], [...flight.deliveryRoutes]);
           for (const event of events) {
+            if (courtyardDiverter && (event.kind === "first-kiss" || event.kind.startsWith("bank"))) continue;
             const point = new Vector3(event.point.x, event.point.y, event.point.z);
             if (event.kind === "sky") { registerDeliveryRoute("sky", point); continue; }
             if (event.kind === "wet") {
@@ -2169,8 +2182,8 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
           };
           projectLabel(destinationRef.current,
             new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z));
-          projectLabel(switchLabelRef.current, diverterLab ? new Vector3(DIVERTER_SWITCH.x,7,DIVERTER_SWITCH.z) : null);
-          projectLabel(floorLabelRef.current, diverterLab ? new Vector3(DIVERTER_FLOOR.x,6,DIVERTER_FLOOR.z) : null);
+          projectLabel(switchLabelRef.current, diverterLab ? new Vector3((courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).x,7,(courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).z) : null);
+          projectLabel(floorLabelRef.current, diverterLab ? new Vector3((courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x),6,(courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
           const mechanism = hole.requiredTags[0];
           const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
@@ -2181,7 +2194,8 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
             : null);
           const secondBank = hole.requiredTags.length > 1 ? hole.banks?.[1] : null;
           projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
-          projectLabel(deliveryPadRef.current, hole.boost ? new Vector3(hole.boost.x, 2.4, hole.boost.z) : null);
+          const sharedPad = withSharedYardPad(hole).boost;
+          projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
           projectLabel(skyLabelRef.current, hole.id === 'mill-delivery' ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
           for (const step of CASCADE_STEPS) {
             projectLabel(cascadeLabelRefs.current[step.id] ?? null, hole.id === 'lumber-cascade' ? new Vector3(step.x, step.top+1, step.z) : null);
@@ -2322,9 +2336,9 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
     <main className="rail-golf-shell manners-shell" data-phase={phase}>
       <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}</small>
       {diverterLab && <>
-        <div className="floor-state-chip" role="status">FLOOR {floorState} · {FLOOR_STATES[floorState].label}</div>
+        <div className="floor-state-chip" role="status">FLOOR {floorState} · {courtyardDiverter ? 'MILL DIVERTER' : FLOOR_STATES[floorState].label}</div>
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
-        <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState} · {FLOOR_STATES[floorState].label}</strong></div>
+        <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
       </>}
       <canvas
         ref={canvasRef}
@@ -2405,7 +2419,7 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
         </Button>
 
         {canAim && <a className="courtyard-link" href={courtyard ? "/practice" : "/"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
-        {canAim && !courtyard && !diverterLab && <a className="courtyard-link" href="/lab/diverter">Diverter Floor lab →</a>}
+        {canAim && !courtyard && !diverterLab && <><a className="courtyard-link" href="/lab/diverter">Diverter Floor lab →</a><a className="courtyard-link" href="/lab/courtyard-diverter">Mill Diverter lab →</a></>}
       </aside>
 
       {labChip ? (
@@ -2424,8 +2438,8 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
 
       {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || !hole.requiredTags.length}><strong>2 · BANK B</strong></div>}
 
+      {courtyard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
       {hole.id === 'mill-delivery' && <>
-        <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>OPTIONAL · SKIP PAD</strong></div>
         <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim}><strong>GOLD SKY TOKEN</strong></div>
         {(canAim || phase === 'result') && <section className="delivery-book" aria-label="Delivery route collection">
           <strong>{Object.keys(deliveryBook).length === 4 ? 'YARD EXPLORER' : 'ROUTE BOOK'} · {Object.keys(deliveryBook).length}/4</strong>
@@ -2447,13 +2461,13 @@ export function MannersGame({ courtyard = false, diverterLab = false }: { courty
         <details className="shot-tools">
           <summary>Shot tools & saved lines · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
-      {courtyard && <nav className="station-picker" aria-label="Launcher station">
+      {courtyard && !courtyardDiverter && <nav className="station-picker" aria-label="Launcher station">
         {Object.values(YARD_STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
           disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : 2)}
           onClick={() => actionsRef.current.selectStation?.(station.id)}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
             {diverterLab && <>
-              <small>FLOOR {floorState} · {FLOOR_STATES[floorState].label}. Switch changes once per shot. Retry keeps the state. Recall restores the recorded starting state.</small>
+              <small>FLOOR {floorState} · {courtyardDiverter ? 'MILL DIVERTER' : FLOOR_STATES[floorState].label}. Switch changes once per shot. Retry keeps the state. Recall restores the recorded starting state.</small>
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => actionsRef.current.reset?.(false)}>Reset Card · restore FLOOR A</button>
             </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {

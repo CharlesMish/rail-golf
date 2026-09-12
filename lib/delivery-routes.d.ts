@@ -11,3 +11,5 @@ export function collectDeliveryStepEvents(start: VectorLike, end: VectorLike, ho
 export function padImpulse(velocity: VectorLike, hole: Hole): VectorLike;
 export function earnedDeliveryRoutes(clear:boolean, routes:DeliveryRoute[], touchedSolid:boolean, mechanismTags?:MechanismTag[]): DeliveryRoute[];
 export function normalizeDeliveryBook(value:unknown): DeliveryBook;
+
+export function withSharedYardPad(hole:Hole):Hole;
