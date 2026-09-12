@@ -1,3 +1,4 @@
+import {appendLineEvidence,recordLineContact} from '../../lib/line-score.js';
 import {buildCourtyard} from '../../lib/courtyard-scene.js';
 import {COURTYARD_DIVERTER,COURTYARD_DIVERTER_TARGETS,YARD_DIVERTER_OPTIONS} from '../../lib/courtyard-diverter.js';
 import {collectDeliveryStepEvents,padImpulse} from '../../lib/delivery-routes.js';
@@ -29,7 +30,7 @@ export function diverterHarness(havok,initial='A',integrated=false){
    mesh.parent=root;mesh.position.set(target.x,active?.2:.16,target.z);mesh.metadata={yardLanding:target.id};
    add(mesh,PhysicsShapeType.CYLINDER,{mass:0,restitution:.12,friction:.74});
   }
-  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole);
+  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:true});
  }
  const world=buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?YARD_DIVERTER_OPTIONS:{});
  let id=0;
@@ -41,13 +42,14 @@ export function diverterHarness(havok,initial='A',integrated=false){
    const ball=MeshBuilder.CreateSphere('test-round',{diameter:RAIL_RULES.projectileRadius*2},scene);
    ball.position.set(muzzle.x,muzzle.y,muzzle.z);
    const aggregate=new PhysicsAggregate(ball,PhysicsShapeType.SPHERE,{mass:1.5,restitution:.38,friction:.28},scene);
-   let landing=null;const contacts=[],tags=[];
+   let landing=null;const contacts=[],tags=[],ledger=[];
    let previous=ball.position.clone();
    aggregate.body.setCollisionCallbackEnabled(true);
    aggregate.body.getCollisionObservable().add(event=>{
     if(landing)return;
     const other=event.collider===aggregate.body?event.collidedAgainst:event.collider;
     const contact=world.contact(other,event.point,shotId);
+    if(integrated)recordLineContact(ledger,other.transformNode,event.point,contact);
     if(integrated && event.point){
      const kind=other.transformNode.metadata?.yardBank ?? cascadeContactTag(other.transformNode.metadata?.cascadeStep,event.point) ?? (other.transformNode.metadata?.deliveryRoute==='mill'?'mill':null);
      if(kind&&!tags.includes(kind)){tags.push(kind);contacts.push({kind,point:event.point.clone(),body:other.transformNode.name});}
@@ -63,17 +65,18 @@ export function diverterHarness(havok,initial='A',integrated=false){
      if(integrated&&!landing){
       for(const e of collectDeliveryStepEvents(previous,ball.position,hole,tags,[])){
        if(e.kind==='boost'&&aggregate.body.getLinearVelocity().y<0){
+        appendLineEvidence(ledger,{kind:'pad-activation',surface:'skip-pad',point:{...e.point}});
         tags.push('boost');contacts.push({kind:'boost',point:new Vector3(e.point.x,e.point.y,e.point.z),body:'powered-pad-swept-surface'});
         const kick=padImpulse(aggregate.body.getLinearVelocity(),hole);aggregate.body.applyImpulse(new Vector3(kick.x,kick.y,kick.z),ball.position);break;
        }
       }
      }
      previous.copyFrom(ball.position);
-     if(landing)return {start,end:world.state,outcome:classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}),point:landing.point.asArray(),tags,contacts};
-     if(stopOnSwitch&&tags.some(t=>t.startsWith('switch-')))return {start,end:world.state,outcome:'interrupted',tags,contacts};
+     if(landing){appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target.id});return {start,end:world.state,outcome:classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}),point:landing.point.asArray(),tags,contacts,ledger};}
+     if(stopOnSwitch&&tags.some(t=>t.startsWith('switch-')))return {start,end:world.state,outcome:'interrupted',tags,contacts,ledger};
      if(Math.abs(ball.position.x)>(integrated?50:32)||ball.position.z>(integrated?198:124)||ball.position.z< -15||ball.position.y< -8)break;
     }
-    return {start,end:world.state,outcome:'oob',point:ball.position.asArray(),tags,contacts};
+    return {start,end:world.state,outcome:'oob',point:ball.position.asArray(),tags,contacts,ledger};
    }finally{aggregate.dispose();ball.dispose();}
   },
   dispose(){world.dispose();for(const b of yardBodies)b.dispose();scene.dispose();engine.dispose();}
