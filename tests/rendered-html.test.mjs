@@ -20,6 +20,18 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.doesNotMatch(html, /ADDRESS LAB/);
   assert.match(html, /Across the Yard/);
   assert.match(html, /Winning lines/);
+  assert.match(html, /BUILD .*?(?:[a-f0-9]{10}|unknown)/);
+  assert.doesNotMatch(html, /Diverter Floor|SHOOT SWITCH/);
+  const lab = await worker.fetch(
+    new Request("http://localhost/lab/diverter", {headers:{accept:"text/html"}}),
+    {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},
+    {waitUntil(){},passThroughOnException(){}},
+  );
+  assert.equal(lab.status,200);
+  const labHtml=await lab.text();
+  assert.match(labHtml,/Diverter Floor/);assert.match(labHtml,/Reset Card/);
+  assert.match(labHtml,/SHOOT SWITCH/);assert.match(labHtml,/Recall restores the recorded starting state/);
+  assert.doesNotMatch(labHtml,/Across the Yard|Switchback Gallery|Lumber Cascade/);
   const practice = await worker.fetch(
     new Request("http://localhost/practice", {headers:{accept:"text/html"}}),
     {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},

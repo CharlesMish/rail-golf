@@ -1,0 +1,13 @@
+import type {Hole,RangeTarget} from './rail-golf-v02';
+export type FloorState='A'|'B';
+export type FloorEnvironment={floor:FloorState};
+export const DEFAULT_FLOOR:FloorState;
+export function isFloorState(value:unknown):value is FloorState;
+export const FLOOR_STATES:Readonly<Record<FloorState,{label:string;pitch:number;material:string}>>;
+export const DIVERTER_FLOOR:Readonly<{x:number;y:number;z:number;width:number;depth:number;height:number}>;
+export const DIVERTER_SWITCH:Readonly<{x:number;y:number;z:number;width:number;depth:number;height:number}>;
+export const DIVERTER_TARGET:Readonly<RangeTarget>;
+export const DIVERTER_TARGETS:readonly RangeTarget[];
+export const DIVERTER_HOLE:Readonly<Hole>;
+export const DIVERTER_HOLES:readonly Hole[];
+export function floorForAction(current:FloorState,action:'retry'|'reset'|'enter'|'recall',saved?:FloorEnvironment):FloorState;

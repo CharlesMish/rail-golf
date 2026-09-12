@@ -80,6 +80,11 @@ import { SHOT_LIBRARY_KEY, packLine, collectLine, normalizeShotLibrary } from "@
 import type { LineShelf, SavedLine } from "@/lib/shot-library";
 
 import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
+import { BUILD_ID } from "@/lib/build-identity";
+import { DIVERTER_HOLES, DIVERTER_TARGETS, DIVERTER_SWITCH, DIVERTER_FLOOR, FLOOR_STATES, floorForAction } from "@/lib/diverter-lab";
+import type { FloorState, FloorEnvironment } from "@/lib/diverter-lab";
+import { buildDiverterLab } from "@/lib/diverter-scene";
+import type { DiverterHandles, DiverterContact } from "@/lib/diverter-scene";
 import { CASCADE_STEPS, cascadeContactTag } from "@/lib/lumber-cascade";
 
 type Phase = "booting" | "ready" | "charging" | "flight" | "theatre" | "result" | "error";
@@ -103,6 +108,8 @@ type ShotResult = {
 };
 
 type ShotMemory = ShotSetup & {
+  environment?: FloorEnvironment;
+  environmentAfter?: FloorEnvironment;
   stationId: string;
   outcome: Outcome | null;
   holeId: string;
@@ -114,6 +121,7 @@ type ShotMemory = ShotSetup & {
 };
 
 type FlightState = {
+  environment?: FloorEnvironment;
   aggregate: PhysicsAggregate;
   bodyMesh: Mesh;
   visual: TransformNode;
@@ -197,6 +205,8 @@ function displayPercent(value: number) {
 }
 
 function evidenceLabel(kind: EvidenceKind) {
+  if (kind.startsWith('floor-')) return 'FLOOR '+kind.slice(-1).toUpperCase()+' BOUNCE';
+  if (kind.startsWith('switch-')) return 'SWITCH → '+kind.slice(-1).toUpperCase();
   if (kind.startsWith("step-")) return `TREAD ${{ "step-a": 1, "step-b": 2, "step-c": 3 }[kind as "step-a" | "step-b" | "step-c"]}`;
   if (kind === "sky") return "SKY TOKEN";
   if (kind === "mill") return "MILL REBOUND";
@@ -294,13 +304,17 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
-  const HOLES = courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
-  const RANGE_TARGETS = courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+export function MannersGame({ courtyard = false, diverterLab = false }: { courtyard?: boolean; diverterLab?: boolean }) {
+  const HOLES = diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
+  const RANGE_TARGETS = diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
+  const STORAGE_KEY = diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (!courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const floorStateRef = useRef<FloorState>('A');
+  const [floorState, setFloorState] = useState<FloorState>('A');
+  const floorLabelRef = useRef<HTMLDivElement>(null);
+  const switchLabelRef = useRef<HTMLDivElement>(null);
   const resultCardRef = useRef<HTMLElement>(null);
   const destinationRef = useRef<HTMLDivElement>(null);
   const mechanismRef = useRef<HTMLDivElement>(null);
@@ -325,7 +339,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
-  const libraryKey = `${SHOT_LIBRARY_KEY}-${courtyard ? "yard" : "range"}`;
+  const libraryKey = `${SHOT_LIBRARY_KEY}-${diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -439,7 +453,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
     const initialize = async () => {
       try {
-        const labMode = courtyard ? null : resolveAddressLabFromSearch(window.location.search);
+        const labMode = courtyard || diverterLab ? null : resolveAddressLabFromSearch(window.location.search);
         addressLabRef.current = labMode;
         setAddressLabMode(labMode);
         setBootMessage("Loading Havok once");
@@ -604,6 +618,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
         let aimSpine: LinesMesh | null = null;
         let courseRoot: TransformNode | null = null;
+        let diverterHandles: DiverterHandles | null = null;
+        let labLanding: DiverterContact | null = null;
         let courseAggregates: PhysicsAggregate[] = [];
         let breachBodies: DynamicBody[] = [];
         let dustMotes: DustMote[] = [];
@@ -786,6 +802,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         };
 
         const disposeCourse = () => {
+          diverterHandles?.dispose(); diverterHandles = null; labLanding = null;
           for (const aggregate of courseAggregates) aggregate.dispose();
           courseAggregates = [];
           breachBodies = [];
@@ -804,6 +821,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         const createCourse = (hole: Hole) => {
           disposeCourse();
           courseRoot = new TransformNode(`course-${hole.id}`, scene!);
+          if (diverterLab) {
+            diverterHandles = buildDiverterLab(scene!, courseRoot, materials, shadows, floorStateRef.current);
+            return;
+          }
 
           const place = <T extends Mesh>(mesh: T) => {
             mesh.parent = courseRoot;
@@ -1293,7 +1314,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             ring.rotation.y = ((HOLES[holeIndexRef.current].banks?.find(bank => bank.id === kind)?.yaw) ?? 0) * Math.PI / 180;
           }
           else if (kind === "breach") ring.rotation.x = Math.PI / 2;
-          else if (!kind?.startsWith("step-") && kind !== "sky" && kind !== "mill") ring.position.y = Math.min(position.y, 0.42);
+          else if (!kind?.startsWith("step-") && !kind?.startsWith("floor-") && !kind?.startsWith("switch-") && kind !== "sky" && kind !== "mill") ring.position.y = Math.min(position.y, 0.42);
           ring.material = material;
           theatreFx.push({ mesh: ring, material, bornAt: performance.now(), lifetime: 760, growth: 10 });
           if (outcome === "double") {
@@ -1348,10 +1369,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             setMechanismInFlight(tag.startsWith("step-") ? [...flight.mechanismTags].filter(t => t.startsWith("step-")).map(evidenceLabel).join(" → ") : evidenceLabel(tag));
           }
           impactFocus.copyFrom(at);
-          if (tag.startsWith("bank") || tag.startsWith("step-")) {
+          if (tag.startsWith("bank") || tag.startsWith("step-") || tag.startsWith("floor-")) {
             tone(180, 65, 0.2, 0.13, "triangle");
             tone(390, 170, 0.13, 0.04, "sine", 0.018);
             noise(0.11, 0.055);
+          } else if (tag.startsWith("switch-")) {
+            tone(420, 660, .12, .065, "triangle");
           } else if (tag === "boost") {
             tone(140, 720, 0.3, 0.075, "sine");
             tone(280, 1100, 0.24, 0.035, "triangle", 0.025);
@@ -1402,7 +1425,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           const current = flight!;
           const hole = HOLES[holeIndexRef.current];
           const memory: ShotMemory = {
-            ...current.setup, holeId: hole.id, windId: hole.wind.id, stationId: hole.station?.id ?? "gate", outcome,
+            ...current.setup,
+            ...(diverterLab ? {environment:current.environment!,environmentAfter:{floor:floorStateRef.current}} : {}), holeId: hole.id, windId: hole.wind.id, stationId: hole.station?.id ?? "gate", outcome,
             projectileId: current.projectileId, receipt,
             points: current.points.map(point => point.clone()),
             contacts: current.contacts.map(contact => ({ ...contact, point: contact.point.clone() })),
@@ -1440,10 +1464,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
               point: at.clone(),
             });
           }
-          const receipt = contactKind === 'first-kiss' ? landingReceipt(hole, at) : outcome.toUpperCase();
+          const receipt = contactKind === 'first-kiss' ? (diverterLab ? (outcome === 'ace' ? 'First physical contact on Dispatch Bay.' : 'First physical contact off Dispatch Bay.') : landingReceipt(hole, at)) : outcome.toUpperCase();
           rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, outcome);
           const tags = [...flight.mechanismTags];
           const shotResult = resultCopy(hole, outcome, at.clone(), tags);
+          if (diverterLab) shotResult.detail = (tags.map(evidenceLabel).join(' → ') || 'CARRY') + ' · FLOOR ' + flight.environment!.floor + ' → ' + floorStateRef.current + '. ' + receipt;
           if (hole.id === 'mill-delivery') {
             const earned = earnedDeliveryRoutes(shotResult.clear, [...flight.deliveryRoutes], flight.touchedSolid, tags);
             if (earned.length) {
@@ -1609,7 +1634,9 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           band.material = materials.cyan;
 
           projectileCounter += 1;
+          labLanding = null;
           flight = {
+            ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
             bodyMesh,
             visual,
@@ -1635,6 +1662,13 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
             flight.touchedSolid = true;
             const other = event.collider === aggregate.body ? event.collidedAgainst : event.collider;
+            if (diverterHandles) {
+              if (labLanding) return;
+              const contact = diverterHandles.contact(other, event.point, flight.projectileId);
+              if (contact?.kind === 'landing') labLanding = contact;
+              else if (contact) registerMechanism(contact.kind, contact.point);
+              return;
+            }
             const step = cascadeContactTag(other.transformNode.metadata?.cascadeStep, event.point);
             if (step) registerMechanism(step, (event.point ?? bodyMesh.position).clone());
             if (other.transformNode.metadata?.deliveryRoute === 'mill') {
@@ -1670,6 +1704,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             interrupted = true;
           }
           cancelCharge(); chargePointerRef.current = null;
+          if (diverterLab) floorStateRef.current = floorForAction(floorStateRef.current, 'retry');
           loadHole(holeIndexRef.current, true);
           // A retry is immediate; do not spend another second flying the camera home.
           const direction = getHorizontalDirection();
@@ -1678,10 +1713,16 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
           camera.setTarget(cameraTarget);
-          setRetryNotice(interrupted ? 'Shot interrupted. Aim and power remembered; no landing awarded.' : 'Last setup restored. Adjust and fire when ready.');
+          setRetryNotice((diverterLab ? 'FLOOR ' + floorStateRef.current + ' preserved. ' : '') + (interrupted ? 'Shot interrupted. Aim and power remembered; no landing awarded.' : 'Last setup restored. Adjust and fire when ready.'));
         };
 
         const resetRound = (restore = false) => {
+          if (diverterLab) {
+            if (phaseRef.current === 'booting' || phaseRef.current === 'error') return;
+            retry(); floorStateRef.current = floorForAction(floorStateRef.current, 'reset');
+            setFloorState(floorStateRef.current); loadHole(0, false);
+            setRetryNotice('Card reset. FLOOR A restored. Saved lines kept.'); return;
+          }
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
           loadHole(holeIndexRef.current, restore);
         };
@@ -1711,6 +1752,11 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           if (phaseRef.current !== "ready") return;
           const memory = memoriesRef.current[HOLES[holeIndexRef.current].id];
           if (!memory) return;
+          if (diverterLab) {
+            floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
+            diverterHandles?.setState(floorStateRef.current); setFloorState(floorStateRef.current);
+            setRetryNotice('Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
+          }
           updateSetup(memory);
           setRecalledPower(memory.charge); selectedPowerRef.current = memory.charge; setSelectedPower(memory.charge);
         };
@@ -1721,7 +1767,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
           if (!memory) return;
           memoriesRef.current[holeId] = memory;
+          if (diverterLab) {
+            floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
+            setFloorState(floorStateRef.current);
+          }
           loadHole(holeIndexRef.current, true);
+          if (diverterLab) setRetryNotice('Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
         };
 
         const toggleSurvey = () => {
@@ -1837,6 +1888,19 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           const hole = HOLES[holeIndexRef.current];
           const previous = flight.previousPhysicsPosition;
           const current = flight.bodyMesh.position.clone();
+          if (diverterHandles) {
+            const changed = diverterHandles.flush();
+            if (changed) { floorStateRef.current = changed; setFloorState(changed); }
+            if (labLanding) {
+              const contact = labLanding; labLanding = null;
+              const point = contact.point.add(new Vector3(0, RAIL_RULES.projectileRadius, 0));
+              lockRuling(classifyChallengeRuling({hole,targetHit:contact.targetHit === true,tags:[...flight.mechanismTags]}), point, 'first-kiss');
+            } else if (Math.abs(current.x)>32 || current.z>124 || current.z< -15 || current.y< -8 || flight.physicsElapsed>13) {
+              lockRuling('oob',current);
+            }
+            if (flight && !flight.locked) flight.previousPhysicsPosition.copyFrom(current);
+            return;
+          }
           const previousLike = { x: previous.x, y: previous.y, z: previous.z };
           const currentLike = { x: current.x, y: current.y, z: current.z };
           const events = collectDeliveryStepEvents(previousLike, currentLike, hole, [...flight.mechanismTags], [...flight.deliveryRoutes]);
@@ -2105,6 +2169,8 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           };
           projectLabel(destinationRef.current,
             new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z));
+          projectLabel(switchLabelRef.current, diverterLab ? new Vector3(DIVERTER_SWITCH.x,7,DIVERTER_SWITCH.z) : null);
+          projectLabel(floorLabelRef.current, diverterLab ? new Vector3(DIVERTER_FLOOR.x,6,DIVERTER_FLOOR.z) : null);
           const mechanism = hole.requiredTags[0];
           const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
@@ -2254,6 +2320,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
 
   return (
     <main className="rail-golf-shell manners-shell" data-phase={phase}>
+      <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}</small>
+      {diverterLab && <>
+        <div className="floor-state-chip" role="status">FLOOR {floorState} · {FLOOR_STATES[floorState].label}</div>
+        <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
+        <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState} · {FLOOR_STATES[floorState].label}</strong></div>
+      </>}
       <canvas
         ref={canvasRef}
         className="rail-canvas"
@@ -2284,7 +2356,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         </div>
       </header>
 
-      <nav className="manners-scorecard" aria-label={courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
+      <nav className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];
           const unlocked = holeUnlocked(index);
@@ -2318,7 +2390,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
       </nav>
 
       <aside className="hole-brief manners-brief">
-        <p className="eyebrow">{courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
+        <p className="eyebrow">{diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
         <strong>{hole.name}</strong>
         <span>{hole.instruction}</span>
         <Button
@@ -2333,6 +2405,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
         </Button>
 
         {canAim && <a className="courtyard-link" href={courtyard ? "/practice" : "/"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
+        {canAim && !courtyard && !diverterLab && <a className="courtyard-link" href="/lab/diverter">Diverter Floor lab →</a>}
       </aside>
 
       {labChip ? (
@@ -2379,6 +2452,10 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : 2)}
           onClick={() => actionsRef.current.selectStation?.(station.id)}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
+            {diverterLab && <>
+              <small>FLOOR {floorState} · {FLOOR_STATES[floorState].label}. Switch changes once per shot. Retry keeps the state. Recall restores the recorded starting state.</small>
+              <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => actionsRef.current.reset?.(false)}>Reset Card · restore FLOOR A</button>
+            </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
               const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
             }}><option value="hold">Timed hold</option><option value="set">Set power</option></select></label>
@@ -2392,12 +2469,12 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
             <strong>Winning lines · {winningLines.length}/6 families</strong>
             <small>Saved on this browser. Recall restores aim, power marker and the recorded trail; you still fire.</small>
             {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
-              {shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
+              {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}{shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
             </button>)}
             {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
             <strong>Recent attempts</strong>
             {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
-              #{shot.projectileId} · rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
+              #{shot.projectileId} · {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
             </button>)}
             {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
           </div>
@@ -2533,7 +2610,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
           onClick={() => actionsRef.current.reset?.(false)}
           disabled={phase !== "ready"}
         >
-          <RotateCcw /> Reset address
+          <RotateCcw /> {diverterLab ? "Reset Card · FLOOR A" : "Reset address"}
         </Button>
       </aside>
 
@@ -2563,7 +2640,7 @@ export function MannersGame({ courtyard = false }: { courtyard?: boolean }) {
       {lastShot && phase === "ready" ? (
         <button className="last-line-chip" onClick={() => actionsRef.current.restoreLine?.()} type="button">
           LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {displayPercent(lastShot.charge)}
-          <span>restore aim and power</span>
+          <span>{diverterLab ? ("restore FLOOR " + lastShot.environment?.floor + ", aim and power") : "restore aim and power"}</span>
         </button>
       ) : null}
 
