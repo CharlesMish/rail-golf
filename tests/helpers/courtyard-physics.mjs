@@ -52,7 +52,7 @@ export function courtyardShot(havok, hole, shot) {
         if (e.kind === 'sky') { routes.push('sky'); continue; }
         tags.push(e.kind); contacts.push(e);
         if (e.kind === 'boost') {
-          routes.push('skip');
+          if(hole.id==='mill-delivery') routes.push('skip');
           const kick = padImpulse(body.body.getLinearVelocity(), hole);
           body.body.applyImpulse(new Vector3(kick.x, kick.y, kick.z), ball.position);
           break;

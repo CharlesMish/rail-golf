@@ -135,3 +135,7 @@ Reset Card returns to A, and Recall explicitly restores a saved line's starting
 floor state. Every course now has a quiet build SHA for screenshot provenance.
 See [the lab contract](docs/diverter-floor-lab.md); keep source QA fixtures out of
 blind playtest handoffs.
+
+### Integrated courtyard experiment
+
+`/lab/courtyard-diverter` reuses the real Timber Courtyard with one additive, persistent two-state mill diverter and an experimental Dispatch Bay. It does not enter normal progression. The original Skip Pad is now shared machinery across all three courtyard cards. See [the integration contract](docs/courtyard-diverter-lab.md); winning setups remain in source fixtures for post-discovery verification.
