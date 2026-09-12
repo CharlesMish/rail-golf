@@ -3,8 +3,8 @@ import test from "node:test";
 import { HOLES, RAIL_RULES, chargeFromHold, collectShotStepEvents } from "../lib/rail-golf-v02.js";
 
 test("release power uses the input timestamp even between display frames", () => {
-  const releasedAt = 325.5;
-  assert.equal(chargeFromHold(releasedAt), 0.21);
+  const releasedAt = 525;
+  assert.ok(Math.abs(chargeFromHold(releasedAt) - 0.21) < 1e-12);
   for (const hz of [30, 60, 144]) {
     const lastFrame = Math.floor(releasedAt / (1000 / hz)) * (1000 / hz);
     assert.ok(chargeFromHold(lastFrame) < chargeFromHold(releasedAt));

@@ -1,5 +1,10 @@
 # Timber Courtyard v0.1 — first playable slice
 
+> Power-scale update: QA charge values below are on the original 22–43 m/s scale.
+> Convert old charge `q` to current charge with `(16 + 21*q) / 37`.
+> The regression fixtures preserve those exact speeds. Current timed charging
+> takes 2 seconds to reach 80%, then 1 more second to reach 100%.
+
 A mill and working yard share one play space: two angled timber banks in front,
 lumber stacks along the right, a mill and saw carriage to the left, and a bell gantry
 beyond the far landing. The ground stays level in this first slice.

@@ -4,9 +4,9 @@ import { launchCharge, interruptedRecord, rememberAttempt, landingEdgeGap, landi
 import { COURTYARD_HOLES } from '../lib/courtyard.js';
 import { HOLES, isAceLanding, mergeHoleRecord, RAIL_RULES } from '../lib/rail-golf-v02.js';
 
-test('set power is independent of hold duration; timed hold retains its original curve', () => {
+test('set power is independent of hold duration; timed hold has a slower continuous top end', () => {
   for (const ms of [0, 20, 775, 1550, 3000]) assert.equal(launchCharge('set', .735, ms), .735);
-  assert.equal(launchCharge('hold', .99, 775), .5);
+  assert.equal(launchCharge('hold', .99, 1250), .5);
   assert.equal(launchCharge('hold', .99, 0), 0);
   assert.equal(launchCharge('hold', .1, 3000), 1);
   assert.equal(launchCharge('set', 2, 0), 1);

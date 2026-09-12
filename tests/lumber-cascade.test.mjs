@@ -1,3 +1,4 @@
+import { legacyChargeToCurrent } from '../lib/rail-golf-v02.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -50,7 +51,7 @@ test('tread evidence requires an actual top-face contact supplied by the collisi
 test('full yard supports 27 three-tread landings and nine direct carries across all rails',async(t)=>{
   const havok=await HavokPhysics({wasmBinary:await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm',import.meta.url))});
   for(const railIndex of [0,1,2]) for(const yaw of [-1,0,1]) for(const charge of [.025,.05,.075]) await t.test(`cascade rail ${railIndex}, yaw ${yaw}, charge ${charge}`,()=>{
-    const r=courtyardShot(havok,hole,{railIndex,yaw,elevation:30,charge});
+    const r=courtyardShot(havok,hole,{railIndex,yaw,elevation:30,charge:legacyChargeToCurrent(charge)});
     assert.equal(r.outcome,'double',JSON.stringify(r));
     assert.deepEqual(r.tags.slice(0,3),['step-a','step-b','step-c']);
     for (const extra of r.tags.slice(3)) assert.ok(r.collisions.some(name=>name.includes(extra)), 'additional bank evidence must also have a physical contact');
@@ -61,7 +62,7 @@ test('full yard supports 27 three-tread landings and nine direct carries across 
     }
   });
   for(const railIndex of [0,1,2]) for(const charge of [.55,.6,.65]) await t.test(`direct rail ${railIndex}, charge ${charge}`,()=>{
-    const r=courtyardShot(havok,hole,{railIndex,yaw:0,elevation:40,charge});
+    const r=courtyardShot(havok,hole,{railIndex,yaw:0,elevation:40,charge:legacyChargeToCurrent(charge)});
     assert.equal(r.outcome,'ace',JSON.stringify(r));
     assert.deepEqual(r.tags,[]); assert.deepEqual(r.collisions,[]);
   });

@@ -1,5 +1,5 @@
-import { RailGolfGame } from "./rail-golf-game";
+import { MannersGame } from "./manners-game";
 
 export default function Home() {
-  return <RailGolfGame />;
+  return <MannersGame courtyard />;
 }

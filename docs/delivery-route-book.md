@@ -1,5 +1,10 @@
 # Across the Yard: route collection
 
+> Power-scale update: QA charge values below are on the original 22–43 m/s scale.
+> Convert old charge `q` to current charge with `(16 + 21*q) / 37`.
+> The regression fixtures preserve those exact speeds. Current timed charging
+> takes 2 seconds to reach 80%, then 1 more second to reach 100%.
+
 This iteration responds to playtesting: a legal first mechanism contact should
 lead into a readable and rewarding second arc, and discovered shots should be easy
 to repeat. The original four-card range remains a reference. Work is concentrated

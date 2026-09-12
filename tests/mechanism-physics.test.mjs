@@ -21,6 +21,7 @@ import {
   RAIL_RULES,
   REFERENCE_SHOTS,
   chargeToSpeed,
+  legacyChargeToCurrent,
   classifyChallengeRuling,
   collectShotStepEvents,
   directionFromAim,
@@ -43,7 +44,7 @@ test("authored reference shots clear the grounded Havok range", async (t) => {
     // A neighborhood of side-face banks, not a single lucky top-edge collision.
     ...[-16, -15.5, -15].flatMap((yaw) => [0.70, 0.72, 0.73].map((charge) => ({
       hole: HOLES[1], addressSeconds: 0,
-      shotOverride: { railIndex: 0, yaw, elevation: 20, charge },
+      shotOverride: { railIndex: 0, yaw, elevation: 20, charge: legacyChargeToCurrent(charge) },
     }))),
   ];
 

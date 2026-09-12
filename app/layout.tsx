@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Rail Golf",
   description:
-    "A Babylon.js artillery trick-shot range. Bank timber, ride a powered skip, breach the crate gate, and seat four downrange targets.",
+    "A physics trick-shot timber yard. Discover roof rebounds, walk the lumber cascade, and collect your own winning lines.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

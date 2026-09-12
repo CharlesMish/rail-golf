@@ -1,3 +1,4 @@
+import { legacyChargeToCurrent } from '../lib/rail-golf-v02.js';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -49,7 +50,7 @@ test('the full yard supports several skip, sky and mill lines', async (t) => {
     ...[[50,.9],[50,.95],[52,.9],[52,.95],[54,.95],[56,.95]].map(([elevation,charge])=>({elevation,charge,route:'sky'})),
   ];
   for (const f of fixtures) await t.test(`${f.route}, ${f.elevation}°, ${f.charge}`,()=>{
-    const r=courtyardShot(havok,delivery,{railIndex:1,yaw:f.yaw ?? 0,elevation:f.elevation,charge:f.charge});
+    const r=courtyardShot(havok,delivery,{railIndex:1,yaw:f.yaw ?? 0,elevation:f.elevation,charge:legacyChargeToCurrent(f.charge)});
     assert.equal(r.outcome,'ace',JSON.stringify(r));
     assert.ok(r.routes.includes(f.route));
     assert.ok(earnedDeliveryRoutes(true,r.routes,r.collisions.length>0,r.tags).includes(f.route));
