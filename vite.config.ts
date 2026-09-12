@@ -1,3 +1,4 @@
+import { buildIdentity } from "./build/build-identity";
 import vinext from "vinext";
 import { defineConfig } from "vite";
 import hostingConfig from "./.openai/hosting.json";
@@ -45,6 +46,7 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
+    define: { __RAIL_BUILD__: JSON.stringify(buildIdentity()) },
     server: {
       host: "0.0.0.0",
       allowedHosts: ["terminal.local"],

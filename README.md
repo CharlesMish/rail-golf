@@ -125,3 +125,13 @@ An ordinary Delivery clear opens both the gallery and Lumber Walk. Select card 0
 for a backward view through the yard: carry straight to the lime Receiving Bay,
 or stamp three passive rebounds across descending timber stacks. Quick retry and
 shot tools work at either station. See [the slice notes](docs/lumber-cascade.md).
+
+### Diverter Floor lab
+
+`/lab/diverter` is an isolated switchable-floor experiment, accessible from the
+practice range. It is not Card 04 and does not change the three courtyard cards.
+Shoot the physical switch to alternate LEVEL / RISE; Retry keeps its setting,
+Reset Card returns to A, and Recall explicitly restores a saved line's starting
+floor state. Every course now has a quiet build SHA for screenshot provenance.
+See [the lab contract](docs/diverter-floor-lab.md); keep source QA fixtures out of
+blind playtest handoffs.

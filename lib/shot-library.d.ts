@@ -1,5 +1,7 @@
 import type { Hole, ShotSetup, VectorLike, MechanismTag, Outcome } from './rail-golf-v02';
 export type SavedLine = ShotSetup & {
+  environment?:import('./diverter-lab').FloorEnvironment;
+  environmentAfter?:import('./diverter-lab').FloorEnvironment;
   holeId:string; stationId:string; windId:string; projectileId:number;
   outcome:Outcome|null; receipt:string; points:VectorLike[];
   contacts:{id:string; kind:MechanismTag|'sky'|'mill'|'first-kiss'|'wet'; point:VectorLike}[];
