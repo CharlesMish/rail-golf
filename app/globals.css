@@ -1804,3 +1804,8 @@ canvas {
 .course-readout .line-hud-total{font-size:clamp(22px,2.3vw,34px);line-height:1;color:#b6fff0;font-variant-numeric:tabular-nums;min-width:3ch}
 
 .manners-hud .course-readout > div.line-score-readout:last-child{display:flex}
+
+/* Score-lab session record; not a progression goal. */
+.manners-brief .line-session-best { display:block; margin-top:.65rem; font:600 .72rem var(--font-mono,monospace); color:#8de7e6; letter-spacing:.04em; }
+.result-line { border-color:#62c5c4; }
+.result-line h2 { color:#a1eeea; }

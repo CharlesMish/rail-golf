@@ -7,3 +7,6 @@ export function createRedirectTracker(gates?:typeof REDIRECT_GATES):{beginStep(v
 export const collectLineStepEvents:typeof import('./delivery-routes').collectDeliveryStepEvents;
 
 export function redirectFeature(node:{metadata?:{lineFeature?:RedirectFeature;cascadeStep?:string}},point:VectorLike):RedirectFeature|undefined;
+
+export const SAW_MILL_GATES:Readonly<{maxTransitSeconds:number;maxEpisodeSeconds:number;minSawTurnDegrees:number}>;
+export function createSawMillTracker(gates?:typeof REDIRECT_GATES,local?:typeof SAW_MILL_GATES):Pick<ReturnType<typeof createRedirectTracker>,'beginStep'|'contact'|'endStep'>;

@@ -23,7 +23,7 @@ test('line safety separates spatial OOB, long moving flight, settling and timeou
 test('coupled saw contacts earn one assembly claim; independent legs earn one per part without changing generic gates',()=>{
  const coupled=createRedirectTracker();hit(coupled,chassis);hit(coupled,blade,.03);const e=separate(coupled);assert.equal(e.feature,'saw-assembly');assert.equal(scoreLine([e]).total,100);
  hit(coupled,blade,1);assert.equal(separate(coupled,1.2),null);assert.ok(coupled.drainDiagnostics().some(e=>e.reason==='feature-already-scored'));
- const distinct=createRedirectTracker();hit(distinct,chassis);const a=separate(distinct);hit(distinct,blade,1);const b=separate(distinct,1.2);assert.equal(scoreLine([a,b,a,b]).total,200);
+ const distinct=createRedirectTracker();hit(distinct,chassis);const a=separate(distinct);hit(distinct,blade,1);const b=separate(distinct,1.2);assert.equal(scoreLine([a,b,a,b]).claimTotal,200);
  const rattle=createRedirectTracker();for(let i=0;i<120;i++)hit(rattle,i%2?blade:chassis,i/120);assert.equal(separate(rattle,1.2),null);assert.ok(rattle.drainDiagnostics().some(e=>e.reason==='contact-too-long'));
  const unrelated=createRedirectTracker();hit(unrelated,{...chassis,assembly:undefined});hit(unrelated,{...blade,assembly:undefined},.03);assert.ok(unrelated.drainDiagnostics().some(e=>e.reason==='interrupted-before-free-flight'));
 });
