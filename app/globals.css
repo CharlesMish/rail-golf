@@ -1797,3 +1797,6 @@ canvas {
 .share-line-notice{position:absolute;left:50%;top:80px;transform:translateX(-50%);z-index:37;max-width:560px;width:calc(100% - 32px);background:#14272df5;color:#ffcf8c;padding:8px 12px;font:12px/1.4 var(--font-mono);pointer-events:none}
 .share-line-tools{display:grid;gap:7px}.share-line-tools input{width:100%;min-width:0;color:#ddd;background:#12252b;padding:8px}
 @media(max-height:520px){.line-receipt{top:106px;right:12px;width:230px;max-height:calc(100vh - 250px);font-size:10px;padding:6px}.share-line-notice{top:52px;font-size:10px;width:48%}}
+
+.line-claim-caption{position:fixed;z-index:32;top:23%;left:50%;transform:translateX(-50%);max-width:80vw;padding:9px 16px;background:#071719df;border:1px solid #67dade66;color:#d5ffef;font:600 12px monospace;letter-spacing:.08em;text-align:center;pointer-events:none;animation:line-claim-in .18s ease-out}
+@keyframes line-claim-in{from{opacity:0;transform:translate(-50%,5px)}to{opacity:1;transform:translate(-50%,0)}}

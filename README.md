@@ -143,3 +143,5 @@ blind playtest handoffs.
 ### Provisional line instrument
 
 `/lab/lines` offers the three courtyard objectives with a lab-only receipt and compact shareable setups. **All score values are NON-CANONICAL PLACEHOLDERS.** Totals do not unlock anything. See [the preparatory contract](docs/line-instrument.md).
+
+The experimental [Line Recognition v0.2](docs/line-recognition-v2.md) adds conservative physical redirect captions, named discoveries and a Lumber Walk dock control. Scores remain **NON-CANONICAL PLACEHOLDERS**; play at `/lab/lines`.

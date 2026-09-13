@@ -10,4 +10,4 @@ export const DIVERTER_TARGET:Readonly<RangeTarget>;
 export const DIVERTER_TARGETS:readonly RangeTarget[];
 export const DIVERTER_HOLE:Readonly<Hole>;
 export const DIVERTER_HOLES:readonly Hole[];
-export function floorForAction(current:FloorState,action:'retry'|'reset'|'enter'|'recall',saved?:FloorEnvironment):FloorState;
+export function floorForAction(current:FloorState,action:'retry'|'card'|'station'|'reset'|'enter'|'recall',saved?:FloorEnvironment):FloorState;
