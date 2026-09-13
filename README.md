@@ -147,3 +147,5 @@ blind playtest handoffs.
 The experimental [Line Recognition v0.2](docs/line-recognition-v2.md) adds conservative physical redirect captions, named discoveries and a Lumber Walk dock control. Scores remain **NON-CANONICAL PLACEHOLDERS**; play at `/lab/lines`.
 
 [Line Recognition v0.2.1 hardening](docs/line-hardening-v021.md) repairs score-lab flight safety, saw recognition and the roof cavity, adds forensic rejection reasons and a live additive LINE HUD, and parks the diverter in its dedicated labs.
+
+Score-lab balance and Station 3 experiment: [Open Line / Saw Bay](docs/open-line-saw-bay.md). Values remain NON-CANONICAL PLACEHOLDERS; production Cards 01–03 remain frozen.

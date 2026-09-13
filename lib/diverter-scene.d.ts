@@ -12,4 +12,4 @@ export type DiverterOptions={overlay?:boolean;supports?:boolean;states?:Record<F
 export function buildDiverterLab(scene:Scene,root:TransformNode,materials:Record<string,StandardMaterial>,shadows:Pick<ShadowGenerator,'addShadowCaster'|'removeShadowCaster'>,initial?:FloorState,options?:DiverterOptions):DiverterHandles;
 
 export type YardLandingAuthority=Pick<DiverterHandles,'state'|'setState'|'contact'|'flush'|'dispose'>;
-export function buildYardLandingAuthority(target:{id:string},initial?:FloorState):YardLandingAuthority;
+export function buildYardLandingAuthority(target:{id:string}|null,initial?:FloorState):YardLandingAuthority;

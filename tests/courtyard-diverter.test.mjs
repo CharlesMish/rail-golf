@@ -30,10 +30,10 @@ test('cleaned dock reuses the loading-platform footprint and existing targets wi
    assert.equal(scene.meshes.filter(m=>m.name.includes('bounce-floor')).length,1);
    assert.equal(scene.meshes.filter(m=>m.name.includes('yard-dispatch')).length,0);
    assert.equal(h.world.floor.position.x,-28);assert.equal(h.world.floor.position.z,63);
-   const direct=h.shoot(YARD_REFERENCE_SHOTS.direct);assert.equal(direct.outcome,'ace');assert.equal(scoreLine(direct.ledger).total,1250);
+   const direct=h.shoot(YARD_REFERENCE_SHOTS.direct);assert.equal(direct.outcome,'ace');assert.equal(scoreLine(direct.ledger).total,800);
    const r=h.shoot(YARD_REFERENCE_SHOTS['floor'+state]);
    assert.ok(r.tags.includes('floor-'+state.toLowerCase()));
-   assert.equal(r.contacts.find(c=>c.kind.startsWith('floor')).body,'diverter-bounce-floor');assert.equal(scoreLine(r.ledger).total,200);results.push(r);
+   assert.equal(r.contacts.find(c=>c.kind.startsWith('floor')).body,'diverter-bounce-floor');assert.equal(scoreLine(r.ledger).claimTotal,200);results.push(r);
   }finally{h.dispose();}
  }
  assert.ok(Math.hypot(...results[0].point.map((v,i)=>v-results[1].point[i]))>3,'same input produces distinct real rebounds');

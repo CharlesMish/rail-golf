@@ -7,9 +7,9 @@ export const LEGACY_DELIVERY_BOOK_KEY: string;
 export function readDeliveryBook(current:unknown,legacy:unknown):DeliveryBook;
 export const SKY_TOKEN: Readonly<VectorLike & {radius: number}>;
 export function segmentTokenIntersection(start: VectorLike, end: VectorLike, token?: VectorLike & {radius:number}): number|null;
-export function collectDeliveryStepEvents(start: VectorLike, end: VectorLike, hole: Hole, tags?: MechanismTag[], routes?: DeliveryRoute[]): Array<{kind: MechanismTag|'sky'|'wet'|'first-kiss'; amount:number; point:VectorLike}>;
-export function padImpulse(velocity: VectorLike, hole: Hole): VectorLike;
+export function collectDeliveryStepEvents(start: VectorLike, end: VectorLike, hole: Omit<Hole,"target">, tags?: MechanismTag[], routes?: DeliveryRoute[]): Array<{kind: MechanismTag|'sky'|'wet'|'first-kiss'; amount:number; point:VectorLike}>;
+export function padImpulse(velocity: VectorLike, hole: Omit<Hole,"target">): VectorLike;
 export function earnedDeliveryRoutes(clear:boolean, routes:DeliveryRoute[], touchedSolid:boolean, mechanismTags?:MechanismTag[]): DeliveryRoute[];
 export function normalizeDeliveryBook(value:unknown): DeliveryBook;
 
-export function withSharedYardPad(hole:Hole):Hole;
+export function withSharedYardPad<T extends Omit<Hole,"target">>(hole: T):T;

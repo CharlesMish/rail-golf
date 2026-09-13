@@ -44,7 +44,7 @@ test('single banks and components coexist with ordered sequences without callbac
  const steps=['step-a','step-b','step-c'].map(kind=>rebound(createRedirectTracker(),{id:kind,kind,label:'TREAD KICK'}));
  assert.ok(scoreLine(steps).awards.some(a=>a.id==='treads'));
  assert.equal(scoreLine([...steps,...steps]).total,scoreLine(steps).total);
- assert.equal(scoreLine([a,b],PLACEHOLDER_RULES.map(r=>({...r,points:1}))).total,3);
+ assert.equal(scoreLine([a,b],PLACEHOLDER_RULES.map(r=>({...r,points:1})),{pointsPerAdditionalClaim:0,cap:0}).total,3);
 });
 test('Sky and Skip are named once, miss claims cash out, and provisional qualitative inequalities hold',()=>{
  const sky={kind:'token',surface:'sky'},skip={kind:'pad-activation'};
