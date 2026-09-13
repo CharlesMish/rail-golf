@@ -68,6 +68,7 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.equal(lineResponse.status,200);const lineHtml=await lineResponse.text();
   assert.match(lineHtml,/NON-CANONICAL PLACEHOLDERS/);assert.match(lineHtml,/LINE TOTAL/);
   assert.match(lineHtml,/02 Switchback Gallery, OPEN/);assert.match(lineHtml,/03 Lumber Cascade, OPEN/);
+  assert.match(lineHtml,/line-hud-total/);assert.match(lineHtml,/>LINE<\/span>/);assert.doesNotMatch(lineHtml,/SHOOT SWITCH|floor-state-chip/);assert.doesNotMatch(html,/line-hud-total/);
   assert.match(lineHtml,/Copy current Set Power setup/);assert.doesNotMatch(lineHtml,/Dispatch Bay|Delivery route collection/);
   assert.doesNotMatch(html,/LINE TOTAL|NON-CANONICAL|Copy current Set Power/);
 

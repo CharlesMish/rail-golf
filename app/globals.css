@@ -1800,3 +1800,7 @@ canvas {
 
 .line-claim-caption{position:fixed;z-index:32;top:23%;left:50%;transform:translateX(-50%);max-width:80vw;padding:9px 16px;background:#071719df;border:1px solid #67dade66;color:#d5ffef;font:600 12px monospace;letter-spacing:.08em;text-align:center;pointer-events:none;animation:line-claim-in .18s ease-out}
 @keyframes line-claim-in{from{opacity:0;transform:translate(-50%,5px)}to{opacity:1;transform:translate(-50%,0)}}
+
+.course-readout .line-hud-total{font-size:clamp(22px,2.3vw,34px);line-height:1;color:#b6fff0;font-variant-numeric:tabular-nums;min-width:3ch}
+
+.manners-hud .course-readout > div.line-score-readout:last-child{display:flex}
