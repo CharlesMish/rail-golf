@@ -1,5 +1,7 @@
 # Open Line / Saw Bay — experimental balance and layout
 
+Historical authoring record. The current default station selection and accounting are described in [line-feel-run.md](line-feel-run.md); Saw Bay is now parked.
+
 **NON-CANONICAL PLACEHOLDERS.** This pass changes `/lab/lines` only. There are no score gates, leaderboards, career tiers, multipliers or canonical goals. The production front door, Cards 01–03 definitions, launch rules, objectives, progression and records remain unchanged.
 
 ## Station and target-free card

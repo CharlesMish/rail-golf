@@ -67,7 +67,7 @@ test("serves the Rail Golf experience and metadata", async () => {
     {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},{waitUntil(){},passThroughOnException(){}});
   assert.equal(lineResponse.status,200);const lineHtml=await lineResponse.text();
   assert.match(lineHtml,/NON-CANONICAL PLACEHOLDERS/);assert.match(lineHtml,/LINE TOTAL/);
-  assert.match(lineHtml,/04 Open Line, OPEN/);assert.match(lineHtml,/Saw Bay/);assert.doesNotMatch(html,/Open Line|Saw Bay|VARIETY/);
+  assert.match(lineHtml,/04 Open Line, OPEN/);assert.doesNotMatch(lineHtml,/Saw Bay/);assert.match(lineHtml,/Yard Gate/);assert.match(lineHtml,/Lumber Walk/);assert.match(lineHtml,/MAX · 100%/);assert.match(html,/MAX · 100%/);assert.doesNotMatch(html,/Open Line|Saw Bay|VARIETY/);
   assert.match(lineHtml,/02 Switchback Gallery, OPEN/);assert.match(lineHtml,/03 Lumber Cascade, OPEN/);
   assert.match(lineHtml,/line-hud-total/);assert.match(lineHtml,/>LINE<\/span>/);assert.doesNotMatch(lineHtml,/SHOOT SWITCH|floor-state-chip/);assert.doesNotMatch(html,/line-hud-total/);
   assert.match(lineHtml,/Copy current Set Power setup/);assert.doesNotMatch(lineHtml,/Dispatch Bay|Delivery route collection/);
