@@ -81,7 +81,8 @@ import type { LineShelf, SavedLine } from "@/lib/shot-library";
 
 import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
 import { LineReceipt } from './line-receipt';
-import { appendLineEvidence, recordLineContact } from '@/lib/line-score';
+import { appendLineEvidence, recordLineContact, scoreLine } from '@/lib/line-score';
+import {createRedirectTracker,collectLineStepEvents,redirectFeature} from '@/lib/line-recognition';
 import type { LineEvidence } from '@/lib/line-score';
 import { encodeShareLine, decodeShareLine, restoreShareLine } from '@/lib/share-line';
 import { BUILD_ID } from "@/lib/build-identity";
@@ -130,6 +131,8 @@ type ShotMemory = ShotSetup & {
 
 type FlightState = {
   ledger:LineEvidence[];
+  redirectTracker:ReturnType<typeof createRedirectTracker>;
+  captioned:Set<string>;
   environment?: FloorEnvironment;
   aggregate: PhysicsAggregate;
   bodyMesh: Mesh;
@@ -324,6 +327,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
+  const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
+  useEffect(()=>{if(!claimCaption)return;const timer=setTimeout(()=>setClaimCaption(null),2200);return ()=>clearTimeout(timer);},[claimCaption]);
   const [shareNotice,setShareNotice] = useState('');
   const [shareLink,setShareLink] = useState('');
   const floorStateRef = useRef<FloorState>('A');
@@ -1012,7 +1017,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           }
           if (courtyard) {
-            skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole, {loadingPlatformOverlay:courtyardDiverter}).skyToken;
+            skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole, {loadingPlatformOverlay:courtyardDiverter,lineLab}).skyToken;
             if (courtyardDiverter) diverterHandles = buildDiverterLab(scene!,courseRoot,materials,shadows,floorStateRef.current,{...YARD_DIVERTER_OPTIONS,target:hole.target});
           } else {
           const bankVolume = RANGE_MECHANISMS.bank;
@@ -1369,7 +1374,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const registerDeliveryRoute = (route: DeliveryRoute, at: Vector3) => {
-          if (!flight || flight.locked || HOLES[holeIndexRef.current].id !== 'mill-delivery' || flight.deliveryRoutes.has(route)) return;
+          if (!flight || flight.locked || (!lineLab && HOLES[holeIndexRef.current].id !== 'mill-delivery') || flight.deliveryRoutes.has(route)) return;
           flight.deliveryRoutes.add(route);
           setDeliveryLive([...flight.deliveryRoutes]);
           if (route === 'sky' || route === 'mill') {
@@ -1452,9 +1457,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
         };
 
+        const captionClaims = () => {
+          if(!lineLab||!flight)return;
+          const fresh=scoreLine(flight.ledger).awards.filter(a=>!flight!.captioned.has(a.id));
+          if(fresh.length){fresh.forEach(a=>flight!.captioned.add(a.id));setClaimCaption({text:fresh.map(a=>a.label).join(' · '),serial:Date.now()});}
+        };
         const rememberFlight = (receipt: string, outcome: Outcome | null = null): ShotMemory => {
           const current = flight!;
-          if(lineLab) setLineLedger(current.ledger.map(e=>({...e})));
+          if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));}
           const hole = HOLES[holeIndexRef.current];
           const memory: ShotMemory = {
             ...current.setup,
@@ -1498,7 +1508,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               point: at.clone(),
             });
           }
-          if(lineLab) appendLineEvidence(flight.ledger,{kind:'ruling',targetHit:outcome==='ace'||outcome==='double',surface:hole.target.id});
+          if(lineLab) appendLineEvidence(flight.ledger,{kind:'ruling',targetHit:outcome==='ace'||outcome==='double',surface:hole.target.id,label:hole.target.label.toUpperCase()});
           const receipt = contactKind === 'first-kiss' ? (diverterLab ? ((outcome === 'ace'||outcome==='double') ? `First physical contact on ${hole.target.label}.` : `First physical contact off ${hole.target.label}.`) : landingReceipt(hole, at)) : outcome.toUpperCase();
           rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, outcome);
           const tags = [...flight.mechanismTags];
@@ -1555,6 +1565,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const loadHole = (index: number, restore = false) => {
           if (!holeUnlocked(index)) return;
+          if(lineLab)floorStateRef.current=floorForAction(floorStateRef.current,'card');
+          setClaimCaption(null);
           disposeFlight();
           disposeGhost();
           for (const effect of theatreFx) { effect.mesh.dispose(); effect.material.dispose(); }
@@ -1671,9 +1683,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           projectileCounter += 1;
           labLanding = null;
-          if(lineLab) setLineLedger([]);
+          if(lineLab){setLineLedger([]);setClaimCaption(null);}
           flight = {
-            ledger:[],
+            ledger:[],redirectTracker:createRedirectTracker(),captioned:new Set(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
             bodyMesh,
@@ -1703,7 +1715,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             if (diverterHandles) {
               if (labLanding) return;
               const contact = diverterHandles.contact(other, event.point, flight.projectileId);
-              if(lineLab) recordLineContact(flight.ledger,other.transformNode,event.point,contact);
+              if(lineLab){
+                recordLineContact(flight.ledger,other.transformNode,event.point,contact);
+                if(event.point)flight.redirectTracker.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);
+              }
               if (contact?.kind === 'landing') labLanding = contact;
               else if (contact) registerMechanism(contact.kind, contact.point);
               if (!courtyardDiverter) return;
@@ -1912,6 +1927,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         scene.onBeforePhysicsObservable.add(() => {
           if (!flight || flight.locked || phaseRef.current !== "flight") return;
+          if(lineLab)flight.redirectTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);
           const hole = HOLES[holeIndexRef.current];
           if (hole.wind.x === 0 && hole.wind.z === 0) return;
           const force = new Vector3(
@@ -1928,6 +1944,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const hole = HOLES[holeIndexRef.current];
           const previous = flight.previousPhysicsPosition;
           const current = flight.bodyMesh.position.clone();
+          if(lineLab){
+            const redirect=flight.redirectTracker.endStep(current,flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);
+            if(redirect)appendLineEvidence(flight.ledger,redirect);
+          }
           if (diverterHandles) {
             const changed = diverterHandles.flush();
             if (changed) { floorStateRef.current = changed; setFloorState(changed); }
@@ -1946,7 +1966,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
           const previousLike = { x: previous.x, y: previous.y, z: previous.z };
           const currentLike = { x: current.x, y: current.y, z: current.z };
-          const events = collectDeliveryStepEvents(previousLike, currentLike, hole, [...flight.mechanismTags], [...flight.deliveryRoutes]);
+          const events = (lineLab?collectLineStepEvents:collectDeliveryStepEvents)(previousLike, currentLike, hole, [...flight.mechanismTags], [...flight.deliveryRoutes]);
           for (const event of events) {
             if (courtyardDiverter && (event.kind === "first-kiss" || event.kind.startsWith("bank"))) continue;
             const point = new Vector3(event.point.x, event.point.y, event.point.z);
@@ -1978,6 +1998,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             }
           }
 
+          captionClaims();
           if (!flight.locked) {
             const outOfBounds =
               Math.abs(current.x) > (hole.courseWidth ? hole.courseWidth / 2 : 45) ||
@@ -2230,7 +2251,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
           const sharedPad = withSharedYardPad(hole).boost;
           projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
-          projectLabel(skyLabelRef.current, hole.id === 'mill-delivery' ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
+          projectLabel(skyLabelRef.current, (lineLab || hole.id === 'mill-delivery') ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
           for (const step of CASCADE_STEPS) {
             projectLabel(cascadeLabelRefs.current[step.id] ?? null, hole.id === 'lumber-cascade' ? new Vector3(step.x, step.top+1, step.z) : null);
           }
@@ -2385,7 +2406,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
       </>}
-      {lineLab && <LineReceipt ledger={lineLedger} />}
+      {lineLab && !['flight','charging','theatre'].includes(phase) && <LineReceipt ledger={lineLedger} />}
+      {lineLab && claimCaption && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
       <canvas
         ref={canvasRef}
         className="rail-canvas"
@@ -2452,7 +2474,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       <aside className="hole-brief manners-brief">
         <p className="eyebrow">{diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
         <strong>{hole.name}</strong>
-        <span>{hole.instruction}</span>
+        <span>{lineLab?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction}</span>
         <Button
           type="button"
           variant="outline"
@@ -2486,6 +2508,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || !hole.requiredTags.length}><strong>2 · BANK B</strong></div>}
 
       {courtyard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
+      {lineLab && <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber"><strong>SKY TOKEN</strong></div>}
       {!lineLab && hole.id === 'mill-delivery' && <>
         <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim}><strong>GOLD SKY TOKEN</strong></div>
         {(canAim || phase === 'result') && <section className="delivery-book" aria-label="Delivery route collection">
@@ -2514,7 +2537,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           onClick={() => actionsRef.current.selectStation?.(station.id)}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
             {diverterLab && <>
-              <small>FLOOR {floorState} · {courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. Switch changes once per shot. Retry keeps the state. Recall restores the recorded starting state.</small>
+              <small>FLOOR {floorState} · {courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. Cards, stations and Retry keep the state. Recall restores the recorded starting state.</small>
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => actionsRef.current.reset?.(false)}>Reset Card · restore FLOOR A</button>
             </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {

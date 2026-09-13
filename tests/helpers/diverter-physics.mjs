@@ -1,7 +1,8 @@
+import {createRedirectTracker,collectLineStepEvents,redirectFeature} from '../../lib/line-recognition.js';
 import {appendLineEvidence,recordLineContact} from '../../lib/line-score.js';
 import {buildCourtyard} from '../../lib/courtyard-scene.js';
 import {COURTYARD_DIVERTER,COURTYARD_DIVERTER_TARGETS,YARD_DIVERTER_OPTIONS} from '../../lib/courtyard-diverter.js';
-import {collectDeliveryStepEvents,padImpulse} from '../../lib/delivery-routes.js';
+import {padImpulse} from '../../lib/delivery-routes.js';
 import {cascadeContactTag} from '../../lib/lumber-cascade.js';
 import {NullEngine,Scene,Vector3,MeshBuilder,HavokPlugin,PhysicsAggregate,PhysicsShapeType,TransformNode,StandardMaterial,Logger} from '@babylonjs/core';
 import {buildDiverterLab} from '../../lib/diverter-scene.js';
@@ -9,8 +10,8 @@ import {DIVERTER_HOLE,floorForAction} from '../../lib/diverter-lab.js';
 import {stationMuzzle,stationAim} from '../../lib/stations.js';
 import {RAIL_RULES,chargeToSpeed,classifyChallengeRuling} from '../../lib/rail-golf-v02.js';
 Logger.LogLevels=0;
-export function diverterHarness(havok,initial='A',integrated=false){
- const hole=integrated?COURTYARD_DIVERTER:DIVERTER_HOLE;
+export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null){
+ const hole=selectedHole ?? (integrated?COURTYARD_DIVERTER:DIVERTER_HOLE);
  const engine=new NullEngine({renderWidth:844,renderHeight:390,textureSize:512,deterministicLockstep:false,lockstepMaxSteps:4}),scene=new Scene(engine);
  scene.enablePhysics(new Vector3(0,-RAIL_RULES.gravity,0),new HavokPlugin(true,havok));
  const physics=scene.getPhysicsEngine();physics.setTimeStep(1/120);physics.setSubTimeStep(1000/120);
@@ -30,26 +31,26 @@ export function diverterHarness(havok,initial='A',integrated=false){
    mesh.parent=root;mesh.position.set(target.x,active?.2:.16,target.z);mesh.metadata={yardLanding:target.id};
    add(mesh,PhysicsShapeType.CYLINDER,{mass:0,restitution:.12,friction:.74});
   }
-  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:true});
+  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:true,lineLab:true});
  }
- const world=buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?YARD_DIVERTER_OPTIONS:{});
+ const world=buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});
  let id=0;
  return {
   world,
   action(action,saved){world.setState(floorForAction(world.state,action,saved));},
-  shoot(shot,{stopOnSwitch=false}={}){
-   const start=world.state,shotId=++id,muzzle=stationMuzzle(shot,hole.station),aim=stationAim(shot,hole.station);
+  shoot(shot,{stopOnSwitch=false,station=hole.station}={}){
+   const start=world.state,shotId=++id,muzzle=stationMuzzle(shot,station),aim=stationAim(shot,station);
    const ball=MeshBuilder.CreateSphere('test-round',{diameter:RAIL_RULES.projectileRadius*2},scene);
    ball.position.set(muzzle.x,muzzle.y,muzzle.z);
    const aggregate=new PhysicsAggregate(ball,PhysicsShapeType.SPHERE,{mass:1.5,restitution:.38,friction:.28},scene);
-   let landing=null;const contacts=[],tags=[],ledger=[];
+   let landing=null;const contacts=[],tags=[],ledger=[],routes=[],tracker=createRedirectTracker();
    let previous=ball.position.clone();
    aggregate.body.setCollisionCallbackEnabled(true);
    aggregate.body.getCollisionObservable().add(event=>{
     if(landing)return;
     const other=event.collider===aggregate.body?event.collidedAgainst:event.collider;
     const contact=world.contact(other,event.point,shotId);
-    if(integrated)recordLineContact(ledger,other.transformNode,event.point,contact);
+    if(integrated){recordLineContact(ledger,other.transformNode,event.point,contact);if(event.point)tracker.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);}
     if(integrated && event.point){
      const kind=other.transformNode.metadata?.yardBank ?? cascadeContactTag(other.transformNode.metadata?.cascadeStep,event.point) ?? (other.transformNode.metadata?.deliveryRoute==='mill'?'mill':null);
      if(kind&&!tags.includes(kind)){tags.push(kind);contacts.push({kind,point:event.point.clone(),body:other.transformNode.name});}
@@ -61,9 +62,12 @@ export function diverterHarness(havok,initial='A',integrated=false){
    aggregate.body.applyImpulse(new Vector3(aim.x,aim.y,aim.z).scale(chargeToSpeed(shot.charge)*1.5),ball.position);
    try{
     for(let i=0;i<1560;i++){
+     tracker.beginStep(aggregate.body.getLinearVelocity(),i/120);
      physics._step(1/120);world.flush();
+     const redirect=tracker.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(integrated&&redirect)appendLineEvidence(ledger,redirect);
      if(integrated&&!landing){
-      for(const e of collectDeliveryStepEvents(previous,ball.position,hole,tags,[])){
+      for(const e of collectLineStepEvents(previous,ball.position,hole,tags,routes)){
+       if(e.kind==='sky'){routes.push('sky');appendLineEvidence(ledger,{kind:'token',surface:'sky',point:{...e.point}});}
        if(e.kind==='boost'&&aggregate.body.getLinearVelocity().y<0){
         appendLineEvidence(ledger,{kind:'pad-activation',surface:'skip-pad',point:{...e.point}});
         tags.push('boost');contacts.push({kind:'boost',point:new Vector3(e.point.x,e.point.y,e.point.z),body:'powered-pad-swept-surface'});
@@ -72,7 +76,7 @@ export function diverterHarness(havok,initial='A',integrated=false){
       }
      }
      previous.copyFrom(ball.position);
-     if(landing){appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target.id});return {start,end:world.state,outcome:classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}),point:landing.point.asArray(),tags,contacts,ledger};}
+     if(landing){appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target.id,label:hole.target.label.toUpperCase()});return {start,end:world.state,outcome:classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}),point:landing.point.asArray(),tags,contacts,ledger};}
      if(stopOnSwitch&&tags.some(t=>t.startsWith('switch-')))return {start,end:world.state,outcome:'interrupted',tags,contacts,ledger};
      if(Math.abs(ball.position.x)>(integrated?50:32)||ball.position.z>(integrated?198:124)||ball.position.z< -15||ball.position.y< -8)break;
     }

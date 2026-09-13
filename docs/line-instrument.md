@@ -1,5 +1,7 @@
 # Line instrument — preparatory experiment
 
+The current lab uses [recognition v0.2](line-recognition-v2.md). Its qualified redirect vocabulary and placeholder table supersede the v0.1 scoring details below. ShareLineV1 remains unchanged.
+
 **NON-CANONICAL PLACEHOLDERS.** These numbers and qualifications are scaffolding for design review. They do not define a final scoring economy, tiers, progression, career, or leaderboard.
 
 Entry: `/lab/lines`. This uses the real courtyard with all three existing objectives and both stations available from entry. The score receipt is lab-only. `/lab/courtyard-diverter` retains the simpler switch experiment. Production Cards 01–03 retain their objectives, scoring, progression, records, launch rules and physics. The persistent Skip Pad remains unchanged.
