@@ -1,5 +1,7 @@
 # Line recognition v0.2 — experimental
 
+Current repairs: [v0.2.1 hardening](line-hardening-v021.md) supersedes the dock presence, flight timing, saw, reverse-bank and HUD details below. Placeholder values remain provisional.
+
 **NON-CANONICAL PLACEHOLDERS.** Recognition captions and weights are a playtest instrument, not a final economy. No multipliers, score gates, tiers of achievement, career, or leaderboard.
 
 Play `/lab/lines`. Production Cards 01–03, their objectives/progression/records and their physics remain frozen. Shared scene changes only add feature metadata; the switch move, extra Sky availability, physical loading-dock overlay, captions and receipts are experimental. The original powered Skip Pad is unchanged.

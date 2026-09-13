@@ -145,3 +145,5 @@ blind playtest handoffs.
 `/lab/lines` offers the three courtyard objectives with a lab-only receipt and compact shareable setups. **All score values are NON-CANONICAL PLACEHOLDERS.** Totals do not unlock anything. See [the preparatory contract](docs/line-instrument.md).
 
 The experimental [Line Recognition v0.2](docs/line-recognition-v2.md) adds conservative physical redirect captions, named discoveries and a Lumber Walk dock control. Scores remain **NON-CANONICAL PLACEHOLDERS**; play at `/lab/lines`.
+
+[Line Recognition v0.2.1 hardening](docs/line-hardening-v021.md) repairs score-lab flight safety, saw recognition and the roof cavity, adds forensic rejection reasons and a live additive LINE HUD, and parks the diverter in its dedicated labs.

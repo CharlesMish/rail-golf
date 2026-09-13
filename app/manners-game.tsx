@@ -82,6 +82,7 @@ import type { LineShelf, SavedLine } from "@/lib/shot-library";
 import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
 import { LineReceipt } from './line-receipt';
 import { appendLineEvidence, recordLineContact, scoreLine } from '@/lib/line-score';
+import {createLineLifecycle} from '@/lib/line-lifecycle';
 import {createRedirectTracker,collectLineStepEvents,redirectFeature} from '@/lib/line-recognition';
 import type { LineEvidence } from '@/lib/line-score';
 import { encodeShareLine, decodeShareLine, restoreShareLine } from '@/lib/share-line';
@@ -90,7 +91,7 @@ import { DIVERTER_HOLES, DIVERTER_TARGETS, DIVERTER_SWITCH, DIVERTER_FLOOR, FLOO
 import type { FloorState, FloorEnvironment } from "@/lib/diverter-lab";
 import { COURTYARD_DIVERTER_HOLES, COURTYARD_DIVERTER_TARGETS, YARD_DIVERTER_OPTIONS, YARD_DIVERTER_SWITCH, YARD_DIVERTER_FLOOR } from "@/lib/courtyard-diverter";
 import { withSharedYardPad } from "@/lib/delivery-routes";
-import { buildDiverterLab } from "@/lib/diverter-scene";
+import { buildDiverterLab, buildYardLandingAuthority } from "@/lib/diverter-scene";
 import type { DiverterHandles, DiverterContact } from "@/lib/diverter-scene";
 import { CASCADE_STEPS, cascadeContactTag } from "@/lib/lumber-cascade";
 
@@ -133,6 +134,7 @@ type FlightState = {
   ledger:LineEvidence[];
   redirectTracker:ReturnType<typeof createRedirectTracker>;
   captioned:Set<string>;
+  lifecycle:ReturnType<typeof createLineLifecycle>;
   environment?: FloorEnvironment;
   aggregate: PhysicsAggregate;
   bodyMesh: Mesh;
@@ -326,6 +328,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [liveLineTotal,setLiveLineTotal] = useState(0);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
   useEffect(()=>{if(!claimCaption)return;const timer=setTimeout(()=>setClaimCaption(null),2200);return ()=>clearTimeout(timer);},[claimCaption]);
@@ -482,7 +485,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             if(parsed.route!==route) throw new Error('This shared line belongs to a different lab route.');
             sharedStart=restoreShareLine(parsed,BUILD_ID);
             floorStateRef.current=sharedStart.environment.floor;setFloorState(sharedStart.environment.floor);
-            setShareNotice(sharedStart.warning || 'Shared setup loaded. Press Fire to try the line.');
+            setShareNotice([sharedStart.warning,lineLab?'Shared setup loaded. Dock state is inactive in this score yard. Press Fire to try the line.':'Shared setup loaded. Press Fire to try the line.'].filter(Boolean).join(' '));
           }catch{setShareNotice('Invalid or incompatible line link. Authored starting setup retained.');}}
         }
         const labMode = courtyard || diverterLab ? null : resolveAddressLabFromSearch(window.location.search);
@@ -650,7 +653,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         let aimSpine: LinesMesh | null = null;
         let courseRoot: TransformNode | null = null;
-        let diverterHandles: DiverterHandles | null = null;
+        let diverterHandles: DiverterHandles | ReturnType<typeof buildYardLandingAuthority> | null = null;
         let labLanding: DiverterContact | null = null;
         let courseAggregates: PhysicsAggregate[] = [];
         let breachBodies: DynamicBody[] = [];
@@ -1017,8 +1020,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           }
           if (courtyard) {
-            skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole, {loadingPlatformOverlay:courtyardDiverter,lineLab}).skyToken;
-            if (courtyardDiverter) diverterHandles = buildDiverterLab(scene!,courseRoot,materials,shadows,floorStateRef.current,{...YARD_DIVERTER_OPTIONS,target:hole.target});
+            skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole, {loadingPlatformOverlay:courtyardDiverter&&!lineLab,lineLab}).skyToken;
+            if(lineLab) diverterHandles=buildYardLandingAuthority(hole.target,floorStateRef.current);
+            else if (courtyardDiverter) diverterHandles = buildDiverterLab(scene!,courseRoot,materials,shadows,floorStateRef.current,{...YARD_DIVERTER_OPTIONS,target:hole.target});
           } else {
           const bankVolume = RANGE_MECHANISMS.bank;
           const bankFace = place(MeshBuilder.CreateBox(
@@ -1459,11 +1463,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const captionClaims = () => {
           if(!lineLab||!flight)return;
-          const fresh=scoreLine(flight.ledger).awards.filter(a=>!flight!.captioned.has(a.id));
-          if(fresh.length){fresh.forEach(a=>flight!.captioned.add(a.id));setClaimCaption({text:fresh.map(a=>a.label).join(' · '),serial:Date.now()});}
+          const receipt=scoreLine(flight.ledger);setLiveLineTotal(receipt.total);
+          const fresh=receipt.awards.filter(a=>!flight!.captioned.has(a.id));
+          if(fresh.length){fresh.forEach(a=>flight!.captioned.add(a.id));setClaimCaption({text:fresh.map(a=>`+${a.points} · ${a.label}`).join(' · '),serial:Date.now()});}
         };
         const rememberFlight = (receipt: string, outcome: Outcome | null = null): ShotMemory => {
           const current = flight!;
+          if(lineLab){current.redirectTracker.finish();for(const e of current.redirectTracker.drainDiagnostics())appendLineEvidence(current.ledger,e);}
           if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));}
           const hole = HOLES[holeIndexRef.current];
           const memory: ShotMemory = {
@@ -1489,7 +1495,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           return memory;
         };
 
-        const lockRuling = (outcome: Outcome, at: Vector3, contactKind?: EvidenceKind) => {
+        const lockRuling = (outcome: Outcome, at: Vector3, contactKind?: EvidenceKind, safetyReason?:string) => {
           if (!flight || flight.locked) return;
           const hole = HOLES[holeIndexRef.current];
           flight.locked = true;
@@ -1508,12 +1514,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               point: at.clone(),
             });
           }
+          if(lineLab&&safetyReason)appendLineEvidence(flight.ledger,{kind:'termination',reason:safetyReason});
           if(lineLab) appendLineEvidence(flight.ledger,{kind:'ruling',targetHit:outcome==='ace'||outcome==='double',surface:hole.target.id,label:hole.target.label.toUpperCase()});
-          const receipt = contactKind === 'first-kiss' ? (diverterLab ? ((outcome === 'ace'||outcome==='double') ? `First physical contact on ${hole.target.label}.` : `First physical contact off ${hole.target.label}.`) : landingReceipt(hole, at)) : outcome.toUpperCase();
-          rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, outcome);
+          const receipt = contactKind === 'first-kiss' ? (diverterLab ? ((outcome === 'ace'||outcome==='double') ? `First physical contact on ${hole.target.label}.` : `First physical contact off ${hole.target.label}.`) : landingReceipt(hole, at)) : safetyReason ? safetyReason.replaceAll('-',' ').toUpperCase() : outcome.toUpperCase();
+          rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, safetyReason?null:outcome);
           const tags = [...flight.mechanismTags];
           const shotResult = resultCopy(hole, outcome, at.clone(), tags);
-          if (diverterLab) shotResult.detail = (tags.map(evidenceLabel).join(' → ') || 'CARRY') + ' · FLOOR ' + flight.environment!.floor + ' → ' + floorStateRef.current + '. ' + receipt;
+          if (diverterLab && !lineLab) shotResult.detail = (tags.map(evidenceLabel).join(' → ') || 'CARRY') + ' · FLOOR ' + flight.environment!.floor + ' → ' + floorStateRef.current + '. ' + receipt;
+          if(safetyReason){shotResult.headline=safetyReason==='dead-ball'?'SHOT SETTLED':'SAFETY STOP';shotResult.detail=`${receipt}. Established line claims retained; no target finish awarded.`;shotResult.clear=false;}
           if (!lineLab && hole.id === 'mill-delivery') {
             const earned = earnedDeliveryRoutes(shotResult.clear, [...flight.deliveryRoutes], flight.touchedSolid, tags);
             if (earned.length) {
@@ -1532,7 +1540,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           flight.pendingResult = shotResult;
           const next = {
             ...recordsRef.current,
-            [hole.id]: mergeHoleRecord(recordsRef.current[hole.id], outcome),
+            [hole.id]: safetyReason?interruptedRecord(recordsRef.current[hole.id]):mergeHoleRecord(recordsRef.current[hole.id], outcome),
           };
           persistRecords(next);
           createTheatreRing(at, outcome, contactKind);
@@ -1596,7 +1604,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           updateLauncher();
           makeGhost(memory);
           setLastShot(memory ?? null);
-          if(lineLab) setLineLedger(memory?.ledger ?? []);
+          if(lineLab){setLineLedger(memory?.ledger ?? []);setLiveLineTotal(scoreLine(memory?.ledger ?? []).total);}
           impactFocus.set(hole.target.x, 0.5, hole.target.z);
           setGamePhase("ready");
         };
@@ -1683,9 +1691,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           projectileCounter += 1;
           labLanding = null;
-          if(lineLab){setLineLedger([]);setClaimCaption(null);}
+          if(lineLab){setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);}
           flight = {
-            ledger:[],redirectTracker:createRedirectTracker(),captioned:new Set(),
+            ledger:[],redirectTracker:createRedirectTracker(),captioned:new Set(),lifecycle:createLineLifecycle(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
             bodyMesh,
@@ -1768,7 +1776,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
           camera.setTarget(cameraTarget);
-          setRetryNotice((diverterLab ? 'FLOOR ' + floorStateRef.current + ' preserved. ' : '') + (interrupted ? 'Shot interrupted. Aim and power remembered; no landing awarded.' : 'Last setup restored. Adjust and fire when ready.'));
+          setRetryNotice((diverterLab && !lineLab ? 'FLOOR ' + floorStateRef.current + ' preserved. ' : '') + (interrupted ? 'Shot interrupted. Aim and power remembered; no landing awarded.' : 'Last setup restored. Adjust and fire when ready.'));
         };
 
         const resetRound = (restore = false) => {
@@ -1776,7 +1784,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             if (phaseRef.current === 'booting' || phaseRef.current === 'error') return;
             retry(); floorStateRef.current = floorForAction(floorStateRef.current, 'reset');
             setFloorState(floorStateRef.current); loadHole(lineLab?holeIndexRef.current:0, false);
-            setRetryNotice('Card reset. FLOOR A restored. Saved lines kept.'); return;
+            setRetryNotice(lineLab?'Card reset. Saved lines kept.':'Card reset. FLOOR A restored. Saved lines kept.'); return;
           }
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
           loadHole(holeIndexRef.current, restore);
@@ -1810,7 +1818,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
             diverterHandles?.setState(floorStateRef.current); setFloorState(floorStateRef.current);
-            setRetryNotice('Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
+            setRetryNotice(lineLab?'Recall restored aim and power. Recorded dock state is inactive in this score yard.':'Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
           }
           updateSetup(memory);
           setRecalledPower(memory.charge); selectedPowerRef.current = memory.charge; setSelectedPower(memory.charge);
@@ -1827,7 +1835,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             setFloorState(floorStateRef.current);
           }
           loadHole(holeIndexRef.current, true);
-          if (diverterLab) setRetryNotice('Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
+          if (diverterLab) setRetryNotice(lineLab?'Recall restored aim and power. Recorded dock state is inactive in this score yard.':'Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
         };
 
         const toggleSurvey = () => {
@@ -1947,6 +1955,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){
             const redirect=flight.redirectTracker.endStep(current,flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);
             if(redirect)appendLineEvidence(flight.ledger,redirect);
+            for(const e of flight.redirectTracker.drainDiagnostics())appendLineEvidence(flight.ledger,e);
           }
           if (diverterHandles) {
             const changed = diverterHandles.flush();
@@ -1955,6 +1964,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               const contact = labLanding; labLanding = null;
               const point = contact.point.add(new Vector3(0, RAIL_RULES.projectileRadius, 0));
               lockRuling(classifyChallengeRuling({hole,targetHit:contact.targetHit === true,tags:[...flight.mechanismTags]}), point, 'first-kiss');
+            } else if(lineLab){
+              const end=flight.lifecycle.step(current,flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);
+              if(end)lockRuling(end==='oob'?'oob':'miss',end==='invalid-physics'?previous:current,undefined,end==='oob'?undefined:end);
             } else if (Math.abs(current.x)>(courtyardDiverter ? 50 : 32) || current.z>(courtyardDiverter ? 198 : 124) || current.z< -15 || current.y< -8 || flight.physicsElapsed>13) {
               lockRuling('oob',current);
             }
@@ -1999,7 +2011,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
 
           captionClaims();
-          if (!flight.locked) {
+          if (!flight.locked && !lineLab) {
             const outOfBounds =
               Math.abs(current.x) > (hole.courseWidth ? hole.courseWidth / 2 : 45) ||
               current.z > hole.courseLength + 24 ||
@@ -2058,7 +2070,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         setHistory(historyRef.current[startHole.id] ?? []);
         setWinningLines(libraryRef.current[startHole.id]?.wins ?? []);
         setLastShot(remembered ?? null); makeGhost(remembered);
-        if(lineLab) setLineLedger(remembered?.ledger ?? []);
+        if(lineLab){setLineLedger(remembered?.ledger ?? []);setLiveLineTotal(scoreLine(remembered?.ledger ?? []).total);}
 
         engine.runRenderLoop(() => {
           if (!scene || disposed) return;
@@ -2339,7 +2351,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       const encoded=encodeShareLine({v:1,build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard',route:lineLab?'/lab/lines':'/lab/courtyard-diverter',card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}});
       const url=new URL(lineLab?'/lab/lines':'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
       setShareLink(url.href);
-      try{await navigator.clipboard.writeText(url.href);setShareNotice('Line link copied. It restores setup and starting state; it never fires.');}
+      try{await navigator.clipboard.writeText(url.href);setShareNotice(lineLab?'Line link copied. It restores setup without firing; legacy dock state is inactive here.':'Line link copied. It restores setup and starting state; it never fires.');}
       catch{setShareNotice('Clipboard unavailable. Copy the line link below.');}
     }catch{setShareNotice('This saved line is missing valid setup or environment evidence.');}
   };
@@ -2401,7 +2413,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   return (
     <main className="rail-golf-shell manners-shell" data-phase={phase}>
       <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}</small>
-      {diverterLab && <>
+      {diverterLab && !lineLab && <>
         <div className="floor-state-chip" role="status">FLOOR {floorState} · {courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}</div>
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
@@ -2431,9 +2443,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             <span>ATTEMPT</span>
             <strong>{String(attempt).padStart(2, "0")}</strong>
           </div>
-          <div>
-            <span>WIND</span>
-            <strong>{hole.wind.speedLabel}</strong>
+          <div className={lineLab?'line-score-readout':undefined}>
+            <span>{lineLab?'LINE':'WIND'}</span>
+            <strong className={lineLab?'line-hud-total':undefined} title={lineLab?'NON-CANONICAL PLACEHOLDER score':undefined}>{lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
           </div>
         </div>
       </header>
@@ -2536,7 +2548,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : 2)}
           onClick={() => actionsRef.current.selectStation?.(station.id)}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
-            {diverterLab && <>
+            {diverterLab && !lineLab && <>
               <small>FLOOR {floorState} · {courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. Cards, stations and Retry keep the state. Recall restores the recorded starting state.</small>
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => actionsRef.current.reset?.(false)}>Reset Card · restore FLOOR A</button>
             </>}
@@ -2553,18 +2565,18 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             {courtyardDiverter && <section className="share-line-tools" aria-label="Share a line">
               {lastShot && <button type="button" onClick={()=>copyLineLink(lastShot)}>Copy selected line link</button>}
               <button type="button" disabled={phase!=='ready'||powerMode!=='set'} onClick={()=>copyLineLink()}>Copy current Set Power setup</button>
-              <small>Links restore the exact launch speed and starting state. They do not fire or award a result.</small>
+              <small>Links restore exact launch speed and aim without firing. {lineLab?"Legacy dock state is retained as provenance but is inactive here.":"Starting dock state is restored."}</small>
               {shareLink && <input aria-label="Line link" readOnly value={shareLink} onFocus={event=>event.currentTarget.select()} />}
             </section>}
             <strong>Winning lines · {winningLines.length}/6 families</strong>
             <small>Saved on this browser. Recall restores aim, power marker and the recorded trail; you still fire.</small>
             {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
-              {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}{shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
+              {!lineLab && shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}{shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
             </button>)}
             {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
             <strong>Recent attempts</strong>
             {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
-              #{shot.projectileId} · {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
+              #{shot.projectileId} · {!lineLab && shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
             </button>)}
             {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
           </div>
@@ -2700,7 +2712,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           onClick={() => actionsRef.current.reset?.(false)}
           disabled={phase !== "ready"}
         >
-          <RotateCcw /> {diverterLab ? "Reset Card · FLOOR A" : "Reset address"}
+          <RotateCcw /> {diverterLab ? (lineLab?"Reset Card":"Reset Card · FLOOR A") : "Reset address"}
         </Button>
       </aside>
 
@@ -2730,7 +2742,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       {lastShot && phase === "ready" ? (
         <button className="last-line-chip" onClick={() => actionsRef.current.restoreLine?.()} type="button">
           LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {displayPercent(lastShot.charge)}
-          <span>{diverterLab ? ("restore FLOOR " + lastShot.environment?.floor + ", aim and power") : "restore aim and power"}</span>
+          <span>{diverterLab && !lineLab ? ("restore FLOOR " + lastShot.environment?.floor + ", aim and power") : "restore aim and power"}</span>
         </button>
       ) : null}
 
