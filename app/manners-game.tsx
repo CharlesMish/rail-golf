@@ -68,7 +68,7 @@ import {
 } from "@/lib/rail-golf-v02";
 import type { AddressLabMode, Hole, HoleRecord, MechanismTag, Outcome, ShotSetup } from "@/lib/rail-golf-v02";
 
-import {LINE_CARDS,LINE_STATIONS} from "@/lib/line-lab";
+import {LINE_CARDS,LINE_STATIONS,selectOpenLineStation} from "@/lib/line-lab";
 import type {GameCard} from "@/lib/line-lab";
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
@@ -76,7 +76,9 @@ import { buildCourtyard } from "@/lib/courtyard-scene";
 import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, readDeliveryBook, LEGACY_DELIVERY_BOOK_KEY } from "@/lib/delivery-routes";
 import type { DeliveryRoute, DeliveryBook } from "@/lib/delivery-routes";
 
-import { launchCharge, interruptedRecord, rememberAttempt, landingReceipt } from "@/lib/shot-tools";
+import {advanceFlightCamera,followOffsets,followHeading} from "@/lib/flight-framing";
+import {createRunTracker} from "@/lib/line-run";
+import { maxLatchAfter, launchCharge, interruptedRecord, rememberAttempt, landingReceipt } from "@/lib/shot-tools";
 
 import { SHOT_LIBRARY_KEY, packLine, collectLine, normalizeShotLibrary } from "@/lib/shot-library";
 import type { LineShelf, SavedLine } from "@/lib/shot-library";
@@ -134,6 +136,8 @@ type ShotMemory = ShotSetup & {
 };
 
 type FlightState = {
+  runTracker:ReturnType<typeof createRunTracker>;
+  captionedRun:number;
   ledger:LineEvidence[];
   redirectTracker:ReturnType<typeof createRedirectTracker>;
   sawMillTracker:ReturnType<typeof createSawMillTracker>;
@@ -189,6 +193,7 @@ type GameActions = {
   retry: () => void;
   recallAttempt: (id: number) => void;
   compareAttempts: () => void;
+  toggleMax: () => void;
   beginCharge: () => void;
   release: () => void;
   cancelCharge: () => void;
@@ -327,7 +332,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
-  const HOLES = lineLab ? LINE_CARDS : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
+  const lineCardsRef = useRef<GameCard[]>([...LINE_CARDS]);
+  const [,refreshStation] = useState(0);
+  const HOLES: readonly GameCard[] = lineLab ? lineCardsRef.current : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
   const STORAGE_KEY = lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
@@ -363,6 +370,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const elevationRef = useRef(HOLES[0].defaultShot.elevation);
   const railRef = useRef(HOLES[0].defaultShot.railIndex);
   const chargeRef = useRef(0);
+  const maxPowerRef = useRef(false);
+  const [maxPower,setMaxPower] = useState(false);
+  const clearMax = () => { maxPowerRef.current=maxLatchAfter(maxPowerRef.current,'recall');setMaxPower(maxPowerRef.current); };
   const powerModeRef = useRef<"hold" | "set">("hold");
   const selectedPowerRef = useRef(.5);
   const compareRef = useRef(false);
@@ -434,6 +444,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       if (event.code === "KeyR" && !event.repeat && !(event.target instanceof Element && event.target.closest("input, select, textarea, [contenteditable='true']"))) {
         event.preventDefault(); actionsRef.current.retry?.(); return;
       }
+      if (event.code === "KeyX" && !event.repeat && !(event.target instanceof Element && event.target.closest("input, select, textarea, [contenteditable='true']"))) {
+        event.preventDefault(); actionsRef.current.toggleMax?.(); return;
+      }
       if (isInteractiveTarget(event.target)) return;
       if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.code)) {
         event.preventDefault();
@@ -491,6 +504,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             const route=lineLab?'/lab/lines':'/lab/courtyard-diverter';
             if(parsed.route!==route) throw new Error('This shared line belongs to a different lab route.');
             sharedStart=restoreShareLine(parsed,BUILD_ID);
+            if(lineLab&&sharedStart.card==='open-line')lineCardsRef.current[3]=selectOpenLineStation(sharedStart.station,{allowParked:true});
             floorStateRef.current=sharedStart.environment.floor;setFloorState(sharedStart.environment.floor);
             setShareNotice([sharedStart.warning,lineLab?'Shared setup loaded. Dock state is inactive in this score yard. Press Fire to try the line.':'Shared setup loaded. Press Fire to try the line.'].filter(Boolean).join(' '));
           }catch{setShareNotice('Invalid or incompatible line link. Authored starting setup retained.');}}
@@ -668,6 +682,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         let flagPennant: Mesh | null = null;
         let skyToken: Mesh | null = null;
         let flight: FlightState | null = null;
+        let previousCameraBall:Vector3|null=null;
         let ghostLine: LinesMesh | null = null;
         let theatreFx: TheatreFx[] = [];
         let chargeStartedAt = 0;
@@ -1472,10 +1487,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(!lineLab||!flight)return;
           const receipt=scoreLine(flight.ledger);setLiveLineTotal(receipt.total);
           const fresh=receipt.awards.filter(a=>!flight!.captioned.has(a.id));
-          if(fresh.length){fresh.forEach(a=>flight!.captioned.add(a.id));const captions=fresh.map(a=>`+${a.points} · ${a.label}`);const extra=receipt.secondary-flight.captionedVariety;if(extra>0)captions.push(`+${extra} · VARIETY`);flight.captionedVariety=receipt.secondary;setClaimCaption({text:captions.join(' · '),serial:Date.now()});}
+          if(fresh.length||receipt.run>flight.captionedRun){fresh.forEach(a=>flight!.captioned.add(a.id));const captions=fresh.map(a=>`+${a.points} · ${a.label}`);const extra=receipt.secondary-flight.captionedVariety;if(extra>0)captions.push(`+${extra} · VARIETY`);flight.captionedVariety=receipt.secondary;const runExtra=receipt.run-flight.captionedRun;if(runExtra>0)captions.push(`+${runExtra} · RUN`);flight.captionedRun=receipt.run;setClaimCaption({text:captions.join(' · '),serial:Date.now()});}
         };
         const rememberFlight = (receipt: string, outcome: Outcome | null = null): ShotMemory => {
           const current = flight!;
+          if(lineLab){const run=current.runTracker.snapshot();if(run)appendLineEvidence(current.ledger,run);}
           if(lineLab){if(!current.ledger.some(e=>e.kind==='termination'))appendLineEvidence(current.ledger,{kind:'termination',reason:'retry-interrupted'});current.redirectTracker.finish();for(const e of current.redirectTracker.drainDiagnostics())appendLineEvidence(current.ledger,e);}
           if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));setSessionBest(best=>({...best,[HOLES[holeIndexRef.current].id]:Math.max(best[HOLES[holeIndexRef.current].id]??0,scoreLine(current.ledger).total)}));}
           const hole = HOLES[holeIndexRef.current];
@@ -1578,6 +1594,18 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           updateLauncher();
         };
 
+        const memoryFor = (hole:GameCard) => {
+          const memory=memoriesRef.current[hole.id];
+          if(hole.mode!=='score-only'||memory?.stationId===hole.station?.id)return memory;
+          return libraryRef.current[hole.id]?.recent.find(s=>s.stationId===hole.station?.id);
+        };
+        const chooseOpenStation = (id:string,allowParked=false) => {
+          lineCardsRef.current[3]=selectOpenLineStation(id,{allowParked});refreshStation(n=>n+1);
+        };
+        const exactPower = (charge:number) => {
+          clearMax(); powerModeRef.current='set';setPowerMode('set');
+          selectedPowerRef.current=charge;setSelectedPower(charge);setRecalledPower(charge);
+        };
         const loadHole = (index: number, restore = false) => {
           if (!holeUnlocked(index)) return;
           if(lineLab)floorStateRef.current=floorForAction(floorStateRef.current,'card');
@@ -1588,7 +1616,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           theatreFx = [];
           const hole = HOLES[index];
           holeIndexRef.current = index;
-          stationHoleRef.current[hole.station?.id ?? "gate"] = index;
+          if(hole.mode!=="score-only")stationHoleRef.current[hole.station?.id ?? "gate"] = index;
           setHoleIndex(index);
           setResult(null);
           setMechanismInFlight(null);
@@ -1599,7 +1627,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           surveyRef.current = false;
           chargeRef.current = 0;
           setCharge(0);
-          const memory = memoriesRef.current[hole.id];
+          const memory = memoryFor(hole);
           setHistory(historyRef.current[hole.id] ?? []);
           setWinningLines(libraryRef.current[hole.id]?.wins ?? []);
           if (restore && memory) {
@@ -1625,6 +1653,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           startChargeTone();
           tone(54, 92, 0.16, 0.025, "triangle");
           setGamePhase("charging");
+          if(maxPowerRef.current)fire();
         };
 
         const cancelCharge = () => {
@@ -1643,11 +1672,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             yaw: yawRef.current,
             elevation: elevationRef.current,
             railIndex: railRef.current,
-            charge: launchCharge(powerModeRef.current, selectedPowerRef.current, performance.now() - chargeStartedAt),
+            charge: launchCharge(powerModeRef.current, selectedPowerRef.current, performance.now() - chargeStartedAt, maxPowerRef.current),
           };
           const direction = getAimDirection();
           const muzzle = getMuzzle();
           followDirection = getHorizontalDirection();
+          previousCameraBall=null;
           const bodyMesh = MeshBuilder.CreateSphere(
             `round-body-${projectileCounter + 1}`,
             { diameter: RAIL_RULES.projectileRadius * 2, segments: 12 },
@@ -1700,7 +1730,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           labLanding = null;
           if(lineLab){setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);}
           flight = {
-            ledger:[],redirectTracker:createRedirectTracker(),sawMillTracker:createSawMillTracker(),captioned:new Set(),captionedVariety:0,lifecycle:createLineLifecycle(),
+            ledger:[],runTracker:createRunTracker(),captionedRun:0,redirectTracker:createRedirectTracker(),sawMillTracker:createSawMillTracker(),captioned:new Set(),captionedVariety:0,lifecycle:createLineLifecycle(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
             bodyMesh,
@@ -1726,6 +1756,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           aggregate.body.getCollisionObservable().add(event => {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
             flight.touchedSolid = true;
+            if(lineLab)flight.runTracker.contact();
             const other = event.collider === aggregate.body ? event.collidedAgainst : event.collider;
             if (diverterHandles) {
               if (labLanding) return;
@@ -1763,6 +1794,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const retry = () => {
+          maxPowerRef.current=maxLatchAfter(maxPowerRef.current,'retry');
           const phase = phaseRef.current;
           if (!['ready', 'charging', 'flight', 'theatre', 'result'].includes(phase)) return;
           let interrupted = false;
@@ -1820,15 +1852,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const restoreLine = () => {
           if (phaseRef.current !== "ready") return;
-          const memory = memoriesRef.current[HOLES[holeIndexRef.current].id];
+          const memory = memoryFor(HOLES[holeIndexRef.current]);
           if (!memory) return;
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
             diverterHandles?.setState(floorStateRef.current); setFloorState(floorStateRef.current);
             setRetryNotice(lineLab?'Recall restored aim and power. Recorded dock state is inactive in this score yard.':'Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
           }
-          updateSetup(memory);
-          setRecalledPower(memory.charge); selectedPowerRef.current = memory.charge; setSelectedPower(memory.charge);
+          updateSetup(memory); exactPower(memory.charge);
         };
 
         const recallAttempt = (id: number) => {
@@ -1836,6 +1867,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const holeId = HOLES[holeIndexRef.current].id;
           const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
           if (!memory) return;
+          if(lineLab&&holeId==='open-line')chooseOpenStation(memory.stationId,true);
+          exactPower(memory.charge);
           memoriesRef.current[holeId] = memory;
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
@@ -1871,14 +1904,19 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const setup = deliveryBookRef.current[id];
           if (!setup) return;
           loadHole(0); updateSetup(setup); disposeGhost(); setLastShot(null);
-          setRecalledPower(setup.charge); selectedPowerRef.current = setup.charge; setSelectedPower(setup.charge);
+          exactPower(setup.charge);
         };
 
         actionsRef.current = {
           selectStation: (id) => {
             if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
+            if(lineLab&&HOLES[holeIndexRef.current].mode==='score-only'){chooseOpenStation(id);loadHole(3,true);return;}
             const index = stationHoleRef.current[id];
             if (index !== undefined) loadHole(index, true);
+          },
+          toggleMax: () => {
+            if(phaseRef.current!=='ready'&&phaseRef.current!=='result')return;
+            maxPowerRef.current=maxLatchAfter(maxPowerRef.current,'toggle');setMaxPower(maxPowerRef.current);
           },
           retry, recallAttempt,
           compareAttempts: () => makeGhost(memoriesRef.current[HOLES[holeIndexRef.current].id]),
@@ -1942,7 +1980,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         scene.onBeforePhysicsObservable.add(() => {
           if (!flight || flight.locked || phaseRef.current !== "flight") return;
-          if(lineLab){flight.redirectTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);flight.sawMillTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);}
+          if(lineLab){flight.runTracker.beginStep();flight.redirectTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);flight.sawMillTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);}
           const hole = HOLES[holeIndexRef.current];
           if (hole.wind.x === 0 && hole.wind.z === 0) return;
           const force = new Vector3(
@@ -2018,6 +2056,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             }
           }
 
+          if(lineLab&&!flight.locked){const run=flight.runTracker.step(current,flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed,scoreLine(flight.ledger).awards.some(a=>a.tier!=='FINISH'));if(run)appendLineEvidence(flight.ledger,run);}
           captionClaims();
           if (!flight.locked && !lineLab && hole.target) {
             const outOfBounds =
@@ -2072,9 +2111,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         holeIndexRef.current = startIndex;
         setHoleIndex(startIndex);
         updateSetup(sharedStart?.setup ?? resolveOpeningAddress(startHole, addressLabRef.current));
-        if(sharedStart){powerModeRef.current="set";setPowerMode("set");selectedPowerRef.current=sharedStart.setup.charge;setSelectedPower(sharedStart.setup.charge);setRecalledPower(sharedStart.setup.charge);}
+        if(sharedStart){clearMax();powerModeRef.current="set";setPowerMode("set");selectedPowerRef.current=sharedStart.setup.charge;setSelectedPower(sharedStart.setup.charge);setRecalledPower(sharedStart.setup.charge);}
         impactFocus.set(startHole.target?.x ?? startHole.survey.targetX, 0.5, startHole.target?.z ?? startHole.survey.targetZ);
-        const remembered = memoriesRef.current[startHole.id];
+        const remembered = memoryFor(startHole);
         setHistory(historyRef.current[startHole.id] ?? []);
         setWinningLines(libraryRef.current[startHole.id]?.wins ?? []);
         setLastShot(remembered ?? null); makeGhost(remembered);
@@ -2091,7 +2130,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
 
           if (phaseRef.current === "charging") {
-            const nextCharge = launchCharge(powerModeRef.current, selectedPowerRef.current, now - chargeStartedAt);
+            const nextCharge = launchCharge(powerModeRef.current, selectedPowerRef.current, now - chargeStartedAt, maxPowerRef.current);
             chargeRef.current = nextCharge;
             if (chargeTone && audioContext) {
               chargeTone.oscillator.frequency.setTargetAtTime(62 + nextCharge * 330, audioContext.currentTime, 0.025);
@@ -2165,9 +2204,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               const travelDirection = horizontalVelocity.lengthSquared() > 0.01
                 ? horizontalVelocity.normalize()
                 : horizontalAim;
-              followDirection = Vector3.Lerp(followDirection, travelDirection, 1 - Math.exp(-deltaSeconds * 5)).normalize();
+              if(lineLab){const heading=followHeading(followDirection,velocity,deltaSeconds);followDirection.set(heading.x,0,heading.z);}
+              else followDirection = Vector3.Lerp(followDirection, travelDirection, 1 - Math.exp(-deltaSeconds * 5)).normalize();
               let followTarget = position.add(followDirection.scale(7)).add(new Vector3(0, 1.2, 0));
               let followPosition = position.subtract(followDirection.scale(12)).add(new Vector3(0, 5.5, 0));
+              if(lineLab){const framing=followOffsets(position,velocity,followDirection);followPosition=new Vector3(framing.position.x,framing.position.y,framing.position.z);followTarget=new Vector3(framing.target.x,framing.target.y,framing.target.z);}
               const destinationDistance = hole.target ? Math.hypot(position.x - hole.target.x, position.z - hole.target.z) : Infinity;
               if (hole.target && velocity.y < 0 && destinationDistance < 24) {
                 const green = new Vector3(hole.target.x, 0.75, hole.target.z);
@@ -2232,8 +2273,17 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           });
 
           const cameraEase = 1 - Math.pow(0.001, deltaSeconds);
-          camera.position = Vector3.Lerp(camera.position, desiredCameraPosition, cameraEase);
-          cameraTarget = Vector3.Lerp(cameraTarget, desiredCameraTarget, cameraEase);
+          if(lineLab&&flight&&!flight.locked){
+            const aspect=engine!.getRenderWidth()/engine!.getRenderHeight(),horizontal=camera.fovMode===Camera.FOVMODE_HORIZONTAL_FIXED;
+            const frame=advanceFlightCamera({position:camera.position,target:cameraTarget,fov:camera.fov},flight.bodyMesh.position,previousCameraBall,{position:desiredCameraPosition,target:desiredCameraTarget},deltaSeconds,aspect,horizontal,horizontal?.92:.69);
+            camera.position.set(frame.position.x,frame.position.y,frame.position.z);cameraTarget.set(frame.target.x,frame.target.y,frame.target.z);camera.fov=frame.fov;
+            previousCameraBall=flight.bodyMesh.position.clone();
+          }else{
+            previousCameraBall=null;
+            camera.position = Vector3.Lerp(camera.position, desiredCameraPosition, cameraEase);
+            cameraTarget = Vector3.Lerp(cameraTarget, desiredCameraTarget, cameraEase);
+            if(lineLab)camera.fov+=((camera.fovMode===Camera.FOVMODE_HORIZONTAL_FIXED?.92:.69)-camera.fov)*(1-Math.exp(-deltaSeconds*2));
+          }
           camera.setTarget(cameraTarget);
           camera.getViewMatrix();
           camera.getProjectionMatrix();
@@ -2355,7 +2405,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const copyLineLink = async (saved?:ShotMemory) => {
     try{
       const card=HOLES[holeIndexRef.current];
-      const setup=saved ?? {railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:selectedPowerRef.current};
+      const setup=saved ?? {railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
       const encoded=encodeShareLine({v:1,build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard',route:lineLab?'/lab/lines':'/lab/courtyard-diverter',card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}});
       const url=new URL(lineLab?'/lab/lines':'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
       setShareLink(url.href);
@@ -2370,7 +2420,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     ? Math.max(1, record.attempts)
     : record.attempts + 1;
   const canAim = phase === "ready" || phase === "charging";
-  const shownPower = powerMode === "set" && phase === "ready" ? selectedPower : charge;
+  const shownPower = maxPower && phase === "ready" ? 1 : powerMode === "set" && phase === "ready" ? selectedPower : charge;
   const previousMarker = recalledPower ?? lastShot?.charge ?? null;
 
   const beginButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
@@ -2549,6 +2599,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       </>}
 
       <section className="aim-console manners-console" aria-label="Rail shot controls">
+        <div className="primary-options">
+          <button type="button" className="max-power" aria-pressed={maxPower} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>actionsRef.current.toggleMax?.()} title="Toggle maximum power (X)">MAX · 100% <kbd>X</kbd></button>
+          {lineLab&&hole.mode==='score-only'&&<nav className="station-picker" aria-label="Open Line station">{Object.values(LINE_STATIONS).map(station=><button type="button" key={station.id} aria-pressed={hole.station?.id===station.id} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>actionsRef.current.selectStation?.(station.id)}>{station.label}</button>)}</nav>}
+        </div>
         <details className="shot-tools">
           <summary>Shot tools & saved lines · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
@@ -2562,10 +2616,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => actionsRef.current.reset?.(false)}>Reset Card · restore FLOOR A</button>
             </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
-              const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
+              clearMax(); const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
             }}><option value="hold">Timed hold</option><option value="set">Set power</option></select></label>
             {powerMode === 'set' && <label>Power {displayPercent(selectedPower)}<input type="range" min="0" max="100" step="0.5" aria-label="Set launch power" value={selectedPower * 100} disabled={phase !== 'ready'} onChange={event => {
-              const value = Number(event.target.value) / 100; selectedPowerRef.current = value; setSelectedPower(value);
+              clearMax(); const value = Number(event.target.value) / 100; selectedPowerRef.current = value; setSelectedPower(value);
             }} /></label>}
             <label><input type="checkbox" checked={compare} disabled={phase !== 'ready'} onChange={event => {
               compareRef.current = event.target.checked; setCompare(event.target.checked); actionsRef.current.compareAttempts?.();
@@ -2573,7 +2627,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             <small>Gentle start · 80% in 2 seconds · full power in 3. Aim ±70°; loft 5–85°.</small>
             {courtyardDiverter && <section className="share-line-tools" aria-label="Share a line">
               {lastShot && <button type="button" onClick={()=>copyLineLink(lastShot)}>Copy selected line link</button>}
-              <button type="button" disabled={phase!=='ready'||powerMode!=='set'} onClick={()=>copyLineLink()}>Copy current Set Power setup</button>
+              <button type="button" disabled={phase!=='ready'||(powerMode!=='set'&&!maxPower)} onClick={()=>copyLineLink()}>Copy current Set Power setup</button>
               <small>Links restore exact launch speed and aim without firing. {lineLab?"Legacy dock state is retained as provenance but is inactive here.":"Starting dock state is restored."}</small>
               {shareLink && <input aria-label="Line link" readOnly value={shareLink} onFocus={event=>event.currentTarget.select()} />}
             </section>}
@@ -2585,7 +2639,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
             <strong>Recent attempts</strong>
             {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
-              #{shot.projectileId} · {!lineLab && shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
+              #{shot.projectileId} · {hole.mode==='score-only'&&(shot.stationId==='gate'?'Yard Gate · ':shot.stationId==='lumber'?'Lumber Walk · ':'Saw Bay · ')}{!lineLab && shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
             </button>)}
             {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
           </div>
@@ -2668,7 +2722,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             disabled={!canAim}
           >
             <Crosshair />
-            <span>{powerMode === "set" ? (phase === "charging" ? "RELEASE TO FIRE" : `FIRE AT ${displayPercent(selectedPower)}`) : phase === "charging" ? "RELEASE ROUND" : "HOLD TO CHARGE"}</span>
+            <span>{maxPower ? "FIRE MAX · 100%" : powerMode === "set" ? (phase === "charging" ? "RELEASE TO FIRE" : `FIRE AT ${displayPercent(selectedPower)}`) : phase === "charging" ? "RELEASE ROUND" : "HOLD TO CHARGE"}</span>
           </Button>
 
           <div className="aim-nudges" aria-label="Fine aim controls">
@@ -2691,7 +2745,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           <span className="desktop-control-hint">
             Drag the course to aim · hold only the orange control for power · the short muzzle spine is direction, never a landing prediction
           </span>
-          <span className="mobile-control-hint">Drag to aim · {powerMode === "hold" ? "hold orange to charge" : "release orange to fire"}</span>
+          <span className="mobile-control-hint">Drag to aim · {maxPower ? "tap orange for MAX" : powerMode === "hold" ? "hold orange to charge" : "release orange to fire"}</span>
         </p>
       </section>
 

@@ -1,4 +1,4 @@
-import type { Hole, ShotSetup, VectorLike, MechanismTag, Outcome } from './rail-golf-v02';
+import type { ShotSetup, VectorLike, MechanismTag, Outcome } from './rail-golf-v02';
 export type SavedLine = ShotSetup & {
   lineReceipt?:import('./line-score').RecordedLineReceipt;
   build?:string;ledger?:import('./line-score').LineEvidence[];
@@ -13,4 +13,4 @@ export const SHOT_LIBRARY_KEY:string;
 export function packLine(line:SavedLine): SavedLine & {speed:number};
 export function lineFamily(line:SavedLine):string;
 export function collectLine<T extends SavedLine>(shelf:LineShelf<T>|undefined,line:T):LineShelf<T>;
-export function normalizeShotLibrary(value:unknown,holes:readonly Omit<Hole,"target">[],options?:{environmentRequired?:boolean}):Record<string,LineShelf>;
+export function normalizeShotLibrary(value:unknown,holes:readonly import("./line-lab").GameCard[],options?:{environmentRequired?:boolean}):Record<string,LineShelf>;

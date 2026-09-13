@@ -1,6 +1,7 @@
+import {createRunTracker} from '../../lib/line-run.js';
 import {createLineLifecycle} from '../../lib/line-lifecycle.js';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '../../lib/line-recognition.js';
-import {appendLineEvidence,recordLineContact} from '../../lib/line-score.js';
+import {scoreLine,appendLineEvidence,recordLineContact} from '../../lib/line-score.js';
 import {buildCourtyard} from '../../lib/courtyard-scene.js';
 import {COURTYARD_DIVERTER,COURTYARD_DIVERTER_TARGETS,YARD_DIVERTER_OPTIONS} from '../../lib/courtyard-diverter.js';
 import {padImpulse} from '../../lib/delivery-routes.js';
@@ -44,11 +45,12 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
    const ball=MeshBuilder.CreateSphere('test-round',{diameter:RAIL_RULES.projectileRadius*2},scene);
    ball.position.set(...(launch?launch.position:[muzzle.x,muzzle.y,muzzle.z]));
    const aggregate=new PhysicsAggregate(ball,PhysicsShapeType.SPHERE,{mass:1.5,restitution:.38,friction:.28},scene);
-   let landing=null;const contacts=[],tags=[],ledger=[],routes=[],tracker=createRedirectTracker(),sawMill=createSawMillTracker(),lifecycle=createLineLifecycle();
+   let landing=null;const contacts=[],tags=[],ledger=[],routes=[],run=createRunTracker(),tracker=createRedirectTracker(),sawMill=createSawMillTracker(),lifecycle=createLineLifecycle();
    let previous=ball.position.clone();
    aggregate.body.setCollisionCallbackEnabled(true);
    aggregate.body.getCollisionObservable().add(event=>{
     if(landing)return;
+    if(scoreLab)run.contact();
     const other=event.collider===aggregate.body?event.collidedAgainst:event.collider;
     const contact=world.contact(other,event.point,shotId);
     if(integrated){recordLineContact(ledger,other.transformNode,event.point,contact);if(event.point){tracker.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);sawMill.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);}}
@@ -63,7 +65,7 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
    aggregate.body.applyImpulse((launch?new Vector3(...launch.velocity):new Vector3(aim.x,aim.y,aim.z).scale(chargeToSpeed(shot.charge))).scale(1.5),ball.position);
    try{
     for(let i=0;i<(scoreLab?7300:1560);i++){
-     tracker.beginStep(aggregate.body.getLinearVelocity(),i/120);sawMill.beginStep(aggregate.body.getLinearVelocity(),i/120);
+     run.beginStep();tracker.beginStep(aggregate.body.getLinearVelocity(),i/120);sawMill.beginStep(aggregate.body.getLinearVelocity(),i/120);
      physics._step(1/120);world.flush();
      const redirect=tracker.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(integrated&&redirect)appendLineEvidence(ledger,redirect);
      const relationship=sawMill.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(relationship)appendLineEvidence(ledger,relationship);
@@ -79,10 +81,11 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
        }
       }
      }
+     if(scoreLab&&!landing){const milestone=run.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120,scoreLine(ledger).awards.some(a=>a.tier!=='FINISH'));if(milestone)appendLineEvidence(ledger,milestone);}
      previous.copyFrom(ball.position);
-     if(landing){appendLineEvidence(ledger,{kind:'termination',reason:'ground-contact'});tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target?.id ?? 'ground',label:hole.target?.label.toUpperCase() ?? 'LINE ENDED'});return {start,end:world.state,outcome:hole.target?classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}):'line-ended',point:landing.point.asArray(),tags,contacts,ledger};}
+     if(landing){if(scoreLab&&run.snapshot())appendLineEvidence(ledger,run.snapshot());appendLineEvidence(ledger,{kind:'termination',reason:'ground-contact'});tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target?.id ?? 'ground',label:hole.target?.label.toUpperCase() ?? 'LINE ENDED'});return {start,end:world.state,outcome:hole.target?classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}):'line-ended',point:landing.point.asArray(),tags,contacts,ledger};}
      if(stopOnSwitch&&tags.some(t=>t.startsWith('switch-')))return {start,end:world.state,outcome:'interrupted',tags,contacts,ledger};
-     if(scoreLab){const end=lifecycle.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(end){tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'termination',reason:end});return {start,end:world.state,outcome:end,point:ball.position.asArray(),tags,contacts,ledger,elapsed:(i+1)/120};}}
+     if(scoreLab){const end=lifecycle.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(end){if(run.snapshot())appendLineEvidence(ledger,run.snapshot());tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'termination',reason:end});return {start,end:world.state,outcome:end,point:ball.position.asArray(),tags,contacts,ledger,elapsed:(i+1)/120};}}
      if(!scoreLab&&(Math.abs(ball.position.x)>(integrated?50:32)||ball.position.z>(integrated?198:124)||ball.position.z< -15||ball.position.y< -8))break;
     }
     return {start,end:world.state,outcome:'oob',point:ball.position.asArray(),tags,contacts,ledger};

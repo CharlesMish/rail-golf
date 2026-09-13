@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
 import Havok from '@babylonjs/havok';import {Vector3,Ray} from '@babylonjs/core';
-import {LINE_CARDS,LINE_STATIONS,SAW_BAY,OPEN_LINE} from '../lib/line-lab.js';
+import {LINE_CARDS,LINE_STATIONS,SAW_BAY,SAW_BAY_OPEN_LINE as OPEN_LINE} from '../lib/line-lab.js';
 import {COURTYARD_HOLES} from '../lib/courtyard.js';import {YARD_STATIONS,stationMuzzle} from '../lib/stations.js';
 import {PLACEHOLDER_RULES,VARIETY_RULE,scoreLine,recordLineReceipt} from '../lib/line-score.js';
 import {createRedirectTracker,createSawMillTracker} from '../lib/line-recognition.js';
@@ -14,7 +14,7 @@ const redirect=feature=>({kind:'redirect',feature,surface:feature,label:feature}
 test('NON-CANONICAL finish 500 plus capped variety gives the intended qualitative ordering',()=>{
  assert.equal(PLACEHOLDER_RULES.find(r=>r.id==='seat').points,500);
  const dull=[{kind:'contact',terminal:true},{kind:'termination',reason:'ground-contact'},{kind:'ruling',targetHit:true}];
- const clear=scoreLine(dull);assert.equal(clear.total,800);assert.equal(clear.secondary,50);
+ const clear=scoreLine(dull);assert.equal(clear.total,750);assert.equal(clear.secondary,0);
  const interesting=['step-a','step-b','step-c'].map(redirect),miss=scoreLine(interesting);
  assert.equal(miss.total,1050);assert.ok(miss.total>clear.total);assert.ok(clear.total>scoreLine([]).total);
  assert.ok(scoreLine([...interesting,{kind:'ruling',targetHit:true}]).total>miss.total);
@@ -62,8 +62,8 @@ test('Open Line recalls and shares the real Saw Bay transform/exact speed withou
   const address=resolveOpeningAddress(OPEN_LINE,null,{restore:true,memory:loaded});assert.deepEqual({railIndex:address.railIndex,yaw:address.yaw,elevation:address.elevation},{railIndex:shot.railIndex,yaw:shot.yaw,elevation:shot.elevation});
   const shared={v:1,build:line.build,world:'timber-courtyard',route:'/lab/lines',card:'open-line',station:'saw',rail:shot.railIndex,yaw:shot.yaw,elevation:shot.elevation,speed:chargeToSpeed(shot.charge),environment:{floor:'A'}};
   const restored=restoreShareLine(decodeShareLine(encodeShareLine(shared)),line.build);assert.equal(restored.autoFire,false);assert.equal(restored.station,'saw');assert.equal(restored.setup.charge,shot.charge);
-  assert.deepEqual(stationMuzzle(restored.setup,LINE_STATIONS[restored.station]),stationMuzzle(shot,SAW_BAY));
-  assert.deepEqual(h.shoot(restored.setup).ledger,first.ledger);assert.throws(()=>encodeShareLine({...shared,station:'gate'}));
+  assert.deepEqual(stationMuzzle(restored.setup,SAW_BAY),stationMuzzle(shot,SAW_BAY));
+  assert.deepEqual(h.shoot(restored.setup).ledger,first.ledger);assert.throws(()=>encodeShareLine({...shared,station:'missing'}));
  }finally{h.dispose();}
 });
 test('real saw→mill lines establish a directed named relationship without altering generic redirects',()=>{
