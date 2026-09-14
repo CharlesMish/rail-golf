@@ -14,13 +14,21 @@ Weights are still centralized in `lib/line-score.js`: COMMON 100; existing NAMED
 
 `lib/line-run.js` contains the **NON-CANONICAL** RUN parameters:
 
-**RUN = min(150, 25 × floor(D / 25))**.
+**RUN = min(250, 25 × floor(D / 20))**. The small follow-up seasoning patch raises the cap and decreases milestone spacing; eligibility is unchanged.
 
 D is accumulated three-dimensional path length at the existing 120 Hz physical step, starting only after the first non-FINISH claim has actually been established. No retrospective launch or pre-confirmation path is included. The segment must be free of solid contact, at least 0.10 seconds after the last contact callback, and moving at least 3 m/s. The sampling origin still advances on rejected steps, so distance during contact cannot leak into the next free segment. Scraping, settling, callback frequency and time alive add nothing. Safety/OOB/ground resolution stops accumulation. Retry banks earned claims and eligible RUN before ending the old shot.
 
 The live ledger emits only discrete RUN milestones, plus a final distance snapshot. A milestone gets a brief `+25 · RUN` caption. The receipt separates RUN and its eligible metres from VARIETY and claim points. Saved receipt snapshots include `run` and `runDistance`; older snapshots load with zero for these new fields. ShareLineV1 retains its version and deterministic setup contract, without trajectory samples.
 
-**VARIETY = min(200, 50 × max(0, N − 1))**, now counting distinct non-FINISH qualified claim IDs only. FINISH never adds variety. A simple Direct + seat therefore totals 750. RUN and VARIETY do not count themselves or recursively generate claims. Receipt rule set: `placeholder-v4` (instrument provenance, not a semantic game version).
+**VARIETY = min(200, 50 × max(0, N − 1))**, now counting distinct non-FINISH qualified claim IDs only. FINISH never adds variety. A simple Direct + seat therefore totals 750. RUN and VARIETY do not count themselves or recursively generate claims. Receipt rule set: `placeholder-v5` (instrument provenance, not a semantic game version).
+
+## CASCADE LINE recognition follow-up
+
+**CASCADE LINE = 400 NON-CANONICAL points**, once per shot, for qualified departures from three distinct Cascade assemblies in authored order 1 → 2 → 3. Both tread-body side redirects and timber-support departures can supply assembly evidence. Identity comes from the existing authored tread/support body IDs in confirmed redirect records, never from raw contacts, caption text, duration or callbacks. Each assembly contributes to this relationship only on its first qualified departure; revisiting a stack cannot repair a wrong-order sequence. Unrelated yard geometry may appear between those departures.
+
+The strict top-face `TREAD RUN 1 → 2 → 3` remains 600 and retains its exact predicate. It supersedes the broader 400-point caption on a strict traversal, so the same three-stack journey does not receive both relationship awards. COMMON components and the existing non-FINISH VARIETY formula remain unchanged. The weights and this precedence are declared in the same rule table. Production `cascadeContactTag`, Card 03 stamp authority, objectives and physics are untouched.
+
+Focused follow-up checks cover the 200 m RUN cap threshold and 267 m saturation, a real empty MAX lob with RUN 0, the existing strict physical top/top/top fixture, a real reproducible Lumber Walk top/side/top line earning CASCADE LINE without TREAD RUN, wrong order, duplicate assemblies, chatter and source-config replacement. No wind, diverter, camera, station or geometry change accompanies this patch.
 
 ## Assembly contact episodes
 

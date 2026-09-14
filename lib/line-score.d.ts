@@ -1,6 +1,6 @@
 import type {VectorLike} from './rail-golf-v02';
 export type LineEvidence={kind:'contact'|'pad-activation'|'switch-use'|'ruling'|'token'|'redirect'|'rejected'|'termination'|'relationship'|'run';distance?:number;reason?:string;contactSeconds?:number;members?:string[];terminal?:boolean;feature?:string;label?:string;incoming?:VectorLike;outgoing?:VectorLike;turn?:number;freeSeconds?:number;separation?:number;surface?:string;body?:string;point?:VectorLike;targetHit?:boolean;state?:'A'|'B';count?:number};
-export type PlaceholderRule={id:string;tier:string;label:string;points:number;perFeature?:boolean;sequence:readonly string[]};
+export type PlaceholderRule={id:string;tier:string;label:string;points:number;perFeature?:boolean;supersededBy?:string;sequence:readonly string[]};
 export const PLACEHOLDER_RULES:readonly PlaceholderRule[];
 export function appendLineEvidence(ledger:LineEvidence[],event:LineEvidence):void;
 export const VARIETY_RULE:Readonly<{pointsPerAdditionalClaim:number;cap:number}>;
@@ -12,3 +12,5 @@ export function recordLineContact(ledger:LineEvidence[],node:{name:string;metada
 export type RecordedLineReceipt={ruleSet:string;total:number;run:number;runDistance:number;claimIds:string[];uniqueFeatureCount:number;secondary:number;ending:string};
 export function recordLineReceipt(ledger:readonly LineEvidence[]):RecordedLineReceipt;
 export function normalizeLineReceipt(value:unknown):RecordedLineReceipt|undefined;
+
+export function cascadeAssembly(event:LineEvidence):string|null;
