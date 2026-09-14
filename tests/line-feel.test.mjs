@@ -18,13 +18,13 @@ function step(t,x,time,{claim=false,contact=false,velocity=v}={}){t.beginStep();
 test('RUN starts at confirmed non-finish evidence, never launch distance or airtime; milestones and cap are exact',()=>{
  const t=createRunTracker();for(let i=0;i<100;i++)assert.equal(step(t,i*10,i),null);assert.equal(t.snapshot(),null);
  step(t,1000,100,{claim:true});assert.equal(t.snapshot().distance,0);
- assert.equal(step(t,1024.9,101),null);assert.equal(step(t,1025,102).distance,25);
- step(t,1050,103);assert.equal(scoreLine([claim,t.snapshot()]).run,50);
- for(let i=1;i<=20;i++)step(t,1050+i*25,103+i);
- assert.equal(scoreLine([claim,t.snapshot()]).run,150);assert.deepEqual(RUN_RULE,{metresPerStep:25,pointsPerStep:25,cap:150,minSpeed:3,freeSeconds:.1});
+ assert.equal(step(t,1019.9,101),null);assert.equal(step(t,1020,102).distance,20);
+ step(t,1040,103);assert.equal(scoreLine([claim,t.snapshot()]).run,50);
+ for(let i=1;i<=20;i++)step(t,1040+i*20,103+i);
+ assert.equal(scoreLine([claim,t.snapshot()]).run,250);assert.deepEqual(RUN_RULE,{metresPerStep:20,pointsPerStep:25,cap:250,minSpeed:3,freeSeconds:.1});
  assert.equal(scoreLine([t.snapshot()]).run,0);assert.equal(scoreLine([t.snapshot(),claim]).run,0);
  const finishOnly=[{kind:'contact',body:'ground'},{kind:'ruling',targetHit:true},t.snapshot()];assert.equal(scoreLine(finishOnly).run,0);
- const receipt=recordLineReceipt([claim,t.snapshot()]);assert.equal(normalizeLineReceipt(receipt).run,150);assert.equal(scoreLine(normalizeLineEvidence([claim,t.snapshot()])).run,150);
+ const receipt=recordLineReceipt([claim,t.snapshot()]);assert.equal(normalizeLineReceipt(receipt).run,250);assert.equal(scoreLine(normalizeLineEvidence([claim,t.snapshot()])).run,250);
 });
 test('RUN excludes continuous manifolds, callback chatter, contact grace and settling motion',()=>{
  const t=createRunTracker();step(t,0,0,{claim:true});
@@ -105,7 +105,7 @@ test('real mill column→panel episode qualifies one assembly departure; post-ro
  const h=diverterHarness(hv,'A',true,selectOpenLineStation('gate'),{scoreLab:true});try{
   const r=h.shoot({...OPEN_LINE.defaultShot,charge:1},{launch:{position:[-18,7,79.3],velocity:[-25,3,1]}});
   const event=r.ledger.find(e=>e.kind==='redirect'&&e.feature==='mill-assembly');assert.ok(event);assert.equal(event.members.length,2);assert.equal(scoreLine(r.ledger).awards.filter(a=>a.tier==='COMMON').length,1);
-  const roof=h.shoot({railIndex:1,yaw:-14,elevation:65,charge:1});const receipt=scoreLine(roof.ledger);assert.equal(receipt.run,25);assert.ok(receipt.runDistance>=25&&receipt.runDistance<50);assert.ok(!receipt.claimIds.includes('seat'));
+  const roof=h.shoot({railIndex:1,yaw:-14,elevation:65,charge:1});const receipt=scoreLine(roof.ledger);assert.equal(receipt.run,50);assert.ok(receipt.runDistance>=40&&receipt.runDistance<60);assert.ok(!receipt.claimIds.includes('seat'));
  }finally{h.dispose();}
 });
 test('camera heading smoothly turns through a true 180-degree return instead of normalizing back to the old heading',()=>{
