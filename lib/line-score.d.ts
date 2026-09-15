@@ -7,7 +7,7 @@ export const VARIETY_RULE:Readonly<{pointsPerAdditionalClaim:number;cap:number}>
 export function scoreLine(ledger:readonly LineEvidence[],rules?:readonly PlaceholderRule[],variety?:typeof VARIETY_RULE,runRule?:typeof import("./line-run").RUN_RULE):{ruleSet:string;nonCanonical:boolean;total:number;run:number;runDistance:number;claimIds:string[];uniqueFeatureCount:number;secondary:number;claimTotal:number;awards:{id:string;tier:string;label:string;points:number;evidence:number[]}[];ignored:{index:number;reason:string}[]};
 export function normalizeLineEvidence(value:unknown):LineEvidence[];
 
-export function recordLineContact(ledger:LineEvidence[],node:{name:string;metadata?:{lineFeature?:{id:string;label:string};yardBank?:string;cascadeStep?:string;deliveryRoute?:string;yardLanding?:string}},point:VectorLike|null|undefined,diverterContact?:{kind:string}|null):void;
+export function recordLineContact(ledger:LineEvidence[],node:{name:string;metadata?:{lineSwitchLabel?:string;lineFeature?:{id:string;label:string};yardBank?:string;cascadeStep?:string;deliveryRoute?:string;yardLanding?:string}},point:VectorLike|null|undefined,diverterContact?:{kind:string}|null):void;
 
 export type RecordedLineReceipt={ruleSet:string;total:number;run:number;runDistance:number;claimIds:string[];uniqueFeatureCount:number;secondary:number;ending:string};
 export function recordLineReceipt(ledger:readonly LineEvidence[]):RecordedLineReceipt;

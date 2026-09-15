@@ -1,0 +1,10 @@
+import type {LineEvidence,scoreLine} from './line-score';
+export type SurveyMeta={build:string;card:string;station:string;setup:{railIndex:number;yaw:number;elevation:number;charge:number};launchSpeed:number;environment?:{floor:'A'|'B'}};
+export type SurveyTicket=SurveyMeta&{id:string;session:string;sequence:number;startedAt:string};
+export type SurveyRecord=SurveyTicket&{version:1;resolvedAt:string;ending:string;targetClear:boolean;receipt:Omit<ReturnType<typeof scoreLine>,'ignored'>;evidence:unknown[];contacts:unknown[];rawEventCount:number;rawContactCount:number;omittedEvidence:number;omittedContactGroups:number};
+export type SurveyStatus={count:number;pending:number;evicted:number;warning:string};
+export const SURVEY_LIMITS:Readonly<{attempts:number;bytes:number;recordBytes:number;journalBytes:number}>;
+export function makeSurveyRecord(ticket:SurveyTicket,ledger:LineEvidence[]):SurveyRecord;
+export function surveyCSV(records:SurveyRecord[]):string;
+export function createSurveyArchive(db:IDBFactory,limits?:typeof SURVEY_LIMITS):{append(record:SurveyRecord):Promise<{count:number;bytes:number;evicted:number}|undefined>;read():Promise<{records:SurveyRecord[];evicted:number}>;clear():Promise<void>};
+export function createSurveyLog(options:{storage:Storage;archive:ReturnType<typeof createSurveyArchive>;session?:string;onStatus?:(status:SurveyStatus)=>void}):{begin(meta:SurveyMeta):SurveyTicket;append(ticket:SurveyTicket,ledger:LineEvidence[]):void;export():Promise<{version:number;exportedAt:string;limits:typeof SURVEY_LIMITS;evicted:number;warning:string;records:SurveyRecord[]}>;clear():Promise<void>;ready():Promise<void>};

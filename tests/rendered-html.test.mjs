@@ -69,7 +69,7 @@ test("serves the Rail Golf experience and metadata", async () => {
   assert.match(lineHtml,/NON-CANONICAL PLACEHOLDERS/);assert.match(lineHtml,/LINE TOTAL/);
   assert.match(lineHtml,/04 Open Line, OPEN/);assert.doesNotMatch(lineHtml,/Saw Bay/);assert.match(lineHtml,/Yard Gate/);assert.match(lineHtml,/Lumber Walk/);assert.match(lineHtml,/MAX · 100%/);assert.match(html,/MAX · 100%/);assert.doesNotMatch(html,/Open Line|Saw Bay|VARIETY/);
   assert.match(lineHtml,/02 Switchback Gallery, OPEN/);assert.match(lineHtml,/03 Lumber Cascade, OPEN/);
-  assert.match(lineHtml,/line-hud-total/);assert.match(lineHtml,/>LINE<\/span>/);assert.doesNotMatch(lineHtml,/SHOOT SWITCH|floor-state-chip/);assert.doesNotMatch(html,/line-hud-total/);
+  assert.match(lineHtml,/line-hud-total/);assert.match(lineHtml,/>LINE<\/span>/);assert.match(lineHtml,/SHOOT SWITCH/);assert.match(lineHtml,/KICKER PALLET/);assert.match(lineHtml,/EXPORT SURVEY/);assert.match(lineHtml,/CLEAR SURVEY LOG/);assert.doesNotMatch(html,/KICKER PALLET|SURVEY LOG/);assert.doesNotMatch(html,/line-hud-total/);
   assert.match(lineHtml,/Copy current Set Power setup/);assert.doesNotMatch(lineHtml,/Dispatch Bay|Delivery route collection/);
   assert.doesNotMatch(html,/LINE TOTAL|NON-CANONICAL|Copy current Set Power/);
 
