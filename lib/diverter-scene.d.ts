@@ -8,7 +8,7 @@ export type DiverterHandles={
  contact(other:PhysicsBody,point:Vector3|null|undefined,shotId:number):DiverterContact|null;
  flush():FloorState|null;dispose():void;
 };
-export type DiverterOptions={overlay?:boolean;supports?:boolean;states?:Record<FloorState,{pitch:number;roll?:number;yOffset?:number;material:string}>;floor?:{x:number;y:number;z:number;width:number;height:number;depth:number};switch?:{x:number;y:number;z:number;width:number;height:number;depth:number};target?:{id:string;x:number;z:number;radius:number}};
+export type DiverterOptions={prefix?:string;palletBoards?:boolean;switchLabel?:string;feature?:{id:string;kind:string;label:string};overlay?:boolean;supports?:boolean;states?:Record<FloorState,{pitch:number;roll?:number;yOffset?:number;material:string}>;floor?:{x:number;y:number;z:number;width:number;height:number;depth:number};switch?:{x:number;y:number;z:number;width:number;height:number;depth:number};target?:{id:string;x:number;z:number;radius:number}|null};
 export function buildDiverterLab(scene:Scene,root:TransformNode,materials:Record<string,StandardMaterial>,shadows:Pick<ShadowGenerator,'addShadowCaster'|'removeShadowCaster'>,initial?:FloorState,options?:DiverterOptions):DiverterHandles;
 
 export type YardLandingAuthority=Pick<DiverterHandles,'state'|'setState'|'contact'|'flush'|'dispose'>;
