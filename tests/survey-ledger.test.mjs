@@ -37,6 +37,11 @@ test('collision compaction keeps counts/source indices and all score accounting;
  const huge=makeSurveyRecord({...meta,id:'h',session:'h',sequence:1,startedAt:'now'},Array.from({length:1000},(_,i)=>({kind:'rejected',reason:'turn-too-small',feature:'feature-'+i,point:{x:1,y:2,z:3}})));
  assert.ok(huge.omittedEvidence>0);assert.ok(new TextEncoder().encode(JSON.stringify(huge)).length<=SURVEY_LIMITS.recordBytes);
 });
+test('long assembly evidence retains every member and physical velocities in the survey',()=>{
+ const event={kind:'redirect',feature:'mill-assembly',surface:'mill',members:['roof-a','roof-b','post-a','post-b','wall'],incoming:{x:10,y:-2,z:4},outgoing:{x:-6,y:3,z:7},point:{x:-30,y:15,z:80}};
+ const record=makeSurveyRecord({...meta,id:'assembly',session:'s',sequence:1,startedAt:'now'},[event]);
+ assert.deepEqual(record.evidence[0].members,event.members);assert.deepEqual(record.evidence[0].outgoing,event.outgoing);assert.equal(record.receipt.total,100);
+});
 test('blocked journal is visible and archive/export still preserve attempts',async()=>{
  const storage={get length(){throw Error('blocked');},removeItem(){throw Error('blocked');}};const log=createSurveyLog({storage,archive:createSurveyArchive(new IDBFactory()),session:'blocked'});
  log.append(log.begin(meta),ledger);const data=await log.export();assert.equal(data.records.length,1);assert.ok(data.warning.includes('blocked'));
