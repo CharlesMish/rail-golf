@@ -1,5 +1,10 @@
 import type {ActionEntry} from './lab-controls';
+import type {BrowserIdentity,MountIdentity} from './browser-provenance';
 export const ACTION_TRACE_LIMITS:Readonly<{entries:number;bytes:number}>;
-export type ActionTraceExport={version:number;limits:typeof ACTION_TRACE_LIMITS;retired:number;warning:string;entries:(ActionEntry&{build:string;session:string;sequence:number;timestamp:string;monotonicMs:number})[]};
-export function createActionTrace(options:{storage:Storage;build:string;session?:string;limits?:typeof ACTION_TRACE_LIMITS}):{append:(entry:ActionEntry)=>void;export:()=>ActionTraceExport;clear:()=>void};
+export type TraceScope='mount'|'document'|'tab'|'all';
+export type TraceContext=Partial<BrowserIdentity&MountIdentity>;
+export type TraceInput=ActionEntry&{category?:'action'|'lifecycle'|'diagnostic';detail?:Record<string,unknown>};
+export type TraceEntry=TraceInput&TraceContext&{build:string;session:string;sequence:number;timestamp:string;monotonicMs:number};
+export type ActionTraceExport={version:number;limits:typeof ACTION_TRACE_LIMITS;scope:TraceScope;active:TraceContext&{session:string;build:string};retired:number;retainedTotal:number;legacyWithoutIdentity:number;warning:string;entries:TraceEntry[];sessions:Record<string,unknown>[]};
+export function createActionTrace(options:{storage:Storage;build:string;session?:string;limits?:typeof ACTION_TRACE_LIMITS;context?:()=>TraceContext}):{append:(entry:TraceInput)=>void;export:(scope?:TraceScope)=>ActionTraceExport;summary:()=>TraceContext&{session:string;count:number};clear:()=>void};
 export function actionTraceCSV(trace:ActionTraceExport):string;

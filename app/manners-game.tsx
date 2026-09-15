@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import {buildKickerPallet,KICKER_PALLET,KICKER_SWITCH} from '@/lib/kicker-pallet';
 import {createSurveyLog,createSurveyArchive,type SurveyTicket,type SurveyStatus} from '@/lib/survey-ledger';
 import {createLabControl,createLabGestureGate,captureLabLaunch,returnLabToSetup,type ActionSource} from '@/lib/lab-controls';
+import {createLabSelection,createSelectionWitness,type SelectionDiagnostic} from '@/lib/lab-selection';
+import {getDocumentProvenance,observeBrowserLifecycle} from '@/lib/browser-provenance';
 import {createActionTrace} from '@/lib/action-trace';
 import {SurveyTools} from './survey-tools';
 import {
@@ -339,9 +341,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
-  const lineCardsRef = useRef<GameCard[]>([...LINE_CARDS]);
-  const [,refreshStation] = useState(0);
-  const HOLES: readonly GameCard[] = lineLab ? lineCardsRef.current : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
+  const [labSelection]=useState(()=>createLabSelection(LINE_CARDS));
+  const labSnapshot=useSyncExternalStore(labSelection.subscribe,labSelection.getSnapshot,labSelection.getServerSnapshot);
+  const HOLES: readonly GameCard[] = lineLab ? labSelection.cards : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
   const STORAGE_KEY = lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
@@ -350,6 +352,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [liveLineTotal,setLiveLineTotal] = useState(0);
   const [sessionBest,setSessionBest] = useState<Record<string,number>>({});
+  const componentIdRef=useRef<string|null>(null);
+  const visibleCardRef=useRef<HTMLElement|null>(null);
+  const selectionWitnessRef=useRef<ReturnType<typeof createSelectionWitness>|null>(null);
+  const [selectionNotice,setSelectionNotice]=useState('');
   const actionTraceRef=useRef<ReturnType<typeof createActionTrace>|null>(null);
   const labControlRef=useRef<ReturnType<typeof createLabControl>|null>(null);
   const gestureGateRef=useRef(createLabGestureGate());
@@ -367,7 +373,6 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     // Access through methods so blocked storage is reported by the journal, not a boot crash.
     const storage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit survey clear');}};
     let mounted=true;
-    actionTraceRef.current=createActionTrace({storage,build:BUILD_ID});
     surveyLogRef.current=createSurveyLog({storage,archive:createSurveyArchive(window.indexedDB),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
   },[lineLab]);
@@ -418,7 +423,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
   const [phase, setPhase] = useState<Phase>("booting");
   const [addressLabMode, setAddressLabMode] = useState<AddressLabMode | null>(null);
-  const [holeIndex, setHoleIndex] = useState(0);
+  const [productionHoleIndex, setHoleIndex] = useState(0);
+  const holeIndex=lineLab?labSnapshot.index:productionHoleIndex;
   const [records, setRecords] = useState<ProgressRecords>({});
   const [yaw, setYaw] = useState(HOLES[0].defaultShot.yaw);
   const [elevation, setElevation] = useState(HOLES[0].defaultShot.elevation);
@@ -442,11 +448,18 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [recalledPower, setRecalledPower] = useState<number | null>(null);
   const [bootMessage, setBootMessage] = useState("Opening the mechanism range");
 
-  const readControlState = () => ({phase:phaseRef.current,card:HOLES[holeIndexRef.current].id,
-    station:HOLES[holeIndexRef.current].station?.id??'gate',floor:floorStateRef.current,attempt:activeTicketRef.current,
+  const activeHoleIndex=()=>lineLab?labSelection.getSnapshot().index:holeIndexRef.current;
+  const publishHoleIndex=(index:number)=>{if(lineLab)labSelection.select(index);else{holeIndexRef.current=index;setHoleIndex(index);}};
+  const checkVisibleSelection=(stage:string)=>{
+    const node=visibleCardRef.current;if(!lineLab||!node||!selectionWitnessRef.current)return true;
+    return selectionWitnessRef.current.check({card:node.getAttribute('data-active-card')??'missing',station:node.getAttribute('data-active-station')??'missing'},readControlState(),stage);
+  };
+  useLayoutEffect(()=>{if(lineLab)checkVisibleSelection('react-commit');});
+  const readControlState = () => ({phase:phaseRef.current,card:HOLES[activeHoleIndex()].id,
+    station:HOLES[activeHoleIndex()].station?.id??'gate',floor:floorStateRef.current,attempt:activeTicketRef.current,
     setup:{railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:powerModeRef.current==='set'?selectedPowerRef.current:chargeRef.current}});
   const perform = (method:keyof GameActions,args:unknown[]=[],source:ActionSource='internal/programmatic') => {
-    if(lineLab){const accepted=labControlRef.current?.run(method,args,source)??false;if(accepted)setControlError('');return accepted;}
+    if(lineLab){if(source!=='internal/programmatic'&&method!=='cancelCharge'&&!checkVisibleSelection('before-'+method))return false;const accepted=labControlRef.current?.run(method,args,source)??false;if(accepted)setControlError('');return accepted;}
     // Production retains its original handlers and guards.
     const action=actionsRef.current[method] as ((...values:unknown[])=>void)|undefined;
     action?.(...args);return Boolean(action);
@@ -539,8 +552,26 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    if(lineLab)labControlRef.current=createLabControl({read:readControlState,handlers:()=>actionsRef.current,request:(method,args)=>({...((method==='selectHole'&&typeof args[0]==='number')?{card:HOLES[args[0]]?.id}:{}),...(method==='selectStation'?{station:String(args[0])}:{})}),
-      record:entry=>actionTraceRef.current?.append(entry),onError:error=>setControlError('Control action failed: '+error+'. Action trace retained; export Survey JSON.')});
+    const documentIdentity=lineLab?getDocumentProvenance(window,document):null;
+    if(lineLab&&!componentIdRef.current)componentIdRef.current=crypto.randomUUID();
+    const mountIdentity=documentIdentity?.mount(componentIdRef.current!);
+    const traceStorage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit trace clear');}};
+    const mountTrace=documentIdentity?createActionTrace({storage:traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
+    const lifecycle=(event:string,detail:Record<string,unknown>={})=>{const state=readControlState();mountTrace?.append({category:'lifecycle',action:event,source:'internal/programmatic',before:state,after:state,accepted:true,reason:'observed',detail});};
+    let stopLifecycle=()=>{};
+    if(lineLab&&mountTrace&&documentIdentity){
+      actionTraceRef.current=mountTrace;
+      selectionWitnessRef.current=createSelectionWitness((diagnostic:SelectionDiagnostic)=>{
+        const state=readControlState();mountTrace.append({category:'diagnostic',action:diagnostic.kind,source:'internal/programmatic',before:state,after:state,accepted:diagnostic.kind!=='state-divergence',reason:diagnostic.stage,detail:{...diagnostic}});
+        setSelectionNotice(diagnostic.kind==='state-divergence'?`STATE DIVERGENCE · rendered ${diagnostic.rendered.card}/${diagnostic.rendered.station} · authority ${diagnostic.authority.card}/${diagnostic.authority.station}`:'');
+      });
+      lifecycle('authority-mount',{kind:'game-initialization-effect'});
+      stopLifecycle=observeBrowserLifecycle({win:window,doc:document,canvas,identity:documentIdentity,record:lifecycle});
+      checkVisibleSelection('authority-mount');
+    }
+    const mountControl=lineLab?createLabControl({read:readControlState,handlers:()=>actionsRef.current,request:(method,args)=>({...((method==='selectHole'&&typeof args[0]==='number')?{card:HOLES[args[0]]?.id}:{}),...(method==='selectStation'?{station:String(args[0])}:{})}),
+      record:entry=>mountTrace?.append(entry),onError:error=>setControlError('Control action failed: '+error+'. Action trace retained; export Survey JSON.')}):null;
+    if(mountControl){labControlRef.current=mountControl;setGamePhase('booting');}
     let disposed = false;
     let engine: Engine | null = null;
     let scene: Scene | null = null;
@@ -556,7 +587,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             const route=lineLab?'/lab/lines':'/lab/courtyard-diverter';
             if(parsed.route!==route) throw new Error('This shared line belongs to a different lab route.');
             sharedStart=restoreShareLine(parsed,BUILD_ID);
-            if(lineLab&&sharedStart.card==='open-line')lineCardsRef.current[3]=selectOpenLineStation(sharedStart.station,{allowParked:true});
+            if(lineLab&&sharedStart.card==='open-line')labSelection.replaceOpenLine(selectOpenLineStation(sharedStart.station,{allowParked:true}));
             floorStateRef.current=sharedStart.environment.floor;setFloorState(sharedStart.environment.floor);
             setShareNotice([sharedStart.warning,lineLab?'Shared setup loaded. Starting Kicker Pallet state restored. Press Fire to try the line.':'Shared setup loaded. Press Fire to try the line.'].filter(Boolean).join(' '));
           }catch{setShareNotice('Invalid or incompatible line link. Authored starting setup retained.');}}
@@ -566,7 +597,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         setAddressLabMode(labMode);
         setBootMessage("Loading Havok once");
         const havok = await HavokPhysics();
-        if (disposed) return;
+        if (disposed) {lifecycle('initialization-abandoned',{stage:'after-havok'});return;}
 
         engine = new Engine(canvas, true, {
           antialias: true,
@@ -876,22 +907,22 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const getAimDirection = () => {
-          const raw = stationAim({yaw:yawRef.current, elevation:elevationRef.current}, HOLES[holeIndexRef.current].station);
+          const raw = stationAim({yaw:yawRef.current, elevation:elevationRef.current}, HOLES[activeHoleIndex()].station);
           return new Vector3(raw.x, raw.y, raw.z);
         };
 
         const getHorizontalDirection = () => {
-          const yawRadians = ((yawRef.current + (HOLES[holeIndexRef.current].station?.yaw ?? 0)) * Math.PI) / 180;
+          const yawRadians = ((yawRef.current + (HOLES[activeHoleIndex()].station?.yaw ?? 0)) * Math.PI) / 180;
           return new Vector3(Math.sin(yawRadians), 0, Math.cos(yawRadians));
         };
 
         const getMuzzle = () => {
-          const muzzle = stationMuzzle({ railIndex:railRef.current, yaw:yawRef.current, elevation:elevationRef.current }, HOLES[holeIndexRef.current].station);
+          const muzzle = stationMuzzle({ railIndex:railRef.current, yaw:yawRef.current, elevation:elevationRef.current }, HOLES[activeHoleIndex()].station);
           return new Vector3(muzzle.x, muzzle.y, muzzle.z);
         };
 
         const updateLauncher = () => {
-          const station = HOLES[holeIndexRef.current].station;
+          const station = HOLES[activeHoleIndex()].station;
           const rail = stationRailPosition(railRef.current, station);
           launcher.position.set(rail.x, 0, rail.z);
           launcher.rotation.y = (station?.yaw ?? 0) * Math.PI / 180;
@@ -1370,7 +1401,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const makeGhost = (memory: ShotMemory | undefined) => {
           disposeGhost();
-          if (!memory || memory.points.length < 2 || memory.holeId !== HOLES[holeIndexRef.current].id) return;
+          if (!memory || memory.points.length < 2 || memory.holeId !== HOLES[activeHoleIndex()].id) return;
           const attempts = compareRef.current ? [memory, ...(historyRef.current[memory.holeId] ?? []).filter(s => s.projectileId !== memory.projectileId)].slice(0,3) : [memory];
           const lines: Vector3[][] = [];
           const colors: Color4[][] = [];
@@ -1412,7 +1443,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             ? new Color3(0.75, 0.2, 1)
             : outcome === "wet"
             ? new Color3(0.04, 0.55, 0.72)
-            : outcome === "ace" || outcome === "double" || (lineLab && !HOLES[holeIndexRef.current].target && kind === "first-kiss")
+            : outcome === "ace" || outcome === "double" || (lineLab && !HOLES[activeHoleIndex()].target && kind === "first-kiss")
               ? new Color3(0.09, 0.8, 0.86)
               : new Color3(1, 0.26, 0.025);
           const material = makeMaterial(`impact-${performance.now()}`, color, color.scale(0.85), 0.2);
@@ -1425,7 +1456,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ring.position.copyFrom(position);
           if (kind?.startsWith("bank")) {
             ring.rotation.z = Math.PI / 2;
-            ring.rotation.y = ((HOLES[holeIndexRef.current].banks?.find(bank => bank.id === kind)?.yaw) ?? 0) * Math.PI / 180;
+            ring.rotation.y = ((HOLES[activeHoleIndex()].banks?.find(bank => bank.id === kind)?.yaw) ?? 0) * Math.PI / 180;
           }
           else if (kind === "breach") ring.rotation.x = Math.PI / 2;
           else if (!kind?.startsWith("step-") && !kind?.startsWith("floor-") && !kind?.startsWith("switch-") && kind !== "sky" && kind !== "mill") ring.position.y = Math.min(position.y, 0.42);
@@ -1452,7 +1483,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const registerDeliveryRoute = (route: DeliveryRoute, at: Vector3) => {
-          if (!flight || flight.locked || (!lineLab && HOLES[holeIndexRef.current].id !== 'mill-delivery') || flight.deliveryRoutes.has(route)) return;
+          if (!flight || flight.locked || (!lineLab && HOLES[activeHoleIndex()].id !== 'mill-delivery') || flight.deliveryRoutes.has(route)) return;
           flight.deliveryRoutes.add(route);
           setDeliveryLive([...flight.deliveryRoutes]);
           if (route === 'sky' || route === 'mill') {
@@ -1502,7 +1533,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const triggerBreach = (at: Vector3) => {
           if (!registerMechanism("breach", at)) return false;
           let relaunched = false;
-          const hole = HOLES[holeIndexRef.current];
+          const hole = HOLES[activeHoleIndex()];
           if (flight && hole.breachRecoveryY !== null) {
             const velocity = flight.aggregate.body.getLinearVelocity();
             const verticalImpulse = verticalRecoveryImpulse(velocity.y, hole.breachRecoveryY);
@@ -1546,8 +1577,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){const run=current.runTracker.snapshot();if(run)appendLineEvidence(current.ledger,run);}
           if(lineLab){if(!current.ledger.some(e=>e.kind==='termination'))appendLineEvidence(current.ledger,{kind:'termination',reason:'retry-interrupted'});current.redirectTracker.finish();for(const e of current.redirectTracker.drainDiagnostics())appendLineEvidence(current.ledger,e);}
           if(lineLab&&current.surveyTicket)surveyLogRef.current?.append(current.surveyTicket,current.ledger);
-          if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));setSessionBest(best=>({...best,[HOLES[holeIndexRef.current].id]:Math.max(best[HOLES[holeIndexRef.current].id]??0,scoreLine(current.ledger).total)}));}
-          const hole = current.launchContext?HOLES.find(card=>card.id===current.launchContext!.card)!:HOLES[holeIndexRef.current];
+          if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));setSessionBest(best=>({...best,[HOLES[activeHoleIndex()].id]:Math.max(best[HOLES[activeHoleIndex()].id]??0,scoreLine(current.ledger).total)}));}
+          const hole = current.launchContext?HOLES.find(card=>card.id===current.launchContext!.card)!:HOLES[activeHoleIndex()];
           const memory: ShotMemory = {
             ...current.setup,
             ...(courtyardDiverter ? {build:BUILD_ID} : {}),
@@ -1573,7 +1604,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const lockRuling = (outcome: Outcome, at: Vector3, contactKind?: EvidenceKind, safetyReason?:string) => {
           if (!flight || flight.locked) return;
-          const hole = HOLES[holeIndexRef.current];
+          const hole = HOLES[activeHoleIndex()];
           flight.locked = true;
           flight.lockedAt = performance.now();
           impactFocus.copyFrom(at);
@@ -1653,7 +1684,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           return libraryRef.current[hole.id]?.recent.find(s=>s.stationId===hole.station?.id);
         };
         const chooseOpenStation = (id:string,allowParked=false) => {
-          lineCardsRef.current[3]=selectOpenLineStation(id,{allowParked});refreshStation(n=>n+1);
+          labSelection.replaceOpenLine(selectOpenLineStation(id,{allowParked}));
         };
         const exactPower = (charge:number) => {
           clearMax(); powerModeRef.current='set';setPowerMode('set');
@@ -1670,9 +1701,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           for (const effect of theatreFx) { effect.mesh.dispose(); effect.material.dispose(); }
           theatreFx = [];
           const hole = HOLES[index];
-          holeIndexRef.current = index;
+          publishHoleIndex(index);
           if(hole.mode!=="score-only")stationHoleRef.current[hole.station?.id ?? "gate"] = index;
-          setHoleIndex(index);
           setResult(null);
           setMechanismInFlight(null);
           setDeliveryLive([]);
@@ -1697,7 +1727,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){setLineLedger(memory?.ledger ?? []);setLiveLineTotal(scoreLine(memory?.ledger ?? []).total);}
           impactFocus.set(hole.target?.x ?? hole.survey.targetX, 0.5, hole.target?.z ?? hole.survey.targetZ);
           setGamePhase("ready");
-          if(before)actionTraceRef.current?.append({action:'load-card',source:labControlRef.current?.source()??'internal/programmatic',before,after:readControlState(),accepted:true,reason:'course-loaded'});
+          if(before)mountTrace?.append({action:'load-card',source:labControlRef.current?.source()??'internal/programmatic',before,after:readControlState(),accepted:true,reason:'course-loaded'});
         };
 
         const beginCharge = () => {
@@ -1731,7 +1761,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             railIndex: railRef.current,
             charge: launchCharge(powerModeRef.current, selectedPowerRef.current, performance.now() - chargeStartedAt, maxPowerRef.current),
           };
-          const launchContext=lineLab?captureLabLaunch(HOLES[holeIndexRef.current],setup,{floor:floorStateRef.current},BUILD_ID):undefined;
+          const launchContext=lineLab?captureLabLaunch(HOLES[activeHoleIndex()],setup,{floor:floorStateRef.current},BUILD_ID):undefined;
           const direction=launchContext?new Vector3(launchContext.direction.x,launchContext.direction.y,launchContext.direction.z):getAimDirection();
           const muzzle=launchContext?new Vector3(launchContext.muzzle.x,launchContext.muzzle.y,launchContext.muzzle.z):getMuzzle();
           followDirection = getHorizontalDirection();
@@ -1834,7 +1864,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             if (step) registerMechanism(step, (event.point ?? bodyMesh.position).clone());
             if (other.transformNode.metadata?.deliveryRoute === 'mill') {
               const point = (event.point ?? bodyMesh.position).clone();
-              if (HOLES[holeIndexRef.current].id === 'mill-delivery') registerDeliveryRoute('mill', point);
+              if (HOLES[activeHoleIndex()].id === 'mill-delivery') registerDeliveryRoute('mill', point);
               else if (!flight.contacts.some(c => c.kind === 'mill')) flight.contacts.push({id:`${flight.projectileId}-mill`, kind:'mill', point});
             }
           });
@@ -1857,13 +1887,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const returnLab = (mode:'retry'|'adjust'|'reset') => {
           let interrupted=false;
           returnLabToSetup(mode,{
-            interrupt:()=>{if(flight&&!flight.locked){flight.points.push(flight.bodyMesh.position.clone());rememberFlight('Interrupted · no landing ruling');const id=flight.launchContext?.card??HOLES[holeIndexRef.current].id;persistRecords({...recordsRef.current,[id]:interruptedRecord(recordsRef.current[id])});interrupted=true;}},
+            interrupt:()=>{if(flight&&!flight.locked){flight.points.push(flight.bodyMesh.position.clone());rememberFlight('Interrupted · no landing ruling');const id=flight.launchContext?.card??HOLES[activeHoleIndex()].id;persistRecords({...recordsRef.current,[id]:interruptedRecord(recordsRef.current[id])});interrupted=true;}},
             cancel:()=>{cancelCharge();chargePointerRef.current=null;keyboardChargeRef.current=null;dragPointer=null;},
-            memory:()=>memoryFor(HOLES[holeIndexRef.current]),environment:()=>floorStateRef.current,
+            memory:()=>memoryFor(HOLES[activeHoleIndex()]),environment:()=>floorStateRef.current,
             restoreEnvironment:state=>{floorStateRef.current=state;setFloorState(state);},
-            load:restore=>{loadHole(holeIndexRef.current,restore);},exactPower,
+            load:restore=>{loadHole(activeHoleIndex(),restore);},exactPower,
           });
-          const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[holeIndexRef.current].station),origin=new Vector3(rail.x,.4,rail.z);
+          const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[activeHoleIndex()].station),origin=new Vector3(rail.x,.4,rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0,7.4,0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0,3.2,0)));camera.setTarget(cameraTarget);
           setRetryNotice(mode==='reset'?'Card reset. PALLET A restored. Saved lines and survey log kept.':mode==='adjust'?'Last line restored with its starting pallet state and exact power. Adjust and fire.':interrupted?'Shot interrupted and recorded. Current pallet state preserved.':'Last setup restored. Current pallet state preserved.');
@@ -1878,16 +1908,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if (flight && !flight.locked) {
             flight.points.push(flight.bodyMesh.position.clone());
             rememberFlight('Interrupted · no landing ruling');
-            const id = HOLES[holeIndexRef.current].id;
+            const id = HOLES[activeHoleIndex()].id;
             persistRecords({ ...recordsRef.current, [id]: interruptedRecord(recordsRef.current[id]) });
             interrupted = true;
           }
           cancelCharge(); chargePointerRef.current = null;
           if (diverterLab) floorStateRef.current = floorForAction(floorStateRef.current, 'retry');
-          loadHole(holeIndexRef.current, true);
+          loadHole(activeHoleIndex(), true);
           // A retry is immediate; do not spend another second flying the camera home.
           const direction = getHorizontalDirection();
-          const rail = stationRailPosition(railRef.current, HOLES[holeIndexRef.current].station);
+          const rail = stationRailPosition(railRef.current, HOLES[activeHoleIndex()].station);
           const origin = new Vector3(rail.x, .4, rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
@@ -1900,11 +1930,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if (diverterLab) {
             if (phaseRef.current === 'booting' || phaseRef.current === 'error') return;
             retry(); floorStateRef.current = floorForAction(floorStateRef.current, 'reset');
-            setFloorState(floorStateRef.current); loadHole(lineLab?holeIndexRef.current:0, false);
+            setFloorState(floorStateRef.current); loadHole(lineLab?activeHoleIndex():0, false);
             setRetryNotice(lineLab?'Card reset. PALLET A restored. Saved lines and survey log kept.':'Card reset. FLOOR A restored. Saved lines kept.'); return;
           }
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
-          loadHole(holeIndexRef.current, restore);
+          loadHole(activeHoleIndex(), restore);
         };
 
         const nudgeYaw = (amount: number) => {
@@ -1930,7 +1960,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const restoreLine = () => {
           if (phaseRef.current !== "ready") return;
-          const memory = memoryFor(HOLES[holeIndexRef.current]);
+          const memory = memoryFor(HOLES[activeHoleIndex()]);
           if (!memory) return 'no-saved-line';
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
@@ -1942,7 +1972,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const recallAttempt = (id: number) => {
           if (phaseRef.current !== 'ready' && phaseRef.current !== 'result') return;
-          const holeId = HOLES[holeIndexRef.current].id;
+          const holeId = HOLES[activeHoleIndex()].id;
           const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
           if (!memory) return 'no-saved-line';
           if(lineLab&&holeId==='open-line')chooseOpenStation(memory.stationId,true);
@@ -1952,7 +1982,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
             setFloorState(floorStateRef.current);
           }
-          loadHole(holeIndexRef.current, true);
+          loadHole(activeHoleIndex(), true);
           if (diverterLab) setRetryNotice(lineLab?'Recall restored PALLET ' + floorStateRef.current + ', aim and exact power.':'Recall restored FLOOR ' + floorStateRef.current + ', aim and power marker.');
         };
 
@@ -1969,8 +1999,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const nextHole = () => {
           if (phaseRef.current !== "result" && phaseRef.current !== "ready") return;
-          const next = Math.min(HOLES.length - 1, holeIndexRef.current + 1);
-          if (next === holeIndexRef.current) {
+          const next = Math.min(HOLES.length - 1, activeHoleIndex() + 1);
+          if (next === activeHoleIndex()) {
             loadHole(0, false);
             return;
           }
@@ -1988,7 +2018,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         actionsRef.current = {
           selectStation: (id) => {
             if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
-            if(lineLab&&HOLES[holeIndexRef.current].mode==='score-only'){chooseOpenStation(id);loadHole(3,true);return;}
+            if(lineLab&&HOLES[activeHoleIndex()].mode==='score-only'){chooseOpenStation(id);loadHole(3,true);return;}
             const index = stationHoleRef.current[id];
             if (index !== undefined) loadHole(index, true);
           },
@@ -1997,7 +2027,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             maxPowerRef.current=maxLatchAfter(maxPowerRef.current,'toggle');setMaxPower(maxPowerRef.current);
           },
           retry, recallAttempt,
-          compareAttempts: () => makeGhost(memoriesRef.current[HOLES[holeIndexRef.current].id]),
+          compareAttempts: () => makeGhost(memoriesRef.current[HOLES[activeHoleIndex()].id]),
           recallRoute,
           beginCharge,
           release: fire,
@@ -2059,7 +2089,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         scene.onBeforePhysicsObservable.add(() => {
           if (!flight || flight.locked || phaseRef.current !== "flight") return;
           if(lineLab){flight.runTracker.beginStep();flight.redirectTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);flight.sawMillTracker.beginStep(flight.aggregate.body.getLinearVelocity(),flight.physicsElapsed);}
-          const hole = HOLES[holeIndexRef.current];
+          const hole = HOLES[activeHoleIndex()];
           if (hole.wind.x === 0 && hole.wind.z === 0) return;
           const force = new Vector3(
             hole.wind.x * RAIL_RULES.projectileMass,
@@ -2072,7 +2102,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         scene.onAfterPhysicsObservable.add(() => {
           if (!flight || flight.locked || phaseRef.current !== "flight") return;
           flight.physicsElapsed += 1 / 120;
-          const hole = HOLES[holeIndexRef.current];
+          const hole = HOLES[activeHoleIndex()];
           const previous = flight.previousPhysicsPosition;
           const current = flight.bodyMesh.position.clone();
           if(lineLab){
@@ -2187,10 +2217,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const startHole = HOLES[startIndex];
         const entryBefore=lineLab?readControlState():null;
         createCourse(startHole);
-        holeIndexRef.current = startIndex;
-        setHoleIndex(startIndex);
+        publishHoleIndex(startIndex);
         updateSetup(sharedStart?.setup ?? resolveOpeningAddress(startHole, addressLabRef.current));
-        if(entryBefore)actionTraceRef.current?.append({action:sharedStart?'restore-share':'session-entry',source:sharedStart?'restore/share':'internal/programmatic',before:entryBefore,after:readControlState(),accepted:true,reason:sharedStart?'shared-setup':'saved-progress-resume'});
+        if(entryBefore)mountTrace?.append({action:sharedStart?'restore-share':'session-entry',source:sharedStart?'restore/share':'internal/programmatic',before:entryBefore,after:readControlState(),accepted:true,reason:sharedStart?'shared-setup':'saved-progress-resume'});
         if(sharedStart){clearMax();powerModeRef.current="set";setPowerMode("set");selectedPowerRef.current=sharedStart.setup.charge;setSelectedPower(sharedStart.setup.charge);setRecalledPower(sharedStart.setup.charge);}
         impactFocus.set(startHole.target?.x ?? startHole.survey.targetX, 0.5, startHole.target?.z ?? startHole.survey.targetZ);
         const remembered = memoryFor(startHole);
@@ -2226,7 +2255,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const recoil = recoilAge < 0.5 ? Math.sin(Math.min(1, recoilAge / 0.075) * Math.PI / 2) * Math.exp(-recoilAge * 10) : 0;
           elevationPivot.position.z = -recoil * 0.48;
           elevationPivot.position.y = -recoil * 0.055;
-          const hole = HOLES[holeIndexRef.current];
+          const hole = HOLES[activeHoleIndex()];
           const stationRail = stationRailPosition(railRef.current, hole.station);
           const launcherPosition = new Vector3(stationRail.x, 0.4, stationRail.z);
           const horizontalAim = getHorizontalDirection();
@@ -2457,6 +2486,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           canvas.removeEventListener("contextmenu", preventContext);
         };
       } catch (error) {
+        if(lineLab&&disposed){lifecycle('initialization-abandoned',{error:String(error),stage:'catch-after-dispose'});return;}
+        lifecycle('initialization-error',{error:String(error)});
         console.error(error);
         setBootMessage(error instanceof Error && /WebGL not supported/i.test(error.message)
           ? "3D graphics are unavailable in this browser. Try a browser with WebGL enabled."
@@ -2467,14 +2498,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
     let removeListeners: (() => void) | undefined;
     void initialize().then((cleanup) => {
+      if(disposed){cleanup?.();return;}
       removeListeners = cleanup;
     });
 
     return () => {
       disposed = true;
       removeListeners?.();
-      if(lineLab&&labControlRef.current)labControlRef.current.transition('session-dispose',()=>{actionsRef.current={};});
+      if(mountControl)mountControl.transition('session-dispose',()=>{actionsRef.current={};});
       else actionsRef.current = {};
+      stopLifecycle();
       worldRef.current = null;
       audioMasterRef.current = null;
       audioContext?.close().catch(() => undefined);
@@ -2485,7 +2518,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
   const copyLineLink = async (saved?:ShotMemory) => {
     try{
-      const card=HOLES[holeIndexRef.current];
+      const card=HOLES[activeHoleIndex()];
       const setup=saved ?? {railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
       const encoded=encodeShareLine({v:1,build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard',route:lineLab?'/lab/lines':'/lab/courtyard-diverter',card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}});
       const url=new URL(lineLab?'/lab/lines':'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
@@ -2494,7 +2527,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       catch{setShareNotice('Clipboard unavailable. Copy the line link below.');}
     }catch{setShareNotice('This saved line is missing valid setup or environment evidence.');}
   };
-  const hole = HOLES[holeIndex];
+  const hole = lineLab?labSnapshot.hole:HOLES[holeIndex];
   const labChip = hole.id === "timber-bank" ? addressLabChipLabel(addressLabMode) : null;
   const record = records[hole.id] ?? EMPTY_RECORD;
   const attempt = phase === "theatre" || phase === "result"
@@ -2565,7 +2598,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       }:undefined}
       onKeyDownCapture={lineLab?event=>{if(event.repeat&&(event.code==='Space'||event.code==='Enter')&&event.target instanceof Element&&event.target.closest('button,summary')){event.preventDefault();event.stopPropagation();}}:undefined}
     >
-      {lineLab&&controlError&&<div className="line-control-error" role="alert">{controlError}</div>}
+      {lineLab&&(selectionNotice||controlError)&&<div className="line-control-error" role="alert">{selectionNotice||controlError}</div>}
       <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}</small>
       {diverterLab && <>
         <div className="floor-state-chip" role="status">FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}</div>
@@ -2639,7 +2672,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
       <aside inert={lineLab&&phase==='result'?true:undefined} className="hole-brief manners-brief">
         <p className="eyebrow">{lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
-        <strong data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{hole.name}</strong>
+        <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{hole.name}</strong>
         <span>{lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
         {lineLab && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
         <Button
