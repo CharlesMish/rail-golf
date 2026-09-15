@@ -66,7 +66,13 @@ test("serves the Rail Golf experience and metadata", async () => {
   const lineResponse=await worker.fetch(new Request("http://localhost/lab/lines",{headers:{accept:"text/html"}}),
     {ASSETS:{fetch:async()=>new Response("Not found",{status:404})}},{waitUntil(){},passThroughOnException(){}});
   assert.equal(lineResponse.status,200);const lineHtml=await lineResponse.text();
-  assert.match(lineHtml,/NON-CANONICAL PLACEHOLDERS/);assert.match(lineHtml,/LINE TOTAL/);
+  assert.match(lineHtml,/NON-CANONICAL PLACEHOLDERS/);
+  // Boot must not mount an interactive forensic overlay above the boot/error UI.
+  assert.doesNotMatch(lineHtml,/class="line-receipt/);
+  assert.match(lineHtml,/data-line-lab="true"/);
+  assert.match(lineHtml,/data-active-card="mill-delivery" data-active-station="gate"/);
+  assert.match(lineHtml,/Action trace/);
+  assert.doesNotMatch(html,/data-line-lab="true"|Action trace/);
   assert.match(lineHtml,/04 Open Line, OPEN/);assert.doesNotMatch(lineHtml,/Saw Bay/);assert.match(lineHtml,/Yard Gate/);assert.match(lineHtml,/Lumber Walk/);assert.match(lineHtml,/MAX · 100%/);assert.match(html,/MAX · 100%/);assert.doesNotMatch(html,/Open Line|Saw Bay|VARIETY/);
   assert.match(lineHtml,/02 Switchback Gallery, OPEN/);assert.match(lineHtml,/03 Lumber Cascade, OPEN/);
   assert.match(lineHtml,/line-hud-total/);assert.match(lineHtml,/>LINE<\/span>/);assert.match(lineHtml,/SHOOT SWITCH/);assert.match(lineHtml,/KICKER PALLET/);assert.match(lineHtml,/EXPORT SURVEY/);assert.match(lineHtml,/CLEAR SURVEY LOG/);assert.doesNotMatch(html,/KICKER PALLET|SURVEY LOG/);assert.doesNotMatch(html,/line-hud-total/);
