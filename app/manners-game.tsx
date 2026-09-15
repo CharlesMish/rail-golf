@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import {buildKickerPallet,KICKER_PALLET,KICKER_SWITCH} from '@/lib/kicker-pallet';
 import {createSurveyLog,createSurveyArchive,type SurveyTicket,type SurveyStatus} from '@/lib/survey-ledger';
+import {createLabControl,createLabGestureGate,captureLabLaunch,returnLabToSetup,type ActionSource} from '@/lib/lab-controls';
+import {createActionTrace} from '@/lib/action-trace';
 import {SurveyTools} from './survey-tools';
 import {
   Color3,
@@ -139,6 +141,7 @@ type ShotMemory = ShotSetup & {
 };
 
 type FlightState = {
+  launchContext?:ReturnType<typeof captureLabLaunch>;
   surveyTicket?:SurveyTicket;
   runTracker:ReturnType<typeof createRunTracker>;
   captionedRun:number;
@@ -347,6 +350,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [liveLineTotal,setLiveLineTotal] = useState(0);
   const [sessionBest,setSessionBest] = useState<Record<string,number>>({});
+  const actionTraceRef=useRef<ReturnType<typeof createActionTrace>|null>(null);
+  const labControlRef=useRef<ReturnType<typeof createLabControl>|null>(null);
+  const gestureGateRef=useRef(createLabGestureGate());
+  const inputSourceRef=useRef<ActionSource>('internal/programmatic');
+  const chargeSourceRef=useRef<ActionSource>('internal/programmatic');
+  const keyboardChargeRef=useRef<string|null>(null);
+  const activeTicketRef=useRef<string|undefined>(undefined);
+  const shotToolsRef=useRef<HTMLDetailsElement>(null);
+  const [toolsOpen,setToolsOpen]=useState(false);
   const surveyLogRef=useRef<ReturnType<typeof createSurveyLog>|null>(null);
   const [surveyStatus,setSurveyStatus]=useState<SurveyStatus>({count:0,pending:0,evicted:0,warning:''});
   useEffect(()=>{
@@ -354,6 +366,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     // Access through methods so blocked storage is reported by the journal, not a boot crash.
     const storage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit survey clear');}};
     let mounted=true;
+    actionTraceRef.current=createActionTrace({storage,build:BUILD_ID});
     surveyLogRef.current=createSurveyLog({storage,archive:createSurveyArchive(window.indexedDB),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
   },[lineLab]);
@@ -428,9 +441,27 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [recalledPower, setRecalledPower] = useState<number | null>(null);
   const [bootMessage, setBootMessage] = useState("Opening the mechanism range");
 
+  const readControlState = () => ({phase:phaseRef.current,card:HOLES[holeIndexRef.current].id,
+    station:HOLES[holeIndexRef.current].station?.id??'gate',floor:floorStateRef.current,attempt:activeTicketRef.current,
+    setup:{railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:powerModeRef.current==='set'?selectedPowerRef.current:chargeRef.current}});
+  const perform = (method:keyof GameActions,args:unknown[]=[],source:ActionSource='internal/programmatic') => {
+    if(lineLab)return labControlRef.current?.run(method,args,source)??false;
+    // Production retains its original handlers and guards.
+    const action=actionsRef.current[method] as ((...values:unknown[])=>void)|undefined;
+    action?.(...args);return Boolean(action);
+  };
+  const performUI = (method:keyof GameActions,args:unknown[]=[]) => {
+    const source=inputSourceRef.current;inputSourceRef.current='internal/programmatic';
+    return perform(method,args,source);
+  };
   const setGamePhase = (next: Phase) => {
-    phaseRef.current = next;
-    setPhase(next);
+    const change=()=>{phaseRef.current=next;setPhase(next);};
+    if(lineLab&&labControlRef.current&&phaseRef.current!==next)labControlRef.current.transition('phase-transition',change);
+    else change();
+    if(lineLab&&next!=='ready'&&next!=='charging'){
+      if(shotToolsRef.current)shotToolsRef.current.open=false;
+      setToolsOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -455,35 +486,39 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if(lineLab && event.target instanceof Element && event.target.closest("button, input, select, textarea, a, summary, [role='switch'], [role='button'], [contenteditable]:not([contenteditable='false'])"))return;
+      if(lineLab&&event.repeat&&!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','KeyA','KeyD','KeyW','KeyS'].includes(event.code))return;
       if (event.code === "KeyR" && !event.repeat && !(event.target instanceof Element && event.target.closest("input, select, textarea, [contenteditable='true']"))) {
-        event.preventDefault(); actionsRef.current.retry?.(); return;
+        event.preventDefault(); perform('retry',[],'keyboard'); return;
       }
       if (event.code === "KeyX" && !event.repeat && !(event.target instanceof Element && event.target.closest("input, select, textarea, [contenteditable='true']"))) {
-        event.preventDefault(); actionsRef.current.toggleMax?.(); return;
+        event.preventDefault(); perform('toggleMax',[],'keyboard'); return;
       }
       if (isInteractiveTarget(event.target)) return;
       if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.code)) {
         event.preventDefault();
       }
       if (event.repeat && event.code === "Space") return;
-      if (event.code === "Space") actionsRef.current.beginCharge?.();
-      if (event.code === "ArrowLeft" || event.code === "KeyA") actionsRef.current.nudgeYaw?.(-0.7);
-      if (event.code === "ArrowRight" || event.code === "KeyD") actionsRef.current.nudgeYaw?.(0.7);
-      if (event.code === "ArrowUp" || event.code === "KeyW") actionsRef.current.nudgeElevation?.(0.7);
-      if (event.code === "ArrowDown" || event.code === "KeyS") actionsRef.current.nudgeElevation?.(-0.7);
-      if (event.code === "KeyQ") actionsRef.current.shiftRail?.(-1);
-      if (event.code === "KeyE") actionsRef.current.shiftRail?.(1);
-      if (event.code === "KeyL") actionsRef.current.restoreLine?.();
-      if (event.code === "KeyV") actionsRef.current.toggleSurvey?.();
+      if (event.code === "Space") {if(lineLab)keyboardChargeRef.current='Space';perform('beginCharge',[],'keyboard');}
+      if (event.code === "ArrowLeft" || event.code === "KeyA") perform('nudgeYaw',[-0.7],'keyboard');
+      if (event.code === "ArrowRight" || event.code === "KeyD") perform('nudgeYaw',[0.7],'keyboard');
+      if (event.code === "ArrowUp" || event.code === "KeyW") perform('nudgeElevation',[0.7],'keyboard');
+      if (event.code === "ArrowDown" || event.code === "KeyS") perform('nudgeElevation',[-0.7],'keyboard');
+      if (event.code === "KeyQ") perform('shiftRail',[-1],'keyboard');
+      if (event.code === "KeyE") perform('shiftRail',[1],'keyboard');
+      if (event.code === "KeyL") perform('restoreLine',[],'keyboard');
+      if (event.code === "KeyV") perform('toggleSurvey',[],'keyboard');
       if (event.code === "KeyG") setGhostVisible((visible) => !visible);
       if (event.code === "KeyM") setMuted((value) => !value);
     };
     const onKeyUp = (event: KeyboardEvent) => {
       if (event.code !== "Space" || phaseRef.current !== "charging" || chargePointerRef.current !== null) return;
+      if(lineLab&&keyboardChargeRef.current!=='Space')return;
+      keyboardChargeRef.current=null;
       event.preventDefault();
-      actionsRef.current.release?.();
+      perform('release',[],'keyboard');
     };
-    const cancelCharge = () => actionsRef.current.cancelCharge?.();
+    const cancelCharge = () => {keyboardChargeRef.current=null;perform('cancelCharge',[],'internal/programmatic');};
     const onVisibilityChange = () => {
       if (document.visibilityState !== "visible") cancelCharge();
     };
@@ -503,6 +538,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    if(lineLab)labControlRef.current=createLabControl({read:readControlState,handlers:()=>actionsRef.current,request:(method,args)=>({...((method==='selectHole'&&typeof args[0]==='number')?{card:HOLES[args[0]]?.id}:{}),...(method==='selectStation'?{station:String(args[0])}:{})}),
+      record:entry=>actionTraceRef.current?.append(entry),onError:error=>setRetryNotice('Control action failed: '+error+'. Action trace retained.')});
     let disposed = false;
     let engine: Engine | null = null;
     let scene: Scene | null = null;
@@ -1509,12 +1546,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){if(!current.ledger.some(e=>e.kind==='termination'))appendLineEvidence(current.ledger,{kind:'termination',reason:'retry-interrupted'});current.redirectTracker.finish();for(const e of current.redirectTracker.drainDiagnostics())appendLineEvidence(current.ledger,e);}
           if(lineLab&&current.surveyTicket)surveyLogRef.current?.append(current.surveyTicket,current.ledger);
           if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));setSessionBest(best=>({...best,[HOLES[holeIndexRef.current].id]:Math.max(best[HOLES[holeIndexRef.current].id]??0,scoreLine(current.ledger).total)}));}
-          const hole = HOLES[holeIndexRef.current];
+          const hole = current.launchContext?HOLES.find(card=>card.id===current.launchContext!.card)!:HOLES[holeIndexRef.current];
           const memory: ShotMemory = {
             ...current.setup,
             ...(courtyardDiverter ? {build:BUILD_ID} : {}),
             ...(lineLab ? {ledger:current.ledger.map(e=>({...e})),lineReceipt:recordLineReceipt(current.ledger)} : {}),
-            ...(diverterLab ? {environment:current.environment!,environmentAfter:{floor:floorStateRef.current}} : {}), holeId: hole.id, windId: hole.wind.id, stationId: hole.station?.id ?? "gate", outcome,
+            ...(diverterLab ? {environment:current.environment!,environmentAfter:{floor:floorStateRef.current}} : {}), holeId: current.launchContext?.card??hole.id, windId: current.launchContext?.windId??hole.wind.id, stationId: current.launchContext?.station??hole.station?.id??"gate", outcome,
             projectileId: current.projectileId, receipt,
             points: current.points.map(point => point.clone()),
             contacts: current.contacts.map(contact => ({ ...contact, point: contact.point.clone() })),
@@ -1622,7 +1659,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           selectedPowerRef.current=charge;setSelectedPower(charge);setRecalledPower(charge);
         };
         const loadHole = (index: number, restore = false) => {
-          if (!holeUnlocked(index)) return;
+          if (!holeUnlocked(index)) return 'card-unavailable';
+          const before=lineLab?readControlState():null;
+          if(lineLab)activeTicketRef.current=undefined;
           if(lineLab)floorStateRef.current=floorForAction(floorStateRef.current,'card');
           setClaimCaption(null);
           disposeFlight();
@@ -1657,10 +1696,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){setLineLedger(memory?.ledger ?? []);setLiveLineTotal(scoreLine(memory?.ledger ?? []).total);}
           impactFocus.set(hole.target?.x ?? hole.survey.targetX, 0.5, hole.target?.z ?? hole.survey.targetZ);
           setGamePhase("ready");
+          if(before)actionTraceRef.current?.append({action:'load-card',source:labControlRef.current?.source()??'internal/programmatic',before,after:readControlState(),accepted:true,reason:'course-loaded'});
         };
 
         const beginCharge = () => {
           if (phaseRef.current !== "ready") return;
+          if(lineLab)chargeSourceRef.current=labControlRef.current?.source()??'internal/programmatic';
           setRetryNotice("");
           chargeStartedAt = performance.now();
           chargeRef.current = 0;
@@ -1689,8 +1730,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             railIndex: railRef.current,
             charge: launchCharge(powerModeRef.current, selectedPowerRef.current, performance.now() - chargeStartedAt, maxPowerRef.current),
           };
-          const direction = getAimDirection();
-          const muzzle = getMuzzle();
+          const launchContext=lineLab?captureLabLaunch(HOLES[holeIndexRef.current],setup,{floor:floorStateRef.current},BUILD_ID):undefined;
+          const direction=launchContext?new Vector3(launchContext.direction.x,launchContext.direction.y,launchContext.direction.z):getAimDirection();
+          const muzzle=launchContext?new Vector3(launchContext.muzzle.x,launchContext.muzzle.y,launchContext.muzzle.z):getMuzzle();
           followDirection = getHorizontalDirection();
           previousCameraBall=null;
           const bodyMesh = MeshBuilder.CreateSphere(
@@ -1745,7 +1787,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           labLanding = null;
           if(lineLab){setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);}
           flight = {
-            ...(lineLab?{surveyTicket:surveyLogRef.current?.begin({build:BUILD_ID,card:hole.id,station:hole.station?.id??'gate',setup,launchSpeed:chargeToSpeed(setup.charge),environment:{floor:floorStateRef.current}})}:{}),
+            ...(launchContext?{launchContext,surveyTicket:surveyLogRef.current?.begin(launchContext)}:{}),
             ledger:[],runTracker:createRunTracker(),captionedRun:0,redirectTracker:createRedirectTracker(),sawMillTracker:createSawMillTracker(),captioned:new Set(),captionedVariety:0,lifecycle:createLineLifecycle(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
@@ -1768,6 +1810,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             lockedAt: 0,
             pendingResult: null,
           };
+          if(lineLab)activeTicketRef.current=flight.surveyTicket?.id;
           aggregate.body.setCollisionCallbackEnabled(true);
           aggregate.body.getCollisionObservable().add(event => {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
@@ -1806,10 +1849,27 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             direction.scale(chargeToSpeed(setup.charge) * RAIL_RULES.projectileMass),
             bodyMesh.position,
           );
-          setGamePhase("flight");
+          if(lineLab&&labControlRef.current)labControlRef.current.transition('launch',()=>setGamePhase('flight'),chargeSourceRef.current);
+          else setGamePhase("flight");
+        };
+
+        const returnLab = (mode:'retry'|'adjust'|'reset') => {
+          let interrupted=false;
+          returnLabToSetup(mode,{
+            interrupt:()=>{if(flight&&!flight.locked){flight.points.push(flight.bodyMesh.position.clone());rememberFlight('Interrupted · no landing ruling');const id=flight.launchContext?.card??HOLES[holeIndexRef.current].id;persistRecords({...recordsRef.current,[id]:interruptedRecord(recordsRef.current[id])});interrupted=true;}},
+            cancel:()=>{cancelCharge();chargePointerRef.current=null;keyboardChargeRef.current=null;dragPointer=null;},
+            memory:()=>memoryFor(HOLES[holeIndexRef.current]),environment:()=>floorStateRef.current,
+            restoreEnvironment:state=>{floorStateRef.current=state;setFloorState(state);},
+            load:restore=>{loadHole(holeIndexRef.current,restore);},exactPower,
+          });
+          const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[holeIndexRef.current].station),origin=new Vector3(rail.x,.4,rail.z);
+          camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0,7.4,0)));
+          cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0,3.2,0)));camera.setTarget(cameraTarget);
+          setRetryNotice(mode==='reset'?'Card reset. PALLET A restored. Saved lines and survey log kept.':mode==='adjust'?'Last line restored with its starting pallet state and exact power. Adjust and fire.':interrupted?'Shot interrupted and recorded. Current pallet state preserved.':'Last setup restored. Current pallet state preserved.');
         };
 
         const retry = () => {
+          if(lineLab){returnLab('retry');return;}
           maxPowerRef.current=maxLatchAfter(maxPowerRef.current,'retry');
           const phase = phaseRef.current;
           if (!['ready', 'charging', 'flight', 'theatre', 'result'].includes(phase)) return;
@@ -1835,6 +1895,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const resetRound = (restore = false) => {
+          if(lineLab){returnLab(restore?'adjust':'reset');return;}
           if (diverterLab) {
             if (phaseRef.current === 'booting' || phaseRef.current === 'error') return;
             retry(); floorStateRef.current = floorForAction(floorStateRef.current, 'reset');
@@ -1869,7 +1930,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const restoreLine = () => {
           if (phaseRef.current !== "ready") return;
           const memory = memoryFor(HOLES[holeIndexRef.current]);
-          if (!memory) return;
+          if (!memory) return 'no-saved-line';
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
             diverterHandles?.setState(floorStateRef.current); setFloorState(floorStateRef.current);
@@ -1882,7 +1943,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if (phaseRef.current !== 'ready' && phaseRef.current !== 'result') return;
           const holeId = HOLES[holeIndexRef.current].id;
           const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
-          if (!memory) return;
+          if (!memory) return 'no-saved-line';
           if(lineLab&&holeId==='open-line')chooseOpenStation(memory.stationId,true);
           exactPower(memory.charge);
           memoriesRef.current[holeId] = memory;
@@ -1902,7 +1963,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const selectHole = (index: number) => {
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
-          loadHole(index, false);
+          return loadHole(index, false);
         };
 
         const nextHole = () => {
@@ -1918,7 +1979,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const recallRoute = (id: DeliveryRoute) => {
           if (!courtyard || (phaseRef.current !== 'ready' && phaseRef.current !== 'result')) return;
           const setup = deliveryBookRef.current[id];
-          if (!setup) return;
+          if (!setup) return 'no-saved-route';
           loadHole(0); updateSetup(setup); disposeGhost(); setLastShot(null);
           exactPower(setup.charge);
         };
@@ -2123,10 +2184,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const resumeIndex = chooseResumeHole(saved, HOLES);
         const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
+        const entryBefore=lineLab?readControlState():null;
         createCourse(startHole);
         holeIndexRef.current = startIndex;
         setHoleIndex(startIndex);
         updateSetup(sharedStart?.setup ?? resolveOpeningAddress(startHole, addressLabRef.current));
+        if(entryBefore)actionTraceRef.current?.append({action:sharedStart?'restore-share':'session-entry',source:sharedStart?'restore/share':'internal/programmatic',before:entryBefore,after:readControlState(),accepted:true,reason:sharedStart?'shared-setup':'saved-progress-resume'});
         if(sharedStart){clearMax();powerModeRef.current="set";setPowerMode("set");selectedPowerRef.current=sharedStart.setup.charge;setSelectedPower(sharedStart.setup.charge);setRecalledPower(sharedStart.setup.charge);}
         impactFocus.set(startHole.target?.x ?? startHole.survey.targetX, 0.5, startHole.target?.z ?? startHole.survey.targetZ);
         const remembered = memoryFor(startHole);
@@ -2409,7 +2472,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     return () => {
       disposed = true;
       removeListeners?.();
-      actionsRef.current = {};
+      if(lineLab&&labControlRef.current)labControlRef.current.transition('session-dispose',()=>{actionsRef.current={};});
+      else actionsRef.current = {};
       worldRef.current = null;
       audioMasterRef.current = null;
       audioContext?.close().catch(() => undefined);
@@ -2448,33 +2512,35 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     } catch {
       // Release still works while the pointer remains over the control.
     }
-    actionsRef.current.beginCharge?.();
+    perform('beginCharge',[],'pointer');
   };
 
   const releaseButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (chargePointerRef.current !== event.pointerId) return;
     chargePointerRef.current = null;
-    actionsRef.current.release?.();
+    perform('release',[],'pointer');
   };
 
   const cancelButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (chargePointerRef.current !== event.pointerId) return;
     chargePointerRef.current = null;
-    actionsRef.current.cancelCharge?.();
+    perform('cancelCharge',[],'pointer');
   };
 
   const beginButtonKeyCharge = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if ((event.code !== "Space" && event.code !== "Enter") || chargePointerRef.current !== null) return;
     event.preventDefault();
-    if (!event.repeat) actionsRef.current.beginCharge?.();
+    if(lineLab){event.stopPropagation();keyboardChargeRef.current=event.code;}
+    if (!event.repeat) perform('beginCharge',[],'keyboard');
   };
 
   const releaseButtonKeyCharge = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if ((event.code !== "Space" && event.code !== "Enter") || chargePointerRef.current !== null) return;
     event.preventDefault();
-    actionsRef.current.release?.();
+    if(lineLab){event.stopPropagation();if(keyboardChargeRef.current!==event.code)return;keyboardChargeRef.current=null;}
+    perform('release',[],'keyboard');
   };
 
   const outcomeClass = result ? (lineLab&&!hole.target?"result-line":`result-${result.outcome}`) : "";
@@ -2485,14 +2551,26 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const resultCanAdvance = Boolean(result?.clear);
 
   return (
-    <main className="rail-golf-shell manners-shell" data-phase={phase}>
+    <main className="rail-golf-shell manners-shell" data-phase={phase} data-line-lab={lineLab||undefined}
+      onPointerDownCapture={lineLab?event=>{inputSourceRef.current='pointer';const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;gestureGateRef.current.down(target,labControlRef.current?.revision()??0,event.pointerId);}:undefined}
+      onPointerCancelCapture={lineLab?event=>gestureGateRef.current.cancel(event.pointerId):undefined}
+      onClickCapture={lineLab?event=>{
+        inputSourceRef.current=event.nativeEvent.isTrusted?(event.detail===0?'keyboard':'pointer'):'internal/programmatic';
+        if(event.detail===0)return;
+        const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;
+        if(target instanceof Element&&target.closest('.manners-fire'))return;
+        const reason=gestureGateRef.current.click(target,labControlRef.current?.revision()??0);
+        if(reason){event.preventDefault();event.stopPropagation();labControlRef.current?.rejectGesture(reason);}
+      }:undefined}
+      onKeyDownCapture={lineLab?event=>{if(event.repeat&&(event.code==='Space'||event.code==='Enter')&&event.target instanceof Element&&event.target.closest('button,summary')){event.preventDefault();event.stopPropagation();}}:undefined}
+    >
       <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}</small>
       {diverterLab && <>
         <div className="floor-state-chip" role="status">FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}</div>
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
       </>}
-      {lineLab && !['flight','charging','theatre'].includes(phase) && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
+      {lineLab && phase==='ready' && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
       {lineLab && claimCaption && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
       <canvas
         ref={canvasRef}
@@ -2519,12 +2597,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           </div>
           <div className={lineLab?'line-score-readout':undefined}>
             <span>{lineLab?'LINE':'WIND'}</span>
-            <strong className={lineLab?'line-hud-total':undefined} title={lineLab?'NON-CANONICAL PLACEHOLDER score':undefined}>{lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
+            <strong className={lineLab?'line-hud-total':undefined} title={lineLab?'NON-CANONICAL PLACEHOLDERS · line score':undefined}>{lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
           </div>
         </div>
       </header>
 
-      <nav className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
+      <nav inert={lineLab&&phase==='result'?true:undefined} className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];
           const unlocked = holeUnlocked(index);
@@ -2543,8 +2621,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               type="button"
               data-active={index === holeIndex}
               data-locked={!unlocked}
-              onClick={() => actionsRef.current.selectHole?.(index)}
-              disabled={!unlocked || phase === "flight" || phase === "theatre" || phase === "charging"}
+              onClick={() => performUI('selectHole',[index])}
+              disabled={!unlocked || (lineLab&&(phase==='booting'||phase==='error')) || phase === "flight" || phase === "theatre" || phase === "charging"}
               aria-label={`${item.number} ${item.name}, ${stamp}`}
               aria-current={index === holeIndex ? "step" : undefined}
             >
@@ -2557,16 +2635,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         })}
       </nav>
 
-      <aside className="hole-brief manners-brief">
+      <aside inert={lineLab&&phase==='result'?true:undefined} className="hole-brief manners-brief">
         <p className="eyebrow">{lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
-        <strong>{hole.name}</strong>
+        <strong data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{hole.name}</strong>
         <span>{lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
         {lineLab && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
         <Button
           type="button"
           variant="outline"
           className="survey-chip manners-survey"
-          onClick={() => actionsRef.current.toggleSurvey?.()}
+          onClick={() => performUI('toggleSurvey',[])}
           disabled={!canAim}
           aria-pressed={survey}
         >
@@ -2604,7 +2682,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             {deliveryBook[route.id] ? '✓ ' : '○ '}{route.label}
           </button>)}</div>
           <p>{DELIVERY_ROUTES.find(route => route.id === routeFocus)?.hint}</p>
-          {deliveryBook[routeFocus] && <Button variant="outline" size="sm" disabled={phase === 'charging'} onClick={() => actionsRef.current.recallRoute?.(routeFocus)}>Recall winning line · {displayPercent(deliveryBook[routeFocus]!.charge)}</Button>}
+          {deliveryBook[routeFocus] && <Button variant="outline" size="sm" disabled={phase === 'charging'} onClick={() => performUI('recallRoute',[routeFocus])}>Recall winning line · {displayPercent(deliveryBook[routeFocus]!.charge)}</Button>}
           {recalledPower !== null && <small>Line recalled. {powerMode === "set" ? "Saved power selected." : `Charge to the ${displayPercent(recalledPower)} marker.`}</small>}
         </section>}
         {deliveryLive.length > 0 && phase === 'flight' && <div className="delivery-progress" role="status">{deliveryLive.join(' + ').toUpperCase()} REACHED · LAND TO COLLECT</div>}
@@ -2614,23 +2692,23 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         {CASCADE_STEPS.map((step, index) => <div key={step.id} ref={node => { cascadeLabelRefs.current[step.id] = node; }} className="destination-label cascade-label" data-color="amber" data-visible="false"><strong>TREAD {index+1}</strong></div>)}
       </>}
 
-      <section className="aim-console manners-console" aria-label="Rail shot controls">
+      <section className="aim-console manners-console" data-tools-open={toolsOpen||undefined} inert={lineLab&&['flight','theatre','result'].includes(phase)?true:undefined} aria-label="Rail shot controls">
         <div className="primary-options">
-          <button type="button" className="max-power" aria-pressed={maxPower} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>actionsRef.current.toggleMax?.()} title="Toggle maximum power (X)">MAX · 100% <kbd>X</kbd></button>
-          {lineLab&&hole.mode==='score-only'&&<nav className="station-picker" aria-label="Open Line station">{Object.values(LINE_STATIONS).map(station=><button type="button" key={station.id} aria-pressed={hole.station?.id===station.id} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>actionsRef.current.selectStation?.(station.id)}>{station.label}</button>)}</nav>}
+          <button type="button" className="max-power" aria-pressed={maxPower} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>performUI('toggleMax',[])} title="Toggle maximum power (X)">MAX · 100% <kbd>X</kbd></button>
+          {lineLab&&hole.mode==='score-only'&&<nav className="station-picker" aria-label="Open Line station" data-active-station={hole.station?.id}>{Object.values(LINE_STATIONS).map(station=><button type="button" key={station.id} aria-pressed={hole.station?.id===station.id} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>performUI('selectStation',[station.id])}>{hole.station?.id===station.id?'● ':''}{station.label}</button>)}</nav>}
         </div>
-        <details className="shot-tools">
+        <details className="shot-tools" ref={shotToolsRef} onToggle={lineLab?event=>setToolsOpen(event.currentTarget.open):undefined}>
           <summary>Shot tools & saved lines · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
-            {lineLab&&<SurveyTools log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
+            {lineLab&&<SurveyTools trace={actionTraceRef.current} log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
       {courtyard && (!courtyardDiverter || lineLab) && <nav className="station-picker" aria-label="Launcher station">
         {Object.values(STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
           disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : station.id === 'saw' ? 3 : 2)}
-          onClick={() => actionsRef.current.selectStation?.(station.id)}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
+          onClick={() => performUI('selectStation',[station.id])}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
             {diverterLab && <>
               <small>FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {lineLab?'Pallet switch':courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. Cards, stations and Retry keep the state. Recall restores the recorded starting state.</small>
-              <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => actionsRef.current.reset?.(false)}>Reset Card · restore FLOOR A</button>
+              <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => performUI('reset',[false])}>Reset Card · restore FLOOR A</button>
             </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
               clearMax(); const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
@@ -2639,7 +2717,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               clearMax(); const value = Number(event.target.value) / 100; selectedPowerRef.current = value; setSelectedPower(value);
             }} /></label>}
             <label><input type="checkbox" checked={compare} disabled={phase !== 'ready'} onChange={event => {
-              compareRef.current = event.target.checked; setCompare(event.target.checked); actionsRef.current.compareAttempts?.();
+              compareRef.current = event.target.checked; setCompare(event.target.checked); performUI('compareAttempts',[]);
             }} /> Compare three trails · selected amber, others cyan (Previous Line on)</label>
             <small>Gentle start · 80% in 2 seconds · full power in 3. Aim ±70°; loft 5–85°.</small>
             {courtyardDiverter && <section className="share-line-tools" aria-label="Share a line">
@@ -2650,12 +2728,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             </section>}
             <strong>Winning lines · {winningLines.length}/6 families</strong>
             <small>Saved on this browser. Recall restores aim, power marker and the recorded trail; you still fire.</small>
-            {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
+            {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => performUI('recallAttempt',[shot.projectileId])}>
               {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}{shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
             </button>)}
             {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
             <strong>Recent attempts</strong>
-            {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => actionsRef.current.recallAttempt?.(shot.projectileId)}>
+            {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => performUI('recallAttempt',[shot.projectileId])}>
               #{shot.projectileId} · {hole.mode==='score-only'&&(shot.stationId==='gate'?'Yard Gate · ':shot.stationId==='lumber'?'Lumber Walk · ':'Saw Bay · ')}{shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
             </button>)}
             {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
@@ -2706,7 +2784,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               variant="outline"
               size="icon-lg"
               className="rail-shift"
-              onClick={() => actionsRef.current.shiftRail?.(-1)}
+              onClick={() => performUI('shiftRail',[-1])}
               disabled={!canAim || railIndex === 0}
               aria-label="Move launcher left"
             >
@@ -2718,7 +2796,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               variant="outline"
               size="icon-lg"
               className="rail-shift"
-              onClick={() => actionsRef.current.shiftRail?.(1)}
+              onClick={() => performUI('shiftRail',[1])}
               disabled={!canAim || railIndex === RAIL_RULES.railPositions.length - 1}
               aria-label="Move launcher right"
             >
@@ -2735,7 +2813,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             onLostPointerCapture={cancelButtonCharge}
             onKeyDown={beginButtonKeyCharge}
             onKeyUp={releaseButtonKeyCharge}
-            onBlur={() => actionsRef.current.cancelCharge?.()}
+            onBlur={() => {keyboardChargeRef.current=null;perform('cancelCharge',[],'internal/programmatic');}}
             disabled={!canAim}
           >
             <Crosshair />
@@ -2743,16 +2821,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           </Button>
 
           <div className="aim-nudges" aria-label="Fine aim controls">
-            <button type="button" onClick={() => actionsRef.current.nudgeElevation?.(0.5)} disabled={!canAim} aria-label="Raise elevation">
+            <button type="button" onClick={() => performUI('nudgeElevation',[0.5])} disabled={!canAim} aria-label="Raise elevation">
               <ChevronUp />
             </button>
-            <button type="button" onClick={() => actionsRef.current.nudgeYaw?.(-0.5)} disabled={!canAim} aria-label="Aim left">
+            <button type="button" onClick={() => performUI('nudgeYaw',[-0.5])} disabled={!canAim} aria-label="Aim left">
               <ChevronLeft />
             </button>
-            <button type="button" onClick={() => actionsRef.current.nudgeYaw?.(0.5)} disabled={!canAim} aria-label="Aim right">
+            <button type="button" onClick={() => performUI('nudgeYaw',[0.5])} disabled={!canAim} aria-label="Aim right">
               <ChevronRight />
             </button>
-            <button type="button" onClick={() => actionsRef.current.nudgeElevation?.(-0.5)} disabled={!canAim} aria-label="Lower elevation">
+            <button type="button" onClick={() => performUI('nudgeElevation',[-0.5])} disabled={!canAim} aria-label="Lower elevation">
               <ChevronDown />
             </button>
           </div>
@@ -2766,7 +2844,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </p>
       </section>
 
-      <aside className="utility-panel" aria-label="Range options">
+      <aside inert={lineLab&&phase==='result'?true:undefined} className="utility-panel" aria-label="Range options">
         <Label className="utility-row" htmlFor="manners-ghost-toggle">
           <span><Eye /> Previous line</span>
           <Switch
@@ -2789,14 +2867,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           type="button"
           variant="ghost"
           className="utility-button"
-          onClick={() => actionsRef.current.reset?.(false)}
-          disabled={phase !== "ready"}
+          onClick={() => performUI('reset',[false])}
+          disabled={lineLab?(phase==='booting'||phase==='error'):phase!=="ready"}
         >
           <RotateCcw /> {diverterLab ? (lineLab?"Reset Card":"Reset Card · FLOOR A") : "Reset address"}
         </Button>
       </aside>
 
-      <div className="mobile-utility-panel" aria-label="Mobile range options">
+      <div inert={lineLab&&phase==='result'?true:undefined} className="mobile-utility-panel" aria-label="Mobile range options">
         <Label htmlFor="mobile-manners-ghost">
           <Eye />
           <Switch
@@ -2820,7 +2898,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       </div>
 
       {lastShot && phase === "ready" ? (
-        <button className="last-line-chip" onClick={() => actionsRef.current.restoreLine?.()} type="button">
+        <button className="last-line-chip" onClick={() => performUI('restoreLine',[])} type="button">
           LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {displayPercent(lastShot.charge)}
           <span>{diverterLab && !lineLab ? ("restore FLOOR " + lastShot.environment?.floor + ", aim and power") : "restore aim and power"}</span>
         </button>
@@ -2835,7 +2913,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </div>
       ) : null}
 
-      {(phase === 'flight' || phase === 'theatre' || phase === 'result') && <button type="button" className="quick-retry" onClick={() => actionsRef.current.retry?.()}>
+      {(phase === 'flight' || phase === 'theatre' || (!lineLab&&phase === 'result')) && <button type="button" className="quick-retry" onClick={() => performUI('retry',[])}>
         <RotateCcw size={16} /> {phase === 'flight' ? 'Retry now' : 'Retry shot'} <kbd>R</kbd>
       </button>}
       {retryNotice && phase === 'ready' && <div className="retry-notice" role="status">{retryNotice}</div>}
@@ -2877,11 +2955,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </div>
       ) : null}
 
+      {lineLab&&result&&phase==='result'&&<div className="line-result-backdrop" aria-hidden="true" />}
       {result && phase === "result" ? (
         <section
           ref={resultCardRef}
           className={`result-card manners-result ${outcomeClass}`}
           role="dialog"
+          aria-modal={lineLab||undefined}
           aria-labelledby="range-result-heading"
           aria-describedby="range-result-detail"
           tabIndex={-1}
@@ -2898,28 +2978,29 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           >
             {resultCanAdvance ? (
               nextHoleAvailable ? (
-                <Button type="button" onClick={() => actionsRef.current.nextHole?.()}>
+                <Button type="button" onClick={() => performUI('nextHole',[])}>
                   Next card <ChevronRight />
                 </Button>
               ) : (
-                <Button type="button" onClick={() => actionsRef.current.selectHole?.(0)}>
+                <Button type="button" onClick={() => performUI('selectHole',[0])}>
                   Replay range
                 </Button>
               )
             ) : (
-              <Button type="button" onClick={() => actionsRef.current.reset?.(true)}>
+              <Button type="button" onClick={() => performUI('reset',[true])}>
                 <Crosshair /> {resultNeedsTrick ? "Hunt from last line" : "Adjust last line"}
               </Button>
             )}
             {resultCanAdvance ? (
-              <Button type="button" variant="outline" onClick={() => actionsRef.current.reset?.(true)}>
+              <Button type="button" variant="outline" onClick={() => performUI('reset',[true])}>
                 {resultNeedsTrick ? "Hunt the stamp" : "Replay this line"}
               </Button>
             ) : null}
-            <Button type="button" variant="outline" onClick={() => actionsRef.current.reset?.(false)}>
+            <Button type="button" variant="outline" onClick={() => performUI('reset',[false])}>
               <RotateCcw /> Reset card
             </Button>
           </div>
+          {lineLab&&<><Button type="button" className="line-result-retry" variant="outline" onClick={()=>performUI('retry',[])}>Retry shot · preserve current pallet <kbd>R</kbd></Button><LineReceipt ledger={lineLedger} shot={lastShot??undefined} inline /></>}
         </section>
       ) : null}
 

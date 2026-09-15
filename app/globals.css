@@ -1822,3 +1822,14 @@ canvas {
 .survey-tools { display:grid; gap:7px; padding:10px 0; border-bottom:1px solid #37504d; }
 .survey-tools > div { display:flex; flex-wrap:wrap; gap:7px; }
 .survey-tools [role="alert"] { color:#ffc080; font-size:12px; margin:0; }
+
+/* Lab control layers: one foreground surface; hidden tools never own input. */
+.manners-shell[data-line-lab] .manners-console[data-tools-open] { z-index: 38; }
+.manners-shell[data-line-lab] .shot-tools:not([open]) > .shot-tools-body { display: none; pointer-events: none; }
+.manners-shell[data-line-lab] .shot-tools-body { overscroll-behavior: contain; }
+.manners-shell[data-line-lab] .station-picker button[aria-pressed="true"] { color: #071718; background: #55e2e6; border-color: #55e2e6; font-weight: 800; }
+.manners-shell[data-line-lab] .line-result-backdrop { position: absolute; inset: 0; z-index: 40; background: rgb(2 12 15 / .35); pointer-events: auto; }
+.manners-shell[data-line-lab] .manners-result { z-index: 41; max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; }
+.manners-shell[data-line-lab] .line-receipt-inline { position: static; width: auto; max-height: none; margin-top: 16px; text-align: left; }
+.manners-shell[data-line-lab] [inert] { pointer-events: none !important; }
+.manners-shell[data-line-lab] .line-result-retry { margin-top: 8px; width: 100%; }

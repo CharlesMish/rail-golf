@@ -3,9 +3,9 @@ import {RUN_RULE} from '@/lib/line-run';
 import {scoreLine} from '@/lib/line-score';
 import type {SavedLine} from '@/lib/shot-library';
 import type {LineEvidence} from '@/lib/line-score';
-export function LineReceipt({ledger,shot}:{ledger:LineEvidence[];shot?:SavedLine}){
+export function LineReceipt({ledger,shot,inline=false}:{ledger:LineEvidence[];shot?:SavedLine;inline?:boolean}){
  const receipt=scoreLine(ledger);
- return <details className="line-receipt" open={ledger.length>0} key={ledger.length?`receipt-${ledger.length}`:'empty'}>
+ return <details className={inline?"line-receipt line-receipt-inline":"line-receipt"}>
   <summary>LINE TOTAL — PLACEHOLDER · {receipt.total}</summary>
   <strong>NON-CANONICAL PLACEHOLDERS</strong>
   <p>One projectile. No unlocks. Values await design review.</p>
