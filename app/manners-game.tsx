@@ -359,6 +359,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const activeTicketRef=useRef<string|undefined>(undefined);
   const shotToolsRef=useRef<HTMLDetailsElement>(null);
   const [toolsOpen,setToolsOpen]=useState(false);
+  const [controlError,setControlError]=useState('');
   const surveyLogRef=useRef<ReturnType<typeof createSurveyLog>|null>(null);
   const [surveyStatus,setSurveyStatus]=useState<SurveyStatus>({count:0,pending:0,evicted:0,warning:''});
   useEffect(()=>{
@@ -445,7 +446,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     station:HOLES[holeIndexRef.current].station?.id??'gate',floor:floorStateRef.current,attempt:activeTicketRef.current,
     setup:{railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:powerModeRef.current==='set'?selectedPowerRef.current:chargeRef.current}});
   const perform = (method:keyof GameActions,args:unknown[]=[],source:ActionSource='internal/programmatic') => {
-    if(lineLab)return labControlRef.current?.run(method,args,source)??false;
+    if(lineLab){const accepted=labControlRef.current?.run(method,args,source)??false;if(accepted)setControlError('');return accepted;}
     // Production retains its original handlers and guards.
     const action=actionsRef.current[method] as ((...values:unknown[])=>void)|undefined;
     action?.(...args);return Boolean(action);
@@ -539,7 +540,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     if (!canvas) return;
 
     if(lineLab)labControlRef.current=createLabControl({read:readControlState,handlers:()=>actionsRef.current,request:(method,args)=>({...((method==='selectHole'&&typeof args[0]==='number')?{card:HOLES[args[0]]?.id}:{}),...(method==='selectStation'?{station:String(args[0])}:{})}),
-      record:entry=>actionTraceRef.current?.append(entry),onError:error=>setRetryNotice('Control action failed: '+error+'. Action trace retained.')});
+      record:entry=>actionTraceRef.current?.append(entry),onError:error=>setControlError('Control action failed: '+error+'. Action trace retained; export Survey JSON.')});
     let disposed = false;
     let engine: Engine | null = null;
     let scene: Scene | null = null;
@@ -2564,6 +2565,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       }:undefined}
       onKeyDownCapture={lineLab?event=>{if(event.repeat&&(event.code==='Space'||event.code==='Enter')&&event.target instanceof Element&&event.target.closest('button,summary')){event.preventDefault();event.stopPropagation();}}:undefined}
     >
+      {lineLab&&controlError&&<div className="line-control-error" role="alert">{controlError}</div>}
       <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}</small>
       {diverterLab && <>
         <div className="floor-state-chip" role="status">FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}</div>

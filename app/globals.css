@@ -1833,3 +1833,5 @@ canvas {
 .manners-shell[data-line-lab] .line-receipt-inline { position: static; width: auto; max-height: none; margin-top: 16px; text-align: left; }
 .manners-shell[data-line-lab] [inert] { pointer-events: none !important; }
 .manners-shell[data-line-lab] .line-result-retry { margin-top: 8px; width: 100%; }
+
+.manners-shell[data-line-lab] .line-control-error { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); z-index: 45; width: min(540px, 90%); padding: 10px; color: #ffe1bb; background: #351911f2; border: 1px solid #ff9955; font: 12px/1.4 var(--font-mono); pointer-events: none; }
