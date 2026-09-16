@@ -1,0 +1,26 @@
+.shell{position:fixed;inset:0;overflow:hidden;background:#101c20;color:#e8eee9;font:14px/1.4 Arial,sans-serif;isolation:isolate}
+.canvas{width:100%;height:100%;display:block;touch-action:none;outline:none}
+.header{position:absolute;top:18px;left:22px;right:22px;display:flex;justify-content:space-between;gap:20px;pointer-events:none}
+.header span,.identity{font:10px/1.6 monospace;letter-spacing:.1em;color:#74c5c9}
+.header h1{font-size:25px;letter-spacing:-.04em;text-transform:uppercase;margin:3px 0}
+.header p{font-size:11px;color:#b8c6c3;margin:0}
+.identity{text-align:right;max-width:200px;overflow-wrap:anywhere;font-size:9px}
+.brief{position:absolute;top:112px;left:22px;max-width:260px;border-left:2px solid #71d0d3;padding:0 12px;background:#101c20a3}
+.brief p{margin:0 0 9px}.quiet{color:#adbbb9;font-size:12px}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.actions a{color:#a9cacb;font-size:11px}
+.shell button,.shell input,.shell select{font:inherit;color:inherit;border:1px solid #45585c;border-radius:3px;background:#14262b;padding:8px 10px}
+.shell button{cursor:pointer;touch-action:manipulation}.shell button:disabled{opacity:.45;cursor:default}.shell button[aria-pressed=true]{border-color:#ff9a50;background:#492d1b}
+.shell button:focus-visible,.shell input:focus-visible,.shell select:focus-visible,.shell summary:focus-visible{outline:2px solid #79eef1;outline-offset:3px}
+.shell kbd{opacity:.6;font-size:10px;padding-left:6px}
+.machine{position:absolute;right:22px;top:90px;background:#241e15ed;border:1px solid #e58c3b;color:#ffc27c;padding:10px 14px;font:700 13px monospace}
+.machine span{display:block;font-size:10px;letter-spacing:.15em;margin-top:5px}
+.machine[data-state=B]{border-color:#ae73e7;color:#d6b0ff;background:#231b33ed}
+.caption{position:absolute;top:29%;left:50%;transform:translateX(-50%);padding:10px 16px;background:#10272de8;border:1px solid #70c7cb;font:700 13px monospace;pointer-events:none;white-space:nowrap}
+.message{position:absolute;top:42%;left:50%;transform:translateX(-50%);width:min(500px,85%);background:#142126f5;border:1px solid #b5c5c4;padding:25px;z-index:3;text-align:center}
+.console{position:absolute;bottom:max(12px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(700px,calc(100% - 30px));background:#0c1b20f0;border:1px solid #354e52;padding:12px;max-height:58%;overflow:auto}
+.setup{display:flex;gap:12px;align-items:end}.setup label{display:flex;flex:1;flex-direction:column;gap:4px;font:10px monospace;letter-spacing:.09em}.setup input,.setup select{width:100%;font:14px monospace;min-width:0}.setup>button{font:11px monospace;min-height:37px}
+.console progress{width:100%;height:4px;accent-color:#ff9948;display:block;margin:10px 0}
+.fireRow{display:flex;gap:8px}.fireRow .fire{flex:1;background:#ff9149;color:#171e20;border-color:#ffb16d;font-weight:800;letter-spacing:.07em;padding:13px}.fireRow>button:not(.fire){font-size:12px}
+.tools{margin-top:9px;font-size:11px;color:#b5c7c7}.tools summary{cursor:pointer}.tools p{max-width:620px}.exact{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}.exact input{width:85px}.tools pre{max-height:180px;overflow:auto;white-space:pre-wrap;background:#091317;padding:12px;font:10px/1.4 monospace}
+@media(max-height:550px){.header{top:10px;left:14px}.header h1{font-size:19px}.header p{display:none}.brief{top:69px;left:14px;max-width:220px;font-size:11px}.brief .quiet{display:none}.machine{top:64px;right:14px;padding:7px 10px}.console{bottom:5px;padding:7px;max-height:52%;width:min(620px,calc(100% - 20px))}.setup{gap:8px}.setup label{gap:2px}.setup input,.setup select{padding:5px 8px}.setup>button{min-height:29px}.fireRow .fire{padding:8px}.tools{margin-top:5px}.caption{top:35%;font-size:11px}}
+@media(max-width:580px){.header h1{font-size:20px}.header .identity{max-width:120px;font-size:8px}.brief{max-width:210px;font-size:12px}.machine{top:96px;padding:7px;font-size:11px}.setup{gap:6px}.setup>button{font-size:10px;padding:7px}.setup kbd,.fireRow kbd{display:none}.fireRow>button:not(.fire){font-size:11px;padding:8px}.fireRow .fire{font-size:12px}.caption{top:40%}}
