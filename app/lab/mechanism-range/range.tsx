@@ -10,9 +10,11 @@ import {buildMechanismRange} from '@/lib/mechanism-range-scene';
 import {createMechanismSession,type RangeRecord,type RangeSetup} from '@/lib/mechanism-range-session';
 import {advanceFlightCamera,followOffsets,followHeading} from '@/lib/flight-framing';
 import {launchCharge,maxLatchAfter} from '@/lib/shot-tools';
-import {rangeSetup,rangeRail,rangeDrag,rangeRestore,createRangeView,rangeViewLabel,stepRangeView,RANGE_BLIND_BRIEF,transferFeedback} from '@/lib/mechanism-range-controls';
+import {rangeSetup,rangeRail,rangeDrag,createRangeView,rangeViewLabel,RANGE_BLIND_BRIEF,transferFeedback} from '@/lib/mechanism-range-controls';
 import {buildRangeLauncher,buildRangeProjectile,buildRangePresentationMaterials} from '@/lib/mechanism-range-presentation';
 import {RANGE_EVENT_HOLD_MS,rangeLineReceipt,createRangeDepartureMarkers} from '@/lib/mechanism-range-legibility';
+import {rangeCameraFrame,placeRangeCamera,advanceRangeCamera,type RangeFraming} from '@/lib/mechanism-range-framing';
+import {recoverRangeToSetup} from '@/lib/mechanism-range-recovery';
 import {ChevronLeft,ChevronRight,ChevronUp,ChevronDown,Crosshair} from 'lucide-react';
 import styles from './range.module.css';
 
@@ -26,6 +28,9 @@ export default function MechanismRange(){
   const [view]=useState(createRangeView),viewMode=useSyncExternalStore(view.subscribe,view.getSnapshot,view.getServerSnapshot);
   const [powerMode,setPowerMode]=useState<'hold'|'set'>('hold'),powerModeRef=useRef<'hold'|'set'>('hold');
   const [visualMode,setVisualMode]=useState<'round'|'ball'>('round'),visualModeRef=useRef<'round'|'ball'>('round');
+  const [framing,setFraming]=useState<RangeFraming>('familiar'),framingRef=useRef<RangeFraming>('familiar');
+  const chargePointer=useRef<{element:HTMLButtonElement;id:number}|null>(null);
+  const [recoveryNotice,setRecoveryNotice]=useState('');
   const [discovered,setDiscovered]=useState(false);
   const [floor,setFloor]=useState('A'),[power,setPower]=useState(0),[caption,setCaption]=useState(''),[error,setError]=useState('');
   const [last,setLast]=useState<RangeRecord|null>(null);
@@ -61,6 +66,13 @@ export default function MechanismRange(){
         }
         const root=new TransformNode('mr-world',scene),world=buildMechanismRange(scene,root,materials,shadows);
         let captionUntil=0,chargeStart=0,lastCharge=-1;
+        let drag:{id:number;x:number;y:number}|null=null,keyboardCharge=false;
+        const cameraFrame=(mode=view.getSnapshot())=>rangeCameraFrame(setupRef.current,framingRef.current,activeEngine.getRenderWidth(),activeEngine.getRenderHeight(),mode);
+        const releaseInputs=()=>{
+          if(drag&&surface.hasPointerCapture(drag.id))surface.releasePointerCapture(drag.id);drag=null;keyboardCharge=false;chargeStart=0;lastCharge=-1;
+          const pointer=chargePointer.current;chargePointer.current=null;
+          if(pointer?.element.hasPointerCapture(pointer.id))pointer.element.releasePointerCapture(pointer.id);
+        };
         const departureMarkers=createRangeDepartureMarkers(scene);
         const session=createMechanismSession(scene,world,event=>{
           if(disposed)return;
@@ -80,35 +92,36 @@ export default function MechanismRange(){
         const shoot=(charge:number)=>{
           if(!['ready','charging'].includes(phaseRef.current))return;
           if(session.fire({...setupRef.current,charge})){
-            phaseTo('flight');setPower(charge);setCaption('');departureMarkers.clear();view.set('flight');
+            phaseTo('flight');setPower(charge);setCaption('');setRecoveryNotice('');departureMarkers.clear();view.set('flight');
             const direction=stationAim(setupRef.current,RANGE_STATION);heading={x:direction.x,y:0,z:direction.z};previous=null;
             projectile?.dispose();projectile=buildRangeProjectile(activeScene,session.flight!.mesh,presentationMaterials,shadows,visualModeRef.current);projectile.sync(session.flight!.aggregate.body.getLinearVelocity());trail?.dispose();trail=null;points=[];
           }
         };
-        const cancel=()=>{if(phaseRef.current==='charging'){phaseTo('ready');setPower(0);}};
+        let recovering=false;
+        const cancel=()=>{if(!recovering&&phaseRef.current==='charging'){phaseTo('ready');setPower(0);}};
         const restore=(action:'retry'|'reset'|'recall')=>{
-          if(phaseRef.current==='loading'||phaseRef.current==='error'||action==='recall'&&!session.last)return;
-          const restored=session.action(action);phaseTo('ready');setPower(0);setCaption('');previous=null;
-          view.set('launch');departureMarkers.clear();projectile?.dispose();projectile=null;
-          const next=rangeRestore(action,setupRef.current,restored,powerModeRef.current,maxRef.current);
-          setupRef.current=next.setup;setSetup(next.setup);powerModeRef.current=next.mode;setPowerMode(next.mode);maxRef.current=next.max;setMax(next.max);
-          // Same return-to-setup language: Retry restores last aim, Reset default aim, Recall exact power.
-          const rail=stationRailPosition(next.setup.railIndex,RANGE_STATION);camera.position.copyFrom(Vector3.FromArray(RANGE_CAMERA.address));camera.position.x+=rail.x*.4;target.copyFrom(Vector3.FromArray(RANGE_CAMERA.look));camera.setTarget(target);
+          if(recovering||phaseRef.current==='loading'||phaseRef.current==='error'||action==='recall'&&!session.last)return;
+          recovering=true;try{recoverRangeToSetup(action,{
+            session,current:setupRef.current,mode:powerModeRef.current,max:maxRef.current,view,
+            cancelInput:releaseInputs,
+            clearPresentation:()=>{departureMarkers.clear();projectile?.dispose();projectile=null;previous=null;captionUntil=0;setCaption('');setPower(0);},
+            publishSetup:next=>{setupRef.current=next.setup;setSetup(next.setup);powerModeRef.current=next.mode;setPowerMode(next.mode);maxRef.current=next.max;setMax(next.max);},
+            placeCamera:()=>placeRangeCamera(camera,target,cameraFrame('launch')),
+            ready:()=>{phaseTo('ready');setRecoveryNotice(action==='reset'?'Ready · card reset.':action==='recall'?'Ready · last line restored.':'Ready · take another shot.');},
+          });}finally{recovering=false;}
         };
         actions.current={
           begin(){if(phaseRef.current!=='ready')return;if(maxRef.current){shoot(1);return;}chargeStart=performance.now();phaseTo('charging');},
           release(){if(phaseRef.current==='charging')shoot(launchCharge(powerModeRef.current,setupRef.current.charge,performance.now()-chargeStart,maxRef.current));},cancel,
           retry(){restore('retry');},reset(){restore('reset');},recall(){restore('recall');},
         };
-        let drag:{id:number;x:number;y:number}|null=null;
         const down=(e:PointerEvent)=>{if(!['ready','charging'].includes(phaseRef.current)||view.getSnapshot()==='survey'||drag||(e.pointerType==='mouse'&&e.button!==0))return;e.preventDefault();drag={id:e.pointerId,x:e.clientX,y:e.clientY};surface.setPointerCapture(e.pointerId);};
         const move=(e:PointerEvent)=>{if(!drag||drag.id!==e.pointerId||!['ready','charging'].includes(phaseRef.current))return;e.preventDefault();
           const next=rangeDrag(setupRef.current,e.clientX-drag.x,e.clientY-drag.y,e.pointerType);
           setupRef.current=next;setSetup(next);drag={...drag,x:e.clientX,y:e.clientY};};
         const up=()=>{drag=null;};
-        let keyboardCharge=false;
         const keydown=(e:KeyboardEvent)=>{
-          if(e.metaKey||e.ctrlKey||e.altKey||e.target instanceof Element&&e.target.closest('button,input,select,textarea,summary,a,[contenteditable]'))return;
+          if(e.metaKey||e.ctrlKey||e.altKey||e.target instanceof Element&&e.target.closest('input,select,textarea,[contenteditable]')||(e.target instanceof Element&&e.target.closest('button,summary,a')&&!['KeyR','KeyV'].includes(e.code)))return;
           if(e.repeat&&!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','KeyA','KeyD','KeyW','KeyS'].includes(e.code))return;
           if(['Space','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','KeyR','KeyX','KeyQ','KeyE','KeyL','KeyV'].includes(e.code))e.preventDefault();
           if(e.code==='Space'){keyboardCharge=true;actions.current?.begin();}
@@ -126,10 +139,10 @@ export default function MechanismRange(){
           setupRef.current=next;setSetup(next);
         };
         const keyup=(e:KeyboardEvent)=>{if(e.code==='Space'&&keyboardCharge){keyboardCharge=false;e.preventDefault();actions.current?.release();}};
-        const blur=()=>{keyboardCharge=false;up();cancel();};
+        const blur=()=>{releaseInputs();cancel();};
         surface.addEventListener('pointerdown',down);surface.addEventListener('pointermove',move);surface.addEventListener('pointerup',up);surface.addEventListener('pointercancel',up);
         window.addEventListener('keydown',keydown);window.addEventListener('keyup',keyup);window.addEventListener('blur',blur);
-        const resize=()=>{activeEngine.resize();camera.fovMode=activeEngine.getAspectRatio(camera)<1.3?Camera.FOVMODE_HORIZONTAL_FIXED:Camera.FOVMODE_VERTICAL_FIXED;camera.fov=camera.fovMode===Camera.FOVMODE_HORIZONTAL_FIXED?1.25:RANGE_CAMERA.fov;};resize();window.addEventListener('resize',resize);
+        const resize=()=>{activeEngine.resize();const frame=cameraFrame();camera.fovMode=frame.horizontal?Camera.FOVMODE_HORIZONTAL_FIXED:Camera.FOVMODE_VERTICAL_FIXED;camera.fov=frame.fov;};resize();placeRangeCamera(camera,target,cameraFrame('launch'));window.addEventListener('resize',resize);
         cleanup=()=>{actions.current=null;window.removeEventListener('resize',resize);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('blur',blur);surface.removeEventListener('pointerdown',down);surface.removeEventListener('pointermove',move);surface.removeEventListener('pointerup',up);surface.removeEventListener('pointercancel',up);projectile?.dispose();departureMarkers.dispose();session.dispose();world.dispose();};
         phaseTo('ready');
         activeEngine.runRenderLoop(()=>{
@@ -147,10 +160,10 @@ export default function MechanismRange(){
           if(f&&view.getSnapshot()==='flight'){
             const p=f.mesh.position,v=f.aggregate.body.getLinearVelocity();heading=followHeading(heading,v,dt);
             const horizontal=camera.fovMode===Camera.FOVMODE_HORIZONTAL_FIXED;
-            const desired=followOffsets(p,v,heading),frame=advanceFlightCamera({position:camera.position,target,fov:camera.fov},p,previous,desired,dt,activeEngine.getAspectRatio(camera),horizontal,horizontal?1.25:.80);
+            const desired=followOffsets(p,v,heading),frame=advanceFlightCamera({position:camera.position,target,fov:camera.fov},p,previous,desired,dt,activeEngine.getAspectRatio(camera),horizontal,framingRef.current==='familiar'?(horizontal?.92:.69):(horizontal?1.25:.80));
             camera.position.copyFromFloats(frame.position.x,frame.position.y,frame.position.z);target.copyFromFloats(frame.target.x,frame.target.y,frame.target.z);camera.fov=frame.fov;previous=p.clone();
             if(++trailFrame%3===0){points.push(p.clone());if(points.length>900)points.shift();if(points.length>1){trail?.dispose();trail=MeshBuilder.CreateLines('mr-trail',{points},activeScene);trail.color=new Color3(.1,.8,.85);}}
-          }else{stepRangeView(camera,target,view.getSnapshot(),rail.x,dt,camera.fovMode===Camera.FOVMODE_HORIZONTAL_FIXED?1.25:RANGE_CAMERA.fov);}
+          }else if(view.getSnapshot()==='launch'||view.getSnapshot()==='survey'){advanceRangeCamera(camera,target,cameraFrame(),dt);}
           camera.setTarget(target);activeScene.render();
         });
       }catch(e){if(disposed)return;setError(e instanceof Error?e.message:String(e));phaseTo('error');}
@@ -168,12 +181,17 @@ export default function MechanismRange(){
     {feedback&&<div className={styles.machine} data-state={floor} role="status">{feedback}</div>}
     {caption&&<div className={styles.caption} role="status">{caption}</div>}
     {phase==='result'&&<section className={`${styles.caption} ${styles.receipt}`} aria-label="Line result" role="status">
+      <div className={styles.resultActions} aria-label="Continue playing">
+        <button type="button" onClick={e=>{e.stopPropagation();actions.current?.retry();}}>Retry Shot <kbd>R</kbd></button>
+        <button type="button" onClick={e=>{e.stopPropagation();actions.current?.reset();}}>Reset Card</button>
+      </div>
       {receipt.events.length>0&&<ol aria-label="Qualified line events">{receipt.events.map((event,index)=><li key={index}>{event.label}</li>)}</ol>}
       <p>{receipt.terminal}</p>
     </section>}
     {phase==='loading'&&<div className={styles.message}>Opening the transfer yard…</div>}
     {phase==='error'&&<div className={styles.message} role="alert">{error}</div>}
     <section className={styles.console} aria-label="Rail shot controls">
+      {recoveryNotice&&ready&&<p className={styles.recoveryNotice} role="status">{recoveryNotice}</p>}
       <div className={styles.options}>
         <button disabled={!ready&&phase!=='result'} aria-pressed={max} onClick={toggleMax}>MAX · 100% <kbd>X</kbd></button>
         <button disabled={!available} onClick={()=>actions.current?.retry()}>{live?'Retry Shot':'Retry'} <kbd>R</kbd></button>
@@ -186,6 +204,7 @@ export default function MechanismRange(){
           <label>Yaw <input aria-label="Exact yaw" type="number" step="0.1" min={RAIL_RULES.minYaw} max={RAIL_RULES.maxYaw} disabled={!canAim} value={Number(setup.yaw.toFixed(1))} onChange={e=>update({yaw:Number(e.target.value)})}/></label>
           <label>Elevation <input aria-label="Exact elevation" type="number" step="0.1" min={RAIL_RULES.minElevation} max={RAIL_RULES.maxElevation} disabled={!canAim} value={Number(setup.elevation.toFixed(1))} onChange={e=>update({elevation:Number(e.target.value)})}/></label>
           <button disabled={!['ready','result'].includes(phase)||!last} onClick={()=>actions.current?.recall()}>Recall last line</button>
+          <label>Launch framing <select aria-label="Launch framing" disabled={!['ready','result'].includes(phase)} value={framing} onChange={e=>{const next=e.target.value as RangeFraming;framingRef.current=next;setFraming(next);view.set('launch');}}><option value="familiar">FAMILIAR</option><option value="range">RANGE</option></select></label>
           <label>Projectile visual <select aria-label="Projectile visual" value={visualMode} onChange={e=>{const mode=e.target.value as 'round'|'ball';visualModeRef.current=mode;setVisualMode(mode);}}><option value="round">RAIL ROUND</option><option value="ball">BALL</option></select></label>
         </div>
         <p>Gentle start · 80% in 2 seconds · full power in 3. Aim ±70°; loft 5–85°. Q/E rails · arrows/WASD aim · Space fire · X MAX · R Retry · L Recall · V Survey.</p>
@@ -206,8 +225,8 @@ export default function MechanismRange(){
           <button disabled={!canAim||setup.railIndex===RAIL_RULES.railPositions.length-1} aria-label="Move launcher right" onClick={()=>moveRail(1)}><ChevronRight/></button>
         </div>
         <button className={styles.fire} disabled={!canAim}
-          onPointerDown={e=>{if(e.button!==0)return;e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);actions.current?.begin();}}
-          onPointerUp={()=>actions.current?.release()} onPointerCancel={()=>actions.current?.cancel()} onLostPointerCapture={()=>actions.current?.cancel()} onBlur={()=>actions.current?.cancel()}
+          onPointerDown={e=>{if(e.button!==0)return;e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);chargePointer.current={element:e.currentTarget,id:e.pointerId};actions.current?.begin();}}
+          onPointerUp={()=>{chargePointer.current=null;actions.current?.release();}} onPointerCancel={()=>actions.current?.cancel()} onLostPointerCapture={()=>actions.current?.cancel()} onBlur={()=>actions.current?.cancel()}
           onKeyDown={e=>{if((e.code==='Space'||e.code==='Enter')&&!e.repeat){e.preventDefault();e.stopPropagation();actions.current?.begin();}}}
           onKeyUp={e=>{if(e.code==='Space'||e.code==='Enter'){e.preventDefault();e.stopPropagation();actions.current?.release();}}}>
           <Crosshair/><span>{max?'FIRE MAX · 100%':powerMode==='set'?(phase==='charging'?'RELEASE TO FIRE':`FIRE AT ${Math.round(setup.charge*1000)/10}%`):phase==='charging'?'RELEASE ROUND':'HOLD TO CHARGE'}</span>
