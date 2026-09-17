@@ -1,0 +1,12 @@
+import type {RangeSetup} from './mechanism-range-session';
+import type {Vector3} from '@babylonjs/core';
+export type RangeViewMode='launch'|'survey'|'flight'|'impact';
+export function rangeSetup(setup:RangeSetup,patch:Partial<RangeSetup>):RangeSetup;
+export function rangeRail(setup:RangeSetup,direction:number):RangeSetup;
+export function rangeDrag(setup:RangeSetup,dx:number,dy:number,pointerType:string):RangeSetup;
+export function rangeRestore(action:'retry'|'reset'|'recall',current:RangeSetup,saved:RangeSetup|null,mode:'hold'|'set',max:boolean):{setup:RangeSetup;mode:'hold'|'set';max:boolean};
+export function createRangeView():{getSnapshot:()=>RangeViewMode;getServerSnapshot:()=>RangeViewMode;subscribe(fn:()=>void):()=>void;set(mode:RangeViewMode):void;toggle(phase:string):boolean};
+export function rangeViewLabel(mode:RangeViewMode):string;
+export function stepRangeView(camera:{position:Vector3;fov:number},target:Vector3,mode:RangeViewMode,railX:number,dt:number,baseFov:number):boolean;
+export const RANGE_BLIND_BRIEF:string;
+export function transferFeedback(discovered:boolean,state:string):string|null;

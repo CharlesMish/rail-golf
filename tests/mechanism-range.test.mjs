@@ -114,5 +114,5 @@ test('new route has no score/progression/archive writes and does not reuse court
  const scene=await readFile(new URL('../lib/mechanism-range-scene.js',import.meta.url),'utf8'),session=await readFile(new URL('../lib/mechanism-range-session.js',import.meta.url),'utf8'),ui=await readFile(new URL('../app/lab/mechanism-range/range.tsx',import.meta.url),'utf8');
  for(const source of [scene,session,ui])assert.doesNotMatch(source,/scoreLine\(|localStorage|indexedDB|buildCourtyard\(|COURTYARD_HOLES|createSurveyLedger/);
  assert.equal((session.match(/\.applyImpulse\(/g)||[]).length,1,'only the initial launch uses an impulse');
- assert.match(ui,/chargeFromHold/);assert.match(ui,/Recall last setup \+ state/);
+ assert.match(ui,/launchCharge/);assert.match(ui,/Recall last line/);
 });
