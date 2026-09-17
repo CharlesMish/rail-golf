@@ -108,7 +108,7 @@ test('blind brief and initial state contain no mechanism instructions; actual sw
  const ui=await readFile(new URL('../app/lab/mechanism-range/range.tsx',import.meta.url),'utf8');
  assert.doesNotMatch(ui,/Shoot the control|one shared machine|Reset · A|surveyRef|phaseRef.current!==['"]result['"]\|\|/);
  assert.match(ui,/if\(event.kind==='switch'\)setDiscovered\(true\)/);assert.equal((ui.match(/setDiscovered\(true\)/g)||[]).length,1);
- assert.match(ui,/rangeViewLabel\(viewMode\)/);assert.match(ui,/stepRangeView\(camera,target,view.getSnapshot\(\)/);
+ assert.match(ui,/rangeViewLabel\(viewMode\)/);assert.match(ui,/advanceRangeCamera\(camera,target,cameraFrame\(\),dt\)/);
  assert.match(ui,/useSyncExternalStore\(view.subscribe,view.getSnapshot,view.getServerSnapshot\)/);
  assert.match(ui,/\},\[view\]\)/,'presentation toggles do not restart the scene');
  assert.match(ui,/powerModeRef.current,setupRef.current.charge/);
