@@ -1,0 +1,200 @@
+{
+  "baseline": "ce7d1439875702282aea3da0d92a01779f6c31eb",
+  "cases": [
+    {
+      "name": "bench",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": -17,
+        "elevation": 22,
+        "charge": 0.45
+      },
+      "sha256": "d9b1f17e4e1b15bf74d0e766942a522504bd8ae34fc9fbf92104a510da8b0b60",
+      "features": [
+        "split-bench"
+      ]
+    },
+    {
+      "name": "table",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 9,
+        "elevation": 20,
+        "charge": 0.6
+      },
+      "sha256": "75097c57a4a2e3e30f9eb13a526a6a88c5fa0c7f07e85a7bdbf05678d43894cc",
+      "features": [
+        "transfer-table"
+      ]
+    },
+    {
+      "name": "cross",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": -18,
+        "elevation": 22,
+        "charge": 0.55
+      },
+      "sha256": "9f873f4c1598254a5df9f345fd9477b90836848a8ec57ae85ed1cc9668157e12",
+      "features": [
+        "split-bench",
+        "transfer-table"
+      ]
+    },
+    {
+      "name": "rack",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 23,
+        "elevation": 40,
+        "charge": 0.8
+      },
+      "sha256": "f3fa9a958c2afc878bb0861af96cc1ea7dc72d0ee1859bd2e5405bc99a27d9a0",
+      "features": [
+        "return-wall"
+      ]
+    },
+    {
+      "name": "low",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 9,
+        "elevation": 20,
+        "charge": 0.62
+      },
+      "sha256": "a4ac1ea92667083475d32a35519936c5c5842171a9049972e9e5f6300d668747",
+      "features": [
+        "transfer-table",
+        "rack-low"
+      ]
+    },
+    {
+      "name": "middle",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 9,
+        "elevation": 20,
+        "charge": 0.65
+      },
+      "sha256": "28519038c0962cb49a2e765dc906f87dab1bba32a54832577535959d8a2788be",
+      "features": []
+    },
+    {
+      "name": "switch",
+      "state": "A",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 33,
+        "elevation": 12,
+        "charge": 0.65
+      },
+      "sha256": "0a7f5594ebdb028698efc4cf0996a0c3947dc6ee76b6657612e207f85e012bcd",
+      "features": []
+    },
+    {
+      "name": "bench",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": -17,
+        "elevation": 22,
+        "charge": 0.45
+      },
+      "sha256": "90a59475fb0f226116213c9e61b08bc88294a8a771c7c2356f9892b246712d9c",
+      "features": [
+        "split-bench"
+      ]
+    },
+    {
+      "name": "table",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 9,
+        "elevation": 20,
+        "charge": 0.6
+      },
+      "sha256": "2d21d420e75f44fe38e4ed39270b7dd92574c160597fd421be780e9943b5ffbf",
+      "features": [
+        "transfer-table"
+      ]
+    },
+    {
+      "name": "cross",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": -18,
+        "elevation": 22,
+        "charge": 0.55
+      },
+      "sha256": "f5dcdd0c5cb9e289c8fd539230b0b136e35c17dd0e02a8450b739ff686943010",
+      "features": [
+        "split-bench",
+        "transfer-table"
+      ]
+    },
+    {
+      "name": "rack",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 23,
+        "elevation": 40,
+        "charge": 0.8
+      },
+      "sha256": "82abf9aa6f8b7eb0e85e666dd142fff0ab2eb8242fff14d0ba10775543247bd3",
+      "features": [
+        "return-wall"
+      ]
+    },
+    {
+      "name": "low",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 9,
+        "elevation": 20,
+        "charge": 0.62
+      },
+      "sha256": "d419ea29f9ab083f5ce3b9c3d035c4ffbd1e210ae3190273d75d9c2b3349ea2f",
+      "features": [
+        "transfer-table",
+        "rack-middle"
+      ]
+    },
+    {
+      "name": "middle",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 9,
+        "elevation": 20,
+        "charge": 0.65
+      },
+      "sha256": "d3d6438191efb625061c69daf7043427497684b584d6d99c2bc7ec64b907ad21",
+      "features": [
+        "transfer-table",
+        "rack-middle"
+      ]
+    },
+    {
+      "name": "switch",
+      "state": "B",
+      "setup": {
+        "railIndex": 1,
+        "yaw": 33,
+        "elevation": 12,
+        "charge": 0.65
+      },
+      "sha256": "12c4f291a4e6ce070a318779e75927c6ee42c833e0c989f3f0803720056fe170",
+      "features": []
+    }
+  ]
+}
