@@ -1,0 +1,10 @@
+import type {YardStation} from './stations';
+export const VOCABULARY_STATION:YardStation;
+export const VOCABULARY_DEFAULT:{railIndex:number;yaw:number;elevation:number;charge:number};
+export const VOCABULARY_BOUNDS:{minX:number;maxX:number;minZ:number;maxZ:number;minY:number};
+export const WIND_VOLUME:{minX:number;maxX:number;minY:number;maxY:number;minZ:number;maxZ:number;acceleration:number};
+export const WIND_STATES:readonly string[];
+export const PADDLE:{x:number;y:number;z:number;width:number;height:number;depth:number;amplitudeDegrees:number;periodSeconds:number};
+export function windAcceleration(point:{x:number;y:number;z:number},state:string):{x:number;y:number;z:number};
+export function paddleYaw(seconds:number):number;
+export function vocabularyEnd(point:{x:number;y:number;z:number},velocity:{x:number;y:number;z:number},elapsed:number,slowSince:number|null):string|null;

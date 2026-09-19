@@ -1,0 +1,16 @@
+import type {RangeSetup} from './mechanism-range-session';
+export type TeeMode='rails'|'stops'|'continuous';
+export type TeeSetup=RangeSetup & {carriageMode:TeeMode;originX:number};
+export const TEE_STOPS:readonly number[];
+export const TEE_TRACK:{min:number;max:number;step:number};
+export const TEE_MODES:readonly {id:TeeMode;label:string}[];
+export const TEE_DEFAULT:Readonly<TeeSetup>;
+export function normalizeTeeSetup(setup:RangeSetup & Partial<TeeSetup>):TeeSetup;
+export function teeOriginPoints(mode:string):readonly number[]|null;
+export function selectTeeMode(setup:TeeSetup,mode:TeeMode):TeeSetup;
+export function selectTeeOrigin(setup:TeeSetup,x:number):TeeSetup;
+export function shiftTeeOrigin(setup:TeeSetup,direction:number):TeeSetup;
+export function teeStation(setup:TeeSetup):{id:string;label:string;x:number;z:number;yaw:number};
+export const TEE_ORIGIN_CONTROL:{modes:typeof TEE_MODES;modeKey:'carriageMode';positionKey:'originX';min:number;max:number;step:number;stops:typeof teeOriginPoints;normalize:typeof normalizeTeeSetup;shift:typeof shiftTeeOrigin;selectMode:typeof selectTeeMode;select:typeof selectTeeOrigin};
+export const TEE_BOUNDS:{minX:number;maxX:number;minZ:number;maxZ:number;minY:number};
+export const teeEnd:typeof import('./mechanism-range').rangeEnd;

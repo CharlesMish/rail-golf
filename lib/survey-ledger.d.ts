@@ -6,5 +6,5 @@ export type SurveyStatus={count:number;pending:number;evicted:number;warning:str
 export const SURVEY_LIMITS:Readonly<{attempts:number;bytes:number;recordBytes:number;journalBytes:number}>;
 export function makeSurveyRecord(ticket:SurveyTicket,ledger:LineEvidence[]):SurveyRecord;
 export function surveyCSV(records:SurveyRecord[]):string;
-export function createSurveyArchive(db:IDBFactory,limits?:typeof SURVEY_LIMITS):{append(record:SurveyRecord):Promise<{count:number;bytes:number;evicted:number}|undefined>;read():Promise<{records:SurveyRecord[];evicted:number}>;clear():Promise<void>};
+export function createSurveyArchive(db:IDBFactory,limits?:typeof SURVEY_LIMITS,databaseName?:string):{append(record:SurveyRecord):Promise<{count:number;bytes:number;evicted:number}|undefined>;read():Promise<{records:SurveyRecord[];evicted:number}>;clear():Promise<void>};
 export function createSurveyLog(options:{storage:Storage;archive:ReturnType<typeof createSurveyArchive>;session?:string;onStatus?:(status:SurveyStatus)=>void}):{begin(meta:SurveyMeta):SurveyTicket;append(ticket:SurveyTicket,ledger:LineEvidence[]):void;export():Promise<{version:number;exportedAt:string;limits:typeof SURVEY_LIMITS;evicted:number;warning:string;records:SurveyRecord[]}>;clear():Promise<void>;ready():Promise<void>};

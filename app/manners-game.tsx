@@ -79,6 +79,8 @@ import {LINE_CARDS,LINE_STATIONS,selectOpenLineStation} from "@/lib/line-lab";
 import type {GameCard} from "@/lib/line-lab";
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
+import {buildTimberReceiver} from "@/lib/timber-receiver";
+import {receiverStorage} from "@/lib/timber-receiver-storage";
 
 import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, readDeliveryBook, LEGACY_DELIVERY_BOOK_KEY } from "@/lib/delivery-routes";
 import type { DeliveryRoute, DeliveryBook } from "@/lib/delivery-routes";
@@ -337,7 +339,9 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean }) {
+export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean }) {
+  lineLab = lineLab || timberReceiver;
+  const lineRoute = timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
@@ -346,7 +350,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const HOLES: readonly GameCard[] = lineLab ? labSelection.cards : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const STORAGE_KEY = timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -373,9 +377,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     // Access through methods so blocked storage is reported by the journal, not a boot crash.
     const storage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit survey clear');}};
     let mounted=true;
-    surveyLogRef.current=createSurveyLog({storage,archive:createSurveyArchive(window.indexedDB),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
+    surveyLogRef.current=createSurveyLog({storage:timberReceiver?receiverStorage(storage):storage,archive:createSurveyArchive(window.indexedDB,undefined,timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
-  },[lineLab]);
+  },[lineLab,timberReceiver]);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
   useEffect(()=>{if(!claimCaption)return;const timer=setTimeout(()=>setClaimCaption(null),2200);return ()=>clearTimeout(timer);},[claimCaption]);
@@ -412,7 +416,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2, saw: 3 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
-  const libraryKey = `${SHOT_LIBRARY_KEY}-${lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
+  const libraryKey = `${SHOT_LIBRARY_KEY}-${timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -556,7 +560,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     if(lineLab&&!componentIdRef.current)componentIdRef.current=crypto.randomUUID();
     const mountIdentity=documentIdentity?.mount(componentIdRef.current!);
     const traceStorage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit trace clear');}};
-    const mountTrace=documentIdentity?createActionTrace({storage:traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
+    const mountTrace=documentIdentity?createActionTrace({storage:timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
     const lifecycle=(event:string,detail:Record<string,unknown>={})=>{const state=readControlState();mountTrace?.append({category:'lifecycle',action:event,source:'internal/programmatic',before:state,after:state,accepted:true,reason:'observed',detail});};
     let stopLifecycle=()=>{};
     if(lineLab&&mountTrace&&documentIdentity){
@@ -584,7 +588,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const encoded=new URLSearchParams(window.location.hash.slice(1)).get('line');
           if(encoded){try{
             const parsed=decodeShareLine(encoded);
-            const route=lineLab?'/lab/lines':'/lab/courtyard-diverter';
+            const route=lineLab?lineRoute:'/lab/courtyard-diverter';
             if(parsed.route!==route) throw new Error('This shared line belongs to a different lab route.');
             sharedStart=restoreShareLine(parsed,BUILD_ID);
             if(lineLab&&sharedStart.card==='open-line')labSelection.replaceOpenLine(selectOpenLineStation(sharedStart.station,{allowParked:true}));
@@ -1126,6 +1130,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
           if (courtyard) {
             skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole, {loadingPlatformOverlay:courtyardDiverter&&!lineLab,lineLab}).skyToken;
+            if(timberReceiver)buildTimberReceiver(scene!,courseRoot!,materials,shadows,registerAggregate);
             if(lineLab) diverterHandles=buildKickerPallet(scene!,courseRoot!,materials,shadows,floorStateRef.current,hole.target);
             else if (courtyardDiverter && hole.target) diverterHandles = buildDiverterLab(scene!,courseRoot,materials,shadows,floorStateRef.current,{...YARD_DIVERTER_OPTIONS,target:hole.target});
           } else {
@@ -2213,7 +2218,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         recordsRef.current = saved;
         setRecords(saved);
         const resumeIndex = chooseResumeHole(saved, HOLES);
-        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
+        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
         const entryBefore=lineLab?readControlState():null;
         createCourse(startHole);
@@ -2520,8 +2525,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     try{
       const card=HOLES[activeHoleIndex()];
       const setup=saved ?? {railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
-      const encoded=encodeShareLine({v:1,build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard',route:lineLab?'/lab/lines':'/lab/courtyard-diverter',card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}});
-      const url=new URL(lineLab?'/lab/lines':'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
+      const encoded=encodeShareLine({v:1,build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard',route:lineLab?lineRoute:'/lab/courtyard-diverter',card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}});
+      const url=new URL(lineLab?lineRoute:'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
       setShareLink(url.href);
       try{await navigator.clipboard.writeText(url.href);setShareNotice(lineLab?'Line link copied. It restores setup and starting pallet state without firing.':'Line link copied. It restores setup and starting state; it never fires.');}
       catch{setShareNotice('Clipboard unavailable. Copy the line link below.');}
@@ -2671,7 +2676,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       </nav>
 
       <aside inert={lineLab&&phase==='result'?true:undefined} className="hole-brief manners-brief">
-        <p className="eyebrow">{lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
+        <p className="eyebrow">{timberReceiver ? `Timber Receiver · ${hole.station?.label}` : lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
         <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{hole.name}</strong>
         <span>{lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
         {lineLab && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
