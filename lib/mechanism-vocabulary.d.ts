@@ -4,6 +4,10 @@ export const VOCABULARY_DEFAULT:{railIndex:number;yaw:number;elevation:number;ch
 export const VOCABULARY_BOUNDS:{minX:number;maxX:number;minZ:number;maxZ:number;minY:number};
 export const WIND_VOLUME:{minX:number;maxX:number;minY:number;maxY:number;minZ:number;maxZ:number;acceleration:number};
 export const WIND_STATES:readonly string[];
+export const PADDLE_MODES:readonly string[];
+export const PADDLE_HZ:number;
+export const VOCABULARY_ENVIRONMENT:{wind:string;paddleMode:string;paddleTick:string};
+export function paddleTick(value:string|number):number;
 export const PADDLE:{x:number;y:number;z:number;width:number;height:number;depth:number;amplitudeDegrees:number;periodSeconds:number};
 export function windAcceleration(point:{x:number;y:number;z:number},state:string):{x:number;y:number;z:number};
 export function paddleYaw(seconds:number):number;

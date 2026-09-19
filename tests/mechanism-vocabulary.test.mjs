@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import Havok from '@babylonjs/havok';
 import {PhysicsMotionType,Vector3,NullEngine,Scene,FreeCamera,Matrix,Viewport,Camera} from '@babylonjs/core';
-import {VOCABULARY_DEFAULT,WIND_VOLUME,paddleYaw,windAcceleration} from '../lib/mechanism-vocabulary.js';
+import {VOCABULARY_DEFAULT,WIND_VOLUME,VOCABULARY_ENVIRONMENT,PADDLE_HZ,paddleTick,paddleYaw,windAcceleration} from '../lib/mechanism-vocabulary.js';
 import {MECHANISM_VOCABULARY} from '../lib/mechanism-vocabulary-experiment.js';
 import {RAIL_RULES,chargeToSpeed} from '../lib/rail-golf-v02.js';
 import {spatialLaunch,spatialCameraFrame} from '../lib/spatial-lab-session.js';
@@ -37,12 +37,12 @@ test('shots outside the volume are identical for every fan setting, including MA
   assert.deepEqual(results[0],results[1]);assert.deepEqual(results[1],results[2]);
  }finally{h.dispose();}
 });
-test('wind state survives Retry and Recall restores launch state; Reset is OFF',()=>{
+test('wind state survives Retry and Recall restores launch state; Reset is visible LEFT/SYNC',()=>{
  const h=vocabularyHarness(hv);try{
   assert.throws(()=>h.world.environment.restore({wind:'random'}));
   h.world.environment.restore({wind:'LEFT'});const last=h.shoot(windShot);
-  h.session.action('retry');assert.deepEqual(h.world.environment.snapshot(),{wind:'LEFT'});
-  h.session.action('reset');assert.deepEqual(h.world.environment.snapshot(),{wind:'OFF'});
+  h.session.action('retry');assert.deepEqual(h.world.environment.snapshot(),{wind:'LEFT',paddleMode:'SYNC',paddleTick:'0'});
+  h.session.action('reset');assert.deepEqual(h.world.environment.snapshot(),VOCABULARY_ENVIRONMENT);
   assert.deepEqual(h.session.action('recall'),last.setup);assert.deepEqual(h.world.environment.snapshot(),last.environment);
   assert.deepEqual(h.shoot(last.setup),last);
  }finally{h.dispose();}
@@ -78,18 +78,19 @@ test('shared browser physics-observable path matches direct fixed-step authority
   }finally{expected.dispose();actual.dispose();}
  }
 });
-test('paddle freezes in RESULT and resets to a motionless READY phase after Retry/Reset/Recall',()=>{
+test('paddle freezes in RESULT and previews its real cycle in READY after recovery',()=>{
  const h=vocabularyHarness(hv);try{
   h.world.environment.restore({wind:'RIGHT'});
   h.shoot(paddleShot);const terminal=h.world.paddle.rotationQuaternion.asArray();
-  for(let i=0;i<240;i++)h.scene.getPhysicsEngine()._step(1/120);
+  for(let i=0;i<240;i++)h.step();
   assert.deepEqual(h.world.paddle.rotationQuaternion.asArray(),terminal);assert.equal(h.world.paddleBody.body.getAngularVelocity().length(),0);
   for(const action of ['retry','reset','recall']){
    h.session.action(action);assert.ok(h.world.paddle.rotationQuaternion.toEulerAngles().length()<1e-8);
-   for(let i=0;i<240;i++)h.scene.getPhysicsEngine()._step(1/120);
-   assert.ok(h.world.paddle.rotationQuaternion.toEulerAngles().length()<1e-8);assert.equal(h.world.paddleBody.body.getAngularVelocity().length(),0);
+   for(let i=0;i<120;i++)h.step();
+   assert.ok(Math.abs(h.world.paddle.rotationQuaternion.toEulerAngles().y-paddleYaw(1))<.005);
+   assert.ok(h.world.paddleBody.body.getAngularVelocity().length()>.1,'real animated body previews while ready');
   }
-  assert.deepEqual(h.world.environment.snapshot(),{wind:'RIGHT'});
+  assert.deepEqual(h.world.environment.snapshot(),{wind:'RIGHT',paddleMode:'SYNC',paddleTick:'0'});
  }finally{h.dispose();}
 });
 test('the new world uses incumbent muzzle, speed, mass and gravity authority and never scores',()=>{
@@ -123,4 +124,96 @@ test('FAMILIAR opening view includes both working-bay centers on desktop and mob
    }
   }finally{scene.dispose();engine.dispose();}
  }
+});
+
+
+test('SYNC idle preview duration cannot change the recorded launch phase or resulting physical line',()=>{
+ const h=vocabularyHarness(hv);try{
+  h.world.environment.restore({wind:'OFF',paddleMode:'SYNC',paddleTick:'0'});const expected=h.shoot(paddleShot);
+  for(const idle of [60,270,731]){
+   h.session.action('retry');for(let i=0;i<idle;i++)h.step();
+   assert.notEqual(h.world.paddle.rotationQuaternion.toEulerAngles().y,0);
+   assert.equal(h.session.fire(paddleShot),true);
+   assert.equal(h.session.flight.start.paddleTick,'0');
+   assert.ok(h.world.paddle.rotationQuaternion.toEulerAngles().length()<1e-8);
+   for(let i=0;i<7300&&!h.session.flight.ended;i++)h.step();assert.deepEqual(h.session.last,expected);
+  }
+ }finally{h.dispose();}
+});
+test('LIVE captures the physically visible integer phase; Recall holds it and repeats exactly',()=>{
+ const h=vocabularyHarness(hv);try{
+  h.world.environment.setControl('wind','OFF');h.world.environment.setControl('paddleMode','LIVE');
+  for(let i=0;i<180;i++)h.step();
+  const visible=h.world.paddle.rotationQuaternion.asArray();assert.equal(h.world.environment.snapshot().paddleTick,'180');
+  assert.equal(h.session.fire(paddleShot),true);assert.equal(h.session.flight.start.paddleTick,'180');
+  const atLaunch=h.world.paddle.rotationQuaternion.asArray();for(let i=0;i<4;i++)assert.ok(Math.abs(visible[i]-atLaunch[i])<1e-5);
+  for(let i=0;i<7300&&!h.session.flight.ended;i++)h.step();const expected=h.session.last;
+  assert.equal(expected.environment.paddleMode,'LIVE');assert.equal(expected.environment.paddleTick,'180');
+  h.session.action('recall');const held=h.world.paddle.rotationQuaternion.asArray();
+  for(let i=0;i<480;i++)h.step();for(let i=0;i<4;i++)assert.ok(Math.abs(h.world.paddle.rotationQuaternion.asArray()[i]-held[i])<1e-7,'held phase only receives Havok float quantization');assert.equal(h.world.paddleBody.body.getAngularVelocity().length(),0);
+  assert.match(h.world.diagnostics().recallHeld,/RECALLED PHASE HELD/);
+  h.world.environment.setControl('wind','LEFT');assert.equal(h.world.environment.snapshot().paddleTick,'180');
+  assert.match(h.world.diagnostics().recallHeld,/RECALLED PHASE HELD/);
+  h.world.environment.setControl('wind','OFF');
+  assert.equal(h.session.fire(expected.setup),true);for(let i=0;i<7300&&!h.session.flight.ended;i++)h.step();assert.deepEqual(h.session.last,expected);
+  h.session.action('recall');h.world.environment.setControl('paddleMode','LIVE');
+  for(let i=0;i<60;i++)h.step();assert.equal(h.world.environment.snapshot().paddleTick,'240');assert.equal(h.world.diagnostics().recallHeld,'');
+  h.session.action('retry');assert.equal(h.world.environment.snapshot().paddleMode,'LIVE');const before=h.world.environment.snapshot().paddleTick;h.step();assert.notEqual(h.world.environment.snapshot().paddleTick,before);
+  h.session.action('reset');assert.deepEqual(h.world.environment.snapshot(),VOCABULARY_ENVIRONMENT);
+ }finally{h.dispose();}
+});
+test('LIVE phase payload is bounded and rejects malformed state without changing the physical environment',()=>{
+ const h=vocabularyHarness(hv);try{
+  for(const value of ['nan','-1','1.5','1080',Infinity,{},null])assert.throws(()=>paddleTick(value));
+  for(const state of [{wind:'RANDOM'},{wind:'LEFT',paddleMode:'CHAOS'},{wind:'LEFT',paddleMode:'LIVE',paddleTick:'9999'}]){
+   const before=h.world.environment.snapshot();assert.throws(()=>h.world.environment.restore(state));assert.deepEqual(h.world.environment.snapshot(),before);
+  }
+  assert.equal(paddleTick('1079'),1079);assert.equal(PADDLE_HZ,120);
+ }finally{h.dispose();}
+});
+test('active wind moves directional cues in READY; OFF visibly collapses them without adding physical authority',()=>{
+ const h=vocabularyHarness(hv);try{
+  const cues=h.world.streamers;assert.equal(h.world.environment.snapshot().wind,'LEFT');assert.equal(cues.length,9);
+  const positions=()=>cues.map(({ribbon})=>ribbon.position.asArray());const first=positions();
+  for(let i=0;i<60;i++)h.world.updatePresentation(VOCABULARY_DEFAULT,1/60);
+  assert.notDeepEqual(positions(),first);assert.ok(h.world.fanRotors.every(r=>r.rotation.y!==0));
+  for(const {ribbon,arrow}of cues){assert.equal(ribbon.physicsBody,undefined);assert.equal(arrow.physicsBody,undefined);assert.equal(arrow.isEnabled(),true);assert.ok(arrow.position.x<0);}
+  h.world.environment.setControl('wind','RIGHT');for(const {arrow}of cues)assert.ok(arrow.position.x>0);
+  h.world.environment.setControl('wind','OFF');const off=positions(),rotors=h.world.fanRotors.map(r=>r.rotation.y);
+  for(let i=0;i<60;i++)h.world.updatePresentation(VOCABULARY_DEFAULT,1/60);
+  assert.deepEqual(positions(),off);assert.deepEqual(h.world.fanRotors.map(r=>r.rotation.y),rotors);
+  assert.ok(cues.every(({ribbon,arrow})=>ribbon.scaling.x===.16&&!arrow.isEnabled()));
+  assert.ok(h.scene.meshes.filter(m=>/paddle-(motion-stripe|band|pivot-collar)/.test(m.name)).every(m=>!m.physicsBody));
+  assert.deepEqual(MECHANISM_VOCABULARY.controls.map(c=>[c.id,c.placement,c.options]),[['wind','primary',['OFF','LEFT','RIGHT']],['paddleMode','primary',['SYNC','LIVE']]]);
+ }finally{h.dispose();}
+});
+
+test('LIVE physical contacts repeat across six recorded phases and three useful speeds without observed tunnelling',()=>{
+ const h=vocabularyHarness(hv);try{
+  for(const tick of [0,180,360,540,720,900])for(const [charge,elevation]of [[.65,25],[.85,20],[1,15]]){
+   const state={wind:'OFF',paddleMode:'LIVE',paddleTick:String(tick)},setup={railIndex:1,yaw:20,elevation,charge};
+   h.world.environment.restore(state);const a=h.shoot(setup);h.world.environment.restore(state);const b=h.shoot(setup);
+   assert.deepEqual(a,b,`same setup/state repeats at tick ${tick}, speed ${chargeToSpeed(charge)}`);
+   assert.deepEqual(a.environment,state);
+   const contact=a.contacts.filter(c=>c.body==='mv-paddle');assert.ok(contact.length>0,'real moving-body contact');
+   assert.ok(contact.reduce((sum,c)=>sum+c.count,0)<12,'no prolonged episode');
+   assert.deepEqual(redirects(a).map(e=>e.feature),['moving-paddle']);assert.ok(a.position[2]<48,'departure returns before paddle plane');
+  }
+ }finally{h.dispose();}
+});
+test('browser physics-observable idle and launch steps capture the same LIVE phase and result as direct Havok steps',()=>{
+ const direct=vocabularyHarness(hv),browser=vocabularyHarness(hv);try{
+  for(const h of [direct,browser]){h.world.environment.setControl('wind','OFF');h.world.environment.setControl('paddleMode','LIVE');}
+  browser.scene.onBeforePhysicsObservable.add(()=>browser.session.beforeStep());browser.scene.onAfterPhysicsObservable.add(()=>browser.session.afterStep());
+  for(let i=0;i<180;i++)direct.step();
+  // Scene owns a substep accumulator, so compare executed physical ticks rather
+  // than assuming one submitted frame always yields exactly one physics step.
+  for(let i=0;i<182&&browser.world.environment.snapshot().paddleTick!=='180';i++)browser.scene._advancePhysicsEngineStep(1000/120);
+  assert.deepEqual(browser.world.environment.snapshot(),direct.world.environment.snapshot());
+  assert.equal(direct.session.fire(paddleShot),true);assert.equal(browser.session.fire(paddleShot),true);
+  for(let i=0;i<7300&&(!direct.session.flight.ended||!browser.session.flight.ended);i++){
+   if(!direct.session.flight.ended)direct.step();if(!browser.session.flight.ended)browser.scene._advancePhysicsEngineStep(1000/120);
+  }
+  assert.deepEqual(browser.session.last,direct.session.last);
+ }finally{direct.dispose();browser.dispose();}
 });
