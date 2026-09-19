@@ -1,0 +1,17 @@
+import type {Scene,TransformNode,StandardMaterial,ShadowGenerator,Mesh,PhysicsAggregate,PhysicsBody} from '@babylonjs/core';
+import type {VectorLike} from './rail-golf-v02';
+export type SpatialSetup={railIndex:number;yaw:number;elevation:number;charge:number;carriageMode?:string;originX?:number};
+export type SpatialStation={id:string;label:string;x:number;y?:number;z:number;yaw:number};
+export type SpatialEnvironment=Record<string,string>;
+export type SpatialEvent={kind:string;label?:string;feature?:string;state?:string|SpatialEnvironment;point?:VectorLike;last?:SpatialRecord;[key:string]:unknown};
+export type SpatialRecord={setup:SpatialSetup;station:SpatialStation;environment:SpatialEnvironment;endEnvironment:SpatialEnvironment;reason:string;elapsed:number;evidence:SpatialEvent[];contacts:{body:string;count:number;first:number;last:number;point:VectorLike}[];position:number[]};
+export type SpatialFlight={id:number;mesh:Mesh;aggregate:PhysicsAggregate;setup:SpatialSetup;elapsed:number;ended:string|null;evidence:SpatialEvent[]};
+export type SpatialWorld={dispose():void;environment?:{snapshot():SpatialEnvironment;restore(state:SpatialEnvironment):void;reset():void};contact?:(other:PhysicsBody,point:VectorLike,flight:SpatialFlight)=>{kind:string}|null;flush?:()=>string|null|undefined;onLaunch?:(flight:SpatialFlight)=>void;onResolve?:(flight:SpatialFlight,reason:string)=>void;onAction?:(action:string)=>void;beforeStep?:(flight:SpatialFlight,dt:number)=>void;afterStep?:(flight:SpatialFlight,dt:number)=>void;updatePresentation?:(setup:SpatialSetup)=>void;};
+export type SpatialBounds={minX:number;maxX:number;minZ:number;maxZ:number;minY:number;maxY?:number};
+export type SpatialConfig={id:string;title:string;subtitle?:string;brief:string;defaultSetup:SpatialSetup;station:(setup:SpatialSetup)=>SpatialStation;bounds?:SpatialBounds;end?:(point:VectorLike,velocity:VectorLike,elapsed:number,slow:number|null)=>string|null;survey:{position:number[];target:number[]};buildWorld:(scene:Scene,root:TransformNode,materials:Record<string,StandardMaterial>,shadows:ShadowGenerator)=>SpatialWorld;controls?:{id:string;label:string;options:string[]}[];originControl?:{modes:{id:string;label:string}[];min:number;max:number;step:number;stops:(mode:string)=>number[]|null;normalize:(setup:SpatialSetup)=>SpatialSetup;selectMode?:(setup:SpatialSetup,mode:string)=>SpatialSetup;select?:(setup:SpatialSetup,x:number)=>SpatialSetup;shift:(setup:SpatialSetup,direction:number)=>SpatialSetup};};
+export function spatialSetup(config:SpatialConfig,setup:SpatialSetup,patch?:Partial<SpatialSetup>):SpatialSetup;
+export function spatialControlSetup(config:SpatialConfig,current:SpatialSetup,patch:Partial<SpatialSetup>,phase:string):SpatialSetup;
+export function spatialLaunch(config:SpatialConfig,setup:SpatialSetup):{station:SpatialStation;rail:VectorLike;muzzle:VectorLike;aim:VectorLike};
+export function spatialCameraFrame(config:SpatialConfig,setup:SpatialSetup,width:number,height:number,mode?:string):{position:number[];target:number[];fov:number;horizontal:boolean;ease:number};
+export function spatialEnd(bounds:SpatialBounds,p:VectorLike,v:VectorLike,t:number,slow:number|null):string|null;
+export function createSpatialSession(scene:Scene,world:SpatialWorld,config:SpatialConfig,emit?:(event:SpatialEvent)=>void):{readonly flight:SpatialFlight|null;readonly last:SpatialRecord|null;fire(setup:SpatialSetup):boolean;beforeStep():void;afterStep():void;action(action:'retry'|'reset'|'recall'):SpatialSetup|null;dispose():void;};
