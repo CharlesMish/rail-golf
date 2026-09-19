@@ -1,0 +1,21 @@
+.primary{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;margin:0 0 8px;font:11px monospace}
+.primary fieldset{display:flex;gap:4px;align-items:center;flex-wrap:wrap;border:0;padding:0;margin:0}
+.primary legend{float:left;padding:0 6px 0 0;color:#a8cbcc}
+.primary button{min-height:32px;padding:5px 9px!important;font:11px monospace!important}
+.state{color:#ffc27c;font:700 11px monospace;white-space:nowrap}
+.origin{display:grid;grid-template-columns:1fr auto;gap:7px 12px;align-items:center;margin-bottom:9px}
+.meter{grid-column:1/-1;height:15px;position:relative;border-bottom:2px solid #58787a;margin:0 8px 9px}
+.meter:before{content:'';position:absolute;left:50%;height:10px;border-left:1px solid #608689;bottom:0}
+.needle{position:absolute;bottom:-4px;width:8px;height:19px;background:#70f0f2;transform:translateX(-50%);border:1px solid #12292d}
+.previous{position:absolute;bottom:0;width:2px;height:12px;background:#eabb83;transform:translateX(-50%)}
+.end{position:absolute;top:18px;color:#a3bfc0;font:9px monospace}
+.end:last-child{right:0}
+.originText{font:700 12px monospace;color:#bde5e1}
+.hint{font:10px/1.35 monospace;color:#a8c3c4;margin:5px 0 7px}
+@media(max-height:550px){.primary{gap:4px 9px;margin-bottom:4px}.primary button{min-height:26px;padding:3px 7px!important}.origin{margin-bottom:5px;gap:4px}.meter{height:10px;margin-bottom:7px}.hint{font-size:9px;margin:4px 0}}
+
+/* Keep the familiar firing controls in view while experiment/tools content scrolls. */
+.console.console{display:flex;flex-direction:column;overflow:hidden}
+.scroll{min-height:0;overflow:auto;overscroll-behavior:contain;padding:2px}
+.core{flex:0 0 auto;background:#0c1b20;padding-top:6px}
+@media(max-height:550px){.core{padding-top:4px}}

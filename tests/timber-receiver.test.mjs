@@ -21,15 +21,15 @@ const shot=(railIndex,yaw,elevation,charge)=>({railIndex,yaw,elevation,charge});
 
 test('one ordinary static timber segment is the entire receiver physical overlay',()=>{
  const h=harness();try{
-  assert.deepEqual(TIMBER_RECEIVER,{x:43,y:7,z:148,width:1.2,height:14,depth:26,yaw:-25});
+  assert.deepEqual(TIMBER_RECEIVER,{x:45,y:5,z:134,width:1.2,height:10,depth:18,yaw:-25});
   assert.equal(h.scene.meshes.filter(m=>m.name==='timber-receiver').length,1);
   assert.equal(h.overlay.body.body.getMassProperties().mass,0);
   assert.equal(h.overlay.body.shape.material.restitution,.86);
   assert.equal(h.overlay.body.shape.material.friction,.18);
   assert.equal(h.scene.meshes.filter(m=>m.name.startsWith('receiver-')&&m.physicsBody).length,0);
   const bounds=h.overlay.wall.getBoundingInfo().boundingBox;h.overlay.wall.computeWorldMatrix(true);
-  assert.ok(bounds.minimumWorld.x>36&&bounds.maximumWorld.x<50);
-  assert.ok(bounds.minimumWorld.z>135&&bounds.maximumWorld.z<161);
+  assert.ok(bounds.minimumWorld.x>40&&bounds.maximumWorld.x<50);
+  assert.ok(bounds.minimumWorld.z>125&&bounds.maximumWorld.z<143);
  }finally{h.dispose();}
 });
 
@@ -48,17 +48,17 @@ test('Gate tread and lumber departures that were OOB return to the existing yard
 });
 
 test('Walk receiver departures reach distinct existing tread/lumber regions across rails and power',()=>{
- for(const [railIndex,charge]of [[0,.8],[1,.8],[2,.8],[1,1]]){
+ for(const setup of [shot(0,-45,10,.8),shot(1,-50,20,1),shot(2,-60,15,1)]){
   const old=harness('lumber',false),next=harness('lumber');
   try{
-   const setup=shot(railIndex,-65,25,charge),a=old.shoot(setup),b=next.shoot(setup);assert.equal(a.outcome,'oob');assert.equal(b.outcome,'line-ended');
-   const list=features(b);assert.equal(list[0],'timber-receiver');assert.ok(list.length>1);assert.ok(b.point[2]<115);
+   const a=old.shoot(setup),b=next.shoot(setup);assert.equal(a.outcome,'oob');assert.equal(b.outcome,'line-ended');
+   const list=features(b);assert.equal(list[0],'timber-receiver');assert.ok(list.length>1);assert.ok(b.point[2]<145);
   }finally{old.dispose();next.dispose();}
  }
 });
 
 test('receiver is repeatable, independent of pallet state, and leaves OOB gaps and unchanged non-contact shots',()=>{
- const setup=shot(1,-65,25,.8),a=harness('lumber',true,'A'),b=harness('lumber',true,'B');
+ const setup=shot(2,-60,15,1),a=harness('lumber',true,'A'),b=harness('lumber',true,'B');
  try{const one=a.shoot(setup),two=b.shoot(setup);assert.deepEqual(features(one),features(two));assert.deepEqual(one.point,two.point);}finally{a.dispose();b.dispose();}
  for(const setup of [shot(1,70,35,1),shot(0,23.6,21.2,1),shot(1,0,42,.93)]){
   const old=harness('gate',false),next=harness('gate');

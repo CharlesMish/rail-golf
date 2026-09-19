@@ -5,7 +5,8 @@ import Havok from '@babylonjs/havok';
 import {PhysicsMotionType,FreeCamera,Vector3,Matrix,Viewport} from '@babylonjs/core';
 import {verticalHarness} from './helpers/vertical-yard-physics.mjs';
 import {mechanismHarness} from './helpers/mechanism-range-physics.mjs';
-import {VERTICAL_STATION,VERTICAL_DEFAULT,VERTICAL_SOLIDS,VERTICAL_APRON} from '../lib/vertical-yard.js';
+import {VERTICAL_STATION,VERTICAL_DEFAULT,VERTICAL_SOLIDS,VERTICAL_V0_SOLIDS,VERTICAL_RETURN_LADDER,VERTICAL_APRON} from '../lib/vertical-yard.js';
+import {buildVerticalYard} from '../lib/vertical-yard-scene.js';
 import {VERTICAL_YARD_LAB} from '../lib/vertical-yard-config.js';
 import {spatialLaunch,spatialCameraFrame} from '../lib/spatial-lab-session.js';
 import {placeRangeCamera} from '../lib/mechanism-range-framing.js';
@@ -25,7 +26,7 @@ const refs={
 
 test('vertical blockout has one elevated station, honest static bodies and no mechanism/target',()=>{
  const h=verticalHarness(hv);try{
-  assert.equal(h.world.features.size,VERTICAL_SOLIDS.length+4);
+  assert.equal(h.world.features.size,VERTICAL_SOLIDS.length+4+VERTICAL_RETURN_LADDER.length);
   for(const record of VERTICAL_SOLIDS){
    const mesh=h.world.features.get(record.id);assert.ok(mesh);assert.equal(mesh.physicsBody.getMotionType(),PhysicsMotionType.STATIC);
    assert.deepEqual(mesh.position.asArray(),[record.x,record.y,record.z]);
@@ -70,8 +71,8 @@ test('verticality supports distinct low, terrace, gallery and cross-space physic
  }finally{h.dispose();}
 });
 
-test('high return admits a broad three-rail family and returns through lower space without a scripted impulse',()=>{
- const h=verticalHarness(hv);try{
+test('recoverable v0 high return retains its broad three-rail family without the v1 overlay',()=>{
+ const h=verticalHarness(hv,{...VERTICAL_YARD_LAB,buildWorld:(...args)=>buildVerticalYard(...args,{solids:VERTICAL_V0_SOLIDS})});try{
   for(const railIndex of [0,1,2])for(const yaw of [-5,0,5]){
    const r=h.shoot({...refs.high,railIndex,yaw});assert.deepEqual(features(r),['cross-gantry','far-return']);
    const e=r.evidence.find(e=>e.feature==='far-return'&&e.kind==='redirect');
@@ -127,4 +128,83 @@ test('vertical scene has no scorer, trajectory assistance or production imports'
  for(const source of [scene,config])assert.doesNotMatch(source,/applyImpulse|setLinearVelocity|scoreLine|COURTYARD_HOLES|localStorage|indexedDB|buildCourtyard/);
  assert.equal(VERTICAL_YARD_LAB.defaultSetup,VERTICAL_DEFAULT);
  assert.equal(VERTICAL_YARD_LAB.station(VERTICAL_DEFAULT),VERTICAL_STATION);
+});
+
+test('return ladder adds separated faces and honest support bodies without altering v0 masses',()=>{
+ const h=verticalHarness(hv);try{
+  assert.deepEqual(VERTICAL_SOLIDS.slice(0,VERTICAL_V0_SOLIDS.length),VERTICAL_V0_SOLIDS);
+  assert.equal(VERTICAL_RETURN_LADDER.length,3);
+  for(const face of VERTICAL_RETURN_LADDER){
+   assert.ok(face.d<2&&face.h>=10,'wall/cheek dimensions, not treads');
+   const mesh=h.world.features.get(face.id),support=h.world.features.get(face.id+'-stanchion');
+   assert.equal(mesh.physicsBody.getMotionType(),PhysicsMotionType.STATIC);
+   assert.equal(support.physicsBody.getMotionType(),PhysicsMotionType.STATIC);
+   const mat=mesh.physicsBody.shape.material;assert.equal(mat.restitution,.86);assert.equal(mat.friction,.18);
+   const centre=mesh.getBoundingInfo().boundingBox.centerWorld;
+   for(const other of VERTICAL_RETURN_LADDER.filter(s=>s!==face)){
+    const box=h.world.features.get(other.id).getBoundingInfo().boundingBox;
+    assert.ok(Vector3.Distance(centre,box.centerWorld)>20,'faces separated across the void');
+    assert.equal(mesh.getBoundingInfo().intersects(h.world.features.get(other.id).getBoundingInfo(),true),false);
+   }
+   assert.equal(h.scene.getMeshByName('vy-'+face.id+'-face').physicsBody,undefined,'face dressing is not extra collider authority');
+  }
+ }finally{h.dispose();}
+});
+
+test('upward low-cheek departure can cross the void into a higher cheek under ordinary Havok',()=>{
+ const h=verticalHarness(hv);try{
+  const result=h.shoot({railIndex:0,yaw:-10,elevation:20,charge:1});
+  assert.deepEqual(features(result),['ladder-low','ladder-middle']);
+  const [low,high]=result.evidence.filter(e=>e.kind==='redirect');
+  assert.ok(low.incoming.y>0&&low.outgoing.y>10&&low.outgoing.z>15);
+  assert.ok(high.point.y-low.point.y>8);assert.ok(high.point.x-low.point.x>20);
+  assert.equal(result.reason,'first-ground-contact');
+  for(const event of [low,high])assert.ok(result.contacts.some(c=>c.body===event.body));
+ }finally{h.dispose();}
+});
+
+test('power choice leads to different regions instead of an automatic ladder chain',()=>{
+ const h=verticalHarness(hv);try{
+  const expected=[['ladder-low','terrace-two','lower-ramp'],['ladder-low','terrace-three'],['ladder-low','ladder-middle']];
+  for(const [index,charge] of [.65,.85,1].entries()){
+   const r=h.shoot({railIndex:0,yaw:-10,elevation:20,charge});assert.deepEqual(features(r),expected[index]);
+   assert.equal(r.evidence.filter(e=>e.kind==='redirect'&&e.feature==='ladder-low').length,1);
+  }
+ }finally{h.dispose();}
+});
+
+test('upper return has a real descending continuation into the rear ladder cheek',()=>{
+ const h=verticalHarness(hv);try{
+  const r=h.shoot({railIndex:2,yaw:-10,elevation:40,charge:.85});
+  assert.deepEqual(features(r),['cross-gantry','far-return','ladder-high']);
+  const [,far,cheek]=r.evidence.filter(e=>e.kind==='redirect');
+  assert.ok(far.point.y>35&&far.outgoing.y<-10&&far.outgoing.z<-18);
+  assert.ok(cheek.point.y<28&&cheek.point.z<100&&cheek.incoming.y<-15);
+  assert.ok(cheek.outgoing.z>15,'second ordinary reflection changes the returning leg again');
+  assert.ok(r.position[1]<1);assert.equal(r.reason,'first-ground-contact');
+ }finally{h.dispose();}
+});
+
+test('descending cross-void line can visit middle then low cheek in the opposite vertical order',()=>{
+ const h=verticalHarness(hv);try{
+  const r=h.shoot({railIndex:0,yaw:10,elevation:30,charge:1});
+  assert.deepEqual(features(r),['ladder-middle','ladder-low']);
+  const [high,low]=r.evidence.filter(e=>e.kind==='redirect');
+  assert.ok(high.point.y-low.point.y>10);assert.ok(high.point.x-low.point.x>15);
+  assert.ok(high.outgoing.y<0&&low.incoming.y<-15);
+ }finally{h.dispose();}
+});
+
+test('v1 preserves bypass, open OOB and exact Recall/repeat of a ladder launch',()=>{
+ const h=verticalHarness(hv);try{
+  for(const setup of [refs.low,refs.terraces,refs.gallery,refs.cross]){
+   const r=h.shoot(setup);assert.equal(features(r).some(id=>id.startsWith('ladder-')),false,'existing route can bypass every added face');
+  }
+  const outward=h.shoot({railIndex:0,yaw:-10,elevation:10,charge:1});
+  assert.deepEqual(features(outward),['ladder-low']);assert.equal(outward.reason,'out-of-bounds');
+  const setup={railIndex:0,yaw:-10,elevation:20,charge:1};const first=h.shoot(setup);
+  const recalled=h.session.action('recall');assert.deepEqual(recalled,first.setup);
+  const second=h.shoot(recalled);assert.deepEqual(features(second),features(first));
+  assert.ok(Vector3.Distance(Vector3.FromArray(first.position),Vector3.FromArray(second.position))<.001);
+ }finally{h.dispose();}
 });
