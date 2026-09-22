@@ -7,6 +7,8 @@ import {createLabControl,createLabGestureGate,captureLabLaunch,returnLabToSetup,
 import {createLabSelection,createSelectionWitness,type SelectionDiagnostic} from '@/lib/lab-selection';
 import {getDocumentProvenance,observeBrowserLifecycle} from '@/lib/browser-provenance';
 import {createActionTrace} from '@/lib/action-trace';
+import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type IntentCondition} from './intent-tools';
+import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
 import {SurveyTools} from './survey-tools';
 import {
   Color3,
@@ -129,6 +131,7 @@ type ShotResult = {
 };
 
 type ShotMemory = ShotSetup & {
+  intentAttemptId?:string;
   build?:string;
   ledger?:LineEvidence[];
   lineReceipt?:ReturnType<typeof recordLineReceipt>;
@@ -339,18 +342,29 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean }) {
-  lineLab = lineLab || timberReceiver;
+export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean }) {
+  lineLab = lineLab || timberReceiver || intentLab;
   const lineRoute = timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
-  const [labSelection]=useState(()=>createLabSelection(LINE_CARDS));
+  const [labSelection]=useState(()=>{const selection=createLabSelection(LINE_CARDS);if(intentLab){selection.select(3);return {...selection,getServerSnapshot:selection.getSnapshot};}return selection;});
+  const [intentCondition,setIntentCondition]=useState<IntentCondition>('keep');
+  const intentConditionRef=useRef<IntentCondition>('keep');
+  const [intentSentence,setIntentSentence]=useState('banks'),intentSentenceRef=useRef('banks');
+  const [intentKept,setIntentKept]=useState<ReturnType<typeof keepIntentLine>>([]),intentKeptRef=useRef<ReturnType<typeof keepIntentLine>>([]);
+  const [intentGhosts,setIntentGhosts]=useState(true),intentGhostsRef=useRef(true);
+  const [intentAttempt,setIntentAttempt]=useState<string|null>(null),intentAttemptRef=useRef<string|null>(null);
+  const intentRelationRef=useRef<{action:string;attemptId?:string}|null>(null);
+  const intentDecisionsRef=useRef<ReturnType<typeof createIntentDecisions>|null>(null);
+  const [intentNotice,setIntentNotice]=useState('');
+  const intentActionsRef=useRef<{condition(value:IntentCondition):void;sentence(id:string):void;keep():void;discard():void;recallKeep(id:string):void}|null>(null);
+  const intentScored=!intentLab||intentCondition==='score';
   const labSnapshot=useSyncExternalStore(labSelection.subscribe,labSelection.getSnapshot,labSelection.getServerSnapshot);
   const HOLES: readonly GameCard[] = lineLab ? labSelection.cards : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const STORAGE_KEY = intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -377,9 +391,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     // Access through methods so blocked storage is reported by the journal, not a boot crash.
     const storage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit survey clear');}};
     let mounted=true;
-    surveyLogRef.current=createSurveyLog({storage:timberReceiver?receiverStorage(storage):storage,archive:createSurveyArchive(window.indexedDB,undefined,timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
+    if(intentLab)intentDecisionsRef.current=createIntentDecisions(intentStorage(storage));
+    surveyLogRef.current=createSurveyLog({storage:intentLab?intentStorage(storage):timberReceiver?receiverStorage(storage):storage,archive:createSurveyArchive(window.indexedDB,undefined,intentLab?"rail-golf-intent-survey":timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
-  },[lineLab,timberReceiver]);
+  },[lineLab,timberReceiver,intentLab]);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
   useEffect(()=>{if(!claimCaption)return;const timer=setTimeout(()=>setClaimCaption(null),2200);return ()=>clearTimeout(timer);},[claimCaption]);
@@ -416,7 +431,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2, saw: 3 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
-  const libraryKey = `${SHOT_LIBRARY_KEY}-${timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
+  const libraryKey = `${SHOT_LIBRARY_KEY}-${intentLab ? "intent-v1" : timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -560,7 +575,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     if(lineLab&&!componentIdRef.current)componentIdRef.current=crypto.randomUUID();
     const mountIdentity=documentIdentity?.mount(componentIdRef.current!);
     const traceStorage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit trace clear');}};
-    const mountTrace=documentIdentity?createActionTrace({storage:timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
+    const mountTrace=documentIdentity?createActionTrace({storage:intentLab?intentStorage(traceStorage):timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
     const lifecycle=(event:string,detail:Record<string,unknown>={})=>{const state=readControlState();mountTrace?.append({category:'lifecycle',action:event,source:'internal/programmatic',before:state,after:state,accepted:true,reason:'observed',detail});};
     let stopLifecycle=()=>{};
     if(lineLab&&mountTrace&&documentIdentity){
@@ -584,7 +599,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const initialize = async () => {
       try {
         let sharedStart:ReturnType<typeof restoreShareLine>|null=null;
-        if (courtyardDiverter) {
+        if (courtyardDiverter && !intentLab) {
           const encoded=new URLSearchParams(window.location.hash.slice(1)).get('line');
           if(encoded){try{
             const parsed=decodeShareLine(encoded);
@@ -771,6 +786,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         let flight: FlightState | null = null;
         let previousCameraBall:Vector3|null=null;
         let ghostLine: LinesMesh | null = null;
+        let keptGhost:LinesMesh|null=null,keptGhostVersion:unknown=null;
         let theatreFx: TheatreFx[] = [];
         let chargeStartedAt = 0;
         let projectileCounter = 0;
@@ -1573,6 +1589,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const captionClaims = () => {
           if(!lineLab||!flight)return;
+          if(intentLab&&intentConditionRef.current!=='score'){
+            const events=recognizedIntentEvents(flight.ledger),fresh=events.filter(e=>!flight!.captioned.has('intent:'+e.sourceIndex));
+            if(fresh.length){fresh.forEach(e=>flight!.captioned.add('intent:'+e.sourceIndex));setClaimCaption({text:fresh.map(e=>e.label).join(' · '),serial:Date.now()});setLineLedger(flight.ledger.map(e=>({...e})));}
+            return;
+          }
           const receipt=scoreLine(flight.ledger);setLiveLineTotal(receipt.total);
           const fresh=receipt.awards.filter(a=>!flight!.captioned.has(a.id));
           if(fresh.length||receipt.run>flight.captionedRun){fresh.forEach(a=>flight!.captioned.add(a.id));const captions=fresh.map(a=>`+${a.points} · ${a.label}`);const extra=receipt.secondary-flight.captionedVariety;if(extra>0)captions.push(`+${extra} · VARIETY`);flight.captionedVariety=receipt.secondary;const runExtra=receipt.run-flight.captionedRun;if(runExtra>0)captions.push(`+${runExtra} · RUN`);flight.captionedRun=receipt.run;setClaimCaption({text:captions.join(' · '),serial:Date.now()});}
@@ -1582,10 +1603,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){const run=current.runTracker.snapshot();if(run)appendLineEvidence(current.ledger,run);}
           if(lineLab){if(!current.ledger.some(e=>e.kind==='termination'))appendLineEvidence(current.ledger,{kind:'termination',reason:'retry-interrupted'});current.redirectTracker.finish();for(const e of current.redirectTracker.drainDiagnostics())appendLineEvidence(current.ledger,e);}
           if(lineLab&&current.surveyTicket)surveyLogRef.current?.append(current.surveyTicket,current.ledger);
-          if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));setSessionBest(best=>({...best,[HOLES[activeHoleIndex()].id]:Math.max(best[HOLES[activeHoleIndex()].id]??0,scoreLine(current.ledger).total)}));}
+          if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));if(!intentLab||intentConditionRef.current==='score')setSessionBest(best=>({...best,[HOLES[activeHoleIndex()].id]:Math.max(best[HOLES[activeHoleIndex()].id]??0,scoreLine(current.ledger).total)}));}
           const hole = current.launchContext?HOLES.find(card=>card.id===current.launchContext!.card)!:HOLES[activeHoleIndex()];
           const memory: ShotMemory = {
             ...current.setup,
+            ...(intentLab?{intentAttemptId:current.surveyTicket?.id}:{}),
             ...(courtyardDiverter ? {build:BUILD_ID} : {}),
             ...(lineLab ? {ledger:current.ledger.map(e=>({...e})),lineReceipt:recordLineReceipt(current.ledger)} : {}),
             ...(diverterLab ? {environment:current.environment!,environmentAfter:{floor:floorStateRef.current}} : {}), holeId: current.launchContext?.card??hole.id, windId: current.launchContext?.windId??hole.wind.id, stationId: current.launchContext?.station??hole.station?.id??"gate", outcome,
@@ -1593,12 +1615,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             points: current.points.map(point => point.clone()),
             contacts: current.contacts.map(contact => ({ ...contact, point: contact.point.clone() })),
           };
+          if(intentLab){intentAttemptRef.current=current.surveyTicket?.id??null;setIntentAttempt(intentAttemptRef.current);}
           memoriesRef.current[hole.id] = memory;
           historyRef.current[hole.id] = rememberAttempt(historyRef.current[hole.id] ?? [], memory);
           setHistory(historyRef.current[hole.id]); setLastShot(memory);
           libraryRef.current[hole.id] = collectLine(libraryRef.current[hole.id], memory);
           setWinningLines(libraryRef.current[hole.id].wins);
-          try {
+          if(!intentLab)try {
             const holes = Object.fromEntries(Object.entries(libraryRef.current).map(([id,shelf]) => [id, {
               recent:shelf.recent.map(packLine), wins:shelf.wins.map(packLine),
             }]));
@@ -1729,7 +1752,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           updateLauncher();
           makeGhost(memory);
           setLastShot(memory ?? null);
-          if(lineLab){setLineLedger(memory?.ledger ?? []);setLiveLineTotal(scoreLine(memory?.ledger ?? []).total);}
+          if(lineLab){setLineLedger(intentLab?[]:memory?.ledger ?? []);setLiveLineTotal(intentLab?0:scoreLine(memory?.ledger ?? []).total);}
           impactFocus.set(hole.target?.x ?? hole.survey.targetX, 0.5, hole.target?.z ?? hole.survey.targetZ);
           setGamePhase("ready");
           if(before)mountTrace?.append({action:'load-card',source:labControlRef.current?.source()??'internal/programmatic',before,after:readControlState(),accepted:true,reason:'course-loaded'});
@@ -1823,7 +1846,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           labLanding = null;
           if(lineLab){setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);}
           flight = {
-            ...(launchContext?{launchContext,surveyTicket:surveyLogRef.current?.begin(launchContext)}:{}),
+            ...(launchContext?{launchContext,surveyTicket:surveyLogRef.current?.begin({...launchContext,...(intentLab?intentMeta(intentConditionRef.current,intentSentenceRef.current,intentRelationRef.current):{})})}:{}),
             ledger:[],runTracker:createRunTracker(),captionedRun:0,redirectTracker:createRedirectTracker(),sawMillTracker:createSawMillTracker(),captioned:new Set(),captionedVariety:0,lifecycle:createLineLifecycle(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
@@ -1847,6 +1870,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             pendingResult: null,
           };
           if(lineLab)activeTicketRef.current=flight.surveyTicket?.id;
+          if(intentLab){intentAttemptRef.current=null;setIntentAttempt(null);intentRelationRef.current=null;}
           aggregate.body.setCollisionCallbackEnabled(true);
           aggregate.body.getCollisionObservable().add(event => {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
@@ -1890,6 +1914,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const returnLab = (mode:'retry'|'adjust'|'reset') => {
+          const parentAttempt=flight?.surveyTicket?.id??intentAttemptRef.current??undefined;
           let interrupted=false;
           returnLabToSetup(mode,{
             interrupt:()=>{if(flight&&!flight.locked){flight.points.push(flight.bodyMesh.position.clone());rememberFlight('Interrupted · no landing ruling');const id=flight.launchContext?.card??HOLES[activeHoleIndex()].id;persistRecords({...recordsRef.current,[id]:interruptedRecord(recordsRef.current[id])});interrupted=true;}},
@@ -1898,6 +1923,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             restoreEnvironment:state=>{floorStateRef.current=state;setFloorState(state);},
             load:restore=>{loadHole(activeHoleIndex(),restore);},exactPower,
           });
+          if(intentLab)intentRelationRef.current={action:mode,attemptId:parentAttempt};
           const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[activeHoleIndex()].station),origin=new Vector3(rail.x,.4,rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0,7.4,0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0,3.2,0)));camera.setTarget(cameraTarget);
@@ -1967,6 +1993,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if (phaseRef.current !== "ready") return;
           const memory = memoryFor(HOLES[activeHoleIndex()]);
           if (!memory) return 'no-saved-line';
+          if(intentLab)intentRelationRef.current={action:'recall',attemptId:memory.intentAttemptId};
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
             diverterHandles?.setState(floorStateRef.current); setFloorState(floorStateRef.current);
@@ -1980,6 +2007,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const holeId = HOLES[activeHoleIndex()].id;
           const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
           if (!memory) return 'no-saved-line';
+          if(intentLab)intentRelationRef.current={action:'recall',attemptId:memory.intentAttemptId};
           if(lineLab&&holeId==='open-line')chooseOpenStation(memory.stationId,true);
           exactPower(memory.charge);
           memoriesRef.current[holeId] = memory;
@@ -1998,11 +2026,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const selectHole = (index: number) => {
+          if(intentLab&&index!==3)return 'intent-open-line-only';
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
           return loadHole(index, false);
         };
 
         const nextHole = () => {
+          if(intentLab)return;
           if (phaseRef.current !== "result" && phaseRef.current !== "ready") return;
           const next = Math.min(HOLES.length - 1, activeHoleIndex() + 1);
           if (next === activeHoleIndex()) {
@@ -2020,9 +2050,53 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           exactPower(setup.charge);
         };
 
+        const intentBlock=(condition:IntentCondition,sentenceId?:string,stationId?:string)=>{
+          if(!intentLab||!['ready','result'].includes(phaseRef.current))return;
+          const change=()=>{
+            const prompt=SENTENCES.find(p=>p.id===(sentenceId??intentSentenceRef.current))!;
+            intentConditionRef.current=condition;setIntentCondition(condition);
+            const station=stationId??(sentenceId?prompt.station:HOLES[activeHoleIndex()].station?.id??'gate');
+            const selectedPrompt=sentenceId??(prompt.station===station?prompt.id:station==='lumber'?'treads':'banks');
+            intentSentenceRef.current=selectedPrompt;setIntentSentence(selectedPrompt);
+            // Begin a clean block without importing another condition's recent lines.
+            memoriesRef.current={};historyRef.current={};libraryRef.current={};
+            setLastShot(null);setHistory([]);setWinningLines([]);setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);
+            intentAttemptRef.current=null;setIntentAttempt(null);intentRelationRef.current=null;
+            compareRef.current=false;setCompare(false);clearMax();powerModeRef.current='hold';setPowerMode('hold');selectedPowerRef.current=.5;setSelectedPower(.5);
+            chooseOpenStation(station);returnLab('reset');intentRelationRef.current=null;
+            setRetryNotice('New study block · '+station+' · authored setup, timed charge, MAX off, PALLET A. Kept lines stay in KEEP.');
+          };
+          mountControl?.transition('intent-block-'+condition,change,inputSourceRef.current);
+        };
+        intentActionsRef.current=intentLab?{
+          condition:value=>{if(['sentence','keep','score'].includes(value))intentBlock(value);},
+          sentence:id=>{if(SENTENCES.some(p=>p.id===id))intentBlock('sentence',id);},
+          keep:()=>{
+            if(phaseRef.current!=='result'||intentConditionRef.current!=='keep')return;
+            const memory=memoryFor(HOLES[activeHoleIndex()]),id=intentAttemptRef.current;if(!memory||!id)return;
+            const kept=keepIntentLine(intentKeptRef.current,id,memory);
+            if(kept!==intentKeptRef.current){intentKeptRef.current=kept;setIntentKept(kept);intentDecisionsRef.current?.append(id,'keep');setIntentNotice('Line kept. Its recorded trail is available in KEEP Survey.');}
+          },
+          discard:()=>{
+            if(phaseRef.current!=='result'||intentConditionRef.current!=='keep')return;
+            const id=intentAttemptRef.current;if(id&&!intentKeptRef.current.some(k=>k.attemptId===id))intentDecisionsRef.current?.append(id,'discard');
+            returnLab('retry');
+          },
+          recallKeep:id=>{
+            if(phaseRef.current!=='ready'||intentConditionRef.current!=='keep')return;
+            const kept=intentKeptRef.current.find(k=>k.attemptId===id);if(!kept)return;
+            const memory:ShotMemory={...kept.line,intentAttemptId:id,points:kept.line.points.map(p=>new Vector3(p.x,p.y,p.z)),contacts:kept.line.contacts.map(c=>({...c,point:new Vector3(c.point.x,c.point.y,c.point.z)}))};
+            memoriesRef.current['open-line']=memory;historyRef.current['open-line']=[memory];chooseOpenStation(memory.stationId);
+            floorStateRef.current=memory.environment!.floor;setFloorState(floorStateRef.current);loadHole(3,true);exactPower(memory.charge);
+            intentRelationRef.current={action:'recall-kept',attemptId:id};
+            setRetryNotice('Kept line restored: exact origin, aim, power and starting pallet state. Press Fire.');
+          },
+        }:null;
+
         actionsRef.current = {
           selectStation: (id) => {
             if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
+            if(intentLab){intentBlock(intentConditionRef.current,undefined,id);return;}
             if(lineLab&&HOLES[activeHoleIndex()].mode==='score-only'){chooseOpenStation(id);loadHole(3,true);return;}
             const index = stationHoleRef.current[id];
             if (index !== undefined) loadHole(index, true);
@@ -2202,7 +2276,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           } catch { /* Start an empty route book if browser storage is unavailable. */ }
         }
         try {
-          const loaded = normalizeShotLibrary(readStoredJson(libraryKey), HOLES, {environmentRequired:diverterLab});
+          const loaded = normalizeShotLibrary(intentLab?null:readStoredJson(libraryKey), HOLES, {environmentRequired:diverterLab});
           const hydrate = (line: SavedLine): ShotMemory => ({...line,
             points:line.points.map(p => new Vector3(p.x,p.y,p.z)),
             contacts:line.contacts.map(c => ({...c, point:new Vector3(c.point.x,c.point.y,c.point.z)})),
@@ -2214,11 +2288,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             for (const line of [...recent,...wins]) projectileCounter = Math.max(projectileCounter,line.projectileId);
           }
         } catch { /* Malformed or unavailable storage starts an empty collection. */ }
-        const saved = loadProgress(HOLES, STORAGE_KEY);
+        const saved = intentLab?{}:loadProgress(HOLES, STORAGE_KEY);
         recordsRef.current = saved;
         setRecords(saved);
         const resumeIndex = chooseResumeHole(saved, HOLES);
-        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
+        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : intentLab ? 3 : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
         const entryBefore=lineLab?readControlState():null;
         createCourse(startHole);
@@ -2236,6 +2310,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         engine.runRenderLoop(() => {
           if (!scene || disposed) return;
           const now = performance.now();
+          if(intentLab){
+            if(keptGhostVersion!==intentKeptRef.current){
+              keptGhost?.dispose();keptGhost=null;keptGhostVersion=intentKeptRef.current;
+              const lines=intentKeptRef.current.map(k=>k.line.points.map(p=>new Vector3(p.x,p.y,p.z))).filter(p=>p.length>1);
+              if(lines.length){keptGhost=MeshBuilder.CreateLineSystem('intent-kept-history',{lines},scene);keptGhost.color=new Color3(.45,.72,.75);keptGhost.alpha=.3;keptGhost.isPickable=false;}
+            }
+            if(keptGhost)keptGhost.isVisible=intentConditionRef.current==='keep'&&surveyRef.current&&intentGhostsRef.current;
+          }
           const deltaSeconds = Math.min(0.04, engine!.getDeltaTime() / 1000);
 
           if (mutedRef.current) {
@@ -2513,6 +2595,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       if(mountControl)mountControl.transition('session-dispose',()=>{actionsRef.current={};});
       else actionsRef.current = {};
       stopLifecycle();
+      intentActionsRef.current=null;
       worldRef.current = null;
       audioMasterRef.current = null;
       audioContext?.close().catch(() => undefined);
@@ -2520,6 +2603,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       engine?.dispose();
     };
   }, []);
+
+  const exportIntent=async(format:'json'|'csv')=>{
+    try{const archive=await surveyLogRef.current?.export();if(!archive)return;
+      const packet=exportIntentStudy(archive,intentDecisionsRef.current?.export()??[]);
+      const blob=new Blob([format==='json'?JSON.stringify(packet,null,2):intentStudyCSV(packet)],{type:format==='json'?'application/json':'text/csv'});
+      const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`rail-golf-intent-${BUILD_ID}.${format}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setIntentNotice('Study exported locally.');
+    }catch(error){setIntentNotice('Study export failed: '+String(error));}
+  };
 
   const copyLineLink = async (saved?:ShotMemory) => {
     try{
@@ -2533,6 +2624,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     }catch{setShareNotice('This saved line is missing valid setup or environment evidence.');}
   };
   const hole = lineLab?labSnapshot.hole:HOLES[holeIndex];
+  const intentPrompt=SENTENCES.find(p=>p.id===intentSentence)!;
+  const intentMatch=matchIntentSentence(intentSentence,lineLedger);
+  const intentOptions=SENTENCES.map(p=>({id:p.id,label:p.label,stationLabel:p.station==='gate'?'Yard Gate':'Lumber Walk',clauses:p.clauses.map(c=>c.label)}));
   const labChip = hole.id === "timber-bank" ? addressLabChipLabel(addressLabMode) : null;
   const record = records[hole.id] ?? EMPTY_RECORD;
   const attempt = phase === "theatre" || phase === "result"
@@ -2590,7 +2684,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const resultCanAdvance = Boolean(result?.clear);
 
   return (
-    <main className="rail-golf-shell manners-shell" data-phase={phase} data-line-lab={lineLab||undefined}
+    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}`} data-phase={phase} data-line-lab={lineLab||undefined}
       onPointerDownCapture={lineLab?event=>{inputSourceRef.current='pointer';const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;gestureGateRef.current.down(target,labControlRef.current?.revision()??0,event.pointerId);}:undefined}
       onPointerCancelCapture={lineLab?event=>gestureGateRef.current.cancel(event.pointerId):undefined}
       onClickCapture={lineLab?event=>{
@@ -2610,7 +2704,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
       </>}
-      {lineLab && phase==='ready' && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
+      {lineLab && intentScored && phase==='ready' && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
       {lineLab && claimCaption && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
       <canvas
         ref={canvasRef}
@@ -2636,13 +2730,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             <strong>{String(attempt).padStart(2, "0")}</strong>
           </div>
           <div className={lineLab?'line-score-readout':undefined}>
-            <span>{lineLab?'LINE':'WIND'}</span>
-            <strong className={lineLab?'line-hud-total':undefined} title={lineLab?'NON-CANONICAL PLACEHOLDERS · line score':undefined}>{lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
+            <span>{intentLab&&!intentScored?'CONDITION':lineLab?'LINE':'WIND'}</span>
+            <strong className={lineLab?'line-hud-total':undefined} title={lineLab&&intentScored?'NON-CANONICAL PLACEHOLDERS · line score':undefined}>{intentLab&&!intentScored?intentCondition.toUpperCase():lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
           </div>
         </div>
       </header>
 
-      <nav inert={lineLab&&phase==='result'?true:undefined} className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
+      {intentLab&&<IntentControls condition={intentCondition} sentenceId={intentSentence} sentences={intentOptions} clauseReached={intentMatch.reached} headline={lineLedger.length?intentMatch.headline:undefined} disabled={phase!=='ready'} onCondition={value=>intentActionsRef.current?.condition(value)} onSentence={id=>intentActionsRef.current?.sentence(id)}/> }
+      {!intentLab&&<nav inert={lineLab&&phase==='result'?true:undefined} className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];
           const unlocked = holeUnlocked(index);
@@ -2673,13 +2768,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             </button>
           );
         })}
-      </nav>
+      </nav>}
 
       <aside inert={lineLab&&phase==='result'?true:undefined} className="hole-brief manners-brief">
         <p className="eyebrow">{timberReceiver ? `Timber Receiver · ${hole.station?.label}` : lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
-        <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{hole.name}</strong>
-        <span>{lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
-        {lineLab && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
+        <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{intentLab?'Intent Lab · '+intentCondition.toUpperCase():hole.name}</strong>
+        <span>{intentLab?(intentCondition==='sentence'?'Follow the sentence. No seat or score required.':intentCondition==='keep'?'Make a line. Keep it if you want to return to it.':'Open Line scoring · frozen NON-CANONICAL control.'):lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
+        {lineLab && intentScored && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
         <Button
           type="button"
           variant="outline"
@@ -2740,14 +2835,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <details className="shot-tools" ref={shotToolsRef} onToggle={lineLab?event=>setToolsOpen(event.currentTarget.open):undefined}>
           <summary>Shot tools & saved lines · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
-            {lineLab&&<SurveyTools trace={actionTraceRef.current} log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
+            {lineLab&&!intentLab&&<SurveyTools trace={actionTraceRef.current} log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
       {courtyard && (!courtyardDiverter || lineLab) && <nav className="station-picker" aria-label="Launcher station">
         {Object.values(STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
           disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : station.id === 'saw' ? 3 : 2)}
           onClick={() => performUI('selectStation',[station.id])}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
+            {intentLab&&<IntentStudyTools condition={intentCondition} kept={intentKept} keptGhosts={intentGhosts} onGhosts={value=>{intentGhostsRef.current=value;setIntentGhosts(value);}} onRecallKeep={id=>intentActionsRef.current?.recallKeep(String(id))} onSurvey={()=>performUI('toggleSurvey',[])} onExport={exportIntent} status={[intentNotice,`${surveyStatus.count} attempts · ${surveyStatus.pending} pending`,surveyStatus.warning,intentDecisionsRef.current?.warning()].filter(Boolean).join(' · ')} disabled={phase!=='ready'}/>}
             {diverterLab && <>
-              <small>FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {lineLab?'Pallet switch':courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. Cards, stations and Retry keep the state. Recall restores the recorded starting state.</small>
+              <small>FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {lineLab?'Pallet switch':courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. {intentLab?'Retry keeps state. Condition, prompt or station changes start a fresh block at A.':'Cards, stations and Retry keep the state.'} Recall restores the recorded starting state.</small>
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => performUI('reset',[false])}>Reset Card · restore FLOOR A</button>
             </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
@@ -2760,19 +2856,19 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               compareRef.current = event.target.checked; setCompare(event.target.checked); performUI('compareAttempts',[]);
             }} /> Compare three trails · selected amber, others cyan (Previous Line on)</label>
             <small>Gentle start · 80% in 2 seconds · full power in 3. Aim ±70°; loft 5–85°.</small>
-            {courtyardDiverter && <section className="share-line-tools" aria-label="Share a line">
+            {courtyardDiverter && !intentLab && <section className="share-line-tools" aria-label="Share a line">
               {lastShot && <button type="button" onClick={()=>copyLineLink(lastShot)}>Copy selected line link</button>}
               <button type="button" disabled={phase!=='ready'||(powerMode!=='set'&&!maxPower)} onClick={()=>copyLineLink()}>Copy current Set Power setup</button>
               <small>Links restore exact launch speed and aim without firing. {lineLab?"Starting Kicker Pallet state is restored.":"Starting dock state is restored."}</small>
               {shareLink && <input aria-label="Line link" readOnly value={shareLink} onFocus={event=>event.currentTarget.select()} />}
             </section>}
-            <strong>Winning lines · {winningLines.length}/6 families</strong>
+            {!intentLab&&<><strong>Winning lines · {winningLines.length}/6 families</strong>
             <small>Saved on this browser. Recall restores aim, power marker and the recorded trail; you still fire.</small>
             {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => performUI('recallAttempt',[shot.projectileId])}>
               {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}{shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
             </button>)}
             {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
-            <strong>Recent attempts</strong>
+            </>}<strong>Recent attempts</strong>
             {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => performUI('recallAttempt',[shot.projectileId])}>
               #{shot.projectileId} · {hole.mode==='score-only'&&(shot.stationId==='gate'?'Yard Gate · ':shot.stationId==='lumber'?'Lumber Walk · ':'Saw Bay · ')}{shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
             </button>)}
@@ -3006,9 +3102,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           aria-describedby="range-result-detail"
           tabIndex={-1}
         >
-          <p className="eyebrow">{lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>
-          <h2 id="range-result-heading">{result.headline}</h2>
-          <p id="range-result-detail">{result.detail}</p>
+<p className="eyebrow">{intentLab?`Intent Lab · ${intentCondition.toUpperCase()}`:lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>
+          <h2 id="range-result-heading">{intentLab&&!intentScored?(intentCondition==='sentence'?intentMatch.headline:'LINE RECORDED'):result.headline}</h2>
+          <p id="range-result-detail">{intentLab?`LINE ENDED — ${(lastShot?.lineReceipt?.ending??'resolved').replaceAll('-',' ').toUpperCase()}`:result.detail}</p>
+          {intentLab&&!intentScored&&<p>{recognizedIntentEvents(lineLedger).map(e=>e.label).join(' → ')||'No qualified departures recorded.'}</p>}
+          {intentLab&&<IntentResult condition={intentCondition} sentenceLabel={intentPrompt.label} clauses={intentPrompt.clauses.map(c=>c.label)} clauseReached={intentMatch.reached} headline={intentMatch.headline} lastAttemptId={intentAttempt} kept={intentKept} onKeep={()=>intentActionsRef.current?.keep()} onDiscard={()=>intentActionsRef.current?.discard()}/> }
           {hole.target && hole.requiredTags.length > 0 && result.outcome !== "double" ? (
             <div className="perfect-callout"><Flag /> Stamp requires {hole.requiredTags.map(evidenceLabel).join(" → ")} → {hole.target.label} in one shot.</div>
           ) : null}
@@ -3040,7 +3138,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               <RotateCcw /> Reset card
             </Button>
           </div>
-          {lineLab&&<><Button type="button" className="line-result-retry" variant="outline" onClick={()=>performUI('retry',[])}>Retry shot · preserve current pallet <kbd>R</kbd></Button><LineReceipt ledger={lineLedger} shot={lastShot??undefined} inline /></>}
+          {lineLab&&<><Button type="button" className="line-result-retry" variant="outline" onClick={()=>performUI('retry',[])}>Retry shot · preserve current pallet <kbd>R</kbd></Button>{intentScored&&<LineReceipt ledger={lineLedger} shot={lastShot??undefined} inline />}</>}
         </section>
       ) : null}
 
