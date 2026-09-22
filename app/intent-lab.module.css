@@ -1,0 +1,59 @@
+.controls,.study,.result{color:#d9e7e5;font:11px/1.45 var(--font-mono,monospace)}
+.shell{min-width:0}
+.controls{position:absolute;top:max(16px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:10;width:min(430px,44vw);padding:10px 12px;background:rgba(8,20,24,.94);border:1px solid #325155;pointer-events:auto;box-sizing:border-box;overscroll-behavior:contain}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;letter-spacing:.06em;color:#a0c4c7}
+.order{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:0}
+.controls select{min-width:0;max-width:100%;color:#e1eeeb;background:#122d32;border:1px solid #3e6064;padding:5px;font:inherit}
+.conditions,.actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.controls button,.study button,.result button{border:1px solid #486065;background:#142b30;color:#e0e9e5;padding:7px 9px;cursor:pointer;font:inherit;min-height:32px}
+.conditions button{flex:1}
+.conditions button[aria-pressed=true]{border-color:#64d9db;background:#174950;color:#f1ffff;box-shadow:inset 0 -2px #64d9db}
+.controls button:disabled,.study button:disabled,.result button:disabled,.controls select:disabled{opacity:.55;cursor:default}
+.controls button:focus-visible,.study button:focus-visible,.result button:focus-visible,.controls select:focus-visible,.ghostToggle input:focus-visible{outline:2px solid #f9b65d;outline-offset:2px}
+.prompt{display:flex;align-items:center;gap:8px;font-size:10px;color:#a0c4c7}.prompt select{flex:1;width:0}
+.clauses{list-style:none;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;padding:0;margin:9px 0;color:#a6b7b5}
+.clauses li{display:flex;align-items:baseline;gap:5px}.clauses li[data-reached=true]{color:#77e7d6}.arrow{color:#6a8b8e}
+.hint,.contract{margin:5px 0;color:#b3c5c4;font-size:10px}.contract{color:#93abaa;font-size:9px;margin-top:8px}.status{margin:5px 0;color:#a2eee1}
+.result{margin:10px 0;padding:10px 0;border-top:1px solid #345258}.resultHeadline{margin:5px 0;font-size:15px;letter-spacing:.05em;color:#eaf5ee}.eyebrow{margin:0;color:#8cc8cc;font-size:10px}
+.study{padding-top:10px;border-top:1px solid #385357}.study h3{font-size:11px;font-weight:500;letter-spacing:.03em;margin:4px 0 8px}.ghostToggle{display:flex;align-items:center;gap:8px;margin:8px 0}.ghostToggle input{accent-color:#68d9d6}
+.kept{list-style:none;padding:0;margin:8px 0}.kept li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #2b464b}.kept small{display:block;color:#9bb6b7;font-size:10px}
+@media(max-width:600px){.controls{padding:7px 9px}.heading{flex-wrap:wrap}.order{margin-left:auto}.conditions{margin:6px 0}.controls button{padding:6px}.contract{max-width:36em}}
+@media(max-height:500px){.controls{padding:6px 8px}.conditions{margin:5px 0}.clauses{margin:5px 0}.contract{font-size:8px;margin-top:4px}}
+
+/* Yield setup controls to the result modal and flight. Live clauses remain visible. */
+.shell[data-phase="result"] .controls{visibility:hidden;pointer-events:none}
+.shell:is([data-phase="flight"],[data-phase="theatre"]) .controls{top:76px;width:max-content;max-width:min(430px,70vw);pointer-events:none}
+.shell:is([data-phase="flight"],[data-phase="theatre"]) .controls :is(.heading,.conditions,.prompt,.hint,.contract){display:none}
+.shell:is([data-phase="flight"],[data-phase="theatre"]) .controls:not([data-condition="sentence"]){display:none}
+@media(orientation:portrait) and (max-width:700px){
+  .controls{top:max(58px,calc(env(safe-area-inset-top) + 50px));left:12px;right:12px;transform:none;width:auto;max-height:180px;overflow:auto}
+  .shell :global(.manners-brief){top:max(246px,calc(env(safe-area-inset-top) + 238px));left:12px;width:calc(100% - 24px);display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;row-gap:3px;padding-left:8px}
+  .shell :global(.manners-brief) :global(.eyebrow){margin:0;font-size:9px;grid-column:1}
+  .shell :global(.manners-brief)>strong{grid-column:1;font-size:12px;line-height:1.2}
+  .shell :global(.manners-brief)>span,.shell :global(.manners-brief) :global(.courtyard-link){display:none}
+  .shell :global(.manners-brief) :global(.manners-survey){grid-column:2;grid-row:1 / span 2;margin:0;height:32px;padding:5px 8px;font-size:10px}
+  .shell :global(.manners-brief) :global(.line-session-best){margin-top:3px;font-size:10px}
+  .shell :global(.floor-state-chip){top:max(311px,calc(env(safe-area-inset-top) + 303px));right:12px;font-size:10px;padding:4px 6px}
+  .shell :global(.line-receipt){top:348px;max-height:min(160px,19dvh);font-size:10px}
+  .shell :global(.line-claim-caption){top:165px;max-width:calc(100vw - 32px);font-size:11px}
+  .shell :global(.flight-status){top:115px}
+  .shell:is([data-phase="flight"],[data-phase="theatre"]) .controls{top:64px;left:12px;right:12px;max-width:none;width:auto;max-height:86px}
+  .shell :global(.manners-console) :global(.primary-options){gap:5px}
+  .shell :global(.manners-console) :global(.station-picker){gap:4px;margin-top:0}
+  .shell :global(.manners-console) :global(.station-picker) button{padding:5px 7px;min-height:32px;font-size:10px}
+}
+@media(orientation:landscape) and (max-height:520px){
+  .controls{top:7px;width:330px;max-width:calc(100vw - 490px);max-height:146px;overflow:auto}
+  .heading{flex-wrap:wrap;gap:3px}.order{margin-left:auto}.order select{max-width:220px}
+  .contract{display:none}.hint{font-size:9px}.controls .clauses{font-size:10px}
+  .shell :global(.manners-brief){width:215px;top:56px}
+  .shell :global(.manners-brief)>span,.shell :global(.manners-brief) :global(.courtyard-link){display:none}
+  .shell :global(.manners-brief)>strong{font-size:13px}
+  .shell :global(.line-claim-caption){top:44%;max-width:65vw;padding:6px 10px;font-size:10px}
+  .shell:is([data-phase="flight"],[data-phase="theatre"]) .controls{top:8px;max-width:calc(100vw - 420px);max-height:84px}
+}
+@media(orientation:landscape) and (max-height:520px) and (max-width:760px){
+  .controls{left:190px;right:12px;transform:none;width:auto;max-width:none;top:54px;max-height:130px}
+  .shell :global(.manners-brief){width:166px}
+  .shell :global(.floor-state-chip){top:8px;font-size:9px}
+}
