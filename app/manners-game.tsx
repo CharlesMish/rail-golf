@@ -9,6 +9,8 @@ import {getDocumentProvenance,observeBrowserLifecycle} from '@/lib/browser-prove
 import {createActionTrace} from '@/lib/action-trace';
 import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type IntentCondition} from './intent-tools';
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
+import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName} from './linecraft-tools';
+import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
 import {SurveyTools} from './survey-tools';
 import {
   Color3,
@@ -132,6 +134,9 @@ type ShotResult = {
 
 type ShotMemory = ShotSetup & {
   intentAttemptId?:string;
+  linecraftAttemptId?:string;
+  linecraftLaunch?:ReturnType<typeof captureLabLaunch>;
+  linecraftMeta?:ReturnType<typeof linecraftMeta>;
   build?:string;
   ledger?:LineEvidence[];
   lineReceipt?:ReturnType<typeof recordLineReceipt>;
@@ -148,6 +153,7 @@ type ShotMemory = ShotSetup & {
 };
 
 type FlightState = {
+  linecraftMeta?:ReturnType<typeof linecraftMeta>;
   launchContext?:ReturnType<typeof captureLabLaunch>;
   surveyTicket?:SurveyTicket;
   runTracker:ReturnType<typeof createRunTracker>;
@@ -342,13 +348,13 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean }) {
-  lineLab = lineLab || timberReceiver || intentLab;
-  const lineRoute = timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
+export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false, linecraftLab = false }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean; linecraftLab?:boolean }) {
+  lineLab = lineLab || timberReceiver || intentLab || linecraftLab;
+  const lineRoute = linecraftLab ? "/lab/linecraft" : timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
-  const [labSelection]=useState(()=>{const selection=createLabSelection(LINE_CARDS);if(intentLab){selection.select(3);return {...selection,getServerSnapshot:selection.getSnapshot};}return selection;});
+  const [labSelection]=useState(()=>{const selection=createLabSelection(LINE_CARDS);if(intentLab||linecraftLab){selection.select(3);return {...selection,getServerSnapshot:selection.getSnapshot};}return selection;});
   const [intentCondition,setIntentCondition]=useState<IntentCondition>('keep');
   const intentConditionRef=useRef<IntentCondition>('keep');
   const [intentSentence,setIntentSentence]=useState('banks'),intentSentenceRef=useRef('banks');
@@ -360,11 +366,24 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [intentNotice,setIntentNotice]=useState('');
   const intentActionsRef=useRef<{condition(value:IntentCondition):void;sentence(id:string):void;keep():void;discard():void;recallKeep(id:string):void}|null>(null);
   const intentScored=!intentLab||intentCondition==='score';
+  const [linecraftSession,setLinecraftSession]=useState(createLinecraftSession),linecraftSessionRef=useRef(createLinecraftSession());
+  const linecraftShelfRef=useRef<ReturnType<typeof createLinecraftShelf>|null>(null);
+  const linecraftDecisionsRef=useRef<ReturnType<typeof createLinecraftDecisions>|null>(null);
+  const [linecraftKept,setLinecraftKept]=useState<ReturnType<ReturnType<typeof createLinecraftShelf>['entries']>>([]);
+  const [linecraftAttempt,setLinecraftAttempt]=useState<string|null>(null),linecraftAttemptRef=useRef<string|null>(null);
+  const linecraftRelationRef=useRef<{action:string;attemptId?:string}|null>(null);
+  const [linecraftNotice,setLinecraftNotice]=useState('');
+  const [linecraftShelfOpen,setLinecraftShelfOpen]=useState(false),linecraftShelfOpenRef=useRef(false);
+  const [linecraftGhostId,setLinecraftGhostId]=useState<string|null>(null),linecraftGhostIdRef=useRef<string|null>(null);
+  const [linecraftReplaying,setLinecraftReplaying]=useState(false),linecraftReplayingRef=useRef(false);
+  const linecraftActionsRef=useRef<{next():void;open():void;restart():void;score(value:boolean):void;keep():void;restore(id:string):void;ghost(id:string|null):void;replay(id:string):void;stopReplay():void;remove(id:string):void}|null>(null);
+  const linecraftScored=!linecraftLab||(linecraftSession.stage==='open'&&linecraftSession.scoreVisible);
+  const showLinecraftShelf=(visible:boolean)=>{linecraftShelfOpenRef.current=visible;setLinecraftShelfOpen(visible);};
   const labSnapshot=useSyncExternalStore(labSelection.subscribe,labSelection.getSnapshot,labSelection.getServerSnapshot);
   const HOLES: readonly GameCard[] = lineLab ? labSelection.cards : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const STORAGE_KEY = linecraftLab ? "rail-golf-linecraft-v1" : intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -391,11 +410,18 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     // Access through methods so blocked storage is reported by the journal, not a boot crash.
     const storage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit survey clear');}};
     let mounted=true;
+    if(linecraftLab){
+      linecraftShelfRef.current=createLinecraftShelf(linecraftStorage(storage));
+      linecraftDecisionsRef.current=createLinecraftDecisions(linecraftStorage(storage));
+      setLinecraftKept(linecraftShelfRef.current.entries());
+      setLinecraftNotice([linecraftShelfRef.current.warning(),linecraftDecisionsRef.current.warning()].filter(Boolean).join(' · '));
+    }
     if(intentLab)intentDecisionsRef.current=createIntentDecisions(intentStorage(storage));
-    surveyLogRef.current=createSurveyLog({storage:intentLab?intentStorage(storage):timberReceiver?receiverStorage(storage):storage,archive:createSurveyArchive(window.indexedDB,undefined,intentLab?"rail-golf-intent-survey":timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
+    surveyLogRef.current=createSurveyLog({storage:linecraftLab?linecraftStorage(storage):intentLab?intentStorage(storage):timberReceiver?receiverStorage(storage):storage,archive:createSurveyArchive(window.indexedDB,undefined,linecraftLab?"rail-golf-linecraft-survey":intentLab?"rail-golf-intent-survey":timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
-  },[lineLab,timberReceiver,intentLab]);
+  },[lineLab,timberReceiver,intentLab,linecraftLab]);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
+  const lineLedgerRef=useRef<LineEvidence[]>([]);lineLedgerRef.current=lineLedger;
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
   useEffect(()=>{if(!claimCaption)return;const timer=setTimeout(()=>setClaimCaption(null),2200);return ()=>clearTimeout(timer);},[claimCaption]);
   const [shareNotice,setShareNotice] = useState('');
@@ -431,7 +457,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2, saw: 3 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
-  const libraryKey = `${SHOT_LIBRARY_KEY}-${intentLab ? "intent-v1" : timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
+  const libraryKey = `${SHOT_LIBRARY_KEY}-${linecraftLab ? "linecraft-v1" : intentLab ? "intent-v1" : timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -478,6 +504,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     station:HOLES[activeHoleIndex()].station?.id??'gate',floor:floorStateRef.current,attempt:activeTicketRef.current,
     setup:{railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:powerModeRef.current==='set'?selectedPowerRef.current:chargeRef.current}});
   const perform = (method:keyof GameActions,args:unknown[]=[],source:ActionSource='internal/programmatic') => {
+    if(linecraftLab&&(linecraftReplayingRef.current||linecraftShelfOpenRef.current))return false;
     if(lineLab){if(source!=='internal/programmatic'&&method!=='cancelCharge'&&!checkVisibleSelection('before-'+method))return false;const accepted=labControlRef.current?.run(method,args,source)??false;if(accepted)setControlError('');return accepted;}
     // Production retains its original handlers and guards.
     const action=actionsRef.current[method] as ((...values:unknown[])=>void)|undefined;
@@ -518,6 +545,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       target instanceof Element && Boolean(target.closest("button, input, select, textarea, a, [role='switch']"));
 
     const onKeyDown = (event: KeyboardEvent) => {
+      if(linecraftLab&&linecraftReplayingRef.current){if(event.code==='Escape'){event.preventDefault();linecraftActionsRef.current?.stopReplay();}return;}
+      if(linecraftLab&&linecraftShelfOpenRef.current)return;
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       if(lineLab && event.target instanceof Element && event.target.closest("button, input, select, textarea, a, summary, [role='switch'], [role='button'], [contenteditable]:not([contenteditable='false'])"))return;
       if(lineLab&&event.repeat&&!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','KeyA','KeyD','KeyW','KeyS'].includes(event.code))return;
@@ -575,7 +604,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     if(lineLab&&!componentIdRef.current)componentIdRef.current=crypto.randomUUID();
     const mountIdentity=documentIdentity?.mount(componentIdRef.current!);
     const traceStorage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit trace clear');}};
-    const mountTrace=documentIdentity?createActionTrace({storage:intentLab?intentStorage(traceStorage):timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
+    const mountTrace=documentIdentity?createActionTrace({storage:linecraftLab?linecraftStorage(traceStorage):intentLab?intentStorage(traceStorage):timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
     const lifecycle=(event:string,detail:Record<string,unknown>={})=>{const state=readControlState();mountTrace?.append({category:'lifecycle',action:event,source:'internal/programmatic',before:state,after:state,accepted:true,reason:'observed',detail});};
     let stopLifecycle=()=>{};
     if(lineLab&&mountTrace&&documentIdentity){
@@ -606,6 +635,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             const route=lineLab?lineRoute:'/lab/courtyard-diverter';
             if(parsed.route!==route) throw new Error('This shared line belongs to a different lab route.');
             sharedStart=restoreShareLine(parsed,BUILD_ID);
+            if(linecraftLab){const next=enterLinecraftOpen(linecraftSessionRef.current,'revisit');linecraftSessionRef.current=next;setLinecraftSession(next);}
             if(lineLab&&sharedStart.card==='open-line')labSelection.replaceOpenLine(selectOpenLineStation(sharedStart.station,{allowParked:true}));
             floorStateRef.current=sharedStart.environment.floor;setFloorState(sharedStart.environment.floor);
             setShareNotice([sharedStart.warning,lineLab?'Shared setup loaded. Starting Kicker Pallet state restored. Press Fire to try the line.':'Shared setup loaded. Press Fire to try the line.'].filter(Boolean).join(' '));
@@ -787,6 +817,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         let previousCameraBall:Vector3|null=null;
         let ghostLine: LinesMesh | null = null;
         let keptGhost:LinesMesh|null=null,keptGhostVersion:unknown=null;
+        let linecraftGhost:LinesMesh|null=null,linecraftGhostVersion:string|null=null;
+        let replayMarker:Mesh|null=null,replayTrail:LinesMesh|null=null;
+        let replayView:{position:Vector3;target:Vector3;survey:boolean;fov:number}|null=null;
+        let replayStarted=0,replayPoints:SavedLine['points']=[];
         let theatreFx: TheatreFx[] = [];
         let chargeStartedAt = 0;
         let projectileCounter = 0;
@@ -1589,6 +1623,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const captionClaims = () => {
           if(!lineLab||!flight)return;
+          if(linecraftLab&&(linecraftSessionRef.current.stage==='learn'||!linecraftSessionRef.current.scoreVisible)){
+            const events=recognizedIntentEvents(flight.ledger),fresh=events.filter(e=>!flight!.captioned.has('linecraft:'+e.sourceIndex));
+            if(fresh.length){fresh.forEach(e=>flight!.captioned.add('linecraft:'+e.sourceIndex));setClaimCaption({text:fresh.map(e=>e.label).join(' · '),serial:Date.now()});}
+            setLineLedger(flight.ledger.map(e=>({...e})));return;
+          }
           if(intentLab&&intentConditionRef.current!=='score'){
             const events=recognizedIntentEvents(flight.ledger),fresh=events.filter(e=>!flight!.captioned.has('intent:'+e.sourceIndex));
             if(fresh.length){fresh.forEach(e=>flight!.captioned.add('intent:'+e.sourceIndex));setClaimCaption({text:fresh.map(e=>e.label).join(' · '),serial:Date.now()});setLineLedger(flight.ledger.map(e=>({...e})));}
@@ -1608,6 +1647,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const memory: ShotMemory = {
             ...current.setup,
             ...(intentLab?{intentAttemptId:current.surveyTicket?.id}:{}),
+            ...(linecraftLab?{linecraftAttemptId:current.surveyTicket?.id,linecraftLaunch:current.launchContext,linecraftMeta:current.linecraftMeta}:{}),
             ...(courtyardDiverter ? {build:BUILD_ID} : {}),
             ...(lineLab ? {ledger:current.ledger.map(e=>({...e})),lineReceipt:recordLineReceipt(current.ledger)} : {}),
             ...(diverterLab ? {environment:current.environment!,environmentAfter:{floor:floorStateRef.current}} : {}), holeId: current.launchContext?.card??hole.id, windId: current.launchContext?.windId??hole.wind.id, stationId: current.launchContext?.station??hole.station?.id??"gate", outcome,
@@ -1616,12 +1656,17 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             contacts: current.contacts.map(contact => ({ ...contact, point: contact.point.clone() })),
           };
           if(intentLab){intentAttemptRef.current=current.surveyTicket?.id??null;setIntentAttempt(intentAttemptRef.current);}
+          if(linecraftLab){
+            const resolved=current.ledger.some(e=>e.kind==='termination'&&e.reason!=='retry-interrupted');
+            linecraftAttemptRef.current=resolved?current.surveyTicket?.id??null:null;setLinecraftAttempt(linecraftAttemptRef.current);
+            if(resolved&&current.surveyTicket){const next=recordLinecraftAttempt(linecraftSessionRef.current,current.surveyTicket.id,current.ledger,current.linecraftMeta);linecraftSessionRef.current=next;setLinecraftSession(next);}
+          }
           memoriesRef.current[hole.id] = memory;
           historyRef.current[hole.id] = rememberAttempt(historyRef.current[hole.id] ?? [], memory);
           setHistory(historyRef.current[hole.id]); setLastShot(memory);
           libraryRef.current[hole.id] = collectLine(libraryRef.current[hole.id], memory);
           setWinningLines(libraryRef.current[hole.id].wins);
-          if(!intentLab)try {
+          if(!intentLab&&!linecraftLab)try {
             const holes = Object.fromEntries(Object.entries(libraryRef.current).map(([id,shelf]) => [id, {
               recent:shelf.recent.map(packLine), wins:shelf.wins.map(packLine),
             }]));
@@ -1719,6 +1764,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           selectedPowerRef.current=charge;setSelectedPower(charge);setRecalledPower(charge);
         };
         const loadHole = (index: number, restore = false) => {
+          if(linecraftLab&&index!==3)return 'linecraft-open-line-only';
           if (!holeUnlocked(index)) return 'card-unavailable';
           const before=lineLab?readControlState():null;
           if(lineLab)activeTicketRef.current=undefined;
@@ -1752,13 +1798,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           updateLauncher();
           makeGhost(memory);
           setLastShot(memory ?? null);
-          if(lineLab){setLineLedger(intentLab?[]:memory?.ledger ?? []);setLiveLineTotal(intentLab?0:scoreLine(memory?.ledger ?? []).total);}
+          if(lineLab){setLineLedger(intentLab||linecraftLab?[]:memory?.ledger ?? []);setLiveLineTotal(intentLab||linecraftLab?0:scoreLine(memory?.ledger ?? []).total);}
           impactFocus.set(hole.target?.x ?? hole.survey.targetX, 0.5, hole.target?.z ?? hole.survey.targetZ);
           setGamePhase("ready");
           if(before)mountTrace?.append({action:'load-card',source:labControlRef.current?.source()??'internal/programmatic',before,after:readControlState(),accepted:true,reason:'course-loaded'});
         };
 
         const beginCharge = () => {
+          if(linecraftLab&&(linecraftReplayingRef.current||linecraftShelfOpenRef.current))return;
           if (phaseRef.current !== "ready") return;
           if(lineLab)chargeSourceRef.current=labControlRef.current?.source()??'internal/programmatic';
           setRetryNotice("");
@@ -1781,6 +1828,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const fire = () => {
+          if(linecraftLab&&(linecraftReplayingRef.current||linecraftShelfOpenRef.current))return;
           if (phaseRef.current !== "charging") return;
           stopChargeTone();
           const setup: ShotSetup = {
@@ -1845,8 +1893,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           projectileCounter += 1;
           labLanding = null;
           if(lineLab){setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);}
+          const linecraftFireMeta=linecraftLab?{...linecraftMeta(linecraftSessionRef.current,linecraftRelationRef.current),shelfAvailable:4-(linecraftShelfRef.current?.entries().length??0)}:undefined;
           flight = {
-            ...(launchContext?{launchContext,surveyTicket:surveyLogRef.current?.begin({...launchContext,...(intentLab?intentMeta(intentConditionRef.current,intentSentenceRef.current,intentRelationRef.current):{})})}:{}),
+            ...(linecraftFireMeta?{linecraftMeta:linecraftFireMeta}:{}),
+            ...(launchContext?{launchContext,surveyTicket:surveyLogRef.current?.begin({...launchContext,...(intentLab?intentMeta(intentConditionRef.current,intentSentenceRef.current,intentRelationRef.current):{}),...(linecraftFireMeta??{})})}:{}),
             ledger:[],runTracker:createRunTracker(),captionedRun:0,redirectTracker:createRedirectTracker(),sawMillTracker:createSawMillTracker(),captioned:new Set(),captionedVariety:0,lifecycle:createLineLifecycle(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
             aggregate,
@@ -1871,6 +1921,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           };
           if(lineLab)activeTicketRef.current=flight.surveyTicket?.id;
           if(intentLab){intentAttemptRef.current=null;setIntentAttempt(null);intentRelationRef.current=null;}
+          if(linecraftLab){linecraftAttemptRef.current=null;setLinecraftAttempt(null);linecraftRelationRef.current=null;linecraftGhostIdRef.current=null;setLinecraftGhostId(null);}
           aggregate.body.setCollisionCallbackEnabled(true);
           aggregate.body.getCollisionObservable().add(event => {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
@@ -1914,7 +1965,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const returnLab = (mode:'retry'|'adjust'|'reset') => {
-          const parentAttempt=flight?.surveyTicket?.id??intentAttemptRef.current??undefined;
+          const parentAttempt=flight?.surveyTicket?.id??linecraftAttemptRef.current??intentAttemptRef.current??undefined;
           let interrupted=false;
           returnLabToSetup(mode,{
             interrupt:()=>{if(flight&&!flight.locked){flight.points.push(flight.bodyMesh.position.clone());rememberFlight('Interrupted · no landing ruling');const id=flight.launchContext?.card??HOLES[activeHoleIndex()].id;persistRecords({...recordsRef.current,[id]:interruptedRecord(recordsRef.current[id])});interrupted=true;}},
@@ -1924,6 +1975,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             load:restore=>{loadHole(activeHoleIndex(),restore);},exactPower,
           });
           if(intentLab)intentRelationRef.current={action:mode,attemptId:parentAttempt};
+          if(linecraftLab){linecraftRelationRef.current={action:mode,attemptId:parentAttempt};linecraftAttemptRef.current=null;setLinecraftAttempt(null);}
           const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[activeHoleIndex()].station),origin=new Vector3(rail.x,.4,rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0,7.4,0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0,3.2,0)));camera.setTarget(cameraTarget);
@@ -1994,6 +2046,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const memory = memoryFor(HOLES[activeHoleIndex()]);
           if (!memory) return 'no-saved-line';
           if(intentLab)intentRelationRef.current={action:'recall',attemptId:memory.intentAttemptId};
+          if(linecraftLab){linecraftRelationRef.current={action:'recall',attemptId:memory.linecraftAttemptId};linecraftAttemptRef.current=null;setLinecraftAttempt(null);}
           if (diverterLab) {
             floorStateRef.current = floorForAction(floorStateRef.current, 'recall', memory.environment);
             diverterHandles?.setState(floorStateRef.current); setFloorState(floorStateRef.current);
@@ -2008,6 +2061,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const memory = [...(historyRef.current[holeId] ?? []), ...(libraryRef.current[holeId]?.wins ?? [])].find(item => item.projectileId === id);
           if (!memory) return 'no-saved-line';
           if(intentLab)intentRelationRef.current={action:'recall',attemptId:memory.intentAttemptId};
+          if(linecraftLab){linecraftRelationRef.current={action:'recall',attemptId:memory.linecraftAttemptId};linecraftAttemptRef.current=null;setLinecraftAttempt(null);}
           if(lineLab&&holeId==='open-line')chooseOpenStation(memory.stationId,true);
           exactPower(memory.charge);
           memoriesRef.current[holeId] = memory;
@@ -2026,13 +2080,14 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const selectHole = (index: number) => {
+          if(linecraftLab&&index!==3)return 'linecraft-open-line-only';
           if(intentLab&&index!==3)return 'intent-open-line-only';
           if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
           return loadHole(index, false);
         };
 
         const nextHole = () => {
-          if(intentLab)return;
+          if(intentLab||linecraftLab)return;
           if (phaseRef.current !== "result" && phaseRef.current !== "ready") return;
           const next = Math.min(HOLES.length - 1, activeHoleIndex() + 1);
           if (next === activeHoleIndex()) {
@@ -2093,9 +2148,97 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           },
         }:null;
 
+        const stopLinecraftReplay=()=>{
+          replayMarker?.dispose();replayMarker=null;replayTrail?.dispose();replayTrail=null;replayPoints=[];
+          linecraftReplayingRef.current=false;setLinecraftReplaying(false);
+          if(replayView){camera.position.copyFrom(replayView.position);cameraTarget.copyFrom(replayView.target);camera.fov=replayView.fov;camera.setTarget(cameraTarget);surveyRef.current=replayView.survey;setSurvey(replayView.survey);replayView=null;}
+        };
+        const linecraftBlock=(next:ReturnType<typeof createLinecraftSession>,stationId?:string)=>{
+          if(!linecraftLab||!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current)return;
+          const change=()=>{
+            linecraftSessionRef.current=next;setLinecraftSession(next);
+            const station=stationId??(next.stage==='learn'?LINECRAFT_LESSONS[next.lessonIndex].station:HOLES[activeHoleIndex()].station?.id??'gate');
+            memoriesRef.current={};historyRef.current={};libraryRef.current={};recordsRef.current={};setRecords({});
+            setLastShot(null);setHistory([]);setWinningLines([]);setLineLedger([]);setLiveLineTotal(0);setSessionBest({});setClaimCaption(null);
+            linecraftAttemptRef.current=null;setLinecraftAttempt(null);linecraftRelationRef.current=null;
+            linecraftGhostIdRef.current=null;setLinecraftGhostId(null);
+            compareRef.current=false;setCompare(false);clearMax();powerModeRef.current='hold';setPowerMode('hold');selectedPowerRef.current=.5;setSelectedPower(.5);
+            chooseOpenStation(station);returnLab('reset');linecraftRelationRef.current=null;
+            showLinecraftShelf(false);
+            setRetryNotice('Fresh setup · timed power · MAX off · PALLET A. Line Shelf retained.');
+          };
+          mountControl?.transition('linecraft-block-'+next.stage,change,inputSourceRef.current);
+        };
+        const restoreLinecraft=(id:string)=>{
+          if(!linecraftLab||!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current)return false;
+          const entry=linecraftShelfRef.current?.entries().find(item=>item.attemptId===id);if(!entry)return false;
+          // Revisit is explicitly Open, never an answer imported into the current lesson.
+          const memory:ShotMemory={...entry.line,linecraftAttemptId:id,linecraftLaunch:entry.launchContext,linecraftMeta:'linecraft' in entry.meta?entry.meta:{linecraft:entry.meta},
+            points:entry.line.points.map(point=>new Vector3(point.x,point.y,point.z)),contacts:entry.line.contacts.map(contact=>({...contact,point:new Vector3(contact.point.x,contact.point.y,contact.point.z)}))};
+          linecraftBlock(enterLinecraftOpen(linecraftSessionRef.current,'revisit'),memory.stationId);
+          memoriesRef.current['open-line']=memory;historyRef.current['open-line']=[memory];
+          floorStateRef.current=memory.environment!.floor;setFloorState(floorStateRef.current);
+          loadHole(3,true);exactPower(memory.charge);
+          linecraftRelationRef.current={action:'restore-kept',attemptId:id};
+          const warning=memory.build!==BUILD_ID?` Recorded build ${memory.build}; current ${BUILD_ID}. A new shot may differ.`:'';
+          setLinecraftNotice('Restored in Open: exact setup and starting pallet. Fire manually.'+warning);
+          setRetryNotice('Kept setup restored. Fire manually; this is a new physical attempt.'+warning);
+          return true;
+        };
+        const playLinecraftReplay=(id:string)=>{
+          if(!linecraftLab||linecraftReplayingRef.current||!['ready','result'].includes(phaseRef.current))return;
+          const entry=linecraftShelfRef.current?.entries().find(item=>item.attemptId===id);if(!entry||entry.line.points.length<2)return;
+          if(!restoreLinecraft(id))return;
+          // Historical path only: no PhysicsAggregate, Fire, recognition or survey ticket.
+          replayView={position:camera.position.clone(),target:cameraTarget.clone(),survey:surveyRef.current,fov:camera.fov};
+          replayPoints=entry.line.points;replayStarted=performance.now();
+          replayTrail=MeshBuilder.CreateLines('linecraft-replay-history',{points:replayPoints.map(point=>new Vector3(point.x,point.y,point.z))},scene!);
+          replayTrail.color=new Color3(.46,.83,.85);replayTrail.alpha=.35;replayTrail.isPickable=false;
+          replayMarker=MeshBuilder.CreateSphere('linecraft-replay-marker',{diameter:1.4,segments:12},scene!);replayMarker.material=materials.amber;replayMarker.isPickable=false;
+          const start=replayPoints[0];replayMarker.position.set(start.x,start.y,start.z);
+          disposeGhost();linecraftGhostIdRef.current=null;setLinecraftGhostId(null);
+          surveyRef.current=true;setSurvey(true);linecraftReplayingRef.current=true;setLinecraftReplaying(true);showLinecraftShelf(false);
+          setLinecraftNotice('Recorded path · approximate time · starting pallet frozen. No new physics or score.');
+        };
+        linecraftActionsRef.current=linecraftLab?{
+          next:()=>{const next=continueLinecraftSession(linecraftSessionRef.current);if(next!==linecraftSessionRef.current)linecraftBlock(next);},
+          open:()=>linecraftBlock(enterLinecraftOpen(linecraftSessionRef.current,'cold')),
+          restart:()=>linecraftBlock(createLinecraftSession()),
+          score:value=>{
+            if(!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current||linecraftSessionRef.current.stage!=='open')return;
+            const next={...linecraftSessionRef.current,scoreVisible:value};linecraftSessionRef.current=next;setLinecraftSession(next);
+            setLiveLineTotal(scoreLine(lineLedgerRef.current).total);setClaimCaption(null);
+          },
+          keep:()=>{
+            if(phaseRef.current!=='result'||linecraftReplayingRef.current)return;
+            const memory=memoryFor(HOLES[activeHoleIndex()]),id=linecraftAttemptRef.current;
+            if(!memory||!id||memory.linecraftAttemptId!==id||!memory.linecraftLaunch||!memory.linecraftMeta)return;
+            try{
+              const entry=linecraftShelfRef.current?.keep(id,memory,memory.linecraftLaunch,memory.linecraftMeta);
+              if(!entry){setLinecraftNotice('Line Shelf is full. Remove a viewing slot before keeping another line.');return;}
+              linecraftDecisionsRef.current?.append(entry);setLinecraftKept(linecraftShelfRef.current!.entries());
+              setLinecraftNotice([`Line kept locally. ${linecraftShelfRef.current!.entries().length} / 4 slots.`,linecraftShelfRef.current?.warning(),linecraftDecisionsRef.current?.warning()].filter(Boolean).join(' '));
+            }catch(error){setLinecraftNotice('Could not Keep this line: '+String(error));}
+          },
+          restore:restoreLinecraft,
+          ghost:id=>{
+            if(!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current)return;
+            if(id&&!linecraftShelfRef.current?.entries().some(entry=>entry.attemptId===id))return;
+            if(phaseRef.current==='result')returnLab('adjust');
+            linecraftGhostIdRef.current=id;setLinecraftGhostId(id);surveyRef.current=Boolean(id);setSurvey(Boolean(id));showLinecraftShelf(false);
+            setLinecraftNotice(id?'Ghost shows a recorded path in Survey. It does not predict the next shot.':'Recorded ghost hidden.');
+          },
+          replay:playLinecraftReplay,stopReplay:stopLinecraftReplay,
+          remove:id=>{
+            if(!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current)return;
+            if(linecraftShelfRef.current?.remove(id)){setLinecraftKept(linecraftShelfRef.current.entries());if(linecraftGhostIdRef.current===id){linecraftGhostIdRef.current=null;setLinecraftGhostId(null);}setLinecraftNotice('Viewing slot removed. Its original Keep decision remains in the study record. '+linecraftShelfRef.current.warning());}
+          },
+        }:null;
+
         actionsRef.current = {
           selectStation: (id) => {
             if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
+            if(linecraftLab){if(linecraftSessionRef.current.stage==='learn')return 'lesson-station-fixed';linecraftBlock(linecraftSessionRef.current,id);return;}
             if(intentLab){intentBlock(intentConditionRef.current,undefined,id);return;}
             if(lineLab&&HOLES[activeHoleIndex()].mode==='score-only'){chooseOpenStation(id);loadHole(3,true);return;}
             const index = stationHoleRef.current[id];
@@ -2122,6 +2265,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const onPointerDown = (event: PointerEvent) => {
+          if(linecraftLab&&(linecraftReplayingRef.current||linecraftShelfOpenRef.current))return;
           if (phaseRef.current !== "ready" && phaseRef.current !== "charging") return;
           if (dragPointer !== null || (event.pointerType === "mouse" && event.button !== 0)) return;
           event.preventDefault();
@@ -2136,6 +2280,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const onPointerMove = (event: PointerEvent) => {
+          if(linecraftLab&&(linecraftReplayingRef.current||linecraftShelfOpenRef.current))return;
           if (event.pointerId !== dragPointer) return;
           if (phaseRef.current !== "ready" && phaseRef.current !== "charging") return;
           event.preventDefault();
@@ -2276,7 +2421,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           } catch { /* Start an empty route book if browser storage is unavailable. */ }
         }
         try {
-          const loaded = normalizeShotLibrary(intentLab?null:readStoredJson(libraryKey), HOLES, {environmentRequired:diverterLab});
+          const loaded = normalizeShotLibrary(linecraftLab?null:intentLab?null:readStoredJson(libraryKey), HOLES, {environmentRequired:diverterLab});
           const hydrate = (line: SavedLine): ShotMemory => ({...line,
             points:line.points.map(p => new Vector3(p.x,p.y,p.z)),
             contacts:line.contacts.map(c => ({...c, point:new Vector3(c.point.x,c.point.y,c.point.z)})),
@@ -2288,11 +2433,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             for (const line of [...recent,...wins]) projectileCounter = Math.max(projectileCounter,line.projectileId);
           }
         } catch { /* Malformed or unavailable storage starts an empty collection. */ }
-        const saved = intentLab?{}:loadProgress(HOLES, STORAGE_KEY);
+        const saved = linecraftLab?{}:intentLab?{}:loadProgress(HOLES, STORAGE_KEY);
         recordsRef.current = saved;
         setRecords(saved);
         const resumeIndex = chooseResumeHole(saved, HOLES);
-        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : intentLab ? 3 : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
+        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : linecraftLab ? 3 : intentLab ? 3 : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
         const entryBefore=lineLab?readControlState():null;
         createCourse(startHole);
@@ -2317,6 +2462,20 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               if(lines.length){keptGhost=MeshBuilder.CreateLineSystem('intent-kept-history',{lines},scene);keptGhost.color=new Color3(.45,.72,.75);keptGhost.alpha=.3;keptGhost.isPickable=false;}
             }
             if(keptGhost)keptGhost.isVisible=intentConditionRef.current==='keep'&&surveyRef.current&&intentGhostsRef.current;
+          }
+          if(linecraftLab){
+            if(linecraftGhostVersion!==linecraftGhostIdRef.current){
+              linecraftGhost?.dispose();linecraftGhost=null;linecraftGhostVersion=linecraftGhostIdRef.current;
+              const entry=linecraftShelfRef.current?.entries().find(item=>item.attemptId===linecraftGhostVersion);
+              if(entry&&entry.line.points.length>1){linecraftGhost=MeshBuilder.CreateLines('linecraft-kept-history',{points:entry.line.points.map(point=>new Vector3(point.x,point.y,point.z))},scene);linecraftGhost.color=new Color3(.45,.82,.85);linecraftGhost.alpha=.45;linecraftGhost.isPickable=false;}
+            }
+            if(linecraftGhost)linecraftGhost.isVisible=surveyRef.current&&phaseRef.current==='ready'&&!linecraftReplayingRef.current;
+            if(linecraftReplayingRef.current&&replayMarker){
+              const progress=(now-replayStarted)/(LINECRAFT_REPLAY_SECONDS*1000),point=sampleRecordedPath(replayPoints,progress);
+              if(point){replayMarker.position.set(point.x,point.y,point.z);cameraTarget.set(point.x,point.y,point.z);camera.position.set(point.x+27,point.y+22,point.z-29);camera.setTarget(cameraTarget);}
+              if(progress>=1){stopLinecraftReplay();setLinecraftNotice('Replay finished. Recorded samples only; no new shot was fired.');}
+              scene.render();return;
+            }
           }
           const deltaSeconds = Math.min(0.04, engine!.getDeltaTime() / 1000);
 
@@ -2505,7 +2664,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             hole.target ? new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z) : null);
           projectLabel(switchLabelRef.current, diverterLab ? new Vector3((lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).x,7,(lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).z) : null);
           projectLabel(floorLabelRef.current, diverterLab ? new Vector3((lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x),6,(lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
-          const mechanism = hole.requiredTags[0];
+          const mechanism = linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks'?'bank':hole.requiredTags[0];
           const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
           projectLabel(mechanismRef.current, mechanism?.startsWith("bank")
@@ -2513,13 +2672,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             : mechanism === "boost" ? new Vector3(pad.x, 1.5, pad.z)
             : mechanism === "breach" && hole.breach ? new Vector3(hole.breach.x, hole.breach.maxY, hole.breach.z)
             : null);
-          const secondBank = hole.requiredTags.length > 1 ? hole.banks?.[1] : null;
+          const secondBank = hole.requiredTags.length > 1 || (linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks') ? hole.banks?.[1] : null;
           projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
           const sharedPad = withSharedYardPad(hole).boost;
           projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
           projectLabel(skyLabelRef.current, (lineLab || hole.id === 'mill-delivery') ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
           for (const step of CASCADE_STEPS) {
-            projectLabel(cascadeLabelRefs.current[step.id] ?? null, hole.id === 'lumber-cascade' ? new Vector3(step.x, step.top+1, step.z) : null);
+            projectLabel(cascadeLabelRefs.current[step.id] ?? null, (hole.id === 'lumber-cascade'||(linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id!=='banks')) ? new Vector3(step.x, step.top+1, step.z) : null);
           }
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
@@ -2596,6 +2755,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       else actionsRef.current = {};
       stopLifecycle();
       intentActionsRef.current=null;
+      linecraftActionsRef.current=null;
       worldRef.current = null;
       audioMasterRef.current = null;
       audioContext?.close().catch(() => undefined);
@@ -2612,7 +2772,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     }catch(error){setIntentNotice('Study export failed: '+String(error));}
   };
 
-  const copyLineLink = async (saved?:ShotMemory) => {
+  const exportLinecraft=async(format:'json'|'csv')=>{
+    try{
+      const archive=await surveyLogRef.current!.export();
+      const packet=exportLinecraftStudy(archive,linecraftDecisionsRef.current?.export()??[],linecraftShelfRef.current?.entries()??[]);
+      const blob=new Blob([format==='json'?JSON.stringify(packet,null,2):linecraftStudyCSV(packet)],{type:format==='json'?'application/json':'text/csv'});
+      const url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download=`rail-golf-linecraft-${BUILD_ID}.${format}`;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setLinecraftNotice('Study exported locally.');
+    }catch(error){setLinecraftNotice('Study export failed: '+String(error));}
+  };
+  const copyLineLink = async (saved?:ShotMemory|SavedLine) => {
     try{
       const card=HOLES[activeHoleIndex()];
       const setup=saved ?? {railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
@@ -2626,6 +2794,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const hole = lineLab?labSnapshot.hole:HOLES[holeIndex];
   const intentPrompt=SENTENCES.find(p=>p.id===intentSentence)!;
   const intentMatch=matchIntentSentence(intentSentence,lineLedger);
+  const linecraftLesson=LINECRAFT_LESSONS[linecraftSession.lessonIndex];
+  const linecraftMatch=matchLinecraftSentence(linecraftLesson.id,lineLedger);
+  const linecraftCanContinue=linecraftSession.stage==='learn'&&linecraftSession.progress[linecraftLesson.id].attempted>0;
+  const linecraftAlreadyKept=linecraftKept.some(entry=>entry.attemptId===linecraftAttempt);
+  const linecraftShelfEntries=linecraftKept.map((entry,index)=>({id:entry.attemptId,title:`Line ${index+1}`,stationLabel:entry.line.stationId==='lumber'?'Lumber Walk':'Yard Gate',stage:('linecraft' in entry.meta?entry.meta.linecraft:entry.meta).stage,description:recognizedIntentEvents(entry.line.ledger??[]).map(event=>event.label).join(' → ')||'A line you chose to keep.'}));
   const intentOptions=SENTENCES.map(p=>({id:p.id,label:p.label,stationLabel:p.station==='gate'?'Yard Gate':'Lumber Walk',clauses:p.clauses.map(c=>c.label)}));
   const labChip = hole.id === "timber-bank" ? addressLabChipLabel(addressLabMode) : null;
   const record = records[hole.id] ?? EMPTY_RECORD;
@@ -2684,7 +2857,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const resultCanAdvance = Boolean(result?.clear);
 
   return (
-    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}`} data-phase={phase} data-line-lab={lineLab||undefined}
+    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab?' '+linecraftShellClassName:''}`} data-phase={phase} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined}
       onPointerDownCapture={lineLab?event=>{inputSourceRef.current='pointer';const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;gestureGateRef.current.down(target,labControlRef.current?.revision()??0,event.pointerId);}:undefined}
       onPointerCancelCapture={lineLab?event=>gestureGateRef.current.cancel(event.pointerId):undefined}
       onClickCapture={lineLab?event=>{
@@ -2704,7 +2877,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
       </>}
-      {lineLab && intentScored && phase==='ready' && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
+      {lineLab && intentScored && phase==='ready' && linecraftScored && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
       {lineLab && claimCaption && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
       <canvas
         ref={canvasRef}
@@ -2730,14 +2903,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             <strong>{String(attempt).padStart(2, "0")}</strong>
           </div>
           <div className={lineLab?'line-score-readout':undefined}>
-            <span>{intentLab&&!intentScored?'CONDITION':lineLab?'LINE':'WIND'}</span>
-            <strong className={lineLab?'line-hud-total':undefined} title={lineLab&&intentScored?'NON-CANONICAL PLACEHOLDERS · line score':undefined}>{intentLab&&!intentScored?intentCondition.toUpperCase():lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
+            <span>{linecraftLab?'STUDY':intentLab&&!intentScored?'CONDITION':lineLab?'LINE':'WIND'}</span>
+            <strong className={lineLab?'line-hud-total':undefined} title={lineLab&&intentScored&&linecraftScored?'NON-CANONICAL PLACEHOLDERS · line score':undefined}>{linecraftLab&&!linecraftScored?linecraftSession.stage.toUpperCase():intentLab&&!intentScored?intentCondition.toUpperCase():lineLab?liveLineTotal:hole.wind.speedLabel}</strong>
           </div>
         </div>
       </header>
 
       {intentLab&&<IntentControls condition={intentCondition} sentenceId={intentSentence} sentences={intentOptions} clauseReached={intentMatch.reached} headline={lineLedger.length?intentMatch.headline:undefined} disabled={phase!=='ready'} onCondition={value=>intentActionsRef.current?.condition(value)} onSentence={id=>intentActionsRef.current?.sentence(id)}/> }
-      {!intentLab&&<nav inert={lineLab&&phase==='result'?true:undefined} className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
+      {linecraftLab&&<LinecraftControls stage={linecraftSession.stage} lessonIndex={linecraftSession.lessonIndex} lessonCount={LINECRAFT_LESSONS.length} sentenceLabel={linecraftLesson.label} stationLabel={linecraftLesson.station==='lumber'?'Lumber Walk':'Yard Gate'} clauses={linecraftMatch.labels} clauseReached={linecraftMatch.reached} headline={lineLedger.length?linecraftMatch.headline:undefined} disabled={phase!=='ready'||linecraftShelfOpen} scoreVisible={linecraftSession.scoreVisible} onScoreVisible={value=>linecraftActionsRef.current?.score(value)} onOpen={()=>linecraftActionsRef.current?.open()} onRestart={()=>linecraftActionsRef.current?.restart()} onShelf={()=>showLinecraftShelf(true)} shelfCount={linecraftKept.length} canContinue={linecraftCanContinue} onContinue={()=>linecraftActionsRef.current?.next()} replaying={linecraftReplaying} onStopReplay={()=>linecraftActionsRef.current?.stopReplay()}/>}
+      {linecraftLab&&linecraftShelfOpen&&<LinecraftShelf entries={linecraftShelfEntries} ghostId={linecraftGhostId} onGhost={id=>linecraftActionsRef.current?.ghost(id)} onRestore={id=>linecraftActionsRef.current?.restore(id)} onReplay={id=>linecraftActionsRef.current?.replay(id)} onRemove={id=>linecraftActionsRef.current?.remove(id)} onShare={id=>{const entry=linecraftKept.find(item=>item.attemptId===id);if(entry)void copyLineLink(entry.line);}} onExport={exportLinecraft} shareLink={shareLink} onClose={()=>showLinecraftShelf(false)} disabled={!['ready','result'].includes(phase)} status={[linecraftNotice,shareNotice,`${surveyStatus.count} attempts · ${surveyStatus.pending} pending`,surveyStatus.warning,linecraftShelfRef.current?.warning(),linecraftDecisionsRef.current?.warning()].filter(Boolean).join(' · ')}/>}
+      {!linecraftLab&&!intentLab&&<nav inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];
           const unlocked = holeUnlocked(index);
@@ -2770,11 +2945,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         })}
       </nav>}
 
-      <aside inert={lineLab&&phase==='result'?true:undefined} className="hole-brief manners-brief">
+      <aside inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="hole-brief manners-brief">
         <p className="eyebrow">{timberReceiver ? `Timber Receiver · ${hole.station?.label}` : lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
-        <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{intentLab?'Intent Lab · '+intentCondition.toUpperCase():hole.name}</strong>
-        <span>{intentLab?(intentCondition==='sentence'?'Follow the sentence. No seat or score required.':intentCondition==='keep'?'Make a line. Keep it if you want to return to it.':'Open Line scoring · frozen NON-CANONICAL control.'):lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
-        {lineLab && intentScored && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
+        <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{linecraftLab?'Linecraft · '+linecraftSession.stage.toUpperCase():intentLab?'Intent Lab · '+intentCondition.toUpperCase():hole.name}</strong>
+        <span>{linecraftLab?(linecraftSession.stage==='learn'?'Use Survey to locate the named faces. A qualified rebound advances a clause.':'No required sentence. One launch, one line.'):intentLab?(intentCondition==='sentence'?'Follow the sentence. No seat or score required.':intentCondition==='keep'?'Make a line. Keep it if you want to return to it.':'Open Line scoring · frozen NON-CANONICAL control.'):lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
+        {lineLab && !linecraftLab && intentScored && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
         <Button
           type="button"
           variant="outline"
@@ -2783,7 +2958,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           disabled={!canAim}
           aria-pressed={survey}
         >
-          <Map /> {survey ? "Address view" : "Survey hole"}
+          <Map /> {survey ? "Address view" : linecraftLab ? "Survey yard" : "Survey hole"}
         </Button>
 
         {canAim && <a className="courtyard-link" href={courtyard ? "/practice" : "/"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
@@ -2801,11 +2976,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       </div>}
 
       <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
-        data-color={hole.requiredTags[0] === "boost" ? "boost" : "amber"} aria-hidden={!canAim || !hole.requiredTags.length}>
-        <strong>1 · {hole.requiredTags[0]?.startsWith("bank") ? (courtyard ? "BANK A · THEN B" : "BANK HERE") : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</strong>
+        data-color={hole.requiredTags[0] === "boost" ? "boost" : "amber"} aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}>
+        <strong>{linecraftLab?'BANK A':<>1 · {hole.requiredTags[0]?.startsWith("bank") ? (courtyard ? "BANK A · THEN B" : "BANK HERE") : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</>}</strong>
       </div>
 
-      {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || !hole.requiredTags.length}><strong>2 · BANK B</strong></div>}
+      {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}><strong>{linecraftLab?"BANK B":"2 · BANK B"}</strong></div>}
 
       {courtyard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
       {lineLab && <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber"><strong>SKY TOKEN</strong></div>}
@@ -2823,27 +2998,27 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         {deliveryLive.length > 0 && phase === 'flight' && <div className="delivery-progress" role="status">{deliveryLive.join(' + ').toUpperCase()} REACHED · LAND TO COLLECT</div>}
       </>}
 
-      {hole.id === 'lumber-cascade' && <>
+      {(hole.id === 'lumber-cascade'||linecraftLab) && <>
         {CASCADE_STEPS.map((step, index) => <div key={step.id} ref={node => { cascadeLabelRefs.current[step.id] = node; }} className="destination-label cascade-label" data-color="amber" data-visible="false"><strong>TREAD {index+1}</strong></div>)}
       </>}
 
-      <section className="aim-console manners-console" data-tools-open={toolsOpen||undefined} inert={lineLab&&['flight','theatre','result'].includes(phase)?true:undefined} aria-label="Rail shot controls">
+      <section className="aim-console manners-console" data-tools-open={toolsOpen||undefined} inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&['flight','theatre','result'].includes(phase))?true:undefined} aria-label="Rail shot controls">
         <div className="primary-options">
           <button type="button" className="max-power" aria-pressed={maxPower} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>performUI('toggleMax',[])} title="Toggle maximum power (X)">MAX · 100% <kbd>X</kbd></button>
-          {lineLab&&hole.mode==='score-only'&&<nav className="station-picker" aria-label="Open Line station" data-active-station={hole.station?.id}>{Object.values(LINE_STATIONS).map(station=><button type="button" key={station.id} aria-pressed={hole.station?.id===station.id} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>performUI('selectStation',[station.id])}>{hole.station?.id===station.id?'● ':''}{station.label}</button>)}</nav>}
+          {lineLab&&(!linecraftLab||linecraftSession.stage==='open')&&hole.mode==='score-only'&&<nav className="station-picker" aria-label="Open Line station" data-active-station={hole.station?.id}>{Object.values(LINE_STATIONS).map(station=><button type="button" key={station.id} aria-pressed={hole.station?.id===station.id} disabled={phase!=='ready'&&phase!=='result'} onClick={()=>performUI('selectStation',[station.id])}>{hole.station?.id===station.id?'● ':''}{station.label}</button>)}</nav>}
         </div>
         <details className="shot-tools" ref={shotToolsRef} onToggle={lineLab?event=>setToolsOpen(event.currentTarget.open):undefined}>
           <summary>Shot tools & saved lines · {powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}</summary>
           <div className="shot-tools-body">
-            {lineLab&&!intentLab&&<SurveyTools trace={actionTraceRef.current} log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
-      {courtyard && (!courtyardDiverter || lineLab) && <nav className="station-picker" aria-label="Launcher station">
+            {lineLab&&!intentLab&&!linecraftLab&&<SurveyTools trace={actionTraceRef.current} log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
+      {courtyard && (!linecraftLab||linecraftSession.stage==='open') && (!courtyardDiverter || lineLab) && <nav className="station-picker" aria-label="Launcher station">
         {Object.values(STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
           disabled={(phase !== 'ready' && phase !== 'result') || !holeUnlocked(station.id === 'gate' ? 0 : station.id === 'saw' ? 3 : 2)}
           onClick={() => performUI('selectStation',[station.id])}>{station.label}{station.id === 'lumber' && !holeUnlocked(2) ? ' · locked' : ''}</button>)}
       </nav>}
             {intentLab&&<IntentStudyTools condition={intentCondition} kept={intentKept} keptGhosts={intentGhosts} onGhosts={value=>{intentGhostsRef.current=value;setIntentGhosts(value);}} onRecallKeep={id=>intentActionsRef.current?.recallKeep(String(id))} onSurvey={()=>performUI('toggleSurvey',[])} onExport={exportIntent} status={[intentNotice,`${surveyStatus.count} attempts · ${surveyStatus.pending} pending`,surveyStatus.warning,intentDecisionsRef.current?.warning()].filter(Boolean).join(' · ')} disabled={phase!=='ready'}/>}
             {diverterLab && <>
-              <small>FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {lineLab?'Pallet switch':courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. {intentLab?'Retry keeps state. Condition, prompt or station changes start a fresh block at A.':'Cards, stations and Retry keep the state.'} Recall restores the recorded starting state.</small>
+              <small>FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {lineLab?'Pallet switch':courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. {linecraftLab?'Retry keeps current state. New lessons/stations restore A. Keep survives every stage.':intentLab?'Retry keeps state. Condition, prompt or station changes start a fresh block at A.':'Cards, stations and Retry keep the state.'} Recall restores the recorded starting state.</small>
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => performUI('reset',[false])}>Reset Card · restore FLOOR A</button>
             </>}
             <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
@@ -2862,7 +3037,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               <small>Links restore exact launch speed and aim without firing. {lineLab?"Starting Kicker Pallet state is restored.":"Starting dock state is restored."}</small>
               {shareLink && <input aria-label="Line link" readOnly value={shareLink} onFocus={event=>event.currentTarget.select()} />}
             </section>}
-            {!intentLab&&<><strong>Winning lines · {winningLines.length}/6 families</strong>
+            {!linecraftLab&&!intentLab&&<><strong>Winning lines · {winningLines.length}/6 families</strong>
             <small>Saved on this browser. Recall restores aim, power marker and the recorded trail; you still fire.</small>
             {winningLines.map(shot => <button type="button" key={`win-${shot.projectileId}`} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => performUI('recallAttempt',[shot.projectileId])}>
               {shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}{shot.outcome === 'double' ? 'STAMP' : 'CLEAR'} · {shot.contacts.filter(c => c.kind !== 'first-kiss' && c.kind !== 'wet').map(c => evidenceLabel(c.kind)).join(' → ') || 'CARRY'} · rail {shot.railIndex + 1} · {displayPercent(shot.charge)}
@@ -2980,7 +3155,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </p>
       </section>
 
-      <aside inert={lineLab&&phase==='result'?true:undefined} className="utility-panel" aria-label="Range options">
+      <aside inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="utility-panel" aria-label="Range options">
         <Label className="utility-row" htmlFor="manners-ghost-toggle">
           <span><Eye /> Previous line</span>
           <Switch
@@ -3010,7 +3185,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </Button>
       </aside>
 
-      <div inert={lineLab&&phase==='result'?true:undefined} className="mobile-utility-panel" aria-label="Mobile range options">
+      <div inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="mobile-utility-panel" aria-label="Mobile range options">
         <Label htmlFor="mobile-manners-ghost">
           <Eye />
           <Switch
@@ -3095,6 +3270,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       {result && phase === "result" ? (
         <section
           ref={resultCardRef}
+          inert={linecraftShelfOpen||linecraftReplaying?true:undefined}
           className={`result-card manners-result ${outcomeClass}`}
           role="dialog"
           aria-modal={lineLab||undefined}
@@ -3102,11 +3278,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           aria-describedby="range-result-detail"
           tabIndex={-1}
         >
-<p className="eyebrow">{intentLab?`Intent Lab · ${intentCondition.toUpperCase()}`:lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>
-          <h2 id="range-result-heading">{intentLab&&!intentScored?(intentCondition==='sentence'?intentMatch.headline:'LINE RECORDED'):result.headline}</h2>
-          <p id="range-result-detail">{intentLab?`LINE ENDED — ${(lastShot?.lineReceipt?.ending??'resolved').replaceAll('-',' ').toUpperCase()}`:result.detail}</p>
+<p className="eyebrow">{linecraftLab?`Linecraft · ${linecraftSession.stage.toUpperCase()}`:intentLab?`Intent Lab · ${intentCondition.toUpperCase()}`:lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>
+          <h2 id="range-result-heading">{linecraftLab?(linecraftSession.stage==='learn'?linecraftMatch.headline:'LINE RECORDED'):intentLab&&!intentScored?(intentCondition==='sentence'?intentMatch.headline:'LINE RECORDED'):result.headline}</h2>
+          <p id="range-result-detail">{intentLab||linecraftLab?`LINE ENDED — ${(lastShot?.lineReceipt?.ending??'resolved').replaceAll('-',' ').toUpperCase()}`:result.detail}</p>
           {intentLab&&!intentScored&&<p>{recognizedIntentEvents(lineLedger).map(e=>e.label).join(' → ')||'No qualified departures recorded.'}</p>}
           {intentLab&&<IntentResult condition={intentCondition} sentenceLabel={intentPrompt.label} clauses={intentPrompt.clauses.map(c=>c.label)} clauseReached={intentMatch.reached} headline={intentMatch.headline} lastAttemptId={intentAttempt} kept={intentKept} onKeep={()=>intentActionsRef.current?.keep()} onDiscard={()=>intentActionsRef.current?.discard()}/> }
+          {linecraftLab&&<>
+            <p>{recognizedIntentEvents(lineLedger).map(event=>event.label).join(' → ')||'No qualified departures recorded.'}</p>
+            <LinecraftResult stage={linecraftSession.stage} sentenceLabel={linecraftLesson.label} clauses={linecraftMatch.labels} clauseReached={linecraftMatch.reached} headline={linecraftMatch.headline} complete={linecraftMatch.complete} isLastLesson={linecraftSession.lessonIndex===LINECRAFT_LESSONS.length-1} canContinue={linecraftCanContinue} canKeep={Boolean(linecraftAttempt)} alreadyKept={linecraftAlreadyKept} shelfCount={linecraftKept.length} onKeep={()=>linecraftActionsRef.current?.keep()} onContinue={()=>linecraftActionsRef.current?.next()} onShelf={()=>showLinecraftShelf(true)}/>
+            {linecraftNotice&&<p role="status">{linecraftNotice}</p>}
+          </>}
           {hole.target && hole.requiredTags.length > 0 && result.outcome !== "double" ? (
             <div className="perfect-callout"><Flag /> Stamp requires {hole.requiredTags.map(evidenceLabel).join(" → ")} → {hole.target.label} in one shot.</div>
           ) : null}
@@ -3138,7 +3319,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               <RotateCcw /> Reset card
             </Button>
           </div>
-          {lineLab&&<><Button type="button" className="line-result-retry" variant="outline" onClick={()=>performUI('retry',[])}>Retry shot · preserve current pallet <kbd>R</kbd></Button>{intentScored&&<LineReceipt ledger={lineLedger} shot={lastShot??undefined} inline />}</>}
+          {lineLab&&<><Button type="button" className="line-result-retry" variant="outline" onClick={()=>performUI('retry',[])}>Retry shot · preserve current pallet <kbd>R</kbd></Button>{linecraftScored&&intentScored&&<LineReceipt ledger={lineLedger} shot={lastShot??undefined} inline />}</>}
         </section>
       ) : null}
 

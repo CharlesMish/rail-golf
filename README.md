@@ -149,3 +149,12 @@ The experimental [Line Recognition v0.2](docs/line-recognition-v2.md) adds conse
 [Line Recognition v0.2.1 hardening](docs/line-hardening-v021.md) repairs score-lab flight safety, saw recognition and the roof cavity, adds forensic rejection reasons and a live additive LINE HUD, and parks the diverter in its dedicated labs.
 
 Score-lab balance and Station 3 experiment: [Open Line / Saw Bay](docs/open-line-saw-bay.md). Values remain NON-CANONICAL PLACEHOLDERS; production Cards 01–03 remain frozen.
+
+### Linecraft graduation study
+
+`/lab/linecraft` is an isolated Learn → Open study in the existing Timber Courtyard.
+Three authored sentences teach two relation families; Keep is available throughout,
+with a four-slot local Line Shelf, exact Restore, recorded Ghost and deliberate
+sampled-path playback. Score is unchanged and optional to display. Production and
+existing labs remain unchanged. See [the runtime contract](docs/LINECRAFT-LAB.md),
+[director memo](docs/LINECRAFT-SPINE.md) and [future Rail Rat protocol](docs/LINECRAFT-RAIL-RAT-PROTOCOL.md).
