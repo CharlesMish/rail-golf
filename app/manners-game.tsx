@@ -9,8 +9,9 @@ import {getDocumentProvenance,observeBrowserLifecycle} from '@/lib/browser-prove
 import {createActionTrace} from '@/lib/action-trace';
 import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type IntentCondition} from './intent-tools';
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
-import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName} from './linecraft-tools';
+import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName} from './linecraft-tools';
 import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftActualDiverges,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
+import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
 import {SurveyTools} from './survey-tools';
 import {
   Color3,
@@ -219,6 +220,7 @@ type GameActions = {
   cancelCharge: () => void;
   reset: (restore?: boolean) => void;
   shiftRail: (direction: number) => void;
+  selectOrigin:(position:number)=>void;
   nudgeYaw: (amount: number) => void;
   nudgeElevation: (amount: number) => void;
   restoreLine: () => void;
@@ -449,6 +451,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const yawRef = useRef(HOLES[0].defaultShot.yaw);
   const elevationRef = useRef(HOLES[0].defaultShot.elevation);
   const railRef = useRef(HOLES[0].defaultShot.railIndex);
+  const originXRef=useRef(0);
   const chargeRef = useRef(0);
   const maxPowerRef = useRef(false);
   const [maxPower,setMaxPower] = useState(false);
@@ -476,6 +479,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [yaw, setYaw] = useState(HOLES[0].defaultShot.yaw);
   const [elevation, setElevation] = useState(HOLES[0].defaultShot.elevation);
   const [railIndex, setRailIndex] = useState(HOLES[0].defaultShot.railIndex);
+  const [originX,setOriginX]=useState(0);
   const [charge, setCharge] = useState(0);
   const [survey, setSurvey] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -504,7 +508,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   useLayoutEffect(()=>{if(lineLab)checkVisibleSelection('react-commit');});
   const readControlState = () => ({phase:phaseRef.current,card:HOLES[activeHoleIndex()].id,
     station:HOLES[activeHoleIndex()].station?.id??'gate',floor:floorStateRef.current,attempt:activeTicketRef.current,
-    setup:{railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:powerModeRef.current==='set'?selectedPowerRef.current:chargeRef.current}});
+    setup:{railIndex:railRef.current,...(linecraftLab?{originX:originXRef.current}:{}),yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:powerModeRef.current==='set'?selectedPowerRef.current:chargeRef.current}});
   const perform = (method:keyof GameActions,args:unknown[]=[],source:ActionSource='internal/programmatic') => {
     if(linecraftLab&&(linecraftReplayingRef.current||linecraftShelfOpenRef.current))return false;
     if(lineLab){if(source!=='internal/programmatic'&&method!=='cancelCharge'&&!checkVisibleSelection('before-'+method))return false;const accepted=labControlRef.current?.run(method,args,source)??false;if(accepted)setControlError('');return accepted;}
@@ -973,13 +977,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
 
         const getMuzzle = () => {
-          const muzzle = stationMuzzle({ railIndex:railRef.current, yaw:yawRef.current, elevation:elevationRef.current }, HOLES[activeHoleIndex()].station);
+          const muzzle = stationMuzzle({ railIndex:railRef.current,...(linecraftLab?{originX:originXRef.current}:{}),yaw:yawRef.current, elevation:elevationRef.current }, HOLES[activeHoleIndex()].station);
           return new Vector3(muzzle.x, muzzle.y, muzzle.z);
         };
 
         const updateLauncher = () => {
           const station = HOLES[activeHoleIndex()].station;
-          const rail = stationRailPosition(railRef.current, station);
+          const rail = stationRailPosition(railRef.current, station,linecraftLab?originXRef.current:undefined);
           launcher.position.set(rail.x, 0, rail.z);
           launcher.rotation.y = (station?.yaw ?? 0) * Math.PI / 180;
           yawPivot.rotation.y = (yawRef.current * Math.PI) / 180;
@@ -1057,7 +1061,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           const tee = place(MeshBuilder.CreateBox(
             `${hole.id}-tee`,
-            { width: 13, height: 0.34, depth: 7.5 },
+            { width: linecraftLab?23:13, height: 0.34, depth: 7.5 },
             scene!,
           ));
           tee.position.set(0, 0.16, -0.5);
@@ -1160,23 +1164,23 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           for (const station of courtyard ? Object.values(STATIONS) : [YARD_STATIONS.gate]) {
           const railBed = place(MeshBuilder.CreateBox(
             `${hole.id}-rail-bed`,
-            { width: 11.2, height: 0.2, depth: 2.6 },
+            { width: linecraftLab?21.4:11.2, height: 0.2, depth: 2.6 },
             scene!,
           ));
           railBed.position.set(station.x, 0.47, station.z);
           railBed.rotation.y = station.yaw * Math.PI / 180;
           railBed.material = materials.steel;
 
-          for (let railIndex = 0; railIndex < RAIL_RULES.railPositions.length; railIndex += 1) {
+          for (let railIndex = 0; railIndex < (linecraftLab?5:RAIL_RULES.railPositions.length); railIndex += 1) {
             const rail = place(MeshBuilder.CreateBox(
               `${hole.id}-rail-${railIndex}`,
               { width: 0.16, height: 0.08, depth: 6.1 },
               scene!,
             ));
-            const railPosition = stationRailPosition(railIndex, station);
+            const railPosition = stationRailPosition(railIndex, station,linecraftLab?[-10,-5,0,5,10][railIndex]:undefined);
             rail.position.set(railPosition.x, 0.61, railPosition.z);
             rail.rotation.y = station.yaw * Math.PI / 180;
-            rail.material = station.id === (hole.station?.id ?? "gate") && railIndex === railRef.current ? materials.cyan : materials.steel;
+            rail.material = !linecraftLab&&station.id === (hole.station?.id ?? "gate") && railIndex === railRef.current ? materials.cyan : materials.steel;
           }
 
           }
@@ -1749,6 +1753,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           yawRef.current = clampYaw(setup.yaw);
           elevationRef.current = clampElevation(setup.elevation);
           railRef.current = Math.round(clamp(setup.railIndex, 0, RAIL_RULES.railPositions.length - 1));
+          if(linecraftLab){const station=HOLES[activeHoleIndex()].station?.id==='lumber'?'lumber':'gate';originXRef.current=selectLinecraftOrigin(setup,station,linecraftOrigin(setup)).originX;setOriginX(originXRef.current);}
           setYaw(yawRef.current);
           setElevation(elevationRef.current);
           setRailIndex(railRef.current);
@@ -1839,6 +1844,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             yaw: yawRef.current,
             elevation: elevationRef.current,
             railIndex: railRef.current,
+            ...(linecraftLab?{originX:originXRef.current}:{}),
             charge: launchCharge(powerModeRef.current, selectedPowerRef.current, performance.now() - chargeStartedAt, maxPowerRef.current),
           };
           const launchContext=lineLab?captureLabLaunch(HOLES[activeHoleIndex()],setup,{floor:floorStateRef.current},BUILD_ID):undefined;
@@ -1925,7 +1931,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           };
           if(lineLab)activeTicketRef.current=flight.surveyTicket?.id;
           if(intentLab){intentAttemptRef.current=null;setIntentAttempt(null);intentRelationRef.current=null;}
-          if(linecraftLab){linecraftAttemptRef.current=null;setLinecraftAttempt(null);linecraftRelationRef.current=null;linecraftGhostIdRef.current=null;setLinecraftGhostId(null);}
+          if(linecraftLab){linecraftAttemptRef.current=null;setLinecraftAttempt(null);linecraftRelationRef.current=null;linecraftGhostIdRef.current=null;setLinecraftGhostId(null);setLinecraftNotice('');}
           aggregate.body.setCollisionCallbackEnabled(true);
           aggregate.body.getCollisionObservable().add(event => {
             if (!flight || flight.aggregate !== aggregate || flight.locked) return;
@@ -1980,7 +1986,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           });
           if(intentLab)intentRelationRef.current={action:mode,attemptId:parentAttempt};
           if(linecraftLab){linecraftRelationRef.current={action:mode,attemptId:parentAttempt};linecraftAttemptRef.current=null;setLinecraftAttempt(null);}
-          const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[activeHoleIndex()].station),origin=new Vector3(rail.x,.4,rail.z);
+          const direction=getHorizontalDirection(),rail=stationRailPosition(railRef.current,HOLES[activeHoleIndex()].station,linecraftLab?originXRef.current:undefined),origin=new Vector3(rail.x,.4,rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0,7.4,0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0,3.2,0)));camera.setTarget(cameraTarget);
           setRetryNotice(mode==='reset'?'Card reset. PALLET A restored. Saved lines and survey log kept.':mode==='adjust'?'Last line restored with its starting pallet state and exact power. Adjust and fire.':interrupted?'Shot interrupted and recorded. Current pallet state preserved.':'Last setup restored. Current pallet state preserved.');
@@ -2004,7 +2010,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           loadHole(activeHoleIndex(), true);
           // A retry is immediate; do not spend another second flying the camera home.
           const direction = getHorizontalDirection();
-          const rail = stationRailPosition(railRef.current, HOLES[activeHoleIndex()].station);
+          const rail = stationRailPosition(railRef.current, HOLES[activeHoleIndex()].station,linecraftLab?originXRef.current:undefined);
           const origin = new Vector3(rail.x, .4, rail.z);
           camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
           cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
@@ -2040,9 +2046,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
         const moveRail = (direction: number) => {
           if (phaseRef.current !== "ready" && phaseRef.current !== "charging") return;
+          if(linecraftLab){const station=HOLES[activeHoleIndex()].station?.id==='lumber'?'lumber':'gate';const next=shiftLinecraftOrigin({railIndex:railRef.current,originX:originXRef.current,yaw:0,elevation:0,charge:0},station,direction);originXRef.current=next.originX!;railRef.current=next.railIndex;setOriginX(originXRef.current);setRailIndex(railRef.current);updateLauncher();return;}
           railRef.current = shiftRail(railRef.current, direction);
           setRailIndex(railRef.current);
           updateLauncher();
+        };
+        const selectOrigin=(requested:number)=>{
+          if(!linecraftLab||phaseRef.current!=='ready')return false;
+          const station=HOLES[activeHoleIndex()].station?.id==='lumber'?'lumber':'gate';const next=selectLinecraftOrigin({railIndex:railRef.current,yaw:0,elevation:0,charge:0},station,requested);
+          originXRef.current=next.originX!;railRef.current=next.railIndex;setOriginX(originXRef.current);setRailIndex(railRef.current);updateLauncher();
         };
 
         const restoreLine = () => {
@@ -2260,6 +2272,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           cancelCharge,
           reset: resetRound,
           shiftRail: moveRail,
+          selectOrigin,
           nudgeYaw,
           nudgeElevation,
           restoreLine,
@@ -2506,7 +2519,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           elevationPivot.position.z = -recoil * 0.48;
           elevationPivot.position.y = -recoil * 0.055;
           const hole = HOLES[activeHoleIndex()];
-          const stationRail = stationRailPosition(railRef.current, hole.station);
+          const stationRail = stationRailPosition(railRef.current, hole.station,linecraftLab?originXRef.current:undefined);
           const launcherPosition = new Vector3(stationRail.x, 0.4, stationRail.z);
           const horizontalAim = getHorizontalDirection();
           const addressPosition = launcherPosition.subtract(horizontalAim.scale(15)).add(new Vector3(0, 7.4, 0));
@@ -2787,8 +2800,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const copyLineLink = async (saved?:ShotMemory|SavedLine) => {
     try{
       const card=HOLES[activeHoleIndex()];
-      const setup=saved ?? {railIndex:railRef.current,yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
-      const encoded=encodeShareLine({v:1,build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard',route:lineLab?lineRoute:'/lab/courtyard-diverter',card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}});
+      const setup=saved ?? {railIndex:railRef.current,...(linecraftLab?{originX:originXRef.current}:{}),yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
+      const payload={build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard' as const,card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}};
+      const encoded=encodeShareLine(linecraftLab?{...payload,v:2,route:'/lab/linecraft',originX:linecraftOrigin(setup)}:{...payload,v:1,route:lineLab?lineRoute as '/lab/lines'|'/lab/timber-receiver':'/lab/courtyard-diverter'});
       const url=new URL(lineLab?lineRoute:'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
       setShareLink(url.href);
       try{await navigator.clipboard.writeText(url.href);setShareNotice(lineLab?'Line link copied. It restores setup and starting pallet state without firing.':'Line link copied. It restores setup and starting state; it never fires.');}
@@ -3065,8 +3079,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             <strong>{elevation.toFixed(1)}°</strong>
           </div>
           <div className="metric-block">
-            <span>RAIL</span>
-            <strong>{railIndex + 1} / 3</strong>
+            <span>{linecraftLab?'ORIGIN':'RAIL'}</span>
+            <strong>{linecraftLab?`${originX>=0?'+':''}${originX.toFixed(1)} m`:`${railIndex + 1} / 3`}</strong>
           </div>
           <div className="metric-block power-number">
             <span>POWER</span>
@@ -3094,31 +3108,32 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </div>
 
         <div className="manners-control-grid">
-          <div className="rail-controls" aria-label="Launcher rail">
+          <div className="rail-controls" aria-label={linecraftLab?'Launch origin':'Launcher rail'}>
             <Button
               type="button"
               variant="outline"
               size="icon-lg"
               className="rail-shift"
               onClick={() => performUI('shiftRail',[-1])}
-              disabled={!canAim || railIndex === 0}
+              disabled={!canAim || (linecraftLab?originX<=LINECRAFT_ORIGIN.gate.min:railIndex===0)}
               aria-label="Move launcher left"
             >
               <ChevronLeft />
             </Button>
-            <span>RAIL</span>
+            <span>{linecraftLab?'ORIGIN':'RAIL'}</span>
             <Button
               type="button"
               variant="outline"
               size="icon-lg"
               className="rail-shift"
               onClick={() => performUI('shiftRail',[1])}
-              disabled={!canAim || railIndex === RAIL_RULES.railPositions.length - 1}
+              disabled={!canAim || (linecraftLab?originX>=LINECRAFT_ORIGIN.gate.max:railIndex===RAIL_RULES.railPositions.length-1)}
               aria-label="Move launcher right"
             >
               <ChevronRight />
             </Button>
           </div>
+          {linecraftLab&&<label className={linecraftOriginControlClassName}>Origin {originX>=0?'+':''}{originX.toFixed(1)} m<input aria-label="Launch origin position" type="range" min={LINECRAFT_ORIGIN.gate.min} max={LINECRAFT_ORIGIN.gate.max} step={LINECRAFT_ORIGIN.gate.step} value={originX} disabled={phase!=='ready'} onChange={event=>performUI('selectOrigin',[Number(event.target.value)])}/>{lastShot&&lastShot.stationId===hole.station?.id&&<small>Last {linecraftOrigin(lastShot).toFixed(1)} m</small>}</label>}
 
           <Button
             type="button"
@@ -3278,9 +3293,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           inert={linecraftShelfOpen||linecraftReplaying?true:undefined}
           className={`result-card manners-result ${outcomeClass}`}
           role="dialog"
-          aria-modal={lineLab||undefined}
+          aria-modal={lineLab&&!linecraftLab||undefined}
           aria-labelledby="range-result-heading"
-          aria-describedby="range-result-detail"
+          aria-describedby={linecraftLab?undefined:'range-result-detail'}
           tabIndex={-1}
         >
         {!linecraftLab&&<p className="eyebrow">{intentLab?`Intent Lab · ${intentCondition.toUpperCase()}`:lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>}

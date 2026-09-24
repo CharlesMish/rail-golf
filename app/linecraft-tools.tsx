@@ -6,6 +6,7 @@ import styles from "./linecraft-lab.module.css";
 // This stylesheet only applies to the isolated Linecraft Lab root.
 export const linecraftShellClassName = styles.shell;
 export const linecraftResultShelfClassName = styles.resultShelfButton;
+export const linecraftOriginControlClassName = styles.originControl;
 export type LinecraftStage = "learn" | "open";
 export type LinecraftShelfEntry = {
   id: string;
