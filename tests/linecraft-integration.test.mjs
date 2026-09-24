@@ -142,7 +142,7 @@ test('built Linecraft route serves Learn first while production and Intent keep 
  const workerURL=new URL('../dist/server/index.js',import.meta.url);workerURL.searchParams.set('linecraft-test',`${process.pid}-${Date.now()}`);
  const {default:worker}=await import(workerURL.href);
  const htmlAt=async path=>{const response=await worker.fetch(new Request('http://localhost'+path,{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});assert.equal(response.status,200,path);return response.text();};
- const html=await htmlAt('/lab/linecraft');assert.match(html,/LINECRAFT LAB/);assert.match(html,/LEARN 1 \/ 3/);assert.match(html,/BANK A → BANK B/);assert.match(html,/LINE SHELF/);assert.match(html,/SKIP TO OPEN/);assert.match(html,/data-active-card="open-line" data-active-station="gate"/);
+ const html=await htmlAt('/lab/linecraft'),plainHTML=html.replaceAll('<!-- -->','');assert.match(plainHTML,/1 \/ 2/);assert.match(html,/BANK A/);assert.match(html,/BANK B/);assert.match(html,/SHELF/);assert.match(html,/Skip Lessons/);assert.match(html,/data-active-card="open-line" data-active-station="gate"/);
  assert.equal(/Winning lines|NON-CANONICAL PLACEHOLDERS · line score/.test(html),false,'Learn boot must not advertise winning lines or a numeric score tooltip');
  const production=await htmlAt('/');assert.doesNotMatch(production,/LINECRAFT LAB|LINE SHELF|SKIP TO OPEN/);
  const intent=await htmlAt('/lab/intent');assert.match(intent,/INTENT LAB/);assert.doesNotMatch(intent,/LINECRAFT LAB|LINE SHELF|SKIP TO OPEN/);

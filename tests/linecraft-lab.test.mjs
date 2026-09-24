@@ -23,8 +23,8 @@ function fixture({station='gate',ledger=[...banks,terminal],floor='A',after='B'}
 }
 const kept=(manager,id,session=createLinecraftSession(),options)=>{const {line,launch}=fixture(options);return manager.keep(id,line,launch,linecraftMeta(session));};
 
-test('curriculum uses three proven relationships and strictly ordered qualified departures',()=>{
- assert.deepEqual(LINECRAFT_LESSONS.map(lesson=>[lesson.id,lesson.station]),[['banks','gate'],['tread-pair','lumber'],['treads','lumber']]);
+test('curriculum uses two relationships and strictly ordered qualified departures',()=>{
+ assert.deepEqual(LINECRAFT_LESSONS.map(lesson=>[lesson.id,lesson.station]),[['banks','gate'],['treads','lumber']]);
  assert.equal(matchLinecraftSentence('banks',banks).complete,true);
  assert.equal(matchLinecraftSentence('banks',[banks[1],banks[0]]).reached,1);
  assert.equal(matchLinecraftSentence('banks',[{kind:'contact',surface:'bank-a'},banks[1]]).reached,0);
@@ -41,8 +41,8 @@ test('one resolved attempt permits Continue without success; attempts, completio
  assert.deepEqual(session.progress.banks,{attempted:1,completed:false});assert.equal(original.progress.banks.attempted,0);
  assert.equal(recordLinecraftAttempt(session,'learn:1',[...banks,terminal]),session,'same ticket cannot double count');
  session=continueLinecraftSession(session);assert.equal(session.lessonIndex,1);
- session=recordLinecraftAttempt(session,'learn:2',[...treads,terminal]);assert.equal(session.progress['tread-pair'].completed,true);
- session=continueLinecraftSession(session);session=recordLinecraftAttempt(session,'learn:3',[...treads,terminal]);
+ session=recordLinecraftAttempt(session,'learn:2',[...treads.slice(0,2),terminal]);assert.equal(session.progress.treads.completed,false);
+ session=recordLinecraftAttempt(session,'learn:3',[...treads,terminal]);assert.equal(session.progress.treads.completed,true);
  session=continueLinecraftSession(session);assert.equal(session.stage,'open');assert.equal(session.openEntry,'trained');assert.equal(session.openExposures.length,1);
  assert.equal(session.progress.banks.completed,false,'graduation is exposure, not falsely claimed mastery');
  assert.deepEqual(createLinecraftSession(),original,'reload/restart creates fresh session progress');
@@ -94,13 +94,48 @@ test('namespaced storage never sees or clears incumbent journal or production pr
 
 test('malformed shelf and quota failures are visible; Keep remains exportable in memory',()=>{
  const raw=storage();raw.setItem('shelf-v1',JSON.stringify({version:1,entries:[{attemptId:'bad',line:{}}]}));
- const invalid=createLinecraftShelf(raw);assert.equal(invalid.entries().length,0);assert.match(invalid.warning(),/could not be loaded/);
+ const invalid=createLinecraftShelf(raw);assert.equal(invalid.entries().length,0);assert.match(invalid.warning(),/quarantine/);
  raw.setItem('keep-observations-v1',JSON.stringify([{attemptId:'bad',action:'keep',sequence:1,linecraft:linecraftMeta(createLinecraftSession()).linecraft}]));
- const badJournal=createLinecraftDecisions(raw);assert.equal(badJournal.export().length,0);assert.match(badJournal.warning(),/could not be loaded/);
+ const badJournal=createLinecraftDecisions(raw);assert.equal(badJournal.export().length,0);assert.match(badJournal.warning(),/quarantine/);
  const failed={getItem:()=>null,setItem:()=>{throw Error('quota');},removeItem:()=>{}};
  const shelf=createLinecraftShelf(failed),entry=kept(shelf,'q:1');assert.equal(shelf.entries().length,1);assert.match(shelf.warning(),/only in memory/);
  const decisions=createLinecraftDecisions(failed);decisions.append(entry);assert.equal(decisions.export().length,1);assert.match(decisions.warning(),/only in memory/);
  const {line,launch}=fixture();assert.throws(()=>shelf.keep('q:2',line,{...launch,launchSpeed:6},linecraftMeta(createLinecraftSession())),/incomplete/);
+});
+
+test('legacy two-tread evidence survives migration without changing its historical identity',()=>{
+ const raw=storage(),shelf=createLinecraftShelf(raw),session=createLinecraftSession();
+ const old={...linecraftMeta(session),linecraft:{...linecraftMeta(session).linecraft,lessonId:'tread-pair',progress:{...session.progress,'tread-pair':{attempted:1,completed:true}}}};
+ const {line,launch}=fixture({station:'lumber',ledger:[...treads.slice(0,2),terminal]});
+ const kept=shelf.keep('old:1',line,launch,old);
+ const journal=createLinecraftDecisions(raw);journal.append(kept);
+ assert.equal(createLinecraftShelf(raw).entries()[0].meta.linecraft.lessonId,'tread-pair');
+ assert.equal(createLinecraftDecisions(raw).export()[0].sentenceResult.complete,true);
+ assert.equal(matchLinecraftSentence('treads',line.ledger).complete,false);
+});
+
+test('damaged Shelf and Keep journal entries preserve valid neighbors and quarantine the exact original bytes',()=>{
+ const raw=storage(),shelf=createLinecraftShelf(raw),journal=createLinecraftDecisions(raw);
+ const first=kept(shelf,'valid:1');journal.append(first);const second=kept(shelf,'valid:2');journal.append(second);
+ for(const [key,valid] of [['shelf-v1',shelf.entries()],['keep-observations-v1',journal.export()]]){
+  const source=key==='shelf-v1'?JSON.stringify({version:1,entries:[valid[0],{attemptId:'bad',line:{}},valid[1]]}):JSON.stringify([valid[0],{attemptId:'bad'},valid[1]]);
+  raw.setItem(key,source);
+  const loaded=key==='shelf-v1'?createLinecraftShelf(raw):createLinecraftDecisions(raw);
+  assert.deepEqual((key==='shelf-v1'?loaded.entries():loaded.export()).map(e=>e.attemptId),['valid:1','valid:2']);
+  assert.match(loaded.warning(),/quarantine/);
+  const backup=[...Array(raw.length).keys()].map(i=>raw.key(i)).find(k=>k.startsWith(key+'-quarantine-'));
+  assert.equal(raw.getItem(backup),source);
+ }
+});
+
+test('unreadable raw collections cannot be overwritten by a later Keep if quarantine fails',()=>{
+ for(const key of ['shelf-v1','keep-observations-v1']){
+  let raw='broken json';const storage={getItem:k=>k===key?raw:null,setItem:(k,value)=>{if(k!==key)throw Error('backup denied');raw=value;}};
+  const shelf=createLinecraftShelf(storage),entry=kept(shelf,'new:1');
+  if(key==='keep-observations-v1'){const journal=createLinecraftDecisions(storage);journal.append(entry);assert.equal(journal.export().length,1);assert.match(journal.warning(),/could not be preserved/);}
+  else {assert.equal(shelf.entries().length,1);assert.match(shelf.warning(),/could not be preserved/);}
+  assert.equal(raw,'broken json');
+ }
 });
 
 test('Keep observations are immutable, survive slot removal and reload, and preserve original Open receipt',()=>{
@@ -137,7 +172,7 @@ test('replay interpolates recorded spatial distance only, handles repeated sampl
 test('each curriculum sentence remains physically attainable under unchanged Open Line Havok authority',async()=>{
  const havok=await Havok({wasmBinary:await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm',import.meta.url))});
  // QA-only fixtures. Player-facing curriculum contains no coordinates or solutions.
- const fixtures=[['banks','gate',{railIndex:0,yaw:-1,elevation:25,charge:.93}],['tread-pair','lumber',{railIndex:1,yaw:0,elevation:30,charge:(22+21*.05-6)/37}],['treads','lumber',{railIndex:1,yaw:0,elevation:30,charge:(22+21*.05-6)/37}]];
+ const fixtures=[['banks','gate',{railIndex:0,yaw:-1,elevation:25,charge:.93}],['treads','lumber',{railIndex:1,yaw:0,elevation:30,charge:(22+21*.05-6)/37}]];
  for(const [id,station,setup]of fixtures){
   const h=diverterHarness(havok,'A',true,selectOpenLineStation(station),{scoreLab:true});
   try{const shot=h.shoot(setup);assert.equal(matchLinecraftSentence(id,shot.ledger).complete,true,id);const score=scoreLine(shot.ledger);const session={...createLinecraftSession(),stage:'open',scoreVisible:false};

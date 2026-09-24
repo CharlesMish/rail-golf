@@ -5,6 +5,7 @@ import styles from "./linecraft-lab.module.css";
 
 // This stylesheet only applies to the isolated Linecraft Lab root.
 export const linecraftShellClassName = styles.shell;
+export const linecraftResultShelfClassName = styles.resultShelfButton;
 export type LinecraftStage = "learn" | "open";
 export type LinecraftShelfEntry = {
   id: string;
@@ -26,79 +27,73 @@ function Clauses({clauses, reached}: {clauses: string[]; reached: number}) {
 
 /** Presentation only; the runtime owns lesson attempts, score authority and all resets. */
 export function LinecraftControls({
-  stage, lessonIndex, lessonCount, sentenceLabel, stationLabel, clauses = [], clauseReached = 0,
-  headline, disabled, scoreVisible, onScoreVisible, onOpen, onRestart, onShelf, shelfCount,
-  canContinue, onContinue, replaying = false, onStopReplay,
+  stage, lessonIndex, lessonCount, clauses = [], clauseReached = 0,
+  disabled, onOpen, onRestart, onShelf, shelfCount, fired,
+  replaying = false, onStopReplay,
 }: {
   stage: LinecraftStage; lessonIndex: number; lessonCount: number;
-  sentenceLabel?: string; stationLabel?: string; clauses?: string[]; clauseReached?: number;
-  headline?: string; disabled: boolean; scoreVisible: boolean;
-  onScoreVisible: (visible: boolean) => void; onOpen: () => void; onRestart: () => void;
-  onShelf: () => void; shelfCount: number; canContinue: boolean; onContinue: () => void;
+  clauses?: string[]; clauseReached?: number;
+  disabled: boolean; fired: boolean;
+  onOpen: () => void; onRestart: () => void;
+  onShelf: () => void; shelfCount: number;
   replaying?: boolean; onStopReplay?: () => void;
 }) {
   if (replaying) return <section className={styles.controls} data-replaying="true" aria-label="Recorded line replay">
     <div className={styles.heading}><span>RECORDED REPLAY</span><button type="button" onClick={onStopReplay}>STOP REPLAY</button></div>
-    <p className={styles.hint} role="status">Recorded path · distance-normalized six seconds · starting pallet frozen. No new physics.</p>
+    <p className={styles.hint} role="status">Recorded path · no new shot.</p>
   </section>;
   return <section className={styles.controls} data-stage={stage} aria-label="Linecraft Lab" inert={disabled ? true : undefined}>
     <div className={styles.heading}>
-      <span>LINECRAFT LAB <b>{stage === "learn" ? `LEARN ${lessonIndex + 1} / ${lessonCount}` : "OPEN"}</b></span>
-      <button type="button" onClick={onShelf} disabled={disabled}>LINE SHELF <span>{shelfCount}/4</span></button>
+      {stage === "learn" ? <div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div> : <span>OPEN YARD</span>}
+      <button type="button" onClick={onShelf} disabled={disabled}>SHELF <span>{shelfCount}/4</span></button>
     </div>
     {stage === "learn" ? <>
-      <p className={styles.lesson}>{sentenceLabel}<span>{stationLabel}</span></p>
-      <Clauses clauses={clauses} reached={clauseReached}/>
-      {headline && <p className={styles.status} aria-live="polite">{headline}</p>}
-      <p className={styles.teaching}>Drag to aim. Hold/release to fire. Survey names faces.</p>
+      {!fired && <p className={styles.teaching}>Drag to aim · hold and release to fire · Survey names faces.</p>}
       <div className={styles.navigation}>
-        {canContinue && <button type="button" onClick={onContinue} disabled={disabled} className={styles.primary}>{lessonIndex === lessonCount - 1 ? "TRY OPEN" : "CONTINUE STUDY"}</button>}
-        <button type="button" className={styles.quiet} onClick={onOpen} disabled={disabled}>SKIP TO OPEN <span>· skip curriculum</span></button>
+        <button type="button" className={styles.quiet} onClick={onOpen} disabled={disabled}>Skip Lessons</button>
       </div>
     </> : <>
-      <p className={styles.openHint}>The same yard. No required sentence. Keep what matters to you.</p>
       <div className={styles.navigation}>
-        <label className={styles.scoreToggle}><input type="checkbox" checked={scoreVisible} disabled={disabled} onChange={event => onScoreVisible(event.target.checked)}/> SCORE {scoreVisible ? "ON" : "HIDDEN"}</label>
-        <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>RESTART LEARN</button>
+        <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>Restart Lessons</button>
       </div>
-      <p className={styles.contract}>{scoreVisible ? "Score is a non-canonical placeholder. Hiding it changes no physics or values." : "Score is still recorded for the study. Visibility changes no physics or values."}</p>
     </>}
   </section>;
 }
 
 /** Resolved shots are Keep-worthy solely at the player's discretion. */
 export function LinecraftResult({
-  stage, sentenceLabel, clauses = [], clauseReached = 0, complete, isLastLesson,
-  canContinue, canKeep, alreadyKept, shelfCount, onKeep, onContinue, onShelf,
+  stage, lessonIndex, lessonCount, clauses, clauseReached, complete, isLastLesson, canContinue, canKeep, alreadyKept, shelfCount,
+  onKeep, onContinue, onShelf, onAdjust, showKeepExplanation,
 }: {
-  stage: LinecraftStage; sentenceLabel?: string; clauses?: string[]; clauseReached?: number; headline?: string;
+  stage: LinecraftStage; lessonIndex:number; lessonCount:number; clauses:string[]; clauseReached:number;
   complete: boolean; isLastLesson: boolean; canContinue: boolean; canKeep: boolean; alreadyKept: boolean;
-  shelfCount: number; onKeep: () => void; onContinue: () => void; onShelf: () => void;
+  shelfCount: number; onKeep: () => void; onContinue: () => void; onShelf: () => void; onAdjust: () => void; showKeepExplanation:boolean;
 }) {
   return <section className={styles.result} aria-label={`${stage === "learn" ? "Learn" : "Open"} line result`}>
-    {stage === "learn" && <>
-      {sentenceLabel && <p className={styles.eyebrow}>{sentenceLabel}</p>}
-      <Clauses clauses={clauses} reached={clauseReached}/>
-      <p className={styles.hint}>{complete ? "You can retry this line, keep it, or move on." : "The marked clauses show how far the line reached. Retry, or continue the study."}</p>
-    </>}
+    {stage==='learn'&&<div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div>}
     <div className={styles.actions}>
-      <button type="button" className={styles.primary} onClick={onKeep} disabled={!canKeep || alreadyKept || shelfCount >= 4}>{alreadyKept ? "LINE KEPT ✓" : "KEEP LINE"}</button>
-      <button type="button" onClick={onShelf}>LINE SHELF · {shelfCount}/4</button>
-      {stage === "learn" && <button type="button" onClick={onContinue} disabled={!canContinue}>{isLastLesson ? "TRY OPEN" : complete ? "NEXT LESSON" : "CONTINUE STUDY"}</button>}
+      {stage === "learn" && complete ? <>
+        <button type="button" className={styles.primary} onClick={onContinue} disabled={!canContinue}>{isLastLesson ? "Open the Yard" : "Next Lesson"}</button>
+        <button type="button" onClick={onAdjust}>Adjust Last Line</button>
+      </> : <button type="button" className={styles.primary} onClick={onAdjust}>Adjust Last Line</button>}
+      <button type="button" className={styles.quiet} onClick={onKeep} disabled={!canKeep || alreadyKept || shelfCount >= 4}>{alreadyKept ? "Kept ✓" : "Keep Line"}</button>
+      {stage==='learn'&&!complete&&canContinue&&<button type="button" className={styles.quiet} onClick={onContinue}>{isLastLesson?'Skip Lessons':'Skip Lesson'}</button>}
     </div>
-    <p className={styles.hint}>{shelfCount >= 4 && !alreadyKept ? "Shelf full. Remove a line from the shelf to keep another." : "Keep is your choice. No score, recognition or finished sentence is required."}</p>
+    {stage === 'learn' && complete && isLastLesson && <p className={styles.hint}>The same yard, with no required sentence.</p>}
+    {shelfCount >= 4 && !alreadyKept ? <p className={styles.hint}>Shelf full. <button type="button" className={styles.quiet} onClick={onShelf}>Manage Shelf</button></p> : showKeepExplanation && <p className={styles.hint}>Keep saves this line to your Shelf so you can restore or replay it later.</p>}
   </section>;
 }
 
 /** Four local slots, independent from Learn/Open. Runtime supplies all recorded authority. */
 export function LinecraftShelf({
   entries, ghostId, onGhost, onRestore, onReplay, onRemove, onShare, onExport, status,
-  disabled = false, onClose, shareLink,
+  disabled = false, onClose, shareLink, scoreVisible, onScoreVisible,
 }: {
   entries: LinecraftShelfEntry[]; ghostId: string | null; onGhost: (id: string | null) => void;
   onRestore: (id: string) => void; onReplay: (id: string) => void; onRemove: (id: string) => void;
   onShare?: (id: string) => void; onExport: (format: "json" | "csv") => void;
   status?: string; disabled?: boolean; onClose?: () => void; shareLink?: string;
+  scoreVisible?: boolean; onScoreVisible?: (visible:boolean)=>void;
 }) {
   const headingId = useId();
   const dialogRef = useRef<HTMLElement>(null);
@@ -139,9 +134,11 @@ export function LinecraftShelf({
       </ol>}
       {onShare && <p className={styles.contract}>Setup links restore a launch setup. They never fire automatically or contain the recorded replay.</p>}
       {shareLink && <label className={styles.shareLink}>Setup link · select to copy<input type="text" readOnly value={shareLink} aria-label="Kept line setup link" onFocus={event => event.currentTarget.select()}/></label>}
-      <footer className={styles.export}>
-        <div className={styles.actions}><button type="button" onClick={() => onExport("json")}>EXPORT STUDY JSON</button><button type="button" onClick={() => onExport("csv")}>EXPORT STUDY CSV</button></div>
-        <p className={styles.hint}>Study exports associate attempts, unchanged score and your voluntary Keep decisions.</p>
+      <footer className={styles.export}><details><summary>Study tools</summary>
+        {onScoreVisible&&<label className={styles.scoreToggle}><input type="checkbox" checked={scoreVisible} disabled={disabled} onChange={event=>onScoreVisible(event.target.checked)}/> Show provisional score in Open</label>}
+        <div className={styles.actions}><button type="button" onClick={() => onExport("json")}>Export study JSON</button><button type="button" onClick={() => onExport("csv")}>Export study CSV</button></div>
+        <p className={styles.hint}>Exports retain attempts and Keep choices. Score visibility changes no physical or scoring rule.</p>
+      </details>
         {status && <p className={styles.notice} role="status">{status}</p>}
       </footer>
     </aside>
