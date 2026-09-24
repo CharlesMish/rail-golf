@@ -1,5 +1,55 @@
 # Linecraft graduation slice — handoff and runtime contract
 
+## v0.2 owner correction (experimental branch)
+
+Owner play of v0.1 found that three lessons behaved as two meaningful physical
+relationships. The active Learn sequence is now BANK A → BANK B, then the full
+TREAD 1 → TREAD 2 → TREAD 3. Reaching the second tread is useful partial
+progress within Lumber Walk. The qualified redirect gate, actual out-of-order
+evidence, and first-ground rule are unchanged. An attempted lesson can still be
+skipped; completing the second leads to Open without a mastery award.
+
+Keep worked as a capability but its result button was over-promoted. In v0.2
+each result has one prominent action: Adjust Last Line on incomplete Learn/Open,
+Next Lesson after the first completion, Open the Yard after the final completion.
+Keep remains available on any resolved line, including an unrecognized miss,
+in a quiet, consistent position. Shelf lives in utility chrome and the first
+Keep opportunity gives a single inline explanation. Lower Keep frequency after
+this change cannot be interpreted against v0.1's prominent button as diminished
+interest. Study exports and the provisional score toggle live in the Shelf's
+collapsed Study tools section.
+
+Owner play also found that instrumentation crowded the world, inactive roosts
+looked like goals and restricted origins interfered with imagined Open lines.
+Linecraft hides inactive colored roost assemblies and the existing Sky Token;
+production retains them. A future authored endpoint and smaller aerial-token
+experiment remain possible, with no new gameplay in this branch. The new
+stopped launch-origin control serves both Learn and Open: −10 to +10 m at each
+station in 0.5 m steps. It preserves aim, power and pallet state when moved.
+The span is an initial geometric/physics choice; rendered camera and end-range
+usability require play verification. No Travelling Tee modes or moving release
+were ported.
+
+New Linecraft setups save `originX` explicitly, while old three-position setups
+map exactly to −4/0/+4 m. Shelf v1 remains readable, including historical
+`tread-pair` entries; these keep their original identity and two-clause meaning.
+New Linecraft setup links use version 2; version 1 links remain accepted and
+restore the same muzzle. Per-entry loading preserves valid Shelf and Keep journal
+neighbors; damaged raw collections are copied into a separate quarantine key
+before a partial collection can be written. If preservation fails, new choices
+stay in memory and cannot overwrite the original raw bytes. Browser-local
+namespaces remain isolated from production and other labs.
+
+Reload still resets Learn progress for this study. A future representative
+public build needs a separately versioned remembered-completion contract and
+an explicit Restart Lessons control; do not promote this reset behavior to the
+public root as-is. A representative public build and the final architecture are
+separate decisions. Current owner question: **Do taught physical relationships
+produce new self-authored intentions in Open, or mainly repetitions and
+variations of taught routes?**
+
+### v0.1 contract retained for historical context
+
 Starting HEAD: `8eb7ef65e6614176104df43d43b98fd98a83a093`.
 Route: `/lab/linecraft` on the existing public Rail Golf host.
 
