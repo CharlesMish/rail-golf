@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import Havok from '@babylonjs/havok';
-import {LINECRAFT_LESSONS,LINECRAFT_SHELF_LIMIT,LINECRAFT_REPLAY_SECONDS,matchLinecraftSentence,createLinecraftSession,linecraftMeta,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftOpen,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '../lib/linecraft-lab.js';
+import {LINECRAFT_LESSONS,LINECRAFT_SHELF_LIMIT,LINECRAFT_REPLAY_SECONDS,matchLinecraftSentence,linecraftActualDiverges,createLinecraftSession,linecraftMeta,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftOpen,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '../lib/linecraft-lab.js';
 import {captureLabLaunch} from '../lib/lab-controls.js';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {recordLineReceipt,scoreLine} from '../lib/line-score.js';
@@ -33,6 +33,9 @@ test('curriculum uses two relationships and strictly ordered qualified departure
  assert.equal(matchLinecraftSentence('treads',treads.slice(0,2)).headline,'REACHED TREAD 2');
  assert.equal(matchLinecraftSentence('treads',[treads[0],redirect('lumber','step-b'),treads[2]]).complete,false);
  assert.equal(matchLinecraftSentence('banks',[]).headline,'NO CLAUSE YET');
+ assert.equal(linecraftActualDiverges('banks',banks),false);
+ assert.equal(linecraftActualDiverges('banks',[banks[1],banks[0]]),true,'a qualified out-of-order event needs an actual-chain line');
+ assert.equal(linecraftActualDiverges('treads',treads.slice(0,2)),false,'partial in-order progress is already shown by clauses');
 });
 
 test('one resolved attempt permits Continue without success; attempts, completion and Open exposure are distinct',()=>{
@@ -88,8 +91,8 @@ test('Keep applies equally to Learn, hidden-score Open, visible-score Open and u
 
 test('namespaced storage never sees or clears incumbent journal or production progress',()=>{
  const raw=storage();raw.setItem('rail-golf-timber-courtyard-v01','production');raw.setItem('rail-golf:line-survey:pending:baseline','baseline');
- const scoped=linecraftStorage(raw);scoped.setItem('rail-golf:line-survey:pending:trial','trial');scoped.setItem('shelf-v1','shelf');
- assert.equal(scoped.length,2);assert.equal(scoped.getItem('rail-golf-timber-courtyard-v01'),null);scoped.clear();assert.equal(raw.length,2);assert.equal(raw.getItem('rail-golf:line-survey:pending:baseline'),'baseline');
+ const scoped=linecraftStorage(raw);scoped.setItem('rail-golf:line-survey:pending:trial','trial');scoped.setItem('shelf-v1','shelf');scoped.setItem('shelf-v1-quarantine-recovery','original bytes');
+ assert.equal(scoped.length,3);assert.equal(scoped.getItem('rail-golf-timber-courtyard-v01'),null);scoped.clear();assert.equal(raw.length,3);assert.equal(raw.getItem('rail-golf:line-survey:pending:baseline'),'baseline');assert.equal(scoped.getItem('shelf-v1-quarantine-recovery'),'original bytes');
 });
 
 test('malformed shelf and quota failures are visible; Keep remains exportable in memory',()=>{
