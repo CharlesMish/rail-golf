@@ -7,7 +7,7 @@ import styles from "./linecraft-lab.module.css";
 export const linecraftShellClassName = styles.shell;
 export const linecraftResultShelfClassName = styles.resultShelfButton;
 export const linecraftOriginControlClassName = styles.originControl;
-export type LinecraftStage = "learn" | "open";
+export type LinecraftStage = "learn" | "explore" | "open";
 export type LinecraftShelfEntry = {
   id: string;
   title: string;
@@ -29,13 +29,13 @@ function Clauses({clauses, reached}: {clauses: string[]; reached: number}) {
 /** Presentation only; the runtime owns lesson attempts, score authority and all resets. */
 export function LinecraftControls({
   stage, lessonIndex, lessonCount, clauses = [], clauseReached = 0,
-  disabled, onOpen, onRestart, onShelf, shelfCount, fired,
+  disabled, onOpen, onNext, onRestart, onShelf, shelfCount, fired,
   replaying = false, onStopReplay,
 }: {
   stage: LinecraftStage; lessonIndex: number; lessonCount: number;
   clauses?: string[]; clauseReached?: number;
   disabled: boolean; fired: boolean;
-  onOpen: () => void; onRestart: () => void;
+  onOpen: () => void; onNext: () => void; onRestart: () => void;
   onShelf: () => void; shelfCount: number;
   replaying?: boolean; onStopReplay?: () => void;
 }) {
@@ -45,7 +45,7 @@ export function LinecraftControls({
   </section>;
   return <section className={styles.controls} data-stage={stage} aria-label="Linecraft Lab" inert={disabled ? true : undefined}>
     <div className={styles.heading}>
-      {stage === "learn" ? <div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div> : <span>OPEN YARD</span>}
+      {stage === "learn" ? <div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div> : <span>{stage==='explore'?'OPEN · YARD GATE':'OPEN YARD'}</span>}
       <button type="button" onClick={onShelf} disabled={disabled}>SHELF <span>{shelfCount}/4</span></button>
     </div>
     {stage === "learn" ? <>
@@ -53,7 +53,7 @@ export function LinecraftControls({
       <div className={styles.navigation}>
         <button type="button" className={styles.quiet} onClick={onOpen} disabled={disabled}>Skip Lessons</button>
       </div>
-    </> : <>
+    </> : stage==='explore' ? <div className={styles.navigation}><button type="button" className={styles.quiet} onClick={onNext} disabled={disabled}>Next Lesson</button></div> : <>
       <div className={styles.navigation}>
         <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>Restart Lessons</button>
       </div>
@@ -64,23 +64,22 @@ export function LinecraftControls({
 /** Resolved shots are Keep-worthy solely at the player's discretion. */
 export function LinecraftResult({
   stage, lessonIndex, lessonCount, clauses, clauseReached, complete, isLastLesson, canContinue, canKeep, alreadyKept, shelfCount,
-  onKeep, onContinue, onShelf, onAdjust, showKeepExplanation,
+  onKeep, onContinue, onExplore, onShelf, onAdjust, showKeepExplanation,
 }: {
   stage: LinecraftStage; lessonIndex:number; lessonCount:number; clauses:string[]; clauseReached:number;
   complete: boolean; isLastLesson: boolean; canContinue: boolean; canKeep: boolean; alreadyKept: boolean;
-  shelfCount: number; onKeep: () => void; onContinue: () => void; onShelf: () => void; onAdjust: () => void; showKeepExplanation:boolean;
+  shelfCount: number; onKeep: () => void; onContinue: () => void; onExplore: () => void; onShelf: () => void; onAdjust: () => void; showKeepExplanation:boolean;
 }) {
   return <section className={styles.result} aria-label={`${stage === "learn" ? "Learn" : "Open"} line result`}>
     {stage==='learn'&&<div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div>}
     <div className={styles.actions}>
       {stage === "learn" && complete ? <>
-        <button type="button" className={styles.primary} onClick={onContinue} disabled={!canContinue}>{isLastLesson ? "Open the Yard" : "Next Lesson"}</button>
-        <button type="button" onClick={onAdjust}>Adjust Last Line</button>
+        <button type="button" className={styles.primary} onClick={onExplore} disabled={!canContinue}>Explore Here</button>
+        {!isLastLesson&&<button type="button" className={styles.quiet} onClick={onContinue} disabled={!canContinue}>Next Lesson</button>}
       </> : <button type="button" className={styles.primary} onClick={onAdjust}>Adjust Last Line</button>}
       <button type="button" className={styles.quiet} onClick={onKeep} disabled={!canKeep || alreadyKept || shelfCount >= 4}>{alreadyKept ? "Kept ✓" : "Keep Line"}</button>
       {stage==='learn'&&!complete&&canContinue&&<button type="button" className={styles.quiet} onClick={onContinue}>{isLastLesson?'Skip Lessons':'Skip Lesson'}</button>}
     </div>
-    {stage === 'learn' && complete && isLastLesson && <p className={styles.hint}>The same yard, with no required sentence.</p>}
     {shelfCount >= 4 && !alreadyKept ? <p className={styles.hint}>Shelf full. <button type="button" className={styles.quiet} onClick={onShelf}>Manage Shelf</button></p> : showKeepExplanation && <p className={styles.hint}>Keep saves this line to your Shelf so you can restore or replay it later.</p>}
   </section>;
 }

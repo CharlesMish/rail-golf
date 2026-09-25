@@ -41,6 +41,7 @@
 
 /* Keep the physical yard visible while controls are unavailable. */
 .shell[data-phase="result"] .controls:not([data-replaying="true"]){visibility:hidden;pointer-events:none}
+.shell[data-phase="result"] .controls[data-stage="explore"]{visibility:visible;pointer-events:auto}
 .shell:is([data-phase="flight"],[data-phase="theatre"]) .controls:not([data-replaying="true"]){top:76px;width:max-content;max-width:min(460px,72vw);pointer-events:none}
 .shell:is([data-phase="flight"],[data-phase="theatre"]) .controls:not([data-replaying="true"]) :is(.heading,.lesson,.navigation,.hint,.contract,.openHint,.teaching){display:none}
 .shell:is([data-phase="flight"],[data-phase="theatre"]) .controls[data-stage="open"]{display:none}

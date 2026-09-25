@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import Havok from '@babylonjs/havok';
-import {LINECRAFT_LESSONS,LINECRAFT_SHELF_LIMIT,LINECRAFT_REPLAY_SECONDS,matchLinecraftSentence,linecraftActualDiverges,createLinecraftSession,linecraftMeta,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftOpen,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '../lib/linecraft-lab.js';
+import {LINECRAFT_LESSONS,LINECRAFT_SHELF_LIMIT,LINECRAFT_REPLAY_SECONDS,matchLinecraftSentence,linecraftActualDiverges,createLinecraftSession,linecraftMeta,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '../lib/linecraft-lab.js';
 import {captureLabLaunch} from '../lib/lab-controls.js';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {recordLineReceipt,scoreLine} from '../lib/line-score.js';
@@ -66,6 +66,29 @@ test('cold Open is explicit; score visibility changes presentation metadata, nev
  assert.deepEqual(hidden.linecraft.progress,visible.linecraft.progress);assert.equal(linecraftMeta({...createLinecraftSession(),scoreVisible:true}).linecraft.scoreVisible,false);
  visible.linecraft.progress.banks.attempted=900;assert.equal(cold.progress.banks.attempted,0,'ticket metadata is immutable copy');
  assert.throws(()=>enterLinecraftOpen(cold,'mystery'));
+});
+
+test('local Explore needs a completed bank relationship and exports separately from Learn, cold Open and trained Open',()=>{
+ const learn=createLinecraftSession();assert.equal(enterLinecraftExplore(learn),learn);
+ const done=recordLinecraftAttempt(learn,'bank:1',[...banks,terminal]),explore=enterLinecraftExplore(done);
+ assert.equal(explore.stage,'explore');assert.equal(explore.openEntry,'local-explore');assert.equal(explore.lessonIndex,0);
+ assert.equal(explore.openExposures.at(-1).entry,'local-explore');assert.equal(linecraftMeta(explore).linecraft.lessonId,null);
+ const shot=recordLinecraftAttempt(explore,'free:1',[...treads,terminal],linecraftMeta(explore));
+ assert.equal(shot.progress.treads.attempted,0);assert.equal(shot.progress.treads.completed,false);
+ const next=continueLinecraftSession(shot);assert.equal(next.stage,'learn');assert.equal(next.lessonIndex,1);
+ assert.equal(next.progress.treads.attempted,0);
+ const raw=storage(),shelf=createLinecraftShelf(raw),journal=createLinecraftDecisions(raw);
+ const sessions=[done,shot,enterLinecraftOpen(createLinecraftSession(),'cold'),enterLinecraftOpen(next,'trained')];
+ const records=sessions.map((session,index)=>{
+  const entry=kept(shelf,'path:'+index,session);journal.append(entry);
+  return makeSurveyRecord({...entry.launchContext,...entry.meta,id:entry.attemptId,session:'path',sequence:index,startedAt:'2026-09-22T00:00:00.000Z'},entry.line.ledger);
+ });
+ const exported=exportLinecraftStudy({records,exportedAt:'now'},journal.export(),shelf.entries());
+ assert.deepEqual(exported.records.map(r=>[r.linecraft.stage,r.linecraft.openEntry]),[
+  ['learn','trained'],['explore','local-explore'],['open','cold'],['open','trained']]);
+ assert.equal(exported.records[1].sentenceResult,null);assert.equal(exported.records[1].scoreTotal,undefined);
+ assert.equal(exported.decisions[1].linecraft.stage,'explore');assert.equal(exported.decisions[1].sentenceResult,null);
+ assert.equal(exported.shelf[1].line.lineReceipt,undefined);assert.equal(exported.records[2].receipt.total,records[2].receipt.total);
 });
 
 test('four-slot shelf retains exact launch authority and endpoint samples; explicit removal never evicts a different line',()=>{
