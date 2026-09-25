@@ -1,5 +1,45 @@
 # Linecraft graduation slice — handoff and runtime contract
 
+## v0.2.1 continuity preflight (same experimental branch)
+
+This bounded follow-up tests **Line A → local Explore → Line B → Open**. It
+does not establish a mandatory product ladder. After a qualified BANK A →
+BANK B completion, **Explore Here** is primary; **Next Lesson** stays available
+for players who want Lumber Walk immediately. Explore remains at Yard Gate,
+removes the required sentence and uses the same launch-origin equipment. It
+preserves the resolved line as visible Previous Line, including its actual
+trajectory, contact history, exact origin/aim/power and starting pallet state.
+It does not Keep the line automatically. During Explore the quiet Next Lesson
+control starts the tread lesson at Lumber Walk and clears temporary working
+history at that deliberate station boundary; the Shelf and study records stay.
+
+After the full TREAD 1 → 2 → 3 lesson, **Explore Here** starts final Open at
+Lumber Walk with the successful tread line intact. Both existing stations are
+then available. Incomplete Learn results and exploratory results still make
+Adjust Last Line the primary action; Keep remains universal and quiet. A cold
+Skip to Open and a kept-line Restore continue to enter distinct Open paths.
+
+Fire-time tickets and exports identify Yard Gate Explore with stage `explore`,
+`openEntry: local-explore` and no active lesson. It cannot credit the next
+lesson, imply mastery, or create a new score objective. Final trained Open,
+cold Open and kept-line revisit retain their existing entry identities. The
+session still starts fresh on reload; no public returning-player contract has
+been added. Historical Shelf entries and raw quarantine behavior are unchanged.
+
+The launch console now gives the origin slider a separate compact full-width
+row above the three-column origin arrows / FIRE / fine-aim row. The hidden Sky
+Token no longer contributes Linecraft contacts or evidence; production and
+other labs retain their aerial-token vocabulary. After a Linecraft result the
+camera moves to the station's established Survey frame, leaving live flight
+and impact theatre behavior untouched. This framing and responsive layout
+still need owner play on a real desktop and phone; headless tests cannot
+establish visual legibility or discoverability.
+
+The central question remains whether taught relationships generate new
+self-authored intentions in Open or mainly repetitions/variations of taught
+routes. Local Explore is a smaller test of how the previous physical line
+supports revision after the requirement disappears.
+
 ## v0.2 owner correction (experimental branch)
 
 Owner play of v0.1 found that three lessons behaved as two meaningful physical

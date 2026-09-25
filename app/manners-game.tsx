@@ -2616,8 +2616,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
                 desiredCameraTarget = Vector3.Lerp(addressTarget, followTarget, blend);
               }
             } else {
-              desiredCameraTarget = impactFocus.add(new Vector3(0, 1.1, 0));
-              desiredCameraPosition = impactFocus.add(new Vector3(9.5, 7.4, -12.5));
+              if(linecraftLab&&phaseRef.current==='result'){
+                // The established Survey frame keeps the yard and launch address legible
+                // beside the ruled trail; live flight and impact theatre remain untouched.
+                desiredCameraPosition=new Vector3(hole.survey.x,hole.survey.y,hole.survey.z);
+                desiredCameraTarget=new Vector3(hole.survey.targetX,hole.survey.targetY,hole.survey.targetZ);
+              }else{
+                desiredCameraTarget = impactFocus.add(new Vector3(0, 1.1, 0));
+                desiredCameraPosition = impactFocus.add(new Vector3(9.5, 7.4, -12.5));
+              }
             }
 
             if (
