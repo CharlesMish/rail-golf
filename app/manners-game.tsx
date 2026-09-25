@@ -2373,7 +2373,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
           const previousLike = { x: previous.x, y: previous.y, z: previous.z };
           const currentLike = { x: current.x, y: current.y, z: current.z };
-          const events = (lineLab?collectLineStepEvents:collectDeliveryStepEvents)(previousLike, currentLike, hole, [...flight.mechanismTags], [...flight.deliveryRoutes]);
+          const events = lineLab
+            ? collectLineStepEvents(previousLike,currentLike,hole,[...flight.mechanismTags],[...flight.deliveryRoutes],!linecraftLab)
+            : collectDeliveryStepEvents(previousLike,currentLike,hole,[...flight.mechanismTags],[...flight.deliveryRoutes]);
           for (const event of events) {
             if (courtyardDiverter && (event.kind === "first-kiss" || event.kind.startsWith("bank"))) continue;
             const point = new Vector3(event.point.x, event.point.y, event.point.z);
@@ -3107,6 +3109,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ) : null}
         </div>
 
+        {linecraftLab&&<label className={linecraftOriginControlClassName}><span>ORIGIN</span><input aria-label="Launch origin position" type="range" min={LINECRAFT_ORIGIN.gate.min} max={LINECRAFT_ORIGIN.gate.max} step={LINECRAFT_ORIGIN.gate.step} value={originX} disabled={phase!=='ready'} onChange={event=>performUI('selectOrigin',[Number(event.target.value)])}/>{lastShot&&lastShot.stationId===hole.station?.id&&<small>Last {linecraftOrigin(lastShot).toFixed(1)} m</small>}</label>}
         <div className="manners-control-grid">
           <div className="rail-controls" aria-label={linecraftLab?'Launch origin':'Launcher rail'}>
             <Button
@@ -3133,8 +3136,6 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               <ChevronRight />
             </Button>
           </div>
-          {linecraftLab&&<label className={linecraftOriginControlClassName}>Origin {originX>=0?'+':''}{originX.toFixed(1)} m<input aria-label="Launch origin position" type="range" min={LINECRAFT_ORIGIN.gate.min} max={LINECRAFT_ORIGIN.gate.max} step={LINECRAFT_ORIGIN.gate.step} value={originX} disabled={phase!=='ready'} onChange={event=>performUI('selectOrigin',[Number(event.target.value)])}/>{lastShot&&lastShot.stationId===hole.station?.id&&<small>Last {linecraftOrigin(lastShot).toFixed(1)} m</small>}</label>}
-
           <Button
             type="button"
             className="fire-control manners-fire"

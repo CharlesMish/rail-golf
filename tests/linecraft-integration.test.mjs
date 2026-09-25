@@ -7,6 +7,8 @@ import {LINECRAFT_LESSONS,createLinecraftSession,recordLinecraftAttempt,continue
 import {captureLabLaunch} from '../lib/lab-controls.js';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {scoreLine,recordLineReceipt} from '../lib/line-score.js';
+import {collectLineStepEvents} from '../lib/line-recognition.js';
+import {SKY_TOKEN} from '../lib/delivery-routes.js';
 import {encodeShareLine,decodeShareLine,restoreShareLine} from '../lib/share-line.js';
 
 // Execute the actual component handlers without a browser/WebGL dependency.
@@ -22,6 +24,19 @@ const plain=value=>JSON.parse(JSON.stringify(value));
 const storage=()=>{const values=new Map();return {getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};};
 class Vector {constructor(x=0,y=0,z=0){this.set(x,y,z);}set(x,y,z){this.x=x;this.y=y;this.z=z;return this;}clone(){return new Vector(this.x,this.y,this.z);}copyFrom(point){return this.set(point.x,point.y,point.z);}}
 const terminal=[{kind:'termination',reason:'ground-contact'},{kind:'ruling',targetHit:false,surface:'ground'}];
+test('Linecraft hidden Sky Token produces no contact or evidence, while other labs retain it',()=>{
+ const card=selectOpenLineStation('gate'),start={x:SKY_TOKEN.x,y:SKY_TOKEN.y,z:SKY_TOKEN.z-12},end={...start,z:SKY_TOKEN.z+12};
+ assert.ok(collectLineStepEvents(start,end,card).some(event=>event.kind==='sky'));
+ assert.ok(!collectLineStepEvents(start,end,card,[],[],false).some(event=>event.kind==='sky'));
+ assert.match(source,/collectLineStepEvents\(previousLike,currentLike,hole,\[\.\.\.flight\.mechanismTags\],\[\.\.\.flight\.deliveryRoutes\],!linecraftLab\)/);
+});
+
+test('Linecraft console reserves exactly three explicit action areas and a preceding full-width origin control',async()=>{
+ const layout=await readFile(new URL('../app/linecraft-lab.module.css',import.meta.url),'utf8');
+ assert.match(layout,/grid-template-areas:"origin fire aim"/);
+ assert.match(layout,/\.originControl\{display:grid;grid-template-columns:auto minmax\(0,1fr\) auto/);
+ assert.ok(source.indexOf('className={linecraftOriginControlClassName}')<source.indexOf('className="manners-control-grid"'));
+});
 function savedLine(id='study:1',session=createLinecraftSession()){
  const card=selectOpenLineStation('lumber'),setup={railIndex:2,yaw:3,elevation:33,charge:.98};
  const launch=captureLabLaunch(card,setup,{floor:'B'},'8eb7ef65e6');

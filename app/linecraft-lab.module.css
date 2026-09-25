@@ -2,7 +2,13 @@
 .sentence{display:flex;align-items:center;min-width:0;flex-wrap:wrap;color:#e8d6bb}.sentence>span{white-space:nowrap}
 .sentence .clauses{margin:0 0 0 5px;font-size:13px}.sentence .clauses li:not([data-reached=true]){color:#a1a49a}
 .resultShelfButton{position:absolute;right:16px;top:16px;z-index:43;padding:7px 10px;color:#e9e6dd;background:#202928;border:1px solid #68604f;border-radius:3px;cursor:pointer;font:12px var(--font-mono,monospace)}
-.originControl{display:grid;align-content:center;gap:2px;min-width:110px;color:#dfd1b8;font:11px/1.2 var(--font-mono,monospace)}.originControl input{width:100%;accent-color:#e9a45f}.originControl small{font-size:10px;color:#aeb8ae}
+.originControl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px;width:100%;box-sizing:border-box;margin-top:8px;color:#dfd1b8;font:11px/1.2 var(--font-mono,monospace)}.originControl input{width:100%;min-width:0;accent-color:#e9a45f}.originControl small{font-size:10px;color:#aeb8ae;white-space:nowrap}
+.shell :global(.manners-control-grid){grid-template-areas:"origin fire aim";grid-template-columns:132px minmax(0,1fr) 112px}
+.shell :global(.manners-control-grid) :global(.rail-controls){grid-area:origin}
+.shell :global(.manners-control-grid) :global(.manners-fire){grid-area:fire}
+.shell :global(.manners-control-grid) :global(.aim-nudges){grid-area:aim}
+@media(max-width:930px){.shell :global(.manners-control-grid){grid-template-columns:112px minmax(0,1fr) 104px}}
+@media(max-width:700px){.shell :global(.manners-control-grid){grid-template-columns:94px minmax(0,1fr) 88px;gap:5px}.originControl{gap:5px}}
 .shell :global(.manners-hud) :global(.course-readout)>div:first-child,.shell :global(.manners-hud) :global(.line-score-readout),.shell :global(.manners-brief)>:global(.eyebrow),.shell :global(.manners-brief)>strong,.shell :global(.manners-brief)>span{display:none}
 .shell :global(.manners-brief){width:auto;min-width:0;padding:4px;background:transparent;border:0;box-shadow:none}
 .shell :global(.line-result-backdrop){background:transparent;pointer-events:none}
