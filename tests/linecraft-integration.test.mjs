@@ -3,10 +3,13 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import ts from 'typescript';
-import {LINECRAFT_LESSONS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftOpen,linecraftMeta,createLinecraftShelf,createLinecraftDecisions} from '../lib/linecraft-lab.js';
+import {LINECRAFT_LESSONS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,createLinecraftShelf,createLinecraftDecisions} from '../lib/linecraft-lab.js';
 import {captureLabLaunch} from '../lib/lab-controls.js';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {scoreLine,recordLineReceipt} from '../lib/line-score.js';
+import {collectLineStepEvents} from '../lib/line-recognition.js';
+import {collectLinecraftStepEvents} from '../lib/linecraft-yard.js';
+import {SKY_TOKEN} from '../lib/delivery-routes.js';
 import {encodeShareLine,decodeShareLine,restoreShareLine} from '../lib/share-line.js';
 
 // Execute the actual component handlers without a browser/WebGL dependency.
@@ -22,6 +25,19 @@ const plain=value=>JSON.parse(JSON.stringify(value));
 const storage=()=>{const values=new Map();return {getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};};
 class Vector {constructor(x=0,y=0,z=0){this.set(x,y,z);}set(x,y,z){this.x=x;this.y=y;this.z=z;return this;}clone(){return new Vector(this.x,this.y,this.z);}copyFrom(point){return this.set(point.x,point.y,point.z);}}
 const terminal=[{kind:'termination',reason:'ground-contact'},{kind:'ruling',targetHit:false,surface:'ground'}];
+test('Linecraft hidden Sky Token produces no contact or evidence, while other labs retain it',()=>{
+ const card=selectOpenLineStation('gate'),start={x:SKY_TOKEN.x,y:SKY_TOKEN.y,z:SKY_TOKEN.z-12},end={...start,z:SKY_TOKEN.z+12};
+ assert.ok(collectLineStepEvents(start,end,card).some(event=>event.kind==='sky'));
+ assert.ok(!collectLinecraftStepEvents(start,end,card).some(event=>event.kind==='sky'));
+ assert.match(source,/linecraftLab\s*\? collectLinecraftStepEvents\(previousLike,currentLike,hole,\[\.\.\.flight\.mechanismTags\],\[\.\.\.flight\.deliveryRoutes\]\)/);
+});
+
+test('Linecraft console reserves exactly three explicit action areas and a preceding full-width origin control',async()=>{
+ const layout=await readFile(new URL('../app/linecraft-lab.module.css',import.meta.url),'utf8');
+ assert.match(layout,/grid-template-areas:"origin fire aim"/);
+ assert.match(layout,/\.originControl\{display:grid;grid-template-columns:auto minmax\(0,1fr\) auto/);
+ assert.ok(source.indexOf('className={linecraftOriginControlClassName}')<source.indexOf('className="manners-control-grid"'));
+});
 function savedLine(id='study:1',session=createLinecraftSession()){
  const card=selectOpenLineStation('lumber'),setup={railIndex:2,yaw:3,elevation:33,charge:.98};
  const launch=captureLabLaunch(card,setup,{floor:'B'},'8eb7ef65e6');
@@ -31,15 +47,15 @@ function savedLine(id='study:1',session=createLinecraftSession()){
 function context(){
  const state={transitions:[],station:'gate',floor:'B',resets:0,scoreCalls:0,fireCalls:0};
  const local=storage(),shelf=createLinecraftShelf(local),journal=createLinecraftDecisions(local);
- const c={state,linecraftLab:true,LINECRAFT_LESSONS,createLinecraftSession,continueLinecraftSession,enterLinecraftOpen,
+ const c={state,linecraftLab:true,LINECRAFT_LESSONS,createLinecraftSession,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,
   linecraftSessionRef:{current:createLinecraftSession()},linecraftReplayingRef:{current:false},phaseRef:{current:'ready'},inputSourceRef:{current:'pointer'},
   linecraftShelfRef:{current:shelf},linecraftDecisionsRef:{current:journal},linecraftAttemptRef:{current:'old:1'},linecraftRelationRef:{current:{action:'retry'}},linecraftGhostIdRef:{current:'old:1'},
   HOLES:[{id:'open-line',station:{id:'gate'}}],activeHoleIndex:()=>0,memoriesRef:{current:{old:1}},historyRef:{current:{old:1}},libraryRef:{current:{old:1}},recordsRef:{current:{old:1}},
-  compareRef:{current:true},powerModeRef:{current:'set'},selectedPowerRef:{current:.7},floorStateRef:{current:'B'},surveyRef:{current:false},lineLedgerRef:{current:terminal},
+  compareRef:{current:true},powerModeRef:{current:'set'},selectedPowerRef:{current:.7},floorStateRef:{current:'B'},surveyRef:{current:false},lineLedgerRef:{current:terminal},ghostVisibleRef:{current:false},
   setLinecraftSession:value=>state.session=value,setRecords:value=>state.records=value,setLastShot:value=>state.last=value,setHistory:value=>state.history=value,setWinningLines:value=>state.wins=value,
   setLineLedger:value=>state.ledger=value,setLiveLineTotal:value=>state.total=value,setSessionBest:value=>state.best=value,setClaimCaption:value=>state.caption=value,
   setLinecraftAttempt:value=>state.attempt=value,setLinecraftGhostId:value=>state.ghost=value,setCompare:value=>state.compare=value,clearMax:()=>state.max=false,
-  setPowerMode:value=>state.powerMode=value,setSelectedPower:value=>state.power=value,setRetryNotice:value=>state.retryNotice=value,setLinecraftNotice:value=>state.notice=value,
+  setPowerMode:value=>state.powerMode=value,setSelectedPower:value=>state.power=value,setRetryNotice:value=>state.retryNotice=value,setLinecraftNotice:value=>state.notice=value,setGhostVisible:value=>state.ghostVisible=value,
   setLinecraftKept:value=>state.kept=value,setFloorState:value=>state.floor=value,setSurvey:value=>state.survey=value,setLinecraftReplaying:value=>state.replaying=value,
   showLinecraftShelf:value=>state.shelfOpen=value,scoreLine:ledger=>{state.scoreCalls++;return scoreLine(ledger);},
   chooseOpenStation:id=>{state.station=id;c.HOLES[0].station.id=id;},returnLab:mode=>{assert.ok(['reset','adjust'].includes(mode));state.floor='A';c.phaseRef.current='ready';state.resets++;},
@@ -81,19 +97,50 @@ test('actual Continue needs a resolved attempt; incomplete attempts remain incom
  c.runtime.restart();assert.equal(c.linecraftSessionRef.current.stage,'learn');assert.equal(c.linecraftSessionRef.current.lessonIndex,0);assert.equal(c.linecraftSessionRef.current.progress.banks.attempted,0);
 });
 
-test('actual universal Keep accepts unrecognized Learn and Open shots and preserves fire-time metadata after score toggle',()=>{
+test('actual successful bank line enters local Explore with exact prior memory and no lesson-2 credit',()=>{
+ const c=context(),id='bank:success',completed=recordLinecraftAttempt(createLinecraftSession(),id,[
+  {kind:'redirect',surface:'bank-a',feature:'bank-a'}, {kind:'redirect',surface:'bank-b',feature:'bank-b'},...terminal]);
+ const memory=savedLine(id,completed);c.memory=memory;c.phaseRef.current='result';c.linecraftAttemptRef.current=id;
+ c.linecraftSessionRef.current=completed;c.memoriesRef.current={'open-line':memory};c.historyRef.current={'open-line':[memory]};
+ c.returnLab=mode=>{if(mode==='reset'){c.phaseRef.current='ready';return;}assert.equal(mode,'adjust');assert.equal(c.memory,memory);c.state.adjusted=true;c.state.last=memory;c.phaseRef.current='ready';};
+ c.runtime.explore();
+ assert.equal(c.linecraftSessionRef.current.stage,'explore');assert.equal(c.linecraftSessionRef.current.openEntry,'local-explore');
+ assert.equal(c.linecraftSessionRef.current.lessonIndex,0);assert.equal(c.linecraftSessionRef.current.progress.treads.attempted,0);
+ assert.equal(c.memoriesRef.current['open-line'],memory);assert.equal(c.historyRef.current['open-line'][0],memory);
+ assert.equal(c.state.last,memory);assert.equal(c.state.adjusted,true);assert.equal(c.ghostVisibleRef.current,true);
+ assert.deepEqual(plain(c.linecraftRelationRef.current),{action:'explore-from-success',attemptId:id});
+ assert.equal(c.state.ledger,memory.ledger);assert.equal(c.state.transitions.at(-1),'linecraft-explore-banks');
+ const untouched=recordLinecraftAttempt(c.linecraftSessionRef.current,'explore:1',[{kind:'redirect',surface:'step-a',feature:'step-a'},...terminal],linecraftMeta(c.linecraftSessionRef.current));
+ assert.equal(untouched.progress.treads.attempted,0,'Explore shot cannot credit lesson 2');
+ c.linecraftSessionRef.current=untouched;c.runtime.next();
+ assert.equal(c.linecraftSessionRef.current.stage,'learn');assert.equal(c.linecraftSessionRef.current.lessonIndex,1);
+ assert.equal(c.state.station,'lumber');assert.equal(c.state.last,null,'new station deliberately clears working line');
+});
+
+test('actual full tread success opens at Lumber Walk preserving previous line',()=>{
+ const c=context(),id='tread:success',learn={...createLinecraftSession(),lessonIndex:1},completed=recordLinecraftAttempt(learn,id,[
+  {kind:'redirect',surface:'step-a',feature:'step-a'}, {kind:'redirect',surface:'step-b',feature:'step-b'}, {kind:'redirect',surface:'step-c',feature:'step-c'},...terminal]);
+ const memory=savedLine(id,completed);c.memory=memory;c.phaseRef.current='result';c.linecraftAttemptRef.current=id;c.linecraftSessionRef.current=completed;c.memoriesRef.current={'open-line':memory};
+ c.returnLab=mode=>{assert.equal(mode,'adjust');c.state.last=memory;c.phaseRef.current='ready';};c.runtime.explore();
+ assert.equal(c.linecraftSessionRef.current.stage,'open');assert.equal(c.linecraftSessionRef.current.openEntry,'trained');
+ assert.equal(c.linecraftSessionRef.current.lessonIndex,1);assert.equal(c.memoriesRef.current['open-line'],memory);
+ assert.equal(c.state.last,memory);assert.equal(c.state.transitions.at(-1),'linecraft-explore-treads');
+});
+
+test('actual universal Keep accepts unrecognized Learn, Explore and Open shots and preserves fire-time metadata after score toggle',()=>{
  const c=context();c.phaseRef.current='result';
- for(const [index,session] of [createLinecraftSession(),enterLinecraftOpen(createLinecraftSession(),'cold')].entries()){
+ const learn=createLinecraftSession();learn.progress.banks.completed=true;
+ for(const [index,session] of [learn,enterLinecraftExplore(learn),enterLinecraftOpen(createLinecraftSession(),'cold')].entries()){
   const id='s:'+(index+1),line=savedLine(id,session);c.memory=line;c.linecraftAttemptRef.current=id;c.linecraftSessionRef.current=session;
   if(session.stage==='open')c.runtime.score(true);
   c.runtime.keep();assert.equal(c.linecraftShelfRef.current.entries().length,index+1);assert.equal(c.linecraftDecisionsRef.current.export().length,index+1);
  }
  const kept=c.linecraftShelfRef.current.entries(),decisions=c.linecraftDecisionsRef.current.export();
- assert.equal(kept[0].meta.linecraft.stage,'learn');assert.equal(kept[1].meta.linecraft.stage,'open');assert.equal(decisions[1].linecraft.scoreVisible,false,'toggle after shot cannot rewrite exposure at launch');assert.equal(decisions[1].scoreTotal,scoreLine(terminal).total);
- assert.deepEqual(kept[1].launchContext,c.memory.linecraftLaunch);assert.deepEqual(kept[1].line.environment,{floor:'B'});assert.deepEqual(kept[1].line.points,plain(c.memory.points));
- c.linecraftAttemptRef.current='different-ticket';c.runtime.keep();assert.equal(c.linecraftShelfRef.current.entries().length,2);
- c.linecraftAttemptRef.current='s:2';c.phaseRef.current='ready';c.runtime.keep();assert.equal(c.linecraftShelfRef.current.entries().length,2);
- c.phaseRef.current='result';c.runtime.remove('s:1');assert.equal(c.linecraftShelfRef.current.entries().length,1);assert.equal(c.linecraftDecisionsRef.current.export().length,2,'removing viewing slot preserves voluntary Keep');
+ assert.equal(kept[0].meta.linecraft.stage,'learn');assert.equal(kept[1].meta.linecraft.stage,'explore');assert.equal(kept[2].meta.linecraft.stage,'open');assert.equal(decisions[2].linecraft.scoreVisible,false,'toggle after shot cannot rewrite exposure at launch');assert.equal(decisions[1].sentenceResult,null);assert.equal(decisions[2].scoreTotal,scoreLine(terminal).total);
+ assert.deepEqual(kept[2].launchContext,c.memory.linecraftLaunch);assert.deepEqual(kept[2].line.environment,{floor:'B'});assert.deepEqual(kept[2].line.points,plain(c.memory.points));
+ c.linecraftAttemptRef.current='different-ticket';c.runtime.keep();assert.equal(c.linecraftShelfRef.current.entries().length,3);
+ c.linecraftAttemptRef.current='s:3';c.phaseRef.current='ready';c.runtime.keep();assert.equal(c.linecraftShelfRef.current.entries().length,3);
+ c.phaseRef.current='result';c.runtime.remove('s:1');assert.equal(c.linecraftShelfRef.current.entries().length,2);assert.equal(c.linecraftDecisionsRef.current.export().length,3,'removing viewing slot preserves voluntary Keep');
 });
 
 test('score visibility handler changes presentation only and cannot operate in Learn, flight or replay',()=>{
@@ -142,7 +189,7 @@ test('built Linecraft route serves Learn first while production and Intent keep 
  const workerURL=new URL('../dist/server/index.js',import.meta.url);workerURL.searchParams.set('linecraft-test',`${process.pid}-${Date.now()}`);
  const {default:worker}=await import(workerURL.href);
  const htmlAt=async path=>{const response=await worker.fetch(new Request('http://localhost'+path,{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});assert.equal(response.status,200,path);return response.text();};
- const html=await htmlAt('/lab/linecraft');assert.match(html,/LINECRAFT LAB/);assert.match(html,/LEARN 1 \/ 3/);assert.match(html,/BANK A → BANK B/);assert.match(html,/LINE SHELF/);assert.match(html,/SKIP TO OPEN/);assert.match(html,/data-active-card="open-line" data-active-station="gate"/);
+ const html=await htmlAt('/lab/linecraft'),plainHTML=html.replaceAll('<!-- -->','');assert.match(plainHTML,/1 \/ 2/);assert.match(html,/BANK A/);assert.match(html,/BANK B/);assert.match(plainHTML,/Shelf · 0\/4/);assert.match(html,/Skip Lessons/);assert.match(html,/data-active-card="open-line" data-active-station="gate"/);
  assert.equal(/Winning lines|NON-CANONICAL PLACEHOLDERS · line score/.test(html),false,'Learn boot must not advertise winning lines or a numeric score tooltip');
  const production=await htmlAt('/');assert.doesNotMatch(production,/LINECRAFT LAB|LINE SHELF|SKIP TO OPEN/);
  const intent=await htmlAt('/lab/intent');assert.match(intent,/INTENT LAB/);assert.doesNotMatch(intent,/LINECRAFT LAB|LINE SHELF|SKIP TO OPEN/);

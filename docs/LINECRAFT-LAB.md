@@ -1,5 +1,134 @@
 # Linecraft graduation slice — handoff and runtime contract
 
+## Owner-play yard and dock tuning (isolated follow-up)
+
+Charlie marked two physical opportunities in the v0.2.1 yard and found that
+the aiming console and stacked top chrome obscured too much of the shot. This
+branch tests those observations without replacing the courtyard or declaring
+the arrangement final.
+
+Linecraft alone now draws a second magenta pad at x = −15, z = 84 alongside the
+original x = 0 pad. Both are visual swept-volume pads, not rigid catch bodies;
+either triggers the same incumbent boost impulse on descent, at most once per
+shot, before a later first-ground event. The original pad remains in place.
+The established Timber Receiver face at x = 45, z = 134 is reused on the right.
+A short matching timber return face at x = −11, z = 120 provides a distinct
+physical surface in the open middle/far area. These two faces use real static
+Havok colliders and the existing qualified-redirect vocabulary. No new award
+weight, target, rule, or forced line is introduced. These geometry choices are
+provisional; owner play should decide whether either face or pad earns its place.
+
+The lesson is a slim single strip, with Skip/Next/Restart quiet alongside it.
+Shelf stays in one utility position across address and result. The large
+LEARN/score display and separate pallet chip are removed from Linecraft's top
+chrome; the actual pallet state remains visible inside the compact shot dock.
+The dock uses one metric/MAX row, short power track, origin slider, and
+fire/fine-aim row. Shot tools stay collapsible, and the introductory hint
+disappears after a resolved shot. Portrait and short-landscape layouts stack
+these controls rather than squeezing the values into unreadable columns.
+
+Historical Keep/Restore preserves the exact old launch setup and recorded
+trajectory. Re-firing a restored setup in this new physical environment can
+produce a different line if it meets the newly added surfaces; build mismatch
+warnings remain important. Storage schema, lesson qualification, score values,
+RUN, VARIETY and first-ground semantics are unchanged. Production cards, root,
+and other labs do not receive the extra geometry or the compact dock.
+
+Headless physics/UI tests establish authority and reachability, not actual
+framing or comfort. Charlie should compare desktop and phone, both stations,
+the two pads, both return faces, and post-shot line visibility in the hosted
+preview before a further geometry decision.
+
+## v0.2.1 continuity preflight (same experimental branch)
+
+This bounded follow-up tests **Line A → local Explore → Line B → Open**. It
+does not establish a mandatory product ladder. After a qualified BANK A →
+BANK B completion, **Explore Here** is primary; **Next Lesson** stays available
+for players who want Lumber Walk immediately. Explore remains at Yard Gate,
+removes the required sentence and uses the same launch-origin equipment. It
+preserves the resolved line as visible Previous Line, including its actual
+trajectory, contact history, exact origin/aim/power and starting pallet state.
+It does not Keep the line automatically. During Explore the quiet Next Lesson
+control starts the tread lesson at Lumber Walk and clears temporary working
+history at that deliberate station boundary; the Shelf and study records stay.
+
+After the full TREAD 1 → 2 → 3 lesson, **Explore Here** starts final Open at
+Lumber Walk with the successful tread line intact. Both existing stations are
+then available. Incomplete Learn results and exploratory results still make
+Adjust Last Line the primary action; Keep remains universal and quiet. A cold
+Skip to Open and a kept-line Restore continue to enter distinct Open paths.
+
+Fire-time tickets and exports identify Yard Gate Explore with stage `explore`,
+`openEntry: local-explore` and no active lesson. It cannot credit the next
+lesson, imply mastery, or create a new score objective. Final trained Open,
+cold Open and kept-line revisit retain their existing entry identities. The
+session still starts fresh on reload; no public returning-player contract has
+been added. Historical Shelf entries and raw quarantine behavior are unchanged.
+
+The launch console now gives the origin slider a separate compact full-width
+row above the three-column origin arrows / FIRE / fine-aim row. The hidden Sky
+Token no longer contributes Linecraft contacts or evidence; production and
+other labs retain their aerial-token vocabulary. After a Linecraft result the
+camera moves to the station's established Survey frame, leaving live flight
+and impact theatre behavior untouched. This framing and responsive layout
+still need owner play on a real desktop and phone; headless tests cannot
+establish visual legibility or discoverability.
+
+The central question remains whether taught relationships generate new
+self-authored intentions in Open or mainly repetitions/variations of taught
+routes. Local Explore is a smaller test of how the previous physical line
+supports revision after the requirement disappears.
+
+## v0.2 owner correction (experimental branch)
+
+Owner play of v0.1 found that three lessons behaved as two meaningful physical
+relationships. The active Learn sequence is now BANK A → BANK B, then the full
+TREAD 1 → TREAD 2 → TREAD 3. Reaching the second tread is useful partial
+progress within Lumber Walk. The qualified redirect gate, actual out-of-order
+evidence, and first-ground rule are unchanged. An attempted lesson can still be
+skipped; completing the second leads to Open without a mastery award.
+
+Keep worked as a capability but its result button was over-promoted. In v0.2
+each result has one prominent action: Adjust Last Line on incomplete Learn/Open,
+Next Lesson after the first completion, Open the Yard after the final completion.
+Keep remains available on any resolved line, including an unrecognized miss,
+in a quiet, consistent position. Shelf lives in utility chrome and the first
+Keep opportunity gives a single inline explanation. Lower Keep frequency after
+this change cannot be interpreted against v0.1's prominent button as diminished
+interest. Study exports and the provisional score toggle live in the Shelf's
+collapsed Study tools section.
+
+Owner play also found that instrumentation crowded the world, inactive roosts
+looked like goals and restricted origins interfered with imagined Open lines.
+Linecraft hides inactive colored roost assemblies and the existing Sky Token;
+production retains them. A future authored endpoint and smaller aerial-token
+experiment remain possible, with no new gameplay in this branch. The new
+stopped launch-origin control serves both Learn and Open: −10 to +10 m at each
+station in 0.5 m steps. It preserves aim, power and pallet state when moved.
+The span is an initial geometric/physics choice; rendered camera and end-range
+usability require play verification. No Travelling Tee modes or moving release
+were ported.
+
+New Linecraft setups save `originX` explicitly, while old three-position setups
+map exactly to −4/0/+4 m. Shelf v1 remains readable, including historical
+`tread-pair` entries; these keep their original identity and two-clause meaning.
+New Linecraft setup links use version 2; version 1 links remain accepted and
+restore the same muzzle. Per-entry loading preserves valid Shelf and Keep journal
+neighbors; damaged raw collections are copied into a separate quarantine key
+before a partial collection can be written. If preservation fails, new choices
+stay in memory and cannot overwrite the original raw bytes. Browser-local
+namespaces remain isolated from production and other labs.
+
+Reload still resets Learn progress for this study. A future representative
+public build needs a separately versioned remembered-completion contract and
+an explicit Restart Lessons control; do not promote this reset behavior to the
+public root as-is. A representative public build and the final architecture are
+separate decisions. Current owner question: **Do taught physical relationships
+produce new self-authored intentions in Open, or mainly repetitions and
+variations of taught routes?**
+
+### v0.1 contract retained for historical context
+
 Starting HEAD: `8eb7ef65e6614176104df43d43b98fd98a83a093`.
 Route: `/lab/linecraft` on the existing public Rail Golf host.
 
