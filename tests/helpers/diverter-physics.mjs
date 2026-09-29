@@ -4,7 +4,7 @@ import {createLineLifecycle} from '../../lib/line-lifecycle.js';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '../../lib/line-recognition.js';
 import {scoreLine,appendLineEvidence,recordLineContact} from '../../lib/line-score.js';
 import {buildCourtyard} from '../../lib/courtyard-scene.js';
-import {LINECRAFT_SECOND_PAD,buildLinecraftReflectors,collectLinecraftStepEvents} from '../../lib/linecraft-yard.js';
+import {LINECRAFT_EXTRA_PADS,buildLinecraftReflectors,collectLinecraftStepEvents} from '../../lib/linecraft-yard.js';
 import {COURTYARD_DIVERTER,COURTYARD_DIVERTER_TARGETS,YARD_DIVERTER_OPTIONS} from '../../lib/courtyard-diverter.js';
 import {padImpulse} from '../../lib/delivery-routes.js';
 import {cascadeContactTag} from '../../lib/lumber-cascade.js';
@@ -35,7 +35,7 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
    mesh.parent=root;mesh.position.set(target.x,active?.2:.16,target.z);mesh.metadata={yardLanding:target.id};
    add(mesh,PhysicsShapeType.CYLINDER,{mass:0,restitution:.12,friction:.74});
   }
-  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:!scoreLab,lineLab:scoreLab,hideSkyToken:linecraft,...(linecraft?{extraPads:[LINECRAFT_SECOND_PAD]}:{})});
+  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:!scoreLab,lineLab:scoreLab,hideSkyToken:linecraft,...(linecraft?{extraPads:LINECRAFT_EXTRA_PADS}:{})});
   if(linecraft)buildLinecraftReflectors(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b));
  }
  const world=scoreLab?(kicker?buildKickerPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,hole.target):buildYardLandingAuthority(hole.target,initial)):buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});

@@ -1,5 +1,27 @@
 # Linecraft graduation slice — handoff and runtime contract
 
+## Three-pad and low-stack yard follow-up (isolated experiment)
+
+After playing the two-pad version, Charlie asked to try a third magenta pad on
+the center strip nearer the banks, leaving both existing pads in place for a
+direct comparison. The third pad is centered at x = 0, z = 62, away from the
+original x = 0, z = 84 and side x = −15, z = 84 pads. Its swept contact uses
+the same boost impulse and once-per-shot authority. A pad remains an invitation
+to try a line, not a required lesson target.
+
+The x = −11, z = 120 mill-side return is now a low, wider lumber stack: 5.8 m
+wide, 3.6 m tall, 12 m deep. Its one physical body retains the previous lively
+restitution and qualified-redirect rules; the end grain and straps are visual.
+The tall right-hand Timber Receiver remains. The lower silhouette should open
+more angles toward the mill and the yard behind it. Owner play should judge
+the actual sightline and whether all three pads remain useful. This change is
+Linecraft-only; production and the other labs retain their geometry.
+
+Old Shelf trajectories remain intact. A re-fired saved setup can meet the new
+pad or stack and produce a different line, so the existing build-mismatch
+notice remains meaningful. Headless fixtures verify collisions, qualification,
+the taught lines and Open reachability, but cannot establish rendered framing.
+
 ## Owner-play yard and dock tuning (isolated follow-up)
 
 Charlie marked two physical opportunities in the v0.2.1 yard and found that
@@ -12,8 +34,8 @@ original x = 0 pad. Both are visual swept-volume pads, not rigid catch bodies;
 either triggers the same incumbent boost impulse on descent, at most once per
 shot, before a later first-ground event. The original pad remains in place.
 The established Timber Receiver face at x = 45, z = 134 is reused on the right.
-A short matching timber return face at x = −11, z = 120 provides a distinct
-physical surface in the open middle/far area. These two faces use real static
+A short matching timber return face at x = −11, z = 120 provided a distinct
+physical surface in the open middle/far area in that preview. Both faces used real static
 Havok colliders and the existing qualified-redirect vocabulary. No new award
 weight, target, rule, or forced line is introduced. These geometry choices are
 provisional; owner play should decide whether either face or pad earns its place.
