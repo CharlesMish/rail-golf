@@ -8,6 +8,7 @@ import {captureLabLaunch} from '../lib/lab-controls.js';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {scoreLine,recordLineReceipt} from '../lib/line-score.js';
 import {collectLineStepEvents} from '../lib/line-recognition.js';
+import {collectLinecraftStepEvents} from '../lib/linecraft-yard.js';
 import {SKY_TOKEN} from '../lib/delivery-routes.js';
 import {encodeShareLine,decodeShareLine,restoreShareLine} from '../lib/share-line.js';
 
@@ -27,8 +28,8 @@ const terminal=[{kind:'termination',reason:'ground-contact'},{kind:'ruling',targ
 test('Linecraft hidden Sky Token produces no contact or evidence, while other labs retain it',()=>{
  const card=selectOpenLineStation('gate'),start={x:SKY_TOKEN.x,y:SKY_TOKEN.y,z:SKY_TOKEN.z-12},end={...start,z:SKY_TOKEN.z+12};
  assert.ok(collectLineStepEvents(start,end,card).some(event=>event.kind==='sky'));
- assert.ok(!collectLineStepEvents(start,end,card,[],[],false).some(event=>event.kind==='sky'));
- assert.match(source,/collectLineStepEvents\(previousLike,currentLike,hole,\[\.\.\.flight\.mechanismTags\],\[\.\.\.flight\.deliveryRoutes\],!linecraftLab\)/);
+ assert.ok(!collectLinecraftStepEvents(start,end,card).some(event=>event.kind==='sky'));
+ assert.match(source,/linecraftLab\s*\? collectLinecraftStepEvents\(previousLike,currentLike,hole,\[\.\.\.flight\.mechanismTags\],\[\.\.\.flight\.deliveryRoutes\]\)/);
 });
 
 test('Linecraft console reserves exactly three explicit action areas and a preceding full-width origin control',async()=>{
@@ -188,7 +189,7 @@ test('built Linecraft route serves Learn first while production and Intent keep 
  const workerURL=new URL('../dist/server/index.js',import.meta.url);workerURL.searchParams.set('linecraft-test',`${process.pid}-${Date.now()}`);
  const {default:worker}=await import(workerURL.href);
  const htmlAt=async path=>{const response=await worker.fetch(new Request('http://localhost'+path,{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});assert.equal(response.status,200,path);return response.text();};
- const html=await htmlAt('/lab/linecraft'),plainHTML=html.replaceAll('<!-- -->','');assert.match(plainHTML,/1 \/ 2/);assert.match(html,/BANK A/);assert.match(html,/BANK B/);assert.match(html,/SHELF/);assert.match(html,/Skip Lessons/);assert.match(html,/data-active-card="open-line" data-active-station="gate"/);
+ const html=await htmlAt('/lab/linecraft'),plainHTML=html.replaceAll('<!-- -->','');assert.match(plainHTML,/1 \/ 2/);assert.match(html,/BANK A/);assert.match(html,/BANK B/);assert.match(plainHTML,/Shelf · 0\/4/);assert.match(html,/Skip Lessons/);assert.match(html,/data-active-card="open-line" data-active-station="gate"/);
  assert.equal(/Winning lines|NON-CANONICAL PLACEHOLDERS · line score/.test(html),false,'Learn boot must not advertise winning lines or a numeric score tooltip');
  const production=await htmlAt('/');assert.doesNotMatch(production,/LINECRAFT LAB|LINE SHELF|SKIP TO OPEN/);
  const intent=await htmlAt('/lab/intent');assert.match(intent,/INTENT LAB/);assert.doesNotMatch(intent,/LINECRAFT LAB|LINE SHELF|SKIP TO OPEN/);

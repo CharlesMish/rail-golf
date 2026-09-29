@@ -29,14 +29,13 @@ function Clauses({clauses, reached}: {clauses: string[]; reached: number}) {
 /** Presentation only; the runtime owns lesson attempts, score authority and all resets. */
 export function LinecraftControls({
   stage, lessonIndex, lessonCount, clauses = [], clauseReached = 0,
-  disabled, onOpen, onNext, onRestart, onShelf, shelfCount, fired,
+  disabled, onOpen, onNext, onRestart, fired,
   replaying = false, onStopReplay,
 }: {
   stage: LinecraftStage; lessonIndex: number; lessonCount: number;
   clauses?: string[]; clauseReached?: number;
   disabled: boolean; fired: boolean;
   onOpen: () => void; onNext: () => void; onRestart: () => void;
-  onShelf: () => void; shelfCount: number;
   replaying?: boolean; onStopReplay?: () => void;
 }) {
   if (replaying) return <section className={styles.controls} data-replaying="true" aria-label="Recorded line replay">
@@ -46,18 +45,13 @@ export function LinecraftControls({
   return <section className={styles.controls} data-stage={stage} aria-label="Linecraft Lab" inert={disabled ? true : undefined}>
     <div className={styles.heading}>
       {stage === "learn" ? <div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div> : <span>{stage==='explore'?'OPEN · YARD GATE':'OPEN YARD'}</span>}
-      <button type="button" onClick={onShelf} disabled={disabled}>SHELF <span>{shelfCount}/4</span></button>
+      <div className={styles.navigation}>
+        {stage === 'learn' ? <button type="button" className={styles.quiet} onClick={onOpen} disabled={disabled}>Skip Lessons</button>
+          : stage === 'explore' ? <button type="button" className={styles.quiet} onClick={onNext} disabled={disabled}>Next Lesson</button>
+          : <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>Restart Lessons</button>}
+      </div>
     </div>
-    {stage === "learn" ? <>
-      {!fired && <p className={styles.teaching}>Drag to aim · hold and release to fire · Survey names faces.</p>}
-      <div className={styles.navigation}>
-        <button type="button" className={styles.quiet} onClick={onOpen} disabled={disabled}>Skip Lessons</button>
-      </div>
-    </> : stage==='explore' ? <div className={styles.navigation}><button type="button" className={styles.quiet} onClick={onNext} disabled={disabled}>Next Lesson</button></div> : <>
-      <div className={styles.navigation}>
-        <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>Restart Lessons</button>
-      </div>
-    </>}
+    {stage === "learn" && !fired && <p className={styles.teaching}>Drag to aim · hold and release to fire · Survey names faces.</p>}
   </section>;
 }
 

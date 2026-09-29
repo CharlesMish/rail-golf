@@ -1,5 +1,44 @@
 # Linecraft graduation slice — handoff and runtime contract
 
+## Owner-play yard and dock tuning (isolated follow-up)
+
+Charlie marked two physical opportunities in the v0.2.1 yard and found that
+the aiming console and stacked top chrome obscured too much of the shot. This
+branch tests those observations without replacing the courtyard or declaring
+the arrangement final.
+
+Linecraft alone now draws a second magenta pad at x = −15, z = 84 alongside the
+original x = 0 pad. Both are visual swept-volume pads, not rigid catch bodies;
+either triggers the same incumbent boost impulse on descent, at most once per
+shot, before a later first-ground event. The original pad remains in place.
+The established Timber Receiver face at x = 45, z = 134 is reused on the right.
+A short matching timber return face at x = −11, z = 120 provides a distinct
+physical surface in the open middle/far area. These two faces use real static
+Havok colliders and the existing qualified-redirect vocabulary. No new award
+weight, target, rule, or forced line is introduced. These geometry choices are
+provisional; owner play should decide whether either face or pad earns its place.
+
+The lesson is a slim single strip, with Skip/Next/Restart quiet alongside it.
+Shelf stays in one utility position across address and result. The large
+LEARN/score display and separate pallet chip are removed from Linecraft's top
+chrome; the actual pallet state remains visible inside the compact shot dock.
+The dock uses one metric/MAX row, short power track, origin slider, and
+fire/fine-aim row. Shot tools stay collapsible, and the introductory hint
+disappears after a resolved shot. Portrait and short-landscape layouts stack
+these controls rather than squeezing the values into unreadable columns.
+
+Historical Keep/Restore preserves the exact old launch setup and recorded
+trajectory. Re-firing a restored setup in this new physical environment can
+produce a different line if it meets the newly added surfaces; build mismatch
+warnings remain important. Storage schema, lesson qualification, score values,
+RUN, VARIETY and first-ground semantics are unchanged. Production cards, root,
+and other labs do not receive the extra geometry or the compact dock.
+
+Headless physics/UI tests establish authority and reachability, not actual
+framing or comfort. Charlie should compare desktop and phone, both stations,
+the two pads, both return faces, and post-shot line visibility in the hosted
+preview before a further geometry decision.
+
 ## v0.2.1 continuity preflight (same experimental branch)
 
 This bounded follow-up tests **Line A → local Explore → Line B → Open**. It

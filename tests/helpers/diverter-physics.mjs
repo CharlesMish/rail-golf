@@ -4,6 +4,7 @@ import {createLineLifecycle} from '../../lib/line-lifecycle.js';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '../../lib/line-recognition.js';
 import {scoreLine,appendLineEvidence,recordLineContact} from '../../lib/line-score.js';
 import {buildCourtyard} from '../../lib/courtyard-scene.js';
+import {LINECRAFT_SECOND_PAD,buildLinecraftReflectors,collectLinecraftStepEvents} from '../../lib/linecraft-yard.js';
 import {COURTYARD_DIVERTER,COURTYARD_DIVERTER_TARGETS,YARD_DIVERTER_OPTIONS} from '../../lib/courtyard-diverter.js';
 import {padImpulse} from '../../lib/delivery-routes.js';
 import {cascadeContactTag} from '../../lib/lumber-cascade.js';
@@ -13,7 +14,7 @@ import {DIVERTER_HOLE,floorForAction} from '../../lib/diverter-lab.js';
 import {stationMuzzle,stationAim} from '../../lib/stations.js';
 import {RAIL_RULES,chargeToSpeed,classifyChallengeRuling} from '../../lib/rail-golf-v02.js';
 Logger.LogLevels=0;
-export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true}={}){
+export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false}={}){
  const hole=selectedHole ?? (integrated?COURTYARD_DIVERTER:DIVERTER_HOLE);
  const engine=new NullEngine({renderWidth:844,renderHeight:390,textureSize:512,deterministicLockstep:false,lockstepMaxSteps:4}),scene=new Scene(engine);
  scene.enablePhysics(new Vector3(0,-RAIL_RULES.gravity,0),new HavokPlugin(true,havok));
@@ -29,12 +30,13 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
   const tee=MeshBuilder.CreateBox('yard-tee',{width:13,height:.34,depth:7.5},scene);
   tee.parent=root;tee.position.set(0,.16,-.5);tee.metadata={yardLanding:'tee'};
   add(tee,PhysicsShapeType.BOX,{mass:0,restitution:.06,friction:.9});
-  for(const target of COURTYARD_DIVERTER_TARGETS){
+  for(const target of linecraft?[]:COURTYARD_DIVERTER_TARGETS){
    const active=target.id===hole.target?.id,mesh=MeshBuilder.CreateCylinder(target.id,{height:active?.22:.16,diameter:target.radius*2,tessellation:64},scene);
    mesh.parent=root;mesh.position.set(target.x,active?.2:.16,target.z);mesh.metadata={yardLanding:target.id};
    add(mesh,PhysicsShapeType.CYLINDER,{mass:0,restitution:.12,friction:.74});
   }
-  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:!scoreLab,lineLab:scoreLab});
+  buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:!scoreLab,lineLab:scoreLab,hideSkyToken:linecraft,...(linecraft?{extraPads:[LINECRAFT_SECOND_PAD]}:{})});
+  if(linecraft)buildLinecraftReflectors(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b));
  }
  const world=scoreLab?(kicker?buildKickerPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,hole.target):buildYardLandingAuthority(hole.target,initial)):buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});
  let id=0;
@@ -73,7 +75,7 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
      for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);
      onStep?.(ball.position,aggregate.body.getLinearVelocity(),i/120);
      if(integrated&&!landing){
-      for(const e of collectLineStepEvents(previous,ball.position,hole,tags,routes)){
+      for(const e of linecraft?collectLinecraftStepEvents(previous,ball.position,hole,tags,routes):collectLineStepEvents(previous,ball.position,hole,tags,routes)){
        if(e.kind==='sky'){routes.push('sky');appendLineEvidence(ledger,{kind:'token',surface:'sky',point:{...e.point}});}
        if(e.kind==='boost'&&aggregate.body.getLinearVelocity().y<0){
         appendLineEvidence(ledger,{kind:'pad-activation',surface:'skip-pad',point:{...e.point}});
@@ -95,4 +97,3 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
   dispose(){world.dispose();for(const b of yardBodies)b.dispose();scene.dispose();engine.dispose();}
  };
 }
-
