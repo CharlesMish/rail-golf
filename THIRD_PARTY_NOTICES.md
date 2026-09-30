@@ -8,4 +8,4 @@ stylesheet. Those materials are provided under the MIT License reproduced in:
 
 - `vendor/shadcn-tailwind-4.13.0.LICENSE.md`
 
-This notice does not apply a license to Rail Golf's original source code.
+Rail Golf's original source code is released under the MIT License in `LICENSE`.
