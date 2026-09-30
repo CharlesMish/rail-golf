@@ -1,17 +1,19 @@
 # Rail Golf
 
 > [!IMPORTANT]
-> **Development demo — playable, not a release.** This repository is the Rail Golf
-> v0.3.1 baseline for Grokbot and Cursor Origin experiments. Expect active iteration;
-> no compatibility or stability promise is implied.
+> **Development demo — playable, not a release.** The first world and a few spots
+> and gaps inside it are developed, and play is being explored within them. Expect
+> active iteration; no compatibility or stability promise is implied.
+> See the [charter](docs/CHARTER.md), [changelog](CHANGELOG.md) and [license](LICENSE).
 
 _Because who needs to feel like Tiger Woods when you've got artillery?_
 
 Rail Golf is a single-player artillery trick-shot range built with Babylon.js and Havok.
-Aim a rail, hold to charge it, then follow the round downstream. The official ruling is
-the first ground contact—not where the projectile eventually comes to rest.
+Aim a **rail** (the launcher), hold to charge it, then follow the **round** (the
+projectile) downstream. The official ruling is the **first kiss**: the first ground
+contact, not where the round eventually comes to rest.
 
-The optional **Mechanism Range** at `/practice` preserves four early prototype cards:
+The optional **Mechanism Range** at `/practice` preserves four early prototype **cards**, one challenge each:
 
 1. **Open Seat** — land directly on the cyan target.
 2. **Timber Bank** — strike the timber wall and seat the same shot on amber.
@@ -24,7 +26,7 @@ trick stamp. Mechanism contact by itself is recorded as evidence, not a clear.
 ## Timber Courtyard — first slice
 
 The front door `/` opens the Timber Courtyard; `/courtyard` remains a working alias.
-Two stations share one physical mill yard with three challenges:
+Two **stations** (launch positions) share one physical mill yard with three challenges:
 
 - **Across the Yard:** a 146-metre carry to the cyan Mill Bell. A normal target clear opens both the gallery and Lumber Walk.
 - **Switchback Gallery:** bank off wall A, then wall B, and land on the amber roost in one shot for a trick stamp. A direct landing still clears.
@@ -34,8 +36,9 @@ Across the Yard now has a **Route Book**: Direct, Sky, Skip and Mill. Collect th
 gold token, use the violet pad, or rebound from the mill, then land on the bell in
 that same shot. A miss gives feedback but does not bank a route. Collect all four
 across different attempts to earn **Yard Explorer**. Each route saves its latest
-successful aim and power; select a collected route and **Recall winning line** to
-restore its setup and charge marker. These routes are optional for progression.
+successful **line**, meaning the recorded rail, aim, power, and trail of a shot. Select a
+collected route and **Recall winning line** to restore its setup and charge marker.
+These routes are optional for progression.
 
 Courtyard progress is saved separately from the four practice cards. Each station has three rails. Elevated seats, hinges and
 moving reflectors are future authoring work. See [the slice notes](docs/timber-courtyard-slice.md).
@@ -92,7 +95,7 @@ npm test
 
 ## Project shape
 
-- `app/manners-game.tsx` — Babylon/Havok scene, director, input, audio, and HUD
+- `app/manners-game.tsx` — Babylon/Havok scene, camera, input, audio, and HUD
 - `lib/rail-golf-v02.js` — deterministic course rules, geometry queries, scoring,
   and progress normalization
 - `tests/` — game-rule, headless Havok reachability, and rendered-metadata regressions
@@ -106,22 +109,21 @@ required mechanism; they do not instantiate separate games or physics identities
 
 The public game is hosted at [rail-golf.cmish.dev](https://rail-golf.cmish.dev) through
 the repository’s Cloudflare deployment. `.openai/hosting.json` retains the earlier
-ChatGPT Sites project identity; it is not the authority for publishing this build. Runtime credentials and local environment files must
-not be committed.
+ChatGPT Sites project identity; it is not used to publish this build. Runtime
+credentials and local environment files must not be committed.
 
 This source is an application project rather than the separate single-file offline
 build. A standalone HTML can be generated and distributed independently when needed.
 
-## License
+## Lumber Walk and labs
 
-No project reuse license has been granted yet. Public repository visibility alone does
-not grant permission to copy, modify, or redistribute Rail Golf. Third-party materials
-remain under their respective licenses; see `THIRD_PARTY_NOTICES.md`.
+Lumber Walk is part of the courtyard. The lab routes after it are isolated
+experiments; they do not change courtyard progression.
 
 ### Lumber Walk
 
-The courtyard now includes a second station and third card: **Lumber Cascade**.
-An ordinary Delivery clear opens both the gallery and Lumber Walk. Select card 03
+Lumber Walk is the courtyard's second station, and **Lumber Cascade** is its third card.
+An ordinary Across the Yard clear opens both the gallery and Lumber Walk. Select card 03
 for a backward view through the yard: carry straight to the lime Receiving Bay,
 or stamp three passive rebounds across descending timber stacks. Quick retry and
 shot tools work at either station. See [the slice notes](docs/lumber-cascade.md).
@@ -157,4 +159,16 @@ Three authored sentences teach two relation families; Keep is available througho
 with a four-slot local Line Shelf, exact Restore, recorded Ghost and deliberate
 sampled-path playback. Score is unchanged and optional to display. Production and
 existing labs remain unchanged. See [the runtime contract](docs/LINECRAFT-LAB.md),
-[director memo](docs/LINECRAFT-SPINE.md) and [future Rail Rat protocol](docs/LINECRAFT-RAIL-RAT-PROTOCOL.md).
+[design memo](docs/LINECRAFT-SPINE.md) and [future playtest protocol](docs/LINECRAFT-RAIL-RAT-PROTOCOL.md)
+(a **Rail Rat** is a fresh playtester, human or agent).
+
+## Project documents
+
+- [Charter](docs/CHARTER.md): what Rail Golf is for and what it is not
+- [Changelog](CHANGELOG.md): notable changes, with PR and commit references
+- [Hosting](docs/HOSTING.md): deployment rules
+
+## License
+
+Rail Golf is released under the [MIT License](LICENSE). Third-party materials remain
+under their respective licenses; see `THIRD_PARTY_NOTICES.md`.
