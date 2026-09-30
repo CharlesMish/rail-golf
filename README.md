@@ -8,6 +8,8 @@
 
 _Because who needs to feel like Tiger Woods when you've got artillery?_
 
+[Play the development demo](https://rail-golf.cmish.dev/).
+
 Rail Golf is a single-player artillery trick-shot range built with Babylon.js and Havok.
 Aim a **rail** (the launcher), hold to charge it, then follow the **round** (the
 projectile) downstream. The official ruling is the **first kiss**: the first ground
@@ -73,8 +75,17 @@ No account or server-side save is required.
 Prerequisites:
 
 - Node.js `>=22.13.0`
-- A POSIX shell; the bounded build helpers use Linux/macOS shell tools and GNU
-  `timeout` in CI and Sites
+- A POSIX shell and GNU `timeout` on `PATH`. The bounded production build uses
+  `timeout` locally as well as in CI and Sites; `npm test` runs that build too.
+
+On macOS, install [Homebrew coreutils](https://formulae.brew.sh/formula/coreutils)
+and expose its unprefixed commands before running the build or tests:
+
+```bash
+brew install coreutils
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+timeout --version
+```
 
 Install and run the local development server:
 
@@ -171,4 +182,4 @@ existing labs remain unchanged. See [the runtime contract](docs/LINECRAFT-LAB.md
 ## License
 
 Rail Golf is released under the [MIT License](LICENSE). Third-party materials remain
-under their respective licenses; see `THIRD_PARTY_NOTICES.md`.
+under their respective licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).
