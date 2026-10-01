@@ -672,6 +672,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         scene.fogStart = 105;
         scene.fogEnd = 230;
         scene.fogColor = new Color3(0.075, 0.115, 0.135);
+        // Gentle edge falloff keeps the eye on the yard without dimming the HUD.
+        scene.imageProcessingConfiguration.vignetteEnabled = true;
+        scene.imageProcessingConfiguration.vignetteWeight = 1.6;
+        scene.imageProcessingConfiguration.vignetteStretch = 0.4;
+        scene.imageProcessingConfiguration.vignetteColor = new Color4(0.02, 0.03, 0.035, 0);
         scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), new HavokPlugin(true, havok));
         const physicsEngine = scene.getPhysicsEngine();
         physicsEngine?.setTimeStep(1 / 120);
@@ -690,7 +695,49 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const sky = new HemisphericLight("range-sky", new Vector3(-0.2, 1, -0.1), scene);
         sky.intensity = 0.9;
         sky.diffuse = new Color3(0.7, 0.81, 0.91);
-        sky.groundColor = new Color3(0.075, 0.11, 0.07);
+        // Courtyard dirt bounces warm light back into shaded timber faces.
+        sky.groundColor = courtyard ? new Color3(0.2, 0.15, 0.1) : new Color3(0.075, 0.11, 0.07);
+
+        // Visual-only sky dome: a vertical dusk gradient that the fog fades into.
+        const horizon = courtyard ? new Color3(0.42, 0.36, 0.3) : new Color3(0.2, 0.27, 0.29);
+        const skyTexture = new DynamicTexture("range-sky-gradient", { width: 4, height: 256 }, scene, false);
+        const skyContext = skyTexture.getContext() as CanvasRenderingContext2D;
+        const skyGradient = skyContext.createLinearGradient(0, 0, 0, 256);
+        // Canvas top lands on the dome's lower pole: 0.5 is the horizon, 0.61 is ~20° up.
+        skyGradient.addColorStop(0, "#1d1b17");
+        skyGradient.addColorStop(0.5, horizon.toHexString());
+        skyGradient.addColorStop(0.525, courtyard ? "#8a7258" : "#4f6a72");
+        skyGradient.addColorStop(0.59, "#3d5a6e");
+        skyGradient.addColorStop(0.7, "#163049");
+        skyGradient.addColorStop(1, "#08131f");
+        skyContext.fillStyle = skyGradient;
+        skyContext.fillRect(0, 0, 4, 256);
+        skyTexture.update();
+        skyTexture.wrapV = DynamicTexture.CLAMP_ADDRESSMODE;
+        const skyMaterial = new StandardMaterial("range-sky-dome", scene);
+        skyMaterial.backFaceCulling = false;
+        skyMaterial.disableLighting = true;
+        skyMaterial.emissiveTexture = skyTexture;
+        skyMaterial.diffuseColor = new Color3(0, 0, 0);
+        skyMaterial.specularColor = new Color3(0, 0, 0);
+        skyMaterial.fogEnabled = false;
+        const skyDome = MeshBuilder.CreateSphere("range-sky-dome", { diameter: 500, segments: 24, sideOrientation: Mesh.BACKSIDE }, scene);
+        skyDome.material = skyMaterial;
+        skyDome.infiniteDistance = true;
+        skyDome.isPickable = false;
+        skyDome.applyFog = false;
+        if (courtyard) {
+          // Visual-only apron beyond the fence; it sits just under the playable floor and has no collider.
+          const apron = MeshBuilder.CreateGround("yard-outer-apron", { width: 640, height: 640 }, scene);
+          apron.position.set(0, -0.06, 80);
+          apron.isPickable = false;
+          const apronMaterial = new StandardMaterial("yard-outer-apron", scene);
+          apronMaterial.diffuseColor = new Color3(0.16, 0.14, 0.1);
+          apronMaterial.specularColor = new Color3(0, 0, 0);
+          apron.material = apronMaterial;
+        }
+        scene.fogColor = horizon.clone();
+        scene.clearColor = new Color4(horizon.r, horizon.g, horizon.b, 1);
 
         const sun = new DirectionalLight("range-sun", new Vector3(-0.42, -0.85, 0.35), scene);
         sun.position = new Vector3(38, 54, -34);
@@ -741,24 +788,60 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
         materials.water.alpha = 0.82;
 
-        // Subtle procedural grain; shared once by the timber and crates.
-        const woodTexture = new DynamicTexture("timber-grain", { width: 128, height: 512 }, scene, false);
+        // Subtle procedural grain; shared once by the timber and crates. Mipmapped so distant boards don't shimmer.
+        const woodTexture = new DynamicTexture("timber-grain", { width: 256, height: 512 }, scene, true);
         const grain = woodTexture.getContext() as CanvasRenderingContext2D;
         grain.fillStyle = "#bba383";
-        grain.fillRect(0, 0, 128, 512);
-        for (let i = 0; i < 100; i += 1) {
+        grain.fillRect(0, 0, 256, 512);
+        // Broad, faint tone bands first so boards read as individual pieces of wood.
+        for (let i = 0; i < 14; i += 1) {
+          const seed = stableUnitInterval(`grain-band-${i}`);
+          grain.fillStyle = seed > 0.5 ? `rgba(255, 236, 205, ${0.03 + seed * 0.05})` : `rgba(60, 36, 18, ${0.03 + seed * 0.06})`;
+          grain.fillRect(seed * 256 - 12, 0, 8 + seed * 26, 512);
+        }
+        for (let i = 0; i < 180; i += 1) {
           const seed = stableUnitInterval(`grain-${i}`);
-          grain.strokeStyle = `rgba(48, 29, 15, ${0.035 + seed * 0.13})`;
-          grain.lineWidth = 0.5 + seed * 1.4;
+          const x = stableUnitInterval(`grain-x-${i}`) * 256;
+          grain.strokeStyle = `rgba(48, 29, 15, ${0.03 + seed * 0.08})`;
+          grain.lineWidth = 0.4 + seed * 0.9;
           grain.beginPath();
-          grain.moveTo(seed * 128, 0);
-          grain.bezierCurveTo(seed * 128 + 5, 180, seed * 128 - 4, 320, seed * 128 + 1, 512);
+          grain.moveTo(x, 0);
+          grain.bezierCurveTo(x + 4, 180, x - 3, 320, x, 512);
           grain.stroke();
         }
         woodTexture.update();
         materials.timber.diffuseTexture = woodTexture;
         materials.brick.diffuseTexture = woodTexture;
+        // Soft procedural dirt mottling breaks up the flat yard floor; colour still comes from each material.
+        const tiledGround = (uScale: number, vScale: number) => {
+          const texture = new DynamicTexture(`yard-ground-grain-${uScale}x${vScale}`, { width: 256, height: 256 }, scene, true);
+          const dirt = texture.getContext() as CanvasRenderingContext2D;
+          dirt.fillStyle = "#e4e4e4";
+          dirt.fillRect(0, 0, 256, 256);
+          for (let i = 0; i < 420; i += 1) {
+            const a = stableUnitInterval(`dirt-x-${i}`), b = stableUnitInterval(`dirt-y-${i}`), c = stableUnitInterval(`dirt-r-${i}`);
+            const radius = 4 + c * c * 34;
+            const tone = c > 0.5 ? `255, 247, 226, ${0.05 + c * 0.07}` : `46, 32, 18, ${0.06 + c * 0.1}`;
+            // Draw wrapped copies so the tile repeats without a visible seam.
+            for (const dx of [-256, 0, 256]) for (const dy of [-256, 0, 256]) {
+              const x = a * 256 + dx, y = b * 256 + dy;
+              const blob = dirt.createRadialGradient(x, y, 0, x, y, radius);
+              blob.addColorStop(0, `rgba(${tone})`);
+              blob.addColorStop(1, `rgba(${tone.replace(/[\d.]+$/, "0")})`);
+              dirt.fillStyle = blob;
+              dirt.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+            }
+          }
+          texture.update();
+          texture.uScale = uScale;
+          texture.vScale = vScale;
+          return texture;
+        };
         if (courtyard) {
+          // Repeat counts follow each face's footprint (box top faces run u along z: rough 216 × 100 m, stripes ~10 × 24 m).
+          materials.rough.diffuseTexture = tiledGround(20, 9);
+          materials.fairwayA.diffuseTexture = tiledGround(1, 2.2);
+          materials.fairwayB.diffuseTexture = tiledGround(1, 2.2);
           materials.rough.diffuseColor = new Color3(.20, .18, .125);
           materials.fairwayA.diffuseColor = new Color3(.26, .24, .17);
           materials.fairwayB.diffuseColor = new Color3(.24, .22, .155);
