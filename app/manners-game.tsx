@@ -86,6 +86,7 @@ import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from
 import { buildCourtyard } from "@/lib/courtyard-scene";
 import {buildTimberReceiver} from "@/lib/timber-receiver";
 import {LINECRAFT_EXTRA_PADS,buildLinecraftReflectors,collectLinecraftStepEvents} from "@/lib/linecraft-yard";
+import {applyLinecraftPresentation} from "@/lib/linecraft-presentation";
 import {receiverStorage} from "@/lib/timber-receiver-storage";
 
 import { DELIVERY_ROUTES, DELIVERY_BOOK_KEY, SKY_TOKEN, collectDeliveryStepEvents, padImpulse, earnedDeliveryRoutes, readDeliveryBook, LEGACY_DELIVERY_BOOK_KEY } from "@/lib/delivery-routes";
@@ -741,23 +742,27 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
         materials.water.alpha = 0.82;
 
-        // Subtle procedural grain; shared once by the timber and crates.
-        const woodTexture = new DynamicTexture("timber-grain", { width: 128, height: 512 }, scene, false);
-        const grain = woodTexture.getContext() as CanvasRenderingContext2D;
-        grain.fillStyle = "#bba383";
-        grain.fillRect(0, 0, 128, 512);
-        for (let i = 0; i < 100; i += 1) {
-          const seed = stableUnitInterval(`grain-${i}`);
-          grain.strokeStyle = `rgba(48, 29, 15, ${0.035 + seed * 0.13})`;
-          grain.lineWidth = 0.5 + seed * 1.4;
-          grain.beginPath();
-          grain.moveTo(seed * 128, 0);
-          grain.bezierCurveTo(seed * 128 + 5, 180, seed * 128 - 4, 320, seed * 128 + 1, 512);
-          grain.stroke();
+        if(linecraftLab){
+          applyLinecraftPresentation(scene,sky,materials);
+        }else{
+          // Subtle procedural grain; shared once by the timber and crates.
+          const woodTexture = new DynamicTexture("timber-grain", { width: 128, height: 512 }, scene, false);
+          const grain = woodTexture.getContext() as CanvasRenderingContext2D;
+          grain.fillStyle = "#bba383";
+          grain.fillRect(0, 0, 128, 512);
+          for (let i = 0; i < 100; i += 1) {
+            const seed = stableUnitInterval(`grain-${i}`);
+            grain.strokeStyle = `rgba(48, 29, 15, ${0.035 + seed * 0.13})`;
+            grain.lineWidth = 0.5 + seed * 1.4;
+            grain.beginPath();
+            grain.moveTo(seed * 128, 0);
+            grain.bezierCurveTo(seed * 128 + 5, 180, seed * 128 - 4, 320, seed * 128 + 1, 512);
+            grain.stroke();
+          }
+          woodTexture.update();
+          materials.timber.diffuseTexture = woodTexture;
+          materials.brick.diffuseTexture = woodTexture;
         }
-        woodTexture.update();
-        materials.timber.diffuseTexture = woodTexture;
-        materials.brick.diffuseTexture = woodTexture;
         if (courtyard) {
           materials.rough.diffuseColor = new Color3(.20, .18, .125);
           materials.fairwayA.diffuseColor = new Color3(.26, .24, .17);

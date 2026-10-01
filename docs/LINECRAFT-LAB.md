@@ -1,5 +1,28 @@
 # Linecraft graduation slice — handoff and runtime contract
 
+## Graphics borrowing from Claude's yard polish (isolated experiment)
+
+The comparison started from our three-pad/low-stack branch at `6be94f7572`,
+with current `main` at `825bbe9678`. Claude's `claude/timber-yard-polish` commit
+`f708485015` forked that main, which still had the two-pad/tall-return geometry.
+Its visual ideas are adapted onto the latest yard rather than merging that
+older geometry into the experiment.
+
+Linecraft alone now uses Claude's warmer indirect ground light, finer and
+lower-contrast mipmapped timber grain, soft tiled dirt, and dusk sky gradient
+with a matching fog horizon. The dirt tile is drawn once and shared at the
+two footprint scales, with explicit repeat wrapping. The sky is not pickable
+and has no physics or recognition authority. The outer ground apron was not
+carried over: its lack of collision would imply playable ground beyond the
+fence. The vignette was also left out to keep the line and yard edges readable.
+
+The three pads, low lumber stack, controls, cameras, storage and scoring remain
+as in the previous preview. Production and every other lab retain their visual
+setup. A real Havok before/after check preserves the exact bank, full-tread and
+Open fixture results under the new presentation. Headless texture/mesh setup
+checks are not evidence of rendered appearance or phone performance; owner
+play must judge the sky palette, distant visibility and texture scale.
+
 ## Three-pad and low-stack yard follow-up (isolated experiment)
 
 After playing the two-pad version, Charlie asked to try a third magenta pad on
