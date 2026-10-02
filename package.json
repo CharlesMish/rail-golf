@@ -2,7 +2,7 @@
   "name": "rail-golf",
   "version": "0.3.1",
   "description": "A Babylon.js and Havok artillery trick-shot range.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "engines": {
     "node": ">=22.13.0"

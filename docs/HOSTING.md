@@ -33,7 +33,7 @@ Do not add COOP/COEP headers. Havok is loaded as the default WASM asset (import 
 
 Preview URLs (workers_dev + preview_urls) are the phone-test gate.
 
-The intended future URL https://rail-golf.cmish.dev/ is **not** attached. Do not add custom_domain or routes in this change.
+The public game is served at https://rail-golf.cmish.dev/. `wrangler.jsonc` has no custom_domain or routes; do not add them there.
 
 ## Device notes
 
