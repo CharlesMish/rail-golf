@@ -35,7 +35,7 @@ Rail Golf is released under the MIT License (see [LICENSE](../LICENSE)).
 - The README tagline is the one joke. Everything else stays plain.
 - Rail Golf's own words are *rail*, *round*, *first kiss*, *card* (one challenge), *station* (a launch position), *trick stamp* (earned when a mechanism and its target are hit in the same shot), and *line* (a recorded setup and trail you can recall or share). Define each one where it first appears, and don't pile them up.
 - Lab names (Linecraft, Route Book, Open Line, and the rest) are proper nouns. Use them as they are written.
-- The README, this charter, and the game's text don't use internal review-role words such as "director" or "owner". Leave archival wording in older lab records as it is.
+- The README and this charter use public-facing game terms. Existing game text and archival wording in older lab records are unchanged.
 - Cite baselines by commit SHA, as the lab docs already do.
 
 ## 5. Versions and change record

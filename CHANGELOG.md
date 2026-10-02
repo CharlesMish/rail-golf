@@ -9,7 +9,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 
 ### Changed
 - License changed from `UNLICENSED` to MIT in `package.json`, the README, and `THIRD_PARTY_NOTICES.md`.
-- The README and the game's text no longer use internal review-role words.
+- The README uses public-facing terms and defines the game's vocabulary. Existing game UI text is unchanged.
 
 ### Fixed
 - `docs/HOSTING.md` no longer says that rail-golf.cmish.dev is not attached.

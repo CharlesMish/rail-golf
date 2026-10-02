@@ -3373,7 +3373,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
       {phase === "ready" || phase === "charging" ? (
         <div className="portrait-notice" role="note">
-          <span>Landscape gives the camera more fairway.</span>
+          <span>Landscape gives the director more fairway.</span>
         </div>
       ) : null}
     </main>
