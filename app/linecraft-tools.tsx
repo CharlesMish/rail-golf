@@ -1,12 +1,14 @@
 "use client";
 
-import {useEffect, useId, useRef} from "react";
+import {useEffect, useId, useRef, useState} from "react";
+import {linecraftFeedback,linecraftShotDetails,type FeedbackShot} from "@/lib/linecraft-feedback";
 import styles from "./linecraft-lab.module.css";
 
 // This stylesheet only applies to the isolated Linecraft Lab root.
 export const linecraftShellClassName = styles.shell;
 export const linecraftResultShelfClassName = styles.resultShelfButton;
 export const linecraftOriginControlClassName = styles.originControl;
+export const linecraftPowerControlClassName = styles.powerControl;
 export type LinecraftStage = "learn" | "explore" | "open";
 export type LinecraftShelfEntry = {
   id: string;
@@ -51,8 +53,32 @@ export function LinecraftControls({
           : <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>Restart Lessons</button>}
       </div>
     </div>
-    {stage === "learn" && !fired && <p className={styles.teaching}>Drag to aim · hold and release to fire · Survey names faces.</p>}
+    {stage === "learn" && !fired && <p className={styles.teaching}>Drag to aim · timed hold or Set Power below · Survey names faces.</p>}
   </section>;
+}
+
+/** A receipt remains tied to its launch, including after Adjust or an interruption. */
+export function LinecraftShotReceipt({shot,compact=false}:{shot:FeedbackShot;compact?:boolean}){
+  const feedback=linecraftFeedback(shot),details=linecraftShotDetails(shot);
+  const [copyNotice,setCopyNotice]=useState('');
+  const copy=async()=>{
+    try{await navigator.clipboard.writeText(details);setCopyNotice('Shot details copied.');}
+    catch{setCopyNotice('Clipboard unavailable. Select and copy the text below.');}
+  };
+  const body=<>
+    <p className={styles.ending}><strong>{feedback.interrupted?'INTERRUPTED':'FINAL · SHOT ENDED'}</strong><br/>{feedback.ending}</p>
+    {feedback.firstKiss&&<p className={styles.hint}>FIRST KISS marks the ground endpoint. It does not mean the lesson is complete.</p>}
+    <p className={styles.observed}><span>Contacts</span>{feedback.contacts}</p>
+    <p className={styles.observed}><span>Qualified events</span>{feedback.events}</p>
+    <p className={styles.hint}>{feedback.progress}</p>
+    <details className={styles.shotDetails}>
+      <summary>Shot details · #{shot.projectileId}</summary>
+      <textarea aria-label={`Shot ${shot.projectileId} details`} readOnly value={details} onFocus={event=>event.currentTarget.select()}/>
+      <button type="button" onClick={copy}>Copy shot details</button>
+      {copyNotice&&<p role="status">{copyNotice}</p>}
+    </details>
+  </>;
+  return compact?<details className={styles.receipt}><summary>Shot #{shot.projectileId} · {feedback.ending} · {feedback.lesson?`${feedback.lesson.reached}/${feedback.lesson.total}`:'Open'}</summary>{body}</details>:<div className={styles.receipt}>{body}</div>;
 }
 
 /** Resolved shots are Keep-worthy solely at the player's discretion. */

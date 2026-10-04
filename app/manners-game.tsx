@@ -9,8 +9,9 @@ import {getDocumentProvenance,observeBrowserLifecycle} from '@/lib/browser-prove
 import {createActionTrace} from '@/lib/action-trace';
 import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type IntentCondition} from './intent-tools';
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
-import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName} from './linecraft-tools';
-import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftActualDiverges,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
+import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName,linecraftPowerControlClassName,LinecraftShotReceipt} from './linecraft-tools';
+import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
+import {linecraftPowerLabel} from '@/lib/linecraft-feedback';
 import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
 import {SurveyTools} from './survey-tools';
 import {
@@ -136,6 +137,7 @@ type ShotResult = {
 };
 
 type ShotMemory = ShotSetup & {
+  shotControls?:{powerMode:"hold"|"set";max:boolean};
   intentAttemptId?:string;
   linecraftAttemptId?:string;
   linecraftLaunch?:ReturnType<typeof captureLabLaunch>;
@@ -156,6 +158,7 @@ type ShotMemory = ShotSetup & {
 };
 
 type FlightState = {
+  shotControls?:{powerMode:"hold"|"set";max:boolean};
   linecraftMeta?:ReturnType<typeof linecraftMeta>;
   launchContext?:ReturnType<typeof captureLabLaunch>;
   surveyTicket?:SurveyTicket;
@@ -1660,7 +1663,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const memory: ShotMemory = {
             ...current.setup,
             ...(intentLab?{intentAttemptId:current.surveyTicket?.id}:{}),
-            ...(linecraftLab?{linecraftAttemptId:current.surveyTicket?.id,linecraftLaunch:current.launchContext,linecraftMeta:current.linecraftMeta}:{}),
+            ...(linecraftLab?{linecraftAttemptId:current.surveyTicket?.id,linecraftLaunch:current.launchContext,linecraftMeta:current.linecraftMeta,shotControls:current.shotControls}:{}),
             ...(courtyardDiverter ? {build:BUILD_ID} : {}),
             ...(lineLab ? {ledger:current.ledger.map(e=>({...e})),lineReceipt:recordLineReceipt(current.ledger)} : {}),
             ...(diverterLab ? {environment:current.environment!,environmentAfter:{floor:floorStateRef.current}} : {}), holeId: current.launchContext?.card??hole.id, windId: current.launchContext?.windId??hole.wind.id, stationId: current.launchContext?.station??hole.station?.id??"gate", outcome,
@@ -1912,7 +1915,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){setLineLedger([]);setLiveLineTotal(0);setClaimCaption(null);}
           const linecraftFireMeta=linecraftLab?{...linecraftMeta(linecraftSessionRef.current,linecraftRelationRef.current),shelfAvailable:4-(linecraftShelfRef.current?.entries().length??0)}:undefined;
           flight = {
-            ...(linecraftFireMeta?{linecraftMeta:linecraftFireMeta}:{}),
+            ...(linecraftFireMeta?{linecraftMeta:linecraftFireMeta,shotControls:{powerMode:powerModeRef.current,max:maxPowerRef.current}}:{}),
             ...(launchContext?{launchContext,surveyTicket:surveyLogRef.current?.begin({...launchContext,...(intentLab?intentMeta(intentConditionRef.current,intentSentenceRef.current,intentRelationRef.current):{}),...(linecraftFireMeta??{})})}:{}),
             ledger:[],runTracker:createRunTracker(),captionedRun:0,redirectTracker:createRedirectTracker(),sawMillTracker:createSawMillTracker(),captioned:new Set(),captionedVariety:0,lifecycle:createLineLifecycle(),
             ...(diverterLab ? {environment:{floor:floorStateRef.current}} : {}),
@@ -2858,6 +2861,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     : record.attempts + 1;
   const canAim = phase === "ready" || phase === "charging";
   const shownPower = maxPower && phase === "ready" ? 1 : powerMode === "set" && phase === "ready" ? selectedPower : charge;
+  const powerLabel=linecraftLab?linecraftPowerLabel:displayPercent;
   const previousMarker = recalledPower ?? lastShot?.charge ?? null;
 
   const beginButtonCharge = (event: React.PointerEvent<HTMLButtonElement>) => {
@@ -3074,12 +3078,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               <small>FLOOR {floorState} · {lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}. {lineLab?'Pallet switch':courtyardDiverter?'Switch at Lumber Walk':'Switch'} changes once per shot. {linecraftLab?'Retry keeps current state. New lessons/stations restore A. Keep survives every stage.':intentLab?'Retry keeps state. Condition, prompt or station changes start a fresh block at A.':'Cards, stations and Retry keep the state.'} Recall restores the recorded starting state.</small>
               <button type="button" disabled={phase === 'booting' || phase === 'error'} onClick={() => performUI('reset',[false])}>Reset Card · restore FLOOR A</button>
             </>}
-            <label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
+            {!linecraftLab&&<><label>Power control <select value={powerMode} disabled={phase !== 'ready'} onChange={event => {
               clearMax(); const mode = event.target.value as 'hold' | 'set'; powerModeRef.current = mode; setPowerMode(mode);
             }}><option value="hold">Timed hold</option><option value="set">Set power</option></select></label>
             {powerMode === 'set' && <label>Power {displayPercent(selectedPower)}<input type="range" min="0" max="100" step="0.5" aria-label="Set launch power" value={selectedPower * 100} disabled={phase !== 'ready'} onChange={event => {
               clearMax(); const value = Number(event.target.value) / 100; selectedPowerRef.current = value; setSelectedPower(value);
             }} /></label>}
+            </>}
             <label><input type="checkbox" checked={compare} disabled={phase !== 'ready'} onChange={event => {
               compareRef.current = event.target.checked; setCompare(event.target.checked); performUI('compareAttempts',[]);
             }} /> Compare three trails · selected amber, others cyan (Previous Line on)</label>
@@ -3098,8 +3103,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             {!winningLines.length && <small>Land here to save a line. Different contact sequences earn their own entry; the six latest families are kept.</small>}
             </>}<strong>Recent attempts</strong>
             {history.map(shot => <button type="button" key={shot.projectileId} aria-pressed={lastShot?.projectileId === shot.projectileId} disabled={phase !== 'ready'} onClick={() => performUI('recallAttempt',[shot.projectileId])}>
-              #{shot.projectileId} · {hole.mode==='score-only'&&(shot.stationId==='gate'?'Yard Gate · ':shot.stationId==='lumber'?'Lumber Walk · ':'Saw Bay · ')}{shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {displayPercent(shot.charge)} — {shot.receipt}
+              #{shot.projectileId} · {hole.mode==='score-only'&&(shot.stationId==='gate'?'Yard Gate · ':shot.stationId==='lumber'?'Lumber Walk · ':'Saw Bay · ')}{shot.environment && ('FLOOR ' + shot.environment.floor + ' → ' + shot.environmentAfter?.floor + ' · ')}rail {shot.railIndex + 1} · {shot.yaw.toFixed(1)}° / {shot.elevation.toFixed(1)}° · {powerLabel(shot.charge)}{!linecraftLab&&` — ${shot.receipt}`}
             </button>)}
+            {linecraftLab&&history.map(shot=><LinecraftShotReceipt key={`receipt-${shot.projectileId}`} shot={shot} compact/>)}
             {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
           </div>
         </details>
@@ -3118,7 +3124,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           </div>
           <div className="metric-block power-number">
             <span>POWER</span>
-            <strong>{displayPercent(shownPower)}</strong>
+            <strong>{powerLabel(shownPower)}</strong>
           </div>
         </div>
 
@@ -3129,7 +3135,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round(shownPower * 100)}
-          aria-valuetext={displayPercent(shownPower)}
+          aria-valuetext={powerLabel(shownPower)}
         >
           <div className="power-fill" style={{ width: `${shownPower * 100}%` }} />
           {previousMarker !== null ? (
@@ -3141,6 +3147,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ) : null}
         </div>
 
+        {linecraftLab&&<div className={linecraftPowerControlClassName}>
+          <label>Power control <select aria-label="Power control" value={powerMode} disabled={phase!=='ready'} onChange={event=>{clearMax();const mode=event.target.value as 'hold'|'set';powerModeRef.current=mode;setPowerMode(mode);}}><option value="hold">Timed hold</option><option value="set">Set Power</option></select></label>
+          {powerMode==='set'?<label>Set Power {linecraftPowerLabel(selectedPower)}<input type="range" min="0" max="100" step="0.5" aria-label="Set launch power" value={selectedPower*100} disabled={phase!=='ready'} onChange={event=>{clearMax();const value=Number(event.target.value)/100;selectedPowerRef.current=value;setSelectedPower(value);}}/></label>:<small>Hold to charge · release to fire</small>}
+        </div>}
         {linecraftLab&&<label className={linecraftOriginControlClassName}><span>ORIGIN</span><input aria-label="Launch origin position" type="range" min={LINECRAFT_ORIGIN.gate.min} max={LINECRAFT_ORIGIN.gate.max} step={LINECRAFT_ORIGIN.gate.step} value={originX} disabled={phase!=='ready'} onChange={event=>performUI('selectOrigin',[Number(event.target.value)])}/>{lastShot&&lastShot.stationId===hole.station?.id&&<small>Last {linecraftOrigin(lastShot).toFixed(1)} m</small>}</label>}
         <div className="manners-control-grid">
           <div className="rail-controls" aria-label={linecraftLab?'Launch origin':'Launcher rail'}>
@@ -3181,7 +3191,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             disabled={!canAim}
           >
             <Crosshair />
-            <span>{maxPower ? "FIRE MAX · 100%" : powerMode === "set" ? (phase === "charging" ? "RELEASE TO FIRE" : `FIRE AT ${displayPercent(selectedPower)}`) : phase === "charging" ? "RELEASE ROUND" : "HOLD TO CHARGE"}</span>
+            <span>{maxPower ? "FIRE MAX · 100%" : powerMode === "set" ? (phase === "charging" ? "RELEASE TO FIRE" : `FIRE AT ${powerLabel(selectedPower)}`) : phase === "charging" ? "RELEASE ROUND" : "HOLD TO CHARGE"}</span>
           </Button>
 
           <div className="aim-nudges" aria-label="Fine aim controls">
@@ -3263,8 +3273,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
       {lastShot && phase === "ready" ? (
         <button className="last-line-chip" onClick={() => performUI('restoreLine',[])} type="button">
-          LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {displayPercent(lastShot.charge)}
+          LAST Y{lastShot.yaw >= 0 ? "+" : ""}{lastShot.yaw.toFixed(1)}° · E{lastShot.elevation.toFixed(1)}° · {powerLabel(lastShot.charge)}
           <span>{diverterLab && !lineLab ? ("restore FLOOR " + lastShot.environment?.floor + ", aim and power") : "restore aim and power"}</span>
+          {linecraftLab&&<span>Final receipt and comparison · Shot tools</span>}
         </button>
       ) : null}
 
@@ -3283,11 +3294,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       {retryNotice && phase === 'ready' && <div className="retry-notice" role="status">{retryNotice}</div>}
 
       {phase === "flight" ? (
-        <div className="flight-status" role="status">ROUND DOWNRANGE</div>
+        <div className="flight-status" role="status">{linecraftLab?"IN FLIGHT · awaiting shot ending":"ROUND DOWNRANGE"}</div>
       ) : null}
 
       {phase === "theatre" ? (
-        <div className="flight-status theatre-status" role="status">RULING LOCKED</div>
+        <div className="flight-status theatre-status" role="status">{linecraftLab?"SHOT ENDED · preparing final receipt":"RULING LOCKED"}</div>
       ) : null}
 
       {mechanismInFlight && !(hole.id === "mill-delivery" && deliveryLive.length > 0) && (phase === "flight" || phase === "theatre") ? (
@@ -3307,7 +3318,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               data-kind={contact.kind}
               data-visible="false"
             >
-              {evidenceLabel(contact.kind)}
+              {linecraftLab?`${phase==='ready'||phase==='charging'||phase==='flight'?'PREVIOUS ':''}${contact.kind==='first-kiss'?'FIRST KISS · GROUND ENDPOINT':evidenceLabel(contact.kind)} · #${lastShot.projectileId}`:evidenceLabel(contact.kind)}
             </span>
           ))}
         </div>
@@ -3332,12 +3343,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           tabIndex={-1}
         >
         {!linecraftLab&&<p className="eyebrow">{intentLab?`Intent Lab · ${intentCondition.toUpperCase()}`:lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>}
-          <h2 id="range-result-heading">{linecraftLab?(linecraftSession.stage==='learn'?(linecraftMatch.complete?'Line complete':linecraftMatch.reached?'Keep going':'Revise the line'):'Your line'):intentLab&&!intentScored?(intentCondition==='sentence'?intentMatch.headline:'LINE RECORDED'):result.headline}</h2>
-          <p id="range-result-detail">{linecraftLab?'':intentLab?`LINE ENDED — ${(lastShot?.lineReceipt?.ending??'resolved').replaceAll('-',' ').toUpperCase()}`:result.detail}</p>
+          <h2 id="range-result-heading">{linecraftLab?(linecraftSession.stage==='learn'?(linecraftMatch.complete?'Line complete':linecraftMatch.reached?'Line incomplete':'Revise the line'):'Your line'):intentLab&&!intentScored?(intentCondition==='sentence'?intentMatch.headline:'LINE RECORDED'):result.headline}</h2>
+          {!linecraftLab&&<p id="range-result-detail">{intentLab?`LINE ENDED — ${(lastShot?.lineReceipt?.ending??'resolved').replaceAll('-',' ').toUpperCase()}`:result.detail}</p>}
           {intentLab&&!intentScored&&<p>{recognizedIntentEvents(lineLedger).map(e=>e.label).join(' → ')||'No qualified departures recorded.'}</p>}
           {intentLab&&<IntentResult condition={intentCondition} sentenceLabel={intentPrompt.label} clauses={intentPrompt.clauses.map(c=>c.label)} clauseReached={intentMatch.reached} headline={intentMatch.headline} lastAttemptId={intentAttempt} kept={intentKept} onKeep={()=>intentActionsRef.current?.keep()} onDiscard={()=>intentActionsRef.current?.discard()}/> }
           {linecraftLab&&<>
-            {linecraftSession.stage==='learn'&&linecraftActualDiverges(linecraftLesson.id,lineLedger)&&<p className="linecraft-actual">Actual: {recognizedIntentEvents(lineLedger).map(event=>event.label).join(' → ')}</p>}
+            {lastShot&&<LinecraftShotReceipt key={lastShot.projectileId} shot={lastShot}/>}
+            <p className="linecraft-result-persistence">Final receipt stays until you adjust or change location.</p>
             <LinecraftResult stage={linecraftSession.stage} lessonIndex={linecraftSession.lessonIndex} lessonCount={LINECRAFT_LESSONS.length} clauses={linecraftMatch.labels} clauseReached={linecraftMatch.reached} complete={linecraftMatch.complete} isLastLesson={linecraftSession.lessonIndex===LINECRAFT_LESSONS.length-1} canContinue={linecraftCanContinue} canKeep={Boolean(linecraftAttempt)} alreadyKept={linecraftAlreadyKept} shelfCount={linecraftKept.length} onKeep={()=>linecraftActionsRef.current?.keep()} onContinue={()=>linecraftActionsRef.current?.next()} onExplore={()=>linecraftActionsRef.current?.explore()} onShelf={()=>showLinecraftShelf(true)} onAdjust={()=>performUI('reset',[true])} showKeepExplanation={linecraftKeepHint}/>
             {linecraftNotice&&<p role="status">{linecraftNotice}</p>}
           </>}
