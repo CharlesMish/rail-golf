@@ -25,6 +25,10 @@ test('interrupted evidence matching every clause still reports no completed atte
  const result=linecraftFeedback({...shot,ledger:['step-a','step-b','step-c'].map(surface=>({kind:'redirect',surface,feature:surface})).concat({kind:'termination',reason:'retry-interrupted'})});
  assert.match(result.progress,/3\/3 ordered rebounds observed/);assert.match(result.progress,/no completed attempt/);assert.doesNotMatch(result.progress,/Lesson complete/);
 });
+test('a named rebound gets one readable rebound suffix',()=>{
+ const result=linecraftFeedback({...shot,ledger:[{kind:'redirect',feature:'lumber',label:'LUMBER REBOUND'},...ground]});
+ assert.equal(result.events,'LUMBER rebound');
+});
 test('copyable receipt uses the frozen launch and retains exact power, mode and build',()=>{
  const launch={build:'tested-build',setup:{...shot,yaw:-8.25,charge:.305001},launchSpeed:42.5,environment:{floor:'B'}};
  const text=linecraftShotDetails({...shot,yaw:55,ledger:ground,linecraftLaunch:launch});
