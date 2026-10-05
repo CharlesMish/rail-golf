@@ -234,6 +234,14 @@ original receipt and up to 320 sampled actual trajectory points.
 - **Copy setup link** shares only setup/environment/build. Opening it enters
   Open/revisit ready for manual fire. It does not contain the historical trail
   and never auto-fires. Study JSON can carry the actual trail evidence.
+- Pasting a setup hash into the already-open Linecraft address does not change
+  the current shot. When ready or at a result, **Load linked setup** explicitly
+  enters Open/revisit and restores station, origin, aim, exact Set Power and the
+  starting pallet in one course rebuild. MAX is off; fire remains manual. The
+  action clears recent session history as an Open stage change, preserves Shelf
+  and study records, and rejects charging, flight, replay, an open Shelf, invalid
+  links and links for other labs. A build mismatch retains the existing warning.
+  Opening a link in a new document still loads it during initialization.
 
 Reload starts a fresh Learn session with empty recent history and curriculum
 progress. Shelf and study records persist independently in dedicated Linecraft

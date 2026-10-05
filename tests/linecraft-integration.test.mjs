@@ -4,13 +4,13 @@ import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 import ts from 'typescript';
 import {LINECRAFT_LESSONS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,createLinecraftShelf,createLinecraftDecisions} from '../lib/linecraft-lab.js';
-import {captureLabLaunch} from '../lib/lab-controls.js';
+import {captureLabLaunch,createLabControl} from '../lib/lab-controls.js';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {scoreLine,recordLineReceipt} from '../lib/line-score.js';
 import {collectLineStepEvents} from '../lib/line-recognition.js';
 import {collectLinecraftStepEvents} from '../lib/linecraft-yard.js';
 import {SKY_TOKEN} from '../lib/delivery-routes.js';
-import {encodeShareLine,decodeShareLine,restoreShareLine} from '../lib/share-line.js';
+import {encodeShareLine,decodeShareLine,restoreShareLine,restoreLinecraftLinkHash} from '../lib/share-line.js';
 
 // Execute the actual component handlers without a browser/WebGL dependency.
 // This verifies state/authority contracts, not rendered layout or camera quality.
@@ -64,6 +64,55 @@ function context(){
  };
  vm.createContext(c);compile(c,'linecraftBlock',expression('linecraftBlock'));compile(c,'runtime',actions);return c;
 }
+
+const linkedPayload={v:2,build:'f0469b91fc',world:'timber-courtyard',route:'/lab/linecraft',card:'open-line',station:'gate',originX:0,rail:1,yaw:-14,elevation:42,speed:34.59064000017643,environment:{floor:'A'}};
+const linkedHash=payload=>'#line='+encodeShareLine(payload);
+const otherLabPayload={...linkedPayload,v:1,route:'/lab/lines'};
+delete otherLabPayload.originX;
+function linkContext(){
+ const c=context();
+ Object.assign(c,{restoreLinecraftLinkHash,BUILD_ID:linkedPayload.build,window:{location:{hash:linkedHash(linkedPayload)}},linecraftShelfOpenRef:{current:false},
+  setShareNotice:value=>c.state.shareNotice=value,
+  loadHole:index=>{assert.equal(index,3);c.state.resets++;c.state.loadedFloor=c.floorStateRef.current;c.phaseRef.current='ready';},
+  updateSetup:value=>c.state.setup=plain(value),exactPower:value=>{c.state.exactPower=value;c.powerModeRef.current='set';c.state.powerMode='set';c.state.max=false;}});
+ compile(c,'loadSetupLink',expression('loadSetupLink'));return c;
+}
+test('same-page setup link uses strict route validation, exact speed conversion and build warning',()=>{
+ const restored=restoreLinecraftLinkHash(linkedHash(linkedPayload),linkedPayload.build);
+ assert.equal(restored.setup.charge,.7727200000047684);assert.equal(restored.autoFire,false);assert.equal(restored.warning,'');
+ assert.match(restoreLinecraftLinkHash(linkedHash(linkedPayload),'abcdef0').warning,/not guaranteed/);
+ for(const hash of ['', '#line=', '#line=***', linkedHash(otherLabPayload)])assert.throws(()=>restoreLinecraftLinkHash(hash,linkedPayload.build));
+});
+test('actual Load linked setup enters Open once, preserves Shelf/journal, restores pallet and exact charge, and repeats safely',()=>{
+ const c=linkContext(),line=savedLine();c.linecraftShelfRef.current.keep('kept:1',line,line.linecraftLaunch,line.linecraftMeta);
+ c.linecraftDecisionsRef.current.append(c.linecraftShelfRef.current.entries()[0]);
+ const kept=JSON.stringify(c.linecraftShelfRef.current.entries()),journal=JSON.stringify(c.linecraftDecisionsRef.current.export());
+ for(const [i,payload] of [linkedPayload,{...linkedPayload,station:'lumber',originX:2,yaw:3,elevation:33,environment:{floor:'B'}},linkedPayload].entries()){
+  c.phaseRef.current=i===1?'result':'ready';c.window.location.hash=linkedHash(payload);c.loadSetupLink();
+  assert.equal(c.state.resets,i+1,'exactly one course rebuild per explicit load');assert.equal(c.linecraftSessionRef.current.stage,'open');assert.equal(c.linecraftSessionRef.current.openEntry,'revisit');
+  assert.equal(c.state.station,payload.station);assert.equal(c.state.loadedFloor,payload.environment.floor);assert.equal(c.floorStateRef.current,payload.environment.floor);
+  assert.equal(c.state.setup.originX,payload.originX);assert.equal(c.state.setup.yaw,payload.yaw);assert.equal(c.state.setup.elevation,payload.elevation);assert.equal(c.state.exactPower,.7727200000047684);
+  assert.equal(c.state.powerMode,'set');assert.equal(c.state.max,false);assert.equal(c.linecraftAttemptRef.current,null);assert.equal(c.linecraftRelationRef.current,null);
+  assert.match(c.state.shareNotice,/Fire manually/);assert.equal(JSON.stringify(c.linecraftShelfRef.current.entries()),kept);assert.equal(JSON.stringify(c.linecraftDecisionsRef.current.export()),journal);
+ }
+ assert.equal(c.state.fireCalls,0);assert.equal(c.state.scoreCalls,0);assert.equal(c.linecraftSessionRef.current.progress.banks.attempted,0);
+});
+test('actual Load linked setup rejects busy/replay/Shelf and invalid links without changing setup, session or history',()=>{
+ const c=linkContext();
+ const snapshot=()=>JSON.stringify({session:c.linecraftSessionRef.current,history:c.historyRef.current,memories:c.memoriesRef.current,floor:c.floorStateRef.current,station:c.state.station,resets:c.state.resets,transitions:c.state.transitions,power:c.powerModeRef.current});
+ const before=snapshot();
+ for(const phase of ['charging','flight','theatre']){c.phaseRef.current=phase;assert.equal(c.loadSetupLink(),'link-load-unavailable');assert.equal(snapshot(),before);}
+ c.phaseRef.current='ready';c.linecraftReplayingRef.current=true;assert.equal(c.loadSetupLink(),'link-load-unavailable');c.linecraftReplayingRef.current=false;
+ c.linecraftShelfOpenRef.current=true;assert.equal(c.loadSetupLink(),'link-load-unavailable');c.linecraftShelfOpenRef.current=false;
+ for(const hash of ['', '#line=bad', linkedHash(otherLabPayload)]){c.window.location.hash=hash;assert.equal(c.loadSetupLink(),'invalid-setup-link');assert.equal(snapshot(),before);assert.match(c.state.shareNotice,/not loaded/);}
+});
+test('setup-link control authority rejects flight and charging before invoking the load handler',()=>{
+ const state={phase:'flight'},records=[];let calls=0;
+ const control=createLabControl({read:()=>state,handlers:()=>({loadSetupLink:()=>{calls++;}}),record:value=>records.push(value)});
+ for(const phase of ['flight','charging','theatre']){state.phase=phase;assert.equal(control.run('loadSetupLink'),false);assert.equal(calls,0);assert.equal(records.at(-1).reason,'phase-guard');}
+ for(const phase of ['ready','result']){state.phase=phase;assert.equal(control.run('loadSetupLink'),true);}
+ assert.equal(calls,2);assert.equal(records.at(-1).action,'load-setup-link');
+});
 
 test('Linecraft is opt-in, separately namespaced and keeps the physics initializer mount-only',async()=>{
  const route=await readFile(new URL('../app/lab/linecraft/page.tsx',import.meta.url),'utf8');assert.match(route,/<MannersGame linecraftLab\s*\/>/);assert.doesNotMatch(route,/key=/);

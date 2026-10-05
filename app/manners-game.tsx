@@ -9,7 +9,7 @@ import {getDocumentProvenance,observeBrowserLifecycle} from '@/lib/browser-prove
 import {createActionTrace} from '@/lib/action-trace';
 import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type IntentCondition} from './intent-tools';
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
-import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName,linecraftPowerControlClassName,LinecraftShotReceipt} from './linecraft-tools';
+import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName,linecraftPowerControlClassName,LinecraftShotReceipt,LinecraftSetupLink} from './linecraft-tools';
 import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
 import {linecraftPowerLabel} from '@/lib/linecraft-feedback';
 import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
@@ -106,7 +106,7 @@ import { appendLineEvidence, recordLineContact, scoreLine, recordLineReceipt } f
 import {createLineLifecycle} from '@/lib/line-lifecycle';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '@/lib/line-recognition';
 import type { LineEvidence } from '@/lib/line-score';
-import { encodeShareLine, decodeShareLine, restoreShareLine } from '@/lib/share-line';
+import { encodeShareLine, decodeShareLine, restoreShareLine, restoreLinecraftLinkHash } from '@/lib/share-line';
 import { BUILD_ID } from "@/lib/build-identity";
 import { DIVERTER_HOLES, DIVERTER_TARGETS, DIVERTER_SWITCH, DIVERTER_FLOOR, FLOOR_STATES, floorForAction } from "@/lib/diverter-lab";
 import type { FloorState, FloorEnvironment } from "@/lib/diverter-lab";
@@ -226,6 +226,7 @@ type GameActions = {
   reset: (restore?: boolean) => void;
   shiftRail: (direction: number) => void;
   selectOrigin:(position:number)=>void;
+  loadSetupLink: () => void | string;
   nudgeYaw: (amount: number) => void;
   nudgeElevation: (amount: number) => void;
   restoreLine: () => void;
@@ -254,6 +255,16 @@ const EMPTY_RECORD: HoleRecord = {
 function displayPercent(value: number) {
   return `${Math.round(value * 1000) / 10}%`;
 }
+
+// Observe address changes for the Load button only. Gameplay changes require an
+// explicit guarded action; neither navigation nor hash observation fires a shot.
+function subscribeSetupLinkHash(notify:()=>void) {
+  window.addEventListener('hashchange',notify);
+  return ()=>window.removeEventListener('hashchange',notify);
+}
+const noSetupLinkSubscription=()=>()=>{};
+const emptySetupLinkHash=()=>'';
+const readSetupLinkHash=()=>window.location.hash;
 
 function evidenceLabel(kind: EvidenceKind) {
   if (kind.startsWith('floor-')) return 'FLOOR '+kind.slice(-1).toUpperCase()+' BOUNCE';
@@ -434,6 +445,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
   useEffect(()=>{if(!claimCaption)return;const timer=setTimeout(()=>setClaimCaption(null),2200);return ()=>clearTimeout(timer);},[claimCaption]);
   const [shareNotice,setShareNotice] = useState('');
+  const setupLinkHash=useSyncExternalStore(linecraftLab?subscribeSetupLinkHash:noSetupLinkSubscription,linecraftLab?readSetupLinkHash:emptySetupLinkHash,emptySetupLinkHash);
+  const setupLinkAvailable=linecraftLab&&new URLSearchParams(setupLinkHash.slice(1)).has('line');
   const [shareLink,setShareLink] = useState('');
   const floorStateRef = useRef<FloorState>('A');
   const [floorState, setFloorState] = useState<FloorState>('A');
@@ -2179,7 +2192,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           linecraftReplayingRef.current=false;setLinecraftReplaying(false);
           if(replayView){camera.position.copyFrom(replayView.position);cameraTarget.copyFrom(replayView.target);camera.fov=replayView.fov;camera.setTarget(cameraTarget);surveyRef.current=replayView.survey;setSurvey(replayView.survey);replayView=null;}
         };
-        const linecraftBlock=(next:ReturnType<typeof createLinecraftSession>,stationId?:string)=>{
+        const linecraftBlock=(next:ReturnType<typeof createLinecraftSession>,stationId?:string,linkedSetup?:ReturnType<typeof restoreShareLine>)=>{
           if(!linecraftLab||!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current)return;
           const change=()=>{
             linecraftSessionRef.current=next;setLinecraftSession(next);
@@ -2189,11 +2202,25 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             linecraftAttemptRef.current=null;setLinecraftAttempt(null);linecraftRelationRef.current=null;
             linecraftGhostIdRef.current=null;setLinecraftGhostId(null);
             compareRef.current=false;setCompare(false);clearMax();powerModeRef.current='hold';setPowerMode('hold');selectedPowerRef.current=.5;setSelectedPower(.5);
-            chooseOpenStation(station);returnLab('reset');linecraftRelationRef.current=null;
+            chooseOpenStation(station);
+            if(linkedSetup){
+              floorStateRef.current=linkedSetup.environment.floor;setFloorState(floorStateRef.current);
+              loadHole(3);updateSetup(linkedSetup.setup);exactPower(linkedSetup.setup.charge);
+            }else returnLab('reset');
+            linecraftRelationRef.current=null;
             showLinecraftShelf(false);
             setRetryNotice('Fresh setup · timed power · MAX off · PALLET A. Line Shelf retained.');
           };
           mountControl?.transition('linecraft-block-'+next.stage,change,inputSourceRef.current);
+        };
+        const loadSetupLink=()=>{
+          if(!linecraftLab||!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current||linecraftShelfOpenRef.current)return 'link-load-unavailable';
+          let linkedSetup:ReturnType<typeof restoreShareLine>;
+          try{linkedSetup=restoreLinecraftLinkHash(window.location.hash,BUILD_ID);}
+          catch(error){setShareNotice('Setup link not loaded. '+(error instanceof Error?error.message:String(error)));return 'invalid-setup-link';}
+          linecraftBlock(enterLinecraftOpen(linecraftSessionRef.current,'revisit'),linkedSetup.station,linkedSetup);
+          setRetryNotice('');
+          setShareNotice([linkedSetup.warning,'Linked setup loaded in Open. Starting pallet restored. Fire manually.'].filter(Boolean).join(' '));
         };
         const restoreLinecraft=(id:string)=>{
           if(!linecraftLab||!['ready','result'].includes(phaseRef.current)||linecraftReplayingRef.current)return false;
@@ -2277,6 +2304,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         }:null;
 
         actionsRef.current = {
+          loadSetupLink,
           selectStation: (id) => {
             if (phaseRef.current !== "ready" && phaseRef.current !== "result") return;
             if(linecraftLab){if(linecraftSessionRef.current.stage!=='open')return 'lesson-station-fixed';linecraftBlock(linecraftSessionRef.current,id);return;}
@@ -3109,6 +3137,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             {!history.length && <small>Your last three attempts are saved here, including interrupted shots.</small>}
           </div>
         </details>
+        {setupLinkAvailable&&phase==='ready'&&<LinecraftSetupLink onLoad={()=>performUI('loadSetupLink',[])}/>}
         <div className="aim-metrics downrange-metrics">
           <div className="metric-block">
             <span>YAW</span>
@@ -3350,6 +3379,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           {linecraftLab&&<>
             {lastShot&&<LinecraftShotReceipt key={lastShot.projectileId} shot={lastShot}/>}
             <p className="linecraft-result-persistence">Final receipt stays until you adjust or change location.</p>
+            {setupLinkAvailable&&<LinecraftSetupLink onLoad={()=>performUI('loadSetupLink',[])}/>}
             <LinecraftResult stage={linecraftSession.stage} lessonIndex={linecraftSession.lessonIndex} lessonCount={LINECRAFT_LESSONS.length} clauses={linecraftMatch.labels} clauseReached={linecraftMatch.reached} complete={linecraftMatch.complete} isLastLesson={linecraftSession.lessonIndex===LINECRAFT_LESSONS.length-1} canContinue={linecraftCanContinue} canKeep={Boolean(linecraftAttempt)} alreadyKept={linecraftAlreadyKept} shelfCount={linecraftKept.length} onKeep={()=>linecraftActionsRef.current?.keep()} onContinue={()=>linecraftActionsRef.current?.next()} onExplore={()=>linecraftActionsRef.current?.explore()} onShelf={()=>showLinecraftShelf(true)} onAdjust={()=>performUI('reset',[true])} showKeepExplanation={linecraftKeepHint}/>
             {linecraftNotice&&<p role="status">{linecraftNotice}</p>}
           </>}

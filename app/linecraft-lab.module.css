@@ -1,4 +1,5 @@
 .shell{min-width:0}
+.setupLink{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px 8px;color:#d8c8ae;font:11px/1.3 var(--font-mono,monospace);padding-top:5px;border-top:1px solid #635c4e}.setupLink small{font-size:10px;color:#adb7ac}.setupLink button{font:inherit;border:1px solid #b68d58;border-radius:3px;color:#f8e7ce;background:#3d3020;padding:6px 8px;cursor:pointer}.setupLink button:focus-visible{outline:2px solid #ffb35f;outline-offset:2px}
 .sentence{display:flex;align-items:center;min-width:0;flex-wrap:wrap;color:#e8d6bb}.sentence>span{white-space:nowrap}
 .sentence .clauses{margin:0 0 0 5px;font-size:13px}.sentence .clauses li:not([data-reached=true]){color:#a1a49a}
 .resultShelfButton{position:absolute;right:clamp(190px,16vw,270px);top:max(16px,env(safe-area-inset-top));z-index:43;padding:6px 9px;color:#e9e6dd;background:#202928;border:1px solid #68604f;border-radius:3px;cursor:pointer;font:11px var(--font-mono,monospace)}.resultShelfButton:disabled{opacity:.5;cursor:default}
