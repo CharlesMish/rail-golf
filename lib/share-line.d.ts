@@ -7,3 +7,4 @@ export function validateShareLine(value:unknown):ShareLineV1|ShareLineV2;
 export function encodeShareLine(value:ShareLineV1|ShareLineV2):string;
 export function decodeShareLine(value:string):ShareLineV1|ShareLineV2;
 export function restoreShareLine(value:ShareLineV1|ShareLineV2,currentBuild:string):{route:string;card:string;station:string;setup:ShotSetup;environment:FloorEnvironment;powerMode:'set';autoFire:false;warning:string};
+export function restoreLinecraftLinkHash(hash:string,currentBuild:string):ReturnType<typeof restoreShareLine>;

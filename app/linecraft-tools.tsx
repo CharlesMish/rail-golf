@@ -19,6 +19,14 @@ export type LinecraftShelfEntry = {
   scoreTotal?: number | null;
 };
 
+export function LinecraftSetupLink({onLoad}:{onLoad:()=>void}){
+  return <div className={styles.setupLink}>
+    <span>Setup link in address</span>
+    <button type="button" onClick={onLoad}>Load linked setup</button>
+    <small>Opens yard · clears recent history · keeps Shelf</small>
+  </div>;
+}
+
 function Clauses({clauses, reached}: {clauses: string[]; reached: number}) {
   return <ol className={styles.clauses} aria-label="Required events in order">
     {clauses.map((clause, index) => <li key={`${index}-${clause}`} data-reached={index < reached}>
