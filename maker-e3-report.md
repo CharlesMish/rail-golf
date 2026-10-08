@@ -3,10 +3,10 @@
 Draft PR [#42](https://github.com/CharlesMish/rail-golf/pull/42). Do not merge.
 
 - Branch: `studio/e3-gate-yard`
-- Final SHA: `bd360500d12c9479fa367302b53358f683391f31`
-- On-screen BUILD: `bd360500d1` (matches that SHA)
+- Playable SHA / on-screen BUILD: `bd360500d12c9479fa367302b53358f683391f31` (`BUILD bd360500d1`)
+- This report sits on top of that SHA and does not change the yard
 - Base: `d385b6da9b97cd73945c770cb01a6bc4d308b747`
-- Code diff against that base: 12 files, +572 / −97. This report is an additional file.
+- Code diff against that base, excluding this report: 12 files, +572 / −97
 
 ## Blank-canvas cherry-pick
 
