@@ -1466,6 +1466,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ghostLine?.dispose();
           ghostLine = null;
           if (worldRef.current) worldRef.current.ghostLine = null;
+          if (typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = "0";
         };
 
         const makeGhost = (memory: ShotMemory | undefined) => {
@@ -1495,6 +1496,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ghostLine.isPickable = false;
           ghostLine.isVisible = (typeof linecraftE1 !== "undefined" && linecraftE1) ? linecraftE1DrawsPreviousTrail(linecraftE1.arm) : ghostVisibleRef.current;
           if (worldRef.current) worldRef.current.ghostLine = ghostLine;
+          if (typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = String(lines.reduce((sum, line) => sum + line.length, 0));
         };
 
         const disposeFlight = () => {
