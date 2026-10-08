@@ -1,0 +1,17 @@
+export const LINECRAFT_E1_PROGRESS_KEY:'rail-golf-linecraft-e1-v1';
+export const LINECRAFT_E1_LIBRARY_SUFFIX:'-linecraft-e1-v1';
+export const LINECRAFT_E1_SURVEY_DATABASE:'rail-golf-linecraft-e1-survey';
+export const LINECRAFT_E1_SURVEY_VERSION:1;
+export const LINECRAFT_E1_MESSAGE:string;
+export type LinecraftE1Arm='a7'|'c3';
+export type LinecraftE1Station='gate'|'lumber';
+export type LinecraftE1Mode={arm:LinecraftE1Arm;station:LinecraftE1Station;drawPreviousTrail:boolean;shelfTrailButtons:boolean};
+export function linecraftE1LibraryKey():string;
+export function linecraftE1DrawsPreviousTrail(arm:string):boolean;
+export function linecraftE1Prefix(arm:LinecraftE1Arm):string;
+export function parseLinecraftE1Query(arm:string|null|undefined,station:string|null|undefined):{ok:true;mode:LinecraftE1Mode}|{ok:false;message:string};
+export function linecraftE1Storage(storage:Storage,arm:LinecraftE1Arm):Storage;
+export function linecraftE1OwnsKey(key:string):boolean;
+export function linecraftE1KeyCollides(key:string):boolean;
+export function stampLinecraftE1Export<T extends {records:readonly object[]}>(study:T,arm:LinecraftE1Arm):Omit<T,'records'>&{version:number;study:string;arm:LinecraftE1Arm;records:Array<object & {arm:LinecraftE1Arm}>};
+export function linecraftE1StudyCSV(study:{arm:string;records:readonly unknown[];orphanKeepObservations?:readonly unknown[]}):string;
