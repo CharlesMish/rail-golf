@@ -1789,6 +1789,11 @@ canvas {
 /* Quiet, screenshot-visible provenance on every course. */
 .build-identity { position:absolute; left:12px; bottom:3px; z-index:35; font:9px/1.2 var(--font-mono); color:#a0b1af; background:#071014cc; padding:2px 4px; pointer-events:none; }
 .floor-state-chip { position:absolute; top:80px; right:14px; z-index:7; padding:7px 10px; color:#eadcc7; background:#102023ed; border:1px solid #677a74; font:12px/1.4 var(--font-mono); pointer-events:none; }
+.floor-state-chip[data-color="amber"] { color:#f3c27a; border-color:#d0892e; }
+.floor-state-chip[data-color="violet"] { color:#d8c6ff; border-color:#8d6ad8; }
+.gate-yard-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:8px; }
+.gate-yard-actions button { min-height:36px; padding:6px 10px; border:1px solid #8d7352; background:#1b3031; color:#f0e2cc; font:12px var(--font-mono); cursor:pointer; }
+.gate-yard-actions span { font:12px var(--font-mono); color:#e5d6b8; }
 @media (max-height:520px) { .floor-state-chip { top:64px; font-size:10px; padding:4px 7px; } }
 
 /* Experimental instruments only. Production score/result layouts are untouched. */

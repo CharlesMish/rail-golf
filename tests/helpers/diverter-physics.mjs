@@ -1,4 +1,5 @@
 import {buildKickerPallet} from '../../lib/kicker-pallet.js';
+import {buildGateYardPallet} from '../../lib/gate-yard.js';
 import {createRunTracker} from '../../lib/line-run.js';
 import {createLineLifecycle} from '../../lib/line-lifecycle.js';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '../../lib/line-recognition.js';
@@ -14,7 +15,7 @@ import {DIVERTER_HOLE,floorForAction} from '../../lib/diverter-lab.js';
 import {stationMuzzle,stationAim} from '../../lib/stations.js';
 import {RAIL_RULES,chargeToSpeed,classifyChallengeRuling} from '../../lib/rail-golf-v02.js';
 Logger.LogLevels=0;
-export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false}={}){
+export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false,gateYard=false,geometry=null}={}){
  const hole=selectedHole ?? (integrated?COURTYARD_DIVERTER:DIVERTER_HOLE);
  const engine=new NullEngine({renderWidth:844,renderHeight:390,textureSize:512,deterministicLockstep:false,lockstepMaxSteps:4}),scene=new Scene(engine);
  scene.enablePhysics(new Vector3(0,-RAIL_RULES.gravity,0),new HavokPlugin(true,havok));
@@ -38,7 +39,7 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
   buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:!scoreLab,lineLab:scoreLab,hideSkyToken:linecraft,...(linecraft?{extraPads:[LINECRAFT_SECOND_PAD]}:{})});
   if(linecraft)buildLinecraftReflectors(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b));
  }
- const world=scoreLab?(kicker?buildKickerPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,hole.target):buildYardLandingAuthority(hole.target,initial)):buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});
+ const world=gateYard?buildGateYardPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,null,geometry):scoreLab?(kicker?buildKickerPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,hole.target):buildYardLandingAuthority(hole.target,initial)):buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});
  let id=0;
  return {
   world,scene,
