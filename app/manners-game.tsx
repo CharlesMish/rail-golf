@@ -11,7 +11,7 @@ import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type I
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
 import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName} from './linecraft-tools';
 import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftActualDiverges,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
-import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
+import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
 import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
 import {SurveyTools} from './survey-tools';
 import {
@@ -1466,7 +1466,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ghostLine?.dispose();
           ghostLine = null;
           if (worldRef.current) worldRef.current.ghostLine = null;
-          if (typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = "0";
+          if (!(typeof linecraftE1 !== "undefined" && linecraftE1) && typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = "0";
         };
 
         const makeGhost = (memory: ShotMemory | undefined) => {
@@ -1496,7 +1496,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           ghostLine.isPickable = false;
           ghostLine.isVisible = (typeof linecraftE1 !== "undefined" && linecraftE1) ? linecraftE1DrawsPreviousTrail(linecraftE1.arm) : ghostVisibleRef.current;
           if (worldRef.current) worldRef.current.ghostLine = ghostLine;
-          if (typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = String(lines.reduce((sum, line) => sum + line.length, 0));
+          if (!(typeof linecraftE1 !== "undefined" && linecraftE1) && typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = String(lines.reduce((sum, line) => sum + line.length, 0));
         };
 
         const disposeFlight = () => {
@@ -2982,7 +2982,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       {intentLab&&<IntentControls condition={intentCondition} sentenceId={intentSentence} sentences={intentOptions} clauseReached={intentMatch.reached} headline={lineLedger.length?intentMatch.headline:undefined} disabled={phase!=='ready'} onCondition={value=>intentActionsRef.current?.condition(value)} onSentence={id=>intentActionsRef.current?.sentence(id)}/> }
       {linecraftLab&&<LinecraftControls stage={linecraftSession.stage} lessonIndex={linecraftSession.lessonIndex} lessonCount={LINECRAFT_LESSONS.length} clauses={linecraftMatch.labels} clauseReached={linecraftMatch.reached} disabled={!(phase==='ready'||(phase==='result'&&linecraftSession.stage==='explore'))||linecraftShelfOpen} fired={linecraftSession.attemptIds.length>0} onOpen={()=>linecraftActionsRef.current?.open()} onNext={()=>linecraftActionsRef.current?.next()} onRestart={()=>linecraftActionsRef.current?.restart()} replaying={linecraftReplaying} onStopReplay={()=>linecraftActionsRef.current?.stopReplay()} showLessonNav={!linecraftE1}/>}
       {linecraftLab&&!linecraftShelfOpen&&!linecraftReplaying&&<button type="button" className={linecraftResultShelfClassName} onClick={()=>showLinecraftShelf(true)} disabled={!['ready','result'].includes(phase)}>Shelf · {linecraftKept.length}/4</button>}
-      {linecraftLab&&linecraftShelfOpen&&<LinecraftShelf entries={linecraftShelfEntries} ghostId={linecraftGhostId} onGhost={id=>linecraftActionsRef.current?.ghost(id)} onRestore={id=>linecraftActionsRef.current?.restore(id)} onReplay={id=>linecraftActionsRef.current?.replay(id)} onRemove={id=>linecraftActionsRef.current?.remove(id)} onShare={id=>{const entry=linecraftKept.find(item=>item.attemptId===id);if(entry)void copyLineLink(entry.line);}} onExport={exportLinecraft} shareLink={shareLink} scoreVisible={linecraftSession.scoreVisible} onScoreVisible={value=>linecraftActionsRef.current?.score(value)} onClose={()=>showLinecraftShelf(false)} disabled={!['ready','result'].includes(phase)} showTrailActions={!linecraftE1||linecraftE1.shelfTrailButtons} status={[linecraftNotice,shareNotice,`${surveyStatus.count} attempts · ${surveyStatus.pending} pending`,surveyStatus.warning,linecraftShelfRef.current?.warning(),linecraftDecisionsRef.current?.warning()].filter(Boolean).join(' · ')}/>}
+      {linecraftLab&&linecraftShelfOpen&&<LinecraftShelf entries={linecraftShelfEntries} ghostId={linecraftGhostId} onGhost={id=>linecraftActionsRef.current?.ghost(id)} onRestore={id=>linecraftActionsRef.current?.restore(id)} onReplay={id=>linecraftActionsRef.current?.replay(id)} onRemove={id=>linecraftActionsRef.current?.remove(id)} onShare={id=>{const entry=linecraftKept.find(item=>item.attemptId===id);if(entry)void copyLineLink(entry.line);}} onExport={exportLinecraft} shareLink={shareLink} scoreVisible={linecraftSession.scoreVisible} onScoreVisible={value=>linecraftActionsRef.current?.score(value)} onClose={()=>showLinecraftShelf(false)} disabled={!['ready','result'].includes(phase)} showTrailActions={!linecraftE1||linecraftE1.shelfTrailButtons} contract={linecraftE1?LINECRAFT_E1_SHELF_CONTRACT:undefined} setupLinks={linecraftE1?LINECRAFT_E1_SHELF_LINKS:undefined} status={[linecraftNotice,shareNotice,`${surveyStatus.count} attempts · ${surveyStatus.pending} pending`,surveyStatus.warning,linecraftShelfRef.current?.warning(),linecraftDecisionsRef.current?.warning()].filter(Boolean).join(' · ')}/>}
       {!linecraftLab&&!intentLab&&<nav inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="manners-scorecard" aria-label={diverterLab ? "Experimental lab" : courtyard ? "Timber Courtyard challenges" : "Practice Range lessons"}>
         {HOLES.map((item, index) => {
           const itemRecord = records[item.id];

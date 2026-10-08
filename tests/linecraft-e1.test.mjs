@@ -12,6 +12,7 @@ import {createSurveyArchive,createSurveyLog,makeSurveyRecord} from '../lib/surve
 import {createActionTrace} from '../lib/action-trace.js';
 import {
   LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SURVEY_VERSION,LINECRAFT_E1_MESSAGE,
+  LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,
   parseLinecraftE1Query,linecraftE1DrawsPreviousTrail,linecraftE1Prefix,linecraftE1Storage,linecraftE1LibraryKey,linecraftE1OwnsKey,linecraftE1KeyCollides,
   stampLinecraftE1Export,linecraftE1StudyCSV,
 } from '../lib/linecraft-e1.js';
@@ -147,6 +148,15 @@ test('the experiment route is opt-in and production routes stay untouched',async
  assert.match(expression('rememberFlight'),/if\(!intentLab&&!linecraftLab\)try/);
  assert.match(source,/showLessonNav=\{!linecraftE1\}/);
  assert.match(source,/showTrailActions=\{!linecraftE1\|\|linecraftE1\.shelfTrailButtons\}/);
+ assert.match(source,/contract=\{linecraftE1\?LINECRAFT_E1_SHELF_CONTRACT:undefined\}/);
+ assert.match(source,/setupLinks=\{linecraftE1\?LINECRAFT_E1_SHELF_LINKS:undefined\}/);
+ assert.equal(/ghost|replay/i.test(LINECRAFT_E1_SHELF_CONTRACT+LINECRAFT_E1_SHELF_LINKS),false);
+ const shelf=await readFile(new URL('../app/linecraft-tools.tsx',import.meta.url),'utf8');
+ assert.match(shelf,/Ghost: recorded history, never prediction\. Replay: sampled path/);
+ assert.match(shelf,/contain the recorded replay/);
+ const recall=[...source.matchAll(/canvas\.dataset\.recallSamples/g)];
+ assert.equal(recall.length,2);
+ for(const write of recall)assert.match(source.slice(Math.max(0,write.index-160),write.index),/!\(typeof linecraftE1 !== "undefined" && linecraftE1\)/);
  assert.match(source,/!linecraftE1 && <label>/);
  assert.equal(source.includes('aria-label="Open Line station"'),true);
 });

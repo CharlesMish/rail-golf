@@ -3,6 +3,8 @@ export const LINECRAFT_E1_LIBRARY_SUFFIX:'-linecraft-e1-v1';
 export const LINECRAFT_E1_SURVEY_DATABASE:'rail-golf-linecraft-e1-survey';
 export const LINECRAFT_E1_SURVEY_VERSION:1;
 export const LINECRAFT_E1_MESSAGE:string;
+export const LINECRAFT_E1_SHELF_CONTRACT:string;
+export const LINECRAFT_E1_SHELF_LINKS:string;
 export type LinecraftE1Arm='a7'|'c3';
 export type LinecraftE1Station='gate'|'lumber';
 export type LinecraftE1Mode={arm:LinecraftE1Arm;station:LinecraftE1Station;drawPreviousTrail:boolean;shelfTrailButtons:boolean};
