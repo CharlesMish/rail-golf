@@ -617,7 +617,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const documentIdentity=lineLab?getDocumentProvenance(window,document):null;
+    const documentIdentity=lineLab?getDocumentProvenance(window,document,undefined,gateYardRef.current&&gateArmRef.current?`rail-golf:gate-yard:${gateArmRef.current}:tab-id`:undefined):null;
     if(lineLab&&!componentIdRef.current)componentIdRef.current=crypto.randomUUID();
     const mountIdentity=documentIdentity?.mount(componentIdRef.current!);
     const traceStorage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit trace clear');}};
@@ -1748,7 +1748,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               shotResult.detail += ` ${[...flight.deliveryRoutes].join(' + ').toUpperCase()} reached. Land on the bell in this shot to collect the route.`;
             }
           }
-          if (contactKind === 'first-kiss') shotResult.detail += ` ${receipt}`;
+          if (contactKind === 'first-kiss' && !gateYardRef.current) shotResult.detail += ` ${receipt}`;
           flight.pendingResult = shotResult;
           const next = {
             ...recordsRef.current,
@@ -2516,7 +2516,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         recordsRef.current = armProgress;
         setRecords(armProgress);
         const resumeIndex = chooseResumeHole(saved, HOLES);
-        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : linecraftLab ? 3 : intentLab ? 3 : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
+        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : linecraftLab ? 3 : intentLab ? 3 : timberReceiver ? 3 : gateYardRef.current ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
         const entryBefore=lineLab?readControlState():null;
         if(gateYardRef.current&&gateArmRef.current){const next=gateYardLoadState(gateArmRef.current,window.sessionStorage);floorStateRef.current=next;setFloorState(next);}

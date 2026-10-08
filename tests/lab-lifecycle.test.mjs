@@ -17,6 +17,15 @@ const state={phase:'ready',card:'open-line',station:'gate',floor:'A'};
 const entry=action=>({action,source:'internal/programmatic',before:state,after:state,accepted:true,reason:'observed'});
 const event=(name,detail={})=>Object.assign(new Event(name,{cancelable:true}),detail);
 
+test('a caller can keep tab identity on its own session key',()=>{
+ const session=storage(),win=new EventTarget(),doc=new EventTarget();
+ Object.assign(win,{sessionStorage:session,location:{href:'https://example.test/lab/gate-yard',pathname:'/lab/gate-yard',hash:''},performance:{timeOrigin:1,getEntriesByType:()=>[{type:'navigate'}]}});
+ Object.assign(doc,{visibilityState:'visible',wasDiscarded:false,readyState:'complete'});
+ const custom=getDocumentProvenance(win,doc,uuid,'rail-golf:gate-yard:m4:tab-id');
+ assert.equal(session.getItem('rail-golf:gate-yard:m4:tab-id'),custom.tabId());
+ assert.equal(session.getItem('rail-golf:line-tab-id:v1'),null);
+});
+
 test('page identity separates fresh tab, same-tab reload, same-document component/effect mounts, and BFCache restoration',()=>{
  const first=page(),component=uuid(),a=first.identity.mount(component),b=first.identity.mount(component),c=first.identity.mount(uuid());
  assert.notEqual(a.mountId,b.mountId);assert.equal(a.componentId,b.componentId);assert.notEqual(b.componentId,c.componentId);assert.equal(c.mountNumber,3);
