@@ -1,5 +1,5 @@
 import type {LineEvidence,scoreLine} from './line-score';
-export type SurveyMeta={build:string;card:string;station:string;setup:{railIndex:number;yaw:number;elevation:number;charge:number};launchSpeed:number;environment?:{floor:'A'|'B'}};
+export type SurveyMeta={build:string;card:string;station:string;setup:{railIndex:number;yaw:number;elevation:number;charge:number};launchSpeed:number;environment?:{floor:'A'|'B'};set?:'1'|'2'};
 export type SurveyTicket=SurveyMeta&{id:string;session:string;sequence:number;startedAt:string};
 export type SurveyRecord=SurveyTicket&{version:1;resolvedAt:string;ending:string;targetClear:boolean;receipt:Omit<ReturnType<typeof scoreLine>,'ignored'>;evidence:unknown[];contacts:unknown[];rawEventCount:number;rawContactCount:number;omittedEvidence:number;omittedContactGroups:number};
 export type SurveyStatus={count:number;pending:number;evicted:number;warning:string};
