@@ -30,13 +30,13 @@ function Clauses({clauses, reached}: {clauses: string[]; reached: number}) {
 export function LinecraftControls({
   stage, lessonIndex, lessonCount, clauses = [], clauseReached = 0,
   disabled, onOpen, onNext, onRestart, fired,
-  replaying = false, onStopReplay,
+  replaying = false, onStopReplay, showLessonNav = true,
 }: {
   stage: LinecraftStage; lessonIndex: number; lessonCount: number;
   clauses?: string[]; clauseReached?: number;
   disabled: boolean; fired: boolean;
   onOpen: () => void; onNext: () => void; onRestart: () => void;
-  replaying?: boolean; onStopReplay?: () => void;
+  replaying?: boolean; onStopReplay?: () => void; showLessonNav?: boolean;
 }) {
   if (replaying) return <section className={styles.controls} data-replaying="true" aria-label="Recorded line replay">
     <div className={styles.heading}><span>RECORDED REPLAY</span><button type="button" onClick={onStopReplay}>STOP REPLAY</button></div>
@@ -45,11 +45,11 @@ export function LinecraftControls({
   return <section className={styles.controls} data-stage={stage} aria-label="Linecraft Lab" inert={disabled ? true : undefined}>
     <div className={styles.heading}>
       {stage === "learn" ? <div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div> : <span>{stage==='explore'?'OPEN · YARD GATE':'OPEN YARD'}</span>}
-      <div className={styles.navigation}>
+      {showLessonNav && <div className={styles.navigation}>
         {stage === 'learn' ? <button type="button" className={styles.quiet} onClick={onOpen} disabled={disabled}>Skip Lessons</button>
           : stage === 'explore' ? <button type="button" className={styles.quiet} onClick={onNext} disabled={disabled}>Next Lesson</button>
           : <button type="button" className={styles.quiet} onClick={onRestart} disabled={disabled}>Restart Lessons</button>}
-      </div>
+      </div>}
     </div>
     {stage === "learn" && !fired && <p className={styles.teaching}>Drag to aim · hold and release to fire · Survey names faces.</p>}
   </section>;
@@ -59,10 +59,12 @@ export function LinecraftControls({
 export function LinecraftResult({
   stage, lessonIndex, lessonCount, clauses, clauseReached, complete, isLastLesson, canContinue, canKeep, alreadyKept, shelfCount,
   onKeep, onContinue, onExplore, onShelf, onAdjust, showKeepExplanation,
+  keepHint = "Keep saves this line to your Shelf so you can restore or replay it later.",
 }: {
   stage: LinecraftStage; lessonIndex:number; lessonCount:number; clauses:string[]; clauseReached:number;
   complete: boolean; isLastLesson: boolean; canContinue: boolean; canKeep: boolean; alreadyKept: boolean;
   shelfCount: number; onKeep: () => void; onContinue: () => void; onExplore: () => void; onShelf: () => void; onAdjust: () => void; showKeepExplanation:boolean;
+  keepHint?: string;
 }) {
   return <section className={styles.result} aria-label={`${stage === "learn" ? "Learn" : "Open"} line result`}>
     {stage==='learn'&&<div className={styles.sentence}><span>{lessonIndex+1} / {lessonCount} · </span><Clauses clauses={clauses} reached={clauseReached}/></div>}
@@ -74,20 +76,23 @@ export function LinecraftResult({
       <button type="button" className={styles.quiet} onClick={onKeep} disabled={!canKeep || alreadyKept || shelfCount >= 4}>{alreadyKept ? "Kept ✓" : "Keep Line"}</button>
       {stage==='learn'&&!complete&&canContinue&&<button type="button" className={styles.quiet} onClick={onContinue}>{isLastLesson?'Skip Lessons':'Skip Lesson'}</button>}
     </div>
-    {shelfCount >= 4 && !alreadyKept ? <p className={styles.hint}>Shelf full. <button type="button" className={styles.quiet} onClick={onShelf}>Manage Shelf</button></p> : showKeepExplanation && <p className={styles.hint}>Keep saves this line to your Shelf so you can restore or replay it later.</p>}
+    {shelfCount >= 4 && !alreadyKept ? <p className={styles.hint}>Shelf full. <button type="button" className={styles.quiet} onClick={onShelf}>Manage Shelf</button></p> : showKeepExplanation && <p className={styles.hint}>{keepHint}</p>}
   </section>;
 }
 
 /** Four local slots, independent from Learn/Open. Runtime supplies all recorded authority. */
 export function LinecraftShelf({
   entries, ghostId, onGhost, onRestore, onReplay, onRemove, onShare, onExport, status,
-  disabled = false, onClose, shareLink, scoreVisible, onScoreVisible,
+  disabled = false, onClose, shareLink, scoreVisible, onScoreVisible, showTrailActions = true,
+  contract = "A line ends at first ground contact. Restore: exact setup in Open, then fire manually; no lesson credit. Ghost: recorded history, never prediction. Replay: sampled path over distance-normalized six seconds, with starting pallet frozen; no new physics.",
+  setupLinks = "Setup links restore a launch setup. They never fire automatically or contain the recorded replay.",
 }: {
   entries: LinecraftShelfEntry[]; ghostId: string | null; onGhost: (id: string | null) => void;
   onRestore: (id: string) => void; onReplay: (id: string) => void; onRemove: (id: string) => void;
   onShare?: (id: string) => void; onExport: (format: "json" | "csv") => void;
   status?: string; disabled?: boolean; onClose?: () => void; shareLink?: string;
-  scoreVisible?: boolean; onScoreVisible?: (visible:boolean)=>void;
+  scoreVisible?: boolean; onScoreVisible?: (visible:boolean)=>void; showTrailActions?: boolean;
+  contract?: string; setupLinks?: string;
 }) {
   const headingId = useId();
   const dialogRef = useRef<HTMLElement>(null);
@@ -112,21 +117,21 @@ export function LinecraftShelf({
     <aside ref={dialogRef} className={styles.shelf} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby={headingId}>
       <div className={styles.heading}><h2 id={headingId}>LINE SHELF <span>{entries.length} / 4</span></h2>{onClose && <button type="button" onClick={onClose}>CLOSE</button>}</div>
       <p className={styles.hint}>Saved in this browser. The shelf survives reload; each visit starts a fresh study session. Export before clearing browser data.</p>
-      <p className={styles.contract}>A line ends at first ground contact. Restore: exact setup in Open, then fire manually; no lesson credit. Ghost: recorded history, never prediction. Replay: sampled path over distance-normalized six seconds, with starting pallet frozen; no new physics.</p>
+      <p className={styles.contract}>{contract}</p>
       {entries.length === 0 ? <p className={styles.empty}>Make a line in Learn or Open, then choose KEEP LINE.</p> : <ol className={styles.entries}>
         {entries.map((entry, index) => <li key={entry.id}>
           <div className={styles.entryTitle}><span className={styles.slot}>{String(index + 1).padStart(2, "0")}</span><div><strong>{entry.title}</strong><small>{entry.stationLabel} · {entry.stage.toUpperCase()}</small></div></div>
           {entry.description && <p className={styles.description}>{entry.description}</p>}
           <div className={styles.actions}>
             <button type="button" disabled={disabled} onClick={() => onRestore(entry.id)}>RESTORE</button>
-            <button type="button" disabled={disabled} aria-pressed={ghostId === entry.id} onClick={() => onGhost(ghostId === entry.id ? null : entry.id)}>{ghostId === entry.id ? "HIDE GHOST" : "GHOST"}</button>
-            <button type="button" disabled={disabled} onClick={() => onReplay(entry.id)}>PLAY REPLAY</button>
+            {showTrailActions && <button type="button" disabled={disabled} aria-pressed={ghostId === entry.id} onClick={() => onGhost(ghostId === entry.id ? null : entry.id)}>{ghostId === entry.id ? "HIDE GHOST" : "GHOST"}</button>}
+            {showTrailActions && <button type="button" disabled={disabled} onClick={() => onReplay(entry.id)}>PLAY REPLAY</button>}
             {onShare && <button type="button" disabled={disabled} onClick={() => onShare(entry.id)}>COPY SETUP LINK</button>}
             <button type="button" disabled={disabled} className={styles.quiet} aria-label={`Remove ${entry.title}`} onClick={() => onRemove(entry.id)}>REMOVE</button>
           </div>
         </li>)}
       </ol>}
-      {onShare && <p className={styles.contract}>Setup links restore a launch setup. They never fire automatically or contain the recorded replay.</p>}
+      {onShare && <p className={styles.contract}>{setupLinks}</p>}
       {shareLink && <label className={styles.shareLink}>Setup link · select to copy<input type="text" readOnly value={shareLink} aria-label="Kept line setup link" onFocus={event => event.currentTarget.select()}/></label>}
       <footer className={styles.export}><details><summary>Study tools</summary>
         {onScoreVisible&&<label className={styles.scoreToggle}><input type="checkbox" checked={scoreVisible} disabled={disabled} onChange={event=>onScoreVisible(event.target.checked)}/> Show provisional score in Open</label>}
