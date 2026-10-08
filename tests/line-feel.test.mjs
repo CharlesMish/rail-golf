@@ -1,5 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
 import Havok from '@babylonjs/havok';
+import {Vector3} from '@babylonjs/core';
 import {createRunTracker,RUN_RULE} from '../lib/line-run.js';
 import {scoreLine,normalizeLineEvidence,recordLineReceipt,normalizeLineReceipt} from '../lib/line-score.js';
 import {createRedirectTracker,REDIRECT_GATES} from '../lib/line-recognition.js';
@@ -110,4 +111,15 @@ test('real mill column→panel episode qualifies one assembly departure; post-ro
 });
 test('camera heading smoothly turns through a true 180-degree return instead of normalizing back to the old heading',()=>{
  let direction={x:0,y:0,z:1};for(let i=0;i<120;i++){const next=followHeading(direction,{x:0,y:1,z:-20},1/120);assert.ok(Math.hypot(next.x-direction.x,next.z-direction.z)<.14);direction=next;}assert.ok(direction.z<-.99);
+});
+test('a near-vertical kick keeps the Babylon heading instead of feeding undefined components to the camera',()=>{
+ const velocity={x:2.2145642524645792e-15,y:19.364574432373047,z:-0.08061099052429199};
+ assert.ok(Math.hypot(velocity.x,velocity.z)<.1);
+ const plain=followHeading({x:1.2246467991473532e-16,y:0,z:-1},velocity,.04);
+ assert.equal(plain.z,-1);assert.ok(Math.abs(plain.x)<1e-12);
+ const direction=new Vector3(1.2246467991473532e-16,0,-1);
+ const kept=followHeading(direction,velocity,.04);
+ assert.equal(kept.x,direction.x);assert.equal(kept.y,direction.y);assert.equal(kept.z,direction.z);
+ direction.set(kept.x,0,kept.z);
+ assert.equal(direction.x,1.2246467991473532e-16);assert.equal(direction.z,-1);
 });
