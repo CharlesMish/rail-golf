@@ -2751,7 +2751,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             hole.target ? new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z) : null);
           const switchMarker = gateYardRef.current ? GATE_YARD_LEVER : lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH;
           projectLabel(switchLabelRef.current, diverterLab ? new Vector3(switchMarker.x, gateYardRef.current ? switchMarker.y + 2.6 : 7, switchMarker.z) : null);
-          projectLabel(floorLabelRef.current, diverterLab ? new Vector3(gateYardRef.current ? GATE_YARD_PALLET.x : lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x, gateYardRef.current ? GATE_YARD_PALLET.y + 3.4 : 6, (gateYardRef.current ? GATE_YARD_PALLET : lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
+          // Label anchor only. The extra lift keeps PALLET clear of SKIP PAD at the default aim; the slab is unchanged.
+          projectLabel(floorLabelRef.current, diverterLab ? new Vector3(gateYardRef.current ? GATE_YARD_PALLET.x : lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x, gateYardRef.current ? GATE_YARD_PALLET.y + 5.6 : 6, (gateYardRef.current ? GATE_YARD_PALLET : lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
           const mechanism = linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks'?'bank':hole.requiredTags[0];
           const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
