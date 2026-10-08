@@ -388,7 +388,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const HOLES: readonly GameCard[] = lineLab ? labSelection.cards : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = gateYard ? GATE_YARD_PROGRESS_KEY : linecraftLab ? "rail-golf-linecraft-v1" : intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const STORAGE_KEY = linecraftLab ? "rail-golf-linecraft-v1" : intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const progressKey = gateYard ? GATE_YARD_PROGRESS_KEY : STORAGE_KEY;
+  const progressKeyRef = useRef(progressKey);
+  progressKeyRef.current = progressKey;
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -1631,8 +1634,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           recordsRef.current = next;
           setRecords(next);
           try {
-            if(gateYardRef.current&&gateArmRef.current) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(gateYardProgressEnvelope(readStoredJson(STORAGE_KEY), gateArmRef.current, next)));
-            else window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+            if(gateYardRef.current&&gateArmRef.current) window.localStorage.setItem(progressKeyRef.current, JSON.stringify(gateYardProgressEnvelope(readStoredJson(progressKeyRef.current), gateArmRef.current, next)));
+            else window.localStorage.setItem(progressKeyRef.current, JSON.stringify(next));
           } catch {
             // Progress is a convenience; a blocked storage area must not block play.
           }
@@ -1664,8 +1667,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           if(lineLab){const run=current.runTracker.snapshot();if(run)appendLineEvidence(current.ledger,run);}
           if(lineLab){if(!current.ledger.some(e=>e.kind==='termination'))appendLineEvidence(current.ledger,{kind:'termination',reason:'retry-interrupted'});current.redirectTracker.finish();for(const e of current.redirectTracker.drainDiagnostics())appendLineEvidence(current.ledger,e);}
           if(lineLab&&current.surveyTicket){
-            const ticket=gateYardRef.current&&gateArmRef.current?annotateGateYardTicket(current.surveyTicket,gateArmRef.current,current.gateRelation??'fresh',floorStateRef.current,current.contacts,current.ledger):current.surveyTicket;
-            surveyLogRef.current?.append(ticket,current.ledger);
+            if(gateYardRef.current&&gateArmRef.current) Object.assign(current.surveyTicket, annotateGateYardTicket(current.surveyTicket,gateArmRef.current,current.gateRelation??'fresh',floorStateRef.current,current.contacts,current.ledger));
+            surveyLogRef.current?.append(current.surveyTicket,current.ledger);
           }
           if(lineLab){captionClaims();setLineLedger(current.ledger.map(e=>({...e})));if(!intentLab||intentConditionRef.current==='score')setSessionBest(best=>({...best,[HOLES[activeHoleIndex()].id]:Math.max(best[HOLES[activeHoleIndex()].id]??0,scoreLine(current.ledger).total)}));}
           const hole = current.launchContext?HOLES.find(card=>card.id===current.launchContext!.card)!:HOLES[activeHoleIndex()];
@@ -2508,8 +2511,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             for (const line of [...recent,...wins]) projectileCounter = Math.max(projectileCounter,line.projectileId);
           }
         } catch { /* Malformed or unavailable storage starts an empty collection. */ }
-        const saved = linecraftLab?{}:intentLab?{}:loadProgress(HOLES, STORAGE_KEY);
-        const armProgress = gateYardRef.current&&gateArmRef.current?loadProgress(HOLES, STORAGE_KEY, gateYardProgressSlice(readStoredJson(STORAGE_KEY), gateArmRef.current)):saved;
+        const saved = linecraftLab?{}:intentLab?{}:loadProgress(HOLES, progressKeyRef.current);
+        const armProgress = gateYardRef.current&&gateArmRef.current?loadProgress(HOLES, progressKeyRef.current, gateYardProgressSlice(readStoredJson(progressKeyRef.current), gateArmRef.current)):saved;
         recordsRef.current = armProgress;
         setRecords(armProgress);
         const resumeIndex = chooseResumeHole(saved, HOLES);
@@ -2977,7 +2980,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>{gateYard?'LEVER':<>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</>}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>{gateYard?'PALLET':<>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</>}</strong></div>
       </>}
-      {lineLab && !gateYard && intentScored && phase==='ready' && linecraftScored && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
+      {lineLab && intentScored && phase==='ready' && linecraftScored && !toolsOpen && !gateYard && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
       {lineLab && claimCaption && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
       <canvas
         ref={canvasRef}
