@@ -147,7 +147,7 @@ test('storage, export and stop records stay in the gate-yard namespace and count
 
 const hv = await Havok({wasmBinary:await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url))});
 const hole = selectOpenLineStation('gate');
-const REFERENCE = {railIndex:1, originX:0, yaw:-25, elevation:10, charge:0.4};
+const REFERENCE = {railIndex:1, originX:0, yaw:15, elevation:10, charge:0.4};
 
 function gateHarness(initial='A'){
   return diverterHarness(hv, initial, true, hole, {scoreLab:true, linecraft:true, gateYard:true});
