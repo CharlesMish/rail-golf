@@ -61,7 +61,7 @@ test('arms share one DOM except the BUILD suffix', () => {
   assert.match(source, /if\(!intentLab&&!linecraftLab\)try/);
   assert.match(source, /hideSkyToken:linecraftLab\|\|gateYardRef\.current/);
   assert.match(source, /linecraftLab\|\|gateYardRef\.current \? \[\] : RANGE_TARGETS/);
-  assert.match(source, /timberReceiver \? 3 : gateYardRef\.current \? 3 : resolveSessionStartHoleIndex/);
+  assert.match(source, /intentLab \? 3 : gateYardRef\.current \? 3 : timberReceiver \? 3 : resolveSessionStartHoleIndex/);
   assert.match(source, /contactKind === 'first-kiss' && !gateYardRef\.current/);
   assert.match(source, /rail-golf:gate-yard:\$\{gateArmRef\.current\}:tab-id/);
 });

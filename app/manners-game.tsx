@@ -2516,7 +2516,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         recordsRef.current = armProgress;
         setRecords(armProgress);
         const resumeIndex = chooseResumeHole(saved, HOLES);
-        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : linecraftLab ? 3 : intentLab ? 3 : timberReceiver ? 3 : gateYardRef.current ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
+        const startIndex = sharedStart ? Math.max(0,HOLES.findIndex(h=>h.id===sharedStart!.card)) : linecraftLab ? 3 : intentLab ? 3 : gateYardRef.current ? 3 : timberReceiver ? 3 : resolveSessionStartHoleIndex(addressLabRef.current, resumeIndex);
         const startHole = HOLES[startIndex];
         const entryBefore=lineLab?readControlState():null;
         if(gateYardRef.current&&gateArmRef.current){const next=gateYardLoadState(gateArmRef.current,window.sessionStorage);floorStateRef.current=next;setFloorState(next);}
