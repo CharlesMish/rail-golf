@@ -2801,7 +2801,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             projectLabel(sideSkipLabelRef.current, new Vector3(LINECRAFT_SECOND_PAD.x, 3.2, LINECRAFT_SECOND_PAD.z), 'frame');
           }
           const sharedPad = withSharedYardPad(hole).boost;
-          projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
+          projectLabel(deliveryPadRef.current, gateYardRef.current || !sharedPad ? null : new Vector3(sharedPad.x, 2.4, sharedPad.z));
           projectLabel(skyLabelRef.current, ((lineLab && !gateYardRef.current) || hole.id === 'mill-delivery') ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
           for (const step of CASCADE_STEPS) {
             projectLabel(cascadeLabelRefs.current[step.id] ?? null, (hole.id === 'lumber-cascade'||(linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id!=='banks')) ? new Vector3(step.x, step.top+1, step.z) : null);
@@ -3129,9 +3129,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div ref={sideSkipLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="boost"><strong>SKIP PAD</strong></div>
       </>}
 
-      {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}><strong>{linecraftLab?"BANK B":"2 · BANK B"}</strong></div>}
+      {courtyard && !gateYard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}><strong>{linecraftLab?"BANK B":"2 · BANK B"}</strong></div>}
 
-      {courtyard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
+      {courtyard && !gateYard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
       {lineLab && !linecraftLab && !gateYard && <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber"><strong>SKY TOKEN</strong></div>}
       {!lineLab && hole.id === 'mill-delivery' && <>
         <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim}><strong>GOLD SKY TOKEN</strong></div>
