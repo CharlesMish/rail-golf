@@ -12,7 +12,7 @@ import {createSurveyArchive,createSurveyLog,makeSurveyRecord} from '../lib/surve
 import {createActionTrace} from '../lib/action-trace.js';
 import {
   LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SURVEY_VERSION,LINECRAFT_E1_MESSAGE,
-  LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,
+  LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1HidesShotText,
   parseLinecraftE1Query,linecraftE1DrawsPreviousTrail,linecraftE1Prefix,linecraftE1Storage,linecraftE1LibraryKey,linecraftE1OwnsKey,linecraftE1KeyCollides,
   stampLinecraftE1Export,linecraftE1StudyCSV,
 } from '../lib/linecraft-e1.js';
@@ -119,17 +119,43 @@ test('NO-TRAIL never builds the previous-shot ghost; TRAIL still does and stays 
    linecraftE1:arm?{arm,drawPreviousTrail:arm==='a7',shelfTrailButtons:arm==='a7'}:null,
    linecraftE1DrawsPreviousTrail,disposeGhost(){context.disposed=(context.disposed??0)+1;},
    HOLES:[{id:'open-line'}],activeHoleIndex:()=>0,compareRef:{current:true},historyRef:{current:{'open-line':[memory,{...memory,projectileId:3}]}},
-   Color4:class{constructor(){}},Color3:{White:()=>({})},Vector3:Vec,scene:{},ghostVisibleRef:{current:false},worldRef:{current:{}},
-   MeshBuilder:{CreateLineSystem:(name,options)=>{const mesh={name,options,isVisible:null};calls.push(mesh);return mesh;}},
-  };
-  vm.createContext(context);compile(context,'makeGhost',ghost);context.makeGhost(memory);return {calls,context};
+   Color4:class{constructor(){}},Color3:class{constructor(){}static White(){return {};}},Vector3:Vec,scene:{},ghostVisibleRef:{current:false},worldRef:{current:{}},
+   previousShotMarks:[],previousShotMaterial:null,Mesh:{CAP_ALL:3},makeMaterial:()=>({name:'previous-shot'}),
+  MeshBuilder:{
+   CreateLineSystem:(name,options)=>{const mesh={name,kind:'line',options,isVisible:null};calls.push(mesh);return mesh;},
+   CreateTube:(name,options)=>{const mesh={name,kind:'tube',options,isVisible:null,isPickable:null,material:null};calls.push(mesh);return mesh;},
+   CreateCylinder:(name,options)=>{const mesh={name,kind:'pin',options,isVisible:null,isPickable:null,material:null,position:{set:(x,y,z)=>{mesh.at={x,y,z};}}};calls.push(mesh);return mesh;},
+   CreateSphere:(name,options)=>{const mesh={name,kind:'head',options,isVisible:null,isPickable:null,material:null,position:{set:(x,y,z)=>{mesh.at={x,y,z};}}};calls.push(mesh);return mesh;},
+  },
+ };
+ vm.createContext(context);compile(context,'makeGhost',ghost);context.makeGhost(memory);return {calls,context};
  };
  const hidden=run('c3');
  assert.equal(hidden.calls.length,0);assert.equal(hidden.context.disposed,1);assert.equal(hidden.context.worldRef.current.ghostLine,undefined);
  const shown=run('a7');
- assert.equal(shown.calls.length,1);assert.equal(shown.calls[0].isVisible,true);assert.equal(shown.context.ghostVisibleRef.current,false,'forced visibility does not depend on the hidden switch');
+ assert.equal(shown.calls.some(call=>call.kind==='line'),false,'the address trail is a mesh of the recorded path, not the one-pixel line');
+ const tube=shown.calls.find(call=>call.kind==='tube');
+ assert.equal(tube.isVisible,true);assert.equal(tube.isPickable,false);
+ assert.equal(tube.options.path.length,2);
+ assert.equal(tube.options.path[0].x,0);assert.equal(tube.options.path[0].y,1);assert.equal(tube.options.path[0].z,2);
+ assert.equal(tube.options.path[1].x,3);assert.equal(tube.options.path[1].y,1);assert.equal(tube.options.path[1].z,9);
+ const pin=shown.calls.find(call=>call.kind==='pin'),head=shown.calls.find(call=>call.kind==='head');
+ assert.equal(pin.at.x,3);assert.equal(pin.at.z,9);assert.equal(head.at.x,3);assert.equal(head.at.z,9);
+ assert.equal(shown.context.ghostVisibleRef.current,false,'forced visibility does not depend on the hidden switch');
+ const trailBody=ghost.slice(ghost.indexOf('if (e1)'),ghost.indexOf('const attempts'));
+ assert.equal(/getAimDirection|getMuzzle|aimSpine/.test(trailBody),false);
  const production=run(null);
- assert.equal(production.calls.length,1);assert.equal(production.calls[0].isVisible,false);
+ assert.equal(production.calls.length,1);assert.equal(production.calls[0].kind,'line');assert.equal(production.calls[0].isVisible,false);
+});
+
+test('address clears previous-shot text on both arms and the trail flag stays per arm',()=>{
+ for(const phase of ['ready','charging'])assert.equal(linecraftE1HidesShotText(phase),true,phase);
+ for(const phase of ['flight','theatre','result'])assert.equal(linecraftE1HidesShotText(phase),false,phase);
+ assert.equal(linecraftE1DrawsPreviousTrail('a7'),true);
+ assert.equal(linecraftE1DrawsPreviousTrail('c3'),false);
+ const gates=[...source.matchAll(/linecraftE1 && linecraftE1HidesShotText\(phase\)/g)];
+ assert.equal(gates.length,3,'claim caption, registered banner, and contact captions');
+ assert.equal(/linecraftE1HidesShotText\(phase\).*drawPreviousTrail|drawPreviousTrail.*linecraftE1HidesShotText/.test(source),false);
 });
 
 test('the experiment route is opt-in and production routes stay untouched',async()=>{

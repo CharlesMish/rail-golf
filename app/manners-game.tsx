@@ -11,7 +11,7 @@ import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type I
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
 import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName} from './linecraft-tools';
 import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftActualDiverges,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
-import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
+import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,linecraftE1HidesShotText,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
 import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
 import {SurveyTools} from './survey-tools';
 import {
@@ -829,6 +829,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         let flight: FlightState | null = null;
         let previousCameraBall:Vector3|null=null;
         let ghostLine: LinesMesh | null = null;
+        let previousShotMarks: Mesh[] = [];
+        let previousShotMaterial: StandardMaterial | null = null;
         let keptGhost:LinesMesh|null=null,keptGhostVersion:unknown=null;
         let linecraftGhost:LinesMesh|null=null,linecraftGhostVersion:string|null=null;
         let replayMarker:Mesh|null=null,replayTrail:LinesMesh|null=null;
@@ -1465,14 +1467,56 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const disposeGhost = () => {
           ghostLine?.dispose();
           ghostLine = null;
+          for (const mesh of previousShotMarks) { mesh.material = null; mesh.dispose(); }
+          previousShotMarks = [];
+          previousShotMaterial?.dispose();
+          previousShotMaterial = null;
           if (worldRef.current) worldRef.current.ghostLine = null;
           if (!(typeof linecraftE1 !== "undefined" && linecraftE1) && typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = "0";
         };
 
         const makeGhost = (memory: ShotMemory | undefined) => {
           disposeGhost();
-          if (typeof linecraftE1 !== "undefined" && linecraftE1 && !linecraftE1DrawsPreviousTrail(linecraftE1.arm)) return;
+          const e1 = typeof linecraftE1 !== "undefined" && linecraftE1 ? linecraftE1 : null;
+          if (e1 && !linecraftE1DrawsPreviousTrail(e1.arm)) return;
           if (!memory || memory.points.length < 2 || memory.holeId !== HOLES[activeHoleIndex()].id) return;
+          if (e1) {
+            const path: Vector3[] = [];
+            memory.points.forEach((point, index) => {
+              const next = point.clone();
+              const prev = path[path.length - 1];
+              const end = index === memory.points.length - 1;
+              if (!prev) { path.push(next); return; }
+              const dx = next.x - prev.x, dy = next.y - prev.y, dz = next.z - prev.z;
+              if (dx * dx + dy * dy + dz * dz < 0.04 && !end) return;
+              if (end && dx * dx + dy * dy + dz * dz < 1e-8) return;
+              path.push(next);
+            });
+            if (path.length < 2) return;
+            previousShotMaterial = makeMaterial("previous-shot", new Color3(1, .7, .35), new Color3(1, .62, .22), .2);
+            const tube = MeshBuilder.CreateTube("previous-shot", { path, radius: 0.46, tessellation: 8, cap: Mesh.CAP_ALL }, scene!);
+            tube.material = previousShotMaterial;
+            tube.isPickable = false;
+            tube.isVisible = true;
+            previousShotMarks.push(tube);
+            const kiss = memory.contacts.find(contact => contact.kind === "first-kiss");
+            if (kiss) {
+              const kissY = typeof kiss.point.y === "number" ? kiss.point.y : 0;
+              const pin = MeshBuilder.CreateCylinder("previous-kiss", { height: 2.4, diameter: 0.34, tessellation: 10 }, scene!);
+              pin.position.set(kiss.point.x, kissY + 1.2, kiss.point.z);
+              pin.material = previousShotMaterial;
+              pin.isPickable = false;
+              pin.isVisible = true;
+              previousShotMarks.push(pin);
+              const head = MeshBuilder.CreateSphere("previous-kiss-head", { diameter: 1.45, segments: 12 }, scene!);
+              head.position.set(kiss.point.x, kissY + 2.35, kiss.point.z);
+              head.material = previousShotMaterial;
+              head.isPickable = false;
+              head.isVisible = true;
+              previousShotMarks.push(head);
+            }
+            return;
+          }
           const attempts = compareRef.current ? [memory, ...(historyRef.current[memory.holeId] ?? []).filter(s => s.projectileId !== memory.projectileId)].slice(0,3) : [memory];
           const lines: Vector3[][] = [];
           const colors: Color4[][] = [];
@@ -2948,7 +2992,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</strong></div>
       </>}
       {lineLab && intentScored && phase==='ready' && linecraftScored && !toolsOpen && <LineReceipt ledger={lineLedger} shot={lastShot ?? undefined} />}
-      {lineLab && claimCaption && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
+      {lineLab && claimCaption && !(linecraftE1 && linecraftE1HidesShotText(phase)) && <div key={claimCaption.serial} className="line-claim-caption" role="status">{claimCaption.text}</div>}
       <canvas
         ref={canvasRef}
         className="rail-canvas"
@@ -3309,13 +3353,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div className="flight-status theatre-status" role="status">RULING LOCKED</div>
       ) : null}
 
-      {mechanismInFlight && !(hole.id === "mill-delivery" && deliveryLive.length > 0) && (phase === "flight" || phase === "theatre") ? (
+      {mechanismInFlight && !(hole.id === "mill-delivery" && deliveryLive.length > 0) && (phase === "flight" || phase === "theatre") && !(linecraftE1 && linecraftE1HidesShotText(phase)) ? (
         <div className="breach-status" role="status">
           {mechanismInFlight} REGISTERED · {phase === "flight" ? (hole.target?"TARGET STILL LIVE":"LINE STILL LIVE") : "RULING LOCKED"}
         </div>
       ) : null}
 
-      {lastShot?.contacts.length ? (
+      {lastShot?.contacts.length && !(linecraftE1 && linecraftE1HidesShotText(phase)) ? (
         <div className="shot-evidence-layer" aria-hidden="true">
           {lastShot.contacts.map((contact) => (
             <span

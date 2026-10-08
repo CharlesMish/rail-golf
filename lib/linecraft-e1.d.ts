@@ -10,6 +10,7 @@ export type LinecraftE1Station='gate'|'lumber';
 export type LinecraftE1Mode={arm:LinecraftE1Arm;station:LinecraftE1Station;drawPreviousTrail:boolean;shelfTrailButtons:boolean};
 export function linecraftE1LibraryKey():string;
 export function linecraftE1DrawsPreviousTrail(arm:string):boolean;
+export function linecraftE1HidesShotText(phase:string):boolean;
 export function linecraftE1Prefix(arm:LinecraftE1Arm):string;
 export function parseLinecraftE1Query(arm:string|null|undefined,station:string|null|undefined):{ok:true;mode:LinecraftE1Mode}|{ok:false;message:string};
 export function linecraftE1Storage(storage:Storage,arm:LinecraftE1Arm):Storage;
