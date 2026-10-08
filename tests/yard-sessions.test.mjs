@@ -166,6 +166,12 @@ test('the yard session page rejects an unknown set and does not touch production
   assert.match(game, /!linecraftLab&&!intentLab&&!yardSession&&<nav/);
   assert.match(game, /!linecraftLab&&!yardSession\?\.dare&&<div/);
   assert.match(game, /if \(yardSession\?\.dare\)/);
+  const nest = game.slice(game.indexOf('if (yardSession?.dare)'), game.indexOf('for (const station of courtyard', game.indexOf('if (yardSession?.dare)')));
+  assert.match(nest, /gallery-roost-mark/);
+  assert.match(nest, /diameter: YARD_SESSION_NEST_RADIUS \* 2/);
+  assert.match(nest, /makeMaterial\('nest-mark'/);
+  assert.match(nest, /isPickable = false/);
+  assert.doesNotMatch(nest, /materials\.amber|PhysicsAggregate/);
   assert.match(game, /const saved = linecraftLab\?\{\}:intentLab\?\{\}:loadProgress/);
   for (const path of ['../app/page.tsx', '../app/courtyard/page.tsx', '../app/practice/page.tsx']) {
     assert.doesNotMatch(await readFile(new URL(path, import.meta.url), 'utf8'), /yardSession|yard-sessions/);

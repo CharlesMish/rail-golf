@@ -1170,11 +1170,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             if (roost) {
               const nestMark = place(MeshBuilder.CreateTorus(
                 'gallery-roost-mark',
-                { diameter: YARD_SESSION_NEST_RADIUS * 2, thickness: 0.16, tessellation: 64 },
+                { diameter: YARD_SESSION_NEST_RADIUS * 2, thickness: 0.22, tessellation: 64 },
                 scene!,
               ));
-              nestMark.position.set(roost.x, 0.48, roost.z);
-              nestMark.material = materials.amber;
+              nestMark.position.set(roost.x, 0.92, roost.z);
+              nestMark.material = makeMaterial('nest-mark', new Color3(0.02, 0.45, 0.52), new Color3(0.25, 0.98, 1), 0.1);
+              nestMark.isPickable = false;
+              nestMark.receiveShadows = false;
             }
           }
 
