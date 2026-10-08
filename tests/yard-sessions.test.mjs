@@ -13,8 +13,11 @@ import {
   YARD_SESSIONS_LIBRARY_KEY,
   YARD_SESSIONS_MESSAGE,
   YARD_SESSION_NEST_RADIUS,
+  YARD_SESSION_ADDRESS,
   parseYardSessionQuery,
   yardSessionHole,
+  yardSessionDareResult,
+  yardSessionDareRecord,
   yardSessionStorage,
   yardSessionOwnsKey,
   yardSessionKeyCollides,
@@ -58,8 +61,9 @@ test('both yard sessions reuse the gallery hole without changing the physical ro
   const open = yardSessionHole('2');
   assert.equal(dare.id, 'switchback-gallery');
   assert.equal(open.id, 'switchback-gallery');
-  assert.deepEqual(dare.defaultShot, gallery.defaultShot);
-  assert.deepEqual(open.defaultShot, gallery.defaultShot);
+  assert.deepEqual(dare.defaultShot, YARD_SESSION_ADDRESS);
+  assert.deepEqual(open.defaultShot, YARD_SESSION_ADDRESS);
+  assert.deepEqual(gallery.defaultShot, { railIndex: 0, yaw: -1, elevation: 25 });
   assert.deepEqual(dare.banks, gallery.banks);
   assert.deepEqual(open.banks, gallery.banks);
   assert.equal(dare.instruction, 'Bank A → Bank B → land in the nest at the centre of the amber roost.');
@@ -166,6 +170,11 @@ test('the yard session page rejects an unknown set and does not touch production
   assert.match(game, /!linecraftLab&&!intentLab&&!yardSession&&<nav/);
   assert.match(game, /!linecraftLab&&!yardSession\?\.dare&&<div/);
   assert.match(game, /if \(yardSession\?\.dare\)/);
+  assert.match(game, /yardSession\?\.dare && hole\.target && outcome === 'ace'/);
+  assert.match(game, /yardSessionDareResult\(outcome\)/);
+  assert.match(game, /yardSessionDareRecord\(previousRecord, mergedRecord, outcome\)/);
+  assert.match(game, /Back to address \(R\) - last setup restored/);
+  assert.match(game, /phase === 'flight' \? 'Retry now'/);
   const nest = game.slice(game.indexOf('if (yardSession?.dare)'), game.indexOf('for (const station of courtyard', game.indexOf('if (yardSession?.dare)')));
   assert.match(nest, /gallery-roost-mark/);
   assert.match(nest, /diameter: YARD_SESSION_NEST_RADIUS \* 2/);
@@ -178,16 +187,51 @@ test('the yard session page rejects an unknown set and does not touch production
   }
 });
 
-test('registered nest is reachable from the gallery address', async () => {
+test('a no-bank nest on this route is not a clear', () => {
+  const honest = yardSessionDareResult('ace');
+  assert.equal(honest.headline, 'NEST, NO BANKS');
+  assert.match(honest.detail, /required/);
+  assert.match(honest.detail, /not optional/);
+  assert.match(honest.detail, /does not count/);
+  assert.equal(honest.clear, false);
+  assert.doesNotMatch(`${honest.headline} ${honest.detail}`, /optional trick/i);
+  assert.equal(yardSessionDareResult('double'), null);
+  const merged = { attempts: 3, bestOutcome: 'ace', hasAce: true, hasBreach: false, perfect: false, cleared: true };
+  const kept = yardSessionDareRecord(undefined, merged, 'ace');
+  assert.equal(kept.attempts, 3);
+  assert.equal(kept.cleared, false);
+  assert.equal(kept.hasAce, false);
+  assert.equal(kept.perfect, false);
+  assert.equal(kept.bestOutcome, null);
+  const prior = { attempts: 1, bestOutcome: 'double', hasAce: true, hasBreach: true, perfect: true, cleared: true };
+  const still = yardSessionDareRecord(prior, { ...merged, attempts: 2 }, 'ace');
+  assert.equal(still.attempts, 2);
+  assert.equal(still.cleared, true);
+  assert.equal(still.hasAce, true);
+  assert.equal(still.perfect, true);
+  assert.equal(still.bestOutcome, 'double');
+  assert.equal(yardSessionDareRecord(prior, merged, 'double'), merged);
+});
+
+test('the shared yard address banks at a moderate power and never nests on a power slide', async () => {
   const havok = await HavokPhysics({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   const hole = yardSessionHole('1');
   assert.equal(hole.target.radius, YARD_SESSION_NEST_RADIUS);
   assert.equal(roost.radius, 5);
-  let found = false;
-  for (let step = 90; step <= 98; step += 1) {
-    const result = courtyardShot(havok, hole, { ...hole.defaultShot, charge: step / 100 });
+  assert.deepEqual(hole.defaultShot, { railIndex: 0, yaw: -2.5, elevation: 25 });
+  assert.deepEqual(yardSessionHole('2').defaultShot, hole.defaultShot);
+  assert.deepEqual(gallery.defaultShot, { railIndex: 0, yaw: -1, elevation: 25 });
+  let nests = 0;
+  let banks = false;
+  for (let step = 0; step <= 200; step += 1) {
+    const charge = step / 200;
+    const result = courtyardShot(havok, hole, { ...hole.defaultShot, charge });
     const centre = Math.hypot(result.point.x - hole.target.x, result.point.z - hole.target.z);
-    if ((result.outcome === 'ace' || result.outcome === 'double') && centre <= hole.target.radius + RAIL_RULES.projectileRadius) found = true;
+    if ((result.outcome === 'ace' || result.outcome === 'double') && centre <= hole.target.radius + RAIL_RULES.projectileRadius) nests += 1;
+    const bankA = result.tags.indexOf('bank-a');
+    const bankB = result.tags.indexOf('bank-b');
+    if (charge >= 0.5 && charge <= 0.8 && bankA >= 0 && bankB > bankA) banks = true;
   }
-  assert.equal(found, true);
+  assert.equal(nests, 0);
+  assert.equal(banks, true);
 });

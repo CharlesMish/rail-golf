@@ -97,7 +97,7 @@ import { maxLatchAfter, launchCharge, interruptedRecord, rememberAttempt, landin
 
 import { SHOT_LIBRARY_KEY, packLine, collectLine, normalizeShotLibrary } from "@/lib/shot-library";
 import type { LineShelf, SavedLine } from "@/lib/shot-library";
-import { YARD_SESSIONS_PROGRESS_KEY, YARD_SESSIONS_LIBRARY_KEY, YARD_SESSIONS_SURVEY_DATABASE, YARD_SESSION_NEST_RADIUS, yardSessionHole, yardSessionStorage, readYardSessionRecords, writeYardSessionProgress, readYardSessionLibrary, writeYardSessionLibrary } from "@/lib/yard-sessions";
+import { YARD_SESSIONS_PROGRESS_KEY, YARD_SESSIONS_LIBRARY_KEY, YARD_SESSIONS_SURVEY_DATABASE, YARD_SESSION_NEST_RADIUS, yardSessionHole, yardSessionDareResult, yardSessionDareRecord, yardSessionStorage, readYardSessionRecords, writeYardSessionProgress, readYardSessionLibrary, writeYardSessionLibrary } from "@/lib/yard-sessions";
 import type { YardSessionMode } from "@/lib/yard-sessions";
 
 import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
@@ -1762,10 +1762,20 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             shotResult.detail = receipt;
             shotResult.clear = false;
           }
+          if (yardSession?.dare && hole.target && outcome === 'ace' && !safetyReason) {
+            const honest = yardSessionDareResult(outcome);
+            if (honest) {
+              shotResult.headline = honest.headline;
+              shotResult.detail = honest.detail;
+              shotResult.clear = honest.clear;
+            }
+          }
           flight.pendingResult = shotResult;
+          const previousRecord = recordsRef.current[hole.id];
+          const mergedRecord = safetyReason||!hole.target?interruptedRecord(previousRecord):mergeHoleRecord(previousRecord, outcome);
           const next = {
             ...recordsRef.current,
-            [hole.id]: safetyReason||!hole.target?interruptedRecord(recordsRef.current[hole.id]):mergeHoleRecord(recordsRef.current[hole.id], outcome),
+            [hole.id]: yardSession?.dare && hole.target && outcome === 'ace' && !safetyReason ? yardSessionDareRecord(previousRecord, mergedRecord, outcome) : mergedRecord,
           };
           persistRecords(next);
           createTheatreRing(at, outcome, contactKind);
@@ -3317,7 +3327,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       ) : null}
 
       {(phase === 'flight' || phase === 'theatre' || (!lineLab&&phase === 'result')) && <button type="button" className="quick-retry" onClick={() => performUI('retry',[])}>
-        <RotateCcw size={16} /> {phase === 'flight' ? 'Retry now' : 'Retry shot'} <kbd>R</kbd>
+        <RotateCcw size={16} /> {phase === 'flight' ? 'Retry now' : yardSession?.dare ? 'Back to address (R) - last setup restored' : 'Retry shot'} {phase === 'flight' || !yardSession?.dare ? <kbd>R</kbd> : null}
       </button>}
       {retryNotice && phase === 'ready' && <div className="retry-notice" role="status">{retryNotice}</div>}
 

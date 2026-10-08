@@ -9,8 +9,10 @@ export function courtyardShot(havok, hole, shot) {
   const engine = new NullEngine();
   const scene = new Scene(engine);
   const bodies = [];
+  let plugin;
   try {
-    scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), new HavokPlugin(true, havok));
+    plugin = new HavokPlugin(true, havok);
+    scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), plugin);
     const physics = scene.getPhysicsEngine();
     physics.setTimeStep(1 / 120);
     physics.setSubTimeStep(1000 / 120);
@@ -61,5 +63,5 @@ export function courtyardShot(havok, hole, shot) {
       previous.copyFrom(ball.position);
     }
     return { point: { ...ball.position }, tags, contacts, collisions, outcome: 'timeout' };
-  } finally { for (const b of bodies) b.dispose(); scene.dispose(); engine.dispose(); }
+  } finally { for (const b of bodies) b.dispose(); scene.dispose(); plugin?.dispose(); engine.dispose(); }
 }

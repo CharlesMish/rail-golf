@@ -7,12 +7,15 @@ export const YARD_SESSIONS_LIBRARY_KEY: string;
 export const YARD_SESSIONS_SURVEY_DATABASE: 'rail-golf-yard-sessions-survey';
 export const YARD_SESSIONS_MESSAGE: string;
 export const YARD_SESSION_NEST_RADIUS: number;
+export const YARD_SESSION_ADDRESS: { readonly railIndex: 0; readonly yaw: -2.5; readonly elevation: 25 };
 
 export type YardSessionMode = { readonly set: '1' | '2'; readonly dare: boolean };
 export type YardSessionParse = { ok: true; mode: YardSessionMode } | { ok: false; message: string };
 
 export function parseYardSessionQuery(set: unknown): YardSessionParse;
 export function yardSessionHole(set: '1' | '2'): GameCard;
+export function yardSessionDareResult(outcome: string): { headline: string; detail: string; clear: false } | null;
+export function yardSessionDareRecord<T extends HoleRecord>(previous: Partial<HoleRecord> | null | undefined, merged: T, outcome: string): T;
 export function yardSessionPrefix(set: '1' | '2'): string;
 export function yardSessionStorage(storage: Storage, set: '1' | '2'): Storage;
 export function yardSessionOwnsKey(key: string): boolean;
