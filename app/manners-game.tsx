@@ -11,7 +11,7 @@ import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type I
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
 import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName} from './linecraft-tools';
 import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftActualDiverges,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
-import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,linecraftE1HidesShotText,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
+import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,linecraftE1Trail,linecraftE1HidesShotText,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
 import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
 import {SurveyTools} from './survey-tools';
 import {
@@ -1493,26 +1493,34 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               path.push(next);
             });
             if (path.length < 2) return;
-            previousShotMaterial = makeMaterial("previous-shot", new Color3(1, .7, .35), new Color3(1, .62, .22), .2);
-            const tube = MeshBuilder.CreateTube("previous-shot", { path, radius: 0.46, tessellation: 8, cap: Mesh.CAP_ALL }, scene!);
+            const trail = linecraftE1Trail(e1.arm);
+            if (!trail) return;
+            // Recorded samples only. The arm spec changes width, glow and the kiss marker.
+            previousShotMaterial = makeMaterial("previous-shot", new Color3(trail.diffuse[0], trail.diffuse[1], trail.diffuse[2]), new Color3(trail.emissive[0], trail.emissive[1], trail.emissive[2]), trail.roughness);
+            if (trail.alpha < 1) previousShotMaterial.alpha = trail.alpha;
+            if (typeof trail.emissiveIntensity === "number") (previousShotMaterial as StandardMaterial & { emissiveIntensity?: number }).emissiveIntensity = trail.emissiveIntensity;
+            const tube = MeshBuilder.CreateTube("previous-shot", { path, radius: trail.radius, tessellation: 8, cap: Mesh.CAP_ALL }, scene!);
             tube.material = previousShotMaterial;
             tube.isPickable = false;
             tube.isVisible = true;
+            if (trail.excludeGlow) glow.addExcludedMesh(tube);
             previousShotMarks.push(tube);
             const kiss = memory.contacts.find(contact => contact.kind === "first-kiss");
             if (kiss) {
               const kissY = typeof kiss.point.y === "number" ? kiss.point.y : 0;
-              const pin = MeshBuilder.CreateCylinder("previous-kiss", { height: 2.4, diameter: 0.34, tessellation: 10 }, scene!);
-              pin.position.set(kiss.point.x, kissY + 1.2, kiss.point.z);
+              const pin = MeshBuilder.CreateCylinder("previous-kiss", { height: trail.pinHeight, diameter: trail.pinDiameter, tessellation: 10 }, scene!);
+              pin.position.set(kiss.point.x, kissY + trail.pinLift, kiss.point.z);
               pin.material = previousShotMaterial;
               pin.isPickable = false;
               pin.isVisible = true;
+              if (trail.excludeGlow) glow.addExcludedMesh(pin);
               previousShotMarks.push(pin);
-              const head = MeshBuilder.CreateSphere("previous-kiss-head", { diameter: 1.45, segments: 12 }, scene!);
-              head.position.set(kiss.point.x, kissY + 2.35, kiss.point.z);
+              const head = MeshBuilder.CreateSphere("previous-kiss-head", { diameter: trail.headDiameter, segments: 12 }, scene!);
+              head.position.set(kiss.point.x, kissY + trail.headLift, kiss.point.z);
               head.material = previousShotMaterial;
               head.isPickable = false;
               head.isVisible = true;
+              if (trail.excludeGlow) glow.addExcludedMesh(head);
               previousShotMarks.push(head);
             }
             return;

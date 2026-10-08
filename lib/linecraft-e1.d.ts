@@ -5,7 +5,14 @@ export const LINECRAFT_E1_SURVEY_VERSION:1;
 export const LINECRAFT_E1_MESSAGE:string;
 export const LINECRAFT_E1_SHELF_CONTRACT:string;
 export const LINECRAFT_E1_SHELF_LINKS:string;
-export type LinecraftE1Arm='a7'|'c3';
+export type LinecraftE1Arm='a7'|'k5'|'c3';
+export type LinecraftE1Trail={
+ radius:number;diffuse:readonly [number,number,number];emissive:readonly [number,number,number];
+ roughness:number;alpha:number;emissiveIntensity?:number;
+ pinHeight:number;pinDiameter:number;pinLift:number;headDiameter:number;headLift:number;
+ excludeGlow:boolean;
+};
+export function linecraftE1Trail(arm:string):LinecraftE1Trail|null;
 export type LinecraftE1Station='gate'|'lumber';
 export type LinecraftE1Mode={arm:LinecraftE1Arm;station:LinecraftE1Station;drawPreviousTrail:boolean;shelfTrailButtons:boolean};
 export function linecraftE1LibraryKey():string;
