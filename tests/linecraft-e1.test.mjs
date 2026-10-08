@@ -154,7 +154,7 @@ test('the experiment route is opt-in and production routes stay untouched',async
 test('built experiment route opens in Open and rejects a missing or unknown arm',async()=>{
  const workerURL=new URL('../dist/server/index.js',import.meta.url);workerURL.searchParams.set('e1',`${process.pid}-${Date.now()}`);
  const {default:worker}=await import(workerURL.href);
- const htmlAt=async path=>{const response=await worker.fetch(new Request('http://localhost'+path,{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});assert.equal(response.status,200,path);return response.text().replaceAll('<!-- -->','');};
+ const htmlAt=async path=>{const response=await worker.fetch(new Request('http://localhost'+path,{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});assert.equal(response.status,200,path);return (await response.text()).replaceAll('<!-- -->','');};
  const gate=await htmlAt('/lab/linecraft-e1?arm=a7&station=gate');
  const lumber=await htmlAt('/lab/linecraft-e1?arm=c3&station=lumber');
  for(const [html,arm,station] of [[gate,'a7','gate'],[lumber,'c3','lumber']]){
