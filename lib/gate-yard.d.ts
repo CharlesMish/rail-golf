@@ -19,6 +19,7 @@ export function writeCarryPallet(sessionStorage:Pick<Storage,'setItem'>,state:'A
 export function gateYardAddressState(arm:GateYardArm,current:'A'|'B',action:'adjust'|'retry'|'recall'|'reset'):'A'|'B';
 export function gateYardLoadState(arm:GateYardArm,sessionStorage:Pick<Storage,'getItem'>):'A'|'B';
 export function gateYardContactCaption(kind:string):'PALLET'|'LEVER'|null;
+export function gateYardResultDetail(names:readonly string[]|undefined,groundEnding:boolean):string;
 export function gateYardLiveCaptions(ledger:readonly {kind?:string;feature?:string;label?:string;surface?:string}[]):{label:string;sourceIndex:number}[];
 export function gateYardShotFacts(contacts:readonly {kind?:string}[]|undefined,ledger:readonly {kind?:string;surface?:string}[]|undefined):{leverContact:boolean;palletContact:boolean};
 export function annotateGateYardTicket<T extends object>(ticket:T,arm:GateYardArm,relation:GateYardRelation,endFloor:'A'|'B',contacts:readonly {kind?:string}[]|undefined,ledger:readonly {kind?:string;surface?:string}[]|undefined):T&{arm:GateYardArm;setupRelation:GateYardRelation;environmentAfter:{floor:'A'|'B'};leverContact:boolean;palletContact:boolean};

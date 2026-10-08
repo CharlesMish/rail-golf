@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import {buildKickerPallet,KICKER_PALLET,KICKER_SWITCH} from '@/lib/kicker-pallet';
-import {GATE_YARD_PROGRESS_KEY,GATE_YARD_LIBRARY_SUFFIX,GATE_YARD_SURVEY_DB,GATE_YARD_LEVER,GATE_YARD_PALLET,buildGateYardPallet,gateYardStorage,filterSurveyByArm,gateYardLoadState,gateYardAddressState,gateYardCarries,writeCarryPallet,gateYardContactCaption,gateYardLiveCaptions,annotateGateYardTicket,gateYardProgressSlice,gateYardProgressEnvelope,gateYardLibrarySlice,gateYardLibraryEnvelope,gateYardStopRecord,gateYardStudyExport,type GateYardArm,type GateYardRelation} from '@/lib/gate-yard';
+import {GATE_YARD_PROGRESS_KEY,GATE_YARD_LIBRARY_SUFFIX,GATE_YARD_SURVEY_DB,GATE_YARD_LEVER,GATE_YARD_PALLET,buildGateYardPallet,gateYardStorage,filterSurveyByArm,gateYardLoadState,gateYardAddressState,gateYardCarries,writeCarryPallet,gateYardContactCaption,gateYardLiveCaptions,gateYardResultDetail,annotateGateYardTicket,gateYardProgressSlice,gateYardProgressEnvelope,gateYardLibrarySlice,gateYardLibraryEnvelope,gateYardStopRecord,gateYardStudyExport,type GateYardArm,type GateYardRelation} from '@/lib/gate-yard';
 import {createSurveyLog,createSurveyArchive,type SurveyTicket,type SurveyStatus} from '@/lib/survey-ledger';
 import {createLabControl,createLabGestureGate,captureLabLaunch,returnLabToSetup,type ActionSource} from '@/lib/lab-controls';
 import {createLabSelection,createSelectionWitness,type SelectionDiagnostic} from '@/lib/lab-selection';
@@ -83,7 +83,7 @@ import type { AddressLabMode, Hole, HoleRecord, MechanismTag, Outcome, ShotSetup
 
 import {LINE_CARDS,LINE_STATIONS,selectOpenLineStation} from "@/lib/line-lab";
 import type {GameCard} from "@/lib/line-lab";
-import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
+import { COURTYARD_HOLES, COURTYARD_TARGETS, COURTYARD_BANKS, COURTYARD_SKIP_PAD, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
 import {buildTimberReceiver} from "@/lib/timber-receiver";
 import {LINECRAFT_SECOND_PAD,buildLinecraftReflectors,collectLinecraftStepEvents} from "@/lib/linecraft-yard";
@@ -453,6 +453,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const deliveryBookRef = useRef<DeliveryBook>({});
   const cascadeLabelRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const secondBankRef = useRef<HTMLDivElement>(null);
+  const bankALabelRef = useRef<HTMLDivElement>(null);
+  const bankBLabelRef = useRef<HTMLDivElement>(null);
+  const skipLabelRef = useRef<HTMLDivElement>(null);
+  const sideSkipLabelRef = useRef<HTMLDivElement>(null);
   const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
   const actionsRef = useRef<Partial<GameActions>>({});
@@ -1731,7 +1735,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           rememberFlight(`${[...flight.mechanismTags].map(tag=>gateYardRef.current?(gateYardContactCaption(tag)??evidenceLabel(tag)):evidenceLabel(tag)).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, safetyReason||!hole.target?null:outcome);
           const tags = [...flight.mechanismTags];
           const shotResult = hole.target ? resultCopy({...hole,target:hole.target}, outcome, at.clone(), tags) : {outcome,headline:'LINE BANKED',detail:`${receipt}. No roost required.`,point:at.clone(),clear:false};
-          if(gateYardRef.current){const names=[...flight.mechanismTags].map(tag=>gateYardContactCaption(tag)??evidenceLabel(tag));shotResult.headline='LINE ENDED';shotResult.detail=(names.length?names.join(' → ')+' · ':'')+'PALLET '+floorStateRef.current;}
+          if(gateYardRef.current){const names=[...flight.mechanismTags].map(tag=>gateYardContactCaption(tag)??evidenceLabel(tag));shotResult.headline='LINE ENDED';shotResult.detail=gateYardResultDetail(names,!contactKind||contactKind==='first-kiss');}
           if (diverterLab && !lineLab) shotResult.detail = (tags.map(evidenceLabel).join(' → ') || 'CARRY') + ' · FLOOR ' + flight.environment!.floor + ' → ' + floorStateRef.current + '. ' + receipt;
           if(safetyReason){shotResult.headline=safetyReason==='dead-ball'?'SHOT SETTLED':'SAFETY STOP';shotResult.detail=`${receipt}. Established line claims retained; no target finish awarded.`;shotResult.clear=false;}
           if (!lineLab && hole.id === 'mill-delivery') {
@@ -2734,35 +2738,68 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const renderWidth = engine!.getRenderWidth();
           const renderHeight = engine!.getRenderHeight();
           const labelViewport = camera.viewport.toGlobal(renderWidth, renderHeight);
-          const projectLabel = (element: HTMLDivElement | null, marker: Vector3 | null) => {
+          const projectLabel = (element: HTMLDivElement | null, marker: Vector3 | null, fit: 'clamp' | 'frame' | 'required' = 'clamp') => {
             if (!element) return;
             if (!marker) { element.dataset.visible = "false"; return; }
             const projected = Vector3.Project(marker, identityMatrix, viewProjection, labelViewport);
-            const visible = (phaseRef.current === "ready" || phaseRef.current === "charging") && projected.z > 0 && projected.z < 1 && projected.x > 0 && projected.x < renderWidth && projected.y > 0 && projected.y < renderHeight;
-            element.dataset.visible = String(visible);
+            const inFront = projected.z > 0 && projected.z < 1;
             const screenX = projected.x / renderWidth * canvas.clientWidth;
-            const halfWidth = element.offsetWidth / 2;
-            const labelX = clamp(screenX, halfWidth + 8, canvas.clientWidth - halfWidth - 8);
+            const screenY = projected.y / renderHeight * canvas.clientHeight;
+            const showing = phaseRef.current === "ready" || phaseRef.current === "charging";
+            if (fit === 'clamp') {
+              const visible = showing && inFront && projected.x > 0 && projected.x < renderWidth && projected.y > 0 && projected.y < renderHeight;
+              element.dataset.visible = String(visible);
+              const halfWidth = element.offsetWidth / 2;
+              const labelX = clamp(screenX, halfWidth + 8, canvas.clientWidth - halfWidth - 8);
+              element.style.left = `${labelX}px`;
+              element.style.top = `${projected.y / renderHeight * 100}%`;
+              element.style.setProperty("--pin-offset", `${screenX - labelX}px`);
+              return;
+            }
+            const halfWidth = Math.max(element.offsetWidth / 2, 28);
+            const halfHeight = Math.max(element.offsetHeight, 18);
+            const margin = 10;
+            const maxX = canvas.clientWidth - halfWidth - margin;
+            const maxY = canvas.clientHeight - halfHeight - margin;
+            const fits = inFront && screenX >= halfWidth + margin && screenX <= maxX && screenY >= halfHeight + margin && screenY <= maxY;
+            if (fits) {
+              element.dataset.visible = String(showing);
+              element.style.left = `${screenX}px`;
+              element.style.top = `${(screenY / canvas.clientHeight) * 100}%`;
+              element.style.setProperty("--pin-offset", "0px");
+              return;
+            }
+            if (fit !== 'required' || !inFront || !showing) { element.dataset.visible = "false"; return; }
+            const labelX = clamp(screenX, halfWidth + margin, Math.max(halfWidth + margin, maxX));
+            const labelY = clamp(screenY, margin + halfHeight, Math.max(margin + halfHeight, maxY));
+            element.dataset.visible = "true";
             element.style.left = `${labelX}px`;
-            element.style.top = `${projected.y / renderHeight * 100}%`;
+            element.style.top = `${(labelY / canvas.clientHeight) * 100}%`;
             element.style.setProperty("--pin-offset", `${screenX - labelX}px`);
           };
           projectLabel(destinationRef.current,
             hole.target ? new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z) : null);
           const switchMarker = gateYardRef.current ? GATE_YARD_LEVER : lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH;
-          projectLabel(switchLabelRef.current, diverterLab ? new Vector3(switchMarker.x, gateYardRef.current ? switchMarker.y + 2.6 : 7, switchMarker.z) : null);
+          projectLabel(switchLabelRef.current, diverterLab ? new Vector3(switchMarker.x, gateYardRef.current ? switchMarker.y + 2.6 : 7, switchMarker.z) : null, gateYardRef.current ? 'frame' : 'clamp');
           // Label anchor only. The extra lift keeps PALLET clear of SKIP PAD at the default aim; the slab is unchanged.
-          projectLabel(floorLabelRef.current, diverterLab ? new Vector3(gateYardRef.current ? GATE_YARD_PALLET.x : lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x, gateYardRef.current ? GATE_YARD_PALLET.y + 5.6 : 6, (gateYardRef.current ? GATE_YARD_PALLET : lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
+          projectLabel(floorLabelRef.current, diverterLab ? new Vector3(gateYardRef.current ? GATE_YARD_PALLET.x : lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x, gateYardRef.current ? GATE_YARD_PALLET.y + 5.6 : 6, (gateYardRef.current ? GATE_YARD_PALLET : lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null, gateYardRef.current ? 'frame' : 'clamp');
           const mechanism = linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks'?'bank':hole.requiredTags[0];
           const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
           const pad = RANGE_MECHANISMS.boost;
-          projectLabel(mechanismRef.current, mechanism?.startsWith("bank")
+          projectLabel(mechanismRef.current, gateYardRef.current ? null : mechanism?.startsWith("bank")
             ? new Vector3(bank.x + bank.halfWidth, courtyard ? 10 : 4.5, courtyard ? bank.z : bank.z - bank.halfDepth + 13)
             : mechanism === "boost" ? new Vector3(pad.x, 1.5, pad.z)
             : mechanism === "breach" && hole.breach ? new Vector3(hole.breach.x, hole.breach.maxY, hole.breach.z)
             : null);
           const secondBank = hole.requiredTags.length > 1 || (linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks') ? hole.banks?.[1] : null;
-          projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
+          projectLabel(secondBankRef.current, gateYardRef.current || !secondBank ? null : new Vector3(secondBank.x, 10, secondBank.z));
+          if (gateYardRef.current) {
+            const [bankA, bankB] = COURTYARD_BANKS;
+            projectLabel(bankALabelRef.current, new Vector3(bankA.x, 8, bankA.z), 'required');
+            projectLabel(bankBLabelRef.current, new Vector3(bankB.x, 8, bankB.z), 'frame');
+            projectLabel(skipLabelRef.current, new Vector3(COURTYARD_SKIP_PAD.x, 3.2, COURTYARD_SKIP_PAD.z), 'frame');
+            projectLabel(sideSkipLabelRef.current, new Vector3(LINECRAFT_SECOND_PAD.x, 3.2, LINECRAFT_SECOND_PAD.z), 'frame');
+          }
           const sharedPad = withSharedYardPad(hole).boost;
           projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
           projectLabel(skyLabelRef.current, ((lineLab && !gateYardRef.current) || hole.id === 'mill-delivery') ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
@@ -2892,7 +2929,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const intentOptions=SENTENCES.map(p=>({id:p.id,label:p.label,stationLabel:p.station==='gate'?'Yard Gate':'Lumber Walk',clauses:p.clauses.map(c=>c.label)}));
   const labChip = hole.id === "timber-bank" ? addressLabChipLabel(addressLabMode) : null;
   const record = records[hole.id] ?? EMPTY_RECORD;
-  const attempt = phase === "theatre" || phase === "result"
+  const attempt = gateYard ? record.attempts : phase === "theatre" || phase === "result"
     ? Math.max(1, record.attempts)
     : record.attempts + 1;
   const canAim = phase === "ready" || phase === "charging";
@@ -2978,6 +3015,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       <small className="build-identity" title={'Build ' + BUILD_ID}>BUILD {BUILD_ID}{gateYard ? ` ${arm}` : ''}</small>
       {diverterLab && <>
         <div className="floor-state-chip" role="status" {...(gateYard?{"data-color":floorState==='A'?'amber':'violet'}:{})}>{gateYard?`PALLET ${floorState}`:`FLOOR ${floorState} · ${lineLab ? 'KICKER PALLET' : courtyardDiverter ? 'LOADING DOCK' : FLOOR_STATES[floorState].label}`}</div>
+        {gateYard&&<div className="gate-yard-actions"><button type="button" onClick={event=>{event.stopPropagation();endGateSession();}}>End session</button><button type="button" onClick={event=>{event.stopPropagation();void exportGateStudy();}}>Export study</button>{gateNotice&&<span role="status">{gateNotice}</span>}</div>}
         <div ref={switchLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>{gateYard?'LEVER':<>SHOOT SWITCH · {floorState} → {floorState === 'A' ? 'B' : 'A'}</>}</strong></div>
         <div ref={floorLabelRef} className="destination-label" data-color={floorState === 'A' ? 'amber' : 'violet'} data-visible="false"><strong>{gateYard?'PALLET':<>FLOOR {floorState}{!courtyardDiverter && (' · ' + FLOOR_STATES[floorState].label)}</>}</strong></div>
       </>}
@@ -3066,7 +3104,6 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           <Map /> {survey ? "Address view" : linecraftLab ? "Survey yard" : "Survey hole"}
         </Button>
 
-        {gateYard&&<div className="gate-yard-actions"><button type="button" onClick={endGateSession}>End session</button><button type="button" onClick={()=>void exportGateStudy()}>Export study</button>{gateNotice&&<span role="status">{gateNotice}</span>}</div>}
         {canAim && !gateYard && <a className="courtyard-link" href={courtyard ? "/practice" : "/"}>{courtyard ? "← Practice range" : "Explore the timber yard →"}</a>}
         {canAim && !courtyard && !diverterLab && <><a className="courtyard-link" href="/lab/diverter">Diverter Floor lab →</a><a className="courtyard-link" href="/lab/courtyard-diverter">Mill Diverter lab →</a><a className="courtyard-link" href="/lab/lines">Line receipt lab →</a></>}
       </aside>
@@ -3081,10 +3118,16 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <strong>{hole.target.label}</strong>
       </div>}
 
-      <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
+      {!gateYard && <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
         data-color={hole.requiredTags[0] === "boost" ? "boost" : "amber"} aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}>
         <strong>{linecraftLab?'BANK A':<>1 · {hole.requiredTags[0]?.startsWith("bank") ? (courtyard ? "BANK A · THEN B" : "BANK HERE") : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</>}</strong>
-      </div>
+      </div>}
+      {gateYard && <>
+        <div ref={bankALabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber"><strong>BANK A</strong></div>
+        <div ref={bankBLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber"><strong>BANK B</strong></div>
+        <div ref={skipLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="boost"><strong>SKIP PAD</strong></div>
+        <div ref={sideSkipLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="boost"><strong>SKIP PAD</strong></div>
+      </>}
 
       {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}><strong>{linecraftLab?"BANK B":"2 · BANK B"}</strong></div>}
 
@@ -3361,7 +3404,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               data-kind={contact.kind}
               data-visible="false"
             >
-              {gateYard ? (gateYardContactCaption(contact.kind) ?? evidenceLabel(contact.kind)) : evidenceLabel(contact.kind)}
+              {gateYard ? (contact.kind === 'first-kiss' ? 'GROUND' : (gateYardContactCaption(contact.kind) ?? evidenceLabel(contact.kind))) : evidenceLabel(contact.kind)}
             </span>
           ))}
         </div>
