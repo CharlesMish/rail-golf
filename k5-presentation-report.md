@@ -11,6 +11,8 @@ k5's 0.15 m amber tube stays. The **20 px screen-space first-kiss ring** on arm 
 - Branch: `studio/k5-presentation`
 - Draft PR #43: https://github.com/CharlesMish/rail-golf/pull/43
 - Base: `studio/e1b-trail-refine` (PR #40). That branch was not pushed to.
+- Cloudflare Workers Builds, commit `330530bd`: https://4e699155-rail-golf.charlesmish.workers.dev
+- Branch preview: https://studio-k5-presentation-rail-golf.charlesmish.workers.dev
 - Ring and tube: `d83b36d85d5fd56d169297f0d275c7593109f249`. On-screen BUILD `d83b36d85d`.
 - Kept brightness, one later commit: `d6bb9ddf94a777a4dd5d82e4e7618b68f4fa1e3a`. On-screen BUILD `d6bb9ddf94`. Address and survey frames are the earlier SHA. The kept-pair frames are the later SHA. The tube and the ring are the same in both.
 - `a7`, `c3`, and `k5` are unchanged, so k5-before is still on this build at `/lab/linecraft-e1?arm=k5`.
