@@ -3345,7 +3345,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       {(phase === 'flight' || phase === 'theatre' || (!lineLab&&phase === 'result')) && !yardPlaceLab && <button type="button" className="quick-retry" onClick={() => performUI('retry',[])}>
         <RotateCcw size={16} /> {phase === 'flight' ? 'Retry now' : 'Retry shot'} <kbd>R</kbd>
       </button>}
-      {retryNotice && phase === 'ready' && <div className="retry-notice" role="status">{retryNotice}</div>}
+      {retryNotice && phase === 'ready' && !yardPlaceLab && <div className="retry-notice" role="status">{retryNotice}</div>}
 
       {phase === "flight" ? (
         <div className="flight-status" role="status">ROUND DOWNRANGE</div>

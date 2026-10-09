@@ -152,9 +152,21 @@ test('a 12-shot session writes only the study prefix and the same keys in both c
 });
 
 test('frozen authority files are untouched and the shared tee default stays 13 m', () => {
-  const diff = execFileSync('git', ['diff', '--name-only', 'cd9d41ddf6349b47e8d0035fd1707299ac255d55', '--', 'lib/rail-golf-v02.js', 'lib/delivery-routes.js', 'lib/line-recognition.js', 'lib/line-lifecycle.js', 'lib/line-run.js', 'lib/line-score.js'], {encoding: 'utf8'});
-  assert.equal(diff.trim(), '');
-  const helper = execFileSync('git', ['diff', '-U0', 'cd9d41ddf6349b47e8d0035fd1707299ac255d55', '--', 'tests/helpers/diverter-physics.mjs'], {encoding: 'utf8'});
+  const base = 'cd9d41ddf6349b47e8d0035fd1707299ac255d55';
+  const frozen = {
+    'lib/rail-golf-v02.js': '0292f8a258bb57c8bb2faebb88dfdf1cd0e97b5f',
+    'lib/delivery-routes.js': 'cff96ccc5b1444853355d9594a7a257f661dd7fa',
+    'lib/line-recognition.js': '499679c688714e7133d5fd0d7e0a14f3074ff373',
+    'lib/line-lifecycle.js': '7e5b419023c3681103188403eb87d35dc8709cc2',
+    'lib/line-run.js': 'bcb4ccac9af8bde3b184f40e11a46dd1eddd634d',
+    'lib/line-score.js': '6dfa5b50b4a6d6c833befeda01c37bb56835435c',
+  };
+  for (const [path, hash] of Object.entries(frozen)) {
+    assert.equal(execFileSync('git', ['hash-object', path], {encoding: 'utf8'}).trim(), hash, path);
+  }
+  try { execFileSync('git', ['cat-file', '-e', base], {stdio: 'ignore'}); }
+  catch { execFileSync('git', ['fetch', '--depth=1', 'origin', base], {stdio: 'ignore'}); }
+  const helper = execFileSync('git', ['diff', '-U0', base, '--', 'tests/helpers/diverter-physics.mjs'], {encoding: 'utf8'});
   assert.match(helper, /teeWidth=13/);
   assert.match(helper, /width:teeWidth/);
   assert.doesNotMatch(helper, /RAIL_RULES|padImpulse|REDIRECT_GATES|LINE_SAFETY|RUN_RULE|VARIETY_RULE/);
