@@ -427,7 +427,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const studyStorage=yardPlaceLab?yardPlaceStorage(storage):linecraftLab?linecraftStorage(storage):intentLab?intentStorage(storage):timberReceiver?receiverStorage(storage):storage;
     surveyLogRef.current=createSurveyLog({storage:studyStorage,archive:createSurveyArchive(window.indexedDB,undefined,yardPlaceLab?"rail-golf:yard-place:survey":linecraftLab?"rail-golf-linecraft-survey":intentLab?"rail-golf-intent-survey":timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
-  },[lineLab,timberReceiver,intentLab,linecraftLab]);
+  },[lineLab,timberReceiver,intentLab,linecraftLab,yardPlaceLab]);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
   const lineLedgerRef=useRef<LineEvidence[]>([]);lineLedgerRef.current=lineLedger;
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
