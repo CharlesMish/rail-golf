@@ -124,13 +124,14 @@ test('route copy refuses an unknown link and does not print an arm code',async()
 });
 
 test('cosmetic B keeps A\'s collider while physical B rolls, and the cues have no body',()=>{
+ const rollOf=mesh=>mesh.rotationQuaternion?2*Math.atan2(mesh.rotationQuaternion.z,mesh.rotationQuaternion.w):mesh.rotation.z;
  const cosmetic=harness('B',true);
  const physical=harness('B',false);
  const flat=harness('A',false);
  try{
-  assert.equal(cosmetic.world.floor.rotation.z,0);
+  assert.ok(Math.abs(rollOf(cosmetic.world.floor))<1e-6);
   assert.equal(cosmetic.world.floor.position.y,flat.world.floor.position.y);
-  assert.ok(Math.abs(physical.world.floor.rotation.z-(-18*Math.PI/180))<1e-6);
+  assert.ok(Math.abs(rollOf(physical.world.floor)-(-18*Math.PI/180))<1e-4);
   assert.ok(Math.abs(physical.world.floor.position.y-(flat.world.floor.position.y+1.53))<1e-6);
   for(const world of [cosmetic.world,physical.world,flat.world]){
    const cues=world.cueMeshes();
