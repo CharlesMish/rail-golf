@@ -13,7 +13,7 @@ import {createActionTrace} from '../lib/action-trace.js';
 import {
   LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SURVEY_VERSION,LINECRAFT_E1_MESSAGE,
   LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1HidesShotText,
-  parseLinecraftE1Query,linecraftE1DrawsPreviousTrail,linecraftE1Trail,linecraftE1Prefix,linecraftE1Storage,linecraftE1LibraryKey,linecraftE1OwnsKey,linecraftE1KeyCollides,
+  parseLinecraftE1Query,linecraftE1DrawsPreviousTrail,linecraftE1Trail,linecraftE1KeptStyle,linecraftE1KeptSegments,linecraftE1Prefix,linecraftE1Storage,linecraftE1LibraryKey,linecraftE1OwnsKey,linecraftE1KeyCollides,
   stampLinecraftE1Export,linecraftE1StudyCSV,
 } from '../lib/linecraft-e1.js';
 
@@ -37,24 +37,31 @@ function keptLine(id='e1:1'){
  return {id,line,launch,meta:{...linecraftMeta(session),shelfAvailable:4}};
 }
 
-test('arm query accepts a7, k5 and c3 and never describes them',()=>{
- const trail=parseLinecraftE1Query('a7','gate'),refined=parseLinecraftE1Query('k5','gate'),quiet=parseLinecraftE1Query('c3','lumber');
- assert.equal(trail.ok,true);assert.equal(refined.ok,true);assert.equal(quiet.ok,true);
+test('arm query accepts a7, k5, k6 and c3 and never describes them',()=>{
+ const trail=parseLinecraftE1Query('a7','gate'),refined=parseLinecraftE1Query('k5','gate'),presented=parseLinecraftE1Query('k6','lumber'),quiet=parseLinecraftE1Query('c3','lumber');
+ assert.equal(trail.ok,true);assert.equal(refined.ok,true);assert.equal(presented.ok,true);assert.equal(quiet.ok,true);
  assert.equal(trail.mode.arm,'a7');assert.equal(trail.mode.station,'gate');assert.equal(trail.mode.drawPreviousTrail,true);assert.equal(trail.mode.shelfTrailButtons,true);
  assert.equal(refined.mode.arm,'k5');assert.equal(refined.mode.station,'gate');
  assert.deepEqual([refined.mode.drawPreviousTrail,refined.mode.shelfTrailButtons],[trail.mode.drawPreviousTrail,trail.mode.shelfTrailButtons]);
+ assert.equal(presented.mode.arm,'k6');assert.equal(presented.mode.station,'lumber');
+ assert.deepEqual([presented.mode.drawPreviousTrail,presented.mode.shelfTrailButtons],[refined.mode.drawPreviousTrail,refined.mode.shelfTrailButtons]);
  assert.equal(quiet.mode.arm,'c3');assert.equal(quiet.mode.station,'lumber');assert.equal(quiet.mode.drawPreviousTrail,false);assert.equal(quiet.mode.shelfTrailButtons,false);
- assert.equal(linecraftE1DrawsPreviousTrail('a7'),true);assert.equal(linecraftE1DrawsPreviousTrail('k5'),true);assert.equal(linecraftE1DrawsPreviousTrail('c3'),false);assert.equal(linecraftE1DrawsPreviousTrail('a7 '),false);
- const thick=linecraftE1Trail('a7'),slim=linecraftE1Trail('k5');
- assert.equal(linecraftE1Trail('c3'),null);assert.equal(linecraftE1Trail('k5 '),null);
+ assert.equal(linecraftE1DrawsPreviousTrail('a7'),true);assert.equal(linecraftE1DrawsPreviousTrail('k5'),true);assert.equal(linecraftE1DrawsPreviousTrail('k6'),true);assert.equal(linecraftE1DrawsPreviousTrail('c3'),false);assert.equal(linecraftE1DrawsPreviousTrail('a7 '),false);
+ const thick=linecraftE1Trail('a7'),slim=linecraftE1Trail('k5'),ring=linecraftE1Trail('k6');
+ assert.equal(linecraftE1Trail('c3'),null);assert.equal(linecraftE1Trail('k5 '),null);assert.equal(linecraftE1Trail('k6 '),null);
  assert.equal(thick.radius,.46);assert.equal(thick.pinHeight,2.4);assert.equal(thick.pinDiameter,.34);assert.equal(thick.pinLift,1.2);
  assert.equal(thick.headDiameter,1.45);assert.equal(thick.headLift,2.35);assert.deepEqual([...thick.emissive],[1,.62,.22]);
- assert.equal(thick.alpha,1);assert.equal(thick.excludeGlow,false);assert.equal(thick.emissiveIntensity,undefined);
- assert.ok(slim.radius>=.1&&slim.radius<=.18);assert.ok(slim.radius<thick.radius);
+ assert.equal(thick.alpha,1);assert.equal(thick.excludeGlow,false);assert.equal(thick.emissiveIntensity,undefined);assert.equal(thick.kiss,undefined);
+ assert.equal(slim.radius,.15);assert.ok(slim.radius<thick.radius);
  assert.ok(slim.pinHeight<1.2&&slim.pinHeight<thick.pinHeight);assert.ok(slim.headDiameter<.7&&slim.headDiameter<thick.headDiameter);
  assert.ok(slim.emissive.every((channel,index)=>channel<thick.emissive[index]));
- assert.ok(slim.alpha<=1);assert.equal(typeof slim.excludeGlow,'boolean');
- for(const [arm,station] of [[null,'gate'],[undefined,'lumber'],['','gate'],['trail','gate'],['A7','gate'],['K5','gate'],['k5 ','gate'],['no-trail','lumber'],['a7',null],['a7',undefined],['a7',''],['a7','saw'],['c3','gate '],['a7','GATE'],['k5','lumber ']]){
+ assert.ok(slim.alpha<=1);assert.equal(typeof slim.excludeGlow,'boolean');assert.equal(slim.kiss,undefined);assert.equal(slim.ringPx,undefined);
+ assert.equal(ring.radius,slim.radius);assert.deepEqual([...ring.diffuse],[...slim.diffuse]);assert.deepEqual([...ring.emissive],[...slim.emissive]);
+ assert.equal(ring.roughness,slim.roughness);assert.equal(ring.alpha,slim.alpha);assert.equal(ring.emissiveIntensity,slim.emissiveIntensity);assert.equal(ring.excludeGlow,slim.excludeGlow);
+ assert.equal(ring.pinHeight,slim.pinHeight);assert.equal(ring.pinDiameter,slim.pinDiameter);assert.equal(ring.pinLift,slim.pinLift);
+ assert.equal(ring.headDiameter,slim.headDiameter);assert.equal(ring.headLift,slim.headLift);
+ assert.equal(ring.kiss,'screen-ring');assert.equal(ring.ringPx,20);assert.equal(ring.ringBorderPx,2);assert.match(ring.ringColor,/rgba\(186, 112, 36/);
+ for(const [arm,station] of [[null,'gate'],[undefined,'lumber'],['','gate'],['trail','gate'],['A7','gate'],['K5','gate'],['K6','gate'],['k5 ','gate'],['k6 ','gate'],['no-trail','lumber'],['a7',null],['a7',undefined],['a7',''],['a7','saw'],['c3','gate '],['a7','GATE'],['k5','lumber ']]){
   const parsed=parseLinecraftE1Query(arm,station);
   assert.equal(parsed.ok,false,`${arm}/${station}`);
   assert.equal(parsed.message,LINECRAFT_E1_MESSAGE);
@@ -67,11 +74,12 @@ test('experiment storage stays on its own keys and arms do not read each other',
  const raw=memoryStorage();
  for(const key of FOREIGN)raw.setItem(key,'sentinel');
  const before=new Map(FOREIGN.map(key=>[key,raw.getItem(key)]));
- const a7=linecraftE1Storage(raw,'a7'),c3=linecraftE1Storage(raw,'c3'),k5=linecraftE1Storage(raw,'k5');
+ const a7=linecraftE1Storage(raw,'a7'),c3=linecraftE1Storage(raw,'c3'),k5=linecraftE1Storage(raw,'k5'),k6=linecraftE1Storage(raw,'k6');
  const {id,line,launch,meta}=keptLine();
  const shelf=createLinecraftShelf(a7);const entry=shelf.keep(id,line,launch,meta);createLinecraftDecisions(a7).append(entry);
  assert.equal(createLinecraftShelf(c3).entries().length,0);assert.equal(createLinecraftDecisions(c3).export().length,0);
  assert.equal(createLinecraftShelf(k5).entries().length,0);assert.equal(createLinecraftDecisions(k5).export().length,0);
+ assert.equal(createLinecraftShelf(k6).entries().length,0);assert.equal(createLinecraftDecisions(k6).export().length,0);
  const opens=[];const factory=new IDBFactory();const open=factory.open.bind(factory);
  factory.open=(name,version)=>{opens.push({name,version});return open(name,version);};
  const archive=createSurveyArchive(factory,undefined,LINECRAFT_E1_SURVEY_DATABASE);
@@ -93,7 +101,9 @@ test('experiment storage stays on its own keys and arms do not read each other',
  assert.equal(a7.getItem('shelf-v1'),null);assert.equal(a7.getItem('shelf-v1-quarantine-keep'),'raw');
  assert.equal(c3.getItem('keep-hint-v1'),'seen');
  assert.equal(k5.getItem('keep-hint-v1'),null);
+ assert.equal(k6.getItem('keep-hint-v1'),null);
  assert.equal(linecraftE1OwnsKey(`${linecraftE1Prefix('k5')}shelf-v1`),true);
+ assert.equal(linecraftE1OwnsKey(`${linecraftE1Prefix('k6')}shelf-v1`),true);
  assert.equal(linecraftE1OwnsKey('rail-golf:linecraft-e1:zz:shelf-v1'),false);
  for(const key of FOREIGN)assert.equal(raw.getItem(key),'sentinel');
 });
@@ -131,7 +141,7 @@ test('NO-TRAIL never builds the previous-shot ghost; TRAIL still does and stays 
  const run=(arm)=>{
   const calls=[];
   const context={
-   linecraftE1:arm?{arm,drawPreviousTrail:linecraftE1DrawsPreviousTrail(arm),shelfTrailButtons:arm==='a7'||arm==='k5'}:null,
+   linecraftE1:arm?{arm,drawPreviousTrail:linecraftE1DrawsPreviousTrail(arm),shelfTrailButtons:arm==='a7'||arm==='k5'||arm==='k6'}:null,
    linecraftE1DrawsPreviousTrail,linecraftE1Trail,disposeGhost(){context.disposed=(context.disposed??0)+1;},
    HOLES:[{id:'open-line'}],activeHoleIndex:()=>0,compareRef:{current:true},historyRef:{current:{'open-line':[memory,{...memory,projectileId:3}]}},
    Color4:class{constructor(){}},Color3:class{constructor(){}static White(){return {};}},Vector3:Vec,scene:{},ghostVisibleRef:{current:false},worldRef:{current:{}},
@@ -166,6 +176,12 @@ test('NO-TRAIL never builds the previous-shot ghost; TRAIL still does and stays 
  assert.equal(slimPin.options.height,slimSpec.pinHeight);assert.equal(slimPin.options.diameter,slimSpec.pinDiameter);assert.equal(slimPin.at.y,slimSpec.pinLift);
  assert.equal(slimHead.options.diameter,slimSpec.headDiameter);assert.equal(slimHead.at.y,slimSpec.headLift);
  assert.equal(slimTube.glowExcluded,slimSpec.excludeGlow?true:undefined);
+ const ringSpec=linecraftE1Trail('k6'),ringRun=run('k6'),ringTube=ringRun.calls.find(call=>call.kind==='tube');
+ assert.equal(ringRun.calls.some(call=>call.kind==='pin'||call.kind==='head'),false,'a screen ring is not a larger pin or head');
+ assert.equal(ringTube.options.radius,ringSpec.radius);assert.equal(ringTube.options.radius,slimSpec.radius);
+ assert.equal(ringTube.options.path[1].x,3);assert.equal(ringTube.options.path[1].z,9);
+ assert.equal(ringRun.context.kissMark.x,3);assert.equal(ringRun.context.kissMark.y,0);assert.equal(ringRun.context.kissMark.z,9);
+ assert.equal(ringTube.glowExcluded,undefined);
  assert.equal(/getAimDirection|getMuzzle|aimSpine/.test(ghost.slice(ghost.indexOf('linecraftE1Trail'),ghost.indexOf('const attempts'))),false);
  const trailBody=ghost.slice(ghost.indexOf('if (e1)'),ghost.indexOf('const attempts'));
  assert.equal(/getAimDirection|getMuzzle|aimSpine/.test(trailBody),false);
@@ -178,6 +194,7 @@ test('address clears previous-shot text on both arms and the trail flag stays pe
  for(const phase of ['flight','theatre','result'])assert.equal(linecraftE1HidesShotText(phase),false,phase);
  assert.equal(linecraftE1DrawsPreviousTrail('a7'),true);
  assert.equal(linecraftE1DrawsPreviousTrail('k5'),true);
+ assert.equal(linecraftE1DrawsPreviousTrail('k6'),true);
  assert.equal(linecraftE1DrawsPreviousTrail('c3'),false);
  const gates=[...source.matchAll(/linecraftE1 && linecraftE1HidesShotText\(phase\)/g)];
  assert.equal(gates.length,3,'claim caption, registered banner, and contact captions');
@@ -206,11 +223,35 @@ test('the experiment route is opt-in and production routes stay untouched',async
  const shelf=await readFile(new URL('../app/linecraft-tools.tsx',import.meta.url),'utf8');
  assert.match(shelf,/Ghost: recorded history, never prediction\. Replay: sampled path/);
  assert.match(shelf,/contain the recorded replay/);
+ assert.match(source,/linecraftE1KeptStyle\(linecraftE1\.arm\)/);
+ assert.match(source,/new Color3\(\.45,\.82,\.85\)/);
+ assert.match(source,/linecraftGhost\.alpha=\.45/);
+ assert.match(source,/trail\.kiss === "screen-ring"/);
+ assert.match(source,/trail\.ringPx/);
  const recall=[...source.matchAll(/canvas\.dataset\.recallSamples/g)];
  assert.equal(recall.length,2);
  for(const write of recall)assert.match(source.slice(Math.max(0,write.index-160),write.index),/!\(typeof linecraftE1 !== "undefined" && linecraftE1\)/);
  assert.match(source,/!linecraftE1 && <label>/);
  assert.equal(source.includes('aria-label="Open Line station"'),true);
+});
+
+test('k6 kept dashes stay on the recorded path and the other arms keep the plain line',()=>{
+ assert.equal(linecraftE1KeptStyle('a7'),null);
+ assert.equal(linecraftE1KeptStyle('k5'),null);
+ assert.equal(linecraftE1KeptStyle('c3'),null);
+ const kept=linecraftE1KeptStyle('k6'),tube=linecraftE1Trail('k6');
+ assert.ok(kept);assert.ok(kept.radius<tube.radius);assert.ok(kept.radius>=.08);
+ assert.ok(kept.alpha>.7&&kept.alpha<1);assert.ok(kept.dash>kept.gap&&kept.gap>0);
+ assert.ok(kept.emissive[2]>kept.emissive[0],'kept line stays cool, not amber');
+ assert.ok(tube.emissive[0]>tube.emissive[2]);
+ const segments=linecraftE1KeptSegments([{x:0,y:0,z:0},{x:10,y:0,z:0}],kept);
+ assert.deepEqual(segments[0],[{x:0,y:0,z:0},{x:kept.dash,y:0,z:0}]);
+ assert.equal(segments.at(-1).at(-1).x<=10,true);
+ assert.ok(segments.every(segment=>segment.length>=2));
+ assert.equal(linecraftE1KeptSegments([{x:0,y:1,z:2}],kept).length,0);
+ assert.equal(linecraftE1KeptSegments([{x:0,y:0,z:0},{x:1,y:2,z:3}],null).length,0);
+ const short=linecraftE1KeptSegments([{x:0,y:1,z:2},{x:0,y:1,z:2.4}],{dash:3.2,gap:2});
+ assert.equal(short.length,1);assert.deepEqual(short[0][1],{x:0,y:1,z:2.4});
 });
 
 test('built experiment route opens in Open and rejects a missing or unknown arm',async()=>{
@@ -219,8 +260,9 @@ test('built experiment route opens in Open and rejects a missing or unknown arm'
  const htmlAt=async path=>{const response=await worker.fetch(new Request('http://localhost'+path,{headers:{accept:'text/html'}}),{ASSETS:{fetch:async()=>new Response('Not found',{status:404})}},{waitUntil(){},passThroughOnException(){}});assert.equal(response.status,200,path);return (await response.text()).replaceAll('<!-- -->','');};
  const gate=await htmlAt('/lab/linecraft-e1?arm=a7&station=gate');
  const refined=await htmlAt('/lab/linecraft-e1?arm=k5&station=gate');
+ const presented=await htmlAt('/lab/linecraft-e1?arm=k6&station=gate');
  const lumber=await htmlAt('/lab/linecraft-e1?arm=c3&station=lumber');
- for(const [html,arm,station] of [[gate,'a7','gate'],[refined,'k5','gate'],[lumber,'c3','lumber']]){
+ for(const [html,arm,station] of [[gate,'a7','gate'],[refined,'k5','gate'],[presented,'k6','gate'],[lumber,'c3','lumber']]){
   assert.match(html,/OPEN YARD/);assert.match(html,new RegExp(`data-active-station="${station}"`));assert.match(html,new RegExp(`BUILD [^<]*${arm}`));
   assert.equal(/Previous line|Compare three trails|Restart Lessons|Skip Lessons|Next Lesson|NO-TRAIL|ghost off/i.test(html),false);
   assert.equal(html.includes('aria-label="Open Line station"'),false);assert.equal(html.includes('aria-label="Launcher station"'),false);

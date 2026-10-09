@@ -11,7 +11,7 @@ import {IntentControls,IntentResult,IntentStudyTools,intentShellClassName,type I
 import {SENTENCES,matchIntentSentence,recognizedIntentEvents,keepIntentLine,intentStorage,intentMeta,createIntentDecisions,exportIntentStudy,intentStudyCSV} from '@/lib/intent-lab';
 import {LinecraftControls,LinecraftResult,LinecraftShelf,linecraftShellClassName,linecraftResultShelfClassName,linecraftOriginControlClassName} from './linecraft-tools';
 import {LINECRAFT_LESSONS,LINECRAFT_REPLAY_SECONDS,createLinecraftSession,recordLinecraftAttempt,continueLinecraftSession,enterLinecraftExplore,enterLinecraftOpen,linecraftMeta,matchLinecraftSentence,linecraftActualDiverges,linecraftStorage,createLinecraftShelf,createLinecraftDecisions,exportLinecraftStudy,linecraftStudyCSV,sampleRecordedPath} from '@/lib/linecraft-lab';
-import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,linecraftE1Trail,linecraftE1HidesShotText,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
+import {LINECRAFT_E1_PROGRESS_KEY,LINECRAFT_E1_LIBRARY_SUFFIX,LINECRAFT_E1_SURVEY_DATABASE,LINECRAFT_E1_SHELF_CONTRACT,LINECRAFT_E1_SHELF_LINKS,linecraftE1Storage,linecraftE1Prefix,linecraftE1DrawsPreviousTrail,linecraftE1Trail,linecraftE1KeptStyle,linecraftE1KeptSegments,linecraftE1HidesShotText,stampLinecraftE1Export,linecraftE1StudyCSV,type LinecraftE1Mode} from '@/lib/linecraft-e1';
 import {LINECRAFT_ORIGIN,linecraftOrigin,selectLinecraftOrigin,shiftLinecraftOrigin} from '@/lib/linecraft-origin';
 import {SurveyTools} from './survey-tools';
 import {
@@ -831,8 +831,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         let ghostLine: LinesMesh | null = null;
         let previousShotMarks: Mesh[] = [];
         let previousShotMaterial: StandardMaterial | null = null;
+        let kissMark: Vector3 | null = null;
+        let kissReticle: HTMLDivElement | null = null;
         let keptGhost:LinesMesh|null=null,keptGhostVersion:unknown=null;
         let linecraftGhost:LinesMesh|null=null,linecraftGhostVersion:string|null=null;
+        let keptMarks: Mesh[] = [];
+        let keptMaterial: StandardMaterial | null = null;
         let replayMarker:Mesh|null=null,replayTrail:LinesMesh|null=null;
         let replayView:{position:Vector3;target:Vector3;survey:boolean;fov:number}|null=null;
         let replayStarted=0,replayPoints:SavedLine['points']=[];
@@ -1471,6 +1475,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           previousShotMarks = [];
           previousShotMaterial?.dispose();
           previousShotMaterial = null;
+          kissMark = null;
+          if (kissReticle) { kissReticle.hidden = true; kissReticle.dataset.state = "hidden"; }
           if (worldRef.current) worldRef.current.ghostLine = null;
           if (!(typeof linecraftE1 !== "undefined" && linecraftE1) && typeof canvas !== "undefined" && canvas) canvas.dataset.recallSamples = "0";
         };
@@ -1506,6 +1512,24 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             if (trail.excludeGlow) glow.addExcludedMesh(tube);
             previousShotMarks.push(tube);
             const kiss = memory.contacts.find(contact => contact.kind === "first-kiss");
+            if (trail.kiss === "screen-ring") {
+              // Fixed screen size. A larger world bead is the sweep this arm does not repeat.
+              kissMark = kiss ? new Vector3(kiss.point.x, typeof kiss.point.y === "number" ? kiss.point.y : 0, kiss.point.z) : null;
+              if (kissMark && typeof document !== "undefined" && typeof canvas !== "undefined" && canvas.parentElement && (trail.ringPx ?? 0) > 0) {
+                if (!kissReticle) {
+                  kissReticle = document.createElement("div");
+                  kissReticle.className = "kiss-reticle";
+                  kissReticle.setAttribute("aria-hidden", "true");
+                  kissReticle.style.width = `${trail.ringPx}px`;
+                  kissReticle.style.height = `${trail.ringPx}px`;
+                  kissReticle.style.borderWidth = `${trail.ringBorderPx ?? 2}px`;
+                  kissReticle.style.borderColor = trail.ringColor ?? "rgba(186, 112, 36, 0.96)";
+                  canvas.parentElement.appendChild(kissReticle);
+                }
+                kissReticle.hidden = true;
+              }
+              return;
+            }
             if (kiss) {
               const kissY = typeof kiss.point.y === "number" ? kiss.point.y : 0;
               const pin = MeshBuilder.CreateCylinder("previous-kiss", { height: trail.pinHeight, diameter: trail.pinDiameter, tessellation: 10 }, scene!);
@@ -2554,6 +2578,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         setLastShot(remembered ?? null); makeGhost(remembered);
         if(lineLab){setLineLedger(remembered?.ledger ?? []);setLiveLineTotal(scoreLine(remembered?.ledger ?? []).total);}
 
+        const disposeKeptHistory = () => {
+          linecraftGhost?.dispose();
+          linecraftGhost = null;
+          for (const mesh of keptMarks) { mesh.material = null; mesh.dispose(); }
+          keptMarks = [];
+          keptMaterial?.dispose();
+          keptMaterial = null;
+        };
+
         engine.runRenderLoop(() => {
           if (!scene || disposed) return;
           const now = performance.now();
@@ -2567,13 +2600,25 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           }
           if(linecraftLab){
             if(typeof linecraftE1!=="undefined"&&linecraftE1&&!linecraftE1.shelfTrailButtons){
-              if(linecraftGhost){linecraftGhost.dispose();linecraftGhost=null;linecraftGhostVersion=null;}
+              if(linecraftGhost||keptMarks.length){disposeKeptHistory();linecraftGhostVersion=null;}
             } else if(linecraftGhostVersion!==linecraftGhostIdRef.current){
-              linecraftGhost?.dispose();linecraftGhost=null;linecraftGhostVersion=linecraftGhostIdRef.current;
+              disposeKeptHistory();linecraftGhostVersion=linecraftGhostIdRef.current;
               const entry=linecraftShelfRef.current?.entries().find(item=>item.attemptId===linecraftGhostVersion);
-              if(entry&&entry.line.points.length>1){linecraftGhost=MeshBuilder.CreateLines('linecraft-kept-history',{points:entry.line.points.map(point=>new Vector3(point.x,point.y,point.z))},scene);linecraftGhost.color=new Color3(.45,.82,.85);linecraftGhost.alpha=.45;linecraftGhost.isPickable=false;}
+              const kept=typeof linecraftE1!=="undefined"&&linecraftE1?linecraftE1KeptStyle(linecraftE1.arm):null;
+              if(entry&&entry.line.points.length>1&&kept){
+                keptMaterial=makeMaterial("linecraft-kept-history",new Color3(kept.diffuse[0],kept.diffuse[1],kept.diffuse[2]),new Color3(kept.emissive[0],kept.emissive[1],kept.emissive[2]),.55);
+                keptMaterial.alpha=kept.alpha;
+                for(const segment of linecraftE1KeptSegments(entry.line.points,kept)){
+                  const path=segment.map(point=>new Vector3(point.x,point.y,point.z));
+                  if(path.length<2)continue;
+                  const tube=MeshBuilder.CreateTube("linecraft-kept-history",{path,radius:kept.radius,tessellation:6,cap:Mesh.CAP_ALL},scene);
+                  tube.material=keptMaterial;tube.isPickable=false;keptMarks.push(tube);
+                }
+              }else if(entry&&entry.line.points.length>1){linecraftGhost=MeshBuilder.CreateLines('linecraft-kept-history',{points:entry.line.points.map(point=>new Vector3(point.x,point.y,point.z))},scene);linecraftGhost.color=new Color3(.45,.82,.85);linecraftGhost.alpha=.45;linecraftGhost.isPickable=false;}
             }
-            if(linecraftGhost)linecraftGhost.isVisible=surveyRef.current&&phaseRef.current==='ready'&&!linecraftReplayingRef.current;
+            const showKept=surveyRef.current&&phaseRef.current==='ready'&&!linecraftReplayingRef.current;
+            if(linecraftGhost)linecraftGhost.isVisible=showKept;
+            for(const mesh of keptMarks)mesh.isVisible=showKept;
             if(linecraftReplayingRef.current&&replayMarker){
               const progress=(now-replayStarted)/(LINECRAFT_REPLAY_SECONDS*1000),point=sampleRecordedPath(replayPoints,progress);
               if(point){replayMarker.position.set(point.x,point.y,point.z);cameraTarget.set(point.x,point.y,point.z);camera.position.set(point.x+27,point.y+22,point.z-29);camera.setTarget(cameraTarget);}
@@ -2815,6 +2860,19 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               element.dataset.visible = visible ? "true" : "false";
               element.style.left = `${(projected.x / renderWidth) * 100}%`;
               element.style.top = `${(projected.y / renderHeight) * 100}%`;
+            }
+          }
+          if (kissReticle) {
+            if (!kissMark) { kissReticle.hidden = true; kissReticle.dataset.state = "hidden"; }
+            else {
+              const projected = Vector3.Project(kissMark, identityMatrix, viewProjection, labelViewport);
+              const visible = projected.z > 0 && projected.z < 1;
+              kissReticle.hidden = !visible;
+              kissReticle.dataset.state = visible ? "shown" : "hidden";
+              if (visible) {
+                kissReticle.style.left = `${projected.x / renderWidth * canvas.clientWidth}px`;
+                kissReticle.style.top = `${projected.y / renderHeight * canvas.clientHeight}px`;
+              }
             }
           }
           scene.render();

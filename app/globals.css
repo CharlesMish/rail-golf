@@ -114,6 +114,18 @@ canvas {
   mix-blend-mode: screen;
 }
 
+.kiss-reticle {
+  position: absolute;
+  z-index: 4;
+  box-sizing: border-box;
+  border-style: solid;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(12, 8, 4, 0.72);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
 .rail-canvas {
   position: absolute;
   inset: 0;
