@@ -14,7 +14,7 @@ import {DIVERTER_HOLE,floorForAction} from '../../lib/diverter-lab.js';
 import {stationMuzzle,stationAim} from '../../lib/stations.js';
 import {RAIL_RULES,chargeToSpeed,classifyChallengeRuling} from '../../lib/rail-golf-v02.js';
 Logger.LogLevels=0;
-export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false}={}){
+export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false,teeWidth=13}={}){
  const hole=selectedHole ?? (integrated?COURTYARD_DIVERTER:DIVERTER_HOLE);
  const engine=new NullEngine({renderWidth:844,renderHeight:390,textureSize:512,deterministicLockstep:false,lockstepMaxSteps:4}),scene=new Scene(engine);
  scene.enablePhysics(new Vector3(0,-RAIL_RULES.gravity,0),new HavokPlugin(true,havok));
@@ -27,7 +27,7 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
   const ground=MeshBuilder.CreateBox('yard-ground',{width:hole.courseWidth,height:1,depth:hole.courseLength+42},scene);
   ground.parent=root;ground.position.set(0,-.5,(hole.courseLength+8)/2);ground.metadata={yardLanding:'ground'};
   add(ground,PhysicsShapeType.BOX,{mass:0,restitution:.1,friction:.8});
-  const tee=MeshBuilder.CreateBox('yard-tee',{width:13,height:.34,depth:7.5},scene);
+  const tee=MeshBuilder.CreateBox('yard-tee',{width:teeWidth,height:.34,depth:7.5},scene);
   tee.parent=root;tee.position.set(0,.16,-.5);tee.metadata={yardLanding:'tee'};
   add(tee,PhysicsShapeType.BOX,{mass:0,restitution:.06,friction:.9});
   for(const target of linecraft?[]:COURTYARD_DIVERTER_TARGETS){
