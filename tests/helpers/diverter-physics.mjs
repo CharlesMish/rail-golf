@@ -1,4 +1,5 @@
 import {buildKickerPallet} from '../../lib/kicker-pallet.js';
+import {buildPalletYard} from '../../lib/pallet-yard.js';
 import {createRunTracker} from '../../lib/line-run.js';
 import {createLineLifecycle} from '../../lib/line-lifecycle.js';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '../../lib/line-recognition.js';
@@ -14,7 +15,7 @@ import {DIVERTER_HOLE,floorForAction} from '../../lib/diverter-lab.js';
 import {stationMuzzle,stationAim} from '../../lib/stations.js';
 import {RAIL_RULES,chargeToSpeed,classifyChallengeRuling} from '../../lib/rail-golf-v02.js';
 Logger.LogLevels=0;
-export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false}={}){
+export function diverterHarness(havok,initial='A',integrated=false,selectedHole=null,{scoreLab=false,kicker=true,linecraft=false,palletYard=false,flatB=false,geometry=null}={}){
  const hole=selectedHole ?? (integrated?COURTYARD_DIVERTER:DIVERTER_HOLE);
  const engine=new NullEngine({renderWidth:844,renderHeight:390,textureSize:512,deterministicLockstep:false,lockstepMaxSteps:4}),scene=new Scene(engine);
  scene.enablePhysics(new Vector3(0,-RAIL_RULES.gravity,0),new HavokPlugin(true,havok));
@@ -38,7 +39,7 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
   buildCourtyard(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b),hole,{loadingPlatformOverlay:!scoreLab,lineLab:scoreLab,hideSkyToken:linecraft,...(linecraft?{extraPads:[LINECRAFT_SECOND_PAD]}:{})});
   if(linecraft)buildLinecraftReflectors(scene,root,materials,{addShadowCaster(){}},b=>yardBodies.push(b));
  }
- const world=scoreLab?(kicker?buildKickerPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,hole.target):buildYardLandingAuthority(hole.target,initial)):buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});
+ const world=palletYard?buildPalletYard(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,null,{flatB,geometry}):scoreLab?(kicker?buildKickerPallet(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,hole.target):buildYardLandingAuthority(hole.target,initial)):buildDiverterLab(scene,root,materials,{addShadowCaster(){},removeShadowCaster(){}},initial,integrated?{...YARD_DIVERTER_OPTIONS,target:hole.target}:{});
  let id=0;
  return {
   world,scene,
@@ -49,14 +50,16 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
    ball.position.set(...(launch?launch.position:[muzzle.x,muzzle.y,muzzle.z]));
    const aggregate=new PhysicsAggregate(ball,PhysicsShapeType.SPHERE,{mass:1.5,restitution:.38,friction:.28},scene);
    let landing=null;const contacts=[],tags=[],ledger=[],routes=[],run=createRunTracker(),tracker=createRedirectTracker(),sawMill=createSawMillTracker(),lifecycle=createLineLifecycle();
+   const rawSamples=[],flips=[];let step=0,stepState=start;
    let previous=ball.position.clone();
    aggregate.body.setCollisionCallbackEnabled(true);
    aggregate.body.getCollisionObservable().add(event=>{
     if(landing)return;
-    if(scoreLab)run.contact();
+    if(scoreLab||palletYard)run.contact();
     const other=event.collider===aggregate.body?event.collidedAgainst:event.collider;
     const contact=world.contact(other,event.point,shotId);
-    if(integrated){recordLineContact(ledger,other.transformNode,event.point,contact);if(event.point){tracker.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);sawMill.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);}}
+    if(integrated){recordLineContact(ledger,other.transformNode,event.point,contact);if(palletYard){for(let k=1;k<=2;k++){const stamped=ledger.at(-k);if(stamped&&stamped.atStep==null&&(stamped.kind==='contact'||stamped.kind==='switch-use'))stamped.atStep=step;}}if(event.point){tracker.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);sawMill.contact(redirectFeature(other.transformNode,event.point),other.transformNode.name,event.point);}}
+    if(palletYard&&other===world.floorBody&&event.point){const note=world.notePallet(event.point);if(note)rawSamples.push({...note,step,stateAtContact:stepState});}
     if(integrated && event.point){
      const kind=other.transformNode.metadata?.yardBank ?? cascadeContactTag(other.transformNode.metadata?.cascadeStep,event.point) ?? (other.transformNode.metadata?.deliveryRoute==='mill'?'mill':null);
      if(kind&&!tags.includes(kind)){tags.push(kind);contacts.push({kind,point:event.point.clone(),body:other.transformNode.name});}
@@ -66,32 +69,35 @@ export function diverterHarness(havok,initial='A',integrated=false,selectedHole=
     else if(!tags.includes(contact.kind)){tags.push(contact.kind);contacts.push({...contact,body:other.transformNode.name});}
    });
    aggregate.body.applyImpulse((launch?new Vector3(...launch.velocity):new Vector3(aim.x,aim.y,aim.z).scale(chargeToSpeed(shot.charge))).scale(1.5),ball.position);
+   const pack=(extra)=>({...extra,rawSamples,flips});
    try{
-    for(let i=0;i<(scoreLab?7300:1560);i++){
+    for(let i=0;i<(scoreLab||palletYard?7300:1560);i++){
+     step=i;stepState=world.state;
      run.beginStep();tracker.beginStep(aggregate.body.getLinearVelocity(),i/120);sawMill.beginStep(aggregate.body.getLinearVelocity(),i/120);
-     physics._step(1/120);world.flush();
-     const redirect=tracker.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(integrated&&redirect)appendLineEvidence(ledger,redirect);
-     const relationship=sawMill.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(relationship)appendLineEvidence(ledger,relationship);
-     for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);
+     physics._step(1/120);
+     const before=world.state;const flipped=world.flush();if(flipped&&flipped!==before)flips.push({atStep:i,from:before,to:flipped,cause:'lever'});
+     const redirect=tracker.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(integrated&&redirect){redirect.atStep=i;appendLineEvidence(ledger,redirect);}
+     const relationship=sawMill.endStep(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(relationship){relationship.atStep=i;appendLineEvidence(ledger,relationship);}
+     for(const diagnostic of tracker.drainDiagnostics()){diagnostic.atStep=i;appendLineEvidence(ledger,diagnostic);}
      onStep?.(ball.position,aggregate.body.getLinearVelocity(),i/120);
      if(integrated&&!landing){
       for(const e of linecraft?collectLinecraftStepEvents(previous,ball.position,hole,tags,routes):collectLineStepEvents(previous,ball.position,hole,tags,routes)){
        if(e.kind==='sky'){routes.push('sky');appendLineEvidence(ledger,{kind:'token',surface:'sky',point:{...e.point}});}
        if(e.kind==='boost'&&aggregate.body.getLinearVelocity().y<0){
-        appendLineEvidence(ledger,{kind:'pad-activation',surface:'skip-pad',point:{...e.point}});
+        appendLineEvidence(ledger,{kind:'pad-activation',surface:'skip-pad',point:{...e.point},atStep:i});
         tags.push('boost');contacts.push({kind:'boost',point:new Vector3(e.point.x,e.point.y,e.point.z),body:'powered-pad-swept-surface'});
         const kick=padImpulse(aggregate.body.getLinearVelocity(),hole);aggregate.body.applyImpulse(new Vector3(kick.x,kick.y,kick.z),ball.position);break;
        }
       }
      }
-     if(scoreLab&&!landing){const milestone=run.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120,scoreLine(ledger).awards.some(a=>a.tier!=='FINISH'));if(milestone)appendLineEvidence(ledger,milestone);}
+     if((scoreLab||palletYard)&&!landing){const milestone=run.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120,scoreLine(ledger).awards.some(a=>a.tier!=='FINISH'));if(milestone)appendLineEvidence(ledger,milestone);}
      previous.copyFrom(ball.position);
-     if(landing){if(scoreLab&&run.snapshot())appendLineEvidence(ledger,run.snapshot());appendLineEvidence(ledger,{kind:'termination',reason:'ground-contact'});tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target?.id ?? 'ground',label:hole.target?.label.toUpperCase() ?? 'LINE ENDED'});return {start,end:world.state,outcome:hole.target?classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}):'line-ended',point:landing.point.asArray(),tags,contacts,ledger};}
-     if(stopOnSwitch&&tags.some(t=>t.startsWith('switch-')))return {start,end:world.state,outcome:'interrupted',tags,contacts,ledger};
-     if(scoreLab){const end=lifecycle.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(end){if(run.snapshot())appendLineEvidence(ledger,run.snapshot());tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'termination',reason:end});return {start,end:world.state,outcome:end,point:ball.position.asArray(),tags,contacts,ledger,elapsed:(i+1)/120};}}
+     if(landing){if((scoreLab||palletYard)&&run.snapshot())appendLineEvidence(ledger,run.snapshot());appendLineEvidence(ledger,{kind:'termination',reason:'ground-contact',atStep:i});tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'ruling',targetHit:landing.targetHit===true,surface:hole.target?.id ?? 'ground',label:hole.target?.label.toUpperCase() ?? 'LINE ENDED'});return pack({start,end:world.state,outcome:hole.target?classifyChallengeRuling({hole,targetHit:landing.targetHit===true,tags}):'line-ended',point:landing.point.asArray(),tags,contacts,ledger});}
+     if(stopOnSwitch&&tags.some(t=>t.startsWith('switch-')))return pack({start,end:world.state,outcome:'interrupted',tags,contacts,ledger});
+     if(scoreLab||palletYard){const end=lifecycle.step(ball.position,aggregate.body.getLinearVelocity(),(i+1)/120);if(end){if(run.snapshot())appendLineEvidence(ledger,run.snapshot());tracker.finish();for(const diagnostic of tracker.drainDiagnostics())appendLineEvidence(ledger,diagnostic);appendLineEvidence(ledger,{kind:'termination',reason:end,atStep:i});return pack({start,end:world.state,outcome:end,point:ball.position.asArray(),tags,contacts,ledger,elapsed:(i+1)/120});}}
      if(!scoreLab&&(Math.abs(ball.position.x)>(integrated?50:32)||ball.position.z>(integrated?198:124)||ball.position.z< -15||ball.position.y< -8))break;
     }
-    return {start,end:world.state,outcome:'oob',point:ball.position.asArray(),tags,contacts,ledger};
+    return pack({start,end:world.state,outcome:'oob',point:ball.position.asArray(),tags,contacts,ledger});
    }finally{aggregate.dispose();ball.dispose();}
   },
   dispose(){world.dispose();for(const b of yardBodies)b.dispose();scene.dispose();engine.dispose();}
