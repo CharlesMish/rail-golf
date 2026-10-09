@@ -1,0 +1,41 @@
+{
+  "flipThenPallet": null,
+  "absence": "R40P47 has no flight that flips the lever and then meets the pallet. The lever stands at x=24 and the pallet at x=0. A lever-face bounce returns toward the station or leaves to the right. The lever was not moved.",
+  "cases": [
+    {
+      "id": "top",
+      "analogue": "top-deck redirect",
+      "state": "A",
+      "shot": {"railIndex": 1, "originX": -4, "yaw": -8, "elevation": 24, "charge": 0.85},
+      "expect": {"face": "top", "redirect": true, "rejected": false, "deck": true, "flipped": false, "touched": true, "end": "A"}
+    },
+    {
+      "id": "under",
+      "analogue": "underside redirect",
+      "state": "B",
+      "shot": {"railIndex": 1, "originX": 4, "yaw": -6, "elevation": 12, "charge": 0.7},
+      "expect": {"face": "underside", "redirect": true, "rejected": false, "deck": false, "flipped": false, "touched": true, "end": "B"}
+    },
+    {
+      "id": "graze",
+      "analogue": "deck graze rejected",
+      "state": "B",
+      "shot": {"railIndex": 1, "originX": -4, "yaw": -4, "elevation": 18, "charge": 0.85},
+      "expect": {"face": "edge", "redirect": false, "rejected": true, "deck": true, "flipped": false, "touched": true, "end": "B"}
+    },
+    {
+      "id": "clip",
+      "analogue": "end-face clip rejected",
+      "state": "A",
+      "shot": {"railIndex": 1, "originX": -4, "yaw": 12, "elevation": 12, "charge": 0.65},
+      "expect": {"face": "end-x+", "redirect": false, "rejected": true, "deck": false, "flipped": false, "touched": true, "end": "A"}
+    },
+    {
+      "id": "flipOnly",
+      "analogue": "lever flip with no pallet contact",
+      "state": "A",
+      "shot": {"railIndex": 1, "originX": -4, "yaw": 28, "elevation": 16, "charge": 0.65},
+      "expect": {"face": null, "redirect": false, "rejected": false, "deck": false, "flipped": true, "touched": false, "end": "B"}
+    }
+  ]
+}
