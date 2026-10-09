@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import HavokPhysics from '@babylonjs/havok';
 import {diverterHarness} from './helpers/diverter-physics.mjs';
@@ -106,8 +107,26 @@ test('kicker constants and frozen authorities stay on main',()=>{
  assert.equal(PALLET_YARD_LEVER.x,24);
  assert.equal(PALLET_YARD_LEVER.z,40);
  assert.equal(PALLET_YARD_LEVER.width,4);
- const names=execFileSync('git',['diff','--name-only','cd9d41ddf6349b47e8d0035fd1707299ac255d55','--','lib/rail-golf-v02.js','lib/delivery-routes.js','lib/line-recognition.js','lib/line-score.js','lib/line-run.js','lib/line-lifecycle.js','lib/kicker-pallet.js'],{encoding:'utf8'});
+ const frozen=['lib/rail-golf-v02.js','lib/delivery-routes.js','lib/line-recognition.js','lib/line-score.js','lib/line-run.js','lib/line-lifecycle.js','lib/kicker-pallet.js'];
+ const base='cd9d41ddf6349b47e8d0035fd1707299ac255d55';
+ let names='';
+ try{
+  execFileSync('git',['cat-file','-e',base+'^{commit}'],{stdio:'ignore'});
+  names=execFileSync('git',['diff','--name-only',base,'--',...frozen],{encoding:'utf8'});
+ }catch{/* A shallow checkout does not have the baseline object. The source gate below still applies. */}
  assert.equal(names.trim(),'');
+ const rules=readFileSync(new URL('../lib/rail-golf-v02.js',import.meta.url),'utf8');
+ const gates=readFileSync(new URL('../lib/line-recognition.js',import.meta.url),'utf8');
+ const scoring=readFileSync(new URL('../lib/line-score.js',import.meta.url),'utf8');
+ assert.match(rules,/minSpeed:\s*6/);
+ assert.match(rules,/maxSpeed:\s*43/);
+ assert.match(rules,/muzzleLength:\s*5\.18/);
+ assert.match(gates,/minIncomingSpeed:4,minOutgoingSpeed:3,minTurnDegrees:25,maxContactSeconds:\.12,freeSeconds:\.10,minSeparation:1/);
+ assert.match(scoring,/pointsPerAdditionalClaim:50,cap:200/);
+ for(const file of frozen){
+  const text=readFileSync(new URL('../'+file,import.meta.url),'utf8');
+  assert.doesNotMatch(text,/pallet-yard|palletYard|PALLET_YARD/);
+ }
 });
 
 test('route copy refuses an unknown link and does not print an arm code',async()=>{
@@ -165,5 +184,38 @@ test('one integrated shot records the evidence contract from the same event list
   assert.deepEqual(palletEvidenceConsistent(record),[]);
   assert.equal(record.display.settled.includes('PALLET'),record.pallet.redirect!=null);
   assert.equal(record.display.settled.includes('LEVER'),record.lever.flipped);
+ }finally{h.dispose();}
+});
+
+test('recorded fixture shots keep the evidence contract, including a rejected end face',()=>{
+ const book=JSON.parse(readFileSync(new URL('./fixtures/pallet-yard-evidence.json',import.meta.url),'utf8'));
+ assert.equal(book.flipThenPallet,null);
+ const h=harness('A',false);
+ try{
+  for(const row of book.cases){
+   h.world.setState(row.state);
+   const result=h.shoot(row.shot);
+   const face=result.rawSamples[0]?.face??null;
+   const redirect=result.ledger.some(event=>event.kind==='redirect'&&event.feature==='pallet-yard-pallet');
+   const rejected=result.ledger.some(event=>event.kind==='rejected'&&event.feature==='pallet-yard-pallet');
+   const deck=result.rawSamples.some(sample=>Math.abs(sample.local.y-0.4)<.16);
+   assert.equal(face,row.expect.face,row.id);
+   assert.equal(redirect,row.expect.redirect,row.id);
+   assert.equal(rejected,row.expect.rejected,row.id);
+   assert.equal(deck,row.expect.deck,row.id);
+   assert.equal(result.flips.length>0,row.expect.flipped,row.id);
+   assert.equal(result.rawSamples.length>0,row.expect.touched,row.id);
+   assert.equal(result.end,row.expect.end,row.id);
+   const events=palletYardEventList(result.ledger);
+   const settled=palletYardSettledText(events,result.ledger.findLast(event=>event.kind==='termination')?.reason);
+   const record=buildPalletEvidence({
+    stateAtLaunch:result.start,stateAtEnd:result.end,flips:result.flips,rawSamples:result.rawSamples,ledger:result.ledger,
+    displaySettled:settled,displayLive:events.map(event=>({text:event.text,atStep:event.atStep??0})),
+    addressChip:result.start==='B'?'PALLET B':'PALLET A',setupRelation:'fresh',setup:row.shot,build:'fixture',
+   });
+   assert.deepEqual(palletEvidenceConsistent(record),[],row.id);
+   assert.equal(settled.includes('PALLET'),redirect,row.id);
+   assert.equal(settled.includes('LEVER'),result.flips.length>0,row.id);
+  }
  }finally{h.dispose();}
 });
