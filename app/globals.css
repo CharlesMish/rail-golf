@@ -1874,3 +1874,9 @@ canvas {
   .line-note .ending-line { font-size: 14px; }
   .line-note-export { top: 118px; left: 8px; }
 }
+
+/* This route only: keep the phone switches off the station picker. */
+.yard-study .mobile-utility-panel { top: 86px; bottom: auto; }
+@media (orientation: portrait) and (max-width: 700px) {
+  .yard-study.manners-shell .mobile-utility-panel { top: 86px; bottom: auto; }
+}

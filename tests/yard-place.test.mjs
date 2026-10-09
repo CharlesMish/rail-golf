@@ -7,9 +7,10 @@ import {diverterHarness} from './helpers/diverter-physics.mjs';
 import {selectOpenLineStation} from '../lib/line-lab.js';
 import {recognizedIntentEvents} from '../lib/intent-lab.js';
 import {recordLineReceipt, scoreLine} from '../lib/line-score.js';
-import {BAND, ENDING_WORD, EXPORT_FILENAME, PLACE_VOCABULARY, STORAGE_PREFIX, createYardJournal, lifecycleBounds, placeFor, resultCardMarkup, resultView, vocabularyViolations} from '../lib/yard-place.js';
+import {BAND, ENDING_WORD, EXPORT_FILENAME, PLACE_VOCABULARY, STORAGE_PREFIX, createYardJournal, lifecycleBounds, placeFor, resultCardMarkup, resultView, shotExport, vocabularyViolations} from '../lib/yard-place.js';
 
 const fixtures = JSON.parse(await readFile(new URL('./fixtures/e4-yard-fixtures.json', import.meta.url), 'utf8'));
+const adversarial = JSON.parse(await readFile(new URL('./fixtures/e4-adversarial.json', import.meta.url), 'utf8'));
 const hv = await Havok({wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url))});
 const near = (a, b) => Math.abs(a - b) <= 0.01 + 1e-9;
 const pointOf = value => Array.isArray(value) ? {x: value[0], y: value[1], z: value[2]} : value;
@@ -72,6 +73,15 @@ test('classifier matches every fixture place from the recorded terminal only', (
   }
 });
 
+test('adversarial points stay generic unless a footprint or one strict bound names them', () => {
+  assert.equal(adversarial.length, 71);
+  for (const point of adversarial) {
+    const ruling = placeFor(point.station, {reason: point.reason, surface: point.surface, point: {x: point.p[0], y: point.p[1], z: point.p[2]}});
+    assert.equal(ruling.place, point.place, point.id + ' got ' + ruling.place + ' ' + ruling.zone);
+    assert.ok(ruling.place === null || PLACE_VOCABULARY.includes(ruling.place), point.id);
+  }
+});
+
 test('classifier is called with the station and exactly reason, surface, and point', () => {
   const seen = [];
   const terminal = {reason: 'ground-contact', surface: 'ground', point: {x: 1, y: 2, z: 3}, ledger: [{kind: 'redirect'}], place: 'LEAK'};
@@ -79,7 +89,7 @@ test('classifier is called with the station and exactly reason, surface, and poi
     stationId: 'gate',
     terminal,
     ledger: [],
-    showPlace: true,
+    q: true,
     classify(stationId, input) {
       seen.push({stationId, keys: Object.keys(input).sort(), input});
       return placeFor(stationId, input);
@@ -109,8 +119,8 @@ test('arm identity: only the ending line differs, and the card text does not nam
   const cases = [...fixtures, ...synthetic];
   for (const fixture of cases) {
     const ledger = [{kind: 'redirect', surface: 'bank-a', feature: 'bank-a', label: 'BANK A REJECT'}, {kind: 'contact', surface: 'mill', terminal: false}, {kind: 'contact', surface: 'bank-a', terminal: false}];
-    const hidden = resultView({stationId: fixture.station, terminal: terminalOf(fixture), ledger, showPlace: false});
-    const named = resultView({stationId: fixture.station, terminal: terminalOf(fixture), ledger, showPlace: true});
+    const hidden = resultView({stationId: fixture.station, terminal: terminalOf(fixture), ledger, q: false});
+    const named = resultView({stationId: fixture.station, terminal: terminalOf(fixture), ledger, q: true});
     const withoutLine = view => ({...view, endingLine: undefined});
     assert.deepEqual(withoutLine(hidden), withoutLine(named), fixture.id ?? fixture.station);
     assert.equal(hidden.endingLine, 'Ending: ' + ENDING_WORD[fixture.expect.reason], fixture.id ?? fixture.expect.reason);
@@ -130,12 +140,20 @@ test('arm identity: only the ending line differs, and the card text does not nam
 test('a 12-shot session writes only the study prefix and the same keys in both conditions', () => {
   const foreign = {'rail-golf-linecraft-v1': '1', 'rail-golf:linecraft:kept': '1', 'rail-golf-intent-v1': '1', 'rail-golf-line-lab-v1': '1', 'rail-golf-shot-library-v1-linecraft-v1': '1'};
   const keySets = [];
-  for (const code of ['r6', 'h3']) {
+  const shapes = [];
+  for (const named of [false, true]) {
     const storage = memoryStorage(foreign);
     const before = JSON.stringify([...storage.values]);
     const journal = createYardJournal(storage.api);
     for (let index = 0; index < 12; index += 1) {
-      journal.record({k: code, build: 'test', station: index % 2 ? 'lumber' : 'gate', n: index, fps: 4, viewport: {width: 1440, height: 900}});
+      const ending = 'Ending: FIRST KISS' + (named ? ' · BETWEEN THE BANKS' : '');
+      journal.record(shotExport({
+        build: 'test', station: index % 2 ? 'lumber' : 'gate',
+        setup: {yaw: 0, elevation: 10, charge: 0.2, rail: 1, origin: 0},
+        ledger: [], receipt: {ending: 'ground-contact'}, termination: 'ground-contact', surface: 'ground',
+        point: {x: 0, y: 0, z: 36}, sequence: 'Observed contact sequence: none recognized', endingLine: ending,
+        at: '2026-10-09T00:00:00.000Z', fps: 4, viewport: {width: 1440, height: 900},
+      }));
     }
     const keys = [...storage.values.keys()];
     assert.deepEqual(keys.filter(key => !key.startsWith(STORAGE_PREFIX)), Object.keys(foreign));
@@ -145,10 +163,14 @@ test('a 12-shot session writes only the study prefix and the same keys in both c
     assert.equal(ARM_TOKENS.test(journal.filename), false);
     const saved = journal.exportDocument();
     assert.equal(saved.shots.length, 12);
-    assert.equal(saved.shots[0].k, code);
     assert.equal(saved.fps, 4);
+    assert.equal(Object.hasOwn(saved.shots[0], 'k'), false);
+    assert.equal(Object.hasOwn(saved.shots[0], 'classifier'), false);
+    assert.equal(saved.shots[0].endingLine, 'Ending: FIRST KISS' + (named ? ' · BETWEEN THE BANKS' : ''));
+    shapes.push(Object.keys(saved.shots[0]).sort());
   }
   assert.deepEqual(keySets[0], keySets[1]);
+  assert.deepEqual(shapes[0], shapes[1]);
 });
 
 test('frozen authority files are untouched and the shared tee default stays 13 m', () => {
@@ -190,8 +212,8 @@ test('47 live-yard fixtures keep receipt, score, termination, contact, and recog
     assert.equal(again.authority, shot.authority, fixture.id);
     const ledger = JSON.parse(shot.ledger);
     const before = JSON.stringify(ledger);
-    const hidden = resultView({stationId: fixture.station, terminal: {reason: shot.reason, surface: shot.surface, point: pointOf(shot.point)}, ledger, showPlace: false});
-    const named = resultView({stationId: fixture.station, terminal: {reason: shot.reason, surface: shot.surface, point: pointOf(shot.point)}, ledger, showPlace: true});
+    const hidden = resultView({stationId: fixture.station, terminal: {reason: shot.reason, surface: shot.surface, point: pointOf(shot.point)}, ledger, q: false});
+    const named = resultView({stationId: fixture.station, terminal: {reason: shot.reason, surface: shot.surface, point: pointOf(shot.point)}, ledger, q: true});
     assert.equal(JSON.stringify(ledger), before, fixture.id);
     assert.equal(hidden.endingLine, 'Ending: ' + fixture.expect.ending, fixture.id);
     assert.equal(named.endingLine, fixture.expect.place ? hidden.endingLine + ' · ' + fixture.expect.place : hidden.endingLine, fixture.id);

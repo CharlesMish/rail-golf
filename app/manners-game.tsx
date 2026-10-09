@@ -352,7 +352,7 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false, linecraftLab = false, yardPlaceLab = false, showPlace = false, studyCode = "" }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean; linecraftLab?:boolean; yardPlaceLab?:boolean; showPlace?:boolean; studyCode?:string }) {
+export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false, linecraftLab = false, yardPlaceLab = false, q = 0 }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean; linecraftLab?:boolean; yardPlaceLab?:boolean; q?: number }) {
   lineLab = lineLab || timberReceiver || intentLab || linecraftLab || yardPlaceLab;
   const openYard = linecraftLab || yardPlaceLab;
   const lineRoute = linecraftLab ? "/lab/linecraft" : timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
@@ -450,13 +450,11 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const secondPadLabelRef = useRef<HTMLDivElement>(null);
   const millLabelRef = useRef<HTMLDivElement>(null);
   const stackLabelRef = useRef<HTMLDivElement>(null);
-  const showPlaceRef = useRef(showPlace);
-  const studyCodeRef = useRef(studyCode);
+  const qRef = useRef(q);
   const fpsSamplesRef = useRef<number[]>([]);
   const fpsSampleRef = useRef<number | null>(null);
   const yardShotsRef = useRef<Record<string, unknown>[]>([]);
-  showPlaceRef.current = showPlace;
-  studyCodeRef.current = studyCode;
+  qRef.current = q;
   const secondBankRef = useRef<HTMLDivElement>(null);
   const chargePointerRef = useRef<number | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLSpanElement | null>>({});
@@ -1770,9 +1768,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             const termination=safetyReason ?? (contactKind==='first-kiss'?'ground-contact':outcome);
             const surface=[...flight.ledger].reverse().find(event=>event.kind==='contact'&&event.terminal)?.surface ?? null;
             const stationId=HOLES[activeHoleIndex()].station?.id==='lumber'?'lumber':'gate';
-            const view=resultView({stationId,terminal:{reason:termination,surface,point},ledger:flight.ledger,showPlace:showPlaceRef.current});
+            const view=resultView({stationId,terminal:{reason:termination,surface,point},ledger:flight.ledger,q:qRef.current===1});
             const viewport={width:window.innerWidth,height:window.innerHeight};
-            const shot=shotExport({code:studyCodeRef.current,build:BUILD_ID,station:stationId,setup:{yaw:flight.setup.yaw,elevation:flight.setup.elevation,charge:flight.setup.charge,rail:flight.setup.railIndex,origin:flight.setup.originX??0},ledger:flight.ledger.map(event=>({...event})),receipt:recordLineReceipt(flight.ledger),termination,point,classifier:view.classifier,endingLine:view.endingLine,at:new Date().toISOString(),fps:fpsSampleRef.current,viewport});
+            const shot=shotExport({build:BUILD_ID,station:stationId,setup:{yaw:flight.setup.yaw,elevation:flight.setup.elevation,charge:flight.setup.charge,rail:flight.setup.railIndex,origin:flight.setup.originX??0},ledger:flight.ledger.map(event=>({...event})),receipt:recordLineReceipt(flight.ledger),termination,surface,point,sequence:view.sequence,endingLine:view.endingLine,at:new Date().toISOString(),fps:fpsSampleRef.current,viewport});
             yardShotsRef.current=[...yardShotsRef.current,shot];
             try{createYardJournal({get length(){return window.localStorage.length;},key:(index:number)=>window.localStorage.key(index),getItem:(key:string)=>window.localStorage.getItem(key),setItem:(key:string,value:string)=>window.localStorage.setItem(key,value),removeItem:(key:string)=>window.localStorage.removeItem(key)}).record(shot);}catch{/* The in-memory record still downloads. */}
           }
@@ -2903,7 +2901,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const reason=[...lineLedger].reverse().find(event=>event.kind==='termination')?.reason;
     if(!reason)return null;
     const surface=[...lineLedger].reverse().find(event=>event.kind==='contact'&&event.terminal)?.surface??null;
-    return resultView({stationId:hole.station?.id==='lumber'?'lumber':'gate',terminal:{reason,surface,point:{x:result.point.x,y:result.point.y,z:result.point.z}},ledger:lineLedger,showPlace});
+    return resultView({stationId:hole.station?.id==='lumber'?'lumber':'gate',terminal:{reason,surface,point:{x:result.point.x,y:result.point.y,z:result.point.z}},ledger:lineLedger,q:q===1});
   })():null;
   const endingMark=' · ';
   const endingSplit=yardNote?yardNote.endingLine.indexOf(endingMark):-1;
@@ -2966,7 +2964,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const resultCanAdvance = Boolean(result?.clear);
 
   return (
-    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab?' '+linecraftShellClassName:''}`} data-phase={phase} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined}
+    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab?' '+linecraftShellClassName:''}${yardPlaceLab?' yard-study':''}`} data-phase={phase} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined}
       onPointerDownCapture={lineLab?event=>{inputSourceRef.current='pointer';const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;gestureGateRef.current.down(target,labControlRef.current?.revision()??0,event.pointerId);}:undefined}
       onPointerCancelCapture={lineLab?event=>gestureGateRef.current.cancel(event.pointerId):undefined}
       onClickCapture={lineLab?event=>{
