@@ -2612,7 +2612,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
                   const path=segment.map(point=>new Vector3(point.x,point.y,point.z));
                   if(path.length<2)continue;
                   const tube=MeshBuilder.CreateTube("linecraft-kept-history",{path,radius:kept.radius,tessellation:6,cap:Mesh.CAP_ALL},scene);
-                  tube.material=keptMaterial;tube.isPickable=false;glow.addExcludedMesh(tube);keptMarks.push(tube);
+                  tube.material=keptMaterial;tube.isPickable=false;keptMarks.push(tube);
                 }
               }else if(entry&&entry.line.points.length>1){linecraftGhost=MeshBuilder.CreateLines('linecraft-kept-history',{points:entry.line.points.map(point=>new Vector3(point.x,point.y,point.z))},scene);linecraftGhost.color=new Color3(.45,.82,.85);linecraftGhost.alpha=.45;linecraftGhost.isPickable=false;}
             }
