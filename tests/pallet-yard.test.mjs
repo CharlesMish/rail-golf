@@ -85,8 +85,12 @@ test('face, deck flag and display contract keep PALLET for a qualified redirect 
  assert.equal(graze.display.settled.includes('PALLET'),false);
  assert.deepEqual(palletEvidenceConsistent(graze),[]);
  assert.deepEqual(palletEvidenceConsistent({...graze,display:{...graze.display,settled:'PALLET → GROUND'}}),['settled-PALLET']);
- const packet=palletYardStudyExport([record],{stateB:'flat'});
- assert.equal(packet.stateB,'flat');
+ const packet=palletYardStudyExport([record],{stops:['local']});
+ const again=palletYardStudyExport([record]);
+ assert.equal(Object.hasOwn(packet,'stateB'),false);
+ assert.deepEqual(Object.keys(packet),Object.keys(again));
+ assert.deepEqual(Object.keys(packet),['version','study','evidenceContract','exportedAt','attempts','stops']);
+ assert.doesNotMatch(JSON.stringify(packet),/rolled|flat|physical|cosmetic|\bv8\b|\bn2\b/);
  assert.equal(packet.study,'rail-golf-pallet-yard');
 });
 
@@ -134,7 +138,7 @@ test('route copy refuses an unknown link and does not print an arm code',async()
  const game=await readFile(new URL('../app/manners-game.tsx',import.meta.url),'utf8');
  assert.match(page,/This link is not valid\./);
  assert.doesNotMatch(page,/physical|cosmetic|\{key\}|\{rawK\}/);
- assert.doesNotMatch(game,/physical-carry|cosmetic-carry|\bk=v8\b|\bk=n2\b/);
+ assert.doesNotMatch(game,/physical-carry|cosmetic-carry|\bk=v8\b|\bk=n2\b|The pallet keeps its state|stateB|'flat'|'rolled'/);
  assert.match(game,/TRY THIS AIM IN CURRENT YARD/);
  assert.match(game,/RESTORED · PALLET/);
  assert.match(game,/AIM FROM #/);

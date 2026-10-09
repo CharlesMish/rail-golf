@@ -231,7 +231,7 @@ else if(mode==='report'){
  const report={
   geometry:{pallet:PALLET_YARD_PALLET,lever},
   counts:{grid:gRows.length,g0:g0.length,envelope:eRows.length,empty:empty.length,central:central(eRows).length},
-  G1:{grid:line(central(gRows),'G central'),g0:line(g0,'G0'),envelope:line(eRows,'E'),central:line(central(eRows),'C')},
+  G1:{gridCentral:line(central(gRows),'G central'),g0:line(g0,'G0'),envelope:line(eRows,'E'),central:line(central(eRows),'C')},
   G2:{
    bankA:{base:countOf(empty,row=>row.base.ba),A:countOf(eRows,row=>row.A.ba),B:countOf(eRows,row=>row.B.ba)},
    bankB:{base:countOf(empty,row=>row.base.bb),A:countOf(eRows,row=>row.A.ba?false:row.A.bb),B:countOf(eRows,row=>row.B.bb)},

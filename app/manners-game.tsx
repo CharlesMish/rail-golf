@@ -3000,7 +3000,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const exportPallet=async()=>{
     try{
       const archive=await surveyLogRef.current?.export();if(!archive)return;
-      const packet=palletYardStudyExport(archive.records??[],{stateB:palletFlatB?'flat':'rolled'});
+      const packet=palletYardStudyExport(archive.records??[]);
       const blob=new Blob([JSON.stringify(packet,null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download='rail-golf-pallet-yard.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
       setPalletNotice('Study exported locally.');
@@ -3184,7 +3184,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       <aside inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="hole-brief manners-brief">
         <p className="eyebrow">{timberReceiver ? `Timber Receiver · ${hole.station?.label}` : lineLab ? hole.station?.label : diverterLab ? "Experimental mill bay" : courtyard ? hole.station?.label ?? "Timber Courtyard" : "Practice Range"} · {hole.number} / {String(HOLES.length).padStart(2, "0")}</p>
         <strong ref={visibleCardRef} data-active-card={lineLab?hole.id:undefined} data-active-station={lineLab?hole.station?.id:undefined}>{palletYard?'Pallet yard':linecraftLab?'':intentLab?'Intent Lab · '+intentCondition.toUpperCase():hole.name}</strong>
-        <span>{palletYard?'The pallet keeps its state. The lever changes it once per shot.':linecraftLab?'':intentLab?(intentCondition==='sentence'?'Follow the sentence. No seat or score required.':intentCondition==='keep'?'Make a line. Keep it if you want to return to it.':'Open Line scoring · frozen NON-CANONICAL control.'):lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
+        <span>{palletYard?'':linecraftLab?'':intentLab?(intentCondition==='sentence'?'Follow the sentence. No seat or score required.':intentCondition==='keep'?'Make a line. Keep it if you want to return to it.':'Open Line scoring · frozen NON-CANONICAL control.'):lineLab?(hole.target?`Explore a line. Land on ${hole.target.label}, or discover another claim. Scores are provisional.`:hole.instruction):hole.instruction}</span>
         {lineLab && !linecraftLab && !palletYard && intentScored && !hole.target && <strong className="line-session-best">SESSION BEST LINE · {sessionBest[hole.id]??0}</strong>}
         <Button
           type="button"
