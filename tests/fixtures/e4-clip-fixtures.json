@@ -1,0 +1,554 @@
+[
+  {
+    "id": "beyond-gate-inside",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 0,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "BEYOND THE SKIP PADS"
+  },
+  {
+    "id": "beyond-gate-east-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 8.5,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "BEYOND THE SKIP PADS"
+  },
+  {
+    "id": "beyond-gate-east-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 8.51,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "beyond-gate-false",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 13.99,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "beyond-gate-west-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -20,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "BEYOND THE SKIP PADS"
+  },
+  {
+    "id": "beyond-lumber-inside",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 0,
+      "y": 0.08,
+      "z": 60
+    },
+    "expectedPlace": "BEYOND THE SKIP PADS"
+  },
+  {
+    "id": "beyond-lumber-east-edge",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 8.5,
+      "y": 0.08,
+      "z": 60
+    },
+    "expectedPlace": "BEYOND THE SKIP PADS"
+  },
+  {
+    "id": "beyond-lumber-east-out",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 8.51,
+      "y": 0.08,
+      "z": 70
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "beyond-lumber-false",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 13.99,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "treads-gate-inside",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 22,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": "IN FRONT OF THE TREADS"
+  },
+  {
+    "id": "treads-gate-east-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30.5,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": "IN FRONT OF THE TREADS"
+  },
+  {
+    "id": "treads-gate-east-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30.51,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "treads-gate-false",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 34,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "treads-gate-west-inside",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 14,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": "IN FRONT OF THE TREADS"
+  },
+  {
+    "id": "treads-lumber-inside",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 22,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": "BEYOND THE TREADS"
+  },
+  {
+    "id": "treads-lumber-east-edge",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30.5,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": "BEYOND THE TREADS"
+  },
+  {
+    "id": "treads-lumber-east-out",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30.51,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "treads-lumber-false",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 34,
+      "y": 0.08,
+      "z": 50
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "t1-inside",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 22,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "IN FRONT OF TREAD 1"
+  },
+  {
+    "id": "t1-west-edge",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 13.5,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "IN FRONT OF TREAD 1"
+  },
+  {
+    "id": "t1-west-out",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 13.49,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "t1-east-edge",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30.5,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "IN FRONT OF TREAD 1"
+  },
+  {
+    "id": "t1-east-out",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30.51,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "t1-west-falls-to-pads",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 8,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": "IN FRONT OF THE SKIP PADS"
+  },
+  {
+    "id": "t1-false-east",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 34,
+      "y": 0.08,
+      "z": 140
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "t1-false-example",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 33,
+      "y": 0.08,
+      "z": 135.8
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "banks-inside",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 0,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": "IN FRONT OF THE BANKS"
+  },
+  {
+    "id": "banks-west-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -19.2882,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": "IN FRONT OF THE BANKS"
+  },
+  {
+    "id": "banks-west-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -19.29,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "banks-east-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 23.9953,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": "IN FRONT OF THE BANKS"
+  },
+  {
+    "id": "banks-east-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 24,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "banks-far-west",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -30,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "banks-far-east",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": 30,
+      "y": 0.08,
+      "z": 15
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-inside",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -25,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": "BESIDE THE MILL"
+  },
+  {
+    "id": "mill-inside-lumber",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -25,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": "BESIDE THE MILL"
+  },
+  {
+    "id": "mill-east-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -23.5,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": "BESIDE THE MILL"
+  },
+  {
+    "id": "mill-east-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -23.49,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-east-out-lumber",
+    "station": "lumber",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -23.49,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-west-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -46.5,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": "BESIDE THE MILL"
+  },
+  {
+    "id": "mill-west-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -47.5,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-south-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -30,
+      "y": 0.08,
+      "z": 74.5
+    },
+    "expectedPlace": "BESIDE THE MILL"
+  },
+  {
+    "id": "mill-south-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -30,
+      "y": 0.08,
+      "z": 74
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-north-edge",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -30,
+      "y": 0.08,
+      "z": 133.5
+    },
+    "expectedPlace": "BESIDE THE MILL"
+  },
+  {
+    "id": "mill-north-out",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -30,
+      "y": 0.08,
+      "z": 133.51
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-old-run",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -22,
+      "y": 0.08,
+      "z": 100
+    },
+    "expectedPlace": null
+  },
+  {
+    "id": "mill-solid",
+    "station": "gate",
+    "reason": "ground-contact",
+    "surface": "ground",
+    "point": {
+      "x": -35,
+      "y": 0.08,
+      "z": 104
+    },
+    "expectedPlace": null
+  }
+]

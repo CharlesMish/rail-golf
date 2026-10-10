@@ -1,0 +1,1363 @@
+[
+ {
+  "id": "G-short-banks",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 10,
+   "charge": 0.2
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "IN FRONT OF THE BANKS",
+   "zone": "short-banks"
+  },
+  "p": [
+   0,
+   0.03,
+   15.68
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 8532
+ },
+ {
+  "id": "G-between-banks",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 10,
+   "charge": 0.6
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BETWEEN THE BANKS",
+   "zone": "between-banks"
+  },
+  "p": [
+   0,
+   0,
+   36.17
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 2164
+ },
+ {
+  "id": "G-outside-a",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -25,
+   "elevation": 65,
+   "charge": 0.5
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "OUTSIDE BANK A",
+   "zone": "outside-a"
+  },
+  "p": [
+   -18.24,
+   0.03,
+   39.12
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 256
+ },
+ {
+  "id": "G-outside-b",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 20,
+   "elevation": 10,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "OUTSIDE BANK B",
+   "zone": "outside-b"
+  },
+  "p": [
+   26.05,
+   0.03,
+   36.14
+  ],
+  "q": [
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-b"
+  ],
+  "candidates": 1076
+ },
+ {
+  "id": "G-short-pads",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 10,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "IN FRONT OF THE SKIP PADS",
+   "zone": "short-pads"
+  },
+  "p": [
+   0,
+   0.07,
+   50.18
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 2490
+ },
+ {
+  "id": "G-past-pads",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 20,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEYOND THE SKIP PADS",
+   "zone": "past-pads"
+  },
+  "p": [
+   0,
+   0.04,
+   139.22
+  ],
+  "q": [
+   "SKIP"
+  ],
+  "raw": [],
+  "candidates": 1525
+ },
+ {
+  "id": "G-far-end",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 45,
+   "charge": 1
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "FAR END OF THE YARD",
+   "zone": "far-end"
+  },
+  "p": [
+   0,
+   0.09,
+   162.84
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 279
+ },
+ {
+  "id": "G-stacks",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -5,
+   "elevation": 65,
+   "charge": 1
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "AMONG THE LUMBER STACKS",
+   "zone": "stacks"
+  },
+  "p": [
+   31.94,
+   0.03,
+   112.36
+  ],
+  "q": [
+   "CROSS FACE RETURN"
+  ],
+  "raw": [
+   "linecraft-cross-face"
+  ],
+  "candidates": 973
+ },
+ {
+  "id": "G-mill",
+  "station": "gate",
+  "note": "clipped to generic",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -10,
+   "elevation": 50,
+   "charge": 0.9
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "unmapped"
+  },
+  "p": [
+   -23.36,
+   0.17,
+   132.48
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 591
+ },
+ {
+  "id": "G-short-treads",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 15,
+   "elevation": 50,
+   "charge": 0.5
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "IN FRONT OF THE TREADS",
+   "zone": "short-treads"
+  },
+  "p": [
+   14.65,
+   0.17,
+   54.66
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 567
+ },
+ {
+  "id": "G-behind",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 15,
+   "elevation": 35,
+   "charge": 0.6
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEHIND THE RAIL",
+   "zone": "behind"
+  },
+  "p": [
+   1.83,
+   0.04,
+   -7.93
+  ],
+  "q": [
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-b"
+  ],
+  "candidates": 35
+ },
+ {
+  "id": "G-oob-mill",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -20,
+   "elevation": 40,
+   "charge": 0.9
+  },
+  "expect": {
+   "reason": "oob",
+   "surface": null,
+   "ending": "OUT OF BOUNDS",
+   "place": "MILL SIDE",
+   "zone": "oob-mill"
+  },
+  "p": [
+   -50.12,
+   13.65,
+   125.32
+  ],
+  "q": [
+   "MILL ROOF REBOUND"
+  ],
+  "raw": [
+   "mill-roof:-40.1:104"
+  ],
+  "candidates": 905
+ },
+ {
+  "id": "G-oob-lumber",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 20,
+   "elevation": 30,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "oob",
+   "surface": null,
+   "ending": "OUT OF BOUNDS",
+   "place": "LUMBER SIDE",
+   "zone": "oob-lumber"
+  },
+  "p": [
+   50.15,
+   9.69,
+   44.82
+  ],
+  "q": [
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-b"
+  ],
+  "candidates": 983
+ },
+ {
+  "id": "G-oob-back",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 15,
+   "elevation": 25,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "oob",
+   "surface": null,
+   "ending": "OUT OF BOUNDS",
+   "place": "BEHIND THE RAIL",
+   "zone": "oob-back"
+  },
+  "p": [
+   0.55,
+   4.22,
+   -15.09
+  ],
+  "q": [
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-b"
+  ],
+  "candidates": 45
+ },
+ {
+  "id": "G-tee",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 85,
+   "charge": 0.2
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "tee",
+   "ending": "FIRST KISS",
+   "place": "ON THE TEE",
+   "zone": "tee"
+  },
+  "p": [
+   0,
+   0.43,
+   3.21
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 285
+ },
+ {
+  "id": "G-t2-t3",
+  "station": "gate",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 15,
+   "elevation": 50,
+   "charge": 0.7
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BETWEEN TREADS 2 AND 3",
+   "zone": "t2-t3"
+  },
+  "p": [
+   23.59,
+   0.05,
+   88.05
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 54
+ },
+ {
+  "id": "L-short-t1",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 10,
+   "charge": 0.2
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "IN FRONT OF TREAD 1",
+   "zone": "short-t1"
+  },
+  "p": [
+   22,
+   0.03,
+   138.32
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 7297
+ },
+ {
+  "id": "L-l-short-pads",
+  "station": "lumber",
+  "note": "clipped to generic",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 10,
+   "elevation": 35,
+   "charge": 0.5
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "unmapped"
+  },
+  "p": [
+   12.18,
+   0.11,
+   98.33
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 4405
+ },
+ {
+  "id": "L-l-past-pads",
+  "station": "lumber",
+  "note": "clipped to generic",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 5,
+   "elevation": 25,
+   "charge": 0.6
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "unmapped"
+  },
+  "p": [
+   13.6,
+   0.1,
+   57.93
+  ],
+  "q": [
+   "TREAD 2 KICK"
+  ],
+  "raw": [
+   "step-b"
+  ],
+  "candidates": 1682
+ },
+ {
+  "id": "L-past-treads",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 30,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEYOND THE TREADS",
+   "zone": "past-treads"
+  },
+  "p": [
+   22,
+   0.15,
+   51.95
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 736
+ },
+ {
+  "id": "L-t1-t2",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 65,
+   "charge": 0.5
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BETWEEN TREADS 1 AND 2",
+   "zone": "t1-t2"
+  },
+  "p": [
+   22,
+   0.03,
+   110.83
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 19
+ },
+ {
+  "id": "L-t2-t3",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 25,
+   "charge": 0.7
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BETWEEN TREADS 2 AND 3",
+   "zone": "t2-t3"
+  },
+  "p": [
+   22,
+   0.03,
+   85.78
+  ],
+  "q": [
+   "TREAD 3 KICK"
+  ],
+  "raw": [
+   "step-c"
+  ],
+  "candidates": 124
+ },
+ {
+  "id": "L-stacks",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -10,
+   "elevation": 20,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "AMONG THE LUMBER STACKS",
+   "zone": "stacks"
+  },
+  "p": [
+   35.89,
+   0.06,
+   75.21
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 4664
+ },
+ {
+  "id": "L-behind",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 20,
+   "charge": 0.7
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEHIND THE RAIL",
+   "zone": "behind"
+  },
+  "p": [
+   22,
+   0.09,
+   166.89
+  ],
+  "q": [
+   "TREAD SIDE REJECT"
+  ],
+  "raw": [
+   "step-a"
+  ],
+  "candidates": 158
+ },
+ {
+  "id": "L-gate-end",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 20,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "FAR END OF THE YARD",
+   "zone": "gate-end"
+  },
+  "p": [
+   22,
+   0.08,
+   17.37
+  ],
+  "q": [
+   "TREAD 3 KICK"
+  ],
+  "raw": [
+   "step-c"
+  ],
+  "candidates": 173
+ },
+ {
+  "id": "L-between-banks",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 5,
+   "elevation": 35,
+   "charge": 0.9
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BETWEEN THE BANKS",
+   "zone": "between-banks"
+  },
+  "p": [
+   1.12,
+   0.11,
+   33.4
+  ],
+  "q": [
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-b"
+  ],
+  "candidates": 156
+ },
+ {
+  "id": "L-outside-a",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 15,
+   "elevation": 15,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "OUTSIDE BANK A",
+   "zone": "outside-a"
+  },
+  "p": [
+   -14.43,
+   0.01,
+   35.86
+  ],
+  "q": [
+   "SKIP",
+   "BANK A REJECT"
+  ],
+  "raw": [
+   "bank-a"
+  ],
+  "candidates": 223
+ },
+ {
+  "id": "L-oob-lumber",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -10,
+   "elevation": 45,
+   "charge": 1
+  },
+  "expect": {
+   "reason": "oob",
+   "surface": null,
+   "ending": "OUT OF BOUNDS",
+   "place": "LUMBER SIDE",
+   "zone": "oob-lumber"
+  },
+  "p": [
+   50.01,
+   2.12,
+   -4.87
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 2681
+ },
+ {
+  "id": "L-oob-mill",
+  "station": "lumber",
+  "note": "interior",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 5,
+   "elevation": 50,
+   "charge": 0.9
+  },
+  "expect": {
+   "reason": "oob",
+   "surface": null,
+   "ending": "OUT OF BOUNDS",
+   "place": "MILL SIDE",
+   "zone": "oob-mill"
+  },
+  "p": [
+   -50.15,
+   10.83,
+   50.9
+  ],
+  "q": [
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-b"
+  ],
+  "candidates": 319
+ },
+ {
+  "id": "L-mill",
+  "station": "lumber",
+  "note": "clipped to generic",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 30,
+   "elevation": 25,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "unmapped"
+  },
+  "p": [
+   -24.12,
+   0.09,
+   74.11
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 131
+ },
+ {
+  "id": "G-AB-between",
+  "station": "gate",
+  "note": "A->B line ending between banks",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -10,
+   "elevation": 30,
+   "charge": 0.6
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BETWEEN THE BANKS",
+   "zone": "between-banks"
+  },
+  "p": [
+   5.73,
+   0.01,
+   39.05
+  ],
+  "q": [
+   "BANK A REJECT",
+   "BANK B REJECT"
+  ],
+  "raw": [
+   "bank-a",
+   "bank-b"
+  ],
+  "candidates": 216
+ },
+ {
+  "id": "G-A-front",
+  "station": "gate",
+  "note": "rebound off A lands in front: must not read SHORT",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -20,
+   "elevation": 10,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "IN FRONT OF THE BANKS",
+   "zone": "short-banks"
+  },
+  "p": [
+   2.42,
+   0.06,
+   24.98
+  ],
+  "q": [
+   "BANK A REJECT"
+  ],
+  "raw": [
+   "bank-a"
+  ],
+  "candidates": 1075
+ },
+ {
+  "id": "G-noB-outsideB",
+  "station": "gate",
+  "note": "outside B with no B contact at all",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 25,
+   "elevation": 20,
+   "charge": 0.4
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "OUTSIDE BANK B",
+   "zone": "outside-b"
+  },
+  "p": [
+   14.47,
+   0.07,
+   31.03
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 367
+ },
+ {
+  "id": "G-skip-beyond",
+  "station": "gate",
+  "note": "skip then beyond pads",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 20,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEYOND THE SKIP PADS",
+   "zone": "past-pads"
+  },
+  "p": [
+   0,
+   0.04,
+   139.22
+  ],
+  "q": [
+   "SKIP"
+  ],
+  "raw": [],
+  "candidates": 393
+ },
+ {
+  "id": "G-noskip-beyond",
+  "station": "gate",
+  "note": "over the pads, no skip",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 30,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEYOND THE SKIP PADS",
+   "zone": "past-pads"
+  },
+  "p": [
+   0,
+   0.15,
+   102.05
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 1132
+ },
+ {
+  "id": "L-tread-run",
+  "station": "lumber",
+  "note": "full tread run",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 40,
+   "charge": 0.4
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "BEYOND THE TREADS",
+   "zone": "past-treads"
+  },
+  "p": [
+   22,
+   0.08,
+   45.85
+  ],
+  "q": [
+   "TREAD 1 KICK",
+   "TREAD 2 KICK",
+   "TREAD 3 KICK"
+  ],
+  "raw": [
+   "step-a",
+   "step-b",
+   "step-c"
+  ],
+  "candidates": 99
+ },
+ {
+  "id": "L-stacks-nocontact",
+  "station": "lumber",
+  "note": "among stacks without touching one",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -10,
+   "elevation": 20,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "AMONG THE LUMBER STACKS",
+   "zone": "stacks"
+  },
+  "p": [
+   35.89,
+   0.06,
+   75.21
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 3396
+ },
+ {
+  "id": "G-z25.5-in",
+  "station": "gate",
+  "note": "just inside IN FRONT OF THE BANKS",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -20,
+   "elevation": 15,
+   "charge": 0.65
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": "IN FRONT OF THE BANKS",
+   "zone": "short-banks"
+  },
+  "p": [
+   2.3,
+   0.05,
+   25.05
+  ],
+  "q": [
+   "BANK A REJECT"
+  ],
+  "raw": [
+   "bank-a"
+  ],
+  "candidates": 48
+ },
+ {
+  "id": "G-z26-band",
+  "station": "gate",
+  "note": "just inside bank-depth band",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -5,
+   "elevation": 5,
+   "charge": 0.6
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "bank-band"
+  },
+  "p": [
+   -2.29,
+   0.03,
+   26.17
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 75
+ },
+ {
+  "id": "G-bankA-face",
+  "station": "gate",
+  "note": "touching distance of bank A centre-line",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -10,
+   "elevation": 15,
+   "charge": 0.5
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "bank-band"
+  },
+  "p": [
+   -6.46,
+   0,
+   36.65
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 101
+ },
+ {
+  "id": "G-pad-edge-noskip",
+  "station": "gate",
+  "note": "lands within 2.5 m of a pad, no SKIP: must not name the pad",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 25,
+   "charge": 0.7
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "pad-band"
+  },
+  "p": [
+   0,
+   0.09,
+   76.15
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 315
+ },
+ {
+  "id": "L-pad-band",
+  "station": "lumber",
+  "note": "pad band from Lumber",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 10,
+   "elevation": 60,
+   "charge": 0.7
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "pad-band"
+  },
+  "p": [
+   8.23,
+   0.17,
+   75.91
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 443
+ },
+ {
+  "id": "L-tread-band",
+  "station": "lumber",
+  "note": "next to a tread, no tread event",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 10,
+   "charge": 0.4
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "tread-band"
+  },
+  "p": [
+   22,
+   0.03,
+   129.4
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 1488
+ },
+ {
+  "id": "G-unmapped",
+  "station": "gate",
+  "note": "open ground west, no region",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": -15,
+   "elevation": 55,
+   "charge": 1
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "unmapped"
+  },
+  "p": [
+   -39.3,
+   0.12,
+   146.69
+  ],
+  "q": [],
+  "raw": [],
+  "candidates": 767
+ },
+ {
+  "id": "L-unmapped",
+  "station": "lumber",
+  "note": "no region",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 20,
+   "charge": 0.6
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "unmapped"
+  },
+  "p": [
+   22,
+   0.04,
+   154.29
+  ],
+  "q": [
+   "LUMBER REBOUND"
+  ],
+  "raw": [
+   "step-a-stack:22:122",
+   "step-a"
+  ],
+  "candidates": 1897
+ },
+ {
+  "id": "G-edge-band",
+  "station": "gate",
+  "note": "yard-edge band",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 15,
+   "elevation": 40,
+   "charge": 0.8
+  },
+  "expect": {
+   "reason": "ground-contact",
+   "surface": "ground",
+   "ending": "FIRST KISS",
+   "place": null,
+   "zone": "edge-band"
+  },
+  "p": [
+   48.8,
+   0.05,
+   182.11
+  ],
+  "q": [
+   "TREAD 2 KICK"
+  ],
+  "raw": [
+   "step-b"
+  ],
+  "candidates": 293
+ },
+ {
+  "id": "L-dead-ball",
+  "station": "lumber",
+  "note": "settled on a tread top: SETTLED, no place",
+  "setup": {
+   "railIndex": 1,
+   "originX": 0,
+   "yaw": 0,
+   "elevation": 30,
+   "charge": 0.5
+  },
+  "expect": {
+   "reason": "dead-ball",
+   "surface": null,
+   "ending": "SETTLED",
+   "place": null,
+   "zone": "generic-dead-ball"
+  },
+  "p": [
+   22,
+   5.43,
+   97.4
+  ],
+  "q": [
+   "TREAD SIDE REJECT"
+  ],
+  "raw": [
+   "step-b"
+  ],
+  "candidates": 7
+ }
+]

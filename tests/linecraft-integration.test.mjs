@@ -29,7 +29,7 @@ test('Linecraft hidden Sky Token produces no contact or evidence, while other la
  const card=selectOpenLineStation('gate'),start={x:SKY_TOKEN.x,y:SKY_TOKEN.y,z:SKY_TOKEN.z-12},end={...start,z:SKY_TOKEN.z+12};
  assert.ok(collectLineStepEvents(start,end,card).some(event=>event.kind==='sky'));
  assert.ok(!collectLinecraftStepEvents(start,end,card).some(event=>event.kind==='sky'));
- assert.match(source,/linecraftLab\s*\? collectLinecraftStepEvents\(previousLike,currentLike,hole,\[\.\.\.flight\.mechanismTags\],\[\.\.\.flight\.deliveryRoutes\]\)/);
+ assert.match(source,/openYard\s*\? collectLinecraftStepEvents\(previousLike,currentLike,hole,\[\.\.\.flight\.mechanismTags\],\[\.\.\.flight\.deliveryRoutes\]\)/);
 });
 
 test('Linecraft console reserves exactly three explicit action areas and a preceding full-width origin control',async()=>{
@@ -70,10 +70,10 @@ test('Linecraft is opt-in, separately namespaced and keeps the physics initializ
  for(const path of ['../app/page.tsx','../app/courtyard/page.tsx','../app/practice/page.tsx','../app/lab/lines/page.tsx','../app/lab/intent/page.tsx'])assert.doesNotMatch(await readFile(new URL(path,import.meta.url),'utf8'),/linecraftLab/);
  const initializers=findAll(node=>ts.isCallExpression(node)&&node.expression.getText(ast)==='useEffect'&&node.arguments[0]?.getText(ast).includes('const initialize = async'));
  assert.equal(initializers.length,1);assert.equal(initializers[0].arguments[1].getText(ast),'[]');
- const c={linecraftLab:true,intentLab:true,timberReceiver:true,lineLab:true,courtyardDiverter:true,diverterLab:true,courtyard:true};vm.createContext(c);
+ const c={linecraftLab:true,yardPlaceLab:false,yardPlaceCard:false,intentLab:true,timberReceiver:true,lineLab:true,courtyardDiverter:true,diverterLab:true,courtyard:true};vm.createContext(c);
  assert.equal(compile(c,'key',expression('STORAGE_KEY')),'rail-golf-linecraft-v1');
  assert.match(source,/linecraftLab\?linecraftStorage\(storage\)/);assert.match(source,/linecraftLab\?"rail-golf-linecraft-survey"/);
- assert.match(source,/const saved = linecraftLab\?\{\}:intentLab\?\{\}:loadProgress/);
+ assert.match(source,/const saved = linecraftLab\|\|yardPlaceLab\?\{\}:intentLab\?\{\}:loadProgress/);
  assert.match(expression('rememberFlight'),/if\(!intentLab&&!linecraftLab\)try/);
 });
 

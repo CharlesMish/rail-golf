@@ -1,0 +1,357 @@
+{
+  "head": "d3cb90a82cc52d0f734850e1af9f13a1c7f54f10",
+  "bandMetres": 2.5,
+  "note": "expectedPlace is the place after the recommended fix. null is the generic ending (no place clause). shippedPlace is placeFor at this head. y is not read by placeFor.",
+  "items": [
+    {
+      "item": 1,
+      "phrase": "IN FRONT OF THE SKIP PADS",
+      "recommendedRule": {
+        "gate": "ground-contact, surface ground, z in [44.5, 75.5] and x in [-20, 8.5], after the earlier rules. 8.5 = pad east edge 6 + 2.5.",
+        "lumber": "ground-contact, surface ground, z in [92.5, 152] and x in [-20, 8.5], after the earlier rules. Same east cap. West bound stays -20."
+      },
+      "fixtures": [
+        {
+          "id": "gate-pads-front-inside",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.07, "z": 60 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "inside"
+        },
+        {
+          "id": "gate-pads-front-east-edge",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 8.5, "y": 0.07, "z": 60 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "edge, inclusive, 2.5 m east of pad edge x=6"
+        },
+        {
+          "id": "gate-pads-front-east-out",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 8.51, "y": 0.07, "z": 60 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": null,
+          "shippedTruth": "false",
+          "role": "just outside the east band"
+        },
+        {
+          "id": "gate-pads-front-west-edge",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": -20, "y": 0.07, "z": 60 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "west edge of the shipped window; still inside the pad span"
+        },
+        {
+          "id": "gate-pads-front-west-out",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": -20.01, "y": 0.07, "z": 60 },
+          "shippedPlace": null,
+          "expectedPlace": null,
+          "shippedTruth": "true-if-named",
+          "role": "just outside the shipped west bound; still in front of the second pad; leave generic"
+        },
+        {
+          "id": "gate-pads-front-j6",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 12.254, "y": 0.511, "z": 46.628 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": null,
+          "shippedTruth": "false",
+          "role": "Rat J6 shot 10. 6.254 m east of pad edge x=6, 3.754 m outside the band."
+        },
+        {
+          "id": "gate-pads-front-depth-in",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.07, "z": 44.51 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "depth edge, just clear of the bank band at z=44.5"
+        },
+        {
+          "id": "gate-pads-front-depth-bank",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.07, "z": 44.5 },
+          "shippedPlace": null,
+          "expectedPlace": null,
+          "shippedTruth": "generic",
+          "role": "bank-depth band, unchanged"
+        },
+        {
+          "id": "gate-pads-front-depth-pad",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.07, "z": 75.49 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "depth edge, just clear of the pad band at z=75.5"
+        },
+        {
+          "id": "gate-pads-front-depth-band",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.07, "z": 75.5 },
+          "shippedPlace": null,
+          "expectedPlace": null,
+          "shippedTruth": "generic",
+          "role": "pad footprint band, unchanged"
+        },
+        {
+          "id": "lumber-pads-front-inside",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.08, "z": 120 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "inside, lumber near side, clear of the tread-1 rule"
+        },
+        {
+          "id": "lumber-pads-front-east-edge",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 8.5, "y": 0.08, "z": 120 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "east band edge, lumber"
+        },
+        {
+          "id": "lumber-pads-front-east-out",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 8.51, "y": 0.08, "z": 120 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": null,
+          "shippedTruth": "false",
+          "role": "just outside the east band, lumber"
+        },
+        {
+          "id": "lumber-pads-front-west-edge",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": -20, "y": 0.08, "z": 120 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": "IN FRONT OF THE SKIP PADS",
+          "shippedTruth": "true",
+          "role": "west edge, lumber"
+        },
+        {
+          "id": "lumber-pads-front-l-short-pads",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 12.18, "y": 0.11, "z": 98.33 },
+          "shippedPlace": "IN FRONT OF THE SKIP PADS",
+          "expectedPlace": null,
+          "shippedTruth": "false",
+          "role": "existing fixture L-l-short-pads; 6.18 m east of pad edge x=6"
+        }
+      ]
+    },
+    {
+      "item": 2,
+      "phrase": "FAR END OF THE YARD",
+      "recommendedRule": {
+        "teeSurface": "surface tee returns ON THE TEE on both stations.",
+        "lumberGround": "keep: ground, z in [5.75, 25.5] and abs(x) <= 30 returns FAR END OF THE YARD."
+      },
+      "fixtures": [
+        {
+          "id": "lumber-tee-inside",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "tee",
+          "point": { "x": 0, "y": 0.4, "z": 1 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "ON THE TEE",
+          "shippedTruth": "coarse-but-true",
+          "role": "inside the tee box, lumber"
+        },
+        {
+          "id": "lumber-tee-east-corner",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "tee",
+          "point": { "x": 11.5, "y": 0.33, "z": 3.25 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "ON THE TEE",
+          "shippedTruth": "coarse-but-true",
+          "role": "tee box corner, +x"
+        },
+        {
+          "id": "lumber-tee-west-corner",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "tee",
+          "point": { "x": -11.5, "y": 0.33, "z": -4.25 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "ON THE TEE",
+          "shippedTruth": "coarse-but-true",
+          "role": "tee box corner, -x"
+        },
+        {
+          "id": "gate-tee-inside",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "tee",
+          "point": { "x": 0, "y": 0.43, "z": 3.21 },
+          "shippedPlace": "ON THE TEE",
+          "expectedPlace": "ON THE TEE",
+          "shippedTruth": "true",
+          "role": "gate tee, unchanged"
+        },
+        {
+          "id": "lumber-ground-j7",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 22, "y": 0.08, "z": 10.4 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "coarse-but-true",
+          "role": "Rat J7 shot 6. 12.703 m from the tee box. Keep."
+        },
+        {
+          "id": "lumber-ground-inside",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.08, "z": 15 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "coarse-but-true",
+          "role": "inside the gate-end slab"
+        },
+        {
+          "id": "lumber-ground-near-edge",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 22, "y": 0.08, "z": 5.75 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "coarse-but-true",
+          "role": "inclusive near edge, tee face 3.25 + 2.5; x=22 is off the tee"
+        },
+        {
+          "id": "lumber-ground-near-out",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 22, "y": 0.08, "z": 5.74 },
+          "shippedPlace": null,
+          "expectedPlace": null,
+          "shippedTruth": "generic",
+          "role": "just outside, unnamed tee surround"
+        },
+        {
+          "id": "lumber-ground-bank-edge",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 22, "y": 0.08, "z": 25.49 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "coarse-but-true",
+          "role": "just clear of the bank-depth band"
+        },
+        {
+          "id": "lumber-ground-bank-out",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 22, "y": 0.08, "z": 25.5 },
+          "shippedPlace": null,
+          "expectedPlace": null,
+          "shippedTruth": "generic",
+          "role": "bank-depth band"
+        },
+        {
+          "id": "lumber-ground-x-east",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 30, "y": 0.08, "z": 10 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "coarse-but-true",
+          "role": "lateral edge +x"
+        },
+        {
+          "id": "lumber-ground-x-east-out",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 30.01, "y": 0.08, "z": 10 },
+          "shippedPlace": null,
+          "expectedPlace": null,
+          "shippedTruth": "generic",
+          "role": "just outside the lateral cap; leave generic"
+        },
+        {
+          "id": "lumber-ground-x-west",
+          "station": "lumber",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": -30, "y": 0.08, "z": 10 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "coarse-but-true",
+          "role": "lateral edge -x"
+        },
+        {
+          "id": "gate-far-j4",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 34.2, "y": 0.08, "z": 161 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "true",
+          "role": "Rat J4 shot 12"
+        },
+        {
+          "id": "gate-far-j7-s2",
+          "station": "gate",
+          "reason": "ground-contact",
+          "surface": "ground",
+          "point": { "x": 0, "y": 0.09, "z": 162.3 },
+          "shippedPlace": "FAR END OF THE YARD",
+          "expectedPlace": "FAR END OF THE YARD",
+          "shippedTruth": "true",
+          "role": "Rat J7 shot 2 and Rat J8 shot 2"
+        }
+      ]
+    }
+  ]
+}
