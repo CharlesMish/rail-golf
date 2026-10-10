@@ -11,6 +11,8 @@ import {BAND, ENDING_WORD, EXPORT_FILENAME, PLACE_VOCABULARY, STORAGE_PREFIX, cr
 
 const fixtures = JSON.parse(await readFile(new URL('./fixtures/e4-yard-fixtures.json', import.meta.url), 'utf8'));
 const adversarial = JSON.parse(await readFile(new URL('./fixtures/e4-adversarial.json', import.meta.url), 'utf8'));
+const audit = JSON.parse(await readFile(new URL('./fixtures/e4-audit-fixtures.json', import.meta.url), 'utf8'));
+const clips = JSON.parse(await readFile(new URL('./fixtures/e4-clip-fixtures.json', import.meta.url), 'utf8'));
 const hv = await Havok({wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url))});
 const near = (a, b) => Math.abs(a - b) <= 0.01 + 1e-9;
 const pointOf = value => Array.isArray(value) ? {x: value[0], y: value[1], z: value[2]} : value;
@@ -82,6 +84,37 @@ test('adversarial points stay generic unless a footprint or one strict bound nam
   }
 });
 
+test('audit fixtures match expectedPlace and each clipped region has an inside, edge, and outside', () => {
+  const rows = audit.items.flatMap(item => item.fixtures);
+  assert.equal(rows.length, 30);
+  for (const row of rows) {
+    const ruling = placeFor(row.station, {reason: row.reason, surface: row.surface, point: row.point});
+    assert.equal(ruling.place, row.expectedPlace, row.id + ' got ' + ruling.place + ' ' + ruling.zone);
+  }
+  for (const prefix of ['beyond-', 'treads-', 't1-', 'banks-', 'mill-']) {
+    assert.ok(clips.filter(row => row.id.startsWith(prefix)).length >= 4, prefix);
+  }
+  for (const row of clips) {
+    const ruling = placeFor(row.station, {reason: row.reason, surface: row.surface, point: row.point});
+    assert.equal(ruling.place, row.expectedPlace, row.id + ' got ' + ruling.place + ' ' + ruling.zone);
+  }
+});
+
+test('original fixture places move only to generic', () => {
+  const original = JSON.parse(execFileSync('git', ['show', 'd3cb90a82cc52d0f734850e1af9f13a1c7f54f10:tests/fixtures/e4-yard-fixtures.json'], {encoding: 'utf8'}));
+  const changed = [];
+  for (const before of original) {
+    const after = fixtures.find(item => item.id === before.id);
+    if (before.expect.place !== after.expect.place) changed.push({id: before.id, from: before.expect.place, to: after.expect.place});
+  }
+  assert.deepEqual(changed, [
+    {id: 'G-mill', from: 'BESIDE THE MILL', to: null},
+    {id: 'L-l-short-pads', from: 'IN FRONT OF THE SKIP PADS', to: null},
+    {id: 'L-l-past-pads', from: 'BEYOND THE SKIP PADS', to: null},
+    {id: 'L-mill', from: 'BESIDE THE MILL', to: null},
+  ]);
+});
+
 test('classifier is called with the station and exactly reason, surface, and point', () => {
   const seen = [];
   const terminal = {reason: 'ground-contact', surface: 'ground', point: {x: 1, y: 2, z: 3}, ledger: [{kind: 'redirect'}], place: 'LEAK'};
@@ -111,11 +144,11 @@ test('arm identity: only the ending line differs, and the card text does not nam
     {station: 'gate', expect: {reason: 'safety-timeout', surface: null, ending: 'SAFETY STOP', place: null}, p: [0, 1, 40]},
     {station: 'gate', expect: {reason: 'invalid-physics', surface: null, ending: 'SAFETY STOP', place: null}, p: [0, 1, 40]},
     {station: 'gate', expect: {reason: 'oob', surface: null, ending: 'OUT OF BOUNDS', place: null}, p: [-50.2, 1, -15.2]},
-    {station: 'lumber', expect: {reason: 'ground-contact', surface: 'tee', ending: 'FAR END OF THE YARD', place: 'FAR END OF THE YARD'}, p: [22, 0.4, 154]},
+    {station: 'lumber', expect: {reason: 'ground-contact', surface: 'tee', ending: 'FIRST KISS', place: 'ON THE TEE'}, p: [22, 0.4, 154]},
     {station: 'gate', expect: {reason: 'ground-contact', surface: 'other-solid', ending: 'FIRST KISS', place: null}, p: [0, 0, 20]},
   ];
-  // The tee synthetic above stores the place in ending by mistake for the word check below.
-  synthetic[4].expect.ending = 'FIRST KISS';
+  assert.equal(placeFor('lumber', {reason: 'ground-contact', surface: 'tee', point: {x: 22, y: 0.4, z: 154}}).place, 'ON THE TEE');
+  assert.equal(placeFor('gate', {reason: 'ground-contact', surface: 'tee', point: {x: 0, y: 0.43, z: 3.21}}).place, 'ON THE TEE');
   const cases = [...fixtures, ...synthetic];
   for (const fixture of cases) {
     const ledger = [{kind: 'redirect', surface: 'bank-a', feature: 'bank-a', label: 'BANK A REJECT'}, {kind: 'contact', surface: 'mill', terminal: false}, {kind: 'contact', surface: 'bank-a', terminal: false}];

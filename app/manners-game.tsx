@@ -101,7 +101,7 @@ import type { LineShelf, SavedLine } from "@/lib/shot-library";
 import { YARD_STATIONS, stationAim, stationMuzzle, stationRailPosition } from "@/lib/stations";
 import { LineReceipt } from './line-receipt';
 import { appendLineEvidence, recordLineContact, scoreLine, recordLineReceipt } from '@/lib/line-score';
-import {createYardJournal, resultView, shotExport, yardPlaceStorage} from '@/lib/yard-place';
+import {createCardJournal, createYardJournal, resultView, shotExport, yardCardStorage, yardPlaceStorage} from '@/lib/yard-place';
 import {createLineLifecycle} from '@/lib/line-lifecycle';
 import {createSawMillTracker,createRedirectTracker,collectLineStepEvents,redirectFeature} from '@/lib/line-recognition';
 import type { LineEvidence } from '@/lib/line-score';
@@ -352,14 +352,14 @@ function resultCopy(hole: Hole, outcome: Outcome, point: Vector3, tags: Mechanis
   };
 }
 
-export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false, linecraftLab = false, yardPlaceLab = false, q = 0 }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean; linecraftLab?:boolean; yardPlaceLab?:boolean; q?: number }) {
-  lineLab = lineLab || timberReceiver || intentLab || linecraftLab || yardPlaceLab;
-  const openYard = linecraftLab || yardPlaceLab;
-  const lineRoute = linecraftLab ? "/lab/linecraft" : timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
+export function MannersGame({ courtyard = false, diverterLab = false, courtyardDiverter = false, lineLab = false, timberReceiver = false, intentLab = false, linecraftLab = false, yardPlaceLab = false, yardPlaceCard = false, endingSlot = "heading", q = 0 }: { courtyard?: boolean; diverterLab?: boolean; courtyardDiverter?: boolean; lineLab?:boolean; timberReceiver?:boolean; intentLab?:boolean; linecraftLab?:boolean; yardPlaceLab?:boolean; yardPlaceCard?:boolean; endingSlot?: "heading" | "banner"; q?: number }) {
+  lineLab = lineLab || timberReceiver || intentLab || linecraftLab || yardPlaceLab || yardPlaceCard;
+  const openYard = linecraftLab || yardPlaceLab || yardPlaceCard;
+  const lineRoute = yardPlaceCard ? "/lab/yard-place-card" : linecraftLab ? "/lab/linecraft" : timberReceiver ? "/lab/timber-receiver" : "/lab/lines";
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
-  const [labSelection]=useState(()=>{const selection=createLabSelection(LINE_CARDS);if(intentLab||linecraftLab||yardPlaceLab){selection.select(3);return {...selection,getServerSnapshot:selection.getSnapshot};}return selection;});
+  const [labSelection]=useState(()=>{const selection=createLabSelection(LINE_CARDS);if(intentLab||linecraftLab||yardPlaceLab||yardPlaceCard){selection.select(3);return {...selection,getServerSnapshot:selection.getSnapshot};}return selection;});
   const [intentCondition,setIntentCondition]=useState<IntentCondition>('keep');
   const intentConditionRef=useRef<IntentCondition>('keep');
   const [intentSentence,setIntentSentence]=useState('banks'),intentSentenceRef=useRef('banks');
@@ -371,7 +371,9 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [intentNotice,setIntentNotice]=useState('');
   const intentActionsRef=useRef<{condition(value:IntentCondition):void;sentence(id:string):void;keep():void;discard():void;recallKeep(id:string):void}|null>(null);
   const intentScored=!intentLab||intentCondition==='score';
-  const [linecraftSession,setLinecraftSession]=useState(createLinecraftSession),linecraftSessionRef=useRef(createLinecraftSession());
+  const openCardSession=()=>{const next=enterLinecraftOpen(createLinecraftSession(),'cold');next.scoreVisible=true;return next;};
+  const [linecraftSession,setLinecraftSession]=useState(()=>yardPlaceCard?openCardSession():createLinecraftSession());
+  const linecraftSessionRef=useRef(yardPlaceCard?linecraftSession:createLinecraftSession());
   const linecraftShelfRef=useRef<ReturnType<typeof createLinecraftShelf>|null>(null);
   const linecraftDecisionsRef=useRef<ReturnType<typeof createLinecraftDecisions>|null>(null);
   const [linecraftKept,setLinecraftKept]=useState<ReturnType<ReturnType<typeof createLinecraftShelf>['entries']>>([]);
@@ -389,7 +391,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const HOLES: readonly GameCard[] = lineLab ? labSelection.cards : courtyardDiverter ? COURTYARD_DIVERTER_HOLES : diverterLab ? DIVERTER_HOLES : courtyard ? COURTYARD_HOLES : PRACTICE_HOLES;
   const STATIONS = lineLab ? LINE_STATIONS : YARD_STATIONS;
   const RANGE_TARGETS = lineLab ? COURTYARD_TARGETS : courtyardDiverter ? COURTYARD_DIVERTER_TARGETS : diverterLab ? DIVERTER_TARGETS : courtyard ? COURTYARD_TARGETS : PRACTICE_TARGETS;
-  const STORAGE_KEY = yardPlaceLab ? "rail-golf:yard-place:progress" : linecraftLab ? "rail-golf-linecraft-v1" : intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
+  const STORAGE_KEY = yardPlaceCard ? "rail-golf:yard-place-card:progress" : yardPlaceLab ? "rail-golf:yard-place:progress" : linecraftLab ? "rail-golf-linecraft-v1" : intentLab ? "rail-golf-intent-v1" : timberReceiver ? "rail-golf-timber-receiver-v1" : lineLab ? "rail-golf-line-lab-v1" : courtyardDiverter ? "rail-golf-courtyard-diverter-v2" : diverterLab ? "rail-golf-diverter-lab-v1" : courtyard ? "rail-golf-timber-courtyard-v01" : "rail-golf-mechanism-range-v03";
   const holeUnlocked = (index: number) => index >= 0 && index < HOLES.length &&
     (lineLab || !courtyard || isCourtyardChallengeUnlocked(index, recordsRef.current));
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -417,17 +419,18 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     const storage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit survey clear');}};
     let mounted=true;
     if(linecraftLab){
-      linecraftShelfRef.current=createLinecraftShelf(linecraftStorage(storage));
-      linecraftDecisionsRef.current=createLinecraftDecisions(linecraftStorage(storage));
+      const shelfStorage=yardPlaceCard?yardCardStorage(storage):linecraftStorage(storage);
+      linecraftShelfRef.current=createLinecraftShelf(shelfStorage);
+      linecraftDecisionsRef.current=createLinecraftDecisions(shelfStorage);
       setLinecraftKept(linecraftShelfRef.current.entries());
       setLinecraftNotice([linecraftShelfRef.current.warning(),linecraftDecisionsRef.current.warning()].filter(Boolean).join(' · '));
-      linecraftKeepHintSeenRef.current=storage.getItem('rail-golf:linecraft:keep-hint-v1')==='seen';
+      linecraftKeepHintSeenRef.current=storage.getItem(yardPlaceCard?'rail-golf:yard-place-card:keep-hint':'rail-golf:linecraft:keep-hint-v1')==='seen';
     }
     if(intentLab)intentDecisionsRef.current=createIntentDecisions(intentStorage(storage));
-    const studyStorage=yardPlaceLab?yardPlaceStorage(storage):linecraftLab?linecraftStorage(storage):intentLab?intentStorage(storage):timberReceiver?receiverStorage(storage):storage;
-    surveyLogRef.current=createSurveyLog({storage:studyStorage,archive:createSurveyArchive(window.indexedDB,undefined,yardPlaceLab?"rail-golf:yard-place:survey":linecraftLab?"rail-golf-linecraft-survey":intentLab?"rail-golf-intent-survey":timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
+    const studyStorage=yardPlaceCard?yardCardStorage(storage):yardPlaceLab?yardPlaceStorage(storage):linecraftLab?linecraftStorage(storage):intentLab?intentStorage(storage):timberReceiver?receiverStorage(storage):storage;
+    surveyLogRef.current=createSurveyLog({storage:studyStorage,archive:createSurveyArchive(window.indexedDB,undefined,yardPlaceCard?"rail-golf:yard-place-card:survey":yardPlaceLab?"rail-golf:yard-place:survey":linecraftLab?"rail-golf-linecraft-survey":intentLab?"rail-golf-intent-survey":timberReceiver?"rail-golf-timber-receiver-survey":undefined),onStatus:status=>{if(mounted)setSurveyStatus(status);}});
     return ()=>{mounted=false;};
-  },[lineLab,timberReceiver,intentLab,linecraftLab,yardPlaceLab]);
+  },[lineLab,timberReceiver,intentLab,linecraftLab,yardPlaceLab,yardPlaceCard]);
   const [lineLedger,setLineLedger] = useState<LineEvidence[]>([]);
   const lineLedgerRef=useRef<LineEvidence[]>([]);lineLedgerRef.current=lineLedger;
   const [claimCaption,setClaimCaption] = useState<{text:string;serial:number}|null>(null);
@@ -476,7 +479,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const stationHoleRef = useRef<Record<string, number>>({ gate: 0, lumber: 2, saw: 3 });
   const historyRef = useRef<Record<string, ShotMemory[]>>({});
   const libraryRef = useRef<Record<string, LineShelf<ShotMemory>>>({});
-  const libraryKey = yardPlaceLab ? "rail-golf:yard-place:lines" : `${SHOT_LIBRARY_KEY}-${linecraftLab ? "linecraft-v1" : intentLab ? "intent-v1" : timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
+  const libraryKey = yardPlaceCard ? "rail-golf:yard-place-card:lines" : yardPlaceLab ? "rail-golf:yard-place:lines" : `${SHOT_LIBRARY_KEY}-${linecraftLab ? "linecraft-v1" : intentLab ? "intent-v1" : timberReceiver ? "timber-receiver-v1" : lineLab ? "line-lab-v1" : courtyardDiverter ? "courtyard-diverter-v2" : diverterLab ? "diverter" : courtyard ? "yard" : "range"}`;
   const surveyRef = useRef(false);
   const mutedRef = useRef(false);
   const audioMasterRef = useRef<GainNode | null>(null);
@@ -624,7 +627,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     if(lineLab&&!componentIdRef.current)componentIdRef.current=crypto.randomUUID();
     const mountIdentity=documentIdentity?.mount(componentIdRef.current!);
     const traceStorage={get length(){return window.localStorage.length;},key:(i:number)=>window.localStorage.key(i),getItem:(k:string)=>window.localStorage.getItem(k),setItem:(k:string,v:string)=>window.localStorage.setItem(k,v),removeItem:(k:string)=>window.localStorage.removeItem(k),clear:()=>{throw Error('Use explicit trace clear');}};
-    const mountTrace=documentIdentity?createActionTrace({storage:yardPlaceLab?yardPlaceStorage(traceStorage):linecraftLab?linecraftStorage(traceStorage):intentLab?intentStorage(traceStorage):timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
+    const mountTrace=documentIdentity?createActionTrace({storage:yardPlaceCard?yardCardStorage(traceStorage):yardPlaceLab?yardPlaceStorage(traceStorage):linecraftLab?linecraftStorage(traceStorage):intentLab?intentStorage(traceStorage):timberReceiver?receiverStorage(traceStorage):traceStorage,build:BUILD_ID,context:()=>({...documentIdentity.snapshot(),...mountIdentity})}):null;
     const lifecycle=(event:string,detail:Record<string,unknown>={})=>{const state=readControlState();mountTrace?.append({category:'lifecycle',action:event,source:'internal/programmatic',before:state,after:state,accepted:true,reason:'observed',detail});};
     let stopLifecycle=()=>{};
     if(lineLab&&mountTrace&&documentIdentity){
@@ -1682,7 +1685,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             const resolved=current.ledger.some(e=>e.kind==='termination'&&e.reason!=='retry-interrupted');
             linecraftAttemptRef.current=resolved?current.surveyTicket?.id??null:null;setLinecraftAttempt(linecraftAttemptRef.current);
             if(resolved&&current.surveyTicket){const next=recordLinecraftAttempt(linecraftSessionRef.current,current.surveyTicket.id,current.ledger,current.linecraftMeta);linecraftSessionRef.current=next;setLinecraftSession(next);}
-            if(resolved&&!linecraftKeepHintSeenRef.current){linecraftKeepHintSeenRef.current=true;setLinecraftKeepHint(true);try{window.localStorage.setItem('rail-golf:linecraft:keep-hint-v1','seen');}catch{/* Memory hint remains nonblocking. */}}
+            if(resolved&&!linecraftKeepHintSeenRef.current){linecraftKeepHintSeenRef.current=true;setLinecraftKeepHint(true);try{window.localStorage.setItem(yardPlaceCard?'rail-golf:yard-place-card:keep-hint':'rail-golf:linecraft:keep-hint-v1','seen');}catch{/* Memory hint remains nonblocking. */}}
             else setLinecraftKeepHint(false);
           }
           memoriesRef.current[hole.id] = memory;
@@ -1773,6 +1776,17 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             const shot=shotExport({build:BUILD_ID,station:stationId,setup:{yaw:flight.setup.yaw,elevation:flight.setup.elevation,charge:flight.setup.charge,rail:flight.setup.railIndex,origin:flight.setup.originX??0},ledger:flight.ledger.map(event=>({...event})),receipt:recordLineReceipt(flight.ledger),termination,surface,point,sequence:view.sequence,endingLine:view.endingLine,at:new Date().toISOString(),fps:fpsSampleRef.current,viewport});
             yardShotsRef.current=[...yardShotsRef.current,shot];
             try{createYardJournal({get length(){return window.localStorage.length;},key:(index:number)=>window.localStorage.key(index),getItem:(key:string)=>window.localStorage.getItem(key),setItem:(key:string,value:string)=>window.localStorage.setItem(key,value),removeItem:(key:string)=>window.localStorage.removeItem(key)}).record(shot);}catch{/* The in-memory record still downloads. */}
+          }
+          if(yardPlaceCard){
+            const point={x:at.x,y:at.y,z:at.z};
+            const termination=safetyReason ?? (contactKind==='first-kiss'?'ground-contact':outcome);
+            const surface=[...flight.ledger].reverse().find(event=>event.kind==='contact'&&event.terminal)?.surface ?? null;
+            const stationId=HOLES[activeHoleIndex()].station?.id==='lumber'?'lumber':'gate';
+            const view=resultView({stationId,terminal:{reason:termination,surface,point},ledger:flight.ledger,q:true});
+            const viewport={width:window.innerWidth,height:window.innerHeight};
+            const shot=shotExport({build:BUILD_ID,station:stationId,setup:{yaw:flight.setup.yaw,elevation:flight.setup.elevation,charge:flight.setup.charge,rail:flight.setup.railIndex,origin:flight.setup.originX??0},ledger:flight.ledger.map(event=>({...event})),receipt:recordLineReceipt(flight.ledger),termination,surface,point,sequence:view.sequence,endingLine:view.endingLine,at:new Date().toISOString(),fps:fpsSampleRef.current,viewport});
+            yardShotsRef.current=[...yardShotsRef.current,shot];
+            try{createCardJournal({get length(){return window.localStorage.length;},key:(index:number)=>window.localStorage.key(index),getItem:(key:string)=>window.localStorage.getItem(key),setItem:(key:string,value:string)=>window.localStorage.setItem(key,value),removeItem:(key:string)=>window.localStorage.removeItem(key)}).record(shot);}catch{/* The in-memory record still downloads. */}
           }
           setGamePhase("theatre");
         };
@@ -2542,7 +2556,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             }
           }
           const deltaSeconds = Math.min(0.04, engine!.getDeltaTime() / 1000);
-          if(yardPlaceLab){
+          if(yardPlaceLab||yardPlaceCard){
             const frameSeconds=engine!.getDeltaTime()/1000;
             if(frameSeconds>0&&frameSeconds<5){
               const samples=fpsSamplesRef.current;
@@ -2550,6 +2564,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               if(samples.length>45)samples.shift();
               const sorted=[...samples].sort((a,b)=>a-b);
               fpsSampleRef.current=sorted[Math.floor((sorted.length-1)/2)];
+              if(yardPlaceCard&&fpsSampleRef.current!=null)document.documentElement.dataset.swiftFps=fpsSampleRef.current.toFixed(2);
             }
           }
 
@@ -2861,6 +2876,13 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     }catch(error){setIntentNotice('Study export failed: '+String(error));}
   };
 
+  const downloadCard=()=>{
+    let packet:Record<string,unknown>={fps:fpsSampleRef.current,viewport:{width:window.innerWidth,height:window.innerHeight},shots:yardShotsRef.current};
+    try{packet=createCardJournal({get length(){return window.localStorage.length;},key:(index:number)=>window.localStorage.key(index),getItem:(key:string)=>window.localStorage.getItem(key),setItem:(key:string,value:string)=>window.localStorage.setItem(key,value),removeItem:(key:string)=>window.localStorage.removeItem(key)}).exportDocument();}catch{/* The in-memory packet still downloads. */}
+    const blob=new Blob([JSON.stringify(packet,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob),anchor=document.createElement('a');
+    anchor.href=url;anchor.download='yard-place-card.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
   const downloadYard=()=>{
     const packet={fps:fpsSampleRef.current,viewport:{width:window.innerWidth,height:window.innerHeight},shots:yardShotsRef.current};
     try{yardPlaceStorage({get length(){return window.localStorage.length;},key:(index:number)=>window.localStorage.key(index),getItem:(key:string)=>window.localStorage.getItem(key),setItem:(key:string,value:string)=>window.localStorage.setItem(key,value),removeItem:(key:string)=>window.localStorage.removeItem(key)}).setItem('session',JSON.stringify(packet));}catch{/* The file download remains available. */}
@@ -2873,7 +2895,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       const archive=await surveyLogRef.current!.export();
       const packet=exportLinecraftStudy(archive,linecraftDecisionsRef.current?.export()??[],linecraftShelfRef.current?.entries()??[]);
       const blob=new Blob([format==='json'?JSON.stringify(packet,null,2):linecraftStudyCSV(packet)],{type:format==='json'?'application/json':'text/csv'});
-      const url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download=`rail-golf-linecraft-${BUILD_ID}.${format}`;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setLinecraftNotice('Study exported locally.');
+      const url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download=`${yardPlaceCard?'rail-golf-yard-place-card':'rail-golf-linecraft'}-${BUILD_ID}.${format}`;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setLinecraftNotice('Study exported locally.');
     }catch(error){setLinecraftNotice('Study export failed: '+String(error));}
   };
   const copyLineLink = async (saved?:ShotMemory|SavedLine) => {
@@ -2881,7 +2903,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       const card=HOLES[activeHoleIndex()];
       const setup=saved ?? {railIndex:railRef.current,...(openYard?{originX:originXRef.current}:{}),yaw:yawRef.current,elevation:elevationRef.current,charge:maxPowerRef.current?1:selectedPowerRef.current};
       const payload={build:saved?.build ?? (saved?'unknown':BUILD_ID),world:'timber-courtyard' as const,card:saved?.holeId ?? card.id,station:saved?.stationId ?? card.station?.id ?? 'gate',rail:setup.railIndex,yaw:setup.yaw,elevation:setup.elevation,speed:chargeToSpeed(setup.charge),environment:saved?.environment ?? {floor:floorStateRef.current}};
-      const encoded=encodeShareLine(linecraftLab?{...payload,v:2,route:'/lab/linecraft',originX:linecraftOrigin(setup)}:{...payload,v:1,route:lineLab?lineRoute as '/lab/lines'|'/lab/timber-receiver':'/lab/courtyard-diverter'});
+      const encoded=encodeShareLine(yardPlaceCard?{...payload,v:2,route:'/lab/yard-place-card',originX:linecraftOrigin(setup)}:linecraftLab?{...payload,v:2,route:'/lab/linecraft',originX:linecraftOrigin(setup)}:{...payload,v:1,route:lineLab?lineRoute as '/lab/lines'|'/lab/timber-receiver':'/lab/courtyard-diverter'});
       const url=new URL(lineLab?lineRoute:'/lab/courtyard-diverter',window.location.origin);url.hash='line='+encoded;
       setShareLink(url.href);
       try{await navigator.clipboard.writeText(url.href);setShareNotice(lineLab?'Line link copied. It restores setup and starting pallet state without firing.':'Line link copied. It restores setup and starting state; it never fires.');}
@@ -2907,6 +2929,15 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const endingSplit=yardNote?yardNote.endingLine.indexOf(endingMark):-1;
   const endingHead=!yardNote?'':endingSplit<0?yardNote.endingLine:yardNote.endingLine.slice(0,endingSplit);
   const endingTail=!yardNote||endingSplit<0?'':yardNote.endingLine.slice(endingSplit);
+  const cardView=yardPlaceCard&&result&&phase==='result'?(()=>{
+    const reason=[...lineLedger].reverse().find(event=>event.kind==='termination')?.reason;
+    if(!reason)return null;
+    const surface=[...lineLedger].reverse().find(event=>event.kind==='contact'&&event.terminal)?.surface??null;
+    return resultView({stationId:hole.station?.id==='lumber'?'lumber':'gate',terminal:{reason,surface,point:{x:result.point.x,y:result.point.y,z:result.point.z}},ledger:lineLedger,q:true});
+  })():null;
+  const cardSplit=cardView?cardView.endingLine.indexOf(endingMark):-1;
+  const cardHead=!cardView?'':cardSplit<0?cardView.endingLine:cardView.endingLine.slice(0,cardSplit);
+  const cardTail=!cardView||cardSplit<0?'':cardView.endingLine.slice(cardSplit);
   const labChip = hole.id === "timber-bank" ? addressLabChipLabel(addressLabMode) : null;
   const record = records[hole.id] ?? EMPTY_RECORD;
   const attempt = phase === "theatre" || phase === "result"
@@ -2964,7 +2995,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const resultCanAdvance = Boolean(result?.clear);
 
   return (
-    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab?' '+linecraftShellClassName:''}${yardPlaceLab?' yard-study':''}`} data-phase={phase} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined}
+    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab||yardPlaceCard?' '+linecraftShellClassName:''}${yardPlaceLab?' yard-study':''}`} data-phase={phase} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined} data-ending-slot={yardPlaceCard?endingSlot:undefined}
       onPointerDownCapture={lineLab?event=>{inputSourceRef.current='pointer';const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;gestureGateRef.current.down(target,labControlRef.current?.revision()??0,event.pointerId);}:undefined}
       onPointerCancelCapture={lineLab?event=>gestureGateRef.current.cancel(event.pointerId):undefined}
       onClickCapture={lineLab?event=>{
@@ -3126,6 +3157,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <details className="shot-tools" ref={shotToolsRef} onToggle={lineLab?event=>setToolsOpen(event.currentTarget.open):undefined}>
           <summary>{linecraftLab?'Shot tools':`Shot tools & saved lines · ${powerMode === 'hold' ? 'timed charge' : `set power ${displayPercent(selectedPower)}`}`}</summary>
           <div className="shot-tools-body">
+            {yardPlaceCard&&<button type="button" onClick={downloadCard}>Export ending record</button>}
             {lineLab&&!intentLab&&!linecraftLab&&!yardPlaceLab&&<SurveyTools trace={actionTraceRef.current} log={surveyLogRef.current} status={surveyStatus} busy={['flight','charging','theatre'].includes(phase)}/> }
       {courtyard && (!linecraftLab||linecraftSession.stage==='open') && (!courtyardDiverter || lineLab) && !yardPlaceLab && <nav className="station-picker" aria-label="Launcher station">
         {Object.values(STATIONS).map(station => <button type="button" key={station.id} aria-pressed={hole.station?.id === station.id}
@@ -3395,6 +3427,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         </section>
       )}
       {yardPlaceLab && phase==='ready' && <button type="button" className="line-note-export" onClick={downloadYard}>End / Export</button>}
+      {cardView && endingSlot==='banner' && <p id="yard-card-ending" className="yard-card-ending yard-card-ending-banner" data-place={cardView.classifier.place??'generic'}><span className="ending-head">{cardHead}</span>{cardTail?<span className="ending-tail">{cardTail}</span>:null}</p>}
       {result && phase === "result" && !yardPlaceLab ? (
         <section
           ref={resultCardRef}
@@ -3403,11 +3436,12 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           role="dialog"
           aria-modal={lineLab&&!linecraftLab||undefined}
           aria-labelledby="range-result-heading"
-          aria-describedby={linecraftLab?undefined:'range-result-detail'}
+          aria-describedby={yardPlaceCard&&endingSlot!=='banner'?'yard-card-ending':linecraftLab?undefined:'range-result-detail'}
           tabIndex={-1}
         >
         {!linecraftLab&&<p className="eyebrow">{intentLab?`Intent Lab · ${intentCondition.toUpperCase()}`:lineLab?"Line receipt · NON-CANONICAL":"Mechanism Range ruling"}</p>}
           <h2 id="range-result-heading">{linecraftLab?(linecraftSession.stage==='learn'?(linecraftMatch.complete?'Line complete':linecraftMatch.reached?'Keep going':'Revise the line'):'Your line'):intentLab&&!intentScored?(intentCondition==='sentence'?intentMatch.headline:'LINE RECORDED'):result.headline}</h2>
+          {cardView && endingSlot!=='banner' && <p id="yard-card-ending" className="yard-card-ending" data-place={cardView.classifier.place??'generic'}><span className="ending-head">{cardHead}</span>{cardTail?<span className="ending-tail">{cardTail}</span>:null}</p>}
           <p id="range-result-detail">{linecraftLab?'':intentLab?`LINE ENDED — ${(lastShot?.lineReceipt?.ending??'resolved').replaceAll('-',' ').toUpperCase()}`:result.detail}</p>
           {intentLab&&!intentScored&&<p>{recognizedIntentEvents(lineLedger).map(e=>e.label).join(' → ')||'No qualified departures recorded.'}</p>}
           {intentLab&&<IntentResult condition={intentCondition} sentenceLabel={intentPrompt.label} clauses={intentPrompt.clauses.map(c=>c.label)} clauseReached={intentMatch.reached} headline={intentMatch.headline} lastAttemptId={intentAttempt} kept={intentKept} onKeep={()=>intentActionsRef.current?.keep()} onDiscard={()=>intentActionsRef.current?.discard()}/> }
