@@ -101,7 +101,10 @@ test('audit fixtures match expectedPlace and each clipped region has an inside, 
 });
 
 test('original fixture places move only to generic', () => {
-  const original = JSON.parse(execFileSync('git', ['show', 'd3cb90a82cc52d0f734850e1af9f13a1c7f54f10:tests/fixtures/e4-yard-fixtures.json'], {encoding: 'utf8'}));
+  const sha = 'd3cb90a82cc52d0f734850e1af9f13a1c7f54f10';
+  try { execFileSync('git', ['cat-file', '-e', sha], {stdio: 'ignore'}); }
+  catch { execFileSync('git', ['fetch', '--depth=1', 'origin', sha], {stdio: 'ignore'}); }
+  const original = JSON.parse(execFileSync('git', ['show', `${sha}:tests/fixtures/e4-yard-fixtures.json`], {encoding: 'utf8'}));
   const changed = [];
   for (const before of original) {
     const after = fixtures.find(item => item.id === before.id);

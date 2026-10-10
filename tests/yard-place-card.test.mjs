@@ -78,6 +78,8 @@ test('a card share link restores without firing and rejects a linecraft link', (
 });
 
 test('prototype edits do not assign physics, score, or recognition constants', () => {
+  try { execFileSync('git', ['cat-file', '-e', BASE], {stdio: 'ignore'}); }
+  catch { execFileSync('git', ['fetch', '--depth=1', 'origin', BASE], {stdio: 'ignore'}); }
   const diff = execFileSync('git', ['diff', '-U0', BASE, '--', 'app/manners-game.tsx', 'lib/yard-place.js', 'lib/share-line.js', 'app/globals.css', 'app/lab/yard-place-card/page.tsx', 'lib/yard-place.d.ts'], {encoding: 'utf8'});
   const added = diff.split('\n').filter(line => line.startsWith('+') && !line.startsWith('+++'));
   const offenders = added.filter(line => /\b(padImpulse|REDIRECT_GATES|LINE_SAFETY|RUN_RULE|VARIETY_RULE)\b/.test(line) || /\bRAIL_RULES\s*=/.test(line) || /RAIL_RULES\.(?!railPositions)/.test(line));
