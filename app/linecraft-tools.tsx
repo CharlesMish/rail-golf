@@ -15,6 +15,7 @@ export type LinecraftShelfEntry = {
   description?: string;
   stage: LinecraftStage;
   scoreTotal?: number | null;
+  slotLabel?: string;
 };
 
 function Clauses({clauses, reached}: {clauses: string[]; reached: number}) {
@@ -81,13 +82,13 @@ export function LinecraftResult({
 /** Four local slots, independent from Learn/Open. Runtime supplies all recorded authority. */
 export function LinecraftShelf({
   entries, ghostId, onGhost, onRestore, onReplay, onRemove, onShare, onExport, status,
-  disabled = false, onClose, shareLink, scoreVisible, onScoreVisible,
+  disabled = false, onClose, shareLink, scoreVisible, onScoreVisible, pairExport = false,
 }: {
   entries: LinecraftShelfEntry[]; ghostId: string | null; onGhost: (id: string | null) => void;
   onRestore: (id: string) => void; onReplay: (id: string) => void; onRemove: (id: string) => void;
   onShare?: (id: string) => void; onExport: (format: "json" | "csv") => void;
   status?: string; disabled?: boolean; onClose?: () => void; shareLink?: string;
-  scoreVisible?: boolean; onScoreVisible?: (visible:boolean)=>void;
+  scoreVisible?: boolean; onScoreVisible?: (visible:boolean)=>void; pairExport?: boolean;
 }) {
   const headingId = useId();
   const dialogRef = useRef<HTMLElement>(null);
@@ -113,9 +114,9 @@ export function LinecraftShelf({
       <div className={styles.heading}><h2 id={headingId}>LINE SHELF <span>{entries.length} / 4</span></h2>{onClose && <button type="button" onClick={onClose}>CLOSE</button>}</div>
       <p className={styles.hint}>Saved in this browser. The shelf survives reload; each visit starts a fresh study session. Export before clearing browser data.</p>
       <p className={styles.contract}>A line ends at first ground contact. Restore: exact setup in Open, then fire manually; no lesson credit. Ghost: recorded history, never prediction. Replay: sampled path over distance-normalized six seconds, with starting pallet frozen; no new physics.</p>
-      {entries.length === 0 ? <p className={styles.empty}>Make a line in Learn or Open, then choose KEEP LINE.</p> : <ol className={styles.entries}>
+      {entries.length === 0 ? <p className={styles.empty}>{pairExport ? "Make a line, then choose KEEP LINE." : "Make a line in Learn or Open, then choose KEEP LINE."}</p> : <ol className={styles.entries}>
         {entries.map((entry, index) => <li key={entry.id}>
-          <div className={styles.entryTitle}><span className={styles.slot}>{String(index + 1).padStart(2, "0")}</span><div><strong>{entry.title}</strong><small>{entry.stationLabel} · {entry.stage.toUpperCase()}</small></div></div>
+          <div className={styles.entryTitle}>{entry.slotLabel !== '' && <span className={styles.slot}>{entry.slotLabel ?? String(index + 1).padStart(2, "0")}</span>}<div><strong>{entry.title}</strong><small>{entry.stationLabel} · {entry.stage.toUpperCase()}</small></div></div>
           {entry.description && <p className={styles.description}>{entry.description}</p>}
           <div className={styles.actions}>
             <button type="button" disabled={disabled} onClick={() => onRestore(entry.id)}>RESTORE</button>
@@ -128,11 +129,11 @@ export function LinecraftShelf({
       </ol>}
       {onShare && <p className={styles.contract}>Setup links restore a launch setup. They never fire automatically or contain the recorded replay.</p>}
       {shareLink && <label className={styles.shareLink}>Setup link · select to copy<input type="text" readOnly value={shareLink} aria-label="Kept line setup link" onFocus={event => event.currentTarget.select()}/></label>}
-      <footer className={styles.export}><details><summary>Study tools</summary>
+      <footer className={styles.export}>{pairExport ? <div className={styles.actions}><button type="button" data-export="end" onClick={() => onExport("json")}>End / Export</button></div> : <details><summary>Study tools</summary>
         {onScoreVisible&&<label className={styles.scoreToggle}><input type="checkbox" checked={scoreVisible} disabled={disabled} onChange={event=>onScoreVisible(event.target.checked)}/> Show provisional score in Open</label>}
         <div className={styles.actions}><button type="button" onClick={() => onExport("json")}>Export study JSON</button><button type="button" onClick={() => onExport("csv")}>Export study CSV</button></div>
         <p className={styles.hint}>Exports retain attempts and Keep choices. Score visibility changes no physical or scoring rule.</p>
-      </details>
+      </details>}
         {status && <p className={styles.notice} role="status">{status}</p>}
       </footer>
     </aside>
