@@ -3326,7 +3326,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             aria-label="Enable range audio"
           />
         </Label>
-        <Button
+        {!linePair && <Button
           type="button"
           variant="ghost"
           className="utility-button"
@@ -3334,7 +3334,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           disabled={lineLab?(phase==='booting'||phase==='error'):phase!=="ready"}
         >
           <RotateCcw /> {diverterLab ? (lineLab?"Reset Card":"Reset Card · FLOOR A") : "Reset address"}
-        </Button>
+        </Button>}
       </aside>
 
       <div inert={linecraftShelfOpen||linecraftReplaying||(lineLab&&phase==='result')?true:undefined} className="mobile-utility-panel" aria-label="Mobile range options">

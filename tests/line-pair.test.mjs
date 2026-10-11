@@ -425,14 +425,16 @@ test('built line-pair route rejects unknown codes and serves both arms without l
     assert.match(html, /End \/ Export/);
     assert.match(html, /Attempts · 0/);
     assert.match(html, /data-export="end"/);
+    assert.match(html, /data-linecraft-stage="open"/);
     assert.match(html, /BANK A/);
     assert.match(html, /BANK B/);
     assert.match(html, /SKIP PAD/);
     assert.match(html, /MILL/);
     assert.match(html, /LUMBER STACKS/);
     assert.match(html, /TREAD 1/);
-    assert.doesNotMatch(html, /Restart Lessons|Skip Lessons|Next Lesson|Explore Here|Show provisional score|treatment|control|data-arm|parent-line/);
+    assert.doesNotMatch(html, /Restart Lessons|Skip Lessons|Next Lesson|Explore Here|Show provisional score|Reset Card|\btreatment\b|data-arm=|class="parent-line"/);
     assert.equal(html.includes(code === WITH ? WITHOUT : WITH), false, 'the other code stays out of this document');
+    assert.match(html, new RegExp('linePairCode\\\\":\\\\"' + code + '\\\\"'));
   }
   assert.equal(pages[WITH].replaceAll(WITH, 'CODE'), pages[WITHOUT].replaceAll(WITHOUT, 'CODE'));
   const linecraft = await htmlAt('/lab/linecraft');
