@@ -66,22 +66,35 @@
 .shell:is([data-phase="flight"],[data-phase="theatre"]) .controls[data-stage="open"]{display:none}
 .shell[data-replaying="true"] :global(.manners-hud),.shell[data-replaying="true"] :global(.manners-brief),.shell[data-replaying="true"] :global(.manners-console),.shell[data-replaying="true"] :global(.manners-result),.shell[data-replaying="true"] :global(.line-result-backdrop),.shell[data-replaying="true"] :global(.line-receipt),.shell[data-replaying="true"] :global(.line-claim-caption),.shell[data-replaying="true"] :global(.destination-label),.shell[data-replaying="true"] :global(.flight-status),.shell[data-replaying="true"] :global(.floor-state-chip){visibility:hidden;pointer-events:none}
 .shell[data-replaying="true"] :global(.utility-panel),.shell[data-replaying="true"] :global(.mobile-utility-panel){visibility:hidden;pointer-events:none}
-.shell:global(.line-pair) :global(.control-hint){display:none!important}
-.shell:global(.line-pair) :global(.manners-hud) :global(.course-readout){display:none!important}
-.shell:global(.line-pair) :global(.line-pair-attempts){position:absolute;z-index:44;top:max(16px,env(safe-area-inset-top));left:16px;margin:0;padding:6px 9px;color:#e9e6dd;background:#202928;border:1px solid #68604f;border-radius:3px;font:11px var(--font-mono,monospace)}
-.shell:global(.line-pair) :global(.line-pair-export){position:absolute;z-index:44;top:max(16px,env(safe-area-inset-top));left:132px;min-height:28px;padding:6px 9px;color:#f4f7f4;background:#202928;border:1px solid rgba(255,196,120,.55);border-radius:3px;font:600 11px/1.2 var(--font-mono,monospace);cursor:pointer}
+.shell:global(.line-pair) :global(.control-hint),.shell:global(.pallet-carry) :global(.control-hint){display:none!important}
+.shell:global(.line-pair) :global(.manners-hud) :global(.course-readout),.shell:global(.pallet-carry) :global(.manners-hud) :global(.course-readout){display:none!important}
+.shell:global(.line-pair) :global(.line-pair-attempts),.shell:global(.pallet-carry) :global(.line-pair-attempts){position:absolute;z-index:44;top:max(16px,env(safe-area-inset-top));left:16px;margin:0;padding:6px 9px;color:#e9e6dd;background:#202928;border:1px solid #68604f;border-radius:3px;font:11px var(--font-mono,monospace)}
+.shell:global(.line-pair) :global(.line-pair-export),.shell:global(.pallet-carry) :global(.line-pair-export){position:absolute;z-index:44;top:max(16px,env(safe-area-inset-top));left:132px;min-height:28px;padding:6px 9px;color:#f4f7f4;background:#202928;border:1px solid rgba(255,196,120,.55);border-radius:3px;font:600 11px/1.2 var(--font-mono,monospace);cursor:pointer}
 .shell:global(.line-pair) :global(.manners-result) :global(.observed-line),
 .shell:global(.line-pair) :global(.manners-result) :global(.ending-line),
-.shell:global(.line-pair) :global(.manners-result) :global(.parent-line){margin:0;color:#b5c1be;font-size:15px;line-height:1.45}
-.shell:global(.line-pair) :global(.manners-result){overflow:auto}
+.shell:global(.line-pair) :global(.manners-result) :global(.parent-line),
+.shell:global(.pallet-carry) :global(.manners-result) :global(.observed-line),
+.shell:global(.pallet-carry) :global(.manners-result) :global(.ending-line),
+.shell:global(.pallet-carry) :global(.manners-result) :global(.pallet-carry-status){margin:0;color:#b5c1be;font-size:15px;line-height:1.45}
+.shell:global(.line-pair) :global(.manners-result),.shell:global(.pallet-carry) :global(.manners-result){overflow:auto}
 .shell:global(.line-pair) :global(.ending-line),
-.shell:global(.line-pair) :global(.parent-line){display:flex;flex-wrap:wrap;max-width:100%}
+.shell:global(.line-pair) :global(.parent-line),
+.shell:global(.pallet-carry) :global(.ending-line){display:flex;flex-wrap:wrap;max-width:100%}
 .shell:global(.line-pair) :global(.ending-head),
 .shell:global(.line-pair) :global(.ending-tail),
-.shell:global(.line-pair) :global(.parent-line) span{white-space:nowrap}
-.shell:global(.line-pair) :global(.line-pair-actions){display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.shell:global(.line-pair) :global(.line-pair-actions) button{min-height:32px;padding:6px 9px;color:#f1ece1;background:#272e2d;border:1px solid #716b5d;border-radius:3px;cursor:pointer;font:13px/1.2 var(--font-mono,monospace)}
-.shell:global(.line-pair) :global(.line-pair-actions) button:disabled{opacity:.5;cursor:default}
+.shell:global(.line-pair) :global(.parent-line) span,
+.shell:global(.pallet-carry) :global(.ending-head),
+.shell:global(.pallet-carry) :global(.ending-tail){white-space:nowrap}
+.shell:global(.line-pair) :global(.line-pair-actions),.shell:global(.pallet-carry) :global(.pallet-carry-actions){display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.shell:global(.line-pair) :global(.line-pair-actions) button,.shell:global(.pallet-carry) :global(.pallet-carry-actions) button{min-height:32px;padding:6px 9px;color:#f1ece1;background:#272e2d;border:1px solid #716b5d;border-radius:3px;cursor:pointer;font:13px/1.2 var(--font-mono,monospace)}
+.shell:global(.line-pair) :global(.line-pair-actions) button:disabled,.shell:global(.pallet-carry) :global(.pallet-carry-actions) button:disabled{opacity:.5;cursor:default}
+.shell:global(.pallet-carry) :global(.floor-state-chip){display:block!important}
+.shell:global(.pallet-carry) :global(.pallet-carry-plan){position:absolute;z-index:30;top:52px;left:16px;width:min(420px,calc(100vw - 32px));margin:0;padding:8px 10px;color:#e9e6dd;background:rgba(16,32,35,.92);border:1px solid #68604f;border-radius:3px;font:12px/1.4 var(--font-mono,monospace)}
+.shell:global(.pallet-carry) :global(.pallet-carry-plan) textarea{display:block;width:100%;min-height:52px;margin-top:6px;box-sizing:border-box;color:#f4f7f4;background:#14120f;border:1px solid #716b5d}
+.shell:global(.pallet-carry) :global(.pallet-carry-brief){position:absolute;z-index:30;left:16px;bottom:118px;max-width:min(420px,calc(100vw - 32px));margin:0;color:#d5cdc0;font:12px/1.35 var(--font-mono,monospace)}
+.shell:global(.pallet-carry) :global(.pallet-carry-status),
+.shell:global(.pallet-carry) :global(.pallet-carry-continuation),
+.shell:global(.pallet-carry) :global(.pallet-carry-adjust-instruction){white-space:normal;overflow-wrap:anywhere}
 .controls[data-replaying="true"]{z-index:54;top:max(16px,env(safe-area-inset-top));width:min(460px,calc(100vw - 32px));pointer-events:auto}
 
 @media(orientation:portrait) and (max-width:700px){

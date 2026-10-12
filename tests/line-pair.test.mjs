@@ -308,11 +308,11 @@ test('required shots stay 1-12 and the next locked shot is voluntary', () => {
 test('open-only route, export button, and non-firing setup links are wired in source', () => {
   assert.match(source, /enterLinecraftOpen\(createLinecraftSession\(\),'cold'\)/);
   assert.match(source, /next\(\)\{\},\s*explore\(\)\{\},\s*open\(\)\{\},\s*restart\(\)\{\},\s*score\(\)\{\}/);
-  assert.match(source, /linecraftLab&&!linePair&&<LinecraftControls/);
-  assert.match(source, /if\(linePair && restore !== true\) return/);
-  assert.match(source, /replay:id=>\{leave\('replay'\);inner\.replay\(id\);\}/);
-  assert.match(source, /restore:id=>\{leave\('restore-kept'\);inner\.restore\(id\);\}/);
-  assert.match(source, /ghost:id=>\{leave\('ghost'\);inner\.ghost\(id\);\}/);
+  assert.match(source, /linecraftLab&&!linePair&&!palletCarry&&<LinecraftControls/);
+  assert.match(source, /if\(\(linePair \|\| palletCarry\) && restore !== true\) return/);
+  assert.match(source, /replay:id=>\{leave\('replay'\);const before=floorStateRef\.current;inner\.replay\(id\);/);
+  assert.match(source, /restore:id=>\{[\s\S]*?leave\('restore-kept'\);\s*if\(inner\.restore\(id\)/);
+  assert.match(source, /ghost:id=>\{[\s\S]*?leave\('ghost'\);\s*inner\.ghost\(id\);/);
   assert.match(source, /noteLeave\('station'/);
   assert.match(source, /linecraftRelationRef\.current=\{action:'restore-kept',attemptId:id\}/);
   assert.match(source, /Historical path only: no PhysicsAggregate/);
