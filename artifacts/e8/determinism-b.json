@@ -1,0 +1,107 @@
+{
+  "tag": "b",
+  "build": "cd9d41ddf6-dirty",
+  "repeats": 20,
+  "pass": true,
+  "report": [
+    {
+      "id": "J1-lumber-1",
+      "repeats": 20,
+      "lean": 49.9969,
+      "z": 146.29,
+      "hit": true,
+      "contacts": [
+        "prop"
+      ],
+      "spread": 0
+    },
+    {
+      "id": "J8-lumber-7",
+      "repeats": 20,
+      "lean": 49.9969,
+      "z": 154.725,
+      "hit": true,
+      "contacts": [
+        "prop"
+      ],
+      "spread": 0
+    },
+    {
+      "id": "K6-lumber-4",
+      "repeats": 20,
+      "lean": -14.0009,
+      "z": 56.695,
+      "hit": false,
+      "contacts": [],
+      "spread": 0
+    },
+    {
+      "id": "P4-lumber-10",
+      "repeats": 20,
+      "lean": -14.0009,
+      "z": 53.346,
+      "hit": false,
+      "contacts": [],
+      "spread": 0
+    },
+    {
+      "id": "P7-lumber-14",
+      "repeats": 20,
+      "lean": 49.9969,
+      "z": 170.429,
+      "hit": true,
+      "contacts": [
+        "prop"
+      ],
+      "spread": 0
+    },
+    {
+      "id": "K6-lumber-2",
+      "repeats": 20,
+      "lean": -14.0009,
+      "z": 42.352,
+      "hit": false,
+      "contacts": [
+        "step-b"
+      ],
+      "spread": 0
+    },
+    {
+      "id": "P6-lumber-4",
+      "repeats": 20,
+      "lean": -22.9194,
+      "z": -17.044,
+      "hit": true,
+      "contacts": [
+        "prop"
+      ],
+      "spread": 0
+    },
+    {
+      "id": "J1-lumber-4",
+      "repeats": 20,
+      "lean": 49.9969,
+      "z": 150.709,
+      "hit": true,
+      "contacts": [
+        "prop"
+      ],
+      "spread": 0
+    },
+    {
+      "id": "named-rest",
+      "repeats": 20,
+      "both": true,
+      "z": 82.747,
+      "spread": 0
+    },
+    {
+      "id": "named-standing",
+      "repeats": 20,
+      "lean": 49.9969,
+      "z": 161.816,
+      "tread": false,
+      "spread": 0
+    }
+  ]
+}

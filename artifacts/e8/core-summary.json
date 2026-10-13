@@ -1,0 +1,23 @@
+{
+  "label": "lumber-core-hinge",
+  "n": 84,
+  "hit": 67,
+  "hitFrac": 0.7976,
+  "latched": 66,
+  "latchedFrac": 0.7857,
+  "wrong": 1,
+  "wrongFrac": 0.0119,
+  "enables": 66,
+  "treadSameShot": 1,
+  "latchAndTread": 0,
+  "leanEndMin": -22.919,
+  "leanEndMax": 49.997,
+  "pass": true,
+  "belowStanding": [
+    {
+      "id": "P6-E7-lumber-4",
+      "lean": -22.9194
+    }
+  ],
+  "flat": []
+}

@@ -1,0 +1,17 @@
+{
+  "label": "lumber-core-jitter-588",
+  "n": 588,
+  "hit": 476,
+  "hitFrac": 0.8095,
+  "latched": 473,
+  "latchedFrac": 0.8044,
+  "wrong": 3,
+  "wrongFrac": 0.0051,
+  "enables": 473,
+  "treadSameShot": 13,
+  "latchAndTread": 0,
+  "leanEndMin": -22.919,
+  "leanEndMax": 49.997,
+  "pass": true,
+  "flat": 0
+}
