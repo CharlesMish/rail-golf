@@ -14,6 +14,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 
 ### Fixed
 - Public destination distances use station-relative plan measurements; Cascade no longer labels or highlights Bank B as a required tread. Labels avoid nearby UI and one another.
+- Short public-yard landscape layouts keep Shot tools clear of the Survey button.
 - `docs/HOSTING.md` no longer says that rail-golf.cmish.dev is not attached.
 
 ## [0.3.1] - 2026-09-28

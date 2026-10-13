@@ -64,6 +64,12 @@ are suppressed so their names do not appear to identify the front support.
 Survey remains the view for inspecting the full descending sequence. Camera
 comfort and whether players choose Survey still need human play.
 
+The 844 × 390 landscape probe also found Shot tools covering the centre of
+Survey. Its public-yard summary and popover now align to the console's right
+edge. This restores the normal pointer target without changing the brief or
+controls. The existing console still occupies much of a short landscape view;
+this pass does not claim to solve that broader framing limitation.
+
 ## Verification and human review
 
 The companion evidence records exact views, build identity, label bounds and

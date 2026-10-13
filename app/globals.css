@@ -1856,3 +1856,9 @@ canvas {
 [data-yard-legibility] .delivery-book summary { cursor: pointer; font-size: 12px; letter-spacing: .04em; }
 [data-yard-legibility] .delivery-book summary::marker { color: #f2b15f; }
 [data-yard-legibility] .delivery-book:not([open]) { width: auto; min-width: 172px; }
+/* Keep Survey reachable above the brief in short public-yard layouts. */
+@media (orientation: landscape) and (max-height: 520px) {
+  [data-yard-legibility] .shot-tools { left: auto; right: 0; }
+  [data-yard-legibility] .shot-tools > summary { margin-left: auto; }
+  [data-yard-legibility] .shot-tools-body { left: auto; right: 0; }
+}
