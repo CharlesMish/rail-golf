@@ -4,7 +4,9 @@ Isolated lab on `studio/e8-approach-prop`, cut from `main` at `cd9d41ddf6349b47e
 
 ## BUILD
 
-Player-facing `BUILD_ID` is the first 10 hex characters of `HEAD` (`build/build-identity.js`). The headless runs in this folder were executed on the prop code in this commit, before the docs-only follow-up if one exists. The pull request body records the pushed `HEAD`.
+`6597dbaa02`
+
+That is the first 10 hex characters of `6597dbaa023192ca1534631149febf7114288b2d`, the commit that contains the prop and the headless runs below. `BUILD_ID` is produced by `build/build-identity.js`. A browser load of this commit showed `BUILD 6597dbaa02` on the lab. This report file was amended in a later docs-only commit; that commit does not change the plank, the hinge, or the shot records. The pull request body names the branch `HEAD` as well.
 
 ## What was built
 
