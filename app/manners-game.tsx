@@ -85,6 +85,7 @@ import type {GameCard} from "@/lib/line-lab";
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
 import { createYardEnvironment } from "@/lib/yard-environment";
+import { applyYardGroundUVs, applyYardSurfaceMaterials } from "@/lib/yard-surfaces";
 import { stationTargetDistanceLabel, yardFeatureLabels, isTreadLabelVisible } from '@/lib/yard-labels';
 import { layoutYardLabels } from '@/lib/yard-label-layout';
 import { createYardPresentationMaterials } from '@/lib/yard-presentation';
@@ -754,24 +755,28 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         };
         materials.water.alpha = 0.82;
 
-        // Subtle procedural grain; shared once by the timber and crates.
-        const woodTexture = new DynamicTexture("timber-grain", { width: 128, height: 512 }, scene, false);
-        const grain = woodTexture.getContext() as CanvasRenderingContext2D;
-        grain.fillStyle = "#bba383";
-        grain.fillRect(0, 0, 128, 512);
-        for (let i = 0; i < 100; i += 1) {
-          const seed = stableUnitInterval(`grain-${i}`);
-          grain.strokeStyle = `rgba(48, 29, 15, ${0.035 + seed * 0.13})`;
-          grain.lineWidth = 0.5 + seed * 1.4;
-          grain.beginPath();
-          grain.moveTo(seed * 128, 0);
-          grain.bezierCurveTo(seed * 128 + 5, 180, seed * 128 - 4, 320, seed * 128 + 1, 512);
-          grain.stroke();
+        // Historical ranges retain their exact original grain. The public yard
+        // uses shared mipmapped surfaces instead of allocating both texture sets.
+        if (!publicYard) {
+          const woodTexture = new DynamicTexture("timber-grain", { width: 128, height: 512 }, scene, false);
+          const grain = woodTexture.getContext() as CanvasRenderingContext2D;
+          grain.fillStyle = "#bba383";
+          grain.fillRect(0, 0, 128, 512);
+          for (let i = 0; i < 100; i += 1) {
+            const seed = stableUnitInterval(`grain-${i}`);
+            grain.strokeStyle = `rgba(48, 29, 15, ${0.035 + seed * 0.13})`;
+            grain.lineWidth = 0.5 + seed * 1.4;
+            grain.beginPath();
+            grain.moveTo(seed * 128, 0);
+            grain.bezierCurveTo(seed * 128 + 5, 180, seed * 128 - 4, 320, seed * 128 + 1, 512);
+            grain.stroke();
+          }
+          woodTexture.update();
+          materials.timber.diffuseTexture = woodTexture;
+          materials.brick.diffuseTexture = woodTexture;
         }
-        woodTexture.update();
-        materials.timber.diffuseTexture = woodTexture;
-        materials.brick.diffuseTexture = woodTexture;
-        const courtyardMaterials = publicYard ? { ...materials, ...createYardPresentationMaterials(scene, materials) } : materials;
+        const surfaceMaterials = publicYard ? applyYardSurfaceMaterials(scene, materials) : {};
+        const courtyardMaterials = publicYard ? { ...materials, ...surfaceMaterials, ...createYardPresentationMaterials(scene, materials) } : materials;
         if (courtyard) {
           materials.rough.diffuseColor = new Color3(.20, .18, .125);
           materials.fairwayA.diffuseColor = new Color3(.26, .24, .17);
@@ -1052,6 +1057,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             scene!,
           ));
           rough.position.set(0, -0.5, (hole.courseLength + 8) / 2);
+          if (publicYard) applyYardGroundUVs(rough);
           if (courtyardDiverter) rough.metadata = {yardLanding:"ground"};
           rough.material = materials.rough;
           rough.receiveShadows = true;
@@ -1070,6 +1076,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
               scene!,
             ));
             stripe.position.set(hole.fairwayCenters[index], 0.025, 4 + index * 10);
+            if (publicYard) applyYardGroundUVs(stripe);
             stripe.material = index % 2 === 0 ? materials.fairwayA : materials.fairwayB;
             stripe.receiveShadows = true;
           }
@@ -1200,7 +1207,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           }
           if (courtyard) {
-            skyToken = buildCourtyard(scene!, courseRoot, courtyardMaterials, shadows, registerAggregate, hole, {legibility:publicYard,loadingPlatformOverlay:courtyardDiverter&&!lineLab,lineLab,hideSkyToken:linecraftLab,...(linecraftLab?{extraPads:[LINECRAFT_SECOND_PAD]}:{})}).skyToken;
+            skyToken = buildCourtyard(scene!, courseRoot, courtyardMaterials, shadows, registerAggregate, hole, {legibility:publicYard,surfaceDetail:publicYard,loadingPlatformOverlay:courtyardDiverter&&!lineLab,lineLab,hideSkyToken:linecraftLab,...(linecraftLab?{extraPads:[LINECRAFT_SECOND_PAD]}:{})}).skyToken;
             if(timberReceiver)buildTimberReceiver(scene!,courseRoot!,materials,shadows,registerAggregate);
             if(linecraftLab)buildLinecraftReflectors(scene!,courseRoot!,materials,shadows,registerAggregate);
             if(lineLab) diverterHandles=buildKickerPallet(scene!,courseRoot!,materials,shadows,floorStateRef.current,hole.target);
