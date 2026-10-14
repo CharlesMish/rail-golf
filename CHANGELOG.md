@@ -8,10 +8,13 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 - Charter (`docs/CHARTER.md`), MIT license (`LICENSE`), and this changelog.
 
 ### Changed
+- Public courtyard callouts now follow card requirements and Route Book focus; a compact Route Book disclosure keeps the course visible. Tread tops and supports have distinct paint. See `docs/YARD-LEGIBILITY-REVIEW.md`.
 - License changed from `UNLICENSED` to MIT in `package.json`, the README, and `THIRD_PARTY_NOTICES.md`.
 - The README uses public-facing terms and defines the game's vocabulary. Existing game UI text is unchanged.
 
 ### Fixed
+- Public destination distances use station-relative plan measurements; Cascade no longer labels or highlights Bank B as a required tread. Labels avoid nearby UI and one another.
+- Short public-yard landscape layouts keep Shot tools clear of the Survey button.
 - `docs/HOSTING.md` no longer says that rail-golf.cmish.dev is not attached.
 
 ## [0.3.1] - 2026-09-28

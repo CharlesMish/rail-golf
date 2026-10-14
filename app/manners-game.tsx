@@ -84,6 +84,10 @@ import {LINE_CARDS,LINE_STATIONS,selectOpenLineStation} from "@/lib/line-lab";
 import type {GameCard} from "@/lib/line-lab";
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
+import { stationTargetDistanceLabel, yardFeatureLabels, isTreadLabelVisible } from '@/lib/yard-labels';
+import { layoutYardLabels } from '@/lib/yard-label-layout';
+import { createYardPresentationMaterials } from '@/lib/yard-presentation';
+import { YardLabels, type YardLabelElements, type YardLeaderElements } from './yard-labels';
 import {buildTimberReceiver} from "@/lib/timber-receiver";
 import {LINECRAFT_SECOND_PAD,buildLinecraftReflectors,collectLinecraftStepEvents} from "@/lib/linecraft-yard";
 import {receiverStorage} from "@/lib/timber-receiver-storage";
@@ -357,6 +361,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   courtyardDiverter = courtyardDiverter || lineLab;
   courtyard = courtyard || courtyardDiverter;
   diverterLab = diverterLab || courtyardDiverter;
+  const publicYard = courtyard && !diverterLab;
   const [labSelection]=useState(()=>{const selection=createLabSelection(LINE_CARDS);if(intentLab||linecraftLab){selection.select(3);return {...selection,getServerSnapshot:selection.getSnapshot};}return selection;});
   const [intentCondition,setIntentCondition]=useState<IntentCondition>('keep');
   const intentConditionRef=useRef<IntentCondition>('keep');
@@ -436,6 +441,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const floorLabelRef = useRef<HTMLDivElement>(null);
   const switchLabelRef = useRef<HTMLDivElement>(null);
   const resultCardRef = useRef<HTMLElement>(null);
+  const yardLabelsRef = useRef<YardLabelElements>({});
+  const yardLeadersRef = useRef<YardLeaderElements>({});
   const destinationRef = useRef<HTMLDivElement>(null);
   const mechanismRef = useRef<HTMLDivElement>(null);
   const deliveryPadRef = useRef<HTMLDivElement>(null);
@@ -497,6 +504,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
   const [deliveryBook, setDeliveryBook] = useState<DeliveryBook>({});
   const [deliveryLive, setDeliveryLive] = useState<DeliveryRoute[]>([]);
   const [routeFocus, setRouteFocus] = useState<DeliveryRoute>('direct');
+  const routeFocusRef = useRef<DeliveryRoute>('direct');
+  routeFocusRef.current = routeFocus;
   const [recalledPower, setRecalledPower] = useState<number | null>(null);
   const [bootMessage, setBootMessage] = useState("Opening the mechanism range");
 
@@ -758,6 +767,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         woodTexture.update();
         materials.timber.diffuseTexture = woodTexture;
         materials.brick.diffuseTexture = woodTexture;
+        const courtyardMaterials = publicYard ? { ...materials, ...createYardPresentationMaterials(scene, materials) } : materials;
         if (courtyard) {
           materials.rough.diffuseColor = new Color3(.20, .18, .125);
           materials.fairwayA.diffuseColor = new Color3(.26, .24, .17);
@@ -1186,7 +1196,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
 
           }
           if (courtyard) {
-            skyToken = buildCourtyard(scene!, courseRoot, materials, shadows, registerAggregate, hole, {loadingPlatformOverlay:courtyardDiverter&&!lineLab,lineLab,hideSkyToken:linecraftLab,...(linecraftLab?{extraPads:[LINECRAFT_SECOND_PAD]}:{})}).skyToken;
+            skyToken = buildCourtyard(scene!, courseRoot, courtyardMaterials, shadows, registerAggregate, hole, {legibility:publicYard,loadingPlatformOverlay:courtyardDiverter&&!lineLab,lineLab,hideSkyToken:linecraftLab,...(linecraftLab?{extraPads:[LINECRAFT_SECOND_PAD]}:{})}).skyToken;
             if(timberReceiver)buildTimberReceiver(scene!,courseRoot!,materials,shadows,registerAggregate);
             if(linecraftLab)buildLinecraftReflectors(scene!,courseRoot!,materials,shadows,registerAggregate);
             if(lineLab) diverterHandles=buildKickerPallet(scene!,courseRoot!,materials,shadows,floorStateRef.current,hole.target);
@@ -1710,6 +1720,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           rememberFlight(`${[...flight.mechanismTags].map(evidenceLabel).join(" → ")}${flight.mechanismTags.size ? " → " : ""}${receipt}`, safetyReason||!hole.target?null:outcome);
           const tags = [...flight.mechanismTags];
           const shotResult = hole.target ? resultCopy({...hole,target:hole.target}, outcome, at.clone(), tags) : {outcome,headline:'LINE BANKED',detail:`${receipt}. No roost required.`,point:at.clone(),clear:false};
+          if (publicYard && outcome === 'ace' && !hole.requiredTags.length) shotResult.detail = `First ground contact landed on ${hole.target!.label}.`;
           if (diverterLab && !lineLab) shotResult.detail = (tags.map(evidenceLabel).join(' → ') || 'CARRY') + ' · FLOOR ' + flight.environment!.floor + ' → ' + floorStateRef.current + '. ' + receipt;
           if(safetyReason){shotResult.headline=safetyReason==='dead-ball'?'SHOT SETTLED':'SAFETY STOP';shotResult.detail=`${receipt}. Established line claims retained; no target finish awarded.`;shotResult.clear=false;}
           if (!lineLab && hole.id === 'mill-delivery') {
@@ -2014,8 +2025,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const direction = getHorizontalDirection();
           const rail = stationRailPosition(railRef.current, HOLES[activeHoleIndex()].station,linecraftLab?originXRef.current:undefined);
           const origin = new Vector3(rail.x, .4, rail.z);
-          camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, 7.4, 0)));
-          cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, 3.2, 0)));
+          camera.position.copyFrom(origin.subtract(direction.scale(15)).add(new Vector3(0, publicYard && HOLES[activeHoleIndex()].station?.id === 'lumber' ? 11.4 : 7.4, 0)));
+          cameraTarget.copyFrom(origin.add(direction.scale(34)).add(new Vector3(0, publicYard && HOLES[activeHoleIndex()].station?.id === 'lumber' ? 0 : 3.2, 0)));
           camera.setTarget(cameraTarget);
           setRetryNotice((diverterLab && !lineLab ? 'FLOOR ' + floorStateRef.current + ' preserved. ' : '') + (interrupted ? 'Shot interrupted. Aim and power remembered; no landing awarded.' : 'Last setup restored. Adjust and fire when ready.'));
         };
@@ -2543,8 +2554,8 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           const stationRail = stationRailPosition(railRef.current, hole.station,linecraftLab?originXRef.current:undefined);
           const launcherPosition = new Vector3(stationRail.x, 0.4, stationRail.z);
           const horizontalAim = getHorizontalDirection();
-          const addressPosition = launcherPosition.subtract(horizontalAim.scale(15)).add(new Vector3(0, 7.4, 0));
-          const addressTarget = launcherPosition.add(horizontalAim.scale(34)).add(new Vector3(0, 3.2, 0));
+          const addressPosition = launcherPosition.subtract(horizontalAim.scale(15)).add(new Vector3(0, publicYard && hole.station?.id === 'lumber' ? 11.4 : 7.4, 0));
+          const addressTarget = launcherPosition.add(horizontalAim.scale(34)).add(new Vector3(0, publicYard && hole.station?.id === 'lumber' ? 0 : 3.2, 0));
           let desiredCameraPosition = addressPosition;
           let desiredCameraTarget = addressTarget;
 
@@ -2705,25 +2716,81 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
             element.style.top = `${projected.y / renderHeight * 100}%`;
             element.style.setProperty("--pin-offset", `${screenX - labelX}px`);
           };
-          projectLabel(destinationRef.current,
-            hole.target ? new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z) : null);
-          projectLabel(switchLabelRef.current, diverterLab ? new Vector3((lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).x,7,(lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).z) : null);
-          projectLabel(floorLabelRef.current, diverterLab ? new Vector3((lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x),6,(lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
-          const mechanism = linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks'?'bank':hole.requiredTags[0];
-          const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
-          const pad = RANGE_MECHANISMS.boost;
-          projectLabel(mechanismRef.current, mechanism?.startsWith("bank")
-            ? new Vector3(bank.x + bank.halfWidth, courtyard ? 10 : 4.5, courtyard ? bank.z : bank.z - bank.halfDepth + 13)
-            : mechanism === "boost" ? new Vector3(pad.x, 1.5, pad.z)
-            : mechanism === "breach" && hole.breach ? new Vector3(hole.breach.x, hole.breach.maxY, hole.breach.z)
-            : null);
-          const secondBank = hole.requiredTags.length > 1 || (linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks') ? hole.banks?.[1] : null;
-          projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
-          const sharedPad = withSharedYardPad(hole).boost;
-          projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
-          projectLabel(skyLabelRef.current, (lineLab || hole.id === 'mill-delivery') ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
-          for (const step of CASCADE_STEPS) {
-            projectLabel(cascadeLabelRefs.current[step.id] ?? null, (hole.id === 'lumber-cascade'||(linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id!=='banks')) ? new Vector3(step.x, step.top+1, step.z) : null);
+          if (!publicYard) {
+            projectLabel(destinationRef.current,
+              hole.target ? new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + 0.8, hole.target.z) : null);
+            projectLabel(switchLabelRef.current, diverterLab ? new Vector3((lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).x,7,(lineLab ? KICKER_SWITCH : courtyardDiverter ? YARD_DIVERTER_SWITCH : DIVERTER_SWITCH).z) : null);
+            projectLabel(floorLabelRef.current, diverterLab ? new Vector3((lineLab ? KICKER_PALLET.x : courtyardDiverter ? YARD_DIVERTER_FLOOR.x - YARD_DIVERTER_FLOOR.width/2 : DIVERTER_FLOOR.x),6,(lineLab ? KICKER_PALLET : courtyardDiverter ? YARD_DIVERTER_FLOOR : DIVERTER_FLOOR).z) : null);
+            const mechanism = linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks'?'bank':hole.requiredTags[0];
+            const bank = hole.banks?.[0] ?? RANGE_MECHANISMS.bank;
+            const pad = RANGE_MECHANISMS.boost;
+            projectLabel(mechanismRef.current, mechanism?.startsWith("bank")
+              ? new Vector3(bank.x + bank.halfWidth, courtyard ? 10 : 4.5, courtyard ? bank.z : bank.z - bank.halfDepth + 13)
+              : mechanism === "boost" ? new Vector3(pad.x, 1.5, pad.z)
+              : mechanism === "breach" && hole.breach ? new Vector3(hole.breach.x, hole.breach.maxY, hole.breach.z)
+              : null);
+            const secondBank = hole.requiredTags.length > 1 || (linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id==='banks') ? hole.banks?.[1] : null;
+            projectLabel(secondBankRef.current, secondBank ? new Vector3(secondBank.x, 10, secondBank.z) : null);
+            const sharedPad = withSharedYardPad(hole).boost;
+            projectLabel(deliveryPadRef.current, sharedPad ? new Vector3(sharedPad.x, 2.4, sharedPad.z) : null);
+            projectLabel(skyLabelRef.current, (lineLab || hole.id === 'mill-delivery') ? new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z) : null);
+            for (const step of CASCADE_STEPS) {
+              projectLabel(cascadeLabelRefs.current[step.id] ?? null, (hole.id === 'lumber-cascade'||(linecraftLab&&linecraftSessionRef.current.stage==='learn'&&LINECRAFT_LESSONS[linecraftSessionRef.current.lessonIndex].id!=='banks')) ? new Vector3(step.x, step.top+1, step.z) : null);
+            }
+          } else {
+            // Layout only the public courtyard's authored/focused features. Historical
+            // labs retain their own labels, camera and presentation contracts.
+            const features = yardFeatureLabels(hole, { survey: surveyRef.current, routeFocus: routeFocusRef.current });
+            const markers: Record<string, Vector3> = {};
+            if (hole.target) markers.destination = new Vector3(hole.target.x, (hole.target.beaconHeight ?? 6.4 * Math.max(1, hole.target.z / 80)) + .8, hole.target.z);
+            for (const feature of features) {
+              const bank = hole.banks?.find(bank => bank.id === feature.id);
+              const step = CASCADE_STEPS.find(step => step.id === feature.id);
+              if (bank) markers[feature.id] = new Vector3(bank.x, 10, bank.z);
+              else if (step && isTreadLabelVisible(step.id, camera.position)) markers[feature.id] = new Vector3(step.x, step.top + .12, step.z);
+              else if (feature.id === 'boost') { const pad = withSharedYardPad(hole).boost; if (pad) markers.boost = new Vector3(pad.x, 2.4, pad.z); }
+              else if (feature.id === 'sky') markers.sky = new Vector3(SKY_TOKEN.x, SKY_TOKEN.y - SKY_TOKEN.radius, SKY_TOKEN.z);
+              else if (feature.id === 'mill') markers.mill = new Vector3(-35, 18.5, 104);
+            }
+            const ready = phaseRef.current === 'ready' || phaseRef.current === 'charging';
+            const width = canvas.clientWidth, height = canvas.clientHeight;
+            const shell = canvas.closest('main')!;
+            const canvasBox = canvas.getBoundingClientRect();
+            const obstacles = !ready ? [] : Array.from(shell.querySelectorAll<HTMLElement>('.brand-lockup, .course-readout, .manners-scorecard, .manners-brief, .manners-console, .mobile-utility-panel, .delivery-book, .shot-tools, .shot-tools[open] .shot-tools-body, .utility-panel, .last-line-chip, .shot-evidence-layer span[data-visible="true"]')).flatMap(element => {
+              const rect = element.getBoundingClientRect(), style = getComputedStyle(element);
+              return rect.width && rect.height && style.visibility !== 'hidden' && style.display !== 'none' ? [{ x: rect.x-canvasBox.x, y: rect.y-canvasBox.y, width: rect.width, height: rect.height }] : [];
+            });
+            // Protect the visible muzzle/launcher and its short direction spine.
+            // Survey has no address launcher to protect.
+            if (ready && !surveyRef.current) obstacles.push({ x: width/2-38, y: height*.55, width: 76, height: height*.32 });
+            const showLabel = (id: string, visible: boolean) => {
+              const element = yardLabelsRef.current[id], leader = yardLeadersRef.current[id];
+              if (element && element.dataset.visible !== String(visible)) {
+                element.dataset.visible = String(visible);
+                element.setAttribute('aria-hidden', String(!visible));
+              }
+              if (leader && leader.dataset.visible !== String(visible)) leader.dataset.visible = String(visible);
+            };
+            const candidates = Object.entries(yardLabelsRef.current).flatMap(([id, element]) => {
+              const marker = markers[id];
+              if (!ready || !element || !marker) { showLabel(id, false); return []; }
+              const projected = Vector3.Project(marker, identityMatrix, viewProjection, labelViewport);
+              if (projected.z <= 0 || projected.z >= 1) { showLabel(id, false); return []; }
+              const feature = features.find(feature => feature.id === id);
+              const side: 'above'|'left'|'right' = id === 'step-a' || id === 'step-c' ? 'right' : id === 'step-b' ? 'left' : 'above';
+              return [{ id, x: projected.x/renderWidth*width, y: projected.y/renderHeight*height, width: element.offsetWidth, height: element.offsetHeight, priority: id === 'destination' ? 100 : feature?.optional ? 10 : 50, side }];
+            });
+            for (const placed of layoutYardLabels(candidates, { width, height }, obstacles)) {
+              const element = yardLabelsRef.current[placed.id]!, leader = yardLeadersRef.current[placed.id];
+              showLabel(placed.id, placed.visible);
+              if (!placed.visible) continue;
+              element.style.left = `${placed.x}px`; element.style.top = `${placed.y}px`;
+              if (leader) {
+                leader.setAttribute('x1', String(placed.anchorX)); leader.setAttribute('y1', String(placed.anchorY));
+                leader.setAttribute('x2', String(clamp(placed.anchorX, placed.x, placed.x+placed.width)));
+                leader.setAttribute('y2', String(clamp(placed.anchorY, placed.y, placed.y+placed.height)));
+              }
+            }
           }
           const evidenceMemory = memoriesRef.current[hole.id];
           if (evidenceMemory?.contacts.length) {
@@ -2901,9 +2968,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     result && hole.target && hole.requiredTags.length > 0 && result.outcome !== "double",
   );
   const resultCanAdvance = Boolean(result?.clear);
+  const DeliveryBookContainer = publicYard ? 'details' : 'section';
 
   return (
-    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab?' '+linecraftShellClassName:''}`} data-phase={phase} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined}
+    <main className={`rail-golf-shell manners-shell${intentLab?' '+intentShellClassName:''}${linecraftLab?' '+linecraftShellClassName:''}`} data-phase={phase} data-yard-legibility={publicYard||undefined} data-replaying={linecraftReplaying||undefined} data-line-lab={lineLab||undefined}
       onPointerDownCapture={lineLab?event=>{inputSourceRef.current='pointer';const target=event.target instanceof Element?event.target.closest('button,summary,input,select,a')??event.target:event.target;gestureGateRef.current.down(target,labControlRef.current?.revision()??0,event.pointerId);}:undefined}
       onPointerCancelCapture={lineLab?event=>gestureGateRef.current.cancel(event.pointerId):undefined}
       onClickCapture={lineLab?event=>{
@@ -3017,35 +3085,36 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         <div className="address-lab-chip" role="status">{labChip}</div>
       ) : null}
 
-      {hole.target && <div ref={destinationRef} className="destination-label" data-visible="false" data-color={hole.target.material} aria-hidden={!canAim}>
+      {publicYard && <YardLabels features={yardFeatureLabels(hole, { survey: true, routeFocus })} target={hole.target ? { label: hole.target.label, color: hole.target.material, distance: stationTargetDistanceLabel(hole.target, hole.station) } : null} elements={yardLabelsRef} leaders={yardLeadersRef} />}
+      {!publicYard && hole.target && <div ref={destinationRef} className="destination-label" data-visible="false" data-color={hole.target.material} aria-hidden={!canAim}>
         <span>{hole.requiredTags.length ? `${hole.requiredTags.length + 1} · ` : ""}LAND HERE · {Math.round(hole.target.z)} m</span>
         <strong>{hole.target.label}</strong>
       </div>}
 
-      <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
+      {!publicYard && <div ref={mechanismRef} className="destination-label mechanism-label" data-visible="false"
         data-color={hole.requiredTags[0] === "boost" ? "boost" : "amber"} aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}>
         <strong>{linecraftLab?'BANK A':<>1 · {hole.requiredTags[0]?.startsWith("bank") ? (courtyard ? "BANK A · THEN B" : "BANK HERE") : hole.requiredTags[0] === "boost" ? "BOUNCE PAD" : "BREAK THROUGH"}</>}</strong>
-      </div>
+      </div>}
 
-      {courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}><strong>{linecraftLab?"BANK B":"2 · BANK B"}</strong></div>}
+      {!publicYard && courtyard && <div ref={secondBankRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim || (!hole.requiredTags.length&&!linecraftLab)}><strong>{linecraftLab?"BANK B":"2 · BANK B"}</strong></div>}
 
-      {courtyard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
+      {!publicYard && courtyard && <div ref={deliveryPadRef} className="destination-label mechanism-label" data-visible="false" data-color="boost" aria-hidden={!canAim}><strong>{courtyardDiverter ? "SKIP PAD" : "OPTIONAL · SKIP PAD"}</strong></div>}
       {lineLab && !linecraftLab && <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber"><strong>SKY TOKEN</strong></div>}
       {!lineLab && hole.id === 'mill-delivery' && <>
-        <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim}><strong>GOLD SKY TOKEN</strong></div>
-        {(canAim || phase === 'result') && <section className="delivery-book" aria-label="Delivery route collection">
-          <strong>{Object.keys(deliveryBook).length === 4 ? 'YARD EXPLORER' : 'ROUTE BOOK'} · {Object.keys(deliveryBook).length}/4</strong>
+        {!publicYard && <div ref={skyLabelRef} className="destination-label mechanism-label" data-visible="false" data-color="amber" aria-hidden={!canAim}><strong>GOLD SKY TOKEN</strong></div>}
+        {(canAim || phase === 'result') && <DeliveryBookContainer className="delivery-book" aria-label="Delivery route collection">
+          {publicYard ? <summary>{Object.keys(deliveryBook).length === 4 ? 'YARD EXPLORER' : 'ROUTE BOOK'} · {Object.keys(deliveryBook).length}/4</summary> : <strong>{Object.keys(deliveryBook).length === 4 ? 'YARD EXPLORER' : 'ROUTE BOOK'} · {Object.keys(deliveryBook).length}/4</strong>}
           <div className="delivery-route-tabs">{DELIVERY_ROUTES.map(route => <button key={route.id} type="button" aria-pressed={routeFocus === route.id} onClick={() => setRouteFocus(route.id)} data-earned={Boolean(deliveryBook[route.id])}>
             {deliveryBook[route.id] ? '✓ ' : '○ '}{route.label}
           </button>)}</div>
           <p>{DELIVERY_ROUTES.find(route => route.id === routeFocus)?.hint}</p>
           {deliveryBook[routeFocus] && <Button variant="outline" size="sm" disabled={phase === 'charging'} onClick={() => performUI('recallRoute',[routeFocus])}>Recall winning line · {displayPercent(deliveryBook[routeFocus]!.charge)}</Button>}
           {recalledPower !== null && <small>Line recalled. {powerMode === "set" ? "Saved power selected." : `Charge to the ${displayPercent(recalledPower)} marker.`}</small>}
-        </section>}
+        </DeliveryBookContainer>}
         {deliveryLive.length > 0 && phase === 'flight' && <div className="delivery-progress" role="status">{deliveryLive.join(' + ').toUpperCase()} REACHED · LAND TO COLLECT</div>}
       </>}
 
-      {(hole.id === 'lumber-cascade'||linecraftLab) && <>
+      {!publicYard && (hole.id === 'lumber-cascade'||linecraftLab) && <>
         {CASCADE_STEPS.map((step, index) => <div key={step.id} ref={node => { cascadeLabelRefs.current[step.id] = node; }} className="destination-label cascade-label" data-color="amber" data-visible="false"><strong>TREAD {index+1}</strong></div>)}
       </>}
 
