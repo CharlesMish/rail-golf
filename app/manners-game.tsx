@@ -776,7 +776,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
           materials.brick.diffuseTexture = woodTexture;
         }
         const surfaceMaterials = publicYard ? applyYardSurfaceMaterials(scene, materials) : {};
-        const courtyardMaterials = publicYard ? { ...materials, ...surfaceMaterials, ...createYardPresentationMaterials(scene, materials) } : materials;
+        const courtyardMaterials = publicYard ? { ...materials, ...surfaceMaterials, ...createYardPresentationMaterials(scene, materials, { surfaceDetail: true }) } : materials;
         if (courtyard) {
           materials.rough.diffuseColor = new Color3(.20, .18, .125);
           materials.fairwayA.diffuseColor = new Color3(.26, .24, .17);

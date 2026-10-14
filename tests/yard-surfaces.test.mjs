@@ -88,7 +88,7 @@ test('scene shares four mipmapped textures across materials; repeat application 
     f.materials.steel.diffuseColor = new Color3(.29, .35, .34);
     const initialColors = Object.fromEntries(Object.entries(f.materials).map(([key, material]) => [key, material.diffuseColor.asArray()]));
     const overrides = applyYardSurfaceMaterials(f.scene, f.materials);
-    const presentation = createYardPresentationMaterials(f.scene, f.materials);
+    const presentation = createYardPresentationMaterials(f.scene, f.materials, { surfaceDetail: true });
     const textures = [...f.scene.textures], materialCount = f.scene.materials.length;
     assert.equal(textures.length, 4);
     assert.equal(presentation.yardTreadTop.diffuseTexture, f.materials.timber.diffuseTexture);
@@ -109,5 +109,30 @@ test('scene shares four mipmapped textures across materials; repeat application 
     assert.equal(f.materials.steel.diffuseTexture, f.materials.machine.diffuseTexture);
     assert.deepEqual(Object.fromEntries(Object.entries(f.materials).map(([key, material]) => [key, material.diffuseColor.asArray()])), initialColors);
     assert.equal(f.scene.meshes.length, 0, 'surface presentation adds no meshes');
+  } finally { f.dispose(); }
+});
+
+test('enhanced grain retains a pale gold effective tread colour without brightening supports or adding textures', () => {
+  const f = fixture();
+  try {
+    applyYardSurfaceMaterials(f.scene, f.materials);
+    const textures = [...f.scene.textures];
+    const historic = createYardPresentationMaterials(f.scene, f.materials);
+    const enhanced = createYardPresentationMaterials(f.scene, f.materials, { surfaceDetail: true });
+    const pixels = createYardSurfacePixels('timber'), mean = [0, 0, 0];
+    for (let i = 0; i < pixels.data.length; i += 4) for (let channel = 0; channel < 3; channel++) mean[channel] += pixels.data[i + channel] / 255;
+    const tint = enhanced.yardTreadTop.diffuseColor.asArray();
+    const effective = mean.map((sum, channel) => sum / (pixels.width * pixels.height) * tint[channel]);
+    // Preserve the intended PR50 pale-gold value under the new brown map.
+    // Red is capped at 1 rather than overdriving the diffuse colour to cancel
+    // every bit of wood tint. Green/blue stay within .015 of the original tint.
+    assert.ok(effective[0] >= .73 && effective[0] <= .79, `red ${effective[0]}`);
+    assert.ok(Math.abs(effective[1] - .57) < .015, `green ${effective[1]}`);
+    assert.ok(Math.abs(effective[2] - .34) < .015, `blue ${effective[2]}`);
+    assert.deepEqual(historic.yardTreadTop.diffuseColor.asArray(), [.78, .57, .34]);
+    assert.deepEqual(enhanced.yardSupportGrain.diffuseColor.asArray(), historic.yardSupportGrain.diffuseColor.asArray());
+    assert.deepEqual(enhanced.yardTreadMark.diffuseColor.asArray(), historic.yardTreadMark.diffuseColor.asArray());
+    assert.equal(enhanced.yardTreadTop.diffuseTexture, f.materials.timber.diffuseTexture);
+    assert.deepEqual(f.scene.textures, textures);
   } finally { f.dispose(); }
 });

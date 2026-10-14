@@ -29,7 +29,7 @@ function fixture({ enhanced = false, historical = false } = {}) {
   borrowedTexture.name = 'existing-shared-timber';
   materials.timber.diffuseTexture = materials.brick.diffuseTexture = borrowedTexture;
   const surfaceMaterials = enhanced ? applyYardSurfaceMaterials(scene, materials) : {};
-  const presentationMaterials = historical ? {} : createYardPresentationMaterials(scene, materials);
+  const presentationMaterials = historical ? {} : createYardPresentationMaterials(scene, materials, { surfaceDetail: enhanced });
   const courtyardMaterials = { ...materials, ...surfaceMaterials, ...presentationMaterials };
   let root = null, bodies = [], environment = null;
 
