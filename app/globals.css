@@ -1862,3 +1862,48 @@ canvas {
   [data-yard-legibility] .shot-tools > summary { margin-left: auto; }
   [data-yard-legibility] .shot-tools-body { left: auto; right: 0; }
 }
+
+/* Keep the public yard's portrait view control beside its challenge heading.
+   The original button stays inside the measured brief obstacle and retains
+   its reading order, disabled state, pressed state and keyboard behavior. */
+@media (orientation: portrait) and (max-width: 700px) {
+  [data-yard-legibility] .manners-brief {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 116px;
+    column-gap: 10px;
+  }
+  [data-yard-legibility] .manners-brief > .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+  [data-yard-legibility] .manners-brief > strong {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
+  [data-yard-legibility] .manners-brief > span {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  [data-yard-legibility] .manners-brief > .courtyard-link {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+  [data-yard-legibility] .manners-brief .manners-survey {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+    justify-self: end;
+    width: 116px;
+    min-height: 44px;
+    height: 44px !important;
+    margin-top: 0;
+    font-size: 9px !important;
+  }
+  [data-yard-legibility] .manners-brief .manners-survey[aria-pressed="true"] {
+    border-color: rgba(80, 217, 228, .7) !important;
+    color: #d8fffb !important;
+    background: rgba(20, 52, 56, .95) !important;
+  }
+}
