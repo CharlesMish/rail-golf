@@ -1,0 +1,21 @@
+{
+  "study": "E8 Approach Prop",
+  "route": "/lab/approach-prop",
+  "query": "k",
+  "arms": {
+    "k3v8n1p": {
+      "letter": "a",
+      "condition": "natural-discovery",
+      "url": "/lab/approach-prop?k=k3v8n1p",
+      "whatThePlayerSees": "No demonstration. The yard label reads PROP. The brief says the timber is a staged piece, not a log."
+    },
+    "q7m2c4r": {
+      "letter": "b",
+      "condition": "matched-familiarization",
+      "url": "/lab/approach-prop?k=q7m2c4r",
+      "whatThePlayerSees": "One recorded demonstration of a timber fall and a follow-up shot. It does not fire the player's gun and it does not print a recipe."
+    }
+  },
+  "bareUrl": "Same as arm a. No demonstration.",
+  "notImplemented": "A treatment contrast such as Continue in Changed Yard shown versus hidden, or a latched address versus a standing address after the shared recording. Proposed in the build report only."
+}

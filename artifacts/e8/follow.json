@@ -1,0 +1,347 @@
+{
+  "restLean": 49.9969,
+  "cases": {
+    "named-bare": {
+      "stepA": false,
+      "stepB": false,
+      "both": false,
+      "z": 234.873,
+      "lean": null,
+      "hit": false
+    },
+    "named-standing": {
+      "stepA": false,
+      "stepB": false,
+      "both": false,
+      "z": 161.816,
+      "lean": 49.997,
+      "hit": true
+    },
+    "named-rest": {
+      "stepA": true,
+      "stepB": true,
+      "both": true,
+      "z": 82.747,
+      "lean": 49.997,
+      "hit": true
+    },
+    "median-bare": {
+      "stepA": false,
+      "stepB": true,
+      "both": false,
+      "z": -12.878,
+      "lean": null,
+      "hit": false
+    },
+    "median-standing": {
+      "stepA": false,
+      "stepB": false,
+      "both": false,
+      "z": 145.347,
+      "lean": 49.997,
+      "hit": true
+    },
+    "median-rest": {
+      "stepA": false,
+      "stepB": true,
+      "both": false,
+      "z": -12.878,
+      "lean": 49.997,
+      "hit": false
+    },
+    "liveSecond": {
+      "stepA": true,
+      "stepB": true,
+      "both": true,
+      "z": 85.112,
+      "lean": 49.997,
+      "hit": true
+    }
+  },
+  "anyNewTread": 38,
+  "anyNewCells": [
+    {
+      "elev": 12,
+      "power": 0.55
+    },
+    {
+      "elev": 12,
+      "power": 0.6
+    },
+    {
+      "elev": 12,
+      "power": 0.65
+    },
+    {
+      "elev": 12,
+      "power": 0.75
+    },
+    {
+      "elev": 12,
+      "power": 0.82
+    },
+    {
+      "elev": 14,
+      "power": 0.5
+    },
+    {
+      "elev": 14,
+      "power": 0.55
+    },
+    {
+      "elev": 14,
+      "power": 0.6
+    },
+    {
+      "elev": 14,
+      "power": 0.7
+    },
+    {
+      "elev": 14,
+      "power": 0.75
+    },
+    {
+      "elev": 14,
+      "power": 0.82
+    },
+    {
+      "elev": 16,
+      "power": 0.48
+    },
+    {
+      "elev": 16,
+      "power": 0.5
+    },
+    {
+      "elev": 16,
+      "power": 0.55
+    },
+    {
+      "elev": 16,
+      "power": 0.6
+    },
+    {
+      "elev": 16,
+      "power": 0.7
+    },
+    {
+      "elev": 16,
+      "power": 0.75
+    },
+    {
+      "elev": 18,
+      "power": 0.48
+    },
+    {
+      "elev": 18,
+      "power": 0.5
+    },
+    {
+      "elev": 18,
+      "power": 0.55
+    },
+    {
+      "elev": 18,
+      "power": 0.65
+    },
+    {
+      "elev": 18,
+      "power": 0.7
+    },
+    {
+      "elev": 18,
+      "power": 0.75
+    },
+    {
+      "elev": 20,
+      "power": 0.45
+    },
+    {
+      "elev": 20,
+      "power": 0.48
+    },
+    {
+      "elev": 20,
+      "power": 0.5
+    },
+    {
+      "elev": 20,
+      "power": 0.55
+    },
+    {
+      "elev": 20,
+      "power": 0.65
+    },
+    {
+      "elev": 22,
+      "power": 0.45
+    },
+    {
+      "elev": 22,
+      "power": 0.48
+    },
+    {
+      "elev": 22,
+      "power": 0.5
+    },
+    {
+      "elev": 22,
+      "power": 0.55
+    },
+    {
+      "elev": 24,
+      "power": 0.45
+    },
+    {
+      "elev": 24,
+      "power": 0.48
+    },
+    {
+      "elev": 24,
+      "power": 0.5
+    },
+    {
+      "elev": 26,
+      "power": 0.4
+    },
+    {
+      "elev": 26,
+      "power": 0.45
+    },
+    {
+      "elev": 28,
+      "power": 0.4
+    }
+  ],
+  "bothTreadsNew": 7,
+  "bothTreadsCells": [
+    {
+      "elev": 12,
+      "power": 0.65
+    },
+    {
+      "elev": 14,
+      "power": 0.6
+    },
+    {
+      "elev": 16,
+      "power": 0.6
+    },
+    {
+      "elev": 18,
+      "power": 0.55
+    },
+    {
+      "elev": 18,
+      "power": 0.65
+    },
+    {
+      "elev": 20,
+      "power": 0.55
+    },
+    {
+      "elev": 22,
+      "power": 0.55
+    }
+  ],
+  "bothPowersAtElev22": [
+    0.52,
+    0.53,
+    0.54,
+    0.55
+  ],
+  "yawAtNamed": [
+    {
+      "yaw": -12,
+      "restBoth": false,
+      "restA": false,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": -8,
+      "restBoth": false,
+      "restA": false,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": -6,
+      "restBoth": false,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": -5,
+      "restBoth": false,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": -4,
+      "restBoth": true,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": -2,
+      "restBoth": true,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 0,
+      "restBoth": true,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 2,
+      "restBoth": true,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 4,
+      "restBoth": true,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 5,
+      "restBoth": false,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 6,
+      "restBoth": false,
+      "restA": true,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 8,
+      "restBoth": false,
+      "restA": false,
+      "standingTop": false,
+      "bareTop": false
+    },
+    {
+      "yaw": 12,
+      "restBoth": false,
+      "restA": false,
+      "standingTop": false,
+      "bareTop": false
+    }
+  ],
+  "passNamed": true
+}

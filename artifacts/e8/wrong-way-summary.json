@@ -1,0 +1,69 @@
+{
+  "n": 7,
+  "rows": [
+    {
+      "id": "K3-E6-lumber-3",
+      "lean": -22.9195,
+      "tail": -22.9195,
+      "hit": true,
+      "z": 129.951,
+      "climbed": false,
+      "flat": false
+    },
+    {
+      "id": "P2-E7-lumber-4",
+      "lean": -22.9195,
+      "tail": -22.9195,
+      "hit": true,
+      "z": 187.733,
+      "climbed": false,
+      "flat": false
+    },
+    {
+      "id": "P3-E7-lumber-6",
+      "lean": -22.9195,
+      "tail": -22.9195,
+      "hit": true,
+      "z": 208.084,
+      "climbed": false,
+      "flat": false
+    },
+    {
+      "id": "P3-E7-lumber-8",
+      "lean": -22.9037,
+      "tail": -22.9194,
+      "hit": true,
+      "z": 142.236,
+      "climbed": false,
+      "flat": false
+    },
+    {
+      "id": "P6-E7-lumber-4",
+      "lean": -22.9194,
+      "tail": -22.9194,
+      "hit": true,
+      "z": -109.109,
+      "climbed": false,
+      "flat": false
+    },
+    {
+      "id": "P8-E7-lumber-4",
+      "lean": -22.9194,
+      "tail": -22.9194,
+      "hit": true,
+      "z": 204.256,
+      "climbed": false,
+      "flat": false
+    },
+    {
+      "id": "P8-E7-lumber-5",
+      "lean": -22.9195,
+      "tail": -22.9195,
+      "hit": true,
+      "z": 191.243,
+      "climbed": false,
+      "flat": false
+    }
+  ],
+  "pass": true
+}
