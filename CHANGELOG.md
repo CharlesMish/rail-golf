@@ -8,6 +8,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 - Charter (`docs/CHARTER.md`), MIT license (`LICENSE`), and this changelog.
 
 ### Changed
+- Public Timber Courtyard gains a wooded mill setting, an outside service siding, deterministic surface wear and a compact portrait Survey control. Gameplay authority and historical lab presentation are unchanged; see `docs/TIMBER-COURTYARD-WORLD.md`.
 - Public courtyard callouts now follow card requirements and Route Book focus; a compact Route Book disclosure keeps the course visible. Tread tops and supports have distinct paint. See `docs/YARD-LEGIBILITY-REVIEW.md`.
 - License changed from `UNLICENSED` to MIT in `package.json`, the README, and `THIRD_PARTY_NOTICES.md`.
 - The README uses public-facing terms and defines the game's vocabulary. Existing game UI text is unchanged.
