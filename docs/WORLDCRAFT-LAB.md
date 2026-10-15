@@ -1,4 +1,4 @@
-# Worldcraft v0.1 — isolated construction study
+# Worldcraft v0.2 — fixed-goal revision study
 
 Route: `/lab/worldcraft`. Read [the director decision](WORLDCRAFT-DIRECTION.md)
 first. This route changes neither the public courtyard nor any historical lab.
@@ -7,34 +7,43 @@ draft environmental PR #51.
 
 ## What to try
 
-1. Enter Play and fire the prepared line. Return to Build, move or rotate the
-   bank, and try the same launch again. The aim and power survive Build ↔ Play.
-2. Send a line onto the ramp. After observing the departure, move the dull block
-   into that path and fire again. Did the edit create the relationship intended?
-3. Keep a resolved line, edit the arrangement, then restore the kept world and
-   line. Check the pieces and launch origin before firing manually. Save a world
-   copy, reload the page and reopen it too.
+1. Enter Play and fire House Shot. Its fixed setup misses the gold pin by about
+   10.4 m at first ground contact.
+2. Return to Build, select the ramp and rotate it +5° at a time. Fire with the
+   same setup. The amber dashed trail is the preceding recorded attempt; cyan
+   is the new actual path. Survey makes their different departures easy to see.
+3. At +20° the supplied fixture clears by about 0.4 m from the pin centre.
+   Try neighbouring angles before resetting. This is a review recipe, not an
+   in-game predicted solution. Reset House Shot restores the initial ramp and
+   clears temporary trails; Ready again retains the current world and setup.
+4. Keep a resolved line, edit the ramp, and restore that kept world and setup.
+   Fire manually. Save a world copy, reload and reopen it too. Worlds & lines
+   still offers the original three-part Open starter and Empty clearing.
 
-The question is whether that revision feels worth another shot. A successful
-physical test cannot establish enjoyment. Screenshots cannot establish the loop.
+The experiment asks whether comparing a changed surface's actual consequence
+makes a revision worth another shot. A solved fixture establishes feasibility,
+not discoverability or enjoyment. See [the report review](WORLDCRAFT-REPORT-REVIEW.md)
+for evidence, deliberate limits and a repeatable candidate review.
 
 ## Controls and state
 
-Build opens with three parts and an overview. Drag a part to move its translucent
+Build opens with one editable ramp, a fixed pin and an overview. Drag a part to move its translucent
 preview on a 1 m grid. Release to validate and commit; invalid placement returns
 to the existing physical arrangement. The selected-piece fields commit on Enter
 or blur, with 0.5 m translation and 5° rotation precision. Rotation buttons use
-15°. The piece list is also a selection control; Focus magnifies the selected
+5°. Their numeric signs describe surface rotation, not the shot's screen direction. The piece list is also a selection control; Focus magnifies the selected
 part for touch manipulation. Empty-space dragging orbits the view, or pans when
 Pan view is selected (Shift-drag also pans). Zoom and Center are explicit controls.
 
 Undo/Redo covers accepted world edits and loads/restores; it does not reverse
 physics or delete saved slots. A blank clearing is optional in Worlds & lines.
-The palette is deliberately small: bank, inclined rebound ramp, dull block.
+The sandbox palette is deliberately small: bank, inclined rebound ramp, dull block.
+A challenge can restrict additions by kind and fix specific pieces; disabled
+fields and runtime validation both enforce those constraints.
 Parts have fixed dimensions and height. The entire rotated footprint must stay
 inside the editable yard, avoid other pieces and leave the launcher corridor free.
 
-Play provides the existing yaw/elevation envelope and charge-to-speed mapping.
+In sandbox worlds, Play provides the existing yaw/elevation envelope and charge-to-speed mapping.
 Set power is the initial control; Hold to charge is also available. The stopped
 carriage moves from −10 to +10 m in exact 0.5 m increments. It contributes no
 velocity. It is not the production three-rail selector. Canvas dragging aims;
@@ -43,9 +52,13 @@ Space fires/charges there; native focused buttons keep their ordinary behavior.
 Charging, flight and a modal memory view prevent conflicting edit/fire inputs.
 Escape, pointer cancellation and focus loss cancel charging without a launch.
 
-First ground contact ends the line. There is no target, required sentence, score,
-predicted parabola or new objective. Dull blocks can still earn a qualified
-departure when their actual physics satisfies the existing gates.
+First ground contact ends the line. A challenge clears only when the measured
+round centre's x/z at that terminal lies inside or on the fixed pin circle.
+It does not require a qualified rebound or a resting capture. Stop, timeout,
+out-of-bounds and other terminals do not clear. House Shot fixes origin, yaw,
+elevation and charge, so the player changes its one ramp. There is no predicted
+parabola, production score or progress award. Dull blocks can still earn a
+qualified departure when actual physics satisfies the existing gates.
 
 | Action | Contract |
 | --- | --- |
@@ -54,11 +67,12 @@ departure when their actual physics satisfies the existing gates.
 | Aim again | Keep the current world and setup. |
 | Adjust last line | Restore the last actual shot's complete starting world and exact setup. |
 | Restore world & line | Restore the selected kept snapshot and setup; select its recorded history; manual fire required. |
-| Previous line | Show actual history, never a prediction. A different current world is labelled explicitly. |
+| Before / latest | Retain the selected preceding actual path when firing; amber dashed before, cyan live/latest. Different world and changed setup are labelled explicitly. |
 | Stop shot | Interrupt and retain diagnostic history; the UI does not offer Keep for an interrupted attempt. |
 
 Restoring a kept line does not rewrite the latest actual shot: Adjust last line
-still refers to that shot. The selected historical trace and latest actual shot
+still refers to that shot. Restore clears the temporary comparison to avoid
+pairing unrelated records. The selected historical trace and latest actual shot
 are separate state. Repeated Keep of the same resolved record is idempotent.
 Different-build restores warn that a new physical result may differ.
 
@@ -74,7 +88,18 @@ Different-build restores warn that a new physical result may differ.
 - Launcher: `{x}` stores the initial/default stopped carriage position. Each
   actual shot separately captures `originX`, yaw, elevation and charge. The
   internal `railIndex` is fixed at 1, avoiding a second lateral offset.
-- Rules: `null`. Optional challenge authoring is reserved, not implemented.
+- Rules: `null` keeps the original unrestricted v1 contract. Optional rules are
+  `{pin:{x,z,r},locked:[objectId],allowance:{kind:count},rail:null|{yaw,elevation,charge}}`.
+  The whole pin circle must fit on the floor, with radius 0.5–5 m. Locked IDs
+  must exist and cannot be moved, rotated, removed or replaced during ordinary
+  edits. Allowances count movable pieces; omitted kinds allow zero. The total
+  12-piece limit includes fixed pieces. A non-null rail also fixes launch origin
+  to `launcher.x` at firing and when keeping a record. With `rail:null`, origin,
+  aim and power remain free; `launcher.x` remains the saved default. All rule
+  keys are required.
+  Changing rules requires an explicit import/load, not an ordinary edit. These
+  are local authoring constraints, not an anti-cheat boundary. There is no rule
+  editor or creator-solvability validator.
 
 No arbitrary dimensions, y positions, physics coefficients, scripts, asset URLs
 or unsupported keys are accepted. Import rejects malformed/oversized JSON,
@@ -146,7 +171,7 @@ certify the physical-phone targets.
 
 ## Provisional choices and separate work
 
-Three fixed parts, one environment, a 12-part cap, the track span, Build's camera,
+Three fixed-size part types, one environment, a 12-part cap, the track span, Build's camera,
 the initial Set power control and four local slots are study choices. No public
 product hierarchy or object-marketplace architecture is declared. There is no
 freely placed launcher, arbitrary modeling, challenge editor, active mechanism,

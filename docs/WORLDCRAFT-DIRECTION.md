@@ -2,6 +2,12 @@
 
 This is an isolated experiment, not a production architecture decision.
 
+The original Gate A brief below is retained as the design rationale. The
+v0.2 report follow-up adds a fixed House Shot challenge and before/after measured
+trails; [the current playable contract](WORLDCRAFT-LAB.md) and
+[review evidence](WORLDCRAFT-REPORT-REVIEW.md) describe that small extension.
+It does not adopt the report's full progression or change shared physics.
+
 ## Authority
 
 Starting main: `4a2be20984da4e50d7f87f37e59d7d61ff384e2c`.
@@ -34,7 +40,7 @@ forest-edge direction is a reference, not a hidden dependency or merger.
 
 ## Narrow playable contract
 
-- One starter arrangement and an optional empty layout.
+- One fixed House Shot challenge, the original open starter and an optional empty layout.
 - Three fixed-size parts: a rebound bank, a real inclined rebound ramp, and a
   dull obstacle. No arbitrary scale, physics parameters, scripts or asset URLs.
 - Move in x/z and rotate; snapping and fine buttons complement direct dragging.
@@ -55,7 +61,7 @@ forest-edge direction is a reference, not a hidden dependency or merger.
 
 An independent schema and scene adapter sit beside the existing courtyard.
 The document separates environment, physical objects, launcher and optional
-rules (null in v1). Stable object IDs identify contacts; a world content identity
+rules (null for the original sandbox; validated fixed-goal rules in the follow-up). Stable object IDs identify contacts; a world content identity
 and a code-owned catalog/physics contract bind a line to its firing context.
 Imported geometry parameters come only from the supported catalog.
 

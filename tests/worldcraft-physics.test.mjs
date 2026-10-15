@@ -228,3 +228,41 @@ test('twelve maximum-size layout replacements release old bodies/casters and kee
     assert.equal(h.scene.meshes.length,0); assert.equal(h.scene.materials.length,0);
   } finally { h.dispose(); }
 });
+
+test('House Shot miss–turn–clear uses the same real launch; rules survive retry, load and rejected fixed edits', async () => {
+  const {createHouseShotWorld,worldcraftFixedSetup}=await import('../lib/worldcraft-model.js');
+  const world=createHouseShotWorld(),setup=worldcraftFixedSetup(world),h=harness(world);
+  try {
+    h.runtime.setMode('play');
+    for(const patch of [{originX:.5},{yaw:5},{elevation:20},{charge:.7}])assert.equal(h.runtime.launch({...setup,...patch}),false);
+    const before=h.shoot(setup);
+    assert.equal(before.pinResult.status,'miss'); assert.ok(Math.abs(before.position[2]-69.7659)<.001);
+    const results=[];
+    for(const yaw of [5,10,15,20,25,30]){
+      h.replace({...world,objects:[{...world.objects[0],yaw}]});
+      const after=h.shoot(setup); results.push([yaw,after.pinResult.status]);
+      assert.deepEqual(after.setup,before.setup); assert.deepEqual(after.launch,before.launch);
+      assert.ok(after.position[0]<0,'positive surface yaw sends the round left in world coordinates');
+      assert.equal(after.terminal.reason,'first-ground-contact');
+      if(yaw===20){
+        assert.ok(after.pinResult.distance<.5); assert.notEqual(after.worldIdentity,before.worldIdentity);
+        const line=packWorldcraftLine({worldSnapshot:captureWorldSnapshot(after.world,after.build),setup:after.setup,launch:after.launch,contacts:after.contacts,points:after.samples,events:after.evidence,terminal:after.terminal});
+        assert.deepEqual(line.worldSnapshot.world.rules,world.rules);
+        h.replace(parseWorldJSON(exportWorldJSON(after.world)));
+        assert.ok(distance(h.shoot(setup).position,after.position)<.001);
+      }
+    }
+    assert.deepEqual(results,[[5,'miss'],[10,'miss'],[15,'clear'],[20,'clear'],[25,'clear'],[30,'miss']]);
+    assert.equal(before.world.objects[0].yaw,0,'retained pre-edit record remains immutable');
+    h.runtime.clearShot();h.runtime.launch(setup);h.step();h.runtime.clearShot();
+    assert.deepEqual(h.runtime.last.pinResult,{status:'unfinished',distance:null});
+    h.runtime.setMode('build');
+    const fixed={...world,rules:{...world.rules,locked:['ramp-yours'],allowance:{}}};
+    assert.equal(h.runtime.replaceWorld(fixed,{intent:'load'}).ok,true);
+    const meshes=[...h.runtime.objectMeshes.values()];
+    for(const patch of [{rules:null},{objects:[{...world.objects[0],yaw:10}]}])assert.equal(h.runtime.replaceWorld({...fixed,...patch}).ok,false);
+    assert.deepEqual([...h.runtime.objectMeshes.values()],meshes,'rejected edits retain physical bodies');
+    assert.equal(h.runtime.replaceWorld(createStarterWorld(),{intent:'load'}).ok,true);
+    assert.equal(h.shoot(BANK).pinResult,null,'an explicit sandbox load removes challenge result authority');
+  } finally {h.dispose();}
+});
