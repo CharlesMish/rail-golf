@@ -1,6 +1,8 @@
 export type WorldcraftKind='bank'|'ramp'|'block';
 export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number};
-export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:null};
+export type WorldcraftRules={pin:{x:number;z:number;r:number};locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null};
+export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
+export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:WorldcraftRules|null};
 export type WorldcraftSetup={railIndex:1;originX:number;yaw:number;elevation:number;charge:number};
 export type WorldcraftPoint={x:number;y:number;z:number;t?:number};
 export type WorldcraftJSON=null|boolean|number|string|WorldcraftJSON[]|{[key:string]:WorldcraftJSON};
@@ -58,3 +60,11 @@ export function createWorldcraftStore(storage:Pick<Storage,'getItem'|'setItem'>)
  /** Recovery/export only; this envelope cannot be imported as a playable world. */
  exportLocal():string;
 };
+
+export function validateWorldEdit(current:WorldcraftDocument,input:unknown):WorldcraftDocument;
+export function worldcraftFixedSetup(world:WorldcraftDocument):WorldcraftSetup|null;
+export function worldcraftSetupForWorld(world:WorldcraftDocument,current:WorldcraftSetup,options?:{load?:boolean}):WorldcraftSetup;
+export function validateWorldcraftShot(world:WorldcraftDocument,input:unknown):WorldcraftSetup;
+export function worldcraftCanAdd(world:WorldcraftDocument,kind:WorldcraftKind):boolean;
+export function worldcraftPinResult(world:WorldcraftDocument,terminal:unknown):WorldcraftPinResult|null;
+export function createHouseShotWorld():WorldcraftDocument;

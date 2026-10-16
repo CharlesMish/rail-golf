@@ -5,6 +5,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 ## [Unreleased]
 
 ### Added
+- Worldcraft lab fixed House Shot goal, optional v1 challenge rules, and measured before/after trails for surface revision. See `docs/WORLDCRAFT-REPORT-REVIEW.md`; shared physics and production routes are unchanged.
 - Charter (`docs/CHARTER.md`), MIT license (`LICENSE`), and this changelog.
 
 ### Changed

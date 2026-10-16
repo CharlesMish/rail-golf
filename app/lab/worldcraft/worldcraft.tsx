@@ -15,8 +15,10 @@ import { buildRangeLauncher, buildRangeProjectile } from '@/lib/mechanism-range-
 import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-framing';
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
+import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
 import {
-  createStarterWorld, createWorldHistory, createWorldcraftStore, validateWorld,
+  createStarterWorld, createHouseShotWorld, createWorldHistory, createWorldcraftStore, validateWorld,
+  worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd,
   worldcraftIdentity, parseWorldJSON, exportWorldJSON, captureWorldSnapshot,
   packWorldcraftLine, WORLDCRAFT_CATALOG,
   type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup,
@@ -26,6 +28,7 @@ import styles from './worldcraft.module.css';
 type Kind = 'bank' | 'ramp' | 'block';
 type Phase = 'loading' | 'ready' | 'charging' | 'flight' | 'result' | 'error';
 type Store = ReturnType<typeof createWorldcraftStore>;
+type RecordedTrail = { label: string; worldIdentity: string; setup: WorldcraftSetup; points: { x: number; y: number; z: number }[] };
 type UI = {
   mode: 'build' | 'play'; phase: Phase; view: 'address' | 'survey';
   world: WorldcraftWorld; selected: string | null; setup: WorldcraftSetup;
@@ -33,7 +36,7 @@ type UI = {
   notice: string; canUndo: boolean; canRedo: boolean; revision: number;
   memoryOpen: boolean; worlds: ReturnType<Store['worlds']>; lines: ReturnType<Store['lines']>;
   memoryWarning: string; showTrail: boolean; cameraTool: 'orbit' | 'pan';
-  history: { label: string; worldIdentity: string; points: { x: number; y: number; z: number }[] } | null;
+  history: RecordedTrail | null; comparison: RecordedTrail | null;
   lastKept: boolean;
 };
 type Actions = {
@@ -44,18 +47,18 @@ type Actions = {
   ready(): void; adjust(): void; survey(): void; trail(): void; keep(): void;
   memory(open: boolean): void; save(): void; load(id: string): void; forgetWorld(id: string): void;
   restoreLine(id: string): void; forgetLine(id: string): void; export(): void; exportMemory(): void; import(text: string): void;
-  rename(name: string): void; starter(empty?: boolean): void;
+  rename(name: string): void; starter(empty?: boolean): void; house(): void;
   camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool'): void;
 };
 
 function initialUI(): UI {
-  const world = createStarterWorld();
+  const world = createHouseShotWorld();
   return {
     mode: 'build', phase: 'loading', view: 'survey', world, selected: world.objects[0]?.id ?? null,
-    setup: { railIndex: 1, originX: world.launcher.x, yaw: -18, elevation: 15, charge: .70 },
+    setup: worldcraftFixedSetup(world)!,
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
-    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, lastKept: false,
+    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, lastKept: false,
   };
 }
 
@@ -122,6 +125,7 @@ export default function Worldcraft() {
         shadows.bias = .001; shadows.normalBias = .03;
         const presentation = createWorldcraftPresentation(scene);
         let projectile: ReturnType<typeof buildRangeProjectile> | null = null;
+        let comparisonTrail: LinesMesh | null = null;
         let trail: LinesMesh | null = null, spine: LinesMesh | null = null;
         let flightPoints: Vector3[] = [], trailTick = 0, previous: Vector3 | null = null;
         let heading = { x: 0, y: 0, z: 1 };
@@ -143,13 +147,20 @@ export default function Worldcraft() {
           trail = MeshBuilder.CreateLines('worldcraft-actual-line', { points: points.map(p => new Vector3(p.x, p.y, p.z)) }, activeScene);
           trail.color = new Color3(.2, .83, .84); trail.isPickable = false;
         };
+        const drawComparison = () => {
+          comparisonTrail?.dispose(); comparisonTrail = null;
+          const record = uiRef.current.comparison;
+          if (!record || record.points.length < 2 || !uiRef.current.showTrail) return;
+          comparisonTrail = MeshBuilder.CreateLineSystem('worldcraft-before-line', { lines: worldcraftTrailDashes(record.points).map(line=>line.map(p=>new Vector3(p.x,p.y,p.z))) }, activeScene);
+          comparisonTrail.color = new Color3(1,.66,.28); comparisonTrail.isPickable = false;
+        };
         const runtime = createWorldcraftRuntime(scene, {
           world: uiRef.current.world, materials: presentation.materials, shadows, build: BUILD_ID,
           onEvent(event) {
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
-              publish({ phase: 'result', last, lastKept: false, history: { label: 'Previous line', worldIdentity: last.worldIdentity, points: last.samples }, notice: last.reason === 'first-ground-contact' ? 'First ground contact. Revise the shot or the space.' : `Line ended: ${last.reason.replaceAll('-', ' ')}.` });
+              publish({ phase: 'result', last, lastKept: false, history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, notice: last.pinResult?.status === 'clear' ? `Pin cleared · first kiss ${last.pinResult.distance!.toFixed(1)} m from centre.` : last.pinResult?.status === 'miss' ? `First kiss ${last.pinResult.distance!.toFixed(1)} m from pin centre. Revise the piece and compare.` : last.reason === 'first-ground-contact' ? 'First ground contact. Revise the shot or the space.' : `Line ended: ${last.reason.replaceAll('-', ' ')}. No clear.` });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
             }
           },
@@ -175,16 +186,16 @@ export default function Worldcraft() {
         const clearRound = () => {
           projectile?.dispose(); projectile = null; runtime.clearShot(); previous = null; flightPoints = [];
         };
-        const commit = (world: WorldcraftWorld, label: string, historyAction: 'commit' | 'undo' | 'redo' = 'commit') => {
+        const commit = (world: WorldcraftWorld, label: string, historyAction: 'commit' | 'undo' | 'redo' = 'commit', load = false) => {
           if (uiRef.current.mode !== 'build' || busy()) return false;
           discardDrag();
           try {
             const candidate = validateWorld(world);
-            const result = runtime.replaceWorld(candidate);
+            const result = runtime.replaceWorld(candidate, { intent: load || historyAction !== 'commit' ? 'load' : 'edit' });
             if (!result.ok) throw new Error(result.error);
             if (historyAction === 'commit') history.commit(candidate);
             const selected = candidate.objects.some(o => o.id === uiRef.current.selected) ? uiRef.current.selected : candidate.objects[0]?.id ?? null;
-            publish({ world: candidate, selected, ...history.status(), notice: label });
+            publish({ world: candidate, selected, setup: worldcraftSetupForWorld(candidate,uiRef.current.setup,{load}), ...(worldcraftFixedSetup(candidate) ? { powerMode: 'set' as const } : {}), ...history.status(), notice: label });
             selectedHighlight();
             if (uiRef.current.history) drawTrail(uiRef.current.history.points);
             trace('edit', { action: label, worldIdentity: worldcraftIdentity(candidate), objects: candidate.objects });
@@ -197,12 +208,12 @@ export default function Worldcraft() {
           projectile?.dispose(); projectile = null;
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : 'No target or score. First ground contact ends the line.' });
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
           const state = uiRef.current;
-          if (state.mode !== 'play' || !['ready', 'result'].includes(state.phase)) return;
+          if (state.mode !== 'play' || !['ready', 'result'].includes(state.phase) || worldcraftFixedSetup(state.world)) return;
           if (state.phase === 'result') { clearRound(); publish({ phase: 'ready', view: 'address' }); }
           const next = { ...rangeSetup(state.setup, patch), originX: patch.originX === undefined ? state.setup.originX : Math.round(clamp(patch.originX, -10, 10) * 2) / 2, railIndex: 1 } as WorldcraftSetup;
           publish({ setup: next, notice: 'Ready in the current world.' });
@@ -216,16 +227,18 @@ export default function Worldcraft() {
           projectile.sync(runtime.flight!.aggregate.body.getLinearVelocity());
           previous = null; heading = { x: Math.sin(setup.yaw * Math.PI / 180), y: 0, z: Math.cos(setup.yaw * Math.PI / 180) };
           flightPoints = []; trailTick = 0; trail?.dispose(); trail = null;
-          publish({ phase: 'flight', setup, charge, notice: 'Committed line · edits are locked.' });
+          publish({ phase: 'flight', setup, charge, comparison: uiRef.current.history, notice: 'Committed line · edits are locked.' });
+          drawComparison();
           trace('fire', { setup, worldIdentity: worldcraftIdentity(uiRef.current.world), world: uiRef.current.world });
         };
         const cancel = () => { if (uiRef.current.phase === 'charging') publish({ phase: 'ready', charge: 0, notice: 'Charge cancelled.' }); keyboardCharge = false; };
         const restore = (world: WorldcraftWorld, setup: WorldcraftSetup, label: string) => {
           if (busy()) return;
           clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready' });
-          if (!commit(world, label)) return;
+          if (!commit(world, label, 'commit', true)) return;
           runtime.setMode('play');
-          publish({ mode: 'play', phase: 'ready', view: 'address', setup: { ...setup }, powerMode: 'set', charge: 0, notice: label });
+          publish({ mode: 'play', phase: 'ready', view: 'address', setup: { ...setup }, powerMode: 'set', charge: 0, comparison: null, notice: label });
+          drawComparison();
           selectedHighlight(); trace('restore', { setup, worldIdentity: worldcraftIdentity(world) });
         };
         const download = (name: string, text: string) => {
@@ -239,7 +252,7 @@ export default function Worldcraft() {
           add(kind) {
             if (uiRef.current.mode !== 'build' || busy()) return;
             const world = uiRef.current.world;
-            if (world.objects.length >= 12) { publish({ notice: 'This study holds up to 12 pieces. Remove one to add another.' }); return; }
+            if (!worldcraftCanAdd(world, kind)) { publish({ notice: 'This world has no allowance for another piece of that kind.' }); return; }
             const id = `${kind}-${crypto.randomUUID().slice(0, 8)}`;
             for (let z = 18; z <= 88; z += 12) for (const x of [0, -16, 16]) {
               const next = { ...world, objects: [...world.objects, { id, kind, x, z, yaw: 0 }] };
@@ -251,7 +264,7 @@ export default function Worldcraft() {
           },
           change(patch) {
             const state = uiRef.current, object = state.world.objects.find(o => o.id === state.selected);
-            if (!object) return;
+            if (!object || state.world.rules?.locked.includes(object.id)) return;
             const next = { ...object, ...patch };
             if (patch.yaw !== undefined) next.yaw = ((patch.yaw + 180) % 360 + 360) % 360 - 180;
             commit({ ...state.world, objects: state.world.objects.map(o => o.id === object.id ? next : o) }, `${object.kind} moved · same launch setup retained.`);
@@ -263,7 +276,7 @@ export default function Worldcraft() {
           undo() { if (busy() || uiRef.current.mode !== 'build' || !history.status().canUndo) return; commit(history.undo(), 'Undid the last world edit.', 'undo'); },
           redo() { if (busy() || uiRef.current.mode !== 'build' || !history.status().canRedo) return; commit(history.redo(), 'Redid the world edit.', 'redo'); },
           setup: updateSetup,
-          powerMode(mode) { if (busy()) return; publish({ powerMode: mode, charge: 0 }); },
+          powerMode(mode) { if (busy() || worldcraftFixedSetup(uiRef.current.world)) return; publish({ powerMode: mode, charge: 0 }); },
           begin() {
             if (uiRef.current.mode !== 'play' || uiRef.current.phase !== 'ready' || uiRef.current.memoryOpen) return;
             if (uiRef.current.powerMode === 'set') { shoot(uiRef.current.setup.charge); return; }
@@ -281,11 +294,11 @@ export default function Worldcraft() {
             const last = uiRef.current.last;
             if (last) {
               restore(last.world, last.setup as WorldcraftSetup, 'Last line restored: its starting world, origin, aim and power. Fire when ready.');
-              publish({ history: { label: 'Previous line', worldIdentity: last.worldIdentity, points: last.samples } }); drawTrail(last.samples);
+              publish({ history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples } }); drawTrail(last.samples);
             }
           },
           survey() { if (busy() || uiRef.current.mode !== 'play') return; const address = uiRef.current.view === 'survey'; publish({ view: address ? 'address' : 'survey' }); if (address && uiRef.current.phase === 'result') { clearRound(); publish({ phase: 'ready', notice: 'Ready · same setup, current world.' }); } },
-          trail() { publish({ showTrail: !uiRef.current.showTrail }); if (uiRef.current.history) drawTrail(uiRef.current.history.points); },
+          trail() { publish({ showTrail: !uiRef.current.showTrail }); drawTrail(uiRef.current.phase === 'flight' ? flightPoints : uiRef.current.history?.points ?? []); drawComparison(); },
           keep() {
             const last = uiRef.current.last;
             if (!last || last.reason === 'interrupted' || busy()) return;
@@ -305,14 +318,14 @@ export default function Worldcraft() {
           load(id) {
             const entry = store.worlds().find(w => w.id === id); if (!entry || busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-            if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.')) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false });
+            if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false });
             trace('load-world', { id });
           },
           forgetWorld(id) { store.removeWorld(id); publish(memoryState()); },
           restoreLine(id) {
             const entry = store.lines().find(l => l.id === id); if (!entry) return;
             restore(entry.worldSnapshot.world, entry.setup, entry.worldSnapshot.build === BUILD_ID ? 'Kept world and launch setup restored. Fire manually.' : 'Kept setup restored from another build. A new physical shot may differ.');
-            publish({ memoryOpen: false, history: { label: 'Kept line', worldIdentity: entry.worldSnapshot.worldIdentity, points: entry.points } }); drawTrail(entry.points);
+            publish({ memoryOpen: false, history: { label: 'Kept line', worldIdentity: entry.worldSnapshot.worldIdentity, setup: entry.setup, points: entry.points } }); drawTrail(entry.points);
           },
           forgetLine(id) { store.removeLine(id); publish({ ...memoryState(), lastKept: uiRef.current.last && kept.get(uiRef.current.last)?.id === id ? false : uiRef.current.lastKept }); },
           export() { download('rail-golf-world.json', exportWorldJSON({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } })); trace('export-world'); },
@@ -322,7 +335,7 @@ export default function Worldcraft() {
             try {
               const world = parseWorldJSON(text);
               clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-              if (commit(world, 'Imported world opened. Undo returns to your previous arrangement.')) publish({ setup: { ...uiRef.current.setup, originX: world.launcher.x }, memoryOpen: false });
+              if (commit(world, 'Imported world opened. Undo returns to your previous arrangement.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: world.launcher.x }, memoryOpen: false });
               trace('import-world', { worldIdentity: worldcraftIdentity(world) });
             } catch (e) { publish({ notice: `Import rejected: ${e instanceof Error ? e.message : String(e)}` }); trace('import-rejected'); }
           },
@@ -336,8 +349,16 @@ export default function Worldcraft() {
             if (busy()) return;
             const world = createStarterWorld(); if (empty) { world.objects = []; world.name = 'An open clearing'; }
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-            commit(world, empty ? 'Empty clearing. Add a piece to begin.' : 'Starter arrangement opened. Undo preserves your previous world.');
+            commit(world, empty ? 'Empty clearing. Add a piece to begin.' : 'Starter arrangement opened. Undo preserves your previous world.', 'commit', true);
             publish({ memoryOpen: false, setup: { ...uiRef.current.setup, originX: world.launcher.x } });
+          },
+          house() {
+            if (busy()) return;
+            clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            if (commit(createHouseShotWorld(), 'House Shot reset. Fire, turn the ramp, then compare.', 'commit', true)) {
+              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
+              drawTrail([]); drawComparison();
+            }
           },
           camera(action) {
             if (uiRef.current.mode !== 'build' && uiRef.current.view !== 'survey') return;
@@ -362,7 +383,7 @@ export default function Worldcraft() {
             const rect = surface.getBoundingClientRect();
             const pick = activeScene.pick(e.clientX - rect.left, e.clientY - rect.top, mesh => Boolean(mesh.metadata?.worldcraftId));
             object = state.world.objects.find(o => o.id === pick?.pickedMesh?.metadata?.worldcraftId);
-            if (object) { original = runtime.objectMeshes.get(object.id); actions.current!.select(object.id); }
+            if (object) { actions.current!.select(object.id); if (state.world.rules?.locked.includes(object.id)) return; original = runtime.objectMeshes.get(object.id); }
           }
           drag = { id: e.pointerId, x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, type: object ? 'object' : state.mode === 'build' || state.view === 'survey' ? 'view' : 'aim', ground: groundPoint(e) ?? undefined, object, original, moved: false };
           surface.setPointerCapture(e.pointerId);
@@ -424,7 +445,8 @@ export default function Worldcraft() {
         surface.addEventListener('wheel', wheel, { passive: false });
         window.addEventListener('keydown', keydown); window.addEventListener('keyup', keyup); window.addEventListener('blur', blur);
         const visibility = () => { if (document.hidden) blur(); }; document.addEventListener('visibilitychange', visibility);
-        const resize = new ResizeObserver(() => activeEngine.resize()); resize.observe(surface);
+        let resizeFrame = 0;
+        const resize = new ResizeObserver(() => { cancelAnimationFrame(resizeFrame); resizeFrame = requestAnimationFrame(() => activeEngine.resize()); }); resize.observe(surface);
         scene.onBeforePhysicsObservable.add(() => runtime.beforeStep());
         scene.onAfterPhysicsObservable.add(() => runtime.afterStep());
         const qaWindow = window as unknown as { __worldcraftQA?: { snapshot(): unknown; events(): unknown } };
@@ -436,6 +458,7 @@ export default function Worldcraft() {
                 worldIdentity: worldcraftIdentity(state.world), selectedObjectId: state.selected, setup: state.setup,
                 ...history.status(), editLock: busy(), diagnostics: runtime.diagnostics(), memory: store.status(),
                 lastShot: state.last ? { ...state.last, currentWorldChanged: worldcraftIdentity(state.world) !== state.last.worldIdentity, thisShotChangedWorld: false } : null,
+                comparison: state.comparison, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
                 previousTrail: state.showTrail && Boolean(state.history), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
                   const p = Vector3.Project(mesh.position, Matrix.Identity(), activeScene.getTransformMatrix(), camera.viewport.toGlobal(activeEngine.getRenderWidth(), activeEngine.getRenderHeight()));
@@ -446,14 +469,14 @@ export default function Worldcraft() {
           };
         }
         cleanup = () => {
-          actions.current = null; delete qaWindow.__worldcraftQA; discardDrag(); resize.disconnect();
+          actions.current = null; delete qaWindow.__worldcraftQA; discardDrag(); resize.disconnect(); cancelAnimationFrame(resizeFrame);
           window.removeEventListener('keydown', keydown); window.removeEventListener('keyup', keyup); window.removeEventListener('blur', blur);
           document.removeEventListener('visibilitychange', visibility);
           surface.removeEventListener('pointerdown', down); surface.removeEventListener('pointermove', move);
           surface.removeEventListener('pointerup', up); surface.removeEventListener('pointercancel', discardDrag); surface.removeEventListener('wheel', wheel);
-          projectile?.dispose(); trail?.dispose(); spine?.dispose(); runtime.dispose(); presentation.dispose();
+          projectile?.dispose(); trail?.dispose(); comparisonTrail?.dispose(); spine?.dispose(); runtime.dispose(); presentation.dispose();
         };
-        publish({ phase: 'ready', notice: 'A small space to change. Try Play, then move one piece and fire again.', ...memoryState() });
+        publish({ phase: 'ready', notice: 'House Shot: fire once, then turn the ramp. The rail and gold pin stay fixed.', ...memoryState() });
         selectedHighlight();
         activeEngine.runRenderLoop(() => {
           if (disposed) return;
@@ -498,6 +521,10 @@ export default function Worldcraft() {
 
   const locked = ['loading', 'error', 'charging', 'flight'].includes(ui.phase);
   const selected = ui.world.objects.find(o => o.id === ui.selected);
+  const fixedRail = Boolean(worldcraftFixedSetup(ui.world));
+  const fixedPiece = Boolean(selected && ui.world.rules?.locked.includes(selected.id));
+  const shownSetup = ui.phase === 'flight' ? ui.setup : ui.history?.setup;
+  const setupChanged = Boolean(ui.comparison && shownSetup && Object.keys(shownSetup).some(key => shownSetup[key as keyof WorldcraftSetup] !== ui.comparison!.setup[key as keyof WorldcraftSetup]));
   const earlierWorld = Boolean(ui.history && worldcraftIdentity(ui.world) !== ui.history.worldIdentity);
   const qualified = ui.last?.evidence.filter(e => e.kind === 'redirect') ?? [];
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
@@ -507,7 +534,7 @@ export default function Worldcraft() {
   };
   const numberControl = (label: string, value: number, change: (value: number) => void, step: number, min: number, max: number) => (
     <label className={styles.field}><span className={styles.fieldLabel}>{label}<strong>{value.toFixed(1)}{label === 'Origin' ? ' m' : '°'}</strong></span>
-      <input className={styles.range} aria-label={label} type="range" min={min} max={max} step={step} value={value} disabled={locked} onChange={e => change(Number(e.target.value))} />
+      <input className={styles.range} aria-label={label} type="range" min={min} max={max} step={step} value={value} disabled={locked || fixedRail} onChange={e => change(Number(e.target.value))} />
     </label>
   );
   return <main className={styles.shell} data-mode={ui.mode} data-phase={ui.phase}>
@@ -521,7 +548,7 @@ export default function Worldcraft() {
     </header>
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
-        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
+        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? 'Play yard. Fixed rail. Space fires the house shot.' : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
         <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
@@ -532,16 +559,22 @@ export default function Worldcraft() {
           <button type="button" aria-label="Orbit right" onClick={() => actions.current?.camera('right')}>↷</button>
           <button type="button" aria-pressed={ui.cameraTool === 'pan'} onClick={() => actions.current?.camera('tool')}>{ui.cameraTool === 'pan' ? 'Pan view' : 'Orbit view'}</button>
         </div>}
-        <p className={styles.hint}>{ui.phase === 'flight' ? 'Actual flight trail' : ui.history && ui.showTrail ? `${ui.history.label} · ${earlierWorld ? 'earlier world · recorded history' : 'actual recorded history'}` : ui.mode === 'build' ? 'Drag a piece · empty space moves the view' : 'One committed launch. No predicted arc.'}</p>
+        <p className={styles.hint}>{ui.comparison && ui.showTrail ? `Amber dashed: before${ui.comparison.worldIdentity !== worldcraftIdentity(ui.world) ? ' (earlier world)' : ''} · cyan: ${ui.phase === 'flight' ? 'live' : 'latest'}${earlierWorld && ui.phase !== 'flight' ? ' (earlier world)' : ''} · ${setupChanged ? 'launch setup changed' : 'same launch setup'}` : ui.phase === 'flight' ? 'Actual flight trail' : ui.history && ui.showTrail ? `${ui.history.label} · ${earlierWorld ? 'earlier world · recorded history' : 'actual recorded history'}` : ui.mode === 'build' ? 'Drag a piece · empty space moves the view' : 'One committed launch. No predicted arc.'}</p>
       </section>
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
+        {ui.world.rules && <section className={styles.goal} aria-label="Fixed goal">
+          <strong>First kiss inside the gold circle</strong>
+          <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? 'Rail fixed: change the piece, keep the shot.' : 'Free rail.'}</p>
+          {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
+          <button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button>
+        </section>}
         {ui.mode === 'build' ? <>
           <section className={styles.section}><h2 className={styles.sectionTitle}>Shape a possibility</h2>
-            <div className={styles.palette}>{(['bank', 'ramp', 'block'] as Kind[]).map(kind => <button type="button" key={kind} disabled={locked || ui.world.objects.length >= 12} onClick={() => actions.current?.add(kind)}>+ {kind[0].toUpperCase() + kind.slice(1)}</button>)}</div>
-            <div className={styles.parts} aria-label="Pieces">{ui.world.objects.map((object, index) => <button type="button" className={`${styles.partButton} ${object.id === ui.selected ? styles.selectedPart : ''}`} aria-pressed={object.id === ui.selected} key={object.id} onClick={() => actions.current?.select(object.id)}>{index + 1}. {object.kind}</button>)}</div>
+            <div className={styles.palette}>{(['bank', 'ramp', 'block'] as Kind[]).map(kind => <button type="button" key={kind} disabled={locked || !worldcraftCanAdd(ui.world, kind)} onClick={() => actions.current?.add(kind)}>+ {kind[0].toUpperCase() + kind.slice(1)}</button>)}</div>
+            <div className={styles.parts} aria-label="Pieces">{ui.world.objects.map((object, index) => <button type="button" className={`${styles.partButton} ${object.id === ui.selected ? styles.selectedPart : ''}`} aria-pressed={object.id === ui.selected} key={object.id} onClick={() => actions.current?.select(object.id)}>{index + 1}. {object.kind}{ui.world.rules?.locked.includes(object.id) ? ' · fixed' : ''}</button>)}</div>
           </section>
-          {selected && <section className={styles.inspector} aria-label="Selected piece">
-            <h2 className={styles.sectionTitle}>{selected.kind[0].toUpperCase() + selected.kind.slice(1)} <small>{selected.kind === 'block' ? 'Dull obstacle' : selected.kind === 'ramp' ? 'Inclined rebound' : 'Timber rebound'}</small></h2>
+          {selected && <fieldset disabled={locked || fixedPiece} className={styles.inspector} aria-label="Selected piece">
+            <h2 className={styles.sectionTitle}>{selected.kind[0].toUpperCase() + selected.kind.slice(1)}{fixedPiece ? ' · fixed' : ''} <small>{selected.kind === 'block' ? 'Dull obstacle' : selected.kind === 'ramp' ? 'Inclined rebound' : 'Timber rebound'}</small></h2>
             <div className={styles.controlRow}>
               <label className={styles.numberField}>Across · m<input key={`${selected.id}-x-${selected.x}`} aria-label="Piece X" type="number" step=".5" defaultValue={selected.x} onBlur={e => commitNumber('x', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label>
               <label className={styles.numberField}>Along · m<input key={`${selected.id}-z-${selected.z}`} aria-label="Piece Z" type="number" step=".5" defaultValue={selected.z} onBlur={e => commitNumber('z', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label>
@@ -552,18 +585,20 @@ export default function Worldcraft() {
               <button type="button" aria-label="Move piece back half metre" onClick={() => actions.current?.change({ z: selected.z - .5 })}>Z −.5</button>
               <button type="button" aria-label="Move piece forward half metre" onClick={() => actions.current?.change({ z: selected.z + .5 })}>Z +.5</button>
             </div>
-            <div className={styles.controlRow}><button type="button" aria-label="Rotate piece left 15 degrees" onClick={() => actions.current?.change({ yaw: selected.yaw - 15 })}>↶ 15°</button><label className={styles.numberField}>Turn<input key={`${selected.id}-yaw-${selected.yaw}`} aria-label="Piece rotation" type="number" step="5" defaultValue={selected.yaw} onBlur={e => commitNumber('yaw', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label><button type="button" aria-label="Rotate piece right 15 degrees" onClick={() => actions.current?.change({ yaw: selected.yaw + 15 })}>15° ↷</button></div>
+            <div className={styles.controlRow}><button type="button" aria-label="Rotate piece minus 5 degrees" onClick={() => actions.current?.change({ yaw: selected.yaw - 5 })}>−5°</button><label className={styles.numberField}>Turn<input key={`${selected.id}-yaw-${selected.yaw}`} aria-label="Piece rotation" type="number" step="5" defaultValue={selected.yaw} onBlur={e => commitNumber('yaw', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label><button type="button" aria-label="Rotate piece plus 5 degrees" onClick={() => actions.current?.change({ yaw: selected.yaw + 5 })}>+5°</button></div>
             <button type="button" className={styles.danger} onClick={() => actions.current?.remove()}>Remove piece</button>
-          </section>}
+          </fieldset>}
           <div className={styles.buttonRow}><button type="button" disabled={!ui.canUndo || locked} onClick={() => actions.current?.undo()}>Undo</button><button type="button" disabled={!ui.canRedo || locked} onClick={() => actions.current?.redo()}>Redo</button><button type="button" className={styles.primary} disabled={locked} onClick={() => actions.current?.mode('play')}>Try this space →</button></div>
         </> : <section className={styles.playControls}>
-          <div className={styles.buttonRow}><button type="button" disabled={locked} aria-pressed={ui.view === 'survey'} onClick={() => actions.current?.survey()}>{ui.view === 'survey' ? 'Address' : 'Survey'}</button><button type="button" aria-pressed={ui.showTrail} onClick={() => actions.current?.trail()}>Previous line</button></div>
+          <div className={styles.buttonRow}><button type="button" disabled={locked} aria-pressed={ui.view === 'survey'} onClick={() => actions.current?.survey()}>{ui.view === 'survey' ? 'Address' : 'Survey'}</button><button type="button" aria-pressed={ui.showTrail} onClick={() => actions.current?.trail()}>Show trails</button></div>
+          {!fixedRail && <>
           {numberControl('Origin', ui.setup.originX, originX => actions.current?.setup({ originX }), .5, -10, 10)}
           <div className={styles.buttonRow}><button type="button" aria-label="Origin left half metre" disabled={locked} onClick={() => actions.current?.setup({ originX: ui.setup.originX - .5 })}>← .5 m</button><button type="button" aria-label="Origin right half metre" disabled={locked} onClick={() => actions.current?.setup({ originX: ui.setup.originX + .5 })}>.5 m →</button></div>
           {numberControl('Yaw', ui.setup.yaw, yaw => actions.current?.setup({ yaw }), .5, -70, 70)}
           {numberControl('Elevation', ui.setup.elevation, elevation => actions.current?.setup({ elevation }), .5, 5, 85)}
           <div className={styles.controlRow}><label className={styles.field}>Power<select aria-label="Power control" disabled={locked} value={ui.powerMode} onChange={e => actions.current?.powerMode(e.target.value as UI['powerMode'])}><option value="set">Set power</option><option value="hold">Hold to charge</option></select></label><strong>{Math.round((ui.phase === 'charging' ? ui.charge : ui.setup.charge) * 100)}%</strong></div>
           {ui.powerMode === 'set' && <input aria-label="Power" className={styles.range} disabled={locked} type="range" min="0" max="1" step=".01" value={ui.setup.charge} onChange={e => actions.current?.setup({ charge: Number(e.target.value) })} />}
+          </>}
           {ui.phase === 'ready' || ui.phase === 'charging' ? <button key="launch-control" type="button" className={styles.chargeButton} aria-label={ui.powerMode === 'set' ? 'Fire line' : 'Hold to charge'}
             onClick={() => { if (ui.powerMode === 'set') actions.current?.begin(); }}
             onPointerDown={e => { if (ui.powerMode === 'hold') { e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); actions.current?.begin(); } }}
@@ -573,14 +608,14 @@ export default function Worldcraft() {
             onKeyDown={e => { if (ui.powerMode === 'hold' && ['Enter', ' '].includes(e.key) && !e.repeat) { e.preventDefault(); actions.current?.begin(); } }}
             onKeyUp={e => { if (ui.powerMode === 'hold' && ['Enter', ' '].includes(e.key)) { e.preventDefault(); actions.current?.release(); } }}>
             {ui.phase === 'charging' ? `Release · ${Math.round(ui.charge * 100)}%` : ui.powerMode === 'set' ? 'Fire line' : 'Hold to charge'}
-          </button> : <button key="recovery-control" type="button" className={styles.chargeButton} disabled={ui.phase === 'loading' || ui.phase === 'error'} onClick={() => actions.current?.ready()}>{ui.phase === 'flight' ? 'Stop shot' : 'Aim again · current world'}</button>}
-          {ui.last && <div className={styles.receipt}><p>{qualified.length ? qualified.map(e => e.label ?? e.feature).join(' → ') : 'No qualified rebound recorded.'}</p><div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div></div>}
+          </button> : <button key="recovery-control" type="button" className={styles.chargeButton} disabled={ui.phase === 'loading' || ui.phase === 'error'} onClick={() => actions.current?.ready()}>{ui.phase === 'flight' ? 'Stop shot' : fixedRail ? 'Ready again · same setup' : 'Aim again · current world'}</button>}
+          {ui.last && <div className={styles.receipt}><p>{ui.last.pinResult ? `${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}` : ''}</p><p>{qualified.length ? qualified.map(e => e.label ?? e.feature).join(' → ') : 'No qualified rebound recorded.'}</p><div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div></div>}
         </section>}
         <p className={styles.notice} role="status">{ui.notice}</p>
         {ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
       </aside>
     </div>
-    <footer className={styles.footer}><span>Worldcraft v0.1 · isolated study</span><span>BUILD {BUILD_ID.slice(0, 7)}</span></footer>
+    <footer className={styles.footer}><span>Worldcraft v0.2 · isolated study</span><span>BUILD {BUILD_ID.slice(0, 7)}</span></footer>
     {ui.memoryOpen && <div ref={dialog} className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="world-memory-title" onKeyDown={e => { if (e.key === 'Escape') actions.current?.memory(false); }}>
       <div className={styles.dialogBody}><div className={styles.dialogHeader}><h2 id="world-memory-title">Worlds &amp; kept lines</h2><button type="button" onClick={() => actions.current?.memory(false)}>Close</button></div>
         <p className={styles.muted}>Saved on this browser. A kept line includes the world it was fired in.</p>
@@ -589,7 +624,7 @@ export default function Worldcraft() {
         <input ref={upload} className={styles.visuallyHidden} type="file" accept=".json,application/json" aria-label="Import world file" onChange={async e => { const file = e.target.files?.[0]; if (file) { if (file.size > 65536) actions.current?.import('oversized-file'); else actions.current?.import(await file.text()); } e.target.value = ''; }} />
         <div className={styles.memoryGrid}><section><h3>Worlds · {ui.worlds.length}/4</h3>{ui.worlds.length === 0 && <p className={styles.empty}>Save an arrangement worth revisiting.</p>}{ui.worlds.map(entry => <div className={styles.slot} key={entry.id}><strong>{entry.world.name}</strong><span>{entry.world.objects.length} pieces</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.load(entry.id)}>Open world</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetWorld(entry.id)}>Remove saved world</button></div></div>)}</section>
           <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
-        <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
+        <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
         <button type="button" onClick={() => actions.current?.exportMemory()}>Export local memory</button><p className={styles.muted}>Memory export includes kept paths for safekeeping; world JSON is the playable import format.</p>
         <p className={styles.notice} role="status">{ui.notice}</p>{ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
       </div>

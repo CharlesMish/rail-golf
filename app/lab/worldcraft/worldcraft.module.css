@@ -164,3 +164,14 @@
   .hint { font-size: 10px; }
   .footer { min-height: 20px; padding-top: 3px; padding-bottom: max(3px, env(safe-area-inset-bottom)); font-size: 9px; }
 }
+
+.goal { margin-bottom: 12px; padding: 10px; border: 1px solid #80703c; background: #29291c; color: #f2dfa5; font-size: 12px; }
+.goal p { margin: 5px 0; }
+.inspector { border: 0; margin: 0; padding: 0; min-width: 0; }
+
+@media (max-width: 700px) {
+  .shell[data-mode="play"] .tools { display: flex; flex-direction: column; }
+  .shell[data-mode="play"] .playControls { flex: 0 0 auto; order: 0; }
+  .shell[data-mode="play"] .goal { order: 1; margin-top: 10px; }
+  .shell[data-mode="play"] .notice, .shell[data-mode="play"] .status { order: 2; }
+}
