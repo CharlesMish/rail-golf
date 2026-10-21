@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHouseShotWorld,createStarterWorld,validateWorld,validateWorldEdit,worldcraftFixedSetup,validateWorldcraftShot,worldcraftCanAdd,worldcraftPinResult,exportWorldJSON,parseWorldJSON,worldcraftIdentity,createWorldcraftStore} from '../lib/worldcraft-model.js';
+import {createHouseShotWorld,createOrcStaticWorld,createStarterWorld,validateWorld,validateWorldEdit,worldcraftFixedSetup,validateWorldcraftShot,worldcraftCanAdd,worldcraftPinResult,worldcraftTargetResult,worldcraftTargetBody,exportWorldJSON,parseWorldJSON,worldcraftIdentity,createWorldcraftStore,WORLDCRAFT_CATALOG,WORLDCRAFT_ORC} from '../lib/worldcraft-model.js';
 
 const house=()=>createHouseShotWorld();
 const withFixed=()=>validateWorld({...house(),objects:[...house().objects,{id:'fixed-bank',kind:'bank',x:-20,z:20,yaw:0}],rules:{...house().rules,locked:['fixed-bank']}});
@@ -61,6 +61,49 @@ test('only measured first-ground centre inside/on the pin clears; stops, out of 
  for(const reason of ['interrupted','out-of-bounds','settled','timeout'])assert.deepEqual(worldcraftPinResult(w,at(-10,72.5,reason)),{status:'unfinished',distance:null});
  for(const position of [[],[-10,NaN,72.5],[-10,72.5],null])assert.equal(worldcraftPinResult(w,{reason:'first-ground-contact',position}).status,'unfinished');
  assert.equal(worldcraftPinResult(createStarterWorld(),at(-10,72.5)),null);
+});
+
+test('Orc Stand-in is a second fixed-rail challenge and does not change House Shot',()=>{
+ const house=createHouseShotWorld(),orc=createOrcStaticWorld();
+ assert.equal(Object.hasOwn(house.rules,'target'),false);
+ assert.equal(worldcraftIdentity(house),worldcraftIdentity(parseWorldJSON(exportWorldJSON(house))));
+ assert.deepEqual(parseWorldJSON(exportWorldJSON(orc)),orc);
+ assert.equal(orc.rules.pin,null);
+ assert.deepEqual(orc.rules.target,{id:'stand-in-orc',x:-26,z:58.5,yaw:0});
+ assert.deepEqual(orc.rules.allowance,{bank:1,ramp:1});
+ assert.deepEqual(orc.rules.locked,['shield']);
+ assert.deepEqual(worldcraftFixedSetup(orc),{railIndex:1,originX:0,yaw:0,elevation:18,charge:.55});
+ assert.deepEqual(orc.objects.map(object=>object.id),['ramp-yours','bank-yours','shield']);
+ assert.equal(worldcraftCanAdd(orc,'ramp'),false);
+ assert.equal(worldcraftCanAdd(orc,'bank'),false);
+ assert.equal(worldcraftCanAdd(orc,'block'),false);
+ assert.equal(WORLDCRAFT_ORC.restitution,WORLDCRAFT_CATALOG.block.restitution);
+ assert.equal(WORLDCRAFT_ORC.friction,WORLDCRAFT_CATALOG.block.friction);
+ assert.equal(worldcraftTargetBody(orc.rules.target.id),'worldcraft-target-stand-in-orc');
+ for(const rules of [
+  {...orc.rules,pin:null,target:undefined},
+  {...house.rules,pin:null},
+  {...orc.rules,target:{...orc.rules.target,id:'shield'}},
+  {...orc.rules,target:{...orc.rules.target,x:-10,z:52}},
+  {...orc.rules,target:{id:'stand-in-orc',x:-26,z:58.5}},
+  {...orc.rules,target:{...orc.rules.target,yaw:1}},
+ ])assert.throws(()=>validateWorld({...orc,rules}));
+ assert.throws(()=>validateWorldEdit(orc,{...orc,rules:{...orc.rules,target:{...orc.rules.target,x:-13.5}}}));
+ assert.throws(()=>validateWorldEdit(orc,{...orc,objects:orc.objects.map(object=>object.id==='shield'?{...object,x:.5}:object)}));
+ assert.throws(()=>validateWorldEdit(orc,{...orc,objects:orc.objects.filter(object=>object.id!=='shield')}));
+ assert.doesNotThrow(()=>validateWorldEdit(orc,{...orc,objects:orc.objects.map(object=>object.id==='ramp-yours'?{...object,x:object.x-.5,yaw:5}:object)}));
+ assert.doesNotThrow(()=>validateWorldEdit(orc,{...orc,objects:orc.objects.map(object=>object.id==='bank-yours'?{...object,z:object.z-.5}:object)}));
+ const fixed=worldcraftFixedSetup(orc);
+ assert.throws(()=>validateWorldcraftShot(orc,{...fixed,yaw:5}));
+ assert.equal(worldcraftPinResult(orc,{reason:'first-ground-contact',position:[-14,.43,68]}),null);
+ const body=worldcraftTargetBody('stand-in-orc');
+ const contact={body,point:{x:-26,y:1.2,z:58.2},count:3,first:.8,last:.84};
+ assert.deepEqual(worldcraftTargetResult(orc,{reason:'first-ground-contact',contacts:[contact]}),{status:'hit',body,contact});
+ assert.deepEqual(worldcraftTargetResult(orc,{reason:'interrupted',contacts:[contact]}).status,'hit');
+ assert.equal(worldcraftTargetResult(orc,{reason:'first-ground-contact',contacts:[{body:'worldcraft-object-shield',point:{x:0,y:2,z:53},count:1,first:.4,last:.4}]}).status,'miss');
+ assert.equal(worldcraftTargetResult(orc,{reason:'interrupted',contacts:[]}).status,'unfinished');
+ assert.equal(worldcraftTargetResult(orc,{reason:'timeout'}).status,'unfinished');
+ assert.equal(worldcraftTargetResult(house,{reason:'first-ground-contact',contacts:[contact]}),null);
 });
 
 test('piece edit Undo/Redo preserve free origin; explicit loads and fixed worlds supply their own origin', async()=>{
