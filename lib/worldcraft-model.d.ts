@@ -1,6 +1,6 @@
 export type WorldcraftKind='bank'|'ramp'|'block';
-export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number};
-export type WorldcraftRules={pin:{x:number;z:number;r:number};locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null};
+export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;pitch?:number};
+export type WorldcraftRules={pin:{x:number;z:number;r:number};locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;rampPitch?:true};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
 export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:WorldcraftRules|null};
 export type WorldcraftSetup={railIndex:1;originX:number;yaw:number;elevation:number;charge:number};
@@ -23,8 +23,12 @@ export const WORLDCRAFT_LIMITS:Readonly<{objects:12;worldSlots:4;lineSlots:4;imp
 export const WORLDCRAFT_BOUNDS:Readonly<{minX:-30;maxX:30;minZ:10;maxZ:96}>;
 export const WORLDCRAFT_LAUNCHER_CORRIDOR:Readonly<{minX:-12;maxX:12;minZ:-8;maxZ:10}>;
 export const WORLDCRAFT_GRID:Readonly<{coarse:1;fine:.5;rotation:15;fineRotation:5;launcher:.5}>;
+export const WORLDCRAFT_RAMP_PITCH:Readonly<{min:number;max:number;step:number}>;
 export const WORLDCRAFT_CATALOG:Readonly<Record<WorldcraftKind,Readonly<{label:string;width:number;height:number;depth:number;centerY:number;pitch:number;friction:number;restitution:number}>>>;
 export function newWorldcraftId(prefix?:string):string;
+export function worldcraftObjectPitch(object:WorldcraftObject):number;
+export function worldcraftPitchedCenterY(prefab:{height:number;depth:number},pitchDegrees:number):number;
+export function worldcraftObjectCenterY(object:WorldcraftObject):number;
 export function worldcraftFootprint(object:WorldcraftObject):{x:number;z:number;halfX:number;halfZ:number;ux:{x:number;z:number};uz:{x:number;z:number};corners:{x:number;z:number}[]};
 /** Returns a canonical independent copy; rejects rather than repairing input. */
 export function validateWorld(value:unknown):WorldcraftDocument;
@@ -68,3 +72,4 @@ export function validateWorldcraftShot(world:WorldcraftDocument,input:unknown):W
 export function worldcraftCanAdd(world:WorldcraftDocument,kind:WorldcraftKind):boolean;
 export function worldcraftPinResult(world:WorldcraftDocument,terminal:unknown):WorldcraftPinResult|null;
 export function createHouseShotWorld():WorldcraftDocument;
+export function createTwoPiecePitchWorld():WorldcraftDocument;

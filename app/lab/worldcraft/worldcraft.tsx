@@ -17,10 +17,10 @@ import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
 import {
-  createStarterWorld, createHouseShotWorld, createWorldHistory, createWorldcraftStore, validateWorld,
+  createStarterWorld, createHouseShotWorld, createTwoPiecePitchWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd,
   worldcraftIdentity, parseWorldJSON, exportWorldJSON, captureWorldSnapshot,
-  packWorldcraftLine, WORLDCRAFT_CATALOG,
+  packWorldcraftLine, WORLDCRAFT_CATALOG, WORLDCRAFT_RAMP_PITCH,
   type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup,
 } from '@/lib/worldcraft-model';
 import styles from './worldcraft.module.css';
@@ -41,13 +41,13 @@ type UI = {
 };
 type Actions = {
   mode(mode: UI['mode']): void; select(id: string): void; add(kind: Kind): void;
-  change(patch: Partial<{ x: number; z: number; yaw: number }>): void;
+  change(patch: Partial<{ x: number; z: number; yaw: number; pitch: number }>): void;
   remove(): void; undo(): void; redo(): void; setup(patch: Partial<WorldcraftSetup>): void;
   powerMode(mode: UI['powerMode']): void; begin(): void; release(): void; cancel(): void;
   ready(): void; adjust(): void; survey(): void; trail(): void; keep(): void;
   memory(open: boolean): void; save(): void; load(id: string): void; forgetWorld(id: string): void;
   restoreLine(id: string): void; forgetLine(id: string): void; export(): void; exportMemory(): void; import(text: string): void;
-  rename(name: string): void; starter(empty?: boolean): void; house(): void;
+  rename(name: string): void; starter(empty?: boolean): void; house(): void; pitchChallenge(): void;
   camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool'): void;
 };
 
@@ -160,7 +160,7 @@ export default function Worldcraft() {
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
-              publish({ phase: 'result', last, lastKept: false, history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, notice: last.pinResult?.status === 'clear' ? `Pin cleared · first kiss ${last.pinResult.distance!.toFixed(1)} m from centre.` : last.pinResult?.status === 'miss' ? `First kiss ${last.pinResult.distance!.toFixed(1)} m from pin centre. Revise the piece and compare.` : last.reason === 'first-ground-contact' ? 'First ground contact. Revise the shot or the space.' : `Line ended: ${last.reason.replaceAll('-', ' ')}. No clear.` });
+              publish({ phase: 'result', last, lastKept: false, history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, notice: last.pinResult?.status === 'clear' ? `Pin cleared · first kiss ${last.pinResult.distance!.toFixed(1)} m from centre.` : last.pinResult?.status === 'miss' ? `First kiss ${last.pinResult.distance!.toFixed(1)} m from pin centre. ${uiRef.current.world.rules?.rampPitch ? 'Revise the ramp, its pitch, or the bank and compare.' : 'Revise the piece and compare.'}` : last.reason === 'first-ground-contact' ? 'First ground contact. Revise the shot or the space.' : `Line ended: ${last.reason.replaceAll('-', ' ')}. No clear.` });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
             }
           },
@@ -208,7 +208,7 @@ export default function Worldcraft() {
           projectile?.dispose(); projectile = null;
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? (uiRef.current.world.rules?.rampPitch ? 'Revise the ramp, its pitch, or the bank, then try the same shot.' : 'Move a piece, then try the same shot.') : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
@@ -255,7 +255,8 @@ export default function Worldcraft() {
             if (!worldcraftCanAdd(world, kind)) { publish({ notice: 'This world has no allowance for another piece of that kind.' }); return; }
             const id = `${kind}-${crypto.randomUUID().slice(0, 8)}`;
             for (let z = 18; z <= 88; z += 12) for (const x of [0, -16, 16]) {
-              const next = { ...world, objects: [...world.objects, { id, kind, x, z, yaw: 0 }] };
+              const piece = { id, kind, x, z, yaw: 0, ...(kind === 'ramp' && world.rules?.rampPitch ? { pitch: -20 } : {}) };
+              const next = { ...world, objects: [...world.objects, piece] };
               try { validateWorld(next); } catch { continue; }
               if (commit(next, `${kind[0].toUpperCase() + kind.slice(1)} added. Drag it or use the fine controls.`)) { publish({ selected: id }); selectedHighlight(); }
               return;
@@ -356,6 +357,14 @@ export default function Worldcraft() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createHouseShotWorld(), 'House Shot reset. Fire, turn the ramp, then compare.', 'commit', true)) {
+              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
+              drawTrail([]); drawComparison();
+            }
+          },
+          pitchChallenge() {
+            if (busy()) return;
+            clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            if (commit(createTwoPiecePitchWorld(), 'Two-piece pitch. The open shot misses the gold circle. Revise the ramp, its incline, and the bank.', 'commit', true)) {
               publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
               drawTrail([]); drawComparison();
             }
@@ -527,7 +536,8 @@ export default function Worldcraft() {
   const setupChanged = Boolean(ui.comparison && shownSetup && Object.keys(shownSetup).some(key => shownSetup[key as keyof WorldcraftSetup] !== ui.comparison!.setup[key as keyof WorldcraftSetup]));
   const earlierWorld = Boolean(ui.history && worldcraftIdentity(ui.world) !== ui.history.worldIdentity);
   const qualified = ui.last?.evidence.filter(e => e.kind === 'redirect') ?? [];
-  const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
+  const rampPitch = selected?.kind === 'ramp' && selected.pitch !== undefined && ui.world.rules?.rampPitch ? selected.pitch : null;
+  const commitNumber = (key: 'x' | 'z' | 'yaw' | 'pitch', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);
     input.value = String(actual?.[key] ?? selected?.[key] ?? 0);
@@ -548,7 +558,7 @@ export default function Worldcraft() {
     </header>
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
-        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? 'Play yard. Fixed rail. Space fires the house shot.' : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
+        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (ui.world.rules?.rampPitch ? 'Play yard. Fixed rail. Space fires the two-piece shot.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
         <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
@@ -564,17 +574,20 @@ export default function Worldcraft() {
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
         {ui.world.rules && <section className={styles.goal} aria-label="Fixed goal">
           <strong>First kiss inside the gold circle</strong>
-          <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? 'Rail fixed: change the piece, keep the shot.' : 'Free rail.'}</p>
+          <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? (ui.world.rules.rampPitch ? 'Rail fixed. Revise both pieces; ramp pitch steps by 5°.' : 'Rail fixed: change the piece, keep the shot.') : 'Free rail.'}</p>
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
-          <button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button>
+          <div className={styles.buttonRow}>
+            <button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button>
+            <button type="button" disabled={locked} onClick={() => actions.current?.pitchChallenge()}>{ui.world.id === 'two-piece-pitch-v1' ? 'Reset Two-piece pitch' : 'Open Two-piece pitch'}</button>
+          </div>
         </section>}
         {ui.mode === 'build' ? <>
           <section className={styles.section}><h2 className={styles.sectionTitle}>Shape a possibility</h2>
             <div className={styles.palette}>{(['bank', 'ramp', 'block'] as Kind[]).map(kind => <button type="button" key={kind} disabled={locked || !worldcraftCanAdd(ui.world, kind)} onClick={() => actions.current?.add(kind)}>+ {kind[0].toUpperCase() + kind.slice(1)}</button>)}</div>
-            <div className={styles.parts} aria-label="Pieces">{ui.world.objects.map((object, index) => <button type="button" className={`${styles.partButton} ${object.id === ui.selected ? styles.selectedPart : ''}`} aria-pressed={object.id === ui.selected} key={object.id} onClick={() => actions.current?.select(object.id)}>{index + 1}. {object.kind}{ui.world.rules?.locked.includes(object.id) ? ' · fixed' : ''}</button>)}</div>
+            <div className={styles.parts} aria-label="Pieces">{ui.world.objects.map((object, index) => <button type="button" className={`${styles.partButton} ${object.id === ui.selected ? styles.selectedPart : ''}`} aria-pressed={object.id === ui.selected} key={object.id} onClick={() => actions.current?.select(object.id)}>{index + 1}. {object.kind}{object.pitch !== undefined ? ` · ${object.pitch}°` : ''}{ui.world.rules?.locked.includes(object.id) ? ' · fixed' : ''}</button>)}</div>
           </section>
           {selected && <fieldset disabled={locked || fixedPiece} className={styles.inspector} aria-label="Selected piece">
-            <h2 className={styles.sectionTitle}>{selected.kind[0].toUpperCase() + selected.kind.slice(1)}{fixedPiece ? ' · fixed' : ''} <small>{selected.kind === 'block' ? 'Dull obstacle' : selected.kind === 'ramp' ? 'Inclined rebound' : 'Timber rebound'}</small></h2>
+            <h2 className={styles.sectionTitle}>{selected.kind[0].toUpperCase() + selected.kind.slice(1)}{fixedPiece ? ' · fixed' : ''} <small>{selected.kind === 'block' ? 'Dull obstacle' : selected.kind === 'ramp' ? (rampPitch !== null ? 'Incline in 5° steps' : 'Inclined rebound') : 'Timber rebound'}</small></h2>
             <div className={styles.controlRow}>
               <label className={styles.numberField}>Across · m<input key={`${selected.id}-x-${selected.x}`} aria-label="Piece X" type="number" step=".5" defaultValue={selected.x} onBlur={e => commitNumber('x', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label>
               <label className={styles.numberField}>Along · m<input key={`${selected.id}-z-${selected.z}`} aria-label="Piece Z" type="number" step=".5" defaultValue={selected.z} onBlur={e => commitNumber('z', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label>
@@ -586,6 +599,7 @@ export default function Worldcraft() {
               <button type="button" aria-label="Move piece forward half metre" onClick={() => actions.current?.change({ z: selected.z + .5 })}>Z +.5</button>
             </div>
             <div className={styles.controlRow}><button type="button" aria-label="Rotate piece minus 5 degrees" onClick={() => actions.current?.change({ yaw: selected.yaw - 5 })}>−5°</button><label className={styles.numberField}>Turn<input key={`${selected.id}-yaw-${selected.yaw}`} aria-label="Piece rotation" type="number" step="5" defaultValue={selected.yaw} onBlur={e => commitNumber('yaw', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label><button type="button" aria-label="Rotate piece plus 5 degrees" onClick={() => actions.current?.change({ yaw: selected.yaw + 5 })}>+5°</button></div>
+            {rampPitch !== null && <div className={styles.controlRow}><button type="button" aria-label="Decrease ramp pitch 5 degrees" disabled={rampPitch <= WORLDCRAFT_RAMP_PITCH.min} onClick={() => actions.current?.change({ pitch: rampPitch - 5 })}>−5°</button><label className={styles.numberField}>Pitch<input key={`${selected.id}-pitch-${rampPitch}`} aria-label="Ramp pitch" type="number" step="5" min={WORLDCRAFT_RAMP_PITCH.min} max={WORLDCRAFT_RAMP_PITCH.max} defaultValue={rampPitch} onBlur={e => commitNumber('pitch', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label><button type="button" aria-label="Increase ramp pitch 5 degrees" disabled={rampPitch >= WORLDCRAFT_RAMP_PITCH.max} onClick={() => actions.current?.change({ pitch: rampPitch + 5 })}>+5°</button></div>}
             <button type="button" className={styles.danger} onClick={() => actions.current?.remove()}>Remove piece</button>
           </fieldset>}
           <div className={styles.buttonRow}><button type="button" disabled={!ui.canUndo || locked} onClick={() => actions.current?.undo()}>Undo</button><button type="button" disabled={!ui.canRedo || locked} onClick={() => actions.current?.redo()}>Redo</button><button type="button" className={styles.primary} disabled={locked} onClick={() => actions.current?.mode('play')}>Try this space →</button></div>
@@ -624,7 +638,7 @@ export default function Worldcraft() {
         <input ref={upload} className={styles.visuallyHidden} type="file" accept=".json,application/json" aria-label="Import world file" onChange={async e => { const file = e.target.files?.[0]; if (file) { if (file.size > 65536) actions.current?.import('oversized-file'); else actions.current?.import(await file.text()); } e.target.value = ''; }} />
         <div className={styles.memoryGrid}><section><h3>Worlds · {ui.worlds.length}/4</h3>{ui.worlds.length === 0 && <p className={styles.empty}>Save an arrangement worth revisiting.</p>}{ui.worlds.map(entry => <div className={styles.slot} key={entry.id}><strong>{entry.world.name}</strong><span>{entry.world.objects.length} pieces</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.load(entry.id)}>Open world</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetWorld(entry.id)}>Remove saved world</button></div></div>)}</section>
           <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
-        <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
+        <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.pitchChallenge()}>Two-piece pitch</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
         <button type="button" onClick={() => actions.current?.exportMemory()}>Export local memory</button><p className={styles.muted}>Memory export includes kept paths for safekeeping; world JSON is the playable import format.</p>
         <p className={styles.notice} role="status">{ui.notice}</p>{ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
       </div>

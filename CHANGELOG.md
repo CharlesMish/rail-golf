@@ -5,6 +5,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 ## [Unreleased]
 
 ### Added
+- Worldcraft lab Two-piece pitch challenge: a fixed rail, a gold circle off the open shot, and a ramp incline in 5° steps beside the existing House Shot. See `docs/experiments/wc-exp-20261020-two-piece-pitch.md`.
 - Worldcraft lab fixed House Shot goal, optional v1 challenge rules, and measured before/after trails for surface revision. See `docs/WORLDCRAFT-REPORT-REVIEW.md`; shared physics and production routes are unchanged.
 - Charter (`docs/CHARTER.md`), MIT license (`LICENSE`), and this changelog.
 

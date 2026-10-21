@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHouseShotWorld,createStarterWorld,validateWorld,validateWorldEdit,worldcraftFixedSetup,validateWorldcraftShot,worldcraftCanAdd,worldcraftPinResult,exportWorldJSON,parseWorldJSON,worldcraftIdentity,createWorldcraftStore} from '../lib/worldcraft-model.js';
+import {createHouseShotWorld,createTwoPiecePitchWorld,createStarterWorld,validateWorld,validateWorldEdit,worldcraftFixedSetup,validateWorldcraftShot,worldcraftCanAdd,worldcraftPinResult,exportWorldJSON,parseWorldJSON,worldcraftIdentity,createWorldcraftStore,WORLDCRAFT_CATALOG,WORLDCRAFT_RAMP_PITCH,worldcraftPitchedCenterY,worldcraftFootprint,worldcraftObjectCenterY} from '../lib/worldcraft-model.js';
 
 const house=()=>createHouseShotWorld();
 const withFixed=()=>validateWorld({...house(),objects:[...house().objects,{id:'fixed-bank',kind:'bank',x:-20,z:20,yaw:0}],rules:{...house().rules,locked:['fixed-bank']}});
@@ -61,6 +61,39 @@ test('only measured first-ground centre inside/on the pin clears; stops, out of 
  for(const reason of ['interrupted','out-of-bounds','settled','timeout'])assert.deepEqual(worldcraftPinResult(w,at(-10,72.5,reason)),{status:'unfinished',distance:null});
  for(const position of [[],[-10,NaN,72.5],[-10,72.5],null])assert.equal(worldcraftPinResult(w,{reason:'first-ground-contact',position}).status,'unfinished');
  assert.equal(worldcraftPinResult(createStarterWorld(),at(-10,72.5)),null);
+});
+
+test('two-piece pitch keeps House Shot unchanged and roundtrips an editable ramp incline',()=>{
+ const house=createHouseShotWorld(),pitch=createTwoPiecePitchWorld();
+ assert.equal(Object.hasOwn(house.objects[0],'pitch'),false);
+ assert.equal(Object.hasOwn(house.rules,'rampPitch'),false);
+ assert.equal(house.rules.rail.yaw,0);assert.equal(house.rules.rail.elevation,18);assert.equal(house.rules.rail.charge,.55);
+ assert.deepEqual(parseWorldJSON(exportWorldJSON(pitch)),pitch);
+ assert.equal(worldcraftIdentity(pitch),worldcraftIdentity(parseWorldJSON(exportWorldJSON(pitch))));
+ assert.notEqual(worldcraftIdentity(pitch),worldcraftIdentity({...pitch,objects:pitch.objects.map(o=>o.kind==='ramp'?{...o,pitch:o.pitch-5}:o)}));
+ assert.equal(pitch.rules.rampPitch,true);
+ assert.deepEqual(pitch.rules.rail,house.rules.rail);
+ assert.deepEqual(pitch.rules.allowance,{bank:1,ramp:1});
+ assert.equal(pitch.objects.find(o=>o.kind==='ramp').pitch,0);
+ assert.deepEqual(pitch.rules.pin,{x:0,z:76,r:1.5});
+ assert.ok(Math.abs(worldcraftPitchedCenterY(WORLDCRAFT_CATALOG.ramp,-20)-WORLDCRAFT_CATALOG.ramp.centerY)<1e-12);
+ assert.ok(Math.abs(worldcraftObjectCenterY(pitch.objects[0])-worldcraftPitchedCenterY(WORLDCRAFT_CATALOG.ramp,0))<1e-12);
+ const flat=worldcraftFootprint({id:'r',kind:'ramp',x:0,z:40,yaw:0,pitch:0});
+ const steep=worldcraftFootprint({id:'r',kind:'ramp',x:0,z:40,yaw:0,pitch:-40});
+ assert.ok(steep.halfZ<flat.halfZ);
+ assert.doesNotThrow(()=>validateWorldEdit(pitch,{...pitch,objects:pitch.objects.map(o=>o.kind==='ramp'?{...o,pitch:-15}:o)}));
+ assert.throws(()=>validateWorldEdit(pitch,{...pitch,rules:{...pitch.rules,rampPitch:undefined}}));
+ assert.throws(()=>validateWorldEdit(house,{...house,objects:[{...house.objects[0],pitch:-20}]}),/Incline is fixed/);
+ assert.equal(worldcraftCanAdd(pitch,'ramp'),false);assert.equal(worldcraftCanAdd(pitch,'bank'),false);assert.equal(worldcraftCanAdd(pitch,'block'),false);
+ for(const rules of [
+  {...pitch.rules,rampPitch:false},{...pitch.rules,rampPitch:1},{...pitch.rules,rampPitch:'true'},
+ ])assert.throws(()=>validateWorld({...pitch,rules}));
+ assert.throws(()=>validateWorld({...pitch,objects:pitch.objects.map(o=>o.kind==='ramp'?{...o,pitch:-50}:o)}));
+ assert.throws(()=>validateWorld({...pitch,objects:pitch.objects.map(o=>o.kind==='ramp'?{...o,pitch:-7}:o)}));
+ assert.throws(()=>validateWorld({...pitch,objects:pitch.objects.map(o=>o.kind==='ramp'?{id:o.id,kind:o.kind,x:o.x,z:o.z,yaw:o.yaw}:o)}),/needs an incline/);
+ assert.throws(()=>validateWorld({...pitch,objects:[...pitch.objects,{id:'bank-extra',kind:'bank',x:18,z:30,yaw:0,pitch:0}]}),/only a ramp/);
+ assert.throws(()=>validateWorld({...createStarterWorld(),objects:[{...createStarterWorld().objects[1],pitch:-20}]}),/Incline is fixed/);
+ assert.equal(WORLDCRAFT_RAMP_PITCH.step,5);
 });
 
 test('piece edit Undo/Redo preserve free origin; explicit loads and fixed worlds supply their own origin', async()=>{

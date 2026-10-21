@@ -229,6 +229,75 @@ test('twelve maximum-size layout replacements release old bodies/casters and kee
   } finally { h.dispose(); }
 });
 
+test('ramp pitch is copied onto the Havok body and changes the real landing', async () => {
+  const {createTwoPiecePitchWorld,worldcraftFixedSetup,worldcraftObjectCenterY,WORLDCRAFT_CATALOG}=await import('../lib/worldcraft-model.js');
+  const {Quaternion}=await import('@babylonjs/core');
+  const world=createTwoPiecePitchWorld(),setup=worldcraftFixedSetup(world),h=harness(world);
+  const readBody=mesh=>{
+    const plugin=h.scene.getPhysicsEngine().getPhysicsPlugin();
+    const transform=plugin._hknp.HP_Body_GetQTransform(mesh.physicsBody._pluginData.hpBodyId)[1];
+    const offset=mesh.physicsBody._pluginData.worldRegion.floatingOrigin;
+    return {position:transform[0].map((value,i)=>value+[offset.x,offset.y,offset.z][i]),orientation:transform[1]};
+  };
+  try {
+    for (const pitch of [-40,-10,0]) {
+      const next={...world,objects:world.objects.map(object=>object.kind==='ramp'?{...object,pitch,yaw:15}:object)};
+      h.replace(next);
+      const record=next.objects.find(object=>object.kind==='ramp');
+      const mesh=h.runtime.objectMeshes.get(record.id);
+      const prefab=WORLDCRAFT_CATALOG.ramp;
+      assert.ok(Math.abs(mesh.position.y-worldcraftObjectCenterY(record))<1e-6);
+      assert.ok(Math.abs(mesh.getBoundingInfo().boundingBox.minimumWorld.y)<1e-4,'inclined ramp sits on the ground');
+      const expected=Quaternion.RotationYawPitchRoll(record.yaw*Math.PI/180,pitch*Math.PI/180,0);
+      const body=readBody(mesh);
+      const dot=body.orientation[0]*expected.x+body.orientation[1]*expected.y+body.orientation[2]*expected.z+body.orientation[3]*expected.w;
+      assert.ok(Math.abs(Math.abs(dot)-1)<1e-5,`Havok orientation follows pitch ${pitch}`);
+      assert.ok(Math.abs(body.position[0]-record.x)<1e-4&&Math.abs(body.position[1]-mesh.position.y)<1e-4&&Math.abs(body.position[2]-record.z)<1e-4);
+      const extents=mesh.physicsBody.getBoundingBox();
+      assert.ok(extents.maximumWorld.y-extents.minimumWorld.y>prefab.height+(pitch===0?-.01:.4),'collider extent includes the incline');
+    }
+    const shallow=h.shoot(setup);
+    h.replace({...world,objects:world.objects.map(object=>object.kind==='ramp'?{...object,pitch:-40,yaw:15}:object)});
+    const steep=h.shoot(setup);
+    assert.deepEqual(steep.setup,shallow.setup);
+    assert.ok(distance(steep.position,shallow.position)>1,'pitch changes the measured landing with the rail held fixed');
+    assert.notEqual(steep.worldIdentity,shallow.worldIdentity);
+  } finally { h.dispose(); }
+});
+
+test('Two-piece pitch default misses far away and two mirrored layouts clear on the same fixed rail', async () => {
+  const {createTwoPiecePitchWorld,worldcraftFixedSetup}=await import('../lib/worldcraft-model.js');
+  const world=createTwoPiecePitchWorld(),setup=worldcraftFixedSetup(world),h=harness(world);
+  const place=(ramp,bank)=>({...world,objects:[
+    {id:'ramp-yours',kind:'ramp',...ramp},
+    {id:'bank-yours',kind:'bank',...bank},
+  ]});
+  try {
+    const opened=h.shoot(setup);
+    assert.equal(opened.pinResult.status,'miss');
+    assert.ok(opened.pinResult.distance>25,'default layout misses by a lot');
+    assert.deepEqual(opened.contacts.map(contact=>contact.body).filter(body=>body.startsWith('worldcraft-object')),[],'default pieces are not on the open shot');
+    h.replace({...world,objects:[]});
+    const direct=h.shoot(setup);
+    assert.equal(direct.pinResult.status,'miss');
+    assert.ok(Math.abs(direct.pinResult.distance-opened.pinResult.distance)<.001);
+    h.replace(place({x:-4,z:40,yaw:45,pitch:-10},{x:-8,z:76,yaw:-40}));
+    const left=h.shoot(setup);
+    h.replace(place({x:4,z:40,yaw:-45,pitch:-10},{x:8,z:76,yaw:40}));
+    const right=h.shoot(setup);
+    for (const shot of [left,right]) {
+      assert.equal(shot.pinResult.status,'clear');
+      assert.ok(shot.pinResult.distance<1.5);
+      assert.deepEqual(shot.setup,opened.setup);
+      assert.ok(shot.contacts.some(contact=>contact.body==='worldcraft-object-ramp-yours'));
+      assert.ok(shot.contacts.some(contact=>contact.body==='worldcraft-object-bank-yours'));
+    }
+    assert.ok(left.position[0]<0&&right.position[0]>0,'the two clears arrive from opposite sides');
+    h.replace(place({x:-4,z:40,yaw:45,pitch:-15},{x:-8,z:76,yaw:-40}));
+    assert.equal(h.shoot(setup).pinResult.status,'miss','one pitch step leaves the circle');
+  } finally { h.dispose(); }
+});
+
 test('House Shot miss–turn–clear uses the same real launch; rules survive retry, load and rejected fixed edits', async () => {
   const {createHouseShotWorld,worldcraftFixedSetup}=await import('../lib/worldcraft-model.js');
   const world=createHouseShotWorld(),setup=worldcraftFixedSetup(world),h=harness(world);
