@@ -266,3 +266,39 @@ test('House Shot miss–turn–clear uses the same real launch; rules survive re
     assert.equal(h.shoot(BANK).pinResult,null,'an explicit sandbox load removes challenge result authority');
   } finally {h.dispose();}
 });
+
+test('Orc Loop resets a kinematic stand-in, misses by default, and repeats a ramp steer and a bank redirect', async () => {
+  const {createOrcLoopWorld,worldcraftFixedSetup,worldcraftTargetPose,validateWorld}=await import('../lib/worldcraft-model.js');
+  const world=createOrcLoopWorld(),setup=worldcraftFixedSetup(world);
+  const layout=(ramp,bank,delay)=>validateWorld({...world,objects:world.objects.map(object=>object.id==='ramp-yours'?{...object,...ramp}:object.id==='bank-yours'?{...object,...bank}:object),timing:{delay}});
+  const rampHit=layout({yaw:-10},{x:16,z:56,yaw:0},3);
+  const bankHit=layout({yaw:0},{x:-6,z:66,yaw:-25},0);
+  const signature=record=>({status:record.pinResult.status,reason:record.reason,position:record.position.map(value=>Math.round(value*1e6)/1e6),contacts:record.contacts.map(contact=>({body:contact.body,count:contact.count,first:Math.round(contact.first*1e6)/1e6,last:Math.round(contact.last*1e6)/1e6,point:{x:Math.round(contact.point.x*1e6)/1e6,y:Math.round(contact.point.y*1e6)/1e6,z:Math.round(contact.point.z*1e6)/1e6}}))});
+  const a=harness(world),b=harness(world);
+  try {
+    a.runtime.setMode('play'); assert.equal(a.runtime.launch(setup),true);
+    const pose=worldcraftTargetPose(world.rules.target,0);
+    assert.ok(Math.hypot(a.runtime.targetMesh.position.x-pose.x,a.runtime.targetMesh.position.y-pose.y,a.runtime.targetMesh.position.z-pose.z)<1e-4,'phase snaps back at fire');
+    assert.equal(a.runtime.targetMesh.physicsBody.getMotionType(),PhysicsMotionType.ANIMATED);
+    for (let i=0;i<1200&&!a.runtime.flight.ended;i++) a.step();
+    const first=a.runtime.last;
+    assert.equal(first.pinResult.status,'miss');
+    assert.equal(first.pinResult.goal,'orc');
+    assert.equal(first.contacts.some(contact=>contact.body==='worldcraft-target-orc'),false);
+    const second=a.shoot(setup);
+    assert.deepEqual(signature(second),signature(first));
+    assert.deepEqual(signature(b.shoot(setup)),signature(first));
+    a.replace(rampHit);
+    const steered=a.shoot(setup),steeredAgain=a.shoot(setup);
+    assert.equal(steered.pinResult.status,'clear');
+    assert.deepEqual(steered.contacts.map(contact=>contact.body),['worldcraft-object-ramp-yours','worldcraft-target-orc','worldcraft-ground']);
+    assert.deepEqual(signature(steeredAgain),signature(steered));
+    a.replace(bankHit);
+    const kicked=a.shoot(setup),kickedAgain=a.shoot(setup);
+    assert.equal(kicked.pinResult.status,'clear');
+    assert.deepEqual(kicked.contacts.map(contact=>contact.body),['worldcraft-object-ramp-yours','worldcraft-object-bank-yours','worldcraft-target-orc','worldcraft-ground']);
+    assert.ok(kicked.contacts.find(contact=>contact.body==='worldcraft-target-orc').first>kicked.contacts.find(contact=>contact.body==='worldcraft-object-bank-yours').first);
+    assert.deepEqual(signature(kickedAgain),signature(kicked));
+    assert.deepEqual(signature(b.shoot(setup)),signature(first),'the other runtime is still on the untouched default');
+  } finally { a.dispose(); b.dispose(); }
+});

@@ -17,10 +17,10 @@ import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
 import {
-  createStarterWorld, createHouseShotWorld, createWorldHistory, createWorldcraftStore, validateWorld,
+  createStarterWorld, createHouseShotWorld, createOrcLoopWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd,
   worldcraftIdentity, parseWorldJSON, exportWorldJSON, captureWorldSnapshot,
-  packWorldcraftLine, WORLDCRAFT_CATALOG,
+  packWorldcraftLine, WORLDCRAFT_CATALOG, WORLDCRAFT_DELAY, WORLDCRAFT_TARGET_BODY,
   type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup,
 } from '@/lib/worldcraft-model';
 import styles from './worldcraft.module.css';
@@ -47,7 +47,7 @@ type Actions = {
   ready(): void; adjust(): void; survey(): void; trail(): void; keep(): void;
   memory(open: boolean): void; save(): void; load(id: string): void; forgetWorld(id: string): void;
   restoreLine(id: string): void; forgetLine(id: string): void; export(): void; exportMemory(): void; import(text: string): void;
-  rename(name: string): void; starter(empty?: boolean): void; house(): void;
+  rename(name: string): void; starter(empty?: boolean): void; house(): void; orc(): void; delay(seconds: number): void;
   camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool'): void;
 };
 
@@ -160,7 +160,8 @@ export default function Worldcraft() {
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
-              publish({ phase: 'result', last, lastKept: false, history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, notice: last.pinResult?.status === 'clear' ? `Pin cleared · first kiss ${last.pinResult.distance!.toFixed(1)} m from centre.` : last.pinResult?.status === 'miss' ? `First kiss ${last.pinResult.distance!.toFixed(1)} m from pin centre. Revise the piece and compare.` : last.reason === 'first-ground-contact' ? 'First ground contact. Revise the shot or the space.' : `Line ended: ${last.reason.replaceAll('-', ' ')}. No clear.` });
+              const orcGoal = last.pinResult?.goal === 'orc';
+              publish({ phase: 'result', last, lastKept: false, history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, notice: orcGoal ? (last.pinResult?.status === 'clear' ? 'ORC BONKED' : last.pinResult?.status === 'miss' ? 'Missed the orc. Revise the ramp, the bank, or the launch delay.' : 'No orc contact. The line ended early.') : last.pinResult?.status === 'clear' ? `Pin cleared · first kiss ${last.pinResult.distance!.toFixed(1)} m from centre.` : last.pinResult?.status === 'miss' ? `First kiss ${last.pinResult.distance!.toFixed(1)} m from pin centre. Revise the piece and compare.` : last.reason === 'first-ground-contact' ? 'First ground contact. Revise the shot or the space.' : `Line ended: ${last.reason.replaceAll('-', ' ')}. No clear.` });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
             }
           },
@@ -208,7 +209,7 @@ export default function Worldcraft() {
           projectile?.dispose(); projectile = null;
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules?.target ? 'Fixed rail. The orc restarts from the same phase every fire. Launch delay shifts that phase.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
@@ -358,6 +359,32 @@ export default function Worldcraft() {
             if (commit(createHouseShotWorld(), 'House Shot reset. Fire, turn the ramp, then compare.', 'commit', true)) {
               publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
               drawTrail([]); drawComparison();
+            }
+          },
+          orc() {
+            if (busy()) return;
+            clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            if (commit(createOrcLoopWorld(), 'Orc Loop. The stand-in restarts on the same phase every fire. The supplied pieces miss.', 'commit', true)) {
+              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
+              drawTrail([]); drawComparison();
+            }
+          },
+          delay(seconds) {
+            const state = uiRef.current;
+            if (!state.world.timing || busy()) return;
+            const nextDelay = Math.round(seconds * 2) / 2;
+            if (nextDelay < WORLDCRAFT_DELAY.min || nextDelay > WORLDCRAFT_DELAY.max) return;
+            const resumePlay = state.mode === 'play';
+            const view = state.view;
+            if (resumePlay) {
+              projectile?.dispose(); projectile = null;
+              if (!runtime.setMode('build')) { publish({ notice: runtime.error }); return; }
+              publish({ mode: 'build', phase: 'ready' });
+            }
+            const applied = commit({ ...state.world, timing: { delay: nextDelay } }, `Launch delay ${nextDelay.toFixed(1)} s. The orc phase resets to it on every fire.`);
+            if (resumePlay && applied) {
+              runtime.setMode('play');
+              publish({ mode: 'play', phase: 'ready', view, notice: `Launch delay ${nextDelay.toFixed(1)} s. Phase resets on fire.` });
             }
           },
           camera(action) {
@@ -523,6 +550,8 @@ export default function Worldcraft() {
   const selected = ui.world.objects.find(o => o.id === ui.selected);
   const fixedRail = Boolean(worldcraftFixedSetup(ui.world));
   const fixedPiece = Boolean(selected && ui.world.rules?.locked.includes(selected.id));
+  const orcTarget = ui.world.rules?.target ?? null;
+  const launchDelay = ui.world.timing?.delay ?? 0;
   const shownSetup = ui.phase === 'flight' ? ui.setup : ui.history?.setup;
   const setupChanged = Boolean(ui.comparison && shownSetup && Object.keys(shownSetup).some(key => shownSetup[key as keyof WorldcraftSetup] !== ui.comparison!.setup[key as keyof WorldcraftSetup]));
   const earlierWorld = Boolean(ui.history && worldcraftIdentity(ui.world) !== ui.history.worldIdentity);
@@ -563,10 +592,24 @@ export default function Worldcraft() {
       </section>
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
         {ui.world.rules && <section className={styles.goal} aria-label="Fixed goal">
-          <strong>First kiss inside the gold circle</strong>
-          <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? 'Rail fixed: change the piece, keep the shot.' : 'Free rail.'}</p>
-          {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
-          <button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button>
+          {orcTarget ? <>
+            <strong>Bonk the walking stand-in</strong>
+            <p>An {WORLDCRAFT_TARGET_BODY.height} m cylinder stands in for the orc. It walks a {orcTarget.radius} m circle at {orcTarget.speed} m/s and restarts from the same phase on every fire. Rail fixed: revise the ramp and bank, keep the shot.</p>
+            <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
+            <p>Launch delay <strong>{launchDelay.toFixed(1)} s</strong></p>
+            <div className={styles.buttonRow}>
+              <button type="button" aria-label="Decrease launch delay by half a second" disabled={locked || launchDelay <= WORLDCRAFT_DELAY.min} onClick={() => actions.current?.delay(launchDelay - WORLDCRAFT_DELAY.step)}>−0.5 s</button>
+              <button type="button" aria-label="Increase launch delay by half a second" disabled={locked || launchDelay >= WORLDCRAFT_DELAY.max} onClick={() => actions.current?.delay(launchDelay + WORLDCRAFT_DELAY.step)}>+0.5 s</button>
+            </div>
+          </> : <>
+            <strong>First kiss inside the gold circle</strong>
+            <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? 'Rail fixed: change the piece, keep the shot.' : 'Free rail.'}</p>
+            {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
+          </>}
+          <div className={styles.buttonRow}>
+            <button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button>
+            <button type="button" disabled={locked} onClick={() => actions.current?.orc()}>{ui.world.id === 'orc-loop-v1' ? 'Reset Orc Loop' : 'Open Orc Loop'}</button>
+          </div>
         </section>}
         {ui.mode === 'build' ? <>
           <section className={styles.section}><h2 className={styles.sectionTitle}>Shape a possibility</h2>
@@ -609,7 +652,15 @@ export default function Worldcraft() {
             onKeyUp={e => { if (ui.powerMode === 'hold' && ['Enter', ' '].includes(e.key)) { e.preventDefault(); actions.current?.release(); } }}>
             {ui.phase === 'charging' ? `Release · ${Math.round(ui.charge * 100)}%` : ui.powerMode === 'set' ? 'Fire line' : 'Hold to charge'}
           </button> : <button key="recovery-control" type="button" className={styles.chargeButton} disabled={ui.phase === 'loading' || ui.phase === 'error'} onClick={() => actions.current?.ready()}>{ui.phase === 'flight' ? 'Stop shot' : fixedRail ? 'Ready again · same setup' : 'Aim again · current world'}</button>}
-          {ui.last && <div className={styles.receipt}><p>{ui.last.pinResult ? `${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}` : ''}</p><p>{qualified.length ? qualified.map(e => e.label ?? e.feature).join(' → ') : 'No qualified rebound recorded.'}</p><div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div></div>}
+          {ui.last && <div className={styles.receipt}>
+            {ui.last.pinResult?.goal === 'orc' ? <>
+              <p className={ui.last.pinResult.status === 'clear' ? styles.payoff : undefined}>{ui.last.pinResult.status === 'clear' ? 'ORC BONKED' : ui.last.pinResult.status === 'miss' ? 'Orc not contacted' : 'No clear'}{ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}</p>
+              <ul className={styles.contactList} aria-label="Shot contacts">
+                {ui.last.contacts.length === 0 && <li>No contacts recorded.</li>}
+                {ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${index}`}>{contact.body === ui.last?.pinResult?.body ? 'ORC BONKED · ' : ''}{contact.body} · {contact.count} {contact.count === 1 ? 'hit' : 'hits'} · {contact.first.toFixed(2)}–{contact.last.toFixed(2)} s</li>)}
+              </ul>
+            </> : <p>{ui.last.pinResult ? `${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}` : ''}</p>}
+            <p>{qualified.length ? qualified.map(e => e.label ?? e.feature).join(' → ') : 'No qualified rebound recorded.'}</p><div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div></div>}
         </section>}
         <p className={styles.notice} role="status">{ui.notice}</p>
         {ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
@@ -624,7 +675,7 @@ export default function Worldcraft() {
         <input ref={upload} className={styles.visuallyHidden} type="file" accept=".json,application/json" aria-label="Import world file" onChange={async e => { const file = e.target.files?.[0]; if (file) { if (file.size > 65536) actions.current?.import('oversized-file'); else actions.current?.import(await file.text()); } e.target.value = ''; }} />
         <div className={styles.memoryGrid}><section><h3>Worlds · {ui.worlds.length}/4</h3>{ui.worlds.length === 0 && <p className={styles.empty}>Save an arrangement worth revisiting.</p>}{ui.worlds.map(entry => <div className={styles.slot} key={entry.id}><strong>{entry.world.name}</strong><span>{entry.world.objects.length} pieces</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.load(entry.id)}>Open world</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetWorld(entry.id)}>Remove saved world</button></div></div>)}</section>
           <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
-        <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
+        <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.orc()}>Orc Loop</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
         <button type="button" onClick={() => actions.current?.exportMemory()}>Export local memory</button><p className={styles.muted}>Memory export includes kept paths for safekeeping; world JSON is the playable import format.</p>
         <p className={styles.notice} role="status">{ui.notice}</p>{ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
       </div>
