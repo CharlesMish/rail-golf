@@ -1,6 +1,6 @@
 {
   "seed": 20261024,
-  "gitSha": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a",
+  "gitSha": "3fd4f49d78fd6abed038b7e2483fb6dbe7849952",
   "presetId": "travelling-bell",
   "presetHash": "ab39b2d6ea0e07ea509b1d62ba3d5ef42ed0b96782bdbcc46e56252aaa3bb293",
   "openingWorldIdentitySha256": "2b698a8e4762a81684845e756410ce29a9ba5c3bdd5b9c439b12a9b279ad96e2",
@@ -9,7 +9,7 @@
   "periodSeconds": 8,
   "speedMetersPerSecond": 1,
   "lengthMeters": 4,
-  "elapsedSeconds": 29.183537229,
+  "elapsedSeconds": 31.748901620999998,
   "determinism": {
     "phase": 1,
     "match": true

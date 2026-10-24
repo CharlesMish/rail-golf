@@ -104,7 +104,7 @@ node scripts/range/sweep-travelling-bell.mjs
 
 Raw rows: [appendix/travelling-bell/windows.json](appendix/travelling-bell/windows.json). One saved hit: [appendix/travelling-bell/hit-shot.json](appendix/travelling-bell/hit-shot.json). Short solution note: [appendix/travelling-bell/SOLUTIONS.md](appendix/travelling-bell/SOLUTIONS.md).
 
-Headless Havok, same runtime as the lab. Seed `20261024` is recorded and not applied to the solver. The run that wrote `windows.json` took 29.183537229 s. That file's `gitSha` is `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a` because the sweep ran on this lane's working tree before the lane commit existed. The parent at that moment was the range base. Re-running the script on the lane commit updates `gitSha` and `elapsedSeconds` only if the windows match; that check is stated under Checks when it has been done.
+Headless Havok, same runtime as the lab. Seed `20261024` is recorded and not applied to the solver. The file was first written against parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a` (wall time 29.183537229 s) while this lane was still uncommitted. It was then re-run on `3fd4f49d78fd6abed038b7e2483fb6dbe7849952`. Every coarse trial, every window, the repeat flag, the refire flag, and the phase-1 contacts match. The only fields that moved are `windows.json` `gitSha` (now that commit), `elapsedSeconds` (31.748901620999998), and `hit-shot.json` `worldSnapshot.build` (the same commit). The binding hash did not change.
 
 Inside one layout, aim, charge, pieces, and the bell law stay fixed. The only change is launch phase.
 
@@ -195,7 +195,7 @@ The slider is 0.05 s. The measured edges are 1/120 s. A player on the buttons ca
 
 ## Checks
 
-Run on this working tree, parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a`. The dev server footer still prints that parent, because the lane commit did not exist yet. The page was serving this tree.
+Run on this working tree before `3fd4f49d78fd6abed038b7e2483fb6dbe7849952` was committed. The dev server footer printed parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a`. The page was serving this tree. The sweep re-run named above is the check that those bytes, once committed, reproduce the windows.
 
 | Check | Result |
 | --- | --- |
