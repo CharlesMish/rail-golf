@@ -104,7 +104,7 @@ node scripts/range/sweep-travelling-bell.mjs
 
 Raw rows: [appendix/travelling-bell/windows.json](appendix/travelling-bell/windows.json). One saved hit: [appendix/travelling-bell/hit-shot.json](appendix/travelling-bell/hit-shot.json). Short solution note: [appendix/travelling-bell/SOLUTIONS.md](appendix/travelling-bell/SOLUTIONS.md).
 
-Headless Havok, same runtime as the lab. Seed `20261024` is recorded and not applied to the solver. The lane file was first written against parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a` and re-run on `3fd4f49d78fd6abed038b7e2483fb6dbe7849952`. After the opening revision it was re-run on the integrated tree (parent merge `2e16c13f07a591b35690f76d79ba0292a74b333f`, wall time 29.686886236000003 s). `windows.json` `gitSha` and `hit-shot.json` `worldSnapshot.build` name the commit the sweep process read. The solution’s coarse trials, windows, repeat flag, refire flag, phase-1 contacts, and binding hash match the lane run. The catalog opening’s hit count does not: it is now 0.
+Headless Havok, same runtime as the lab. Seed `20261024` is recorded and not applied to the solver. The lane file was first written against parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a` and re-run on `3fd4f49d78fd6abed038b7e2483fb6dbe7849952`. After the opening revision it was re-run on `0db31fbcce7bb33dfdc25ee9c42a2094a5714cb1` (wall time 30.205972468 s). `windows.json` `gitSha` and `hit-shot.json` `worldSnapshot.build` name that commit. The solution’s coarse trials, windows, repeat flag, refire flag, phase-1 contacts, and binding hash match the lane run. The catalog opening’s hit count does not: it is now 0.
 
 Inside one layout, aim, charge, pieces, and the bell law stay fixed. The only change is launch phase.
 

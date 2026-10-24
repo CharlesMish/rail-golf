@@ -115,7 +115,7 @@
     "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":16,\"yaw\":80},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":-8,\"z\":40,\"yaw\":0},{\"id\":\"shield\",\"kind\":\"block\",\"x\":-10,\"z\":52,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"bank-yours\",\"ramp-yours\",\"shield\"],\"allowance\":{},\"rail\":{\"yaw\":0,\"elevation\":18,\"charge\":0.55},\"target\":{\"id\":\"bell\",\"yaw\":0,\"motion\":{\"kind\":\"segment-shuttle\",\"speed\":1,\"phaseReference\":\"endpoint-0\",\"endpoints\":[{\"x\":-28,\"z\":58},{\"x\":-24,\"z\":58}],\"collider\":{\"shape\":\"lathe-convex-hull\",\"height\":2.4,\"skirtRadius\":0.75,\"centerY\":1.5,\"friction\":0.8,\"restitution\":0.1},\"hit\":\"any-contact-before-ledger-close\"}},\"goal\":{\"kind\":\"target-contact\",\"id\":\"bell\",\"yaw\":0,\"motion\":{\"kind\":\"segment-shuttle\",\"speed\":1,\"phaseReference\":\"endpoint-0\",\"endpoints\":[{\"x\":-28,\"z\":58},{\"x\":-24,\"z\":58}],\"collider\":{\"shape\":\"lathe-convex-hull\",\"height\":2.4,\"skirtRadius\":0.75,\"centerY\":1.5,\"friction\":0.8,\"restitution\":0.1},\"hit\":\"any-contact-before-ledger-close\"}}}}",
     "catalog": "worldcraft-prefabs-v2",
     "physics": "rail-golf-v02-worldcraft-v1",
-    "build": "2e16c13f07a591b35690f76d79ba0292a74b333f"
+    "build": "0db31fbcce7bb33dfdc25ee9c42a2094a5714cb1"
   },
   "setup": {
     "railIndex": 1,
