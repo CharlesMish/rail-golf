@@ -34,7 +34,12 @@ export function createResonanceEar(): {
   hear(input: { body: string; time: number; speed: number; world: Parameters<typeof resonanceOf>[0] }): ResonanceImpact | null;
   snapshot(): ResonanceLog;
 };
-export function scheduleImpact(ctx: OfflineAudioContext | AudioContext, when: number, impact: Pick<ResonanceImpact, 'material' | 'gain' | 'hz'>): void;
+export function scheduleImpact(ctx: OfflineAudioContext | AudioContext, when: number, impact: Pick<ResonanceImpact, 'material' | 'gain' | 'hz'>): AudioScheduledSourceNode[];
+export function createVoiceLedger(): {
+  watch(node: { stop?: () => void; disconnect?: () => void; addEventListener?: (type: string, listener: () => void) => void; onended?: (() => void) | null }): void;
+  release(): number;
+  counts(): { started: number; cleaned: number; finished: number; active: number };
+};
 export function audioBufferToWav(buffer: { getChannelData(channel: number): Float32Array; sampleRate: number; numberOfChannels?: number }): Uint8Array;
 export function renderResonanceWav(impacts: ResonanceImpact[], options?: { OfflineAudioContext?: typeof OfflineAudioContext; sampleRate?: number; tail?: number }): Promise<Uint8Array>;
-export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact): void };
+export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact): void; release(): number; counts(): { started: number; cleaned: number; finished: number; active: number }; dispose(): void };

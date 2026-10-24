@@ -20,10 +20,15 @@ import { WORLDCRAFT_SCALE, createResonanceOutput, formatResonanceImpact, type Re
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd,
-  worldcraftIdentity, parseWorldJSON, exportWorldJSON, captureWorldSnapshot,
+  worldcraftIdentity, exportWorldJSON, captureWorldSnapshot,
   packWorldcraftLine, WORLDCRAFT_CATALOG,
   type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup, type WorldcraftVoice,
 } from '@/lib/worldcraft-model';
+import {
+  adaptRangePreset, bindRangeShot, exportRangePreset, importRangeDocument, listRangePresets,
+  projectRangePreset, rangePreset, recordedTrail,
+  type RangePreset, type RangeShot,
+} from '@/lib/worldcraft-range';
 import styles from './worldcraft.module.css';
 
 type Kind = 'bank' | 'ramp' | 'block' | 'plate';
@@ -39,6 +44,7 @@ type UI = {
   memoryWarning: string; showTrail: boolean; cameraTool: 'orbit' | 'pan';
   history: RecordedTrail | null; comparison: RecordedTrail | null;
   lastKept: boolean; liveNotes: ResonanceImpact[];
+  preset: RangePreset | null; presetBaseline: RangePreset | null; presetId: string | null; shotRecord: RangeShot | null;
 };
 type Actions = {
   mode(mode: UI['mode']): void; select(id: string): void; add(kind: Kind): void;
@@ -49,10 +55,15 @@ type Actions = {
   memory(open: boolean): void; save(): void; load(id: string): void; forgetWorld(id: string): void;
   restoreLine(id: string): void; forgetLine(id: string): void; export(): void; exportMemory(): void; import(text: string): void;
   rename(name: string): void; starter(empty?: boolean): void; house(): void; orc(): void;
+  enter(id: string): void; resetPreset(): void;
   camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool'): void;
 };
 
 function shotNotice(last: WorldcraftRecord): string {
+  if (last.goalResult?.kind === 'none') {
+    if (last.reason === 'first-ground-contact') return 'First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.';
+    return `Line ended: ${last.reason.replaceAll('-', ' ')}. No pin, no target, no score.`;
+  }
   if (last.targetResult?.status === 'hit') return 'ORC BONKED';
   if (last.targetResult?.status === 'miss') return 'The stand-in is untouched. Move the ramp, the bank, or the plate, then fire the same shot.';
   if (last.targetResult?.status === 'unfinished') return 'No orc contact. The line ended before a bonk.';
@@ -70,6 +81,7 @@ function initialUI(): UI {
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
     memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, lastKept: false, liveNotes: [],
+    preset: null, presetBaseline: null, presetId: null, shotRecord: null,
   };
 }
 
@@ -174,6 +186,8 @@ export default function Worldcraft() {
           comparisonTrail.color = new Color3(1,.66,.28); comparisonTrail.isPickable = false;
         };
         const resonance = createResonanceOutput();
+        let shotToken: object | null = null;
+        let perfSlot: string | null = null;
         const runtime = createWorldcraftRuntime(scene, {
           world: uiRef.current.world, materials: presentation.materials, shadows, build: BUILD_ID,
           onEvent(event) {
@@ -185,7 +199,20 @@ export default function Worldcraft() {
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
-              publish({ phase: 'result', last, lastKept: false, history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, notice: shotNotice(last) });
+              const history = recordedTrail({ label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples });
+              const token = {};
+              shotToken = token;
+              const preset = uiRef.current.preset;
+              void bindRangeShot({
+                preset, world: last.world, setup: last.setup, build: last.build, launch: last.launch,
+                points: last.samples, events: last.evidence, contacts: last.contacts, terminal: last.terminal,
+              }).then(shotRecord => {
+                if (disposed || shotToken !== token) return;
+                publish({ shotRecord });
+              }).catch(error => {
+                if (!disposed) publish({ notice: error instanceof Error ? error.message : String(error) });
+              });
+              publish({ phase: 'result', last, lastKept: false, history, shotRecord: null, notice: shotNotice(last) });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
             }
           },
@@ -216,11 +243,14 @@ export default function Worldcraft() {
           discardDrag();
           try {
             const candidate = validateWorld(world);
+            const editingPreset = historyAction === 'commit' && !load;
+            const nextPreset = editingPreset && uiRef.current.preset ? projectRangePreset(uiRef.current.preset, candidate) : uiRef.current.preset;
             const result = runtime.replaceWorld(candidate, { intent: load || historyAction !== 'commit' ? 'load' : 'edit' });
             if (!result.ok) throw new Error(result.error);
+            resonance.release();
             if (historyAction === 'commit') history.commit(candidate);
             const selected = candidate.objects.some(o => o.id === uiRef.current.selected) ? uiRef.current.selected : candidate.objects[0]?.id ?? null;
-            publish({ world: candidate, selected, setup: worldcraftSetupForWorld(candidate,uiRef.current.setup,{load}), ...(worldcraftFixedSetup(candidate) ? { powerMode: 'set' as const } : {}), ...history.status(), notice: label });
+            publish({ world: candidate, selected, ...(editingPreset ? { preset: nextPreset, presetId: nextPreset?.id ?? null } : {}), setup: worldcraftSetupForWorld(candidate,uiRef.current.setup,{load}), ...(worldcraftFixedSetup(candidate) ? { powerMode: 'set' as const } : {}), ...history.status(), notice: label });
             selectedHighlight();
             if (uiRef.current.history) drawTrail(uiRef.current.history.points);
             trace('edit', { action: label, worldIdentity: worldcraftIdentity(candidate), objects: candidate.objects });
@@ -233,7 +263,9 @@ export default function Worldcraft() {
           projectile?.dispose(); projectile = null;
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
+          const goalKind = uiRef.current.world.rules?.goal?.kind;
+          const playNotice = goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : playNotice });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
@@ -254,7 +286,8 @@ export default function Worldcraft() {
           projectile.sync(runtime.flight!.aggregate.body.getLinearVelocity());
           previous = null; heading = { x: Math.sin(setup.yaw * Math.PI / 180), y: 0, z: Math.cos(setup.yaw * Math.PI / 180) };
           flightPoints = []; trailTick = 0; trail?.dispose(); trail = null;
-          publish({ phase: 'flight', setup, charge, comparison: uiRef.current.history, notice: 'Committed line · edits are locked.' });
+          const comparison = uiRef.current.history ? recordedTrail(uiRef.current.history) : null;
+          publish({ phase: 'flight', setup, charge, comparison, notice: 'Committed line · edits are locked.' });
           drawComparison();
           trace('fire', { setup, worldIdentity: worldcraftIdentity(uiRef.current.world), world: uiRef.current.world });
         };
@@ -347,7 +380,7 @@ export default function Worldcraft() {
           load(id) {
             const entry = store.worlds().find(w => w.id === id); if (!entry || busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-            if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false });
+            if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
             trace('load-world', { id });
           },
           forgetWorld(id) { store.removeWorld(id); publish(memoryState()); },
@@ -357,15 +390,29 @@ export default function Worldcraft() {
             publish({ memoryOpen: false, history: { label: 'Kept line', worldIdentity: entry.worldSnapshot.worldIdentity, setup: entry.setup, points: entry.points } }); drawTrail(entry.points);
           },
           forgetLine(id) { store.removeLine(id); publish({ ...memoryState(), lastKept: uiRef.current.last && kept.get(uiRef.current.last)?.id === id ? false : uiRef.current.lastKept }); },
-          export() { download('rail-golf-world.json', exportWorldJSON({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } })); trace('export-world'); },
+          export() {
+            const preset = uiRef.current.preset;
+            if (preset) download('rail-golf-range-preset.json', exportRangePreset(preset));
+            else download('rail-golf-world.json', exportWorldJSON({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } }));
+            trace('export-world');
+          },
           exportMemory() { download('rail-golf-worldcraft-memory.json', store.exportLocal()); trace('export-memory'); },
           import(text) {
             if (busy()) return;
             try {
-              const world = parseWorldJSON(text);
+              const loaded = importRangeDocument(text);
               clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-              if (commit(world, 'Imported world opened. Undo returns to your previous arrangement.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: world.launcher.x }, memoryOpen: false });
-              trace('import-world', { worldIdentity: worldcraftIdentity(world) });
+              if (loaded.kind === 'preset') {
+                const adapted = adaptRangePreset(loaded.preset);
+                if (commit(adapted.world, `${adapted.preset.name} imported.`, 'commit', true)) {
+                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: worldcraftFixedSetup(adapted.world)!, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null });
+                  drawTrail([]); drawComparison();
+                }
+                trace('import-preset', { id: adapted.preset.id });
+              } else if (commit(loaded.world, 'Imported world opened. Undo returns to your previous arrangement.', 'commit', true)) {
+                publish({ preset: null, presetBaseline: null, presetId: null, shotRecord: null, setup: { ...uiRef.current.setup, originX: loaded.world.launcher.x }, memoryOpen: false });
+                trace('import-world', { worldIdentity: worldcraftIdentity(loaded.world) });
+              }
             } catch (e) { publish({ notice: `Import rejected: ${e instanceof Error ? e.message : String(e)}` }); trace('import-rejected'); }
           },
           rename(name) {
@@ -379,13 +426,13 @@ export default function Worldcraft() {
             const world = createStarterWorld(); if (empty) { world.objects = []; world.name = 'An open clearing'; }
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             commit(world, empty ? 'Empty clearing. Add a piece to begin.' : 'Starter arrangement opened. Undo preserves your previous world.', 'commit', true);
-            publish({ memoryOpen: false, setup: { ...uiRef.current.setup, originX: world.launcher.x } });
+            publish({ memoryOpen: false, setup: { ...uiRef.current.setup, originX: world.launcher.x }, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
           },
           house() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createHouseShotWorld(), 'House Shot reset. Fire, turn the ramp, then compare.', 'commit', true)) {
-              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
+              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
               drawTrail([]); drawComparison();
             }
           },
@@ -393,7 +440,28 @@ export default function Worldcraft() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createOrcStaticWorld(), 'Orc Stand-in reset. Move the ramp, the bank, or the plate, then fire the same shot.', 'commit', true)) {
-              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
+              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
+              drawTrail([]); drawComparison();
+            }
+          },
+          enter(id) {
+            if (busy()) return;
+            let loaded: ReturnType<typeof adaptRangePreset>;
+            try { loaded = adaptRangePreset(rangePreset(id)); }
+            catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
+            clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            if (commit(loaded.world, `${loaded.preset.name} opened. The rail is fixed. Revise a piece, then fire the same shot.`, 'commit', true)) {
+              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: worldcraftFixedSetup(loaded.world)! });
+              drawTrail([]); drawComparison();
+            }
+          },
+          resetPreset() {
+            const baseline = uiRef.current.presetBaseline;
+            if (!baseline || busy()) return;
+            const loaded = adaptRangePreset(baseline);
+            clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            if (commit(loaded.world, `${loaded.preset.name} reset to its preset.`, 'commit', true)) {
+              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: worldcraftFixedSetup(loaded.world)! });
               drawTrail([]); drawComparison();
             }
           },
@@ -486,7 +554,7 @@ export default function Worldcraft() {
         const resize = new ResizeObserver(() => { cancelAnimationFrame(resizeFrame); resizeFrame = requestAnimationFrame(() => activeEngine.resize()); }); resize.observe(surface);
         scene.onBeforePhysicsObservable.add(() => runtime.beforeStep());
         scene.onAfterPhysicsObservable.add(() => runtime.afterStep());
-        const qaWindow = window as unknown as { __worldcraftQA?: { snapshot(): unknown; events(): unknown } };
+        const qaWindow = window as unknown as { __worldcraftQA?: Record<string, unknown> };
         if (new URLSearchParams(location.search).get('qa') === '1') {
           qaWindow.__worldcraftQA = {
             snapshot() {
@@ -495,14 +563,58 @@ export default function Worldcraft() {
                 worldIdentity: worldcraftIdentity(state.world), selectedObjectId: state.selected, setup: state.setup,
                 ...history.status(), editLock: busy(), diagnostics: runtime.diagnostics(), memory: store.status(),
                 lastShot: state.last ? { ...state.last, currentWorldChanged: worldcraftIdentity(state.world) !== state.last.worldIdentity, thisShotChangedWorld: false } : null,
-                comparison: state.comparison, liveNotes: state.liveNotes, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
-                previousTrail: state.showTrail && Boolean(state.history), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
+                comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
+                previousTrail: state.showTrail && Boolean(state.comparison), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
+                presetId: state.presetId, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, voices: resonance.counts(),
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
                   const p = Vector3.Project(mesh.position, Matrix.Identity(), activeScene.getTransformMatrix(), camera.viewport.toGlobal(activeEngine.getRenderWidth(), activeEngine.getRenderHeight()));
                   return { id, x: rect.left + p.x / activeEngine.getRenderWidth() * rect.width, y: rect.top + p.y / activeEngine.getRenderHeight() * rect.height };
                 }),
               };
             }, events: () => structuredClone(events),
+            enterPreset(id: string) { actions.current?.enter(id); },
+            resetPreset() { actions.current?.resetPreset(); },
+            setMode(mode: 'build' | 'play') { actions.current?.mode(mode); },
+            fire() { actions.current?.begin(); },
+            survey() { actions.current?.survey(); },
+            selectPiece(id: string) { actions.current?.select(id); },
+            nudgeYaw(delta: number) {
+              const object = uiRef.current.world.objects.find(item => item.id === uiRef.current.selected);
+              if (object) actions.current?.change({ yaw: object.yaw + delta });
+            },
+            exportText() {
+              const state = uiRef.current;
+              return state.preset ? exportRangePreset(state.preset) : exportWorldJSON({ ...state.world, launcher: { x: state.setup.originX } });
+            },
+            importText(text: string) { actions.current?.import(text); },
+            saveReload() {
+              const state = uiRef.current;
+              if (!state.preset) return { ok: false, error: 'no preset' };
+              if (state.mode !== 'build') actions.current?.mode('build');
+              try {
+                const saved = store.saveWorld({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } }, perfSlot ? { replaceId: perfSlot } : {});
+                perfSlot = saved.entry.id;
+              } catch (error) { return { ok: false, error: error instanceof Error ? error.message : String(error) }; }
+              const before = runtime.diagnostics().rebuildCount;
+              actions.current?.import(exportRangePreset(uiRef.current.preset!));
+              const diagnostics = runtime.diagnostics();
+              return { ok: uiRef.current.preset?.id === state.preset.id, rebuilds: diagnostics.rebuildCount - before, rebuildMs: diagnostics.rebuildMs, diagnostics, voices: resonance.counts() };
+            },
+            sampleFrames(count = 30) {
+              return new Promise<number[]>(resolve => {
+                const samples: number[] = [];
+                const step = () => {
+                  samples.push(activeEngine.getDeltaTime());
+                  if (samples.length >= count) resolve(samples);
+                  else requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+              });
+            },
+            memory() {
+              const heap = (performance as Performance & { memory?: { usedJSHeapSize: number; totalJSHeapSize: number } }).memory;
+              return heap ? { usedJSHeapSize: heap.usedJSHeapSize, totalJSHeapSize: heap.totalJSHeapSize } : null;
+            },
           };
         }
         cleanup = () => {
@@ -511,7 +623,7 @@ export default function Worldcraft() {
           document.removeEventListener('visibilitychange', visibility);
           surface.removeEventListener('pointerdown', down); surface.removeEventListener('pointermove', move);
           surface.removeEventListener('pointerup', up); surface.removeEventListener('pointercancel', discardDrag); surface.removeEventListener('wheel', wheel);
-          projectile?.dispose(); trail?.dispose(); comparisonTrail?.dispose(); spine?.dispose(); runtime.dispose(); presentation.dispose();
+          projectile?.dispose(); trail?.dispose(); comparisonTrail?.dispose(); spine?.dispose(); resonance.dispose(); runtime.dispose(); presentation.dispose();
         };
         publish({ phase: 'ready', notice: 'House Shot: fire once, then turn the ramp. The rail and gold pin stay fixed.', ...memoryState() });
         selectedHighlight();
@@ -577,6 +689,14 @@ export default function Worldcraft() {
   return <main className={styles.shell} data-mode={ui.mode} data-phase={ui.phase}>
     <header className={styles.header}>
       <div className={styles.brand}><span className={styles.kicker}>RAIL GOLF · LAB</span><h1 className={styles.title}>Worldcraft</h1></div>
+      <label className={styles.presetSelect}><span>Range</span>
+        <select aria-label="Experimental preset" value={ui.presetId ?? ''} disabled={locked} onChange={event => { const id = event.target.value; if (id) actions.current?.enter(id); }}>
+          <option value="">Presets</option>
+          {listRangePresets().map(preset => <option key={preset.id} value={preset.id}>{preset.name}</option>)}
+          {ui.presetId && !listRangePresets().some(preset => preset.id === ui.presetId) ? <option value={ui.presetId}>{ui.preset?.name ?? ui.presetId}</option> : null}
+        </select>
+      </label>
+      <button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button>
       <div className={styles.modeSwitch} aria-label="Worldcraft mode">
         <button type="button" aria-pressed={ui.mode === 'build'} className={ui.mode === 'build' ? styles.active : ''} disabled={locked} onClick={() => actions.current?.mode('build')}>Build</button>
         <button type="button" aria-pressed={ui.mode === 'play'} className={ui.mode === 'play' ? styles.active : ''} disabled={locked} onClick={() => actions.current?.mode('play')}>Play</button>
@@ -585,7 +705,7 @@ export default function Worldcraft() {
     </header>
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
-        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
+        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
         <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
@@ -599,6 +719,12 @@ export default function Worldcraft() {
         <p className={styles.hint}>{ui.comparison && ui.showTrail ? `Amber dashed: before${ui.comparison.worldIdentity !== worldcraftIdentity(ui.world) ? ' (earlier world)' : ''} · cyan: ${ui.phase === 'flight' ? 'live' : 'latest'}${earlierWorld && ui.phase !== 'flight' ? ' (earlier world)' : ''} · ${setupChanged ? 'launch setup changed' : 'same launch setup'}` : ui.phase === 'flight' ? 'Actual flight trail' : ui.history && ui.showTrail ? `${ui.history.label} · ${earlierWorld ? 'earlier world · recorded history' : 'actual recorded history'}` : ui.mode === 'build' ? 'Drag a piece · empty space moves the view' : 'One committed launch. No predicted arc.'}</p>
       </section>
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
+        {ui.world.rules?.goal?.kind === 'none' && <section className={styles.goal} aria-label="Open goal">
+          <strong>No pin, no target, no score</strong>
+          <p>First ground ends the line. The ramp, bank, and plate can move and ring. The rail stays fixed.</p>
+          {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
         {ui.world.rules?.target && <section className={styles.goal} aria-label="Fixed goal">
           <strong>Bonk the stand-in orc</strong>
           <p>Any contact in flight counts. The ramp, bank, and plate each ring; the stand-in stays put. {fixedRail ? 'Rail fixed: move those three pieces, keep the shot.' : 'Free rail.'}</p>
@@ -665,6 +791,8 @@ export default function Worldcraft() {
             <ol>{(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts ?? []).map((impact, index) => <li key={`${impact.body}-${impact.time}-${index}`} data-orc={impact.role === 'orc' ? 'hit' : undefined}>{formatResonanceImpact(impact)}</li>)}</ol>
           </div>}
           {ui.last && <div className={styles.receipt}>
+            {ui.last.goalResult?.kind === 'none' && <p>No score. Goal is none. {ui.last.terminal.reason.replaceAll('-', ' ')}.</p>}
+            {ui.last.goalResult?.kind === 'none' && (ui.last.contacts.length ? <ul className={styles.contactList}>{ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${contact.first}-${index}`}>{contact.body} · first {contact.first.toFixed(3)} s · ({contact.point.x.toFixed(2)}, {contact.point.y.toFixed(2)}, {contact.point.z.toFixed(2)}) · ×{contact.count}</li>)}</ul> : <p>No contact recorded.</p>)}
             {ui.last.targetResult?.status === 'hit' && <p className={styles.bonk}>ORC BONKED</p>}
             {ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
             {ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}
