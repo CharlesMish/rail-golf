@@ -1,5 +1,6 @@
-export type WorldcraftKind='bank'|'ramp'|'block';
-export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number};
+export type WorldcraftKind='bank'|'ramp'|'block'|'plate';
+export type WorldcraftVoice={material:'metal'|'timber';degree:number};
+export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;voice?:WorldcraftVoice};
 export type WorldcraftTarget={id:string;x:number;z:number;yaw:number};
 export type WorldcraftRules={pin:{x:number;z:number;r:number}|null;locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;target?:WorldcraftTarget};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
@@ -8,7 +9,7 @@ export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:strin
 export type WorldcraftSetup={railIndex:1;originX:number;yaw:number;elevation:number;charge:number};
 export type WorldcraftPoint={x:number;y:number;z:number;t?:number};
 export type WorldcraftJSON=null|boolean|number|string|WorldcraftJSON[]|{[key:string]:WorldcraftJSON};
-export type WorldcraftSnapshot={version:1;world:WorldcraftDocument;worldIdentity:string;catalog:'worldcraft-prefabs-v1';physics:'rail-golf-v02-worldcraft-v1';build:string};
+export type WorldcraftSnapshot={version:1;world:WorldcraftDocument;worldIdentity:string;catalog:'worldcraft-prefabs-v2';physics:'rail-golf-v02-worldcraft-v1';build:string};
 export type WorldcraftTerminal={reason:string;[key:string]:WorldcraftJSON};
 export type WorldcraftLaunch={station:{id:string;label:string;x:number;z:number;yaw:number};muzzle:{x:number;y:number;z:number};rail:{x:number;y:number;z:number};aim:{x:number;y:number;z:number};direction:{x:number;y:number;z:number};speed:number;mass:number;radius:number};
 export type WorldcraftContact={body:string;point:{x:number;y:number;z:number};count:number;first:number;last:number};
@@ -18,7 +19,7 @@ export type WorldcraftStoreStatus={warning:string;memoryOnly:boolean;worldCount:
 export type WorldcraftSaveResult<T>={entry:T;persisted:boolean;status:WorldcraftStoreStatus};
 export const WORLDCRAFT_FORMAT:'rail-golf-worldcraft';
 export const WORLDCRAFT_VERSION:1;
-export const WORLDCRAFT_CATALOG_VERSION:'worldcraft-prefabs-v1';
+export const WORLDCRAFT_CATALOG_VERSION:'worldcraft-prefabs-v2';
 export const WORLDCRAFT_PHYSICS_CONTRACT:'rail-golf-v02-worldcraft-v1';
 export const WORLDCRAFT_STORAGE_PREFIX:'rail-golf:worldcraft:v1:';
 export const WORLDCRAFT_LIMITS:Readonly<{objects:12;worldSlots:4;lineSlots:4;importBytes:32768;lineBytes:262144;points:2048;events:1024;history:100}>;

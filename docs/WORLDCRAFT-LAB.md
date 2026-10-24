@@ -38,6 +38,7 @@ Pan view is selected (Shift-drag also pans). Zoom and Center are explicit contro
 Undo/Redo covers accepted world edits and loads/restores; it does not reverse
 physics or delete saved slots. A blank clearing is optional in Worlds & lines.
 The sandbox palette is deliberately small: bank, inclined rebound ramp, dull block.
+The Orc Stand-in allowance also offers one resonant plate.
 A challenge can restrict additions by kind and fix specific pieces; disabled
 fields and runtime validation both enforce those constraints.
 Parts have fixed dimensions and height. The entire rotated footprint must stay
@@ -82,9 +83,12 @@ Different-build restores warn that a new physical result may differ.
 `format`, `version`, `id`, `name`, `environment`, `objects`, `launcher`, `rules`.
 
 - Environment: `{preset:"forest-clearing-v1",seed:1}`. Only this preset exists.
-- Objects: `{id,kind,x,z,yaw}`; kind is `bank`, `ramp` or `block`. Stable IDs
-  identify physical contacts. The code-owned catalog supplies dimensions, height,
-  pitch and existing physical material coefficients.
+- Objects: `{id,kind,x,z,yaw}`; kind is `bank`, `ramp`, `block`, or `plate`.
+  Stable IDs identify physical contacts. The code-owned catalog supplies
+  dimensions, height, pitch and existing physical material coefficients. Ramp,
+  bank, and plate may carry an acoustic `voice` of `{material, degree}`. A plate
+  requires one. Voice does not change friction or restitution. See
+  [the resonant experiment](experiments/wc-exp-20261024-resonant.md).
 - Launcher: `{x}` stores the initial/default stopped carriage position. Each
   actual shot separately captures `originX`, yaw, elevation and charge. The
   internal `railIndex` is fixed at 1, avoiding a second lateral offset.
@@ -171,7 +175,7 @@ certify the physical-phone targets.
 
 ## Provisional choices and separate work
 
-Three fixed-size part types, one environment, a 12-part cap, the track span, Build's camera,
+Four fixed-size part types (the plate is the resonant experiment's addition), one environment, a 12-part cap, the track span, Build's camera,
 the initial Set power control and four local slots are study choices. No public
 product hierarchy or object-marketplace architecture is declared. There is no
 freely placed launcher, arbitrary modeling, challenge editor, active mechanism,

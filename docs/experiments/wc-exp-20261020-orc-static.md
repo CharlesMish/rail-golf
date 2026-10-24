@@ -1,5 +1,7 @@
 # Orc Stand-in (wc-exp-20261020-orc-static)
 
+This file records the sweep from before resonant pieces. On `lab/wc-exp-20261024-resonant`, `createOrcStaticWorld` adds a material and a pitch to the ramp and the bank, plus a plate. `docs/examples/worldcraft-orc-static.json` is still the pre-resonance copy. The resonant world is `docs/examples/worldcraft-resonant.json`. See [wc-exp-20261024-resonant.md](wc-exp-20261024-resonant.md).
+
 Smallest working Worldcraft challenge for experiment B. House Shot is unchanged.
 
 Research question: what kind of goal makes a player revise a multi-piece layout? Hypothesis: a physical opponent payoff (a stand-in orc) is more motivating than a gold circle. This document does not measure players. It records a level where the default misses and two distinct layout families both bonk the same stand-in, so that question can be asked later.

@@ -16,16 +16,17 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
+import { WORLDCRAFT_SCALE, createResonanceOutput, formatResonanceImpact, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd,
   worldcraftIdentity, parseWorldJSON, exportWorldJSON, captureWorldSnapshot,
   packWorldcraftLine, WORLDCRAFT_CATALOG,
-  type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup,
+  type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup, type WorldcraftVoice,
 } from '@/lib/worldcraft-model';
 import styles from './worldcraft.module.css';
 
-type Kind = 'bank' | 'ramp' | 'block';
+type Kind = 'bank' | 'ramp' | 'block' | 'plate';
 type Phase = 'loading' | 'ready' | 'charging' | 'flight' | 'result' | 'error';
 type Store = ReturnType<typeof createWorldcraftStore>;
 type RecordedTrail = { label: string; worldIdentity: string; setup: WorldcraftSetup; points: { x: number; y: number; z: number }[] };
@@ -37,11 +38,11 @@ type UI = {
   memoryOpen: boolean; worlds: ReturnType<Store['worlds']>; lines: ReturnType<Store['lines']>;
   memoryWarning: string; showTrail: boolean; cameraTool: 'orbit' | 'pan';
   history: RecordedTrail | null; comparison: RecordedTrail | null;
-  lastKept: boolean;
+  lastKept: boolean; liveNotes: ResonanceImpact[];
 };
 type Actions = {
   mode(mode: UI['mode']): void; select(id: string): void; add(kind: Kind): void;
-  change(patch: Partial<{ x: number; z: number; yaw: number }>): void;
+  change(patch: Partial<{ x: number; z: number; yaw: number; voice: WorldcraftVoice }>): void;
   remove(): void; undo(): void; redo(): void; setup(patch: Partial<WorldcraftSetup>): void;
   powerMode(mode: UI['powerMode']): void; begin(): void; release(): void; cancel(): void;
   ready(): void; adjust(): void; survey(): void; trail(): void; keep(): void;
@@ -53,7 +54,7 @@ type Actions = {
 
 function shotNotice(last: WorldcraftRecord): string {
   if (last.targetResult?.status === 'hit') return 'ORC BONKED';
-  if (last.targetResult?.status === 'miss') return 'The stand-in is untouched. Move the ramp or the bank, then fire the same shot.';
+  if (last.targetResult?.status === 'miss') return 'The stand-in is untouched. Move the ramp, the bank, or the plate, then fire the same shot.';
   if (last.targetResult?.status === 'unfinished') return 'No orc contact. The line ended before a bonk.';
   if (last.pinResult?.status === 'clear') return `Pin cleared · first kiss ${last.pinResult.distance!.toFixed(1)} m from centre.`;
   if (last.pinResult?.status === 'miss') return `First kiss ${last.pinResult.distance!.toFixed(1)} m from pin centre. Revise the piece and compare.`;
@@ -68,8 +69,16 @@ function initialUI(): UI {
     setup: worldcraftFixedSetup(world)!,
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
-    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, lastKept: false,
+    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, lastKept: false, liveNotes: [],
   };
+}
+
+function pieceCaption(object: WorldcraftWorld['objects'][number]) {
+  if (object.voice) return `${object.voice.material} · ${WORLDCRAFT_SCALE[object.voice.degree]?.name ?? 'pitch'}`;
+  if (object.kind === 'block') return 'Dull obstacle';
+  if (object.kind === 'plate') return 'Resonant plate';
+  if (object.kind === 'ramp') return 'Inclined rebound';
+  return 'Timber rebound';
 }
 
 export default function Worldcraft() {
@@ -164,9 +173,15 @@ export default function Worldcraft() {
           comparisonTrail = MeshBuilder.CreateLineSystem('worldcraft-before-line', { lines: worldcraftTrailDashes(record.points).map(line=>line.map(p=>new Vector3(p.x,p.y,p.z))) }, activeScene);
           comparisonTrail.color = new Color3(1,.66,.28); comparisonTrail.isPickable = false;
         };
+        const resonance = createResonanceOutput();
         const runtime = createWorldcraftRuntime(scene, {
           world: uiRef.current.world, materials: presentation.materials, shadows, build: BUILD_ID,
           onEvent(event) {
+            if (event.kind === 'resonance' && event.impact) {
+              const impact = event.impact as ResonanceImpact;
+              resonance.play(impact);
+              publish({ liveNotes: [...uiRef.current.liveNotes, impact] });
+            }
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
@@ -218,7 +233,7 @@ export default function Worldcraft() {
           projectile?.dispose(); projectile = null;
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.' });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
@@ -232,6 +247,8 @@ export default function Worldcraft() {
         const shoot = (charge: number) => {
           if (uiRef.current.mode !== 'play' || !['ready', 'charging'].includes(uiRef.current.phase)) return;
           const setup = { ...uiRef.current.setup, charge };
+          resonance.unlock();
+          publish({ liveNotes: [] });
           if (!runtime.launch(setup)) { publish({ phase: 'ready', notice: runtime.error }); return; }
           projectile?.dispose(); projectile = buildRangeProjectile(activeScene, runtime.flight!.mesh, presentation.materials, shadows);
           projectile.sync(runtime.flight!.aggregate.body.getLinearVelocity());
@@ -265,7 +282,8 @@ export default function Worldcraft() {
             if (!worldcraftCanAdd(world, kind)) { publish({ notice: 'This world has no allowance for another piece of that kind.' }); return; }
             const id = `${kind}-${crypto.randomUUID().slice(0, 8)}`;
             for (let z = 18; z <= 88; z += 12) for (const x of [0, -16, 16]) {
-              const next = { ...world, objects: [...world.objects, { id, kind, x, z, yaw: 0 }] };
+              const added = { id, kind, x, z, yaw: 0, ...(kind === 'plate' ? { voice: { material: 'metal' as const, degree: 4 } } : {}) };
+              const next = { ...world, objects: [...world.objects, added] };
               try { validateWorld(next); } catch { continue; }
               if (commit(next, `${kind[0].toUpperCase() + kind.slice(1)} added. Drag it or use the fine controls.`)) { publish({ selected: id }); selectedHighlight(); }
               return;
@@ -277,7 +295,8 @@ export default function Worldcraft() {
             if (!object || state.world.rules?.locked.includes(object.id)) return;
             const next = { ...object, ...patch };
             if (patch.yaw !== undefined) next.yaw = ((patch.yaw + 180) % 360 + 360) % 360 - 180;
-            commit({ ...state.world, objects: state.world.objects.map(o => o.id === object.id ? next : o) }, `${object.kind} moved · same launch setup retained.`);
+            const voiceOnly = patch.voice !== undefined && patch.x === undefined && patch.z === undefined && patch.yaw === undefined;
+            commit({ ...state.world, objects: state.world.objects.map(o => o.id === object.id ? next : o) }, voiceOnly ? `${object.kind} retuned · same launch setup retained.` : `${object.kind} moved · same launch setup retained.`);
           },
           remove() {
             const state = uiRef.current;
@@ -373,7 +392,7 @@ export default function Worldcraft() {
           orc() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-            if (commit(createOrcStaticWorld(), 'Orc Stand-in reset. Move the ramp and the bank, then fire the same shot.', 'commit', true)) {
+            if (commit(createOrcStaticWorld(), 'Orc Stand-in reset. Move the ramp, the bank, or the plate, then fire the same shot.', 'commit', true)) {
               publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false });
               drawTrail([]); drawComparison();
             }
@@ -476,7 +495,7 @@ export default function Worldcraft() {
                 worldIdentity: worldcraftIdentity(state.world), selectedObjectId: state.selected, setup: state.setup,
                 ...history.status(), editLock: busy(), diagnostics: runtime.diagnostics(), memory: store.status(),
                 lastShot: state.last ? { ...state.last, currentWorldChanged: worldcraftIdentity(state.world) !== state.last.worldIdentity, thisShotChangedWorld: false } : null,
-                comparison: state.comparison, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
+                comparison: state.comparison, liveNotes: state.liveNotes, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
                 previousTrail: state.showTrail && Boolean(state.history), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
                   const p = Vector3.Project(mesh.position, Matrix.Identity(), activeScene.getTransformMatrix(), camera.viewport.toGlobal(activeEngine.getRenderWidth(), activeEngine.getRenderHeight()));
@@ -582,7 +601,7 @@ export default function Worldcraft() {
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
         {ui.world.rules?.target && <section className={styles.goal} aria-label="Fixed goal">
           <strong>Bonk the stand-in orc</strong>
-          <p>Any contact in flight counts, including a bounce off the ramp or the bank. The stand-in stays put. {fixedRail ? 'Rail fixed: move the two pieces, keep the shot.' : 'Free rail.'}</p>
+          <p>Any contact in flight counts. The ramp, bank, and plate each ring; the stand-in stays put. {fixedRail ? 'Rail fixed: move those three pieces, keep the shot.' : 'Free rail.'}</p>
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
           <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.orc()}>{ui.world.id === 'orc-static-v1' ? 'Reset Orc Stand-in' : 'Open Orc Stand-in'}</button><button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button></div>
         </section>}
@@ -594,11 +613,19 @@ export default function Worldcraft() {
         </section>}
         {ui.mode === 'build' ? <>
           <section className={styles.section}><h2 className={styles.sectionTitle}>Shape a possibility</h2>
-            <div className={styles.palette}>{(['bank', 'ramp', 'block'] as Kind[]).map(kind => <button type="button" key={kind} disabled={locked || !worldcraftCanAdd(ui.world, kind)} onClick={() => actions.current?.add(kind)}>+ {kind[0].toUpperCase() + kind.slice(1)}</button>)}</div>
-            <div className={styles.parts} aria-label="Pieces">{ui.world.objects.map((object, index) => <button type="button" className={`${styles.partButton} ${object.id === ui.selected ? styles.selectedPart : ''}`} aria-pressed={object.id === ui.selected} key={object.id} onClick={() => actions.current?.select(object.id)}>{index + 1}. {object.kind}{ui.world.rules?.locked.includes(object.id) ? ' · fixed' : ''}</button>)}</div>
+            <div className={styles.palette}>{((ui.world.rules?.allowance && Object.hasOwn(ui.world.rules.allowance, 'plate') ? ['bank', 'ramp', 'plate', 'block'] : ['bank', 'ramp', 'block']) as Kind[]).map(kind => <button type="button" key={kind} disabled={locked || !worldcraftCanAdd(ui.world, kind)} onClick={() => actions.current?.add(kind)}>+ {kind[0].toUpperCase() + kind.slice(1)}</button>)}</div>
+            <div className={styles.parts} aria-label="Pieces">{ui.world.objects.map((object, index) => <button type="button" className={`${styles.partButton} ${object.id === ui.selected ? styles.selectedPart : ''}`} aria-pressed={object.id === ui.selected} key={object.id} onClick={() => actions.current?.select(object.id)}>{index + 1}. {object.kind}{object.voice ? ` · ${WORLDCRAFT_SCALE[object.voice.degree]?.name ?? ''}` : ''}{ui.world.rules?.locked.includes(object.id) ? ' · fixed' : ''}</button>)}</div>
           </section>
           {selected && <fieldset disabled={locked || fixedPiece} className={styles.inspector} aria-label="Selected piece">
-            <h2 className={styles.sectionTitle}>{selected.kind[0].toUpperCase() + selected.kind.slice(1)}{fixedPiece ? ' · fixed' : ''} <small>{selected.kind === 'block' ? 'Dull obstacle' : selected.kind === 'ramp' ? 'Inclined rebound' : 'Timber rebound'}</small></h2>
+            <h2 className={styles.sectionTitle}>{selected.kind[0].toUpperCase() + selected.kind.slice(1)}{fixedPiece ? ' · fixed' : ''} <small>{pieceCaption(selected)}</small></h2>
+            {selected.voice && <>
+              <div className={styles.controlRow} role="group" aria-label="Material">
+                <span>Material</span>
+                <button type="button" aria-pressed={selected.voice.material === 'metal'} onClick={() => actions.current?.change({ voice: { material: 'metal', degree: selected.voice!.degree } })}>Metal</button>
+                <button type="button" aria-pressed={selected.voice.material === 'timber'} onClick={() => actions.current?.change({ voice: { material: 'timber', degree: selected.voice!.degree } })}>Timber</button>
+              </div>
+              <div className={styles.pitchRow} role="group" aria-label="Pitch">{WORLDCRAFT_SCALE.map(tone => <button type="button" key={tone.degree} aria-pressed={selected.voice!.degree === tone.degree} aria-label={`Pitch ${tone.name}`} onClick={() => actions.current?.change({ voice: { material: selected.voice!.material, degree: tone.degree } })}>{tone.name.replace('4', '')}</button>)}</div>
+            </>}
             <div className={styles.controlRow}>
               <label className={styles.numberField}>Across · m<input key={`${selected.id}-x-${selected.x}`} aria-label="Piece X" type="number" step=".5" defaultValue={selected.x} onBlur={e => commitNumber('x', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label>
               <label className={styles.numberField}>Along · m<input key={`${selected.id}-z-${selected.z}`} aria-label="Piece Z" type="number" step=".5" defaultValue={selected.z} onBlur={e => commitNumber('z', e.currentTarget)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} /></label>
@@ -633,6 +660,10 @@ export default function Worldcraft() {
             onKeyUp={e => { if (ui.powerMode === 'hold' && ['Enter', ' '].includes(e.key)) { e.preventDefault(); actions.current?.release(); } }}>
             {ui.phase === 'charging' ? `Release · ${Math.round(ui.charge * 100)}%` : ui.powerMode === 'set' ? 'Fire line' : 'Hold to charge'}
           </button> : <button key="recovery-control" type="button" className={styles.chargeButton} disabled={ui.phase === 'loading' || ui.phase === 'error'} onClick={() => actions.current?.ready()}>{ui.phase === 'flight' ? 'Stop shot' : fixedRail ? 'Ready again · same setup' : 'Aim again · current world'}</button>}
+          {ui.mode === 'play' && (ui.phase === 'flight' || ui.phase === 'result') && <div className={styles.resonance} aria-label="Resonant contact sequence" data-resonance="sequence">
+            <p>{ui.phase === 'result' && ui.last?.resonance ? `${ui.last.resonance.sounds} sounds · ${ui.last.resonance.resonantCallbacks} solver callbacks · ${ui.last.resonance.collapsed} collapsed` : 'This shot'}</p>
+            <ol>{(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts ?? []).map((impact, index) => <li key={`${impact.body}-${impact.time}-${index}`} data-orc={impact.role === 'orc' ? 'hit' : undefined}>{formatResonanceImpact(impact)}</li>)}</ol>
+          </div>}
           {ui.last && <div className={styles.receipt}>
             {ui.last.targetResult?.status === 'hit' && <p className={styles.bonk}>ORC BONKED</p>}
             {ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}

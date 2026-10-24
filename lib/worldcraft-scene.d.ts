@@ -1,10 +1,10 @@
 import type { Mesh, PhysicsAggregate, Scene, ShadowGenerator, StandardMaterial, TransformNode } from '@babylonjs/core';
 import type { VectorLike } from './rail-golf-v02';
 import type { WorldcraftDocument as WorldcraftWorld } from './worldcraft-model';
-export type WorldcraftMaterials = Record<'ground'|'machine'|'bank'|'ramp'|'block', StandardMaterial>;
+export type WorldcraftMaterials = Record<'ground'|'machine'|'bank'|'ramp'|'block', StandardMaterial> & Partial<Record<'metal'|'timber'|'steel', StandardMaterial>>;
 export type WorldcraftScene = { root:TransformNode; meshes:Mesh[]; bodies:PhysicsAggregate[]; objectMeshes:Map<string,Mesh>; ground:Mesh; tee:Mesh; target:Mesh|null; dispose():void };
 export const WORLDCRAFT_GROUND: Readonly<{minX:number;maxX:number;minZ:number;maxZ:number;minY:number}>;
-export const WORLDCRAFT_CONTACTS: Readonly<Record<'bank'|'ramp'|'block'|'ground',Readonly<{mass:number;restitution:number;friction:number}>>>;
+export const WORLDCRAFT_CONTACTS: Readonly<Record<'bank'|'ramp'|'block'|'plate'|'ground',Readonly<{mass:number;restitution:number;friction:number}>>>;
 export function createWorldcraftMaterials(scene:Scene):{materials:WorldcraftMaterials;dispose():void};
 export function buildWorldcraftScene(scene:Scene,world:WorldcraftWorld,options:{materials:WorldcraftMaterials;shadows?:ShadowGenerator|null}):WorldcraftScene;
 export function worldcraftMuzzleClearance(world:WorldcraftScene,muzzle:VectorLike,radius?:number):{ok:boolean;reason?:string};
