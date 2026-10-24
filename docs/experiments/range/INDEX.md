@@ -2,6 +2,8 @@
 
 Route: `/lab/worldcraft`. The range selector sits in the lab header. It does not add a route. House Shot, Orc Stand-in, and saved v1 worlds stay available. Choosing a preset loads that preset's own rules. **Reset preset** puts the current preset back to the arrangement you entered.
 
+Non-production preview for this integrated branch: recorded in [REPORT.md](REPORT.md) when Cloudflare posts a preview URL. It is not `rail-golf.cmish.dev`.
+
 A preset states its launcher, which pieces are fixed, and its goal. The goal is one of `none`, `first-ground-zone`, `target-contact`, or `contact-phrase`. A contact phrase is an order of notes read from the contact record. It is not a score and not a rhythm. Fixed pieces do not move from the Build controls. A fixed launcher does not take a new aim or charge. A preset may instead leave aim and power inside a window and lock the carriage origin; the window is enforced on the controls and on the shot. Soft Landing is the preset whose launcher is not fixed and has no window: `launcher.fixed: false` compiles to an unlocked rail, and the stored aim is only the starting shot. Origin, yaw, elevation, and power still have to sit inside the existing shot bounds. Open Workshop stays locked. There is no production score on this route.
 
 Measured solutions and landing numbers are kept out of this page. They live under [appendix/](appendix/).
