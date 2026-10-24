@@ -1,0 +1,1207 @@
+{
+  "simulated": 41696,
+  "skipped": 2671924,
+  "illegal": 0,
+  "clears": 708,
+  "components": 15,
+  "families": [
+    {
+      "id": "family-1",
+      "region": "back",
+      "clears": 644,
+      "bankX": {
+        "min": -24,
+        "max": 12
+      },
+      "bankZ": {
+        "min": 56,
+        "max": 76
+      },
+      "bankYaw": {
+        "min": -45,
+        "max": 45
+      },
+      "aimYaw": {
+        "min": -24,
+        "max": 12
+      },
+      "elevation": {
+        "min": 16,
+        "max": 26
+      },
+      "charge": {
+        "min": 0.6,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 0.19376482069597709,
+        "max": 3.995967863540858
+      },
+      "medianBankZ": 64,
+      "medianBankYaw": 0,
+      "medianCharge": 0.75,
+      "medianContactFirst": 1.8416666666666626,
+      "screenThenBank": 147,
+      "bankWithoutScreen": 497,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -4,
+          "z": 58,
+          "yaw": 15,
+          "ix": 5,
+          "iz": 1,
+          "iw": 4
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 20,
+          "charge": 0.75
+        },
+        "distance": 0.19376482069597709,
+        "position": [
+          -7.8073320388793945,
+          0.43000102043151855,
+          53.97941207885742
+        ],
+        "elapsed": 2.3333333333333277,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.5999999999999968,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-object-screen-b",
+            "first": 1.9833333333333287,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.3249999999999944,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-2",
+      "region": "back",
+      "clears": 28,
+      "bankX": {
+        "min": 4,
+        "max": 4
+      },
+      "bankZ": {
+        "min": 64,
+        "max": 76
+      },
+      "bankYaw": {
+        "min": -45,
+        "max": -45
+      },
+      "aimYaw": {
+        "min": 0,
+        "max": 0
+      },
+      "elevation": {
+        "min": 16,
+        "max": 26
+      },
+      "charge": {
+        "min": 0.65,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 0.11288690539120315,
+        "max": 3.992856423705429
+      },
+      "medianBankZ": 70,
+      "medianBankYaw": -45,
+      "medianCharge": 0.775,
+      "medianContactFirst": 1.8624999999999958,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 28,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": 4,
+          "z": 70,
+          "yaw": -45,
+          "ix": 7,
+          "iz": 7,
+          "iw": 0
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 26,
+          "charge": 0.7
+        },
+        "distance": 0.11288690539120315,
+        "position": [
+          -7.915694236755371,
+          0.430001437664032,
+          53.9249267578125
+        ],
+        "elapsed": 2.6916666666666598,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 2.099999999999995,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.6833333333333265,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-3",
+      "region": "back",
+      "clears": 14,
+      "bankX": {
+        "min": -24,
+        "max": -24
+      },
+      "bankZ": {
+        "min": 62,
+        "max": 66
+      },
+      "bankYaw": {
+        "min": 30,
+        "max": 45
+      },
+      "aimYaw": {
+        "min": -18,
+        "max": -18
+      },
+      "elevation": {
+        "min": 16,
+        "max": 26
+      },
+      "charge": {
+        "min": 0.65,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 0.5702222496585226,
+        "max": 3.986436043763718
+      },
+      "medianBankZ": 64,
+      "medianBankYaw": 45,
+      "medianCharge": 0.75,
+      "medianContactFirst": 1.8291666666666626,
+      "screenThenBank": 3,
+      "bankWithoutScreen": 11,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -24,
+          "z": 64,
+          "yaw": 45,
+          "ix": 0,
+          "iz": 4,
+          "iw": 6
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -18,
+          "elevation": 24,
+          "charge": 0.7
+        },
+        "distance": 0.5702222496585226,
+        "position": [
+          -7.6233086585998535,
+          0.429996520280838,
+          54.42808532714844
+        ],
+        "elapsed": 2.5166666666666604,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.9749999999999954,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.508333333333327,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-4",
+      "region": "back",
+      "clears": 6,
+      "bankX": {
+        "min": 4,
+        "max": 4
+      },
+      "bankZ": {
+        "min": 56,
+        "max": 62
+      },
+      "bankYaw": {
+        "min": -45,
+        "max": -45
+      },
+      "aimYaw": {
+        "min": 0,
+        "max": 0
+      },
+      "elevation": {
+        "min": 18,
+        "max": 26
+      },
+      "charge": {
+        "min": 0.6,
+        "max": 0.8
+      },
+      "distance": {
+        "min": 0.8123002790330845,
+        "max": 3.569704506570066
+      },
+      "medianBankZ": 60,
+      "medianBankYaw": -45,
+      "medianCharge": 0.725,
+      "medianContactFirst": 1.63333333333333,
+      "screenThenBank": 6,
+      "bankWithoutScreen": 0,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": 4,
+          "z": 58,
+          "yaw": -45,
+          "ix": 7,
+          "iz": 1,
+          "iw": 0
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 24,
+          "charge": 0.65
+        },
+        "distance": 0.8123002790330845,
+        "position": [
+          -7.337384223937988,
+          0.4299991726875305,
+          54.46986389160156
+        ],
+        "elapsed": 2.508333333333327,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.7499999999999962,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-object-screen-b",
+            "first": 2.0583333333333287,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.499999999999994,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-5",
+      "region": "back",
+      "clears": 3,
+      "bankX": {
+        "min": -20,
+        "max": -20
+      },
+      "bankZ": {
+        "min": 74,
+        "max": 74
+      },
+      "bankYaw": {
+        "min": 30,
+        "max": 30
+      },
+      "aimYaw": {
+        "min": -12,
+        "max": -12
+      },
+      "elevation": {
+        "min": 18,
+        "max": 22
+      },
+      "charge": {
+        "min": 0.8,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 1.5875757204872007,
+        "max": 3.6350821753376823
+      },
+      "medianBankZ": 74,
+      "medianBankYaw": 30,
+      "medianCharge": 0.85,
+      "medianContactFirst": 1.8916666666666624,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 3,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -20,
+          "z": 74,
+          "yaw": 30,
+          "ix": 1,
+          "iz": 9,
+          "iw": 5
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -12,
+          "elevation": 20,
+          "charge": 0.85
+        },
+        "distance": 1.5875757204872007,
+        "position": [
+          -7.168001651763916,
+          0.4299998879432678,
+          55.35210037231445
+        ],
+        "elapsed": 2.4583333333333273,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.8916666666666624,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.449999999999994,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-6",
+      "region": "back",
+      "clears": 2,
+      "bankX": {
+        "min": -8,
+        "max": -4
+      },
+      "bankZ": {
+        "min": 56,
+        "max": 56
+      },
+      "bankYaw": {
+        "min": 0,
+        "max": 0
+      },
+      "aimYaw": {
+        "min": -6,
+        "max": -6
+      },
+      "elevation": {
+        "min": 16,
+        "max": 16
+      },
+      "charge": {
+        "min": 0.9,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 2.127627509134062,
+        "max": 2.127627509134062
+      },
+      "medianBankZ": 56,
+      "medianBankYaw": 0,
+      "medianCharge": 0.9,
+      "medianContactFirst": 1.3249999999999977,
+      "screenThenBank": 2,
+      "bankWithoutScreen": 0,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -8,
+          "z": 56,
+          "yaw": 0,
+          "ix": 4,
+          "iz": 0,
+          "iw": 3
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -6,
+          "elevation": 16,
+          "charge": 0.9
+        },
+        "distance": 2.127627509134062,
+        "position": [
+          -6.858851909637451,
+          0.4300014078617096,
+          52.204288482666016
+        ],
+        "elapsed": 2.4916666666666605,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.3249999999999977,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-object-screen-b",
+            "first": 1.5833333333333302,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.883333333333329,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-object-screen-b",
+            "first": 2.2249999999999948,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.483333333333327,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-7",
+      "region": "back",
+      "clears": 2,
+      "bankX": {
+        "min": -24,
+        "max": -24
+      },
+      "bankZ": {
+        "min": 58,
+        "max": 60
+      },
+      "bankYaw": {
+        "min": 15,
+        "max": 30
+      },
+      "aimYaw": {
+        "min": -18,
+        "max": -18
+      },
+      "elevation": {
+        "min": 22,
+        "max": 24
+      },
+      "charge": {
+        "min": 0.65,
+        "max": 0.7
+      },
+      "distance": {
+        "min": 3.5046950674557147,
+        "max": 3.939299665049593
+      },
+      "medianBankZ": 59,
+      "medianBankYaw": 22.5,
+      "medianCharge": 0.675,
+      "medianContactFirst": 1.8999999999999957,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 2,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -24,
+          "z": 58,
+          "yaw": 15,
+          "ix": 0,
+          "iz": 1,
+          "iw": 4
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -18,
+          "elevation": 24,
+          "charge": 0.65
+        },
+        "distance": 3.5046950674557147,
+        "position": [
+          -9.50511360168457,
+          0.4300002157688141,
+          50.83495330810547
+        ],
+        "elapsed": 2.391666666666661,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.9499999999999955,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.3833333333333275,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-8",
+      "region": "back",
+      "clears": 2,
+      "bankX": {
+        "min": 12,
+        "max": 12
+      },
+      "bankZ": {
+        "min": 60,
+        "max": 60
+      },
+      "bankYaw": {
+        "min": -15,
+        "max": -15
+      },
+      "aimYaw": {
+        "min": 6,
+        "max": 6
+      },
+      "elevation": {
+        "min": 18,
+        "max": 20
+      },
+      "charge": {
+        "min": 0.75,
+        "max": 0.8
+      },
+      "distance": {
+        "min": 2.674383024466985,
+        "max": 2.845179148591197
+      },
+      "medianBankZ": 60,
+      "medianBankYaw": -15,
+      "medianCharge": 0.775,
+      "medianContactFirst": 1.6124999999999967,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 2,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": 12,
+          "z": 60,
+          "yaw": -15,
+          "ix": 9,
+          "iz": 2,
+          "iw": 2
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 6,
+          "elevation": 20,
+          "charge": 0.75
+        },
+        "distance": 2.674383024466985,
+        "position": [
+          -8.617204666137695,
+          0.43000170588493347,
+          56.60218811035156
+        ],
+        "elapsed": 2.283333333333328,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.6666666666666632,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.2749999999999946,
+            "count": 1
+          }
+        ]
+      }
+    }
+  ],
+  "singletons": [
+    {
+      "id": "family-9",
+      "region": "side",
+      "clears": 1,
+      "bankX": {
+        "min": 16,
+        "max": 16
+      },
+      "bankZ": {
+        "min": 28,
+        "max": 28
+      },
+      "bankYaw": {
+        "min": 75,
+        "max": 75
+      },
+      "aimYaw": {
+        "min": 30,
+        "max": 30
+      },
+      "elevation": {
+        "min": 22,
+        "max": 22
+      },
+      "charge": {
+        "min": 0.55,
+        "max": 0.55
+      },
+      "distance": {
+        "min": 0.9124126086642891,
+        "max": 0.9124126086642891
+      },
+      "medianBankZ": 28,
+      "medianBankYaw": 75,
+      "medianCharge": 0.55,
+      "medianContactFirst": 1.058333333333332,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "side",
+          "x": 16,
+          "z": 28,
+          "yaw": 75,
+          "ix": 0,
+          "iz": 0,
+          "iw": 2
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 30,
+          "elevation": 22,
+          "charge": 0.55
+        },
+        "distance": 0.9124126086642891,
+        "position": [
+          -7.220203876495361,
+          0.4300002455711365,
+          53.526275634765625
+        ],
+        "elapsed": 3.5583333333333234,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.058333333333332,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 3.54999999999999,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-10",
+      "region": "side",
+      "clears": 1,
+      "bankX": {
+        "min": 24,
+        "max": 24
+      },
+      "bankZ": {
+        "min": 28,
+        "max": 28
+      },
+      "bankYaw": {
+        "min": 75,
+        "max": 75
+      },
+      "aimYaw": {
+        "min": 36,
+        "max": 36
+      },
+      "elevation": {
+        "min": 22,
+        "max": 22
+      },
+      "charge": {
+        "min": 0.6,
+        "max": 0.6
+      },
+      "distance": {
+        "min": 1.6394807353071355,
+        "max": 1.6394807353071355
+      },
+      "medianBankZ": 28,
+      "medianBankYaw": 75,
+      "medianCharge": 0.6,
+      "medianContactFirst": 1.2666666666666646,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "side",
+          "x": 24,
+          "z": 28,
+          "yaw": 75,
+          "ix": 2,
+          "iz": 0,
+          "iw": 2
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 22,
+          "charge": 0.6
+        },
+        "distance": 1.6394807353071355,
+        "position": [
+          -7.772468566894531,
+          0.43000200390815735,
+          55.62361526489258
+        ],
+        "elapsed": 4.199999999999998,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.2666666666666646,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 4.191666666666665,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-11",
+      "region": "side",
+      "clears": 1,
+      "bankX": {
+        "min": 20,
+        "max": 20
+      },
+      "bankZ": {
+        "min": 40,
+        "max": 40
+      },
+      "bankYaw": {
+        "min": 75,
+        "max": 75
+      },
+      "aimYaw": {
+        "min": 24,
+        "max": 24
+      },
+      "elevation": {
+        "min": 22,
+        "max": 22
+      },
+      "charge": {
+        "min": 0.65,
+        "max": 0.65
+      },
+      "distance": {
+        "min": 3.526017266349446,
+        "max": 3.526017266349446
+      },
+      "medianBankZ": 40,
+      "medianBankYaw": 75,
+      "medianCharge": 0.65,
+      "medianContactFirst": 1.4583333333333306,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "side",
+          "x": 20,
+          "z": 40,
+          "yaw": 75,
+          "ix": 1,
+          "iz": 3,
+          "iw": 2
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 24,
+          "elevation": 22,
+          "charge": 0.65
+        },
+        "distance": 3.526017266349446,
+        "position": [
+          -8.614849090576172,
+          0.4300028085708618,
+          57.47199630737305
+        ],
+        "elapsed": 2.8999999999999924,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.4583333333333306,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.891666666666659,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-12",
+      "region": "side",
+      "clears": 1,
+      "bankX": {
+        "min": 20,
+        "max": 20
+      },
+      "bankZ": {
+        "min": 48,
+        "max": 48
+      },
+      "bankYaw": {
+        "min": 60,
+        "max": 60
+      },
+      "aimYaw": {
+        "min": 18,
+        "max": 18
+      },
+      "elevation": {
+        "min": 16,
+        "max": 16
+      },
+      "charge": {
+        "min": 0.9,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 1.2842996583398023,
+        "max": 1.2842996583398023
+      },
+      "medianBankZ": 48,
+      "medianBankYaw": 60,
+      "medianCharge": 0.9,
+      "medianContactFirst": 1.2999999999999978,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "side",
+          "x": 20,
+          "z": 48,
+          "yaw": 60,
+          "ix": 1,
+          "iz": 5,
+          "iw": 1
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 18,
+          "elevation": 16,
+          "charge": 0.9
+        },
+        "distance": 1.2842996583398023,
+        "position": [
+          -6.882578372955322,
+          0.43000105023384094,
+          53.36691665649414
+        ],
+        "elapsed": 2.124999999999995,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.2999999999999978,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.116666666666662,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-13",
+      "region": "back",
+      "clears": 1,
+      "bankX": {
+        "min": -16,
+        "max": -16
+      },
+      "bankZ": {
+        "min": 60,
+        "max": 60
+      },
+      "bankYaw": {
+        "min": 45,
+        "max": 45
+      },
+      "aimYaw": {
+        "min": -12,
+        "max": -12
+      },
+      "elevation": {
+        "min": 26,
+        "max": 26
+      },
+      "charge": {
+        "min": 0.6,
+        "max": 0.6
+      },
+      "distance": {
+        "min": 3.672496259237901,
+        "max": 3.672496259237901
+      },
+      "medianBankZ": 60,
+      "medianBankYaw": 45,
+      "medianCharge": 0.6,
+      "medianContactFirst": 2.0333333333333288,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -16,
+          "z": 60,
+          "yaw": 45,
+          "ix": 2,
+          "iz": 2,
+          "iw": 6
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -12,
+          "elevation": 26,
+          "charge": 0.6
+        },
+        "distance": 3.672496259237901,
+        "position": [
+          -4.580848693847656,
+          0.430001437664032,
+          52.65961456298828
+        ],
+        "elapsed": 2.4166666666666607,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 2.0333333333333288,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.4083333333333274,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-14",
+      "region": "back",
+      "clears": 1,
+      "bankX": {
+        "min": 12,
+        "max": 12
+      },
+      "bankZ": {
+        "min": 60,
+        "max": 60
+      },
+      "bankYaw": {
+        "min": -15,
+        "max": -15
+      },
+      "aimYaw": {
+        "min": 6,
+        "max": 6
+      },
+      "elevation": {
+        "min": 26,
+        "max": 26
+      },
+      "charge": {
+        "min": 0.65,
+        "max": 0.65
+      },
+      "distance": {
+        "min": 3.441215854984151,
+        "max": 3.441215854984151
+      },
+      "medianBankZ": 60,
+      "medianBankYaw": -15,
+      "medianCharge": 0.65,
+      "medianContactFirst": 1.9666666666666621,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": 12,
+          "z": 60,
+          "yaw": -15,
+          "ix": 9,
+          "iz": 2,
+          "iw": 2
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 6,
+          "elevation": 26,
+          "charge": 0.65
+        },
+        "distance": 3.441215854984151,
+        "position": [
+          -6.185670852661133,
+          0.42999935150146484,
+          56.924068450927734
+        ],
+        "elapsed": 2.5749999999999935,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.9666666666666621,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.56666666666666,
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "family-15",
+      "region": "back",
+      "clears": 1,
+      "bankX": {
+        "min": -4,
+        "max": -4
+      },
+      "bankZ": {
+        "min": 78,
+        "max": 78
+      },
+      "bankYaw": {
+        "min": 15,
+        "max": 15
+      },
+      "aimYaw": {
+        "min": 0,
+        "max": 0
+      },
+      "elevation": {
+        "min": 20,
+        "max": 20
+      },
+      "charge": {
+        "min": 0.9,
+        "max": 0.9
+      },
+      "distance": {
+        "min": 2.887204320142094,
+        "max": 2.887204320142094
+      },
+      "medianBankZ": 78,
+      "medianBankYaw": 15,
+      "medianCharge": 0.9,
+      "medianContactFirst": 1.9166666666666623,
+      "screenThenBank": 0,
+      "bankWithoutScreen": 1,
+      "representative": {
+        "pose": {
+          "region": "back",
+          "x": -4,
+          "z": 78,
+          "yaw": 15,
+          "ix": 5,
+          "iz": 11,
+          "iw": 4
+        },
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 20,
+          "charge": 0.9
+        },
+        "distance": 2.887204320142094,
+        "position": [
+          -10.799835205078125,
+          0.4300004839897156,
+          54.704891204833984
+        ],
+        "elapsed": 2.674999999999993,
+        "reason": "first-ground-contact",
+        "scored": true,
+        "contacts": [
+          {
+            "body": "worldcraft-object-bank-yours",
+            "first": 1.9166666666666623,
+            "count": 2
+          },
+          {
+            "body": "worldcraft-ground",
+            "first": 2.66666666666666,
+            "count": 1
+          }
+        ]
+      }
+    }
+  ],
+  "singletonCount": 7
+}

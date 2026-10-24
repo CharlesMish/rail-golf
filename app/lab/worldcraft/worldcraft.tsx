@@ -26,7 +26,7 @@ import {
 } from '@/lib/worldcraft-model';
 import {
   adaptRangePreset, bindRangeShot, exportRangePreset, importRangeDocument, listRangePresets,
-  projectRangePreset, rangePreset, recordedTrail,
+  projectRangePreset, rangeOpeningSetup, rangePreset, recordedTrail, retargetRangeOpening,
   type RangePreset, type RangeShot,
 } from '@/lib/worldcraft-range';
 import styles from './worldcraft.module.css';
@@ -264,7 +264,7 @@ export default function Worldcraft() {
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
           const goalKind = uiRef.current.world.rules?.goal?.kind;
-          const playNotice = goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
+          const playNotice = goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules?.aimWindow ? 'Land the first kiss in the pocket. The carriage stays put. Aim and power stay in the window.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
           publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : playNotice });
           selectedHighlight(); trace('mode', { mode });
         };
@@ -272,13 +272,19 @@ export default function Worldcraft() {
           const state = uiRef.current;
           if (state.mode !== 'play' || !['ready', 'result'].includes(state.phase) || worldcraftFixedSetup(state.world)) return;
           if (state.phase === 'result') { clearRound(); publish({ phase: 'ready', view: 'address' }); }
-          const next = { ...rangeSetup(state.setup, patch), originX: patch.originX === undefined ? state.setup.originX : Math.round(clamp(patch.originX, -10, 10) * 2) / 2, railIndex: 1 } as WorldcraftSetup;
+          const window = state.world.rules?.aimWindow;
+          let next = { ...rangeSetup(state.setup, patch), originX: patch.originX === undefined ? state.setup.originX : Math.round(clamp(patch.originX, -10, 10) * 2) / 2, railIndex: 1 } as WorldcraftSetup;
+          if (state.world.rules?.originFixed) next = { ...next, originX: state.world.launcher.x };
+          if (window) next = { ...next, yaw: clamp(next.yaw, window.yawMin, window.yawMax), elevation: clamp(next.elevation, window.elevationMin, window.elevationMax), charge: clamp(next.charge, window.chargeMin, window.chargeMax) };
           publish({ setup: next, notice: 'Ready in the current world.' });
           trace('setup', { setup: next });
         };
         const shoot = (charge: number) => {
           if (uiRef.current.mode !== 'play' || !['ready', 'charging'].includes(uiRef.current.phase)) return;
-          const setup = { ...uiRef.current.setup, charge };
+          const window = uiRef.current.world.rules?.aimWindow;
+          let setup = { ...uiRef.current.setup, charge };
+          if (uiRef.current.world.rules?.originFixed) setup = { ...setup, originX: uiRef.current.world.launcher.x };
+          if (window) setup = { ...setup, yaw: clamp(setup.yaw, window.yawMin, window.yawMax), elevation: clamp(setup.elevation, window.elevationMin, window.elevationMax), charge: clamp(setup.charge, window.chargeMin, window.chargeMax) };
           resonance.unlock();
           publish({ liveNotes: [] });
           if (!runtime.launch(setup)) { publish({ phase: 'ready', notice: runtime.error }); return; }
@@ -392,7 +398,7 @@ export default function Worldcraft() {
           forgetLine(id) { store.removeLine(id); publish({ ...memoryState(), lastKept: uiRef.current.last && kept.get(uiRef.current.last)?.id === id ? false : uiRef.current.lastKept }); },
           export() {
             const preset = uiRef.current.preset;
-            if (preset) download('rail-golf-range-preset.json', exportRangePreset(preset));
+            if (preset) download('rail-golf-range-preset.json', exportRangePreset(retargetRangeOpening(preset, uiRef.current.setup)));
             else download('rail-golf-world.json', exportWorldJSON({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } }));
             trace('export-world');
           },
@@ -405,7 +411,7 @@ export default function Worldcraft() {
               if (loaded.kind === 'preset') {
                 const adapted = adaptRangePreset(loaded.preset);
                 if (commit(adapted.world, `${adapted.preset.name} imported.`, 'commit', true)) {
-                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: worldcraftFixedSetup(adapted.world)!, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null });
+                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: rangeOpeningSetup(adapted.preset), memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null });
                   drawTrail([]); drawComparison();
                 }
                 trace('import-preset', { id: adapted.preset.id });
@@ -450,8 +456,9 @@ export default function Worldcraft() {
             try { loaded = adaptRangePreset(rangePreset(id)); }
             catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-            if (commit(loaded.world, `${loaded.preset.name} opened. The rail is fixed. Revise a piece, then fire the same shot.`, 'commit', true)) {
-              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: worldcraftFixedSetup(loaded.world)! });
+            const label = worldcraftFixedSetup(loaded.world) ? `${loaded.preset.name} opened. The rail is fixed. Revise a piece, then fire the same shot.` : `${loaded.preset.name} opened. The carriage stays at centre. Aim and power stay in the window.`;
+            if (commit(loaded.world, label, 'commit', true)) {
+              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset) });
               drawTrail([]); drawComparison();
             }
           },
@@ -461,7 +468,7 @@ export default function Worldcraft() {
             const loaded = adaptRangePreset(baseline);
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, `${loaded.preset.name} reset to its preset.`, 'commit', true)) {
-              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: worldcraftFixedSetup(loaded.world)! });
+              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset) });
               drawTrail([]); drawComparison();
             }
           },
@@ -584,7 +591,7 @@ export default function Worldcraft() {
             },
             exportText() {
               const state = uiRef.current;
-              return state.preset ? exportRangePreset(state.preset) : exportWorldJSON({ ...state.world, launcher: { x: state.setup.originX } });
+              return state.preset ? exportRangePreset(retargetRangeOpening(state.preset, state.setup)) : exportWorldJSON({ ...state.world, launcher: { x: state.setup.originX } });
             },
             importText(text: string) { actions.current?.import(text); },
             saveReload() {
@@ -641,7 +648,10 @@ export default function Worldcraft() {
           camera.fovMode = horizontal ? Camera.FOVMODE_HORIZONTAL_FIXED : Camera.FOVMODE_VERTICAL_FIXED;
           if (runtime.flight && projectile) projectile.sync(runtime.flight.aggregate.body.getLinearVelocity());
           if (state.phase === 'charging' && performance.now() - lastChargeUpdate > 70) {
-            lastChargeUpdate = performance.now(); publish({ charge: launchCharge('hold', setup.charge, performance.now() - chargeStart) });
+            lastChargeUpdate = performance.now();
+            const held = launchCharge('hold', setup.charge, performance.now() - chargeStart);
+            const window = state.world.rules?.aimWindow;
+            publish({ charge: window ? clamp(held, window.chargeMin, window.chargeMax) : held });
           }
           if (state.phase === 'flight' && runtime.flight) {
             const p = runtime.flight.mesh.position, v = runtime.flight.aggregate.body.getLinearVelocity();
@@ -731,7 +741,13 @@ export default function Worldcraft() {
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
           <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.orc()}>{ui.world.id === 'orc-static-v1' ? 'Reset Orc Stand-in' : 'Open Orc Stand-in'}</button><button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button></div>
         </section>}
-        {ui.world.rules?.pin && <section className={styles.goal} aria-label="Fixed goal">
+        {ui.presetId === 'back-pocket' && ui.world.rules?.pin && <section className={styles.goal} aria-label="Back Pocket">
+          <strong>Land behind the screen</strong>
+          <p>The gold circle is the pocket, behind the timber screen. The screen stays put. Move the bank. The carriage stays at centre. First ground inside the circle clears. There is no score.</p>
+          <p>{ui.setup.originX} m origin, fixed. Yaw {ui.world.rules.aimWindow?.yawMin}° to {ui.world.rules.aimWindow?.yawMax}°. Elevation {ui.world.rules.aimWindow?.elevationMin}° to {ui.world.rules.aimWindow?.elevationMax}°. Power {Math.round((ui.world.rules.aimWindow?.chargeMin ?? 0) * 100)}% to {Math.round((ui.world.rules.aimWindow?.chargeMax ?? 1) * 100)}%.</p>
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
+        {ui.world.rules?.pin && ui.presetId !== 'back-pocket' && <section className={styles.goal} aria-label="Fixed goal">
           <strong>First kiss inside the gold circle</strong>
           <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? 'Rail fixed: change the piece, keep the shot.' : 'Free rail.'}</p>
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
@@ -769,12 +785,14 @@ export default function Worldcraft() {
         </> : <section className={styles.playControls}>
           <div className={styles.buttonRow}><button type="button" disabled={locked} aria-pressed={ui.view === 'survey'} onClick={() => actions.current?.survey()}>{ui.view === 'survey' ? 'Address' : 'Survey'}</button><button type="button" aria-pressed={ui.showTrail} onClick={() => actions.current?.trail()}>Show trails</button></div>
           {!fixedRail && <>
+          {ui.world.rules?.originFixed ? <p>Carriage fixed at {ui.world.launcher.x} m.</p> : <>
           {numberControl('Origin', ui.setup.originX, originX => actions.current?.setup({ originX }), .5, -10, 10)}
           <div className={styles.buttonRow}><button type="button" aria-label="Origin left half metre" disabled={locked} onClick={() => actions.current?.setup({ originX: ui.setup.originX - .5 })}>← .5 m</button><button type="button" aria-label="Origin right half metre" disabled={locked} onClick={() => actions.current?.setup({ originX: ui.setup.originX + .5 })}>.5 m →</button></div>
-          {numberControl('Yaw', ui.setup.yaw, yaw => actions.current?.setup({ yaw }), .5, -70, 70)}
-          {numberControl('Elevation', ui.setup.elevation, elevation => actions.current?.setup({ elevation }), .5, 5, 85)}
+          </>}
+          {numberControl('Yaw', ui.setup.yaw, yaw => actions.current?.setup({ yaw }), .5, ui.world.rules?.aimWindow?.yawMin ?? -70, ui.world.rules?.aimWindow?.yawMax ?? 70)}
+          {numberControl('Elevation', ui.setup.elevation, elevation => actions.current?.setup({ elevation }), .5, ui.world.rules?.aimWindow?.elevationMin ?? 5, ui.world.rules?.aimWindow?.elevationMax ?? 85)}
           <div className={styles.controlRow}><label className={styles.field}>Power<select aria-label="Power control" disabled={locked} value={ui.powerMode} onChange={e => actions.current?.powerMode(e.target.value as UI['powerMode'])}><option value="set">Set power</option><option value="hold">Hold to charge</option></select></label><strong>{Math.round((ui.phase === 'charging' ? ui.charge : ui.setup.charge) * 100)}%</strong></div>
-          {ui.powerMode === 'set' && <input aria-label="Power" className={styles.range} disabled={locked} type="range" min="0" max="1" step=".01" value={ui.setup.charge} onChange={e => actions.current?.setup({ charge: Number(e.target.value) })} />}
+          {ui.powerMode === 'set' && <input aria-label="Power" className={styles.range} disabled={locked} type="range" min={ui.world.rules?.aimWindow?.chargeMin ?? 0} max={ui.world.rules?.aimWindow?.chargeMax ?? 1} step=".01" value={ui.setup.charge} onChange={e => actions.current?.setup({ charge: Number(e.target.value) })} />}
           </>}
           {ui.phase === 'ready' || ui.phase === 'charging' ? <button key="launch-control" type="button" className={styles.chargeButton} aria-label={ui.powerMode === 'set' ? 'Fire line' : 'Hold to charge'}
             onClick={() => { if (ui.powerMode === 'set') actions.current?.begin(); }}

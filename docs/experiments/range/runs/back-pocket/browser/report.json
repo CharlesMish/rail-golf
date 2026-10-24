@@ -1,0 +1,61 @@
+{
+  "entry": "docs/experiments/range/runs/back-pocket/browser/back-pocket-entry.png",
+  "play": "docs/experiments/range/runs/back-pocket/browser/back-pocket-play.png",
+  "solved": "docs/experiments/range/runs/back-pocket/browser/back-pocket-solved.png",
+  "entered": {
+    "presetId": "back-pocket",
+    "goal": {
+      "kind": "first-ground-zone",
+      "x": -8,
+      "z": 54,
+      "r": 4
+    },
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "objects": [
+      {
+        "id": "screen-a",
+        "x": -18,
+        "z": 46,
+        "yaw": 0
+      },
+      {
+        "id": "screen-b",
+        "x": -6,
+        "z": 46,
+        "yaw": 0
+      },
+      {
+        "id": "screen-c",
+        "x": 6,
+        "z": 46,
+        "yaw": 0
+      },
+      {
+        "id": "bank-yours",
+        "x": -22,
+        "z": 20,
+        "yaw": 0
+      }
+    ]
+  },
+  "outcome": {
+    "kind": "first-ground-zone",
+    "status": "clear",
+    "distance": 0.19376482069597709,
+    "scored": true
+  },
+  "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 20,
+    "charge": 0.75
+  },
+  "notice": "Pin cleared · first kiss 0.2 m from centre."
+}

@@ -1,0 +1,1317 @@
+[
+  {
+    "id": "family-1",
+    "representative": {
+      "pose": {
+        "region": "back",
+        "x": -4,
+        "z": 58,
+        "yaw": 15,
+        "ix": 5,
+        "iz": 1,
+        "iw": 4
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.75
+      },
+      "distance": 0.19376482069597709,
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "elapsed": 2.3333333333333277,
+      "reason": "first-ground-contact",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 1.5999999999999968,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.9833333333333287,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.3249999999999944,
+          "count": 1
+        }
+      ]
+    },
+    "axes": {
+      "aimYaw": {
+        "samples": 61,
+        "intervals": [
+          {
+            "min": -2,
+            "max": 0,
+            "count": 2,
+            "bestDistance": 0.19376482069597709
+          }
+        ],
+        "containing": {
+          "min": -2,
+          "max": 0,
+          "count": 2,
+          "bestDistance": 0.19376482069597709
+        }
+      },
+      "elevation": {
+        "samples": 37,
+        "intervals": [
+          {
+            "min": 19.5,
+            "max": 20.5,
+            "count": 3,
+            "bestDistance": 0.19376482069597709
+          }
+        ],
+        "containing": {
+          "min": 19.5,
+          "max": 20.5,
+          "count": 3,
+          "bestDistance": 0.19376482069597709
+        }
+      },
+      "charge": {
+        "samples": 61,
+        "intervals": [
+          {
+            "min": 0.72,
+            "max": 0.76,
+            "count": 5,
+            "bestDistance": 0.19376482069597709
+          }
+        ],
+        "containing": {
+          "min": 0.72,
+          "max": 0.76,
+          "count": 5,
+          "bestDistance": 0.19376482069597709
+        }
+      },
+      "bankX": {
+        "samples": 121,
+        "intervals": [
+          {
+            "min": -5.5,
+            "max": 4.5,
+            "count": 21,
+            "bestDistance": 0.19376482069597709
+          }
+        ],
+        "containing": {
+          "min": -5.5,
+          "max": 4.5,
+          "count": 21,
+          "bestDistance": 0.19376482069597709
+        }
+      },
+      "bankZ": {
+        "samples": 173,
+        "intervals": [
+          {
+            "min": 55.5,
+            "max": 59.5,
+            "count": 9,
+            "bestDistance": 0.19376482069597709
+          },
+          {
+            "min": 64.5,
+            "max": 66.5,
+            "count": 5,
+            "bestDistance": 3.092856974348351
+          }
+        ],
+        "containing": {
+          "min": 55.5,
+          "max": 59.5,
+          "count": 9,
+          "bestDistance": 0.19376482069597709
+        }
+      },
+      "bankYaw": {
+        "samples": 72,
+        "intervals": [
+          {
+            "min": -170,
+            "max": -160,
+            "count": 3,
+            "bestDistance": 0.2619140472188782
+          },
+          {
+            "min": 10,
+            "max": 20,
+            "count": 3,
+            "bestDistance": 0.19376482069597709
+          }
+        ],
+        "containing": {
+          "min": 10,
+          "max": 20,
+          "count": 3,
+          "bestDistance": 0.19376482069597709
+        }
+      }
+    },
+    "bankZCharge": {
+      "scored": 39,
+      "tried": 81,
+      "z": {
+        "min": 56,
+        "max": 60
+      },
+      "charge": {
+        "min": 0.72,
+        "max": 0.78
+      },
+      "cells": [
+        {
+          "z": 56,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 56,
+          "charge": 0.72,
+          "scored": true,
+          "distance": 1.3704205086101326
+        },
+        {
+          "z": 56,
+          "charge": 0.73,
+          "scored": true,
+          "distance": 0.5263504634422306
+        },
+        {
+          "z": 56,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 1.5861900782750655
+        },
+        {
+          "z": 56,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 1.1484622973746375
+        },
+        {
+          "z": 56,
+          "charge": 0.76,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 56,
+          "charge": 0.77,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 56,
+          "charge": 0.78,
+          "scored": false,
+          "distance": 24.681291213138422
+        },
+        {
+          "z": 56,
+          "charge": 0.79,
+          "scored": false,
+          "distance": 26.198676114518744
+        },
+        {
+          "z": 56.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 56.5,
+          "charge": 0.72,
+          "scored": true,
+          "distance": 1.5677329376623446
+        },
+        {
+          "z": 56.5,
+          "charge": 0.73,
+          "scored": true,
+          "distance": 1.1804883447235655
+        },
+        {
+          "z": 56.5,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 1.6599813897572093
+        },
+        {
+          "z": 56.5,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 2.6281931677112125
+        },
+        {
+          "z": 56.5,
+          "charge": 0.76,
+          "scored": false,
+          "distance": 8.355721702681244
+        },
+        {
+          "z": 56.5,
+          "charge": 0.77,
+          "scored": false,
+          "distance": 53.30041260363578
+        },
+        {
+          "z": 56.5,
+          "charge": 0.78,
+          "scored": false,
+          "distance": 53.37782983107706
+        },
+        {
+          "z": 56.5,
+          "charge": 0.79,
+          "scored": false,
+          "distance": 26.198676114518744
+        },
+        {
+          "z": 57,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 57,
+          "charge": 0.72,
+          "scored": true,
+          "distance": 1.7926266863977363
+        },
+        {
+          "z": 57,
+          "charge": 0.73,
+          "scored": true,
+          "distance": 0.9739809048879738
+        },
+        {
+          "z": 57,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 1.0558989609081668
+        },
+        {
+          "z": 57,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 1.701080805038545
+        },
+        {
+          "z": 57,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 2.039560308389014
+        },
+        {
+          "z": 57,
+          "charge": 0.77,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 57,
+          "charge": 0.78,
+          "scored": false,
+          "distance": 52.852082372545134
+        },
+        {
+          "z": 57,
+          "charge": 0.79,
+          "scored": false,
+          "distance": 26.198676114518744
+        },
+        {
+          "z": 57.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 57.5,
+          "charge": 0.72,
+          "scored": true,
+          "distance": 2.6012174426177856
+        },
+        {
+          "z": 57.5,
+          "charge": 0.73,
+          "scored": true,
+          "distance": 1.5106601031435458
+        },
+        {
+          "z": 57.5,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 0.6466994466751285
+        },
+        {
+          "z": 57.5,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 1.0268677655004927
+        },
+        {
+          "z": 57.5,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 1.9414669512044236
+        },
+        {
+          "z": 57.5,
+          "charge": 0.77,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 57.5,
+          "charge": 0.78,
+          "scored": false,
+          "distance": 51.04437723656764
+        },
+        {
+          "z": 57.5,
+          "charge": 0.79,
+          "scored": false,
+          "distance": 26.198676114518744
+        },
+        {
+          "z": 58,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 58,
+          "charge": 0.72,
+          "scored": true,
+          "distance": 3.385576421540973
+        },
+        {
+          "z": 58,
+          "charge": 0.73,
+          "scored": true,
+          "distance": 2.3808470689805232
+        },
+        {
+          "z": 58,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 1.067490902083568
+        },
+        {
+          "z": 58,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 0.19376482069597709
+        },
+        {
+          "z": 58,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 1.6235506556289154
+        },
+        {
+          "z": 58,
+          "charge": 0.77,
+          "scored": false,
+          "distance": 4.82048251599809
+        },
+        {
+          "z": 58,
+          "charge": 0.78,
+          "scored": false,
+          "distance": 41.665583864335936
+        },
+        {
+          "z": 58,
+          "charge": 0.79,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 58.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 58.5,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 4.34649266982946
+        },
+        {
+          "z": 58.5,
+          "charge": 0.73,
+          "scored": true,
+          "distance": 3.0242271180639686
+        },
+        {
+          "z": 58.5,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 1.9965344300585264
+        },
+        {
+          "z": 58.5,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 0.5432089115382843
+        },
+        {
+          "z": 58.5,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 0.4112035944307467
+        },
+        {
+          "z": 58.5,
+          "charge": 0.77,
+          "scored": true,
+          "distance": 1.050681493350372
+        },
+        {
+          "z": 58.5,
+          "charge": 0.78,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 58.5,
+          "charge": 0.79,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 59,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 59,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 5.161621095680571
+        },
+        {
+          "z": 59,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 4.177961514143502
+        },
+        {
+          "z": 59,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 2.9915164337214115
+        },
+        {
+          "z": 59,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 1.8761084057384352
+        },
+        {
+          "z": 59,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 0.474340535233697
+        },
+        {
+          "z": 59,
+          "charge": 0.77,
+          "scored": true,
+          "distance": 0.6050825171889818
+        },
+        {
+          "z": 59,
+          "charge": 0.78,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 59,
+          "charge": 0.79,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 59.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 59.5,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 6.3229258617707655
+        },
+        {
+          "z": 59.5,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 5.024845368341435
+        },
+        {
+          "z": 59.5,
+          "charge": 0.74,
+          "scored": true,
+          "distance": 3.697476243769199
+        },
+        {
+          "z": 59.5,
+          "charge": 0.75,
+          "scored": true,
+          "distance": 2.5280283976658797
+        },
+        {
+          "z": 59.5,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 1.3499211037781993
+        },
+        {
+          "z": 59.5,
+          "charge": 0.77,
+          "scored": true,
+          "distance": 0.6710326055277805
+        },
+        {
+          "z": 59.5,
+          "charge": 0.78,
+          "scored": false,
+          "distance": 6.710280541211954
+        },
+        {
+          "z": 59.5,
+          "charge": 0.79,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 60,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 60,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 7.158280872902355
+        },
+        {
+          "z": 60,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 6.026983195102037
+        },
+        {
+          "z": 60,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 4.550653858714723
+        },
+        {
+          "z": 60,
+          "charge": 0.75,
+          "scored": false,
+          "distance": 4.05633940036202
+        },
+        {
+          "z": 60,
+          "charge": 0.76,
+          "scored": true,
+          "distance": 2.234605377024873
+        },
+        {
+          "z": 60,
+          "charge": 0.77,
+          "scored": true,
+          "distance": 1.3171638004042359
+        },
+        {
+          "z": 60,
+          "charge": 0.78,
+          "scored": true,
+          "distance": 0.6885911549935775
+        },
+        {
+          "z": 60,
+          "charge": 0.79,
+          "scored": false,
+          "distance": null
+        }
+      ]
+    }
+  },
+  {
+    "id": "family-2",
+    "representative": {
+      "pose": {
+        "region": "back",
+        "x": 4,
+        "z": 70,
+        "yaw": -45,
+        "ix": 7,
+        "iz": 7,
+        "iw": 0
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 26,
+        "charge": 0.7
+      },
+      "distance": 0.11288690539120315,
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "elapsed": 2.6916666666666598,
+      "reason": "first-ground-contact",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 2.099999999999995,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.6833333333333265,
+          "count": 1
+        }
+      ]
+    },
+    "axes": {
+      "aimYaw": {
+        "samples": 61,
+        "intervals": [
+          {
+            "min": 0,
+            "max": 0,
+            "count": 1,
+            "bestDistance": 0.11288690539120315
+          }
+        ],
+        "containing": {
+          "min": 0,
+          "max": 0,
+          "count": 1,
+          "bestDistance": 0.11288690539120315
+        }
+      },
+      "elevation": {
+        "samples": 37,
+        "intervals": [
+          {
+            "min": 23.5,
+            "max": 26,
+            "count": 6,
+            "bestDistance": 0.11288690539120315
+          }
+        ],
+        "containing": {
+          "min": 23.5,
+          "max": 26,
+          "count": 6,
+          "bestDistance": 0.11288690539120315
+        }
+      },
+      "charge": {
+        "samples": 61,
+        "intervals": [
+          {
+            "min": 0.68,
+            "max": 0.7,
+            "count": 3,
+            "bestDistance": 0.11288690539120315
+          }
+        ],
+        "containing": {
+          "min": 0.68,
+          "max": 0.7,
+          "count": 3,
+          "bestDistance": 0.11288690539120315
+        }
+      },
+      "bankX": {
+        "samples": 121,
+        "intervals": [
+          {
+            "min": 4,
+            "max": 4,
+            "count": 1,
+            "bestDistance": 0.11288690539120315
+          }
+        ],
+        "containing": {
+          "min": 4,
+          "max": 4,
+          "count": 1,
+          "bestDistance": 0.11288690539120315
+        }
+      },
+      "bankZ": {
+        "samples": 173,
+        "intervals": [
+          {
+            "min": 69.5,
+            "max": 72,
+            "count": 6,
+            "bestDistance": 0.11288690539120315
+          }
+        ],
+        "containing": {
+          "min": 69.5,
+          "max": 72,
+          "count": 6,
+          "bestDistance": 0.11288690539120315
+        }
+      },
+      "bankYaw": {
+        "samples": 72,
+        "intervals": [
+          {
+            "min": -45,
+            "max": -45,
+            "count": 1,
+            "bestDistance": 0.11288690539120315
+          },
+          {
+            "min": 135,
+            "max": 135,
+            "count": 1,
+            "bestDistance": 0.11284453151186448
+          }
+        ],
+        "containing": {
+          "min": -45,
+          "max": -45,
+          "count": 1,
+          "bestDistance": 0.11288690539120315
+        }
+      }
+    },
+    "bankZCharge": {
+      "scored": 27,
+      "tried": 81,
+      "z": {
+        "min": 68,
+        "max": 72
+      },
+      "charge": {
+        "min": 0.66,
+        "max": 0.71
+      },
+      "cells": [
+        {
+          "z": 68,
+          "charge": 0.66,
+          "scored": true,
+          "distance": 3.010634441063494
+        },
+        {
+          "z": 68,
+          "charge": 0.67,
+          "scored": true,
+          "distance": 2.1382109878345132
+        },
+        {
+          "z": 68,
+          "charge": 0.68,
+          "scored": true,
+          "distance": 2.349120715225756
+        },
+        {
+          "z": 68,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 3.6422014383013828
+        },
+        {
+          "z": 68,
+          "charge": 0.7,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 68,
+          "charge": 0.71,
+          "scored": false,
+          "distance": 27.18494464692264
+        },
+        {
+          "z": 68,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 28.47194594173146
+        },
+        {
+          "z": 68,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 68,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 68.5,
+          "charge": 0.66,
+          "scored": true,
+          "distance": 3.5704257707642633
+        },
+        {
+          "z": 68.5,
+          "charge": 0.67,
+          "scored": true,
+          "distance": 2.530237511166611
+        },
+        {
+          "z": 68.5,
+          "charge": 0.68,
+          "scored": true,
+          "distance": 2.1422653393916944
+        },
+        {
+          "z": 68.5,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 2.9569556141420335
+        },
+        {
+          "z": 68.5,
+          "charge": 0.7,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 68.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 68.5,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 28.47194594173146
+        },
+        {
+          "z": 68.5,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 68.5,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 69,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 5.351016491474109
+        },
+        {
+          "z": 69,
+          "charge": 0.67,
+          "scored": true,
+          "distance": 3.3101985816171258
+        },
+        {
+          "z": 69,
+          "charge": 0.68,
+          "scored": true,
+          "distance": 1.9338835595544233
+        },
+        {
+          "z": 69,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 2.824544153918735
+        },
+        {
+          "z": 69,
+          "charge": 0.7,
+          "scored": false,
+          "distance": 31.495362464666766
+        },
+        {
+          "z": 69,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 69,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 28.47194594173146
+        },
+        {
+          "z": 69,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 69,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 69.5,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 5.31518294674992
+        },
+        {
+          "z": 69.5,
+          "charge": 0.67,
+          "scored": false,
+          "distance": 5.213112861959299
+        },
+        {
+          "z": 69.5,
+          "charge": 0.68,
+          "scored": true,
+          "distance": 3.22782010574527
+        },
+        {
+          "z": 69.5,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 1.7117815377945516
+        },
+        {
+          "z": 69.5,
+          "charge": 0.7,
+          "scored": true,
+          "distance": 0.9189531819551277
+        },
+        {
+          "z": 69.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 69.5,
+          "charge": 0.72,
+          "scored": false,
+          "distance": 28.47194594173146
+        },
+        {
+          "z": 69.5,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 69.5,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 70,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 6.0224769043746536
+        },
+        {
+          "z": 70,
+          "charge": 0.67,
+          "scored": false,
+          "distance": 4.692851438925381
+        },
+        {
+          "z": 70,
+          "charge": 0.68,
+          "scored": true,
+          "distance": 3.109620717555784
+        },
+        {
+          "z": 70,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 1.4657425530916337
+        },
+        {
+          "z": 70,
+          "charge": 0.7,
+          "scored": true,
+          "distance": 0.11288690539120315
+        },
+        {
+          "z": 70,
+          "charge": 0.71,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 70,
+          "charge": 0.72,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 70,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 70,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 70.5,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 6.939550506891357
+        },
+        {
+          "z": 70.5,
+          "charge": 0.67,
+          "scored": false,
+          "distance": 5.40738589759428
+        },
+        {
+          "z": 70.5,
+          "charge": 0.68,
+          "scored": true,
+          "distance": 3.8195844188948715
+        },
+        {
+          "z": 70.5,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 2.3737907820605484
+        },
+        {
+          "z": 70.5,
+          "charge": 0.7,
+          "scored": true,
+          "distance": 0.7134376915008945
+        },
+        {
+          "z": 70.5,
+          "charge": 0.71,
+          "scored": false,
+          "distance": 37.90709307626687
+        },
+        {
+          "z": 70.5,
+          "charge": 0.72,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 70.5,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 70.5,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 71,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 7.686366182389884
+        },
+        {
+          "z": 71,
+          "charge": 0.67,
+          "scored": false,
+          "distance": 6.331357960964237
+        },
+        {
+          "z": 71,
+          "charge": 0.68,
+          "scored": false,
+          "distance": 4.738396097397903
+        },
+        {
+          "z": 71,
+          "charge": 0.69,
+          "scored": true,
+          "distance": 3.1036315137010155
+        },
+        {
+          "z": 71,
+          "charge": 0.7,
+          "scored": true,
+          "distance": 1.649246890031302
+        },
+        {
+          "z": 71,
+          "charge": 0.71,
+          "scored": true,
+          "distance": 0.18061223989962086
+        },
+        {
+          "z": 71,
+          "charge": 0.72,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 71,
+          "charge": 0.73,
+          "scored": false,
+          "distance": 30.022700893406842
+        },
+        {
+          "z": 71,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 71.5,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 9.5900566445956
+        },
+        {
+          "z": 71.5,
+          "charge": 0.67,
+          "scored": false,
+          "distance": 7.0812017011409365
+        },
+        {
+          "z": 71.5,
+          "charge": 0.68,
+          "scored": false,
+          "distance": 5.480213209364182
+        },
+        {
+          "z": 71.5,
+          "charge": 0.69,
+          "scored": false,
+          "distance": 4.042235516853154
+        },
+        {
+          "z": 71.5,
+          "charge": 0.7,
+          "scored": true,
+          "distance": 2.4022832107000545
+        },
+        {
+          "z": 71.5,
+          "charge": 0.71,
+          "scored": true,
+          "distance": 0.827257702811589
+        },
+        {
+          "z": 71.5,
+          "charge": 0.72,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 71.5,
+          "charge": 0.73,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 71.5,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        },
+        {
+          "z": 72,
+          "charge": 0.66,
+          "scored": false,
+          "distance": 10.024878215066732
+        },
+        {
+          "z": 72,
+          "charge": 0.67,
+          "scored": false,
+          "distance": 8.875595156280296
+        },
+        {
+          "z": 72,
+          "charge": 0.68,
+          "scored": false,
+          "distance": 6.432088461569478
+        },
+        {
+          "z": 72,
+          "charge": 0.69,
+          "scored": false,
+          "distance": 4.798241387786848
+        },
+        {
+          "z": 72,
+          "charge": 0.7,
+          "scored": true,
+          "distance": 3.363113646554776
+        },
+        {
+          "z": 72,
+          "charge": 0.71,
+          "scored": true,
+          "distance": 1.6085700979115227
+        },
+        {
+          "z": 72,
+          "charge": 0.72,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 72,
+          "charge": 0.73,
+          "scored": false,
+          "distance": null
+        },
+        {
+          "z": 72,
+          "charge": 0.74,
+          "scored": false,
+          "distance": 31.59573177023428
+        }
+      ]
+    }
+  }
+]

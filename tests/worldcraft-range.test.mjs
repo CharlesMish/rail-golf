@@ -16,13 +16,13 @@ import {
   worldcraftGoalResult, WORLDCRAFT_CATALOG,
 } from '../lib/worldcraft-model.js';
 import {
-  adaptRangePreset, bindRangeShot, createOpenWorkshopPreset, exportRangePreset, importRangeDocument,
+  adaptRangePreset, bindRangeShot, createBackPocketPreset, createOpenWorkshopPreset, exportRangePreset, importRangeDocument,
   inferOutcome, latchRecordedComparison, listRangePresets, parseRangePreset, projectRangePreset,
-  rangeBindingText, rangePreset, recordedTrail, sha256Hex, validateRangePreset,
+  rangeBindingText, rangeOpeningSetup, rangePreset, recordedTrail, retargetRangeOpening, sha256Hex, validateRangePreset,
 } from '../lib/worldcraft-range.js';
 import { createVoiceLedger } from '../lib/worldcraft-resonance.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
-import { runRange } from '../scripts/range/run.mjs';
+import { createRangeHarness, runRange } from '../scripts/range/run.mjs';
 
 Logger.LogLevels = 0;
 const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
@@ -94,7 +94,10 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
   assert.deepEqual(preset.objects.map(object => [object.id, object.voice.material, object.voice.degree]), [
     ['ramp-yours', 'metal', 1], ['bank-yours', 'timber', 0], ['plate-yours', 'metal', 2],
   ]);
-  assert.deepEqual(listRangePresets(), [{ id: 'open-workshop', name: 'Open Workshop', goal: 'none' }]);
+  assert.deepEqual(listRangePresets(), [
+    { id: 'open-workshop', name: 'Open Workshop', goal: 'none' },
+    { id: 'back-pocket', name: 'Back Pocket', goal: 'first-ground-zone' },
+  ]);
   assert.deepEqual(inferOutcome(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), { kind: 'none', status: 'none', scored: false });
   assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72.5] }), null);
   assert.equal(worldcraftTargetResult(world, { reason: 'first-ground-contact', contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), null);
@@ -103,6 +106,34 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
   assert.equal(worldcraftIdentity(adaptRangePreset(projectRangePreset(preset, moved)).world), worldcraftIdentity(validateWorld(moved)));
   assert.throws(() => validateRangePreset({ ...preset, rules: { ...preset.rules, launcher: { ...preset.rules.launcher, fixed: false } } }));
   assert.throws(() => validateWorld({ ...world, rules: { ...world.rules, pin: { x: -10, z: 72.5, r: 3 } } }));
+});
+
+test('Back Pocket locks the screen and the carriage, and keeps aim inside its window', async () => {
+  const preset = createBackPocketPreset();
+  const text = exportRangePreset(preset);
+  assert.equal(await readFile(new URL('../docs/examples/worldcraft-back-pocket.json', import.meta.url), 'utf8'), text);
+  assert.equal(exportRangePreset(parseRangePreset(text)), text);
+  const { world } = adaptRangePreset(preset);
+  assert.equal(world.rules.goal.kind, 'first-ground-zone');
+  assert.equal(world.rules.pin.r, 4);
+  assert.equal(world.rules.rail, null);
+  assert.equal(world.rules.originFixed, true);
+  assert.deepEqual(world.rules.locked, ['screen-a', 'screen-b', 'screen-c']);
+  assert.deepEqual(world.rules.aimWindow, { yawMin: -60, yawMax: 60, elevationMin: 8, elevationMax: 26, chargeMin: 0.3, chargeMax: 0.9 });
+  assert.deepEqual(rangeOpeningSetup(preset), { railIndex: 1, originX: 0, yaw: 0, elevation: 18, charge: 0.55 });
+  assert.throws(() => validateWorldcraftShot(world, { ...rangeOpeningSetup(preset), originX: 1 }));
+  assert.throws(() => validateWorldcraftShot(world, { ...rangeOpeningSetup(preset), yaw: 61 }));
+  assert.throws(() => validateWorldcraftShot(world, { ...rangeOpeningSetup(preset), elevation: 7 }));
+  assert.throws(() => validateWorldcraftShot(world, { ...rangeOpeningSetup(preset), charge: 0.95 }));
+  assert.doesNotThrow(() => validateWorldcraftShot(world, { ...rangeOpeningSetup(preset), yaw: -6, elevation: 24, charge: 0.65 }));
+  assert.throws(() => validateWorldEdit(world, { ...world, objects: world.objects.map(object => object.id === 'screen-b' ? { ...object, x: -5.5 } : object) }));
+  const moved = { ...world, objects: world.objects.map(object => object.id === 'bank-yours' ? { ...object, x: -8, z: 62, yaw: 0 } : object) };
+  assert.equal(worldcraftIdentity(adaptRangePreset(projectRangePreset(preset, moved)).world), worldcraftIdentity(validateWorld(moved)));
+  const aimed = retargetRangeOpening(preset, { railIndex: 1, originX: 0, yaw: -6, elevation: 24, charge: 0.65 });
+  assert.equal(aimed.rules.launcher.fixed, false);
+  assert.equal(aimed.rules.launcher.yaw, -6);
+  assert.deepEqual(aimed.rules.launcher.window, preset.rules.launcher.window);
+  assert.throws(() => retargetRangeOpening(preset, { railIndex: 1, originX: 2, yaw: 0, elevation: 18, charge: 0.55 }));
 });
 
 test('fixed pieces cannot be moved and goal kinds do not borrow each others outcomes', () => {
@@ -244,4 +275,27 @@ test('twenty preset reloads keep the same Havok body count, and the runner write
   const rows = (await readFile(out, 'utf8')).trim().split('\n').map(line => JSON.parse(line));
   assert.equal(rows.length, 2);
   assert.equal(rows[0].gitSha, '4a2be209');
+});
+
+test('Back Pocket opening misses and both appendix imports clear under Havok', async () => {
+  const session = createRangeHarness(havok, adaptRangePreset(createBackPocketPreset()).world, '4a2be209');
+  try {
+    const opening = session.shoot(adaptRangePreset(createBackPocketPreset()).world, rangeOpeningSetup(createBackPocketPreset()));
+    assert.equal(opening.goalResult.scored, false);
+    assert.equal(opening.reason, 'first-ground-contact');
+    assert.ok(opening.goalResult.distance > 10);
+    for (const name of ['family-1', 'family-2']) {
+      const text = await readFile(new URL(`../docs/experiments/range/appendix/back-pocket/${name}.json`, import.meta.url), 'utf8');
+      const preset = parseRangePreset(text);
+      assert.equal(exportRangePreset(preset) + '\n', text);
+      assert.equal(preset.id, 'back-pocket');
+      const world = adaptRangePreset(preset).world;
+      const shot = session.shoot(world, rangeOpeningSetup(preset));
+      assert.equal(shot.reason, 'first-ground-contact');
+      assert.equal(shot.goalResult.scored, true);
+      assert.ok(shot.goalResult.distance < 1);
+      assert.ok(shot.contacts.some(contact => contact.body === 'worldcraft-object-bank-yours'));
+    }
+  } finally { session.dispose(); }
+  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'back-pocket']);
 });

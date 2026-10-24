@@ -1,0 +1,160 @@
+[
+  {
+    "id": "family-1",
+    "file": "docs/experiments/range/appendix/back-pocket/family-1.json",
+    "presetHash": "6ef7255566e13cd8245ccfe96f3b8b028b7a6216b4a1aa564bf7587ab9f09a9e",
+    "same": true,
+    "first": {
+      "type": "shot",
+      "family": "family-1",
+      "pass": "export",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.75
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.3333333333333277,
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "distance": 0.19376482069597709,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 1.5999999999999968,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.9833333333333287,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.3249999999999944,
+          "count": 1
+        }
+      ]
+    },
+    "second": {
+      "type": "shot",
+      "family": "family-1",
+      "pass": "import",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.75
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.3333333333333277,
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "distance": 0.19376482069597709,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 1.5999999999999968,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.9833333333333287,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.3249999999999944,
+          "count": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "family-2",
+    "file": "docs/experiments/range/appendix/back-pocket/family-2.json",
+    "presetHash": "745f1052bfe33d12c08f33560588a194afbefa5bc7a9444dbd724bd7db606068",
+    "same": true,
+    "first": {
+      "type": "shot",
+      "family": "family-2",
+      "pass": "export",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 26,
+        "charge": 0.7
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.6916666666666598,
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "distance": 0.11288690539120315,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 2.099999999999995,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.6833333333333265,
+          "count": 1
+        }
+      ]
+    },
+    "second": {
+      "type": "shot",
+      "family": "family-2",
+      "pass": "import",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 26,
+        "charge": 0.7
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.6916666666666598,
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "distance": 0.11288690539120315,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 2.099999999999995,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.6833333333333265,
+          "count": 1
+        }
+      ]
+    }
+  }
+]

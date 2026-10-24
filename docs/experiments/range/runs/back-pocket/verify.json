@@ -1,0 +1,146 @@
+[
+  {
+    "name": "direct-nearest",
+    "match": true,
+    "harness": {
+      "position": [
+        -8.8064603805542,
+        0.4300000071525574,
+        62.66121292114258
+      ],
+      "reason": "first-ground-contact",
+      "scored": false,
+      "distance": 8.698677348354218
+    },
+    "bound": {
+      "position": [
+        -8.8064603805542,
+        0.4300000071525574,
+        62.66121292114258
+      ],
+      "reason": "first-ground-contact",
+      "scored": false,
+      "distance": 8.698677348354218
+    }
+  },
+  {
+    "name": "default-nearest",
+    "match": true,
+    "harness": {
+      "position": [
+        -8.8064603805542,
+        0.4300000071525574,
+        62.66121292114258
+      ],
+      "reason": "first-ground-contact",
+      "scored": false,
+      "distance": 8.698677348354218
+    },
+    "bound": {
+      "position": [
+        -8.8064603805542,
+        0.4300000071525574,
+        62.66121292114258
+      ],
+      "reason": "first-ground-contact",
+      "scored": false,
+      "distance": 8.698677348354218
+    }
+  },
+  {
+    "name": "family-1",
+    "match": true,
+    "harness": {
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.19376482069597709
+    },
+    "bound": {
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.19376482069597709
+    }
+  },
+  {
+    "name": "family-2",
+    "match": true,
+    "harness": {
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.11288690539120315
+    },
+    "bound": {
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.11288690539120315
+    }
+  },
+  {
+    "name": "family-1-import",
+    "match": true,
+    "harness": {
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.19376482069597709
+    },
+    "bound": {
+      "position": [
+        -7.8073320388793945,
+        0.43000102043151855,
+        53.97941207885742
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.19376482069597709
+    }
+  },
+  {
+    "name": "family-2-import",
+    "match": true,
+    "harness": {
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.11288690539120315
+    },
+    "bound": {
+      "position": [
+        -7.915694236755371,
+        0.430001437664032,
+        53.9249267578125
+      ],
+      "reason": "first-ground-contact",
+      "scored": true,
+      "distance": 0.11288690539120315
+    }
+  }
+]
