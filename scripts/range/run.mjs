@@ -3,6 +3,9 @@
 // charge mapping, or the solver step.
 //
 //   node scripts/range/run.mjs --preset open-workshop --setups docs/experiments/range/setups/open-workshop.json --out docs/experiments/range/runs/open-workshop.jsonl
+//   node scripts/range/run.mjs --preset-file docs/experiments/range/appendix/soft-landing/forgiving.json --setups docs/experiments/range/setups/soft-landing-forgiving.json
+// Optional runRange fields `documentAt` and `labels` vary the world per setup and tag rows.
+// They are omitted from the single-preset path.
 import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -10,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 import Havok from '@babylonjs/havok';
 import { NullEngine, Scene, HavokPlugin, Vector3, Logger } from '@babylonjs/core';
 import { RAIL_RULES } from '../../lib/rail-golf-v02.js';
-import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot } from '../../lib/worldcraft-model.js';
+import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot, worldcraftIdentity } from '../../lib/worldcraft-model.js';
 import { adaptRangePreset, bindRangeShot, exportRangePreset, rangePreset, sha256Hex, validateRangePreset } from '../../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../../lib/worldcraft-runtime.js';
 
@@ -32,7 +35,7 @@ function harness(havok, world, build) {
     runtime,
     shoot(next, setup) {
       if (runtime.mode !== 'build') runtime.setMode('build');
-      if (runtime.world !== next) {
+      if (worldcraftIdentity(runtime.world) !== worldcraftIdentity(next)) {
         const replaced = runtime.replaceWorld(next, { intent: 'load' });
         if (!replaced.ok) throw new Error(replaced.error ?? 'replace failed');
       }
@@ -52,17 +55,20 @@ function harness(havok, world, build) {
   };
 }
 
-export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), havok }) {
+export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), havok, documentAt = null, labels = null }) {
   if (!Array.isArray(setups) || !setups.length) throw new Error('A range run needs at least one setup');
   if (!Number.isInteger(seed)) throw new Error('A range run needs an integer seed');
-  const document = typeof preset === 'string' ? rangePreset(preset) : validateRangePreset(preset);
-  const { world } = adaptRangePreset(document);
-  const presetHash = await sha256Hex(exportRangePreset(document));
+  if (labels && (!Array.isArray(labels) || labels.length !== setups.length)) throw new Error('Range labels must match the setups');
+  const base = typeof preset === 'string' ? rangePreset(preset) : validateRangePreset(preset);
+  const documentFor = index => documentAt ? validateRangePreset(documentAt(setups[index], index)) : base;
+  const first = documentFor(0);
+  const { world } = adaptRangePreset(first);
+  const presetHash = await sha256Hex(exportRangePreset(base));
   const provenance = {
     type: 'provenance',
     gitSha,
     seed,
-    presetId: document.id,
+    presetId: base.id,
     presetHash,
     catalog: WORLDCRAFT_CATALOG_VERSION,
     physics: WORLDCRAFT_PHYSICS_CONTRACT,
@@ -73,23 +79,28 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
     projectileMass: RAIL_RULES.projectileMass,
     projectileRadius: RAIL_RULES.projectileRadius,
   };
+  if (documentAt) provenance.worlds = 'per-setup';
   const lines = [provenance];
   const owned = havok ?? await Havok({ wasmBinary: await readFile(new URL('../../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   const session = harness(owned, world, gitSha === 'unknown' ? 'unknown' : gitSha);
   let rejected = 0;
   try {
     for (let index = 0; index < setups.length; index++) {
+      const document = documentFor(index);
+      const adapted = documentAt ? adaptRangePreset(document) : { preset: base, world };
       let setup;
-      try { setup = validateWorldcraftShot(world, setups[index]); }
+      try { setup = validateWorldcraftShot(adapted.world, setups[index]); }
       catch (error) {
         rejected += 1;
-        lines.push({ type: 'rejected', index, error: error.message });
+        const row = { type: 'rejected', index, error: error.message };
+        if (labels) row.label = labels[index] ?? null;
+        lines.push(row);
         continue;
       }
-      const last = session.shoot(world, setup);
+      const last = session.shoot(adapted.world, setup);
       const shot = await bindRangeShot({
-        preset: document,
-        world,
+        preset: adapted.preset,
+        world: adapted.world,
         setup,
         build: gitSha,
         launch: last.launch,
@@ -98,7 +109,9 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
         contacts: last.contacts,
         terminal: last.terminal,
       });
-      lines.push({ type: 'shot', index, seed, ...shot });
+      const row = { type: 'shot', index, seed, ...shot };
+      if (labels) row.label = labels[index] ?? null;
+      lines.push(row);
     }
   } finally { session.dispose(); }
   return { lines, rejected };
@@ -111,17 +124,19 @@ function arg(name) {
 
 async function main() {
   const presetId = arg('--preset');
+  const presetFile = arg('--preset-file');
   const setupsPath = arg('--setups');
   const outPath = arg('--out');
-  if (!presetId || !setupsPath) {
-    console.error('usage: node scripts/range/run.mjs --preset <id> --setups <file.json> [--out <file.jsonl>]');
+  if ((!presetId && !presetFile) || (presetId && presetFile) || !setupsPath) {
+    console.error('usage: node scripts/range/run.mjs (--preset <id> | --preset-file <preset.json>) --setups <file.json> [--out <file.jsonl>]');
     process.exitCode = 2;
     return;
   }
   const file = JSON.parse(await readFile(setupsPath, 'utf8'));
   const setups = Array.isArray(file) ? file : file.setups;
   const seed = Array.isArray(file) ? null : file.seed;
-  const { lines, rejected } = await runRange({ preset: presetId, setups, seed });
+  const preset = presetFile ? JSON.parse(await readFile(presetFile, 'utf8')) : presetId;
+  const { lines, rejected } = await runRange({ preset, setups, seed });
   const text = lines.map(line => JSON.stringify(line)).join('\n') + '\n';
   if (outPath) {
     await mkdir(dirname(outPath), { recursive: true });

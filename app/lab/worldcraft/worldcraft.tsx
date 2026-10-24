@@ -26,7 +26,7 @@ import {
 } from '@/lib/worldcraft-model';
 import {
   adaptRangePreset, bindRangeShot, exportRangePreset, importRangeDocument, listRangePresets,
-  projectRangePreset, rangePreset, recordedTrail,
+  projectRangePreset, rangePreset, rangeStartingSetup, recordedTrail,
   type RangePreset, type RangeShot,
 } from '@/lib/worldcraft-range';
 import styles from './worldcraft.module.css';
@@ -63,6 +63,11 @@ function shotNotice(last: WorldcraftRecord): string {
   if (last.goalResult?.kind === 'none') {
     if (last.reason === 'first-ground-contact') return 'First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.';
     return `Line ended: ${last.reason.replaceAll('-', ' ')}. No pin, no target, no score.`;
+  }
+  if (last.goalResult?.kind === 'first-ground-zone') {
+    if (last.goalResult.status === 'clear') return `Inside the circle · ${last.goalResult.distance?.toFixed(1)} m from centre. Not a score.`;
+    if (last.goalResult.status === 'miss') return `Outside the circle · ${last.goalResult.distance?.toFixed(1)} m from centre. Not a score.`;
+    return 'No landing in the circle. Not a score.';
   }
   if (last.targetResult?.status === 'hit') return 'ORC BONKED';
   if (last.targetResult?.status === 'miss') return 'The stand-in is untouched. Move the ramp, the bank, or the plate, then fire the same shot.';
@@ -264,8 +269,9 @@ export default function Worldcraft() {
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
           const goalKind = uiRef.current.world.rules?.goal?.kind;
-          const playNotice = goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : playNotice });
+          const adjustable = uiRef.current.preset?.rules.launcher.fixed === false;
+          const playNotice = goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : goalKind === 'first-ground-zone' && adjustable ? 'First ground in the gold circle. Aim within the rail stops. This is not a score.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? (adjustable ? 'Move a piece. The rail can change before the next shot.' : 'Move a piece, then try the same shot.') : playNotice });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
@@ -405,7 +411,7 @@ export default function Worldcraft() {
               if (loaded.kind === 'preset') {
                 const adapted = adaptRangePreset(loaded.preset);
                 if (commit(adapted.world, `${adapted.preset.name} imported.`, 'commit', true)) {
-                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: worldcraftFixedSetup(adapted.world)!, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null });
+                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: rangeStartingSetup(adapted.preset), memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null });
                   drawTrail([]); drawComparison();
                 }
                 trace('import-preset', { id: adapted.preset.id });
@@ -450,8 +456,12 @@ export default function Worldcraft() {
             try { loaded = adaptRangePreset(rangePreset(id)); }
             catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
-            if (commit(loaded.world, `${loaded.preset.name} opened. The rail is fixed. Revise a piece, then fire the same shot.`, 'commit', true)) {
-              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: worldcraftFixedSetup(loaded.world)! });
+            const adjustable = loaded.preset.rules.launcher.fixed === false;
+            const opened = adjustable
+              ? `${loaded.preset.name} opened. The gold circle judges the landing. Aim within the rail stops, or move a piece.`
+              : `${loaded.preset.name} opened. The rail is fixed. Revise a piece, then fire the same shot.`;
+            if (commit(loaded.world, opened, 'commit', true)) {
+              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeStartingSetup(loaded.preset) });
               drawTrail([]); drawComparison();
             }
           },
@@ -461,7 +471,7 @@ export default function Worldcraft() {
             const loaded = adaptRangePreset(baseline);
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, `${loaded.preset.name} reset to its preset.`, 'commit', true)) {
-              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: worldcraftFixedSetup(loaded.world)! });
+              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeStartingSetup(loaded.preset) });
               drawTrail([]); drawComparison();
             }
           },
@@ -575,6 +585,9 @@ export default function Worldcraft() {
             enterPreset(id: string) { actions.current?.enter(id); },
             resetPreset() { actions.current?.resetPreset(); },
             setMode(mode: 'build' | 'play') { actions.current?.mode(mode); },
+            setShot(patch: Partial<WorldcraftSetup>) { actions.current?.setup(patch); },
+            placePiece(id: string, patch: { x?: number; z?: number; yaw?: number }) { actions.current?.select(id); actions.current?.change(patch); },
+            camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool') { actions.current?.camera(action); },
             fire() { actions.current?.begin(); },
             survey() { actions.current?.survey(); },
             selectPiece(id: string) { actions.current?.select(id); },
@@ -719,6 +732,12 @@ export default function Worldcraft() {
         <p className={styles.hint}>{ui.comparison && ui.showTrail ? `Amber dashed: before${ui.comparison.worldIdentity !== worldcraftIdentity(ui.world) ? ' (earlier world)' : ''} · cyan: ${ui.phase === 'flight' ? 'live' : 'latest'}${earlierWorld && ui.phase !== 'flight' ? ' (earlier world)' : ''} · ${setupChanged ? 'launch setup changed' : 'same launch setup'}` : ui.phase === 'flight' ? 'Actual flight trail' : ui.history && ui.showTrail ? `${ui.history.label} · ${earlierWorld ? 'earlier world · recorded history' : 'actual recorded history'}` : ui.mode === 'build' ? 'Drag a piece · empty space moves the view' : 'One committed launch. No predicted arc.'}</p>
       </section>
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
+        {ui.preset && ui.world.rules?.goal?.kind === 'first-ground-zone' && <section className={styles.goal} aria-label="Landing zone">
+          <strong>First ground in the gold circle</strong>
+          <p>The circle judges the landing. Aim and power stay inside the rail stops. The block and the bank can move. A landing here is not a score.</p>
+          <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
         {ui.world.rules?.goal?.kind === 'none' && <section className={styles.goal} aria-label="Open goal">
           <strong>No pin, no target, no score</strong>
           <p>First ground ends the line. The ramp, bank, and plate can move and ring. The rail stays fixed.</p>
@@ -731,7 +750,7 @@ export default function Worldcraft() {
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
           <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.orc()}>{ui.world.id === 'orc-static-v1' ? 'Reset Orc Stand-in' : 'Open Orc Stand-in'}</button><button type="button" disabled={locked} onClick={() => actions.current?.house()}>{ui.world.id === 'house-shot-v1' ? 'Reset House Shot' : 'Open House Shot'}</button></div>
         </section>}
-        {ui.world.rules?.pin && <section className={styles.goal} aria-label="Fixed goal">
+        {!ui.preset && ui.world.rules?.pin && <section className={styles.goal} aria-label="Fixed goal">
           <strong>First kiss inside the gold circle</strong>
           <p>Pin ({ui.world.rules.pin.x}, {ui.world.rules.pin.z}) · radius {ui.world.rules.pin.r} m. {fixedRail ? 'Rail fixed: change the piece, keep the shot.' : 'Free rail.'}</p>
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
@@ -797,7 +816,8 @@ export default function Worldcraft() {
             {ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
             {ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}
             {ui.last.targetResult && (ui.last.contacts.length ? <ul className={styles.contactList}>{ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${contact.first}-${index}`} data-orc={contact.body === ui.last?.targetResult?.body ? 'hit' : undefined}>{contact.body} · first {contact.first.toFixed(3)} s · ({contact.point.x.toFixed(2)}, {contact.point.y.toFixed(2)}, {contact.point.z.toFixed(2)}) · ×{contact.count}</li>)}</ul> : <p>No contact recorded.</p>)}
-            {ui.last.pinResult && <p>{`${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}`}</p>}
+            {ui.preset && ui.last.goalResult?.kind === 'first-ground-zone' && <p>{`${ui.last.goalResult.status === 'clear' ? 'Inside the circle' : ui.last.goalResult.status === 'miss' ? 'Outside the circle' : 'No landing'}${ui.last.goalResult.distance === null ? '' : ` · ${ui.last.goalResult.distance.toFixed(1)} m from centre`}. Not a score.`}</p>}
+            {ui.last.pinResult && !(ui.preset && ui.last.goalResult?.kind === 'first-ground-zone') && <p>{`${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}`}</p>}
             <p>{qualified.length ? qualified.map(e => e.label ?? e.feature).join(' → ') : 'No qualified rebound recorded.'}</p>
             <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div>
           </div>}
