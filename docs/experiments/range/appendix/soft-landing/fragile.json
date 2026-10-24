@@ -1,0 +1,48 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "soft-landing",
+  "name": "Soft Landing",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "backstop",
+      "kind": "block",
+      "x": 18,
+      "z": 86,
+      "yaw": 0
+    },
+    {
+      "id": "redirect",
+      "kind": "bank",
+      "x": -18,
+      "z": 28,
+      "yaw": 0
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 25,
+      "charge": 0.61
+    },
+    "fixed": [],
+    "allowance": {
+      "bank": 1,
+      "block": 1
+    },
+    "goal": {
+      "kind": "first-ground-zone",
+      "x": 0,
+      "z": 64,
+      "r": 2.5
+    }
+  }
+}

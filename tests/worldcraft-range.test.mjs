@@ -16,9 +16,10 @@ import {
   worldcraftGoalResult, WORLDCRAFT_CATALOG,
 } from '../lib/worldcraft-model.js';
 import {
-  adaptRangePreset, bindRangeShot, createBackPocketPreset, createOpenWorkshopPreset, exportRangePreset, importRangeDocument,
+  adaptRangePreset, bindRangeShot, createBackPocketPreset, createOpenWorkshopPreset, createSoftLandingPreset,
+  exportRangePreset, importRangeDocument,
   inferOutcome, latchRecordedComparison, listRangePresets, parseRangePreset, projectRangePreset,
-  rangeBindingText, rangeOpeningSetup, rangePreset, recordedTrail, retargetRangeOpening, sha256Hex, validateRangePreset,
+  rangeBindingText, rangeOpeningSetup, rangePreset, rangeStartingSetup, recordedTrail, retargetRangeOpening, sha256Hex, validateRangePreset,
 } from '../lib/worldcraft-range.js';
 import { createVoiceLedger } from '../lib/worldcraft-resonance.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
@@ -97,6 +98,7 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
   assert.deepEqual(listRangePresets(), [
     { id: 'open-workshop', name: 'Open Workshop', goal: 'none' },
     { id: 'back-pocket', name: 'Back Pocket', goal: 'first-ground-zone' },
+    { id: 'soft-landing', name: 'Soft Landing', goal: 'first-ground-zone' },
   ]);
   assert.deepEqual(inferOutcome(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), { kind: 'none', status: 'none', scored: false });
   assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72.5] }), null);
@@ -104,7 +106,10 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
   assert.throws(() => validateWorldcraftShot(world, { ...worldcraftFixedSetup(world), yaw: 1 }));
   const moved = { ...world, objects: world.objects.map(object => object.id === 'ramp-yours' ? { ...object, yaw: 5 } : object) };
   assert.equal(worldcraftIdentity(adaptRangePreset(projectRangePreset(preset, moved)).world), worldcraftIdentity(validateWorld(moved)));
-  assert.throws(() => validateRangePreset({ ...preset, rules: { ...preset.rules, launcher: { ...preset.rules.launcher, fixed: false } } }));
+  const unfixed = validateRangePreset({ ...preset, id: 'open-aim', name: 'Open aim', rules: { ...preset.rules, launcher: { ...preset.rules.launcher, fixed: false } } });
+  assert.equal(unfixed.rules.launcher.fixed, false);
+  assert.equal(adaptRangePreset(unfixed).world.rules.rail, null);
+  assert.throws(() => validateRangePreset({ ...preset, rules: { ...preset.rules, launcher: { ...preset.rules.launcher, fixed: 'yes' } } }));
   assert.throws(() => validateWorld({ ...world, rules: { ...world.rules, pin: { x: -10, z: 72.5, r: 3 } } }));
 });
 
@@ -134,6 +139,77 @@ test('Back Pocket locks the screen and the carriage, and keeps aim inside its wi
   assert.equal(aimed.rules.launcher.yaw, -6);
   assert.deepEqual(aimed.rules.launcher.window, preset.rules.launcher.window);
   assert.throws(() => retargetRangeOpening(preset, { railIndex: 1, originX: 2, yaw: 0, elevation: 18, charge: 0.55 }));
+});
+
+test('Soft Landing judges a gold circle and leaves the launcher inside the existing shot bounds', async () => {
+  const preset = createSoftLandingPreset();
+  const text = exportRangePreset(preset);
+  assert.equal(await readFile(new URL('../docs/examples/worldcraft-soft-landing.json', import.meta.url), 'utf8'), text);
+  assert.equal(exportRangePreset(parseRangePreset(text)), text);
+  const { world } = adaptRangePreset(preset);
+  assert.equal(world.rules.rail, null);
+  assert.equal(worldcraftFixedSetup(world), null);
+  assert.equal(world.rules.goal.kind, 'first-ground-zone');
+  assert.deepEqual(world.rules.pin, { x: 0, z: 64, r: 2.5 });
+  assert.deepEqual(world.rules.goal, { kind: 'first-ground-zone', x: 0, z: 64, r: 2.5 });
+  assert.deepEqual(rangeStartingSetup(preset), { railIndex: 1, originX: 0, yaw: 0, elevation: 18, charge: 0.55 });
+  assert.deepEqual(preset.objects.map(object => [object.id, object.kind, object.x, object.z, object.yaw]), [
+    ['backstop', 'block', 18, 86, 0],
+    ['redirect', 'bank', -18, 28, 0],
+  ]);
+  assert.deepEqual(preset.rules.allowance, { bank: 1, block: 1 });
+  assert.deepEqual(world.rules.locked, []);
+  const aimed = { ...rangeStartingSetup(preset), yaw: 4, elevation: 25, charge: 0.61 };
+  assert.deepEqual(validateWorldcraftShot(world, aimed), aimed);
+  assert.throws(() => validateWorldcraftShot(world, { ...aimed, yaw: 71 }));
+  assert.throws(() => validateWorldcraftShot(world, { ...aimed, originX: 0.25 }));
+  const moved = { ...world, objects: world.objects.map(object => object.id === 'backstop' ? { ...object, x: 0, z: 69 } : object) };
+  const projected = projectRangePreset(preset, moved);
+  assert.equal(projected.rules.launcher.fixed, false);
+  assert.equal(projected.rules.launcher.charge, 0.55);
+  assert.deepEqual(projected.rules.goal, preset.rules.goal);
+  assert.equal(worldcraftIdentity(adaptRangePreset(projected).world), worldcraftIdentity(validateWorld(moved)));
+  assert.throws(() => validateWorld({ ...world, objects: [...world.objects, { id: 'extra-block', kind: 'block', x: 0, z: 48, yaw: 0 }] }));
+  const fragile = parseRangePreset(await readFile(new URL('../docs/experiments/range/appendix/soft-landing/fragile.json', import.meta.url), 'utf8'));
+  const forgiving = parseRangePreset(await readFile(new URL('../docs/experiments/range/appendix/soft-landing/forgiving.json', import.meta.url), 'utf8'));
+  const session = harness(world);
+  try {
+    const opening = session.shoot(rangeStartingSetup(preset));
+    assert.equal(opening.goalResult.kind, 'first-ground-zone');
+    assert.equal(opening.goalResult.scored, false);
+    assert.equal(opening.reason, 'first-ground-contact');
+    assert.ok(opening.goalResult.distance > 10);
+    assert.equal(opening.launch.mass, 1.5);
+    assert.equal(opening.launch.radius, 0.43);
+    const fragileText = exportRangePreset(fragile);
+    const forgivingText = exportRangePreset(forgiving);
+    assert.equal(await readFile(new URL('../docs/experiments/range/appendix/soft-landing/fragile.json', import.meta.url), 'utf8'), fragileText);
+    assert.equal(await readFile(new URL('../docs/experiments/range/appendix/soft-landing/forgiving.json', import.meta.url), 'utf8'), forgivingText);
+    assert.equal(fragile.rules.goal.r, preset.rules.goal.r);
+    assert.equal(forgiving.rules.goal.z, preset.rules.goal.z);
+    assert.deepEqual(fragile.objects, preset.objects);
+    assert.equal(forgiving.objects.find(object => object.id === 'backstop').z, 69);
+    const fragileWorld = adaptRangePreset(fragile).world;
+    const forgivingWorld = adaptRangePreset(forgiving).world;
+    const fragileShot = session.shoot(rangeStartingSetup(fragile));
+    const missedLong = session.shoot({ ...rangeStartingSetup(forgiving), railIndex: 1 });
+    assert.equal(missedLong.goalResult.scored, false);
+    session.runtime.setMode('build');
+    assert.equal(session.runtime.replaceWorld(forgivingWorld, { intent: 'load' }).ok, true);
+    const forgivingShot = session.shoot(rangeStartingSetup(forgiving));
+    assert.equal(fragileShot.goalResult.scored, true);
+    assert.equal(forgivingShot.goalResult.scored, true);
+    assert.ok(forgivingShot.contacts.some(contact => contact.body === 'worldcraft-object-backstop'));
+    assert.equal(fragileShot.contacts.some(contact => contact.body === 'worldcraft-object-backstop'), false);
+    assert.equal(worldcraftIdentity(fragileWorld), worldcraftIdentity(world));
+    assert.notEqual(worldcraftIdentity(forgivingWorld), worldcraftIdentity(world));
+  } finally { session.dispose(); }
+  const again = await runRange({ preset: forgiving, setups: [rangeStartingSetup(forgiving)], seed: 20261024, gitSha: '4a2be209', havok });
+  const replay = await runRange({ preset: parseRangePreset(exportRangePreset(forgiving)), setups: [rangeStartingSetup(forgiving)], seed: 20261024, gitSha: '4a2be209', havok });
+  assert.equal(again.lines[1].outcome.scored, true);
+  assert.deepEqual(again.lines[1].terminal, replay.lines[1].terminal);
+  assert.deepEqual(again.lines[1].points, replay.lines[1].points);
+  assert.equal(again.lines[1].presetHash, await sha256Hex(exportRangePreset(forgiving)));
 });
 
 test('fixed pieces cannot be moved and goal kinds do not borrow each others outcomes', () => {
@@ -297,5 +373,5 @@ test('Back Pocket opening misses and both appendix imports clear under Havok', a
       assert.ok(shot.contacts.some(contact => contact.body === 'worldcraft-object-bank-yours'));
     }
   } finally { session.dispose(); }
-  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'back-pocket']);
+  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'back-pocket', 'soft-landing']);
 });

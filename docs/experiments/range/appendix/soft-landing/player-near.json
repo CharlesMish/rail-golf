@@ -1,0 +1,4346 @@
+{
+  "fragile": {
+    "seedBase": 20262024,
+    "start": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 25,
+      "charge": 0.59
+    },
+    "protocol": [
+      {
+        "trial": 0,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 1,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 2,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 3,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 4,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 6,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 7,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 8,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 9,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": true
+      },
+      {
+        "trial": 0,
+        "step": 10,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": true
+      },
+      {
+        "trial": 0,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262024,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 1,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 2,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 3,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 5,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 6,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 7,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 9,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 10,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 1,
+        "step": 11,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262025,
+        "cleared": true
+      },
+      {
+        "trial": 2,
+        "step": 0,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 1,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 2,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 3,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 4,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 5,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 6,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 7,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 10,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 11,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262026,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 0,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 1,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 2,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 3,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 4,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 5,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 6,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 7,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 8,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 9,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 10,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 11,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262027,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 0,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 1,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 2,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 3,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 4,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 5,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 6,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 7,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 8,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 9,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 10,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262028,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 0,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 1,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 2,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 3,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": true
+      },
+      {
+        "trial": 5,
+        "step": 4,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": true
+      },
+      {
+        "trial": 5,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": true
+      },
+      {
+        "trial": 5,
+        "step": 6,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 7,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 8,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 9,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 10,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 11,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262029,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 0,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 1,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 3,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 4,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 5,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 6,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 8,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 10,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 6,
+        "step": 11,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262030,
+        "cleared": true
+      },
+      {
+        "trial": 7,
+        "step": 0,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 1,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 3,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 4,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 5,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 6,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 7,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 8,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 9,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 10,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 11,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262031,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 0,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 1,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 2,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 3,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 4,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 6,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 7,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 8,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 9,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 10,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262032,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 0,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 1,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 2,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 3,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 4,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 5,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 6,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 7,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 8,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": true
+      },
+      {
+        "trial": 9,
+        "step": 9,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": true
+      },
+      {
+        "trial": 9,
+        "step": 10,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": true
+      },
+      {
+        "trial": 9,
+        "step": 11,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262033,
+        "cleared": true
+      },
+      {
+        "trial": 10,
+        "step": 0,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 1,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 2,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 3,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 4,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 5,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 6,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 7,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 8,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 9,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 10,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 11,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262034,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 0,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 1,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 3,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 5,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 6,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 7,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 8,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 9,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 10,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262035,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 0,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 1,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 2,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 3,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 4,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 5,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 6,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 7,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 8,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 10,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 11,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262036,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 0,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 1,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 2,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 3,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 4,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 6,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 7,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 8,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 10,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262037,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 0,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 1,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 3,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 4,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 6,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 7,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 8,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 9,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 10,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 11,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262038,
+        "cleared": true
+      },
+      {
+        "trial": 15,
+        "step": 0,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 1,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 3,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 4,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 5,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 6,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 7,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 8,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 9,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 10,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 11,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262039,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 0,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 1,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 2,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 3,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 5,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 6,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 7,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 9,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 10,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 11,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262040,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 0,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 1,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 2,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 3,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 4,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 6,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 7,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 9,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 10,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 11,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262041,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 0,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 1,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 2,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 3,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 4,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 5,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 6,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 7,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 8,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 9,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 10,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 11,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262042,
+        "cleared": true
+      },
+      {
+        "trial": 19,
+        "step": 0,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 1,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 3,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 4,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 5,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 6,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 7,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 8,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": true
+      },
+      {
+        "trial": 19,
+        "step": 9,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": true
+      },
+      {
+        "trial": 19,
+        "step": 10,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": true
+      },
+      {
+        "trial": 19,
+        "step": 11,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20262043,
+        "cleared": true
+      }
+    ]
+  },
+  "forgiving": {
+    "seedBase": 20263024,
+    "start": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 25,
+      "charge": 0.59
+    },
+    "protocol": [
+      {
+        "trial": 0,
+        "step": 0,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 1,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 3,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 4,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 6,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 7,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 8,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 9,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 10,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 0,
+        "step": 11,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263024,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 0,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 1,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 2,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 3,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 6,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 8,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 9,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 10,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 1,
+        "step": 11,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263025,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 0,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 1,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 2,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 3,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 4,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 5,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": true
+      },
+      {
+        "trial": 2,
+        "step": 6,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": true
+      },
+      {
+        "trial": 2,
+        "step": 7,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 8,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 9,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 10,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 2,
+        "step": 11,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263026,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 1,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 2,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": true
+      },
+      {
+        "trial": 3,
+        "step": 3,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": true
+      },
+      {
+        "trial": 3,
+        "step": 4,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": true
+      },
+      {
+        "trial": 3,
+        "step": 5,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": true
+      },
+      {
+        "trial": 3,
+        "step": 6,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": true
+      },
+      {
+        "trial": 3,
+        "step": 7,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 8,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 9,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 10,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 3,
+        "step": 11,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263027,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 1,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 2,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 3,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 4,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 6,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 8,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 9,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 10,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 4,
+        "step": 11,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263028,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 1,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 3,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 4,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 5,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 6,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 7,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 9,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 10,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 5,
+        "step": 11,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263029,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 0,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 1,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 3,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 4,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 5,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 6,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 7,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 8,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 10,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 6,
+        "step": 11,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263030,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 0,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 1,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 3,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 4,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 5,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 6,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 7,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 8,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 9,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 10,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 7,
+        "step": 11,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263031,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 0,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 1,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 3,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 5,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 6,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 8,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 9,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 10,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 8,
+        "step": 11,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263032,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 1,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 2,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 3,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 4,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 5,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 6,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 7,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 8,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 9,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 10,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 9,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263033,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 0,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 1,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": true
+      },
+      {
+        "trial": 10,
+        "step": 2,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": true
+      },
+      {
+        "trial": 10,
+        "step": 3,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": true
+      },
+      {
+        "trial": 10,
+        "step": 4,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": true
+      },
+      {
+        "trial": 10,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": true
+      },
+      {
+        "trial": 10,
+        "step": 6,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 8,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 9,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 10,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 10,
+        "step": 11,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263034,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 0,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 1,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 2,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 3,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 4,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 5,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 6,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 7,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 8,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 9,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 10,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 11,
+        "step": 11,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263035,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 0,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 1,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 2,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 3,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 4,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 5,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 6,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": true
+      },
+      {
+        "trial": 12,
+        "step": 7,
+        "axis": "elevation",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 9,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 10,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": false
+      },
+      {
+        "trial": 12,
+        "step": 11,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263036,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 0,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 1,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 2,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 3,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 4,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": false
+      },
+      {
+        "trial": 13,
+        "step": 6,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 8,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 9,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 10,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 13,
+        "step": 11,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263037,
+        "cleared": true
+      },
+      {
+        "trial": 14,
+        "step": 0,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 1,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 3,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 4,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 5,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 6,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 8,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 9,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 10,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 14,
+        "step": 11,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263038,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 0,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 1,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 2,
+        "axis": "backstop.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 3,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 4,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 5,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 6,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 7,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 8,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 9,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 10,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 15,
+        "step": 11,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263039,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 0,
+        "axis": "redirect.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 1,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 2,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 3,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 4,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 6,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 7,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 8,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 9,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 10,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 16,
+        "step": 11,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263040,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 0,
+        "axis": "backstop.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 1,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 2,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 3,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 5,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 6,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 7,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 8,
+        "axis": "backstop.yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 10,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 17,
+        "step": 11,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263041,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 0,
+        "axis": "redirect.yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 1,
+        "axis": "charge",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 2,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 3,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 4,
+        "axis": "redirect.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": true
+      },
+      {
+        "trial": 18,
+        "step": 5,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 6,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 7,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 8,
+        "axis": "originX",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 9,
+        "axis": "redirect.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 10,
+        "axis": "originX",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 18,
+        "step": 11,
+        "axis": "redirect.z",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263042,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 0,
+        "axis": "elevation",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 1,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 2,
+        "axis": "backstop.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 3,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 4,
+        "axis": "redirect.x",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 5,
+        "axis": "backstop.x",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 6,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 7,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 8,
+        "axis": "yaw",
+        "sign": 1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 9,
+        "axis": "charge",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 10,
+        "axis": "yaw",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      },
+      {
+        "trial": 19,
+        "step": 11,
+        "axis": "backstop.z",
+        "sign": -1,
+        "accepted": true,
+        "seed": 20263043,
+        "cleared": false
+      }
+    ]
+  }
+}
