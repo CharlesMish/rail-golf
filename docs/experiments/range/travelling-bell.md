@@ -4,7 +4,7 @@ Feasibility only. This file does not measure players, and it does not establish 
 
 Research question: can a player reason about timing a committed projectile to intercept a slow trolley-mounted bell?
 
-Branch `lab/wc-range-e-travelling-bell`, cut from `lab/wc-range-20261024` at `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a`. No pull request, no merge, no deploy.
+Lane E was cut as `lab/wc-range-e-travelling-bell` from `lab/wc-range-20261024` at `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a`. The integrated range keeps that motion and hit rule. One revision, after the merge: the lane’s catalog opening already met the bell on 143 of 320 release phases, so the default arrangement was a solution. Those pieces moved to the appendix. The catalog opening is now a placement that misses on every coarse phase. No pull request, no merge to main, no deploy.
 
 ## Prior art, not imported
 
@@ -14,14 +14,14 @@ This lane does not merge that branch. It does not copy the synthesized bong, the
 
 ## Preset
 
-Catalog id `travelling-bell`, name `Travelling Bell`, goal `target-contact`. Canonical export: `docs/examples/worldcraft-travelling-bell.json`. Preset hash of that document: `ab39b2d6ea0e07ea509b1d62ba3d5ef42ed0b96782bdbcc46e56252aaa3bb293`.
+Catalog id `travelling-bell`, name `Travelling Bell`, goal `target-contact`. Canonical export: `docs/examples/worldcraft-travelling-bell.json`. Preset hash of that document, after the opening revision: `7b3c95341d131c8d6bc2e16a5a444a2b2f4411ce883be6cef9f8c2589372345e`.
 
-Opening layout, all three pieces locked, allowance empty:
+Opening layout, all three pieces locked, allowance empty. This is the prior-art supplied placement. It is not a solution.
 
 | Piece | Place |
 | --- | --- |
-| ramp-yours | (−8, 40), yaw 0° |
-| bank-yours | (0, 16), yaw 80° |
+| ramp-yours | (0, 42), yaw 0° |
+| bank-yours | (14, 28), yaw 0° |
 | shield | (−10, 52), yaw 0° |
 
 Launcher origin 0 m. Fixed rail: yaw 0°, elevation 18°, charge 0.55. The player's lever on this preset is the release phase. Pieces and aim stay put. Enter: header **Range** → **Travelling Bell**. Reset: **Reset preset**, which also returns the phase to 0.
@@ -76,7 +76,7 @@ Collider, required to match the fixed bell constants (the dull-block friction an
 | bell id | `bell` |
 | yaw | 0° (5° grid if a variant turns it) |
 
-A hit is any recorded contact with that body before the incumbent ledger closes. The bell does not have to be the first body touched. First ground still ends the line: the range session was not edited, and a miss in this sweep ends `first-ground-contact`. The existing yard exit (`out-of-bounds`) still closes the ledger too. On the opening layout, 14 of the coarse hits touched the bell and then left the yard without a ground contact. Those still count, because the bell contact was already in the ledger. `pin` stays null.
+A hit is any recorded contact with that body before the incumbent ledger closes. The bell does not have to be the first body touched. First ground still ends the line: the range session was not edited, and a miss in this sweep ends `first-ground-contact`. The existing yard exit (`out-of-bounds`) still closes the ledger too. On the appendix solution (the former opening), 14 of the coarse hits touched the bell and then left the yard without a ground contact. Those still count, because the bell contact was already in the ledger. The revised opening has no bell contact. `pin` stays null.
 
 Path clearance samples the skirt square (side 1.5 m) every 0.5 m along the rail and rejects a yard exit, a launcher-corridor overlap, or a piece overlap. Crown and clapper ornaments, the rail, the stops, and the 1 m ticks have no collider.
 
@@ -86,7 +86,7 @@ The architecture can support this, so the lane did not stop.
 
 The pose is a pure function of the recorded launch phase and the physics flight clock. `beforeStep` moves the bell to `phase + elapsed + dt` with Havok `ANIMATED` and `setTargetTransform`. `dt` is the session step, 1/120 s, not the frame delta. Launch and the build-mode action recreate the hull at the release pose, so idle velocity is not inherited. There is no idle step, so looking at the yard does not move the bell. The amber post is not a physics body, and it stays at the release pose during flight.
 
-The lab already sets the physics timestep to 1/120 s and the substep to 1000/120 ms. `(1000/120) / 1000 === 1/120` in IEEE-754. Headless code calls `physics._step(1/120)` once per `beforeStep`. The browser scene advances by the same substep, so a frame waits until the accumulator holds one substep and then runs one `beforeStep` and one `_step(1/120)`. A test fires the opening preset at phase 1 s both ways and the contact signatures match. Global deterministic lockstep was not turned on; that would have changed House Shot and Open Workshop.
+The lab already sets the physics timestep to 1/120 s and the substep to 1000/120 ms. `(1000/120) / 1000 === 1/120` in IEEE-754. Headless code calls `physics._step(1/120)` once per `beforeStep`. The browser scene advances by the same substep, so a frame waits until the accumulator holds one substep and then runs one `beforeStep` and one `_step(1/120)`. A test fires the catalog opening at phase 1 s both ways and the contact signatures match. That phase misses. The same test shape, on the appendix solution at phase 1 s, is a hit, and the headless contact list matches the lane. Global deterministic lockstep was not turned on; that would have changed House Shot and Open Workshop.
 
 After the shot, build mode places the bell back on the release pose. The reproducible record is the shot (contacts, terminal, `launchPhase`), not the mesh pose after the mode change.
 
@@ -104,7 +104,7 @@ node scripts/range/sweep-travelling-bell.mjs
 
 Raw rows: [appendix/travelling-bell/windows.json](appendix/travelling-bell/windows.json). One saved hit: [appendix/travelling-bell/hit-shot.json](appendix/travelling-bell/hit-shot.json). Short solution note: [appendix/travelling-bell/SOLUTIONS.md](appendix/travelling-bell/SOLUTIONS.md).
 
-Headless Havok, same runtime as the lab. Seed `20261024` is recorded and not applied to the solver. The file was first written against parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a` (wall time 29.183537229 s) while this lane was still uncommitted. It was then re-run on `3fd4f49d78fd6abed038b7e2483fb6dbe7849952`. Every coarse trial, every window, the repeat flag, the refire flag, and the phase-1 contacts match. The only fields that moved are `windows.json` `gitSha` (now that commit), `elapsedSeconds` (31.748901620999998), and `hit-shot.json` `worldSnapshot.build` (the same commit). The binding hash did not change.
+Headless Havok, same runtime as the lab. Seed `20261024` is recorded and not applied to the solver. The lane file was first written against parent `bdc6961dd19b148174f2b5c0a92cb2fd171fc43a` and re-run on `3fd4f49d78fd6abed038b7e2483fb6dbe7849952`. After the opening revision it was re-run on the integrated tree (parent merge `2e16c13f07a591b35690f76d79ba0292a74b333f`, wall time 29.686886236000003 s). `windows.json` `gitSha` and `hit-shot.json` `worldSnapshot.build` name the commit the sweep process read. The solution’s coarse trials, windows, repeat flag, refire flag, phase-1 contacts, and binding hash match the lane run. The catalog opening’s hit count does not: it is now 0.
 
 Inside one layout, aim, charge, pieces, and the bell law stay fixed. The only change is launch phase.
 
@@ -114,7 +114,13 @@ A window is a run of consecutive coarse hits. If phase 0 and the last coarse sam
 
 ### Opening (the catalog preset)
 
-World identity sha256 `2b698a8e4762a81684845e756410ce29a9ba5c3bdd5b9c439b12a9b279ad96e2`. Phase sweeps do not change it.
+World identity sha256 `ffbff70d06f8c26ad97b091d5c0db894265689091c18597aacdcec8c0adc5208`. Phase sweeps do not change it. Pieces: ramp (0, 42, yaw 0), bank (14, 28, yaw 0), shield (−10, 52, yaw 0). The bell law is the same one as the solution.
+
+Coarse: **0 / 320 = 0**. No window. Every trial ends `first-ground-contact`, order `object-ramp-yours>ground`. The bank is not touched. The bell is not touched. Release phase alone does not solve this layout. That matches the lane’s supplied-piece row, which used these same pieces and the same world identity. It is a different grid from the prior-art 10059-shot search (320 phases instead of 21 delays), not a re-run of that search.
+
+### Appendix solution (the lane’s former opening)
+
+Ramp (−8, 40, yaw 0), bank (0, 16, yaw 80), shield (−10, 52, yaw 0), same bell. Document: [appendix/travelling-bell/solution-preset.json](appendix/travelling-bell/solution-preset.json). World identity sha256 `2b698a8e4762a81684845e756410ce29a9ba5c3bdd5b9c439b12a9b279ad96e2`. Preset hash `ab39b2d6ea0e07ea509b1d62ba3d5ef42ed0b96782bdbcc46e56252aaa3bb293` (the lane catalog hash, because this document is that catalog).
 
 Coarse: **143 / 320 = 0.446875**. Two windows. Phase 0 misses.
 
@@ -130,13 +136,7 @@ Both windows are non-wrapping, `endOpen: true`. Contact orders on the 143 hits:
 | `object-bank-yours>object-ramp-yours>target-bell>ground` | 129 | `first-ground-contact` |
 | `object-bank-yours>object-ramp-yours>target-bell` | 14 | `out-of-bounds` |
 
-The 14 out-of-bounds hits are phases 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 6.625, 6.65, 6.675, and 6.7. Misses: 177 / 320, every one `first-ground-contact`, order `object-bank-yours>object-ramp-yours>ground`. Bell-contact time on the hits spans 4.308333333333337 s to 4.458333333333345 s.
-
-### Supplied (prior-art pieces)
-
-Ramp (0, 42, yaw 0), bank (14, 28, yaw 0), same shield and the same bell. World identity sha256 `ffbff70d06f8c26ad97b091d5c0db894265689091c18597aacdcec8c0adc5208`.
-
-Coarse: **0 / 320 = 0**. No window. Every trial ends `first-ground-contact`. Release phase alone does not solve that layout. That matches the prior-art report that delay alone does not solve the supplied layout. It is a different grid (320 phases instead of 21 delays), not a re-run of the 10059-shot search.
+The 14 out-of-bounds hits are phases 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 6.625, 6.65, 6.675, and 6.7. Misses: 177 / 320, every one `first-ground-contact`, order `object-bank-yours>object-ramp-yours>ground`. Bell-contact time on the hits spans 4.308333333333337 s to 4.458333333333345 s. These figures match the lane sweep of what was then the catalog opening.
 
 ### Late (one both-piece arrangement)
 
@@ -153,7 +153,7 @@ The wrapping window is phases from 6.816666666666666 s through the period and on
 
 ## Small aim changes
 
-Same opening pieces, charge 0.55. Yaw or elevation moves, so each row is a new world and a new identity. The catalog preset does not let the player do this; the fixed rail stays at yaw 0°, elevation 18°. These rows ask whether a small aim error erases the phase windows.
+These rows use the appendix solution’s pieces, charge 0.55, not the revised catalog opening. Yaw or elevation moves, so each row is a new world and a new identity. The catalog preset does not let the player do this; the fixed rail stays at yaw 0°, elevation 18°. These rows ask whether a small aim error erases the solution’s phase windows. The re-run reproduced the lane counts.
 
 | Yaw ° | Elevation ° | World identity sha256 | Coarse hits | Fraction | Windows |
 | ---: | ---: | --- | ---: | ---: | --- |
@@ -170,9 +170,9 @@ Window ends in that table are the refined `start` and `end`, `endOpen: true`, no
 
 ## Repeat, save, import, refire
 
-Opening preset, phase 1 s, fired twice in the same runtime. The trial records match (`determinism.match: true`).
+Appendix solution, phase 1 s, fired twice in the same runtime. The trial records match (`determinism.match: true`).
 
-That shot was bound, exported, parsed, and fired again from the imported world and `launchPhase`. The trial records match (`saveImportRefire.match: true`). Binding hash `88c126b099f13f6270ea200b9067ae58ad902eb84939751736136ede4ea5e7b9`. Preset hash as above.
+That shot was bound against the solution preset (the catalog opening no longer matches that world), exported, parsed, and fired again from the imported world and `launchPhase`. The trial records match (`saveImportRefire.match: true`). Binding hash `88c126b099f13f6270ea200b9067ae58ad902eb84939751736136ede4ea5e7b9`. Solution preset hash `ab39b2d6ea0e07ea509b1d62ba3d5ef42ed0b96782bdbcc46e56252aaa3bb293`.
 
 The saved shot, phase 1 s:
 
@@ -189,7 +189,7 @@ The saved shot, phase 1 s:
 
 ## Not established
 
-A fixed layout can have phase intervals that hit and phase intervals that miss, and a fraction of a degree of yaw can remove the coarse windows. That is a timing structure a player could in principle read off the post and the period. Nobody was asked to do it. The 0.446875 opening fraction is a coarse sample of one locked layout, not a player hit rate, and it is not comparable to the prior-art 350 / 10059 piece-and-delay search.
+The revised catalog opening misses at all 320 coarse phases. Release phase, the only lever on that preset, does not meet the bell. The appendix solution is a different locked layout: it has phase intervals that hit and phase intervals that miss, and a fraction of a degree of yaw can remove those coarse windows. That is a timing structure a player could in principle read off the post and the period, on that layout, not on the catalog opening. Nobody was asked to do it. The 0.446875 figure is a coarse sample of the solution layout, not a player hit rate, and it is not comparable to the prior-art 350 / 10059 piece-and-delay search. The opening’s 0 / 320 is the same kind of coarse sample.
 
 The slider is 0.05 s. The measured edges are 1/120 s. A player on the buttons cannot sit on the refined edge itself.
 
@@ -203,8 +203,4 @@ Run on this working tree before `3fd4f49d78fd6abed038b7e2483fb6dbe7849952` was c
 | `npm run lint` | exit 0. Three warnings, all outside this lane: `app/manners-game.tsx` (two `react-hooks/exhaustive-deps`) and `scripts/sweep-orc-static.mjs` (`details` unused). |
 | `npm test` | build, then 493 tests, 493 pass, 0 fail, 18.846 s |
 
-Headed Chrome 156.0.8078.47, SwiftShader WebGL (`--use-gl=angle --use-angle=swiftshader-webgl`), `/lab/worldcraft?qa=1`. Enter Travelling Bell, set launch phase to 1 s, survey view, fire the fixed rail.
-
-The browser shot matches `hit-shot.json`: goal `{ kind: "target-contact", status: "hit", body: "worldcraft-target-bell", scored: true }`, bell first contact 4.308333333333337 s at (−25.218032836914062, 2.8389058113098145, 57.966529846191406), order bank, ramp, bell, ground, terminal `first-ground-contact`. The receipt reads **BELL CONTACT**, "Release phase 1.00 s. Goal is target contact, not a first-ground zone.", and "Bell contact. First ground still ended the line. No score."
-
-Stills, also copied under [appendix/travelling-bell/](appendix/travelling-bell/): the release pose with the amber post (`release-phase.png`) and the receipt after the hit (`hit.png`).
+The lane’s headed Chrome check (156.0.8078.47, SwiftShader) fired what is now the appendix solution at phase 1 s. That browser shot matches `hit-shot.json`: goal `{ kind: "target-contact", status: "hit", body: "worldcraft-target-bell", scored: true }`, bell first contact 4.308333333333337 s at (−25.218032836914062, 2.8389058113098145, 57.966529846191406), order bank, ramp, bell, ground, terminal `first-ground-contact`. The receipt read **BELL CONTACT**. Stills under [appendix/travelling-bell/](appendix/travelling-bell/): `release-phase.png`, `hit.png`. Those stills are the solution layout, not the revised catalog opening. The integrated preset-switch check is in the range report.

@@ -1,15 +1,17 @@
 {
   "seed": 20261024,
-  "gitSha": "3fd4f49d78fd6abed038b7e2483fb6dbe7849952",
+  "gitSha": "2e16c13f07a591b35690f76d79ba0292a74b333f",
   "presetId": "travelling-bell",
-  "presetHash": "ab39b2d6ea0e07ea509b1d62ba3d5ef42ed0b96782bdbcc46e56252aaa3bb293",
-  "openingWorldIdentitySha256": "2b698a8e4762a81684845e756410ce29a9ba5c3bdd5b9c439b12a9b279ad96e2",
+  "presetHash": "7b3c95341d131c8d6bc2e16a5a444a2b2f4411ce883be6cef9f8c2589372345e",
+  "openingWorldIdentitySha256": "ffbff70d06f8c26ad97b091d5c0db894265689091c18597aacdcec8c0adc5208",
+  "solutionWorldIdentitySha256": "2b698a8e4762a81684845e756410ce29a9ba5c3bdd5b9c439b12a9b279ad96e2",
+  "aimLayout": "solution",
   "coarseStepSeconds": 0.025,
   "fineStepSeconds": 0.008333333333333333,
   "periodSeconds": 8,
   "speedMetersPerSecond": 1,
   "lengthMeters": 4,
-  "elapsedSeconds": 31.748901620999998,
+  "elapsedSeconds": 29.686886236000003,
   "determinism": {
     "phase": 1,
     "match": true
@@ -23,7 +25,3249 @@
   "layouts": [
     {
       "name": "opening",
-      "note": "Catalog preset. Ramp (−8, 40, yaw 0), bank (0, 16, yaw 80), shield (−10, 52).",
+      "note": "Catalog preset. Ramp (0, 42, yaw 0), bank (14, 28, yaw 0), shield (−10, 52). The bell law is unchanged.",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": 0,
+          "z": 42,
+          "yaw": 0
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 14,
+          "z": 28,
+          "yaw": 0
+        },
+        {
+          "id": "shield",
+          "kind": "block",
+          "x": -10,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "launcher": {
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "worldIdentitySha256": "ffbff70d06f8c26ad97b091d5c0db894265689091c18597aacdcec8c0adc5208",
+      "trials": [
+        {
+          "phase": 0,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 0.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 1.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 2.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 3.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 4.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 5.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 6.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.025,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.05,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.075,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.1,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.125,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.15,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.175,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.2,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.225,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.25,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.275,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.3,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.325,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.35,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.375,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.4,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.425,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.45,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.475,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.5,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.525,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.55,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.575,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.6,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.625,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.65,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.675,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.7,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.725,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.75,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.775,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.8,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.825,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.85,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.875,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.9,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.925,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.95,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        },
+        {
+          "phase": 7.975,
+          "hit": false,
+          "status": "miss",
+          "reason": "first-ground-contact",
+          "order": "object-ramp-yours>ground",
+          "bellFirst": null,
+          "scored": false,
+          "pin": null
+        }
+      ],
+      "coarse": {
+        "trials": 320,
+        "hits": 0,
+        "fraction": 0,
+        "orders": {}
+      },
+      "windows": []
+    },
+    {
+      "name": "solution",
+      "note": "Former catalog opening, now an appendix solution. Ramp (−8, 40, yaw 0), bank (0, 16, yaw 80), shield (−10, 52). Same bell.",
       "objects": [
         {
           "id": "ramp-yours",
@@ -3292,3248 +6536,6 @@
           "endOpen": true
         }
       ]
-    },
-    {
-      "name": "supplied",
-      "note": "Prior-art supplied pieces. Ramp (0, 42, yaw 0), bank (14, 28, yaw 0), same shield and bell.",
-      "objects": [
-        {
-          "id": "ramp-yours",
-          "kind": "ramp",
-          "x": 0,
-          "z": 42,
-          "yaw": 0
-        },
-        {
-          "id": "bank-yours",
-          "kind": "bank",
-          "x": 14,
-          "z": 28,
-          "yaw": 0
-        },
-        {
-          "id": "shield",
-          "kind": "block",
-          "x": -10,
-          "z": 52,
-          "yaw": 0
-        }
-      ],
-      "launcher": {
-        "yaw": 0,
-        "elevation": 18,
-        "charge": 0.55
-      },
-      "worldIdentitySha256": "ffbff70d06f8c26ad97b091d5c0db894265689091c18597aacdcec8c0adc5208",
-      "trials": [
-        {
-          "phase": 0,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 0.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 1.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 2.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 3.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 4.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 5.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 6.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.025,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.05,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.075,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.1,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.125,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.15,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.175,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.2,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.225,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.25,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.275,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.3,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.325,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.35,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.375,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.4,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.425,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.45,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.475,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.5,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.525,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.55,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.575,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.6,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.625,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.65,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.675,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.7,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.725,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.75,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.775,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.8,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.825,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.85,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.875,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.9,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.925,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.95,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        },
-        {
-          "phase": 7.975,
-          "hit": false,
-          "status": "miss",
-          "reason": "first-ground-contact",
-          "order": "object-ramp-yours>ground",
-          "bellFirst": null,
-          "scored": false,
-          "pin": null
-        }
-      ],
-      "coarse": {
-        "trials": 320,
-        "hits": 0,
-        "fraction": 0,
-        "orders": {}
-      },
-      "windows": []
     },
     {
       "name": "late",

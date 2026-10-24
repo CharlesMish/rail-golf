@@ -13,7 +13,7 @@ import {
 import { resonanceOf } from '../lib/worldcraft-resonance.js';
 import {
   adaptRangePreset, bindRangeShot, createTravellingBellPreset, exportRangePreset, exportRangeShot,
-  parseRangeShot, rangeBindingText, sha256Hex,
+  parseRangeShot, rangeBindingText, sha256Hex, validateRangePreset,
 } from '../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
 
@@ -61,6 +61,15 @@ function signature(last) {
 }
 
 const { preset, world } = adaptRangePreset(createTravellingBellPreset());
+const solutionPreset = validateRangePreset({
+  ...preset,
+  objects: [
+    { id: 'ramp-yours', kind: 'ramp', x: -8, z: 40, yaw: 0 },
+    { id: 'bank-yours', kind: 'bank', x: 0, z: 16, yaw: 80 },
+    { id: 'shield', kind: 'block', x: -10, z: 52, yaw: 0 },
+  ],
+});
+const solution = adaptRangePreset(solutionPreset);
 const setup = { railIndex: 1, originX: 0, yaw: 0, elevation: 18, charge: 0.55 };
 
 test('the travelling bell is a target-contact preset and does not change v1 worlds', async () => {
@@ -122,13 +131,9 @@ test('release phase is recorded, idle waiting does not move the bell, and headle
     assert.equal(first.reason, 'first-ground-contact');
     assert.equal(first.pinResult, null);
     assert.equal(first.goalResult.kind, 'target-contact');
-    assert.equal(first.goalResult.status, 'hit');
-    assert.equal(first.goalResult.scored, true);
-    assert.equal(first.targetResult.body, 'worldcraft-target-bell');
-    assert.equal(first.contacts.find(contact => contact.body === 'worldcraft-target-bell').first, 4.308333333333337);
-    assert.deepEqual(first.contacts.map(contact => contact.body), [
-      'worldcraft-object-bank-yours', 'worldcraft-object-ramp-yours', 'worldcraft-target-bell', 'worldcraft-ground',
-    ]);
+    assert.equal(first.goalResult.status, 'miss');
+    assert.equal(first.goalResult.scored, false);
+    assert.equal(first.contacts.some(contact => contact.body === 'worldcraft-target-bell'), false);
     assert.ok(Math.hypot(mesh.position.x - parked.x, mesh.position.z - parked.z) < 1e-6);
     const again = session.shoot(setup);
     assert.deepEqual(signature(again), signature(first));
@@ -155,12 +160,67 @@ test('release phase is recorded, idle waiting does not move the bell, and headle
   } finally { browser.dispose(); }
 });
 
-test('a saved shot imports and refires the same contact from its recorded phase', async () => {
+test('the catalog opening misses the bell on every coarse release phase', async () => {
+  const session = harness(world);
+  try {
+    for (let step = 0; step < 320; step++) {
+      const phase = Math.round(step * 0.025 * 1e9) / 1e9;
+      assert.equal(session.runtime.setLaunchPhase(phase).ok, true);
+      const last = session.shoot(setup);
+      assert.equal(last.goalResult.status, 'miss', `phase ${phase} hit the bell`);
+      assert.equal(last.goalResult.scored, false);
+      assert.equal(last.contacts.some(contact => contact.body === 'worldcraft-target-bell'), false, `phase ${phase}`);
+    }
+  } finally { session.dispose(); }
+});
+
+test('the appendix solution still meets the bell at phase 1 and round-trips', async () => {
+  assert.equal(await readFile(new URL('../docs/experiments/range/appendix/travelling-bell/solution-preset.json', import.meta.url), 'utf8'), exportRangePreset(solutionPreset));
+  assert.equal(solution.preset.rules.goal.motion.speed, preset.rules.goal.motion.speed);
+  assert.equal(solution.preset.rules.goal.motion.hit, preset.rules.goal.motion.hit);
+  assert.deepEqual(solution.preset.rules.goal.motion.endpoints, preset.rules.goal.motion.endpoints);
+  assert.deepEqual(solution.preset.rules.goal.motion.collider, preset.rules.goal.motion.collider);
+  const session = harness(solution.world);
+  let shot;
+  try {
+    assert.equal(session.runtime.setLaunchPhase(1).ok, true);
+    const last = session.shoot(setup);
+    assert.equal(last.goalResult.status, 'hit');
+    assert.equal(last.goalResult.scored, true);
+    assert.equal(last.contacts.find(contact => contact.body === 'worldcraft-target-bell').first, 4.308333333333337);
+    assert.deepEqual(last.contacts.map(contact => contact.body), [
+      'worldcraft-object-bank-yours', 'worldcraft-object-ramp-yours', 'worldcraft-target-bell', 'worldcraft-ground',
+    ]);
+    shot = await bindRangeShot({
+      preset: solutionPreset, world: solution.world, setup, build: '4a2be209', launch: last.launch, points: last.samples,
+      events: last.evidence, contacts: last.contacts, terminal: last.terminal, launchPhase: last.launchPhase,
+    });
+    assert.equal(shot.launchPhase, 1);
+    assert.equal(shot.outcome.status, 'hit');
+    assert.equal(shot.bindingHash, await sha256Hex(rangeBindingText(shot.worldSnapshot.worldIdentity, shot.setup, shot.launchPhase)));
+    assert.notEqual(worldcraftIdentity(world), shot.worldSnapshot.worldIdentity);
+  } finally { session.dispose(); }
+
+  const text = exportRangeShot(shot);
+  const loaded = parseRangeShot(text);
+  assert.equal(loaded.launchPhase, 1);
+  assert.equal(loaded.outcome.status, 'hit');
+  const replay = harness(loaded.worldSnapshot.world);
+  try {
+    assert.equal(replay.runtime.setLaunchPhase(loaded.launchPhase).ok, true);
+    const last = replay.shoot(loaded.setup);
+    assert.equal(last.goalResult.status, 'hit');
+    assert.equal(last.contacts.find(contact => contact.body === 'worldcraft-target-bell').first, 4.308333333333337);
+  } finally { replay.dispose(); }
+});
+
+test('a saved opening miss imports and refires the same contact from its recorded phase', async () => {
   const session = harness(world);
   let shot;
   try {
     assert.equal(session.runtime.setLaunchPhase(1).ok, true);
     const last = session.shoot(setup);
+    assert.equal(last.goalResult.status, 'miss');
     shot = await bindRangeShot({
       preset, world, setup, build: '4a2be209', launch: last.launch, points: last.samples,
       events: last.evidence, contacts: last.contacts, terminal: last.terminal, launchPhase: last.launchPhase,

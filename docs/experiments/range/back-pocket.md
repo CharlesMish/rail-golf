@@ -59,7 +59,7 @@ Clears: 708. Connected components, adjacent when every lattice index differs by 
 | Component | Clears | What it is |
 | --- | --- | --- |
 | family-1 | 644 | One back-band island. Bank x −24..12, z 56..76, yaw −45..45. Median bank z 64, median yaw 0, median charge 0.75. 497 clears touch the spare bank and not the screen; 147 touch both. |
-| family-2 | 28 | Separate. Bank x is only 4, yaw is only −45, z 64..76. Every clear touches the spare bank and not the screen. Aim yaw on the lattice is only 0. |
+| family-2 | 28 | Separate, and a knife-edge. Bank x is only 4, yaw is only −45, z 64..76. Every clear touches the spare bank and not the screen. Aim yaw is only exactly 0. |
 | family-3 .. family-8 | 14, 6, 3, 2, 2, 2 | Smaller back-band islands. Not scanned axis by axis. Their grid boxes are in `grid-summary.json`. |
 | Side band | 4 clears, all singletons | No adjacent clear. Not a family. |
 
@@ -69,7 +69,7 @@ Representatives are the minimum-distance clear of each component, not a later ha
 
 **Family 1.** Bank (−4, 58) yaw 15. Aim yaw 0, elevation 20, charge 0.75. First ground (−7.807, 53.979), 0.194 m from the centre, at 2.333 s. Contacts: spare bank at 1.600 s, `screen-b` at 1.983 s, ground at 2.325 s. The return kisses the screen and drops into the circle. Preset hash `6ef7255566e13cd8245ccfe96f3b8b028b7a6216b4a1aa564bf7587ab9f09a9e`.
 
-**Family 2.** Bank (4, 70) yaw −45. Aim yaw 0, elevation 26, charge 0.70. First ground (−7.916, 53.925), 0.113 m from the centre, at 2.692 s. Contacts: spare bank at 2.100 s, ground at 2.683 s. No screen. A longer placement off the angled face. Preset hash `745f1052bfe33d12c08f33560588a194afbefa5bc7a9444dbd724bd7db606068`.
+**Family 2.** Bank (4, 70) yaw −45. Aim yaw exactly 0, elevation 26, charge 0.70. First ground (−7.916, 53.925), 0.113 m from the centre, at 2.692 s. Contacts: spare bank at 2.100 s, ground at 2.683 s. No screen. A longer placement off the angled face. The aim yaw is a knife-edge: the representative clears only when aim yaw is exactly 0. Preset hash `745f1052bfe33d12c08f33560588a194afbefa5bc7a9444dbd724bd7db606068`.
 
 File: `grid.jsonl`.
 
@@ -94,7 +94,7 @@ Bank z × charge on a ±2 m by ±0.04 rectangle, step 0.5 m and 0.01: 39 of 81 c
 
 | Axis | Step | Contiguous clears | Just outside |
 | --- | --- | --- | --- |
-| Aim yaw | 0.5°, then 0.1° beside 0 | 0° only | −0.1° misses by 8.496 m. 0.1° misses by 8.789 m. −2° and 2° miss by about 24.7 m |
+| Aim yaw | 0.5°, then 0.1° beside 0 | exactly 0° only (knife-edge) | −0.1° misses by 8.496 m. 0.1° misses by 8.789 m. −2° and 2° miss by about 24.7 m |
 | Elevation | 0.5° | 23.5° .. 26° (6) | 23° misses by 5.073 m |
 | Charge | 0.01 | 0.68 .. 0.70 (3) | 0.67 misses by 4.693 m. 0.71 is out of bounds |
 | Bank x | 0.5 m | 4 m only | 3.5 m misses by 22.919 m. 4.5 m misses by 11.206 m |
@@ -103,7 +103,7 @@ Bank z × charge on a ±2 m by ±0.04 rectangle, step 0.5 m and 0.01: 39 of 81 c
 
 Bank z × charge on the same kind of rectangle: 27 of 81 clear, scored z 68..72, scored charge 0.66..0.71.
 
-Family 1 is a wide placement with a narrow aim. Family 2 is a farther angled face with a few metres of z, a short elevation band, and a power band two hundredths wide. Its aim yaw, its x, and its 5° rotation are cliffs. The review’s ~3 m shift per 5° is the right scale for those cliffs: leaving family 1’s yaw interval by one editor step misses by about 5–6 m, and family 2 does not survive a 5° turn at all. Files: `tolerance.jsonl`, `yaw-fine.jsonl`.
+Family 1 is a wide placement with a narrow aim. Family 2 is a knife-edge. It is a farther angled face with a few metres of z, a short elevation band, and a power band two hundredths wide, and its aim yaw clears only at exactly 0. Its bank x and its 5° rotation are cliffs as well. The review’s ~3 m shift per 5° is the right scale for those cliffs: leaving family 1’s yaw interval by one editor step misses by about 5–6 m, and family 2 does not survive a tenth of a degree of aim yaw or a 5° turn at all. Files: `tolerance.jsonl`, `yaw-fine.jsonl`.
 
 ## 4. Export, import, refire
 
@@ -132,7 +132,7 @@ For each representative, `exportRangePreset` was parsed back with `parseRangePre
 Kept local, and called out because other lanes compile presets and fire shots.
 
 - A v1 world may carry `rules.originFixed: true` and `rules.aimWindow`. Worlds that omit them are unchanged. The v1 export hash `127a033284941a110bd174e59e51700f5bdce4ca3b74a6f6c381786586141389` is still the range test’s constant. Mass, radius, gravity, charge mapping, and first-kiss / first-ground are untouched.
-- A preset launcher with `fixed: false` must say `originFixed` and must carry a window. Open Workshop stays `fixed: true`. Its canonical bytes are unchanged.
+- Back Pocket’s free launcher says `originFixed: true` and carries a window. An adjustable launcher with `fixed: false` and no window is a different preset shape (Soft Landing) and is not this lane. Open Workshop stays `fixed: true`. Its canonical bytes are unchanged.
 - `rangeOpeningSetup` is the shot a preset opens on. `retargetRangeOpening` writes the fired aim back as that opening and does not change the window. The lab export uses it, so a saved file refires the shot that was aimed.
 - `createRangeHarness` and `rangeProvenance` are exported from `scripts/range/run.mjs`. `runRange` is still one preset. This lane’s grid moves the bank, so it reuses the harness and writes the same provenance fields, with `campaign` set. CLI additions: `--preset-file`, `--omit-points`, `--campaign`.
 - The lab clamps yaw, elevation, and power to the window, locks the carriage when `originFixed` is set, and the Back Pocket goal note does not print solution coordinates.
@@ -149,7 +149,7 @@ Hashes of the documents these runs used:
 ## Not established
 
 - No player fired these shots. The clear counts are lattice counts, not a chance a person hits.
-- Family 2’s aim yaw has no measured width at 0.1°. Calling that a usable aim region would be wrong.
+- Family 2’s aim yaw is a knife-edge: the only measured clear is exactly 0. ±0.1° misses by 8.496 m and 8.789 m. It is not an aim region.
 - The 644-cell component was not filled in at editor resolution (0.5 m, 5°, 0.5°). Connectivity is on the discovery lattice. The one-axis scans are only around the two representatives.
 - The six smaller components were not given one-axis scans.
 - Origin tolerance does not exist as a player control here, and it was not measured.

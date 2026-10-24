@@ -14,16 +14,16 @@
     {
       "id": "ramp-yours",
       "kind": "ramp",
-      "x": -8,
-      "z": 40,
+      "x": 0,
+      "z": 42,
       "yaw": 0
     },
     {
       "id": "bank-yours",
       "kind": "bank",
-      "x": 0,
-      "z": 16,
-      "yaw": 80
+      "x": 14,
+      "z": 28,
+      "yaw": 0
     },
     {
       "id": "shield",

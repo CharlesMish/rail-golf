@@ -165,13 +165,16 @@ function recordTrial(last, phase) {
 
 const preset = createTravellingBellPreset();
 const opening = adaptRangePreset(preset);
+// The lane-E catalog opening solved the bell on 143/320 phases. It is the appendix
+// solution. The catalog opening is the prior-art supplied placement, which missed.
+const solutionPreset = variant(preset, [
+  { id: 'ramp-yours', kind: 'ramp', x: -8, z: 40, yaw: 0 },
+  { id: 'bank-yours', kind: 'bank', x: 0, z: 16, yaw: 80 },
+  { id: 'shield', kind: 'block', x: -10, z: 52, yaw: 0 },
+]);
 const layouts = [
-  { name: 'opening', note: 'Catalog preset. Ramp (−8, 40, yaw 0), bank (0, 16, yaw 80), shield (−10, 52).', preset },
-  { name: 'supplied', note: 'Prior-art supplied pieces. Ramp (0, 42, yaw 0), bank (14, 28, yaw 0), same shield and bell.', preset: variant(preset, [
-    { id: 'ramp-yours', kind: 'ramp', x: 0, z: 42, yaw: 0 },
-    { id: 'bank-yours', kind: 'bank', x: 14, z: 28, yaw: 0 },
-    { id: 'shield', kind: 'block', x: -10, z: 52, yaw: 0 },
-  ]) },
+  { name: 'opening', note: 'Catalog preset. Ramp (0, 42, yaw 0), bank (14, 28, yaw 0), shield (−10, 52). The bell law is unchanged.', preset },
+  { name: 'solution', note: 'Former catalog opening, now an appendix solution. Ramp (−8, 40, yaw 0), bank (0, 16, yaw 80), shield (−10, 52). Same bell.', preset: solutionPreset },
   { name: 'late', note: 'Late both-piece arrangement from the bell-rail sweep. Ramp (−1, 42, yaw 20), bank (−6, 68, yaw 20).', preset: variant(preset, [
     { id: 'ramp-yours', kind: 'ramp', x: -1, z: 42, yaw: 20 },
     { id: 'bank-yours', kind: 'bank', x: -6, z: 68, yaw: 20 },
@@ -211,11 +214,12 @@ try {
       windows,
     });
     console.error(`${layout.name}: ${summary.hits}/${summary.trials} coarse hits, ${windows.length} windows`);
+    if (layout.name === 'opening' && summary.hits !== 0) throw new Error(`opening solved the bell on ${summary.hits} phases`);
   }
 
   const aimReports = [];
   for (const offset of aimOffsets) {
-    const aimed = variant(preset, preset.objects, { yaw: offset.yaw, elevation: offset.elevation, charge: 0.55 });
+    const aimed = variant(solutionPreset, solutionPreset.objects, { yaw: offset.yaw, elevation: offset.elevation, charge: 0.55 });
     const adapted = adaptRangePreset(aimed);
     const trials = [];
     for (const phase of phases) trials.push(recordTrial(session.shoot(adapted.world, phase), phase));
@@ -232,12 +236,14 @@ try {
     console.error(`aim yaw ${offset.yaw} elevation ${offset.elevation}: ${summary.hits}/${summary.trials}`);
   }
 
+  const solutionWorld = adaptRangePreset(solutionPreset).world;
   const hitPhase = 1;
-  const first = session.shoot(opening.world, hitPhase);
-  const second = session.shoot(opening.world, hitPhase);
+  const first = session.shoot(solutionWorld, hitPhase);
+  if (first.goalResult.status !== 'hit') throw new Error('appendix solution missed at phase 1');
+  const second = session.shoot(solutionWorld, hitPhase);
   const same = JSON.stringify(recordTrial(first, hitPhase)) === JSON.stringify(recordTrial(second, hitPhase));
   const shot = await bindRangeShot({
-    preset, world: opening.world, setup: worldcraftFixedSetup(opening.world), build: gitSha(),
+    preset: solutionPreset, world: solutionWorld, setup: worldcraftFixedSetup(solutionWorld), build: gitSha(),
     launch: first.launch, points: first.samples, events: first.evidence, contacts: first.contacts,
     terminal: first.terminal, launchPhase: first.launchPhase,
   });
@@ -251,6 +257,8 @@ try {
     presetId: preset.id,
     presetHash,
     openingWorldIdentitySha256: sha256(worldcraftIdentity(opening.world)),
+    solutionWorldIdentitySha256: sha256(worldcraftIdentity(solutionWorld)),
+    aimLayout: 'solution',
     coarseStepSeconds: COARSE,
     fineStepSeconds: TICK,
     periodSeconds: 8,
@@ -264,6 +272,7 @@ try {
   };
   await mkdir(root, { recursive: true });
   await writeFile(new URL('windows.json', root), JSON.stringify(report, null, 2));
+  await writeFile(new URL('solution-preset.json', root), exportRangePreset(solutionPreset));
   await writeFile(new URL('hit-shot.json', root), exportRangeShot(shot));
   console.error(`wrote windows in ${report.elapsedSeconds.toFixed(1)} s, refire ${refireMatch}, repeat ${same}`);
 } finally { session.dispose(); }
