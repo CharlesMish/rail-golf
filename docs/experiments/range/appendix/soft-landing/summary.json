@@ -1,0 +1,503 @@
+{
+  "seed": 20261024,
+  "gitSha": "e045039b15c30e3c7e89c7d882be523f9dd2a92c",
+  "node": "v22.23.4",
+  "opening": {
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "scored": false,
+    "distance": 17.85245132446289,
+    "contacts": [
+      "worldcraft-ground"
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 1.6416666666666633,
+      "position": [
+        0,
+        0.43000003695487976,
+        46.14754867553711
+      ]
+    },
+    "presetHash": "f981320378ddcb92c4bf6a162189df6bf11a79ca77cd77adcba5571952560db3"
+  },
+  "fragile": {
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 25,
+      "charge": 0.61
+    },
+    "scored": true,
+    "distance": 0.4994049072265625,
+    "contacts": [
+      "worldcraft-ground"
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.2666666666666613,
+      "position": [
+        0,
+        0.43000003695487976,
+        63.50059509277344
+      ]
+    },
+    "presetHash": "5223f22e33796059e08741c94c81209581913a21a830ed8661bc3cb414217e1a"
+  },
+  "forgiving": {
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 25,
+      "charge": 0.66
+    },
+    "scored": true,
+    "distance": 0.19103622436523438,
+    "contacts": [
+      "worldcraft-object-backstop",
+      "worldcraft-ground"
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.4416666666666607,
+      "position": [
+        0,
+        0.43000009655952454,
+        63.808963775634766
+      ]
+    },
+    "presetHash": "a81bb95cb06c3bf4212a2b1669635db9bf124912caf0981b7176dcf081b369f5"
+  },
+  "forgivingAimOnFragilePieces": {
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 25,
+      "charge": 0.66
+    },
+    "scored": false,
+    "distance": 6.5312347412109375,
+    "contacts": [
+      "worldcraft-ground"
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.3833333333333275,
+      "position": [
+        0,
+        0.4300000071525574,
+        70.53123474121094
+      ]
+    },
+    "presetHash": "5223f22e33796059e08741c94c81209581913a21a830ed8661bc3cb414217e1a"
+  },
+  "grid": {
+    "opening": {
+      "shots": 240,
+      "clears": 1,
+      "clearCells": [
+        {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 36,
+          "charge": 0.55
+        }
+      ],
+      "note": "This is a uniform-grid count. It is not a tolerance width and not a player success probability."
+    },
+    "forgiving": {
+      "shots": 240,
+      "clears": 3,
+      "clearCells": [
+        {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 18,
+          "charge": 0.75
+        },
+        {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 24,
+          "charge": 0.65
+        },
+        {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 36,
+          "charge": 0.55
+        }
+      ],
+      "note": "This is a uniform-grid count. It is not a tolerance width and not a player success probability."
+    }
+  },
+  "widths": {
+    "fragile": {
+      "yaw": {
+        "first": -2,
+        "last": 2,
+        "width": 4,
+        "count": 17,
+        "step": 0.25,
+        "bracketLow": -2.25,
+        "bracketHigh": 2.25,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "elevation": {
+        "first": 23.75,
+        "last": 27.25,
+        "width": 3.5,
+        "count": 15,
+        "step": 0.25,
+        "bracketLow": 23.5,
+        "bracketHigh": 27.5,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "charge": {
+        "first": 0.596,
+        "last": 0.63,
+        "width": 0.034,
+        "count": 18,
+        "step": 0.002,
+        "bracketLow": 0.594,
+        "bracketHigh": 0.632,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "originX": {
+        "first": -2,
+        "last": 2,
+        "width": 4,
+        "count": 9,
+        "step": 0.5,
+        "bracketLow": -2.5,
+        "bracketHigh": 2.5,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "pieces": {
+        "backstopX": {
+          "first": 0,
+          "last": 24,
+          "width": 24,
+          "count": 49,
+          "step": 0.5,
+          "bracketLow": null,
+          "bracketHigh": null,
+          "censoredLow": true,
+          "censoredHigh": true
+        },
+        "backstopZ": {
+          "first": 60,
+          "last": 93.5,
+          "width": 33.5,
+          "count": 68,
+          "step": 0.5,
+          "bracketLow": null,
+          "bracketHigh": 94,
+          "censoredLow": true,
+          "censoredHigh": false
+        },
+        "backstopYaw": {
+          "first": -180,
+          "last": 175,
+          "width": 355,
+          "count": 72,
+          "step": 5,
+          "bracketLow": null,
+          "bracketHigh": null,
+          "censoredLow": true,
+          "censoredHigh": true
+        },
+        "redirectX": {
+          "first": -24,
+          "last": -6,
+          "width": 18,
+          "count": 37,
+          "step": 0.5,
+          "bracketLow": -24.5,
+          "bracketHigh": null,
+          "censoredLow": false,
+          "censoredHigh": true
+        },
+        "redirectZ": {
+          "first": 16,
+          "last": 48,
+          "width": 32,
+          "count": 65,
+          "step": 0.5,
+          "bracketLow": null,
+          "bracketHigh": null,
+          "censoredLow": true,
+          "censoredHigh": true
+        },
+        "redirectYaw": {
+          "first": -180,
+          "last": 175,
+          "width": 355,
+          "count": 72,
+          "step": 5,
+          "bracketLow": null,
+          "bracketHigh": null,
+          "censoredLow": true,
+          "censoredHigh": true
+        }
+      }
+    },
+    "forgiving": {
+      "yaw": {
+        "first": -2,
+        "last": 2,
+        "width": 4,
+        "count": 17,
+        "step": 0.25,
+        "bracketLow": -2.25,
+        "bracketHigh": 2.25,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "elevation": {
+        "first": 20,
+        "last": 26.5,
+        "width": 6.5,
+        "count": 27,
+        "step": 0.25,
+        "bracketLow": 19.75,
+        "bracketHigh": 26.75,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "charge": {
+        "first": 0.596,
+        "last": 0.678,
+        "width": 0.082,
+        "count": 42,
+        "step": 0.002,
+        "bracketLow": 0.594,
+        "bracketHigh": 0.68,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "originX": {
+        "first": -2,
+        "last": 2,
+        "width": 4,
+        "count": 9,
+        "step": 0.5,
+        "bracketLow": -2.5,
+        "bracketHigh": 2.5,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "pieces": {
+        "backstopX": {
+          "first": -3,
+          "last": 3,
+          "width": 6,
+          "count": 13,
+          "step": 0.5,
+          "bracketLow": -3.5,
+          "bracketHigh": 3.5,
+          "censoredLow": false,
+          "censoredHigh": false
+        },
+        "backstopZ": {
+          "first": 67.5,
+          "last": 70.5,
+          "width": 3,
+          "count": 7,
+          "step": 0.5,
+          "bracketLow": 67,
+          "bracketHigh": 71,
+          "censoredLow": false,
+          "censoredHigh": false
+        },
+        "backstopYaw": {
+          "first": -20,
+          "last": 20,
+          "width": 40,
+          "count": 9,
+          "step": 5,
+          "bracketLow": -25,
+          "bracketHigh": 25,
+          "censoredLow": false,
+          "censoredHigh": false
+        },
+        "redirectX": {
+          "first": -24,
+          "last": -6,
+          "width": 18,
+          "count": 37,
+          "step": 0.5,
+          "bracketLow": -24.5,
+          "bracketHigh": null,
+          "censoredLow": false,
+          "censoredHigh": true
+        },
+        "redirectZ": {
+          "first": 16,
+          "last": 48,
+          "width": 32,
+          "count": 65,
+          "step": 0.5,
+          "bracketLow": null,
+          "bracketHigh": null,
+          "censoredLow": true,
+          "censoredHigh": true
+        },
+        "redirectYaw": {
+          "first": -180,
+          "last": 175,
+          "width": 355,
+          "count": 72,
+          "step": 5,
+          "bracketLow": null,
+          "bracketHigh": null,
+          "censoredLow": true,
+          "censoredHigh": true
+        }
+      }
+    }
+  },
+  "areas": {
+    "fragileYawCharge": {
+      "count": 51,
+      "area": 0.1275,
+      "stepYaw": 0.5,
+      "stepCharge": 0.005,
+      "censored": false,
+      "yawFirst": -2,
+      "yawLast": 2,
+      "chargeFirst": 0.6,
+      "chargeLast": 0.63
+    },
+    "forgivingYawCharge": {
+      "count": 120,
+      "area": 0.3,
+      "stepYaw": 0.5,
+      "stepCharge": 0.005,
+      "censored": false,
+      "yawFirst": -2,
+      "yawLast": 2,
+      "chargeFirst": 0.6,
+      "chargeLast": 0.675
+    },
+    "forgivingBlockXZ": {
+      "count": 91,
+      "area": 22.75,
+      "stepX": 0.5,
+      "stepZ": 0.5,
+      "censored": false,
+      "xFirst": -3,
+      "xLast": 3,
+      "zFirst": 67.5,
+      "zLast": 70.5,
+      "note": "Area is square metres of the 4-connected component on the 0.5 m piece grid. yaw/charge names inside the helper are the two axes."
+    }
+  },
+  "controlDeeper": {
+    "blockZ": 71,
+    "runs": [
+      {
+        "first": 0.596,
+        "last": 0.63,
+        "width": 0.034,
+        "count": 18
+      },
+      {
+        "first": 0.666,
+        "last": 0.692,
+        "width": 0.026,
+        "count": 14
+      }
+    ],
+    "forgivingChargeClears": false,
+    "note": "Same launcher as the forgiving representative, block 2 m deeper. Runs are contiguous clear islands. Their endpoint span is not one window."
+  },
+  "player": {
+    "opening": {
+      "trials": 30,
+      "fired": 1200,
+      "trialsThatCleared": 0,
+      "firstClearSteps": [],
+      "note": "Random one-detent walks. Not a tolerance width and not a player success probability.",
+      "steps": 40,
+      "trialsPlanned": 30,
+      "start": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      }
+    },
+    "nearFragile": {
+      "trials": 20,
+      "fired": 240,
+      "trialsThatCleared": 9,
+      "firstClearSteps": [
+        9,
+        3,
+        3,
+        1,
+        8,
+        1,
+        3,
+        3,
+        8
+      ],
+      "note": "Random one-detent walks. Not a tolerance width and not a player success probability.",
+      "steps": 12,
+      "trialsPlanned": 20,
+      "start": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 25,
+        "charge": 0.59
+      }
+    },
+    "nearForgiving": {
+      "trials": 20,
+      "fired": 240,
+      "trialsThatCleared": 6,
+      "firstClearSteps": [
+        5,
+        2,
+        1,
+        1,
+        0,
+        1
+      ],
+      "note": "Random one-detent walks. Not a tolerance width and not a player success probability.",
+      "steps": 12,
+      "trialsPlanned": 20,
+      "start": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 25,
+        "charge": 0.59
+      }
+    }
+  },
+  "presetHashes": {
+    "opening": "f981320378ddcb92c4bf6a162189df6bf11a79ca77cd77adcba5571952560db3",
+    "fragile": "5223f22e33796059e08741c94c81209581913a21a830ed8661bc3cb414217e1a",
+    "forgiving": "a81bb95cb06c3bf4212a2b1669635db9bf124912caf0981b7176dcf081b369f5"
+  }
+}

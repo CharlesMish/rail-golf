@@ -1,0 +1,105 @@
+{
+  "preset": "/tmp/soft-landing-browser/soft-landing-preset.png",
+  "comparison": "/tmp/soft-landing-browser/soft-landing-comparison.png",
+  "opening": {
+    "presetId": "soft-landing",
+    "goal": {
+      "kind": "first-ground-zone",
+      "x": 0,
+      "z": 64,
+      "r": 2.5
+    },
+    "rail": null,
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    }
+  },
+  "fragile": {
+    "outcome": {
+      "kind": "first-ground-zone",
+      "status": "clear",
+      "distance": 0.4994049072265625,
+      "scored": true
+    },
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.2666666666666613,
+      "position": [
+        0,
+        0.43000003695487976,
+        63.50059509277344
+      ]
+    }
+  },
+  "forgiving": {
+    "outcome": {
+      "kind": "first-ground-zone",
+      "status": "clear",
+      "distance": 0.19103622436523438,
+      "scored": true
+    },
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.4416666666666607,
+      "position": [
+        0,
+        0.43000009655952454,
+        63.808963775634766
+      ]
+    },
+    "meshes": [
+      "worldcraft-before-line",
+      "worldcraft-actual-line"
+    ],
+    "sameTrail": true,
+    "movedTrail": true
+  },
+  "saveReload": {
+    "ok": true,
+    "rebuilds": 1,
+    "rebuildMs": 1.3999999999068677,
+    "diagnostics": {
+      "mode": "build",
+      "revision": 3,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"backstop\",\"kind\":\"block\",\"x\":0,\"z\":69,\"yaw\":0},{\"id\":\"redirect\",\"kind\":\"bank\",\"x\":-18,\"z\":28,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":0,\"z\":64,\"r\":2.5},\"locked\":[],\"allowance\":{\"bank\":1,\"block\":1},\"rail\":null,\"goal\":{\"kind\":\"first-ground-zone\",\"x\":0,\"z\":64,\"r\":2.5}}}",
+      "objectCount": 2,
+      "staticBodies": 4,
+      "liveBodies": 0,
+      "meshes": 4,
+      "materials": 14,
+      "textures": 1,
+      "physicsBodies": 4,
+      "shadowCasters": 8,
+      "rebuildCount": 4,
+      "rebuildMs": 1.3999999999068677,
+      "samples": 0,
+      "live": false,
+      "disposed": false,
+      "error": ""
+    },
+    "voices": {
+      "started": 0,
+      "cleaned": 0,
+      "finished": 0,
+      "active": 0
+    }
+  },
+  "refire": {
+    "scored": true,
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.4416666666666607,
+      "position": [
+        0,
+        0.43000009655952454,
+        63.808963775634766
+      ]
+    },
+    "bindingHash": "9ba3a89bf917f3bd774b63d5084a9f1230d946ab2b7d44bfcee87086dfb2c73a",
+    "presetHash": "a81bb95cb06c3bf4212a2b1669635db9bf124912caf0981b7176dcf081b369f5"
+  }
+}
