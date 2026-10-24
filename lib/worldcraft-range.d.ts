@@ -52,6 +52,8 @@ export function importRangeDocument(text: string): { kind: 'preset'; preset: Ran
 export function createOpenWorkshopPreset(): RangePreset;
 export function createBackPocketPreset(): RangePreset;
 export function createSoftLandingPreset(): RangePreset;
+export function createResonantRunFreePreset(): RangePreset;
+export function createResonantRunPhrasePreset(): RangePreset;
 export function rangeOpeningSetup(preset: RangePreset): WorldcraftSetup;
 export function rangeStartingSetup(preset: unknown): WorldcraftSetup;
 export function retargetRangeOpening(preset: RangePreset, setup: WorldcraftSetup): RangePreset;

@@ -45,7 +45,7 @@
 .kicker { display: block; color: var(--wc-muted); font: 10px/1.3 var(--font-mono, monospace); letter-spacing: .12em; text-transform: uppercase; }
 .title { margin: 0; font-size: 22px; line-height: 1.15; font-weight: 700; letter-spacing: -.025em; }
 .presetSelect { display: flex; align-items: center; gap: 6px; color: var(--wc-muted); font: 11px/1.2 var(--font-mono, monospace); letter-spacing: .08em; text-transform: uppercase; }
-.presetSelect select { min-height: 44px; min-width: 9.5rem; padding: 8px; border: 1px solid var(--wc-line); border-radius: 3px; background: #13262b; color: #e8efeb; text-transform: none; letter-spacing: 0; font: 13px/1.2 var(--font-sans, Arial, sans-serif); }
+.presetSelect select { min-height: 44px; min-width: 13.5rem; padding: 8px; border: 1px solid var(--wc-line); border-radius: 3px; background: #13262b; color: #e8efeb; text-transform: none; letter-spacing: 0; font: 13px/1.2 var(--font-sans, Arial, sans-serif); }
 .modeSwitch { display: flex; gap: 3px; margin-left: auto; padding: 3px; border: 1px solid var(--wc-line); border-radius: 4px; }
 .modeSwitch button { min-width: 75px; border-color: transparent; background: transparent; }
 .shell button.active, .shell button[aria-pressed="true"] { border-color: #5dbcc3; background: #173e44; color: #a0f0ef; }

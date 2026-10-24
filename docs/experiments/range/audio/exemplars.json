@@ -1,0 +1,515 @@
+[
+  {
+    "role": "opening",
+    "id": "opening",
+    "order": "1>2",
+    "heard": [
+      1,
+      2
+    ],
+    "status": "miss",
+    "standIn": {
+      "required": true,
+      "status": "miss",
+      "body": "worldcraft-target-stand-in-orc"
+    },
+    "objects": [
+      {
+        "id": "ramp-yours",
+        "kind": "ramp",
+        "x": 0,
+        "z": 42,
+        "yaw": 0,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "bank-yours",
+        "kind": "bank",
+        "x": 14,
+        "z": 28,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "plate-yours",
+        "kind": "plate",
+        "x": 0,
+        "z": 68,
+        "yaw": 0,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      }
+    ],
+    "bindingHash": "0d93ce3f1d7c1bf3f2f3c37bce9410f691bdbcd7f2b20e90746c3ae7044935e9",
+    "presetHash": "1020fb68d725d178185233ddf2630e3dd47bda9bed3f9f798781b0b1d6f95a5a",
+    "pointHash": "872de0f3085f0e342543ca90793c61d0ac6f71f9ffa657fa3e45b7ee515bf574",
+    "shotHash": "646ad481e66327446cb14fc7c520e5edade1eb75e2b55d87a471a7df0a93a0ca",
+    "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":14,\"z\":28,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":0,\"z\":68,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":0,\"z\":42,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":{\"yaw\":0,\"elevation\":18,\"charge\":0.55},\"target\":{\"id\":\"stand-in-orc\",\"x\":-26,\"z\":58.5,\"yaw\":0},\"goal\":{\"kind\":\"contact-phrase\",\"notes\":[0,1,2],\"standIn\":{\"id\":\"stand-in-orc\",\"x\":-26,\"z\":58.5,\"yaw\":0}}}}",
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 7.216666666666815,
+      "position": [
+        0,
+        0.429999977350235,
+        91.8843994140625
+      ]
+    },
+    "contacts": [
+      {
+        "body": "worldcraft-object-ramp-yours",
+        "point": {
+          "x": 0,
+          "y": 2.17132568359375,
+          "z": 40.85417175292969
+        },
+        "count": 2,
+        "first": 1.4249999999999974,
+        "last": 1.4333333333333307
+      },
+      {
+        "body": "worldcraft-object-plate-yours",
+        "point": {
+          "x": 0,
+          "y": 4.103073596954346,
+          "z": 67.76956176757812
+        },
+        "count": 2,
+        "first": 4.458333333333345,
+        "last": 4.466666666666678
+      },
+      {
+        "body": "worldcraft-ground",
+        "point": {
+          "x": 0,
+          "y": 0.0265464186668396,
+          "z": 91.81153869628906
+        },
+        "count": 1,
+        "first": 7.208333333333481,
+        "last": 7.208333333333481
+      }
+    ],
+    "resonance": {
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "body": "worldcraft-object-ramp-yours",
+          "time": 1.4249999999999974,
+          "last": 1.4333333333333307,
+          "speed": 20.50267369272712,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.9867339302026538,
+          "callbacks": 2
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "body": "worldcraft-object-plate-yours",
+          "time": 4.458333333333345,
+          "last": 4.466666666666678,
+          "speed": 8.872560502314153,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.3567558698325212,
+          "callbacks": 2
+        }
+      ],
+      "sounds": 2,
+      "callbacks": 5,
+      "resonantCallbacks": 4,
+      "collapsed": 2,
+      "maxCallbacks": 2
+    },
+    "resonantContactRows": 2
+  },
+  {
+    "role": "prescribed",
+    "id": "early-cooccur",
+    "order": "0>1>2",
+    "heard": [
+      0,
+      1,
+      2
+    ],
+    "status": "match",
+    "standIn": {
+      "required": true,
+      "status": "hit",
+      "body": "worldcraft-target-stand-in-orc"
+    },
+    "objects": [
+      {
+        "id": "ramp-yours",
+        "kind": "ramp",
+        "x": -8,
+        "z": 40,
+        "yaw": 0,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "bank-yours",
+        "kind": "bank",
+        "x": 0,
+        "z": 16,
+        "yaw": 80,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "plate-yours",
+        "kind": "plate",
+        "x": -24,
+        "z": 64,
+        "yaw": 0,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      }
+    ],
+    "bindingHash": "cc5b314167d10fc0d5f14fe4d9e65942dad88217c9cc97f9c60b907ccc95d0c0",
+    "presetHash": "37cb13d235a971c4ed41417e32b08e2b2583ada9efb02c74cb8d68d04aeebff6",
+    "pointHash": "f5dbcc26db415802aa859dedb2f7274a16629df6907a2e9c950725d8d7c4080b",
+    "shotHash": "abe19ab73df0953c2cb2f3cba109b17ffbad44dc793438bd1e47bc96c766992b",
+    "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":16,\"yaw\":80,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":-24,\"z\":64,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":-8,\"z\":40,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":{\"yaw\":0,\"elevation\":18,\"charge\":0.55},\"target\":{\"id\":\"stand-in-orc\",\"x\":-26,\"z\":58.5,\"yaw\":0},\"goal\":{\"kind\":\"contact-phrase\",\"notes\":[0,1,2],\"standIn\":{\"id\":\"stand-in-orc\",\"x\":-26,\"z\":58.5,\"yaw\":0}}}}",
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 6.591666666666784,
+      "position": [
+        -24.261465072631836,
+        0.43000245094299316,
+        69.77838897705078
+      ]
+    },
+    "contacts": [
+      {
+        "body": "worldcraft-object-bank-yours",
+        "point": {
+          "x": 0.4231705665588379,
+          "y": 4.679812908172607,
+          "z": 10.650684356689453
+        },
+        "count": 2,
+        "first": 0.22499999999999998,
+        "last": 0.2333333333333333
+      },
+      {
+        "body": "worldcraft-object-ramp-yours",
+        "point": {
+          "x": -9.20988941192627,
+          "y": 1.736019492149353,
+          "z": 37.72132110595703
+        },
+        "count": 2,
+        "first": 1.4333333333333307,
+        "last": 1.441666666666664
+      },
+      {
+        "body": "worldcraft-target-stand-in-orc",
+        "point": {
+          "x": -25.41836929321289,
+          "y": 2.426891326904297,
+          "z": 58.104549407958984
+        },
+        "count": 2,
+        "first": 4.333333333333338,
+        "last": 4.341666666666672
+      },
+      {
+        "body": "worldcraft-object-plate-yours",
+        "point": {
+          "x": -24.558609008789062,
+          "y": 4.002730846405029,
+          "z": 63.74162292480469
+        },
+        "count": 2,
+        "first": 5.125000000000044,
+        "last": 5.133333333333378
+      },
+      {
+        "body": "worldcraft-ground",
+        "point": {
+          "x": -24.263076782226562,
+          "y": 0.010493576526641846,
+          "z": 69.74324035644531
+        },
+        "count": 1,
+        "first": 6.58333333333345,
+        "last": 6.58333333333345
+      }
+    ],
+    "resonance": {
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "body": "worldcraft-object-bank-yours",
+          "time": 0.22499999999999998,
+          "last": 0.2333333333333333,
+          "speed": 25.301753467629474,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4",
+          "hz": 261.6256,
+          "gain": 1,
+          "callbacks": 2
+        },
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "body": "worldcraft-object-ramp-yours",
+          "time": 1.4333333333333307,
+          "last": 1.441666666666664,
+          "speed": 19.3240322175637,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.9592140424041528,
+          "callbacks": 2
+        },
+        {
+          "piece": "stand-in-orc",
+          "role": "orc",
+          "body": "worldcraft-target-stand-in-orc",
+          "time": 4.333333333333338,
+          "last": 4.341666666666672,
+          "speed": 12.446885761390053,
+          "material": "thunk",
+          "degree": null,
+          "note": "thunk",
+          "hz": 82,
+          "gain": 0.5980823642536491,
+          "callbacks": 2
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "body": "worldcraft-object-plate-yours",
+          "time": 5.125000000000044,
+          "last": 5.133333333333378,
+          "speed": 6.52848397447741,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.211916831559453,
+          "callbacks": 2
+        }
+      ],
+      "sounds": 4,
+      "callbacks": 9,
+      "resonantCallbacks": 8,
+      "collapsed": 4,
+      "maxCallbacks": 2
+    },
+    "resonantContactRows": 3
+  },
+  {
+    "role": "contrast",
+    "id": "late-plate-3",
+    "order": "1>0>2",
+    "heard": [
+      1,
+      0,
+      2
+    ],
+    "status": "miss",
+    "standIn": {
+      "required": true,
+      "status": "hit",
+      "body": "worldcraft-target-stand-in-orc"
+    },
+    "objects": [
+      {
+        "id": "ramp-yours",
+        "kind": "ramp",
+        "x": -1,
+        "z": 42,
+        "yaw": 20,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "bank-yours",
+        "kind": "bank",
+        "x": -6,
+        "z": 68,
+        "yaw": 20,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "plate-yours",
+        "kind": "plate",
+        "x": -28,
+        "z": 58,
+        "yaw": 90,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      }
+    ],
+    "bindingHash": "dba71f350cd3ab225a33800bfbcca11d4f3d82a37bcb00058e886f60004c7c04",
+    "presetHash": "b81235963a1f8e8696356b796836574deac4dbaf8f4db97a37487d4007a27c87",
+    "pointHash": "29071c42ae526f46eec408dbebf1ce32ffa2fcd76fc1637373ccc73bf265abcc",
+    "shotHash": "7826c3a7a5ae534ea91e9f3f692e231e71c71785b0f84e0dc81b5c60c8517813",
+    "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-6,\"z\":68,\"yaw\":20,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":-28,\"z\":58,\"yaw\":90,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":-1,\"z\":42,\"yaw\":20,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":{\"yaw\":0,\"elevation\":18,\"charge\":0.55},\"target\":{\"id\":\"stand-in-orc\",\"x\":-26,\"z\":58.5,\"yaw\":0},\"goal\":{\"kind\":\"contact-phrase\",\"notes\":[0,1,2],\"standIn\":{\"id\":\"stand-in-orc\",\"x\":-26,\"z\":58.5,\"yaw\":0}}}}",
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 8.383333333333498,
+      "position": [
+        -24.053525924682617,
+        0.4300035536289215,
+        60.346858978271484
+      ]
+    },
+    "contacts": [
+      {
+        "body": "worldcraft-object-ramp-yours",
+        "point": {
+          "x": 0.050273459404706955,
+          "y": 2.2455248832702637,
+          "z": 40.63606262207031
+        },
+        "count": 2,
+        "first": 1.416666666666664,
+        "last": 1.4249999999999974
+      },
+      {
+        "body": "worldcraft-object-bank-yours",
+        "point": {
+          "x": -8.255899429321289,
+          "y": 7.033234119415283,
+          "z": 68.27694702148438
+        },
+        "count": 2,
+        "first": 4.141666666666662,
+        "last": 4.149999999999996
+      },
+      {
+        "body": "worldcraft-target-stand-in-orc",
+        "point": {
+          "x": -25.81727409362793,
+          "y": 2.3329195976257324,
+          "z": 58.89669418334961
+        },
+        "count": 2,
+        "first": 6.700000000000123,
+        "last": 6.7083333333334565
+      },
+      {
+        "body": "worldcraft-object-plate-yours",
+        "point": {
+          "x": -27.782329559326172,
+          "y": 3.9295008182525635,
+          "z": 59.27729797363281
+        },
+        "count": 2,
+        "first": 6.975000000000136,
+        "last": 6.98333333333347
+      },
+      {
+        "body": "worldcraft-ground",
+        "point": {
+          "x": -24.073461532592773,
+          "y": 0.03651934862136841,
+          "z": 60.340545654296875
+        },
+        "count": 1,
+        "first": 8.375000000000165,
+        "last": 8.375000000000165
+      }
+    ],
+    "resonance": {
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "body": "worldcraft-object-ramp-yours",
+          "time": 1.416666666666664,
+          "last": 1.4249999999999974,
+          "speed": 20.95456059219833,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.9934401707241937,
+          "callbacks": 2
+        },
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "body": "worldcraft-object-bank-yours",
+          "time": 4.141666666666662,
+          "last": 4.149999999999996,
+          "speed": 6.365127956836199,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4",
+          "hz": 261.6256,
+          "gain": 0.20268744358709562,
+          "callbacks": 2
+        },
+        {
+          "piece": "stand-in-orc",
+          "role": "orc",
+          "body": "worldcraft-target-stand-in-orc",
+          "time": 6.700000000000123,
+          "last": 6.7083333333334565,
+          "speed": 6.888404174765678,
+          "material": "thunk",
+          "degree": null,
+          "note": "thunk",
+          "hz": 82,
+          "gain": 0.2327194117886218,
+          "callbacks": 2
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "body": "worldcraft-object-plate-yours",
+          "time": 6.975000000000136,
+          "last": 6.98333333333347,
+          "speed": 4.780243326046471,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.12111982245931985,
+          "callbacks": 2
+        }
+      ],
+      "sounds": 4,
+      "callbacks": 9,
+      "resonantCallbacks": 8,
+      "collapsed": 4,
+      "maxCallbacks": 2
+    },
+    "resonantContactRows": 3
+  }
+]
