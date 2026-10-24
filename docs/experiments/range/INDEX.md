@@ -20,6 +20,20 @@ Enter: header **Range** → **Open Workshop**. Reset: **Reset preset** (also rep
 
 The opening arrangement is a ramp on the approach, a bank off to the side, and a plate further along the yard.
 
+## E — Travelling Bell
+
+Enter: header **Range** → **Travelling Bell**. Reset: **Reset preset** (also repeated beside the phase control). Reset returns the release phase to 0.
+
+| | |
+| --- | --- |
+| Physical question | Can a committed shot be timed to meet a slow bell on a short rail? |
+| What can change | The release phase. The ramp, the bank, the shield, and the rail stay where the preset put them. |
+| What stays | First ground still ends the line. The goal is contact with the bell, and that is not a first-ground zone. There is no score. The bell's path, speed, and hit rule are in the preset. |
+| Success | A ledger contact with the bell before the line ends. The amber post is the release you chose. |
+| Voices | The bell rings on contact. The sound does not change how the shot flies. |
+
+The opening arrangement is a ramp on the approach, a bank beside it, a shield, and a bell shuttling a 4 m rail beyond the shield. Measured windows are kept out of this page. They live in [travelling-bell.md](travelling-bell.md) and under [appendix/travelling-bell/](appendix/travelling-bell/).
+
 ## Not opened
 
 | | Name | Physical question | What can change | Success | Enter / reset |
@@ -27,4 +41,3 @@ The opening arrangement is a ramp on the approach, a bank off to the side, and a
 | B | Back Pocket | Not opened in this phase. | — | — | — |
 | C | Soft Landing | Not opened in this phase. | — | — | — |
 | D | Resonant Run | Not opened in this phase. | — | — | — |
-| E | Travelling Bell | Not opened in this phase. | — | — | — |

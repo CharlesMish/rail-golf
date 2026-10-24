@@ -1,8 +1,11 @@
 export type WorldcraftKind='bank'|'ramp'|'block'|'plate';
 export type WorldcraftVoice={material:'metal'|'timber';degree:number};
 export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;voice?:WorldcraftVoice};
-export type WorldcraftTarget={id:string;x:number;z:number;yaw:number};
-export type WorldcraftGoal={kind:'none'}|{kind:'first-ground-zone';x:number;z:number;r:number}|{kind:'target-contact';id:string;x:number;z:number;yaw:number};
+export type WorldcraftStationaryTarget={id:string;x:number;z:number;yaw:number};
+export type WorldcraftShuttle={kind:'segment-shuttle';speed:number;phaseReference:'endpoint-0';endpoints:[{x:number;z:number},{x:number;z:number}];collider:{shape:'lathe-convex-hull';height:number;skirtRadius:number;centerY:number;friction:number;restitution:number};hit:'any-contact-before-ledger-close'};
+export type WorldcraftBellTarget={id:string;yaw:number;motion:WorldcraftShuttle};
+export type WorldcraftTarget=WorldcraftStationaryTarget|WorldcraftBellTarget;
+export type WorldcraftGoal={kind:'none'}|{kind:'first-ground-zone';x:number;z:number;r:number}|{kind:'target-contact';id:string;x:number;z:number;yaw:number}|{kind:'target-contact';id:string;yaw:number;motion:WorldcraftShuttle};
 export type WorldcraftGoalResult={kind:'none';status:'none';scored:false}|{kind:'first-ground-zone';status:'clear'|'miss'|'unfinished';distance:number|null;scored:boolean}|{kind:'target-contact';status:'hit'|'miss'|'unfinished';body:string;scored:boolean};
 export type WorldcraftRules={pin:{x:number;z:number;r:number}|null;locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;target?:WorldcraftTarget;goal?:WorldcraftGoal};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
@@ -30,7 +33,13 @@ export const WORLDCRAFT_LAUNCHER_CORRIDOR:Readonly<{minX:-12;maxX:12;minZ:-8;max
 export const WORLDCRAFT_GRID:Readonly<{coarse:1;fine:.5;rotation:15;fineRotation:5;launcher:.5}>;
 export const WORLDCRAFT_CATALOG:Readonly<Record<WorldcraftKind,Readonly<{label:string;width:number;height:number;depth:number;centerY:number;pitch:number;friction:number;restitution:number}>>>;
 export const WORLDCRAFT_ORC:Readonly<{width:number;height:number;depth:number;centerY:number;friction:number;restitution:number}>;
+export const WORLDCRAFT_BELL:Readonly<{height:number;skirtRadius:number;centerY:number;friction:number;restitution:number}>;
 export function worldcraftTargetBody(id:string):string;
+export function worldcraftBellTarget(world:WorldcraftDocument|null|undefined):WorldcraftBellTarget|null;
+/** Launch phase plus flight seconds. endpoints[0] at t = 0. Constant speed, instant reversal. */
+export function worldcraftBellPose(target:WorldcraftBellTarget,seconds:number):{x:number;y:number;z:number;yaw:number;along:number;length:number;period:number;u:number;direction:1|-1};
+/** Fold seconds into [0, period). Not stored on the world. */
+export function worldcraftLaunchPhase(world:WorldcraftDocument,seconds:number):number;
 export function newWorldcraftId(prefix?:string):string;
 export function worldcraftFootprint(object:WorldcraftObject):{x:number;z:number;halfX:number;halfZ:number;ux:{x:number;z:number};uz:{x:number;z:number};corners:{x:number;z:number}[]};
 /** Returns a canonical independent copy; rejects rather than repairing input. */

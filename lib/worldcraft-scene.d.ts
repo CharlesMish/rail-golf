@@ -2,7 +2,7 @@ import type { Mesh, PhysicsAggregate, Scene, ShadowGenerator, StandardMaterial, 
 import type { VectorLike } from './rail-golf-v02';
 import type { WorldcraftDocument as WorldcraftWorld } from './worldcraft-model';
 export type WorldcraftMaterials = Record<'ground'|'machine'|'bank'|'ramp'|'block', StandardMaterial> & Partial<Record<'metal'|'timber'|'steel', StandardMaterial>>;
-export type WorldcraftScene = { root:TransformNode; meshes:Mesh[]; bodies:PhysicsAggregate[]; objectMeshes:Map<string,Mesh>; ground:Mesh; tee:Mesh; target:Mesh|null; dispose():void };
+export type WorldcraftScene = { root:TransformNode; meshes:Mesh[]; bodies:PhysicsAggregate[]; objectMeshes:Map<string,Mesh>; ground:Mesh; tee:Mesh; target:Mesh|null; dispose():void; setLaunchPhase?(seconds:number):void; bellPose?():{x:number;y:number;z:number;yaw:number;along:number;length:number;period:number;u:number;direction:number}; onLaunch?(flight:unknown):void; beforeStep?(flight:unknown,dt:number):void; onResolve?(flight:unknown):void; onAction?(action:unknown):void };
 export const WORLDCRAFT_GROUND: Readonly<{minX:number;maxX:number;minZ:number;maxZ:number;minY:number}>;
 export const WORLDCRAFT_CONTACTS: Readonly<Record<'bank'|'ramp'|'block'|'plate'|'ground',Readonly<{mass:number;restitution:number;friction:number}>>>;
 export function createWorldcraftMaterials(scene:Scene):{materials:WorldcraftMaterials;dispose():void};

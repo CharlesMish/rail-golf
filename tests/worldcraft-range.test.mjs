@@ -94,7 +94,10 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
   assert.deepEqual(preset.objects.map(object => [object.id, object.voice.material, object.voice.degree]), [
     ['ramp-yours', 'metal', 1], ['bank-yours', 'timber', 0], ['plate-yours', 'metal', 2],
   ]);
-  assert.deepEqual(listRangePresets(), [{ id: 'open-workshop', name: 'Open Workshop', goal: 'none' }]);
+  assert.deepEqual(listRangePresets(), [
+    { id: 'open-workshop', name: 'Open Workshop', goal: 'none' },
+    { id: 'travelling-bell', name: 'Travelling Bell', goal: 'target-contact' },
+  ]);
   assert.deepEqual(inferOutcome(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), { kind: 'none', status: 'none', scored: false });
   assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72.5] }), null);
   assert.equal(worldcraftTargetResult(world, { reason: 'first-ground-contact', contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), null);

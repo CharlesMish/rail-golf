@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import Havok from '@babylonjs/havok';
 import { NullEngine, Scene, HavokPlugin, Vector3, Logger } from '@babylonjs/core';
 import { RAIL_RULES } from '../../lib/rail-golf-v02.js';
-import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot } from '../../lib/worldcraft-model.js';
+import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot, worldcraftBellTarget } from '../../lib/worldcraft-model.js';
 import { adaptRangePreset, bindRangeShot, exportRangePreset, rangePreset, sha256Hex, validateRangePreset } from '../../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../../lib/worldcraft-runtime.js';
 
@@ -79,11 +79,25 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
   let rejected = 0;
   try {
     for (let index = 0; index < setups.length; index++) {
+      const raw = setups[index] ?? {};
+      const { launchPhase: requestedPhase, ...setupFields } = raw;
       let setup;
-      try { setup = validateWorldcraftShot(world, setups[index]); }
+      try { setup = validateWorldcraftShot(world, setupFields); }
       catch (error) {
         rejected += 1;
         lines.push({ type: 'rejected', index, error: error.message });
+        continue;
+      }
+      if (worldcraftBellTarget(world)) {
+        const phased = session.runtime.setLaunchPhase(requestedPhase ?? 0);
+        if (!phased.ok) {
+          rejected += 1;
+          lines.push({ type: 'rejected', index, error: phased.error ?? 'launch phase rejected' });
+          continue;
+        }
+      } else if (requestedPhase !== undefined) {
+        rejected += 1;
+        lines.push({ type: 'rejected', index, error: 'Launch phase requires a travelling bell' });
         continue;
       }
       const last = session.shoot(world, setup);
@@ -97,6 +111,7 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
         events: last.evidence,
         contacts: last.contacts,
         terminal: last.terminal,
+        ...(typeof last.launchPhase === 'number' ? { launchPhase: last.launchPhase } : {}),
       });
       lines.push({ type: 'shot', index, seed, ...shot });
     }
