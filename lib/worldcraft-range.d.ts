@@ -43,6 +43,8 @@ export function exportRangePreset(preset: RangePreset): string;
 export function parseRangePreset(text: string): RangePreset;
 export function importRangeDocument(text: string): { kind: 'preset'; preset: RangePreset } | { kind: 'world'; world: WorldcraftDocument };
 export function createOpenWorkshopPreset(): RangePreset;
+export function createResonantRunFreePreset(): RangePreset;
+export function createResonantRunPhrasePreset(): RangePreset;
 export function listRangePresets(): { id: string; name: string; goal: WorldcraftGoal['kind'] }[];
 export function rangePreset(id: string): RangePreset;
 export function recordedTrail(record: { label?: string; worldIdentity: string; setup: WorldcraftSetup; points: WorldcraftPoint[] }): RecordedTrail;

@@ -2,8 +2,9 @@ export type WorldcraftKind='bank'|'ramp'|'block'|'plate';
 export type WorldcraftVoice={material:'metal'|'timber';degree:number};
 export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;voice?:WorldcraftVoice};
 export type WorldcraftTarget={id:string;x:number;z:number;yaw:number};
-export type WorldcraftGoal={kind:'none'}|{kind:'first-ground-zone';x:number;z:number;r:number}|{kind:'target-contact';id:string;x:number;z:number;yaw:number};
-export type WorldcraftGoalResult={kind:'none';status:'none';scored:false}|{kind:'first-ground-zone';status:'clear'|'miss'|'unfinished';distance:number|null;scored:boolean}|{kind:'target-contact';status:'hit'|'miss'|'unfinished';body:string;scored:boolean};
+export type WorldcraftGoal={kind:'none'}|{kind:'first-ground-zone';x:number;z:number;r:number}|{kind:'target-contact';id:string;x:number;z:number;yaw:number}|{kind:'contact-phrase';notes:number[];standIn:{id:string;x:number;z:number;yaw:number}|null};
+export type WorldcraftPhraseStandIn={required:true;status:'hit'|'miss'|'unfinished';body:string};
+export type WorldcraftGoalResult={kind:'none';status:'none';scored:false}|{kind:'first-ground-zone';status:'clear'|'miss'|'unfinished';distance:number|null;scored:boolean}|{kind:'target-contact';status:'hit'|'miss'|'unfinished';body:string;scored:boolean}|{kind:'contact-phrase';status:'match'|'miss'|'unfinished';notes:number[];heard:number[];scored:false;standIn:WorldcraftPhraseStandIn|null};
 export type WorldcraftRules={pin:{x:number;z:number;r:number}|null;locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;target?:WorldcraftTarget;goal?:WorldcraftGoal};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
 export type WorldcraftTargetResult={status:'hit'|'miss'|'unfinished';body:string;contact:WorldcraftContact|null};
@@ -74,7 +75,9 @@ export function worldcraftSetupForWorld(world:WorldcraftDocument,current:Worldcr
 export function validateWorldcraftShot(world:WorldcraftDocument,input:unknown):WorldcraftSetup;
 export function worldcraftCanAdd(world:WorldcraftDocument,kind:WorldcraftKind):boolean;
 export function worldcraftPinResult(world:WorldcraftDocument,terminal:unknown):WorldcraftPinResult|null;
-/** Null when the world has no explicit goal. Goal kind none never scores. */
+/** Resonant degrees in contact-ledger order. Null when contacts were not supplied. */
+export function contactPhraseHeard(world:WorldcraftDocument,contacts:unknown):number[]|null;
+/** Null when the world has no explicit goal. Goal kind none never scores. A contact phrase never scores. */
 export function worldcraftGoalResult(world:WorldcraftDocument,input:unknown):WorldcraftGoalResult|null;
 /** Any ledger contact with the stand-in. Pass `{reason, contacts}` from the shot record. */
 export function worldcraftTargetResult(world:WorldcraftDocument,input:unknown):WorldcraftTargetResult|null;

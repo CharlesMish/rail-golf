@@ -59,7 +59,20 @@ type Actions = {
   camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool'): void;
 };
 
+function noteName(degree: number) {
+  return WORLDCRAFT_SCALE[degree]?.name ?? String(degree);
+}
+function noteOrder(notes: number[]) {
+  return notes.map(noteName).join(' → ');
+}
+
 function shotNotice(last: WorldcraftRecord): string {
+  if (last.goalResult?.kind === 'contact-phrase') {
+    const heard = last.goalResult.heard.length ? noteOrder(last.goalResult.heard) : 'no resonant contact';
+    const phrase = last.goalResult.status === 'match' ? 'Phrase matched.' : last.goalResult.status === 'miss' ? 'Phrase missed.' : 'Phrase unfinished.';
+    const stand = last.goalResult.standIn?.status === 'hit' ? 'Stand-in hit, judged separately.' : last.goalResult.standIn?.status === 'miss' ? 'Stand-in missed, judged separately.' : last.goalResult.standIn ? 'Stand-in unfinished.' : '';
+    return `${phrase} Heard ${heard}. ${stand} Not a score.`.replace(/\s+/g, ' ').trim();
+  }
   if (last.goalResult?.kind === 'none') {
     if (last.reason === 'first-ground-contact') return 'First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.';
     return `Line ended: ${last.reason.replaceAll('-', ' ')}. No pin, no target, no score.`;
@@ -264,7 +277,7 @@ export default function Worldcraft() {
           if (!runtime.setMode(mode)) { publish({ notice: runtime.error }); return; }
           if (mode === 'play') runtime.clearShot();
           const goalKind = uiRef.current.world.rules?.goal?.kind;
-          const playNotice = goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
+          const playNotice = goalKind === 'contact-phrase' ? 'The phrase is the order of resonant contacts. The stand-in, when shown, is a separate hit. Not a score.' : goalKind === 'none' ? 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.' : uiRef.current.world.rules?.target ? 'Bonk the orc. Pieces ring when the ball hits them. The rail and the stand-in stay fixed.' : uiRef.current.world.rules ? 'First kiss inside the gold circle clears the pin.' : 'No target or score. First ground contact ends the line.';
           publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? 'Move a piece, then try the same shot.' : playNotice });
           selectedHighlight(); trace('mode', { mode });
         };
@@ -565,7 +578,7 @@ export default function Worldcraft() {
                 lastShot: state.last ? { ...state.last, currentWorldChanged: worldcraftIdentity(state.world) !== state.last.worldIdentity, thisShotChangedWorld: false } : null,
                 comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
                 previousTrail: state.showTrail && Boolean(state.comparison), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
-                presetId: state.presetId, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, voices: resonance.counts(),
+                presetId: state.presetId, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, voices: resonance.counts(), audio: resonance.state(),
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
                   const p = Vector3.Project(mesh.position, Matrix.Identity(), activeScene.getTransformMatrix(), camera.viewport.toGlobal(activeEngine.getRenderWidth(), activeEngine.getRenderHeight()));
                   return { id, x: rect.left + p.x / activeEngine.getRenderWidth() * rect.width, y: rect.top + p.y / activeEngine.getRenderHeight() * rect.height };
@@ -576,6 +589,7 @@ export default function Worldcraft() {
             resetPreset() { actions.current?.resetPreset(); },
             setMode(mode: 'build' | 'play') { actions.current?.mode(mode); },
             fire() { actions.current?.begin(); },
+            ready() { actions.current?.ready(); },
             survey() { actions.current?.survey(); },
             selectPiece(id: string) { actions.current?.select(id); },
             nudgeYaw(delta: number) {
@@ -676,6 +690,7 @@ export default function Worldcraft() {
   const setupChanged = Boolean(ui.comparison && shownSetup && Object.keys(shownSetup).some(key => shownSetup[key as keyof WorldcraftSetup] !== ui.comparison!.setup[key as keyof WorldcraftSetup]));
   const earlierWorld = Boolean(ui.history && worldcraftIdentity(ui.world) !== ui.history.worldIdentity);
   const qualified = ui.last?.evidence.filter(e => e.kind === 'redirect') ?? [];
+  const phraseResult = ui.last?.goalResult?.kind === 'contact-phrase' ? ui.last.goalResult : null;
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);
@@ -705,7 +720,7 @@ export default function Worldcraft() {
     </header>
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
-        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
+        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (ui.world.rules?.goal?.kind === 'contact-phrase' ? 'Play yard. Fixed rail. Space fires. The phrase is judged from contacts, not scored.' : ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
         <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
@@ -725,7 +740,14 @@ export default function Worldcraft() {
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
-        {ui.world.rules?.target && <section className={styles.goal} aria-label="Fixed goal">
+        {ui.world.rules?.goal?.kind === 'contact-phrase' && <section className={styles.goal} aria-label="Contact phrase">
+          <strong>Phrase {noteOrder(ui.world.rules.goal.notes)}</strong>
+          <p>The contact record has to ring those notes, in that order. One touch is one note. This is not a score and not a rhythm.</p>
+          {ui.world.rules.goal.standIn ? <p>The stand-in is a separate hit. It is not one of the notes, and it stays put.</p> : <p>No stand-in is required.</p>}
+          {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
+        {ui.world.rules?.target && ui.world.rules.goal?.kind !== 'contact-phrase' && <section className={styles.goal} aria-label="Fixed goal">
           <strong>Bonk the stand-in orc</strong>
           <p>Any contact in flight counts. The ramp, bank, and plate each ring; the stand-in stays put. {fixedRail ? 'Rail fixed: move those three pieces, keep the shot.' : 'Free rail.'}</p>
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
@@ -793,6 +815,9 @@ export default function Worldcraft() {
           {ui.last && <div className={styles.receipt}>
             {ui.last.goalResult?.kind === 'none' && <p>No score. Goal is none. {ui.last.terminal.reason.replaceAll('-', ' ')}.</p>}
             {ui.last.goalResult?.kind === 'none' && (ui.last.contacts.length ? <ul className={styles.contactList}>{ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${contact.first}-${index}`}>{contact.body} · first {contact.first.toFixed(3)} s · ({contact.point.x.toFixed(2)}, {contact.point.y.toFixed(2)}, {contact.point.z.toFixed(2)}) · ×{contact.count}</li>)}</ul> : <p>No contact recorded.</p>)}
+            {phraseResult && <p>{phraseResult.status === 'match' ? 'Phrase matched' : phraseResult.status === 'miss' ? 'Phrase missed' : 'Phrase unfinished'}. Heard {phraseResult.heard.length ? noteOrder(phraseResult.heard) : 'no resonant contact'}. Not a score.</p>}
+            {phraseResult?.standIn && <p>{phraseResult.standIn.status === 'hit' ? 'Stand-in hit' : phraseResult.standIn.status === 'miss' ? 'Stand-in missed' : 'Stand-in unfinished'}. Separate from the phrase.</p>}
+            {phraseResult && (ui.last?.contacts.length ? <ul className={styles.contactList}>{ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${contact.first}-${index}`} data-orc={contact.body === phraseResult.standIn?.body ? 'hit' : undefined}>{contact.body} · first {contact.first.toFixed(3)} s · ({contact.point.x.toFixed(2)}, {contact.point.y.toFixed(2)}, {contact.point.z.toFixed(2)}) · ×{contact.count}</li>)}</ul> : <p>No contact recorded.</p>)}
             {ui.last.targetResult?.status === 'hit' && <p className={styles.bonk}>ORC BONKED</p>}
             {ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
             {ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}

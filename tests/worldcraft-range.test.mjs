@@ -13,14 +13,16 @@ import {
   createHouseShotWorld, createOrcStaticWorld, createStarterWorld, createEmptyWorld,
   exportWorldJSON, parseWorldJSON, worldcraftIdentity, validateWorld, validateWorldEdit,
   validateWorldcraftShot, worldcraftFixedSetup, worldcraftPinResult, worldcraftTargetResult,
-  worldcraftGoalResult, WORLDCRAFT_CATALOG,
+  worldcraftGoalResult, contactPhraseHeard, WORLDCRAFT_CATALOG,
 } from '../lib/worldcraft-model.js';
 import {
-  adaptRangePreset, bindRangeShot, createOpenWorkshopPreset, exportRangePreset, importRangeDocument,
+  adaptRangePreset, bindRangeShot, createOpenWorkshopPreset, createResonantRunFreePreset, createResonantRunPhrasePreset,
+  exportRangePreset, importRangeDocument,
   inferOutcome, latchRecordedComparison, listRangePresets, parseRangePreset, projectRangePreset,
   rangeBindingText, rangePreset, recordedTrail, sha256Hex, validateRangePreset,
 } from '../lib/worldcraft-range.js';
 import { createVoiceLedger } from '../lib/worldcraft-resonance.js';
+import { buildWorldcraftScene, createWorldcraftMaterials, WORLDCRAFT_CONTACTS } from '../lib/worldcraft-scene.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
 import { runRange } from '../scripts/range/run.mjs';
 
@@ -94,7 +96,11 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
   assert.deepEqual(preset.objects.map(object => [object.id, object.voice.material, object.voice.degree]), [
     ['ramp-yours', 'metal', 1], ['bank-yours', 'timber', 0], ['plate-yours', 'metal', 2],
   ]);
-  assert.deepEqual(listRangePresets(), [{ id: 'open-workshop', name: 'Open Workshop', goal: 'none' }]);
+  assert.deepEqual(listRangePresets(), [
+    { id: 'open-workshop', name: 'Open Workshop', goal: 'none' },
+    { id: 'resonant-run-free', name: 'Resonant Run: Free', goal: 'none' },
+    { id: 'resonant-run-phrase', name: 'Resonant Run: Phrase', goal: 'contact-phrase' },
+  ]);
   assert.deepEqual(inferOutcome(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), { kind: 'none', status: 'none', scored: false });
   assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72.5] }), null);
   assert.equal(worldcraftTargetResult(world, { reason: 'first-ground-contact', contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), null);
@@ -244,4 +250,113 @@ test('twenty preset reloads keep the same Havok body count, and the runner write
   const rows = (await readFile(out, 'utf8')).trim().split('\n').map(line => JSON.parse(line));
   assert.equal(rows.length, 2);
   assert.equal(rows[0].gitSha, '4a2be209');
+});
+
+test('a contact phrase is the ledger order, and the stand-in is a separate judgement', async () => {
+  const { world } = adaptRangePreset(createResonantRunPhrasePreset());
+  const opening = [
+    { body: 'worldcraft-object-ramp-yours', point: { x: 0, y: 1, z: 42 }, count: 4, first: 1.4, last: 1.43 },
+    { body: 'worldcraft-object-plate-yours', point: { x: 0, y: 1, z: 68 }, count: 2, first: 4.4, last: 4.42 },
+    { body: 'worldcraft-ground', point: { x: 0, y: 0, z: 90 }, count: 1, first: 7, last: 7 },
+  ];
+  assert.deepEqual(contactPhraseHeard(world, opening), [1, 2]);
+  const miss = worldcraftGoalResult(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: opening });
+  assert.equal(miss.kind, 'contact-phrase');
+  assert.equal(miss.status, 'miss');
+  assert.equal(miss.scored, false);
+  assert.deepEqual(miss.notes, [0, 1, 2]);
+  assert.equal(miss.standIn.status, 'miss');
+  assert.equal(miss.standIn.body, 'worldcraft-target-stand-in-orc');
+  assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72] }), null);
+  assert.equal(worldcraftTargetResult(world, { reason: 'first-ground-contact', contacts: opening }), null);
+  const spelled = [
+    { body: 'worldcraft-object-bank-yours', point: { x: 0, y: 1, z: 1 }, count: 8, first: .2, last: .26 },
+    { body: 'worldcraft-object-ramp-yours', point: { x: 0, y: 1, z: 2 }, count: 2, first: 1, last: 1.02 },
+    { body: 'worldcraft-target-stand-in-orc', point: { x: -26, y: 1, z: 58 }, count: 3, first: 2, last: 2.04 },
+    { body: 'worldcraft-object-plate-yours', point: { x: 0, y: 1, z: 4 }, count: 2, first: 3, last: 3.02 },
+  ];
+  const hit = worldcraftGoalResult(world, { reason: 'first-ground-contact', contacts: spelled });
+  assert.equal(hit.status, 'match');
+  assert.deepEqual(hit.heard, [0, 1, 2]);
+  assert.equal(hit.standIn.status, 'hit');
+  assert.equal(hit.scored, false);
+  const stopped = worldcraftGoalResult(world, { reason: 'interrupted', contacts: spelled });
+  assert.equal(stopped.status, 'unfinished');
+  assert.equal(stopped.standIn.status, 'hit');
+  assert.equal(worldcraftGoalResult(world, { contacts: spelled }).status, 'unfinished');
+  const free = adaptRangePreset(createResonantRunFreePreset());
+  assert.equal(free.world.rules.goal.kind, 'none');
+  assert.equal(Object.hasOwn(free.world.rules, 'target'), false);
+  assert.deepEqual(free.world.objects, adaptRangePreset(createOpenWorkshopPreset()).world.objects);
+  assert.deepEqual(free.preset.rules.allowance, { bank: 1, plate: 1, ramp: 1 });
+  assert.equal(exportRangePreset(rangePreset('resonant-run-free')).includes('"Resonant Run: Free"'), true);
+  assert.equal(await readFile(new URL('../docs/examples/worldcraft-resonant-run-free.json', import.meta.url), 'utf8'), exportRangePreset(createResonantRunFreePreset()));
+  assert.equal(await readFile(new URL('../docs/examples/worldcraft-resonant-run-phrase.json', import.meta.url), 'utf8'), exportRangePreset(createResonantRunPhrasePreset()));
+  assert.throws(() => validateRangePreset({ ...free.preset, rules: { ...free.preset.rules, goal: { kind: 'contact-phrase', notes: [0], standIn: null } } }));
+});
+
+function shapeMaterials(world) {
+  const engine = new NullEngine(), scene = new Scene(engine);
+  scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), new HavokPlugin(true, havok));
+  const palette = createWorldcraftMaterials(scene);
+  const built = buildWorldcraftScene(scene, world, { materials: palette.materials });
+  const rows = built.bodies.map(aggregate => {
+    const material = aggregate.shape?.material;
+    if (!material || !Number.isFinite(material.friction) || !Number.isFinite(material.restitution)) {
+      throw new Error(`No Havok material on ${aggregate.transformNode?.name}`);
+    }
+    return { name: aggregate.transformNode.name, friction: material.friction, restitution: material.restitution };
+  });
+  built.dispose();
+  palette.dispose();
+  scene.dispose();
+  engine.dispose();
+  return rows;
+}
+
+test('Resonant Run opening misses the phrase, and retuning leaves Havok materials and samples unchanged', () => {
+  const phrase = adaptRangePreset(createResonantRunPhrasePreset());
+  const session = harness(phrase.world);
+  try {
+    const opening = session.shoot(worldcraftFixedSetup(phrase.world));
+    assert.equal(opening.goalResult.status, 'miss');
+    assert.deepEqual(opening.goalResult.heard, [1, 2]);
+    assert.equal(opening.goalResult.standIn.status, 'miss');
+    assert.equal(opening.goalResult.scored, false);
+    const resonantRows = opening.contacts.filter(contact => contact.body.startsWith('worldcraft-object-'));
+    assert.equal(opening.resonance.sounds, resonantRows.length);
+    assert.equal(opening.resonance.sounds, opening.goalResult.heard.length);
+    assert.ok(opening.resonance.resonantCallbacks >= opening.resonance.sounds);
+    assert.ok(resonantRows.every(contact => contact.count > 1));
+    assert.equal(opening.resonance.collapsed, opening.resonance.resonantCallbacks - opening.resonance.sounds);
+    const retuned = validateWorld({
+      ...phrase.world,
+      objects: phrase.world.objects.map(object => ({
+        ...object,
+        voice: { material: object.voice.material === 'metal' ? 'timber' : 'metal', degree: (object.voice.degree + 3) % 5 },
+      })),
+    });
+    assert.equal(session.runtime.replaceWorld(retuned, { intent: 'load' }).ok, true);
+    const again = session.shoot(worldcraftFixedSetup(retuned));
+    assert.equal(again.samples.length, opening.samples.length);
+    for (let i = 0; i < opening.samples.length; i++) {
+      assert.equal(Object.is(again.samples[i].t, opening.samples[i].t), true);
+      assert.equal(Object.is(again.samples[i].x, opening.samples[i].x), true);
+      assert.equal(Object.is(again.samples[i].y, opening.samples[i].y), true);
+      assert.equal(Object.is(again.samples[i].z, opening.samples[i].z), true);
+    }
+    assert.notEqual(worldcraftIdentity(retuned), worldcraftIdentity(phrase.world));
+    assert.deepEqual(again.terminal.position, opening.terminal.position);
+    const before = shapeMaterials(phrase.world);
+    const after = shapeMaterials(retuned);
+    assert.deepEqual(after, before);
+    const byName = Object.fromEntries(before.map(row => [row.name, row]));
+    assert.deepEqual(byName['worldcraft-object-ramp-yours'], { name: 'worldcraft-object-ramp-yours', friction: WORLDCRAFT_CONTACTS.ramp.friction, restitution: WORLDCRAFT_CONTACTS.ramp.restitution });
+    assert.deepEqual(byName['worldcraft-object-bank-yours'], { name: 'worldcraft-object-bank-yours', friction: WORLDCRAFT_CATALOG.bank.friction, restitution: WORLDCRAFT_CATALOG.bank.restitution });
+    assert.deepEqual(byName['worldcraft-object-plate-yours'], { name: 'worldcraft-object-plate-yours', friction: WORLDCRAFT_CATALOG.plate.friction, restitution: WORLDCRAFT_CATALOG.plate.restitution });
+    assert.equal(byName['worldcraft-target-stand-in-orc'].friction, WORLDCRAFT_CATALOG.block.friction);
+    assert.equal(byName['worldcraft-target-stand-in-orc'].restitution, WORLDCRAFT_CATALOG.block.restitution);
+    assert.equal(WORLDCRAFT_CATALOG.bank.friction, .18);
+    assert.equal(WORLDCRAFT_CATALOG.bank.restitution, .86);
+  } finally { session.dispose(); }
 });

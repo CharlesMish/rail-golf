@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import Havok from '@babylonjs/havok';
 import { NullEngine, Scene, HavokPlugin, Vector3, Logger } from '@babylonjs/core';
 import { RAIL_RULES } from '../../lib/rail-golf-v02.js';
-import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot } from '../../lib/worldcraft-model.js';
+import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot, worldcraftFixedSetup } from '../../lib/worldcraft-model.js';
 import { adaptRangePreset, bindRangeShot, exportRangePreset, rangePreset, sha256Hex, validateRangePreset } from '../../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../../lib/worldcraft-runtime.js';
 
@@ -99,6 +99,85 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
         terminal: last.terminal,
       });
       lines.push({ type: 'shot', index, seed, ...shot });
+    }
+  } finally { session.dispose(); }
+  return { lines, rejected };
+}
+
+/** One Havok session, many piece layouts, the preset's fixed launch. Layouts that do not validate are rejected and not fired. */
+export async function runLayoutShots({ preset, layouts, seed, gitSha = rangeGitSha(), havok }) {
+  if (!Array.isArray(layouts) || !layouts.length) throw new Error('A layout run needs at least one layout');
+  if (!Number.isInteger(seed)) throw new Error('A range run needs an integer seed');
+  const base = typeof preset === 'string' ? rangePreset(preset) : validateRangePreset(preset);
+  const { world: opening } = adaptRangePreset(base);
+  const setup = worldcraftFixedSetup(opening);
+  const presetHash = await sha256Hex(exportRangePreset(base));
+  const provenance = {
+    type: 'provenance',
+    gitSha,
+    seed,
+    presetId: base.id,
+    presetHash,
+    catalog: WORLDCRAFT_CATALOG_VERSION,
+    physics: WORLDCRAFT_PHYSICS_CONTRACT,
+    node: process.version,
+    timestepHz: 120,
+    substep: '1000/120',
+    gravity: RAIL_RULES.gravity,
+    projectileMass: RAIL_RULES.projectileMass,
+    projectileRadius: RAIL_RULES.projectileRadius,
+    layouts: layouts.length,
+  };
+  const lines = [provenance];
+  const owned = havok ?? await Havok({ wasmBinary: await readFile(new URL('../../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
+  const session = harness(owned, opening, gitSha === 'unknown' ? 'unknown' : gitSha);
+  let rejected = 0;
+  try {
+    for (let index = 0; index < layouts.length; index++) {
+      const layout = layouts[index];
+      let document;
+      let world;
+      try {
+        document = validateRangePreset({ ...base, objects: layout.objects });
+        world = adaptRangePreset(document).world;
+        validateWorldcraftShot(world, setup);
+      } catch (error) {
+        rejected += 1;
+        lines.push({ type: 'rejected', index, id: layout.id ?? null, error: error.message });
+        continue;
+      }
+      const last = session.shoot(world, setup);
+      const shot = await bindRangeShot({
+        preset: document,
+        world,
+        setup,
+        build: gitSha,
+        launch: last.launch,
+        points: last.samples,
+        events: last.evidence,
+        contacts: last.contacts,
+        terminal: last.terminal,
+      });
+      const resonantContacts = shot.contacts.filter(contact => contact.body.startsWith('worldcraft-object-'));
+      lines.push({
+        type: 'shot',
+        index,
+        id: layout.id ?? null,
+        seed,
+        objects: document.objects,
+        outcome: shot.outcome,
+        bindingHash: shot.bindingHash,
+        presetHash: shot.presetHash,
+        worldIdentity: shot.worldSnapshot.worldIdentity,
+        terminal: shot.terminal,
+        contacts: shot.contacts,
+        resonance: last.resonance,
+        resonantContactRows: resonantContacts.length,
+        pointCount: shot.points.length,
+        pointHash: await sha256Hex(JSON.stringify(shot.points)),
+        shotHash: await sha256Hex(JSON.stringify(shot)),
+        shot,
+      });
     }
   } finally { session.dispose(); }
   return { lines, rejected };

@@ -41,5 +41,5 @@ export function createVoiceLedger(): {
   counts(): { started: number; cleaned: number; finished: number; active: number };
 };
 export function audioBufferToWav(buffer: { getChannelData(channel: number): Float32Array; sampleRate: number; numberOfChannels?: number }): Uint8Array;
-export function renderResonanceWav(impacts: ResonanceImpact[], options?: { OfflineAudioContext?: typeof OfflineAudioContext; sampleRate?: number; tail?: number }): Promise<Uint8Array>;
-export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact): void; release(): number; counts(): { started: number; cleaned: number; finished: number; active: number }; dispose(): void };
+export function renderResonanceWav(impacts: ResonanceImpact[], options?: { OfflineAudioContext?: typeof OfflineAudioContext; sampleRate?: number; tail?: number; mix?: number }): Promise<Uint8Array>;
+export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact): void; release(): number; counts(): { started: number; cleaned: number; finished: number; active: number }; state(): AudioContextState | 'uncreated'; dispose(): void };
