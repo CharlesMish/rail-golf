@@ -17,7 +17,7 @@ import { fileURLToPath } from 'node:url';
 import Havok from '@babylonjs/havok';
 import { NullEngine, Scene, HavokPlugin, Vector3, Logger } from '@babylonjs/core';
 import { RAIL_RULES } from '../../lib/rail-golf-v02.js';
-import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot, worldcraftFixedSetup, worldcraftIdentity } from '../../lib/worldcraft-model.js';
+import { WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_PHYSICS_CONTRACT, validateWorldcraftShot, worldcraftBellTarget, worldcraftFixedSetup, worldcraftIdentity } from '../../lib/worldcraft-model.js';
 import { adaptRangePreset, bindRangeShot, exportRangePreset, rangePreset, sha256Hex, validateRangePreset } from '../../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../../lib/worldcraft-runtime.js';
 
@@ -99,11 +99,29 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
     for (let index = 0; index < setups.length; index++) {
       const document = documentFor(index);
       const adapted = documentAt ? adaptRangePreset(document) : { preset: base, world };
+      const raw = setups[index] ?? {};
+      const { launchPhase: requestedPhase, ...setupFields } = raw;
       let setup;
-      try { setup = validateWorldcraftShot(adapted.world, setups[index]); }
+      try { setup = validateWorldcraftShot(adapted.world, setupFields); }
       catch (error) {
         rejected += 1;
         const row = { type: 'rejected', index, error: error.message };
+        if (labels) row.label = labels[index] ?? null;
+        lines.push(row);
+        continue;
+      }
+      if (worldcraftBellTarget(adapted.world)) {
+        const phased = session.runtime.setLaunchPhase(requestedPhase ?? 0);
+        if (!phased.ok) {
+          rejected += 1;
+          const row = { type: 'rejected', index, error: phased.error ?? 'launch phase rejected' };
+          if (labels) row.label = labels[index] ?? null;
+          lines.push(row);
+          continue;
+        }
+      } else if (requestedPhase !== undefined) {
+        rejected += 1;
+        const row = { type: 'rejected', index, error: 'Launch phase requires a travelling bell' };
         if (labels) row.label = labels[index] ?? null;
         lines.push(row);
         continue;
@@ -119,6 +137,7 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
         events: last.evidence,
         contacts: last.contacts,
         terminal: last.terminal,
+        ...(typeof last.launchPhase === 'number' ? { launchPhase: last.launchPhase } : {}),
       });
       let row;
       if (omitPoints) {
@@ -174,6 +193,18 @@ export async function runLayoutShots({ preset, layouts, seed, gitSha = rangeGitS
         lines.push({ type: 'rejected', index, id: layout.id ?? null, error: error.message });
         continue;
       }
+      if (worldcraftBellTarget(world)) {
+        const phased = session.runtime.setLaunchPhase(requestedPhase ?? 0);
+        if (!phased.ok) {
+          rejected += 1;
+          lines.push({ type: 'rejected', index, error: phased.error ?? 'launch phase rejected' });
+          continue;
+        }
+      } else if (requestedPhase !== undefined) {
+        rejected += 1;
+        lines.push({ type: 'rejected', index, error: 'Launch phase requires a travelling bell' });
+        continue;
+      }
       const last = session.shoot(world, setup);
       const shot = await bindRangeShot({
         preset: document,
@@ -185,6 +216,7 @@ export async function runLayoutShots({ preset, layouts, seed, gitSha = rangeGitS
         events: last.evidence,
         contacts: last.contacts,
         terminal: last.terminal,
+        ...(typeof last.launchPhase === 'number' ? { launchPhase: last.launchPhase } : {}),
       });
       const resonantContacts = shot.contacts.filter(contact => contact.body.startsWith('worldcraft-object-'));
       lines.push({
