@@ -1,10 +1,12 @@
 export type WorldcraftKind='bank'|'ramp'|'block';
 export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number};
-export type WorldcraftTarget={id:string;x:number;z:number;yaw:number};
+export type WorldcraftStationaryTarget={id:string;x:number;z:number;yaw:number};
+export type WorldcraftBellTarget={id:string;yaw:number;speed:number;endpoints:[{x:number;z:number},{x:number;z:number}]};
+export type WorldcraftTarget=WorldcraftStationaryTarget|WorldcraftBellTarget;
 export type WorldcraftRules={pin:{x:number;z:number;r:number}|null;locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;target?:WorldcraftTarget};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
 export type WorldcraftTargetResult={status:'hit'|'miss'|'unfinished';body:string;contact:WorldcraftContact|null};
-export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:WorldcraftRules|null};
+export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:WorldcraftRules|null;timing?:{delay:number}};
 export type WorldcraftSetup={railIndex:1;originX:number;yaw:number;elevation:number;charge:number};
 export type WorldcraftPoint={x:number;y:number;z:number;t?:number};
 export type WorldcraftJSON=null|boolean|number|string|WorldcraftJSON[]|{[key:string]:WorldcraftJSON};
@@ -27,7 +29,13 @@ export const WORLDCRAFT_LAUNCHER_CORRIDOR:Readonly<{minX:-12;maxX:12;minZ:-8;max
 export const WORLDCRAFT_GRID:Readonly<{coarse:1;fine:.5;rotation:15;fineRotation:5;launcher:.5}>;
 export const WORLDCRAFT_CATALOG:Readonly<Record<WorldcraftKind,Readonly<{label:string;width:number;height:number;depth:number;centerY:number;pitch:number;friction:number;restitution:number}>>>;
 export const WORLDCRAFT_ORC:Readonly<{width:number;height:number;depth:number;centerY:number;friction:number;restitution:number}>;
+export const WORLDCRAFT_BELL:Readonly<{height:number;skirtRadius:number;centerY:number;friction:number;restitution:number}>;
+export const WORLDCRAFT_DELAY:Readonly<{step:number;min:number;max:number}>;
 export function worldcraftTargetBody(id:string):string;
+export function worldcraftBellTarget(world:WorldcraftDocument|null|undefined):WorldcraftBellTarget|null;
+export function worldcraftLaunchDelay(world:WorldcraftDocument|null|undefined):number;
+/** Delay plus flight seconds. Endpoints[0] at t = 0, constant speed, instant reversal at each end. */
+export function worldcraftBellPose(target:WorldcraftBellTarget,seconds:number):{x:number;y:number;z:number;yaw:number;along:number;length:number;period:number};
 export function newWorldcraftId(prefix?:string):string;
 export function worldcraftFootprint(object:WorldcraftObject):{x:number;z:number;halfX:number;halfZ:number;ux:{x:number;z:number};uz:{x:number;z:number};corners:{x:number;z:number}[]};
 /** Returns a canonical independent copy; rejects rather than repairing input. */
@@ -75,3 +83,4 @@ export function worldcraftPinResult(world:WorldcraftDocument,terminal:unknown):W
 export function worldcraftTargetResult(world:WorldcraftDocument,input:unknown):WorldcraftTargetResult|null;
 export function createHouseShotWorld():WorldcraftDocument;
 export function createOrcStaticWorld():WorldcraftDocument;
+export function createBellRailWorld():WorldcraftDocument;
