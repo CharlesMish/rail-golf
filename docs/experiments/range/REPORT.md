@@ -2,7 +2,9 @@
 
 Integrated branch `lab/wc-range-integrated-20261024`. No pull request. Not merged to `main`. Not deployed to `rail-golf.cmish.dev`.
 
-Non-production preview: not posted yet at the time this file was first written. The URL, once Cloudflare Workers Builds attaches it to the branch tip, is added here and in [INDEX.md](INDEX.md).
+Non-production preview alias for `lab/wc-range-integrated-20261024`: [https://lab-wc-range-integrated-20261024-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://lab-wc-range-integrated-20261024-rail-golf.charlesmish.workers.dev/lab/worldcraft).
+
+Workers Builds on `0b2daa332f2d40dfec49801c56050df632a0fc44` posted version URL [https://cffd3e7d-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://cffd3e7d-rail-golf.charlesmish.workers.dev/lab/worldcraft) (build `7ee15ae7-8797-4810-9e2d-1dc7a8b221ac`). Both URLs returned HTTP 200. Chrome reached phase `ready` on the version URL. The Range select listed Presets, Open Workshop, Back Pocket, Soft Landing, Resonant Run: Free, Resonant Run: Phrase, and Travelling Bell. The footer read `BUILD 0b2daa3`. This is not `rail-golf.cmish.dev`. The alias was serving that same build when it was fetched. A later docs commit does not change the lab; the alias follows the branch when the next build finishes.
 
 Listening quality of the wavs under [audio/](audio/) is unverified. No one listened to them on a speaker or headphones in this integration. A contact labelled C4, D4, or E4 is a scale degree on a ledger row. It is not a claim that the result is music.
 
@@ -156,7 +158,7 @@ After 20 cycles, ending on Travelling Bell reset: static 5, physics 6, live 0, m
 - A person playing any of the six, including the two notebook prompts in [PROTOCOL.md](PROTOCOL.md).
 - Listening to the wavs.
 - Phone, a desktop GPU, or the production host.
-- The Cloudflare preview, until a URL is posted for the pushed commit. This file will say if none appears.
+- A second Chrome pass on the docs commit's own version URL. The pass above is the app build `0b2daa3`.
 - Bitwise equality of the bell solution's terminal position between a fresh plugin and the long sweep session.
 - Family 2 aim yaw below the 0.1° sample. The measured clear is exactly 0 on the samples that were fired. That does not prove an unmeasured 0.01° neighbour.
 - That every coarse cell between Back Pocket's direct-fire samples was visited.
