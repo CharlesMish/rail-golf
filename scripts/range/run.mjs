@@ -3,6 +3,11 @@
 // charge mapping, or the solver step.
 //
 //   node scripts/range/run.mjs --preset open-workshop --setups docs/experiments/range/setups/open-workshop.json --out docs/experiments/range/runs/open-workshop.jsonl
+//   node scripts/range/run.mjs --preset-file docs/experiments/range/appendix/back-pocket/near-bank.json --setups <file> --out <file> --omit-points
+// --preset-file is a preset document that is not in the player selector.
+// --omit-points keeps terminal, contacts, and outcome, and drops sample trails.
+// createRangeHarness is the same step loop. A campaign that moves pieces between
+// shots reuses that loop and rangeProvenance; runRange itself is one preset.
 import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -21,7 +26,7 @@ export function rangeGitSha() {
   catch { return 'unknown'; }
 }
 
-function harness(havok, world, build) {
+export function createRangeHarness(havok, world, build) {
   const engine = new NullEngine(), scene = new Scene(engine);
   scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), new HavokPlugin(true, havok));
   const physics = scene.getPhysicsEngine();
@@ -52,17 +57,12 @@ function harness(havok, world, build) {
   };
 }
 
-export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), havok }) {
-  if (!Array.isArray(setups) || !setups.length) throw new Error('A range run needs at least one setup');
-  if (!Number.isInteger(seed)) throw new Error('A range run needs an integer seed');
-  const document = typeof preset === 'string' ? rangePreset(preset) : validateRangePreset(preset);
-  const { world } = adaptRangePreset(document);
-  const presetHash = await sha256Hex(exportRangePreset(document));
+export function rangeProvenance({ presetId, presetHash, seed, gitSha = rangeGitSha(), label = null, campaign = null }) {
   const provenance = {
     type: 'provenance',
     gitSha,
     seed,
-    presetId: document.id,
+    presetId,
     presetHash,
     catalog: WORLDCRAFT_CATALOG_VERSION,
     physics: WORLDCRAFT_PHYSICS_CONTRACT,
@@ -73,9 +73,21 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
     projectileMass: RAIL_RULES.projectileMass,
     projectileRadius: RAIL_RULES.projectileRadius,
   };
+  if (typeof label === 'string' && label) provenance.label = label;
+  if (typeof campaign === 'string' && campaign) provenance.campaign = campaign;
+  return provenance;
+}
+
+export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), havok, label = null, omitPoints = false, campaign = null }) {
+  if (!Array.isArray(setups) || !setups.length) throw new Error('A range run needs at least one setup');
+  if (!Number.isInteger(seed)) throw new Error('A range run needs an integer seed');
+  const document = typeof preset === 'string' ? rangePreset(preset) : validateRangePreset(preset);
+  const { world } = adaptRangePreset(document);
+  const presetHash = await sha256Hex(exportRangePreset(document));
+  const provenance = rangeProvenance({ presetId: document.id, presetHash, seed, gitSha, label, campaign });
   const lines = [provenance];
   const owned = havok ?? await Havok({ wasmBinary: await readFile(new URL('../../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
-  const session = harness(owned, world, gitSha === 'unknown' ? 'unknown' : gitSha);
+  const session = createRangeHarness(owned, world, gitSha === 'unknown' ? 'unknown' : gitSha);
   let rejected = 0;
   try {
     for (let index = 0; index < setups.length; index++) {
@@ -98,7 +110,10 @@ export async function runRange({ preset, setups, seed, gitSha = rangeGitSha(), h
         contacts: last.contacts,
         terminal: last.terminal,
       });
-      lines.push({ type: 'shot', index, seed, ...shot });
+      if (omitPoints) {
+        const { points, ...rest } = shot;
+        lines.push({ type: 'shot', index, seed, pointCount: points.length, ...rest });
+      } else lines.push({ type: 'shot', index, seed, ...shot });
     }
   } finally { session.dispose(); }
   return { lines, rejected };
@@ -111,17 +126,20 @@ function arg(name) {
 
 async function main() {
   const presetId = arg('--preset');
+  const presetFile = arg('--preset-file');
   const setupsPath = arg('--setups');
   const outPath = arg('--out');
-  if (!presetId || !setupsPath) {
-    console.error('usage: node scripts/range/run.mjs --preset <id> --setups <file.json> [--out <file.jsonl>]');
+  const omitPoints = process.argv.includes('--omit-points');
+  if ((!presetId && !presetFile) || !setupsPath) {
+    console.error('usage: node scripts/range/run.mjs (--preset <id> | --preset-file <file.json>) --setups <file.json> [--out <file.jsonl>] [--omit-points]');
     process.exitCode = 2;
     return;
   }
   const file = JSON.parse(await readFile(setupsPath, 'utf8'));
   const setups = Array.isArray(file) ? file : file.setups;
   const seed = Array.isArray(file) ? null : file.seed;
-  const { lines, rejected } = await runRange({ preset: presetId, setups, seed });
+  const preset = presetFile ? JSON.parse(await readFile(presetFile, 'utf8')) : presetId;
+  const { lines, rejected } = await runRange({ preset, setups, seed, label: Array.isArray(file) ? null : file.label ?? null, omitPoints, campaign: arg('--campaign') });
   const text = lines.map(line => JSON.stringify(line)).join('\n') + '\n';
   if (outPath) {
     await mkdir(dirname(outPath), { recursive: true });

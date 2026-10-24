@@ -15,7 +15,14 @@ export type RangePreset = {
   launcher: { x: number };
   objects: WorldcraftObject[];
   rules: {
-    launcher: { fixed: true; yaw: number; elevation: number; charge: number };
+    launcher: {
+      fixed: boolean;
+      yaw: number;
+      elevation: number;
+      charge: number;
+      originFixed?: boolean;
+      window?: { yawMin: number; yawMax: number; elevationMin: number; elevationMax: number; chargeMin: number; chargeMax: number };
+    };
     fixed: string[];
     allowance: Partial<Record<WorldcraftKind, number>>;
     goal: WorldcraftGoal;
@@ -43,6 +50,9 @@ export function exportRangePreset(preset: RangePreset): string;
 export function parseRangePreset(text: string): RangePreset;
 export function importRangeDocument(text: string): { kind: 'preset'; preset: RangePreset } | { kind: 'world'; world: WorldcraftDocument };
 export function createOpenWorkshopPreset(): RangePreset;
+export function createBackPocketPreset(): RangePreset;
+export function rangeOpeningSetup(preset: RangePreset): WorldcraftSetup;
+export function retargetRangeOpening(preset: RangePreset, setup: WorldcraftSetup): RangePreset;
 export function listRangePresets(): { id: string; name: string; goal: WorldcraftGoal['kind'] }[];
 export function rangePreset(id: string): RangePreset;
 export function recordedTrail(record: { label?: string; worldIdentity: string; setup: WorldcraftSetup; points: WorldcraftPoint[] }): RecordedTrail;

@@ -1,0 +1,78 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "back-pocket",
+  "name": "Back Pocket",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "screen-a",
+      "kind": "bank",
+      "x": -18,
+      "z": 46,
+      "yaw": 0
+    },
+    {
+      "id": "screen-b",
+      "kind": "bank",
+      "x": -6,
+      "z": 46,
+      "yaw": 0
+    },
+    {
+      "id": "screen-c",
+      "kind": "bank",
+      "x": 6,
+      "z": 46,
+      "yaw": 0
+    },
+    {
+      "id": "bank-yours",
+      "kind": "bank",
+      "x": 4,
+      "z": 70,
+      "yaw": -45,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 26,
+      "charge": 0.7,
+      "originFixed": true,
+      "window": {
+        "yawMin": -60,
+        "yawMax": 60,
+        "elevationMin": 8,
+        "elevationMax": 26,
+        "chargeMin": 0.3,
+        "chargeMax": 0.9
+      }
+    },
+    "fixed": [
+      "screen-a",
+      "screen-b",
+      "screen-c"
+    ],
+    "allowance": {
+      "bank": 1
+    },
+    "goal": {
+      "kind": "first-ground-zone",
+      "x": -8,
+      "z": 54,
+      "r": 4
+    }
+  }
+}

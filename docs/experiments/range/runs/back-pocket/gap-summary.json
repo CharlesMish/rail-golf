@@ -1,0 +1,37 @@
+{
+  "shots": 1512,
+  "scored": 0,
+  "minDistance": 8.5632560669718,
+  "minLine": {
+    "type": "shot",
+    "index": 845,
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": -4,
+      "elevation": 26,
+      "charge": 0.59
+    },
+    "reason": "first-ground-contact",
+    "position": [
+      -4.316623687744141,
+      0.43000003695487976,
+      61.730594635009766
+    ],
+    "distance": 8.5632560669718,
+    "scored": false,
+    "contacts": [
+      {
+        "body": "worldcraft-ground",
+        "first": 2.2749999999999946,
+        "count": 1
+      }
+    ]
+  },
+  "seconds": 5.038397416,
+  "pocket": {
+    "x": -8,
+    "z": 54,
+    "r": 4
+  }
+}

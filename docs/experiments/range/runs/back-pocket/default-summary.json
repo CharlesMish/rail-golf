@@ -1,0 +1,669 @@
+{
+  "shots": 15067,
+  "rejected": 0,
+  "scored": 0,
+  "ground": 10837,
+  "withPieceContact": 3029,
+  "minDistance": 8.698677348354218,
+  "minLine": {
+    "type": "shot",
+    "index": 6662,
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": -8,
+      "elevation": 26,
+      "charge": 0.6
+    },
+    "reason": "first-ground-contact",
+    "elapsed": 2.308333333333328,
+    "position": [
+      -8.8064603805542,
+      0.4300000071525574,
+      62.66121292114258
+    ],
+    "distance": 8.698677348354218,
+    "status": "miss",
+    "scored": false,
+    "contacts": [
+      {
+        "body": "worldcraft-ground",
+        "first": 2.2999999999999945,
+        "count": 1
+      }
+    ]
+  },
+  "nearest": [
+    {
+      "distance": 8.698677348354218,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 26,
+        "charge": 0.6
+      },
+      "position": [
+        -8.8064603805542,
+        0.4300000071525574,
+        62.66121292114258
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 2.2999999999999945,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 8.836220802028272,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 26,
+        "charge": 0.6
+      },
+      "position": [
+        -10.98794174194336,
+        0.4300000071525574,
+        62.31570816040039
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 2.2999999999999945,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 8.93002805434428,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 15,
+        "charge": 0.6
+      },
+      "position": [
+        -7.977737903594971,
+        0.43000003695487976,
+        45.06999969482422
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.4916666666666638,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.037257466847196,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -6,
+        "elevation": 26,
+        "charge": 0.6
+      },
+      "position": [
+        -6.6142497062683105,
+        0.4300000071525574,
+        62.930381774902344
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 2.2999999999999945,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.070217405013205,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 13,
+        "charge": 0.65
+      },
+      "position": [
+        -9.588690757751465,
+        0.43000009655952454,
+        45.06999969482422
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.3916666666666642,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.071257270972138,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "position": [
+        -9.594616889953613,
+        0.43000003695487976,
+        45.06999969482422
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.63333333333333,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.071376826101963,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 22,
+        "charge": 0.5
+      },
+      "position": [
+        -9.595296859741211,
+        0.4300000071525574,
+        45.06999969482422
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.8083333333333294,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.8083333333333294,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.0815533445155,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 11,
+        "charge": 0.7
+      },
+      "position": [
+        -6.347817897796631,
+        0.43000006675720215,
+        45.06999969482422
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.2833333333333312,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.2833333333333312,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.082324074615176,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 11,
+        "charge": 0.7
+      },
+      "position": [
+        -7.920260906219482,
+        0.43000006675720215,
+        44.918025970458984
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.2833333333333312,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.106434651894682,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "position": [
+        -8.003777503967285,
+        0.43000003695487976,
+        44.8935661315918
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.6249999999999967,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.63333333333333,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.193900416112946,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 15,
+        "charge": 0.6
+      },
+      "position": [
+        -9.551870346069336,
+        0.43000003695487976,
+        44.938018798828125
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.4916666666666638,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.25049966442841,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 22,
+        "charge": 0.5
+      },
+      "position": [
+        -8.011833190917969,
+        0.43000003695487976,
+        44.749507904052734
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.7916666666666627,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.8083333333333294,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.265388627743143,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 15,
+        "charge": 0.6
+      },
+      "position": [
+        -6.3848185539245605,
+        0.42997705936431885,
+        44.87648010253906
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.4833333333333305,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.4916666666666638,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.344045882284922,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 13,
+        "charge": 0.65
+      },
+      "position": [
+        -8.023221015930176,
+        0.4631173312664032,
+        44.655982971191406
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.3833333333333309,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.3999999999999975,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.4288922633697,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 26,
+        "charge": 0.6
+      },
+      "position": [
+        -13.156031608581543,
+        0.4300000071525574,
+        61.89426040649414
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 2.2999999999999945,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.502204165305391,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 11,
+        "charge": 0.7
+      },
+      "position": [
+        -9.483051300048828,
+        0.43000006675720215,
+        44.61424255371094
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.2833333333333312,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.521704600954441,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 10,
+        "charge": 0.75
+      },
+      "position": [
+        -11.304232597351074,
+        0.43003788590431213,
+        45.06999969482422
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.2333333333333314,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.2416666666666647,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.59322776442541,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "position": [
+        -6.418667316436768,
+        0.42999985814094543,
+        44.538002014160156
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.60833333333333,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.63333333333333,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.655054758938661,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 21,
+        "charge": 0.5
+      },
+      "position": [
+        -6.2546305656433105,
+        0.43000006675720215,
+        44.50401306152344
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.741666666666663,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.683697391920038,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 13,
+        "charge": 0.65
+      },
+      "position": [
+        -6.4187397956848145,
+        0.4300006926059723,
+        44.4462776184082
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.3749999999999976,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.3999999999999975,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.704266410098937,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 22,
+        "charge": 0.5
+      },
+      "position": [
+        -6.418826580047607,
+        0.43000099062919617,
+        44.4254150390625
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.7833333333333294,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.8166666666666627,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.709287923926757,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -6,
+        "elevation": 11,
+        "charge": 0.7
+      },
+      "position": [
+        -4.761280536651611,
+        0.4304456412792206,
+        44.846805572509766
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.274999999999998,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.2833333333333312,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.74334675937556,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 21,
+        "charge": 0.5
+      },
+      "position": [
+        -7.803990364074707,
+        0.43000006675720215,
+        44.25862503051758
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.741666666666663,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.748137210336434,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 22,
+        "charge": 0.5
+      },
+      "position": [
+        -11.164895057678223,
+        0.4300000071525574,
+        44.77993392944336
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.8083333333333294,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "distance": 9.750868775262303,
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "position": [
+        -11.164106369018555,
+        0.43000003695487976,
+        44.77677536010742
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "first": 1.63333333333333,
+          "count": 1
+        }
+      ],
+      "reason": "first-ground-contact"
+    }
+  ],
+  "bankContacts": 1331
+}

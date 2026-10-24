@@ -1,0 +1,1646 @@
+[
+  {
+    "name": "default-opening",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 67,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "b0adeacb1a80147066e36d526781c5ed209a1e5ebcfed2e71fe6fdd8a95bc891",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": -22,
+              "z": 20,
+              "yaw": 0,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-22,\"z\":20,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "bindingHash": "667d4920d21535effa907f5187a9f1cd1b88681decf22b67cce42e630667b385",
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -0.016227932646870613,
+            "y": 0.9161098003387451,
+            "z": 45.32147216796875
+          },
+          "count": 1,
+          "first": 1.5916666666666635,
+          "last": 1.5916666666666635
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "point": {
+            "x": 0.01624225452542305,
+            "y": 0.9161098003387451,
+            "z": 45.32147216796875
+          },
+          "count": 1,
+          "first": 1.5916666666666635,
+          "last": 1.5916666666666635
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -0.0185384564101696,
+            "y": 0.8244109749794006,
+            "z": 45.49945068359375
+          },
+          "count": 1,
+          "first": 1.5999999999999968,
+          "last": 1.5999999999999968
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "point": {
+            "x": 0.013458961620926857,
+            "y": 0.8244109749794006,
+            "z": 45.49972152709961
+          },
+          "count": 1,
+          "first": 1.5999999999999968,
+          "last": 1.5999999999999968
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": 0.07201921939849854,
+            "y": 0.02742263674736023,
+            "z": 44.172523498535156
+          },
+          "count": 1,
+          "first": 1.6416666666666633,
+          "last": 1.6416666666666633
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6499999999999966,
+        "position": [
+          0.08594323694705963,
+          0.4300009310245514,
+          43.99300003051758
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 12.865555814668523,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "wall-only-opening",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 67,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "6958660154688ac9c062ffd7a809816debd9669881fe709adf74adbae293d769",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {},
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "bindingHash": "d1227d898fe4e3f66f262b3039b45e9b4f644ce81f4a7f9f9eeaf41efef7e3ea",
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -0.016227932646870613,
+            "y": 0.9161098003387451,
+            "z": 45.32147216796875
+          },
+          "count": 1,
+          "first": 1.5916666666666635,
+          "last": 1.5916666666666635
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "point": {
+            "x": 0.01624225452542305,
+            "y": 0.9161098003387451,
+            "z": 45.32147216796875
+          },
+          "count": 1,
+          "first": 1.5916666666666635,
+          "last": 1.5916666666666635
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -0.0185384564101696,
+            "y": 0.8244109749794006,
+            "z": 45.49945068359375
+          },
+          "count": 1,
+          "first": 1.5999999999999968,
+          "last": 1.5999999999999968
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "point": {
+            "x": 0.013458961620926857,
+            "y": 0.8244109749794006,
+            "z": 45.49972152709961
+          },
+          "count": 1,
+          "first": 1.5999999999999968,
+          "last": 1.5999999999999968
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": 0.07201921939849854,
+            "y": 0.02742263674736023,
+            "z": 44.172523498535156
+          },
+          "count": 1,
+          "first": 1.6416666666666633,
+          "last": 1.6416666666666633
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6499999999999966,
+        "position": [
+          0.08594323694705963,
+          0.4300009310245514,
+          43.99300003051758
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 12.865555814668523,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "direct-nearest",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 94,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "6958660154688ac9c062ffd7a809816debd9669881fe709adf74adbae293d769",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {},
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 26,
+        "charge": 0.6
+      },
+      "bindingHash": "39b7d12c781867ea71f0aadf0af96ab6f64f41207ff8f2007df7dc7bf8706b90",
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": -8.777007102966309,
+            "y": 0.11081260442733765,
+            "z": 62.45164489746094
+          },
+          "count": 1,
+          "first": 2.2999999999999945,
+          "last": 2.2999999999999945
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.308333333333328,
+        "position": [
+          -8.8064603805542,
+          0.4300000071525574,
+          62.66121292114258
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 8.698677348354218,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "default-nearest",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 94,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "b0adeacb1a80147066e36d526781c5ed209a1e5ebcfed2e71fe6fdd8a95bc891",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": -22,
+              "z": 20,
+              "yaw": 0,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-22,\"z\":20,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 26,
+        "charge": 0.6
+      },
+      "bindingHash": "36b350aa301016d0eb394fc290cac2992c05227f843a8171f4be80f9aba80005",
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": -8.777007102966309,
+            "y": 0.11081260442733765,
+            "z": 62.45164489746094
+          },
+          "count": 1,
+          "first": 2.2999999999999945,
+          "last": 2.2999999999999945
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.308333333333328,
+        "position": [
+          -8.8064603805542,
+          0.4300000071525574,
+          62.66121292114258
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 8.698677348354218,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "screen-face",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 50,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "6958660154688ac9c062ffd7a809816debd9669881fe709adf74adbae293d769",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {},
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -8,
+        "elevation": 8,
+        "charge": 0.9
+      },
+      "bindingHash": "bd87494a8ba0633792e6ac4837721ecc3281652f3917a75b7f3c202605ec78c9",
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -6.321648597717285,
+            "y": 1.5142050981521606,
+            "z": 45.41055679321289
+          },
+          "count": 2,
+          "first": 1.033333333333332,
+          "last": 1.0416666666666654
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": -7.004884719848633,
+            "y": 0.03701406717300415,
+            "z": 39.544986724853516
+          },
+          "count": 1,
+          "first": 1.2083333333333315,
+          "last": 1.2083333333333315
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.2166666666666648,
+        "position": [
+          -7.036766052246094,
+          0.4300021231174469,
+          39.26874923706055
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 14.762708717532488,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "family-1-charge-above",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 115,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "c2292517128d050fc2b0af71ce487fbcd3a07064d3aae486f97025c81a6e4b08",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": -4,
+              "z": 58,
+              "yaw": 15,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-4,\"z\":58,\"yaw\":15,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.77
+      },
+      "bindingHash": "9dba94174083a198e3951631568bc9459f672feb92f322ea6ef5d94d30aac656",
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": 0.11040063202381134,
+            "y": 7.040395259857178,
+            "z": 56.15443801879883
+          },
+          "count": 2,
+          "first": 1.5666666666666635,
+          "last": 1.5749999999999968
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -4.319234371185303,
+            "y": 6.350010395050049,
+            "z": 46.556396484375
+          },
+          "count": 2,
+          "first": 1.933333333333329,
+          "last": 1.9416666666666622
+        },
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": -8.377803802490234,
+            "y": 3.2683887481689453,
+            "z": 58.63027572631836
+          },
+          "count": 2,
+          "first": 2.4666666666666606,
+          "last": 2.474999999999994
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": -12.6923246383667,
+            "y": 0.030333518981933594,
+            "z": 53.564064025878906
+          },
+          "count": 1,
+          "first": 2.8249999999999926,
+          "last": 2.8249999999999926
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.833333333333326,
+        "position": [
+          -12.78921890258789,
+          0.4300020635128021,
+          53.451881408691406
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 4.82048251599809,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "family-1-bankYaw-above",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 94,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "4cfa1e88422557c0f3ab7e6146ac90d1489bcc5e1bf0be175d3ec8e4d1f7c4a8",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": -4,
+              "z": 58,
+              "yaw": 25,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-4,\"z\":58,\"yaw\":25,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.75
+      },
+      "bindingHash": "1e64ed7c8af5ae6a61565daf56207a6290eb46f66210bfb97b09e2c628e98003",
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": 0.1816013753414154,
+            "y": 6.634363651275635,
+            "z": 55.305145263671875
+          },
+          "count": 2,
+          "first": 1.5749999999999968,
+          "last": 1.5833333333333302
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -7.863348484039307,
+            "y": 3.451570987701416,
+            "z": 46.50965118408203
+          },
+          "count": 2,
+          "first": 2.016666666666662,
+          "last": 2.0249999999999955
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": -12.409072875976562,
+            "y": 0.01630944013595581,
+            "z": 51.65736389160156
+          },
+          "count": 1,
+          "first": 2.316666666666661,
+          "last": 2.316666666666661
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.3249999999999944,
+        "position": [
+          -12.534384727478027,
+          0.4300001263618469,
+          51.79243087768555
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 5.043213884675346,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "family-1-aimYaw-above",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 95,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "54fd97c6d233af0141d8fb824c108ef8891f94315ea20519d79c7c30140e5f6b",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": -4,
+              "z": 58,
+              "yaw": 15,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-4,\"z\":58,\"yaw\":15,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0.5,
+        "elevation": 20,
+        "charge": 0.75
+      },
+      "bindingHash": "44d5d84695b866bcbefe1635f2ba2e9f211e0e10e7a05a84d9d6c5a3de134ca8",
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": 0.5973737835884094,
+            "y": 6.4469475746154785,
+            "z": 56.12305450439453
+          },
+          "count": 2,
+          "first": 1.5999999999999968,
+          "last": 1.60833333333333
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "point": {
+            "x": -3.9397082328796387,
+            "y": 3.7005178928375244,
+            "z": 46.550743103027344
+          },
+          "count": 2,
+          "first": 1.9749999999999954,
+          "last": 1.9833333333333287
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": -7.074183940887451,
+            "y": 0.07931828498840332,
+            "z": 54.189125061035156
+          },
+          "count": 1,
+          "first": 2.3333333333333277,
+          "last": 2.3333333333333277
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.341666666666661,
+        "position": [
+          -7.1461920738220215,
+          0.4300004541873932,
+          54.36195373535156
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "clear",
+        "distance": 0.927361030742229,
+        "scored": true
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "family-2-charge-above",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 199,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "d0c5110a620ab01f16c55a546e428b338667e4a2e8d92f0d3dac4b7253c8a534",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": 4,
+              "z": 70,
+              "yaw": -45,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":4,\"z\":70,\"yaw\":-45,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 26,
+        "charge": 0.71
+      },
+      "bindingHash": "357ccd5a76c7686470387503ab8b0421771ff61a7ce731ea9c616a84770d3745",
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": 0.1172621101140976,
+            "y": 7.049934387207031,
+            "z": 65.21598052978516
+          },
+          "count": 2,
+          "first": 2.0749999999999953,
+          "last": 2.0833333333333286
+        }
+      ],
+      "terminal": {
+        "reason": "out-of-bounds",
+        "elapsed": 4.950000000000036,
+        "position": [
+          -32.028812408447266,
+          22.128625869750977,
+          58.18301773071289
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "unfinished",
+        "distance": null,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "family-2-bankYaw-above",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 109,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "c2e1ac864f9834d0f0344f2fb105f5a67a3da7161ed9719f26a65bdeb26b1559",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": 4,
+              "z": 70,
+              "yaw": -40,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":4,\"z\":70,\"yaw\":-40,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 26,
+        "charge": 0.7
+      },
+      "bindingHash": "701e5cfa3c4e8bee8fd5365d46881e0b2f9ae553fa9f0e3a3f702eca9623cd6f",
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": -0.27618879079818726,
+            "y": 6.664682388305664,
+            "z": 65.5521240234375
+          },
+          "count": 2,
+          "first": 2.1083333333333285,
+          "last": 2.116666666666662
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": 12.042622566223145,
+            "y": 0.054354310035705566,
+            "z": 61.80024337768555
+          },
+          "count": 1,
+          "first": 2.674999999999993,
+          "last": 2.674999999999993
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.6833333333333265,
+        "position": [
+          12.221475601196289,
+          0.42999961972236633,
+          61.745330810546875
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 21.65405793043381,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  },
+  {
+    "name": "family-2-aimYaw-above",
+    "line": {
+      "type": "shot",
+      "index": 0,
+      "seed": 20261024,
+      "pointCount": 108,
+      "format": "rail-golf-worldcraft-range-shot",
+      "version": 1,
+      "presetId": "back-pocket",
+      "presetHash": "87952715dd99b791e20c61b133393178e076bcb30ab74567f3bd62e03ec5cf74",
+      "worldSnapshot": {
+        "version": 1,
+        "world": {
+          "format": "rail-golf-worldcraft",
+          "version": 1,
+          "id": "back-pocket",
+          "name": "Back Pocket",
+          "environment": {
+            "preset": "forest-clearing-v1",
+            "seed": 1
+          },
+          "objects": [
+            {
+              "id": "screen-a",
+              "kind": "bank",
+              "x": -18,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-b",
+              "kind": "bank",
+              "x": -6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "screen-c",
+              "kind": "bank",
+              "x": 6,
+              "z": 46,
+              "yaw": 0
+            },
+            {
+              "id": "bank-yours",
+              "kind": "bank",
+              "x": 4,
+              "z": 70,
+              "yaw": -45,
+              "voice": {
+                "material": "timber",
+                "degree": 0
+              }
+            }
+          ],
+          "launcher": {
+            "x": 0
+          },
+          "rules": {
+            "pin": {
+              "x": -8,
+              "z": 54,
+              "r": 4
+            },
+            "locked": [
+              "screen-a",
+              "screen-b",
+              "screen-c"
+            ],
+            "allowance": {
+              "bank": 1
+            },
+            "rail": null,
+            "originFixed": true,
+            "aimWindow": {
+              "yawMin": -60,
+              "yawMax": 60,
+              "elevationMin": 8,
+              "elevationMax": 26,
+              "chargeMin": 0.3,
+              "chargeMax": 0.9
+            },
+            "goal": {
+              "kind": "first-ground-zone",
+              "x": -8,
+              "z": 54,
+              "r": 4
+            }
+          }
+        },
+        "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":4,\"z\":70,\"yaw\":-45,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"screen-a\",\"kind\":\"bank\",\"x\":-18,\"z\":46,\"yaw\":0},{\"id\":\"screen-b\",\"kind\":\"bank\",\"x\":-6,\"z\":46,\"yaw\":0},{\"id\":\"screen-c\",\"kind\":\"bank\",\"x\":6,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":-8,\"z\":54,\"r\":4},\"locked\":[\"screen-a\",\"screen-b\",\"screen-c\"],\"allowance\":{\"bank\":1},\"rail\":null,\"originFixed\":true,\"aimWindow\":{\"yawMin\":-60,\"yawMax\":60,\"elevationMin\":8,\"elevationMax\":26,\"chargeMin\":0.3,\"chargeMax\":0.9},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":-8,\"z\":54,\"r\":4}}}",
+        "catalog": "worldcraft-prefabs-v2",
+        "physics": "rail-golf-v02-worldcraft-v1",
+        "build": "bdc6961dd19b148174f2b5c0a92cb2fd171fc43a"
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0.5,
+        "elevation": 26,
+        "charge": 0.7
+      },
+      "bindingHash": "2544780043a733fdcb621d2b53e2873a56535d958682a0a59249aa01a1b86947",
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "point": {
+            "x": 0.2653374671936035,
+            "y": 6.664682388305664,
+            "z": 65.52433013916016
+          },
+          "count": 2,
+          "first": 2.1083333333333285,
+          "last": 2.116666666666662
+        },
+        {
+          "body": "worldcraft-ground",
+          "point": {
+            "x": 12.709550857543945,
+            "y": 0.09461161494255066,
+            "z": 64.39511108398438
+          },
+          "count": 1,
+          "first": 2.6499999999999932,
+          "last": 2.6499999999999932
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.6583333333333266,
+        "position": [
+          12.897156715393066,
+          0.43000370264053345,
+          64.37962341308594
+        ]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 23.332975399318006,
+        "scored": false
+      }
+    },
+    "rejected": 0
+  }
+]

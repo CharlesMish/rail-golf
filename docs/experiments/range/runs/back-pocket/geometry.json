@@ -1,0 +1,109 @@
+{
+  "model": "unobstructed point mass, centre reaches y = radius, sphere versus the screen AABB",
+  "gravity": 12,
+  "radius": 0.43,
+  "speed": "6 + 37 * charge",
+  "screen": {
+    "minX": -24,
+    "maxX": 12,
+    "minY": 0,
+    "maxY": 7,
+    "minZ": 45.5,
+    "maxZ": 46.5
+  },
+  "pocket": {
+    "x": -8,
+    "z": 54,
+    "r": 4
+  },
+  "lattice": {
+    "yawStep": 0.5,
+    "elevationStep": 0.25,
+    "chargeStep": 0.01,
+    "yaw": [
+      -60,
+      60
+    ],
+    "elevation": [
+      8,
+      26
+    ],
+    "charge": [
+      0.3,
+      0.9
+    ]
+  },
+  "total": 1073173,
+  "occluded": 127818,
+  "free": 945355,
+  "pocketIgnoringWall": 7054,
+  "pocketIgnoringWallOccluded": 7054,
+  "freeInPocket": 0,
+  "minFreeDistance": 8.17748088149375,
+  "minFreeAim": {
+    "yaw": -8.5,
+    "elevation": 25.75,
+    "charge": 0.6,
+    "landing": {
+      "x": -9.27748188049267,
+      "y": 0.43000000000000327,
+      "z": 62.07708076053525
+    },
+    "distance": 8.17748088149375
+  },
+  "maxApex": 16.18757520649813,
+  "maxApexAim": {
+    "yaw": -60,
+    "elevation": 26,
+    "charge": 0.9,
+    "apex": 16.18757520649813
+  },
+  "minLandingZClearingScreenOnPocketX": 61.71548563190676,
+  "minClearLanding": {
+    "yaw": -10.5,
+    "elevation": 25.75,
+    "charge": 0.6,
+    "landing": {
+      "x": -11.438289164503432,
+      "y": 0.43000000000000327,
+      "z": 61.71548563190676
+    },
+    "crossY": 7.4623564475428275
+  },
+  "freeDistanceBins": {
+    "8": 68,
+    "9": 1409,
+    "10": 2564,
+    "11": 3573,
+    "12": 4553,
+    "13": 5516,
+    "14": 6541,
+    "15": 7566,
+    "16": 8574,
+    "17": 9741,
+    "18": 10977,
+    "19": 12759,
+    "20": 14377,
+    "21": 15716,
+    "22": 18252,
+    "23": 20494,
+    "24": 22143,
+    "25": 23610,
+    "26": 25440,
+    "27": 26267,
+    "28": 27389,
+    "29": 28025,
+    "30": 28720,
+    "31": 28903,
+    "32": 29551,
+    "33": 29127,
+    "34": 29093,
+    "35": 28774,
+    "36": 27813,
+    "37": 27217,
+    "38": 26938,
+    "39": 26733,
+    "40": 366932
+  },
+  "seconds": 0.4873461790000001
+}

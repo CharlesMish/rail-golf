@@ -1,0 +1,222 @@
+{
+  "pilots": [
+    {
+      "type": "shot",
+      "name": "wall-only-opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.6499999999999966,
+      "position": [
+        0.08594323694705963,
+        0.4300009310245514,
+        43.99300003051758
+      ],
+      "distance": 12.865555814668523,
+      "status": "miss",
+      "scored": false,
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.5916666666666635,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "first": 1.5916666666666635,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.5999999999999968,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "first": 1.5999999999999968,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.6416666666666633,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "type": "shot",
+      "name": "default-opening",
+      "pose": {
+        "x": -22,
+        "z": 20,
+        "yaw": 0
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.6499999999999966,
+      "position": [
+        0.08594323694705963,
+        0.4300009310245514,
+        43.99300003051758
+      ],
+      "distance": 12.865555814668523,
+      "status": "miss",
+      "scored": false,
+      "contacts": [
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.5916666666666635,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "first": 1.5916666666666635,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-object-screen-b",
+          "first": 1.5999999999999968,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-object-screen-c",
+          "first": 1.5999999999999968,
+          "count": 1
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 1.6416666666666633,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "type": "shot",
+      "name": "near",
+      "pose": {
+        "region": "back",
+        "x": -8,
+        "z": 62,
+        "yaw": 0
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -6,
+        "elevation": 24,
+        "charge": 0.65
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.3749999999999942,
+      "position": [
+        -6.988198757171631,
+        0.4300001859664917,
+        53.843257904052734
+      ],
+      "distance": 1.0238700306342472,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 2.0583333333333287,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.366666666666661,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "type": "shot",
+      "name": "far",
+      "pose": {
+        "region": "back",
+        "x": -4,
+        "z": 70,
+        "yaw": 15
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 24,
+        "charge": 0.75
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.6583333333333266,
+      "position": [
+        -6.927242279052734,
+        0.43000009655952454,
+        53.661529541015625
+      ],
+      "distance": 1.124887274111084,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 2.041666666666662,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.6499999999999932,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "type": "shot",
+      "name": "far-yaw-20",
+      "pose": {
+        "region": "back",
+        "x": -4,
+        "z": 70,
+        "yaw": 20
+      },
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 24,
+        "charge": 0.75
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.6583333333333266,
+      "position": [
+        -9.159685134887695,
+        0.42999961972236633,
+        54.5084228515625
+      ],
+      "distance": 1.2662398698787034,
+      "status": "clear",
+      "scored": true,
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "first": 2.0333333333333288,
+          "count": 2
+        },
+        {
+          "body": "worldcraft-ground",
+          "first": 2.6499999999999932,
+          "count": 1
+        }
+      ]
+    }
+  ]
+}
