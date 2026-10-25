@@ -308,7 +308,7 @@ export default function Worldcraft() {
           if (mode === 'play') runtime.clearShot();
           const windowed = Boolean(uiRef.current.world.rules?.aimWindow);
           const adjustable = uiRef.current.preset?.rules.launcher.fixed === false && !windowed;
-          const buildNotice = worldcraftBellTarget(uiRef.current.world)
+          const buildNotice = worldcraftBellTarget(uiRef.current.world) || worldcraftClockworkTarget(uiRef.current.world)
             ? 'The pieces stay. Set the release phase, then fire.'
             : windowed
               ? 'Move the bank. The carriage stays put. Aim and power stay in the window.'
@@ -955,10 +955,14 @@ export default function Worldcraft() {
             {bell && ui.last.targetResult?.status === 'miss' && <p>Bell missed. First ground ended the line. No score.</p>}
             {bell && ui.last.targetResult?.status === 'unfinished' && <p>No bell contact recorded. No score.</p>}
             {bell && typeof ui.last.launchPhase === 'number' && <p>Release phase {ui.last.launchPhase.toFixed(2)} s. Goal is target contact, not a first-ground zone.</p>}
-            {!bell && !phraseResult && ui.last.targetResult?.status === 'hit' && <p className={styles.bonk}>ORC BONKED</p>}
-            {!bell && !phraseResult && ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
-            {!bell && !phraseResult && ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}
-            {!phraseResult && ui.last.targetResult && (ui.last.contacts.length ? <ul className={styles.contactList}>{ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${contact.first}-${index}`} data-orc={!bell && contact.body === ui.last?.targetResult?.body ? 'hit' : undefined} data-bell={bell && contact.body === ui.last?.targetResult?.body ? 'hit' : undefined}>{contact.body} · first {contact.first.toFixed(3)} s · ({contact.point.x.toFixed(2)}, {contact.point.y.toFixed(2)}, {contact.point.z.toFixed(2)}) · ×{contact.count}</li>)}</ul> : <p>No contact recorded.</p>)}
+            {clock && ui.last.targetResult?.status === 'hit' && <p className={styles.bonk}>HEARTS POPPED</p>}
+            {clock && ui.last.targetResult?.status === 'miss' && <p>Figure missed. First ground ended the line. No score.</p>}
+            {clock && ui.last.targetResult?.status === 'unfinished' && <p>No figure contact recorded. No score.</p>}
+            {clock && typeof ui.last.launchPhase === 'number' && <p>Release phase {ui.last.launchPhase.toFixed(2)} s. Goal is target contact, not a first-ground zone.</p>}
+            {!bell && !clock && !phraseResult && ui.last.targetResult?.status === 'hit' && <p className={styles.bonk}>ORC BONKED</p>}
+            {!bell && !clock && !phraseResult && ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
+            {!bell && !clock && !phraseResult && ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}
+            {!phraseResult && ui.last.targetResult && (ui.last.contacts.length ? <ul className={styles.contactList}>{ui.last.contacts.map((contact, index) => <li key={`${contact.body}-${contact.first}-${index}`} data-orc={!bell && !clock && contact.body === ui.last?.targetResult?.body ? 'hit' : undefined} data-bell={bell && contact.body === ui.last?.targetResult?.body ? 'hit' : undefined} data-clock={clock && contact.body === ui.last?.targetResult?.body ? 'hit' : undefined}>{contact.body} · first {contact.first.toFixed(3)} s · ({contact.point.x.toFixed(2)}, {contact.point.y.toFixed(2)}, {contact.point.z.toFixed(2)}) · ×{contact.count}</li>)}</ul> : <p>No contact recorded.</p>)}
             {ui.preset && ui.last.goalResult?.kind === 'first-ground-zone' && <p>{`${ui.last.goalResult.status === 'clear' ? 'Inside the circle' : ui.last.goalResult.status === 'miss' ? 'Outside the circle' : 'No landing'}${ui.last.goalResult.distance === null ? '' : ` · ${ui.last.goalResult.distance.toFixed(1)} m from centre`}. Not a score.`}</p>}
             {ui.last.pinResult && !(ui.preset && ui.last.goalResult?.kind === 'first-ground-zone') && <p>{`${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}`}</p>}
             <p>{qualified.length ? qualified.map(e => e.label ?? e.feature).join(' → ') : 'No qualified rebound recorded.'}</p>

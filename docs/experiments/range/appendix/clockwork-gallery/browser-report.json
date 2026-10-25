@@ -1,0 +1,64 @@
+{
+  "house": {
+    "phase": "ready",
+    "build": "e5e1fd2e77-dirty"
+  },
+  "opened": {
+    "presetId": "clockwork-gallery",
+    "launchPhase": 0,
+    "goal": "target-contact",
+    "notice": "Clockwork Gallery opened. The pieces stay. The post is the release phase. The figure rides the turntable. First ground still ends the line."
+  },
+  "releaseBytes": 89852,
+  "quarterPhase": 2,
+  "quarterBytes": 90293,
+  "openingPhase": 0,
+  "openingShot": {
+    "status": "miss",
+    "reason": "first-ground-contact",
+    "figure": false,
+    "notice": "The figure was not touched. First ground ended the line. No score.",
+    "launchPhase": 0
+  },
+  "missBytes": 99928,
+  "hitPhase": 1.775,
+  "hitShot": {
+    "status": "hit",
+    "body": "worldcraft-target-figure",
+    "reason": "first-ground-contact",
+    "contactTime": 1.60833333333333,
+    "point": {
+      "x": 0.4167960286140442,
+      "y": 0.7318788766860962,
+      "z": 45.415061950683594
+    },
+    "launchPhase": 1.775,
+    "notice": "Hearts popped. The figure was touched. First ground still ended the line. No score.",
+    "comicHearts": 15,
+    "bindingHash": "76e79d18372239f38c89000540dfb5ccd34ad9e6b6f1defa8a8d1ccea14b8294"
+  },
+  "frames": 18,
+  "heartCounts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    0
+  ],
+  "heartFrame": 10,
+  "maxHearts": 15,
+  "clipBytes": 109386
+}
