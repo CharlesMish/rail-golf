@@ -2,7 +2,7 @@
 
 Branch `lab/wc-range-music-20261025`, from `lab/wc-range-integrated-20261024` at `6cf951576d29cd051109d119e1d11381aeae0450`.
 
-Route `/lab/worldcraft`. No production deploy. The pinned non-production preview for this branch is recorded at the bottom of this file once Workers Builds publishes it. It is not `rail-golf.cmish.dev`.
+Route `/lab/worldcraft`. No production deploy. The pinned non-production preview for `e36074d007fee2e649db73dc13c0973dc265c462` is [https://012e39f9-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://012e39f9-rail-golf.charlesmish.workers.dev/lab/worldcraft). It is not `rail-golf.cmish.dev`.
 
 This note separates what was implemented and checked on real Havok from what was not listened to and is not a musical claim. Coordinates for the five fired arrangements are in the appendix below and in [appendix/music/search.json](appendix/music/search.json). The sitting that omits them is [PROTOCOL-MUSIC.md](PROTOCOL-MUSIC.md).
 
@@ -70,13 +70,13 @@ Chrome `OfflineAudioContext` called `renderResonanceWav` on the recorded impacts
 | [plate-e4.wav](audio/music/plate-e4.wav) | Plate E4 | −11.60 dBFS | 3.258 | `8b889dacbe27a4fcb7bc47bc626a6eb7f6d73862d4ac0b27de7c44955eff9f01` |
 | [return-d4-d4.wav](audio/music/return-d4-d4.wav) | Ramp D4 → Ramp D4 | −11.41 dBFS | 6.858 | `aeaeef72aa3e6925084254ac9f66bece8e4a0fb802ad0eb0f3948a6af3f7aa47` |
 
-Sidecars sit beside the wavs: branch, git SHA, preset, setup, objects, seed, contact sequence, peak dBFS. The `gitSha` in those files is the commit `rangeGitSha()` returned when the renderer ran. A docs commit that only records the preview URL does not change the wav bytes.
+Sidecars sit beside the wavs: branch, git SHA, preset, setup, objects, seed, contact sequence, peak dBFS. `gitSha` is `e36074d007fee2e649db73dc13c0973dc265c462`, the commit that contains the workshop, the shots, and these wav bytes. The renderer had read the parent `6cf951576d29cd051109d119e1d11381aeae0450` because that commit did not exist yet. The solver does not read the git SHA. A later sentence that only records the preview URL does not change the wav bytes.
 
 ## Browser smoke
 
 Headless Chrome, SwiftShader, local dev server. Desktop 1400×900 and a 390×844 viewport.
 
-The selector options were Fixed Shot Workshop, Musical Workshop, Back Pocket, Soft Landing, Resonant Run: Free (fixed shot), Resonant Phrase (fixed shot), and Travelling Bell. The closed control was photographed. Headless Chrome did not paint the open native menu. The option texts were read from the page.
+The selector options were Fixed Shot Workshop, Musical Workshop, Back Pocket, Soft Landing, Resonant Run: Free (fixed shot), Resonant Phrase (fixed shot), and Travelling Bell. Headless Chrome does not paint the open native menu. The smoke page expanded that same control into a list long enough to photograph the labels. The product control stays a closed select.
 
 Musical Workshop: Build, **Play →**, **Fire line**. The impact line was `Ramp D4 → Plate E4`, with the two-note explanation, and the bank named as untouched. **Ready again** returned to ready. The header **Build** returned to Build. From the next result, **Back to Build** returned to Build. The fired binding hash was the opening arrangement above. `scored` was false.
 
@@ -94,11 +94,13 @@ Screenshots from that pass: `desktop-selector.png`, `desktop-musical-workshop.pn
 - The browser pass is headless Chrome with SwiftShader, not a handset GPU and not a person playing.
 - A plate note followed by another piece note was outside the orders this lattice produced.
 - Family 2's 0.081° width was not re-measured on this branch. The figure is the existing bisection.
-- The preview URL is filled in when Workers Builds publishes a version for this branch. Until that line exists, there is no pinned URL.
+- Listening on the pinned preview was not done. The preview was fetched: `/lab/worldcraft` returned 200, and the worldcraft bundle contains `Musical Workshop` and `e36074d`.
 
 ## Preview
 
-Pending a Workers Builds version URL for the commit that contains this branch. Non-production only.
+Pinned non-production version for `e36074d007fee2e649db73dc13c0973dc265c462`: [https://012e39f9-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://012e39f9-rail-golf.charlesmish.workers.dev/lab/worldcraft).
+
+Workers build `cca6160a-fa2e-411e-8000-0e89f04c7ec9`. Version `012e39f9-c788-406f-aa62-460280e5342b`. That version's bundle footer is `BUILD e36074d`. The branch alias [https://lab-wc-range-music-20261025-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://lab-wc-range-music-20261025-rail-golf.charlesmish.workers.dev/lab/worldcraft) follows later commits on this branch. The `012e39f9` URL stays on `e36074d`. A later commit that only names this URL does not change the workshop, the shots, or the wav bytes. Its own per-version preview is recorded on the draft pull request when Workers Builds publishes that commit. This is not `rail-golf.cmish.dev`.
 
 ## Appendix — five arrangements
 
