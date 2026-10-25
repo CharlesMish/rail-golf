@@ -58,3 +58,13 @@ Enter: **Range** → **Travelling Bell**. Reset: **Reset preset**. Reset also pu
 The pieces stay. The lever is the release phase. Success is a contact with the bell before the line ends. First ground still ends the line.
 
 Change the phase and fire. When you get a bell contact, or when you decide to stop trying, write the two lines. Then the offer to stop.
+
+## Clockwork Gallery (optional)
+
+Skip this if the sitting is already long. If you skip it, write "skipped" and do not treat that as the offer-to-stop note.
+
+Enter: **Range** → **Clockwork Gallery**. Reset: **Reset preset**. Reset also puts the release phase back to 0.
+
+The pieces stay. The lever is the release phase. The wooden figure rides a circle. Success is a contact with the figure before the line ends. First ground still ends the line. Hearts and the timber knock are not a score.
+
+Change the phase and fire. When the figure is touched, or when you decide to stop trying, write the two lines. Then the offer to stop.

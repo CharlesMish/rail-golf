@@ -1,0 +1,67 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "clockwork-gallery",
+  "name": "Clockwork Gallery",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "plinth",
+      "kind": "block",
+      "x": -16,
+      "z": 32,
+      "yaw": 0
+    },
+    {
+      "id": "side-screen",
+      "kind": "block",
+      "x": 18,
+      "z": 62,
+      "yaw": 0
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": true,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "fixed": [
+      "plinth",
+      "side-screen"
+    ],
+    "allowance": {},
+    "goal": {
+      "kind": "target-contact",
+      "id": "figure",
+      "yaw": 0,
+      "motion": {
+        "kind": "turntable",
+        "phaseReference": "near-point",
+        "center": {
+          "x": 4,
+          "z": 44
+        },
+        "radius": 2,
+        "period": 8,
+        "collider": {
+          "shape": "box",
+          "width": 0.9,
+          "depth": 0.7,
+          "height": 2.2,
+          "centerY": 1.35,
+          "friction": 0.8,
+          "restitution": 0.1
+        },
+        "hit": "any-contact-before-ledger-close"
+      }
+    }
+  }
+}

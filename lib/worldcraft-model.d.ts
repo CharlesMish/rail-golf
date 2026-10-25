@@ -4,8 +4,10 @@ export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;ya
 export type WorldcraftStationaryTarget={id:string;x:number;z:number;yaw:number};
 export type WorldcraftShuttle={kind:'segment-shuttle';speed:number;phaseReference:'endpoint-0';endpoints:[{x:number;z:number},{x:number;z:number}];collider:{shape:'lathe-convex-hull';height:number;skirtRadius:number;centerY:number;friction:number;restitution:number};hit:'any-contact-before-ledger-close'};
 export type WorldcraftBellTarget={id:string;yaw:number;motion:WorldcraftShuttle};
-export type WorldcraftTarget=WorldcraftStationaryTarget|WorldcraftBellTarget;
-export type WorldcraftGoal={kind:'none'}|{kind:'first-ground-zone';x:number;z:number;r:number}|{kind:'target-contact';id:string;x:number;z:number;yaw:number}|{kind:'target-contact';id:string;yaw:number;motion:WorldcraftShuttle}|{kind:'contact-phrase';notes:number[];standIn:{id:string;x:number;z:number;yaw:number}|null};
+export type WorldcraftTurntable={kind:'turntable';phaseReference:'near-point';center:{x:number;z:number};radius:number;period:number;collider:{shape:'box';width:number;depth:number;height:number;centerY:number;friction:number;restitution:number};hit:'any-contact-before-ledger-close'};
+export type WorldcraftClockworkTarget={id:string;yaw:number;motion:WorldcraftTurntable};
+export type WorldcraftTarget=WorldcraftStationaryTarget|WorldcraftBellTarget|WorldcraftClockworkTarget;
+export type WorldcraftGoal={kind:'none'}|{kind:'first-ground-zone';x:number;z:number;r:number}|{kind:'target-contact';id:string;x:number;z:number;yaw:number}|{kind:'target-contact';id:string;yaw:number;motion:WorldcraftShuttle}|{kind:'target-contact';id:string;yaw:number;motion:WorldcraftTurntable}|{kind:'contact-phrase';notes:number[];standIn:{id:string;x:number;z:number;yaw:number}|null};
 export type WorldcraftPhraseStandIn={required:true;status:'hit'|'miss'|'unfinished';body:string};
 export type WorldcraftGoalResult={kind:'none';status:'none';scored:false}|{kind:'first-ground-zone';status:'clear'|'miss'|'unfinished';distance:number|null;scored:boolean}|{kind:'target-contact';status:'hit'|'miss'|'unfinished';body:string;scored:boolean}|{kind:'contact-phrase';status:'match'|'miss'|'unfinished';notes:number[];heard:number[];scored:false;standIn:WorldcraftPhraseStandIn|null};
 export type WorldcraftAimWindow={yawMin:number;yawMax:number;elevationMin:number;elevationMax:number;chargeMin:number;chargeMax:number};
@@ -38,6 +40,11 @@ export const WORLDCRAFT_ORC:Readonly<{width:number;height:number;depth:number;ce
 export const WORLDCRAFT_BELL:Readonly<{height:number;skirtRadius:number;centerY:number;friction:number;restitution:number}>;
 export function worldcraftTargetBody(id:string):string;
 export function worldcraftBellTarget(world:WorldcraftDocument|null|undefined):WorldcraftBellTarget|null;
+export function worldcraftPhasedTarget(world:WorldcraftDocument|null|undefined):WorldcraftBellTarget|WorldcraftClockworkTarget|null;
+export const WORLDCRAFT_CLOCKWORK:Readonly<{width:number;depth:number;height:number;centerY:number}>;
+export function worldcraftClockworkTarget(world:WorldcraftDocument|null|undefined):WorldcraftClockworkTarget|null;
+/** Launch phase plus flight seconds. Near point at t = 0. Constant arc speed, one revolution per period. */
+export function worldcraftClockworkPose(target:WorldcraftClockworkTarget,seconds:number):{x:number;y:number;z:number;yaw:number;facing:number;theta:number;period:number;u:number;radius:number;arcSpeed:number;around:number;degrees:number;heading:string;direction:1};
 /** Launch phase plus flight seconds. endpoints[0] at t = 0. Constant speed, instant reversal. */
 export function worldcraftBellPose(target:WorldcraftBellTarget,seconds:number):{x:number;y:number;z:number;yaw:number;along:number;length:number;period:number;u:number;direction:1|-1};
 /** Fold seconds into [0, period). Not stored on the world. */

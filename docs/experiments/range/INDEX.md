@@ -91,3 +91,17 @@ Enter: header **Range** → **Travelling Bell**. Reset: **Reset preset** (also r
 | Voices | The bell rings on contact. The sound does not change how the shot flies. |
 
 The opening arrangement is a ramp on the approach, a bank beside it, a shield, and a bell shuttling a 4 m rail beyond the shield. Measured windows are kept out of this page. They live in [travelling-bell.md](travelling-bell.md) and under [appendix/travelling-bell/](appendix/travelling-bell/).
+
+## F — Clockwork Gallery
+
+Enter: header **Range** → **Clockwork Gallery**. Reset: **Reset preset** (also repeated beside the phase control). Reset returns the release phase to 0.
+
+| | |
+| --- | --- |
+| Physical question | Can a committed shot be timed to meet a wooden figure circling a turntable? |
+| What can change | The release phase. The plinth, the side screen, and the turntable stay where the preset put them. |
+| What stays | First ground still ends the line. The goal is contact with the figure, and that is not a first-ground zone. There is no score. The figure's circle, speed, and hit rule are in the preset. |
+| Success | A ledger contact with the figure before the line ends. The amber post is the release you chose. |
+| Voices | The figure gives a timber knock, and a few hearts pop. Neither changes how the shot flies. |
+
+The opening arrangement is a plinth, a side screen, and a figure riding a circle beside the straight shot. Measured windows are kept out of this page. They live in [clockwork-gallery.md](clockwork-gallery.md) and under [appendix/clockwork-gallery/](appendix/clockwork-gallery/).

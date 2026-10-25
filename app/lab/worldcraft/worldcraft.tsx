@@ -20,6 +20,7 @@ import { WORLDCRAFT_SCALE, createResonanceOutput, formatResonanceImpact, type Re
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
+  worldcraftClockworkTarget, worldcraftClockworkPose,
   worldcraftIdentity, exportWorldJSON, captureWorldSnapshot,
   packWorldcraftLine, WORLDCRAFT_CATALOG,
   type WorldcraftDocument as WorldcraftWorld, type WorldcraftSetup, type WorldcraftVoice,
@@ -79,6 +80,11 @@ function shotNotice(last: WorldcraftRecord): string {
     if (last.targetResult?.status === 'miss') return 'The bell was not touched. First ground ended the line. No score.';
     if (last.targetResult?.status === 'unfinished') return 'No bell contact was recorded. No score.';
   }
+  if (worldcraftClockworkTarget(last.world)) {
+    if (last.targetResult?.status === 'hit') return 'Hearts popped. The figure was touched. First ground still ended the line. No score.';
+    if (last.targetResult?.status === 'miss') return 'The figure was not touched. First ground ended the line. No score.';
+    if (last.targetResult?.status === 'unfinished') return 'No figure contact was recorded. No score.';
+  }
   if (last.goalResult?.kind === 'none') {
     if (last.reason === 'first-ground-contact') return 'First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.';
     return `Line ended: ${last.reason.replaceAll('-', ' ')}. No pin, no target, no score.`;
@@ -111,6 +117,7 @@ function initialUI(): UI {
 
 function playNoticeFor(world: WorldcraftWorld, preset: RangePreset | null): string {
   if (worldcraftBellTarget(world)) return 'Time the release. The post marks the phase. First ground still ends the line. Contact with the bell is the goal. No score.';
+  if (worldcraftClockworkTarget(world)) return 'Time the release. The post marks where the figure starts. First ground still ends the line. Contact with the figure is the goal. No score.';
   if (world.rules?.goal?.kind === 'contact-phrase') return 'The phrase is the order of resonant contacts. The stand-in, when shown, is a separate hit. Not a score.';
   if (world.rules?.goal?.kind === 'none') return 'No pin or score. The rail stays fixed. Revise a piece, then fire the same shot.';
   if (world.rules?.aimWindow) return 'Land the first kiss in the pocket. The carriage stays put. Aim and power stay in the window.';
@@ -499,10 +506,13 @@ export default function Worldcraft() {
             try { loaded = adaptRangePreset(rangePreset(id)); }
             catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
             const bell = worldcraftBellTarget(loaded.world);
+            const clock = worldcraftClockworkTarget(loaded.world);
             const windowed = Boolean(loaded.world.rules?.aimWindow);
             const adjustable = loaded.preset.rules.launcher.fixed === false && !windowed;
             const opened = bell
               ? `${loaded.preset.name} opened. The pieces stay. The post is the release phase. First ground still ends the line.`
+              : clock
+                ? `${loaded.preset.name} opened. The pieces stay. The post is the release phase. The figure rides the turntable. First ground still ends the line.`
               : windowed
                 ? `${loaded.preset.name} opened. The carriage stays at centre. Aim and power stay in the window.`
                 : adjustable
@@ -510,7 +520,7 @@ export default function Worldcraft() {
                   : `${loaded.preset.name} opened. The rail is fixed. Revise a piece, then fire the same shot.`;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, opened, 'commit', true)) {
-              if (bell) runtime.setLaunchPhase(0);
+              if (bell || clock) runtime.setLaunchPhase(0);
               publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
@@ -520,9 +530,10 @@ export default function Worldcraft() {
             if (!baseline || busy()) return;
             const loaded = adaptRangePreset(baseline);
             const bell = worldcraftBellTarget(loaded.world);
+            const clock = worldcraftClockworkTarget(loaded.world);
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, `${loaded.preset.name} reset to its preset.`, 'commit', true)) {
-              if (bell) runtime.setLaunchPhase(0);
+              if (bell || clock) runtime.setLaunchPhase(0);
               publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
@@ -530,9 +541,20 @@ export default function Worldcraft() {
           phase(seconds) {
             const result = runtime.setLaunchPhase(seconds);
             if (!result.ok || result.phase === undefined) { publish({ notice: result.error ?? 'The release phase did not change.' }); return; }
-            const pose = worldcraftBellPose(worldcraftBellTarget(uiRef.current.world)!, result.phase);
-            const heading = pose.direction > 0 ? 'out, toward the far stop' : 'back, toward the first stop';
-            publish({ launchPhase: result.phase, notice: `Release phase ${result.phase.toFixed(2)} s · ${heading} · ${pose.along.toFixed(2)} m along the rail.` });
+            const bellTarget = worldcraftBellTarget(uiRef.current.world);
+            if (bellTarget) {
+              const pose = worldcraftBellPose(bellTarget, result.phase);
+              const heading = pose.direction > 0 ? 'out, toward the far stop' : 'back, toward the first stop';
+              publish({ launchPhase: result.phase, notice: `Release phase ${result.phase.toFixed(2)} s · ${heading} · ${pose.along.toFixed(2)} m along the rail.` });
+              return;
+            }
+            const clockTarget = worldcraftClockworkTarget(uiRef.current.world);
+            if (clockTarget) {
+              const pose = worldcraftClockworkPose(clockTarget, result.phase);
+              publish({ launchPhase: result.phase, notice: `Release phase ${result.phase.toFixed(2)} s · ${pose.heading} · ${pose.degrees.toFixed(0)}° around the circle.` });
+              return;
+            }
+            publish({ launchPhase: result.phase });
           },
           importShot(text) {
             if (busy()) return { ok: false, error: 'Finish the current shot before importing one.' };
@@ -647,6 +669,7 @@ export default function Worldcraft() {
                 comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
                 previousTrail: state.showTrail && Boolean(state.comparison), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
                 presetId: state.presetId, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, launchPhase: state.launchPhase, voices: resonance.counts(), audio: resonance.state(),
+                comicHearts: activeScene.meshes.filter(mesh => mesh.metadata?.worldcraftClockworkHeart).length,
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
                   const p = Vector3.Project(mesh.position, Matrix.Identity(), activeScene.getTransformMatrix(), camera.viewport.toGlobal(activeEngine.getRenderWidth(), activeEngine.getRenderHeight()));
                   return { id, x: rect.left + p.x / activeEngine.getRenderWidth() * rect.width, y: rect.top + p.y / activeEngine.getRenderHeight() * rect.height };
@@ -765,6 +788,8 @@ export default function Worldcraft() {
   const bell = worldcraftBellTarget(ui.world);
   const bellPose = bell ? worldcraftBellPose(bell, ui.launchPhase) : null;
   const bellPeriod = bell ? worldcraftBellPose(bell, 0) : null;
+  const clock = worldcraftClockworkTarget(ui.world);
+  const clockPose = clock ? worldcraftClockworkPose(clock, ui.launchPhase) : null;
   const fixedPiece = Boolean(selected && ui.world.rules?.locked.includes(selected.id));
   const shownSetup = ui.phase === 'flight' ? ui.setup : ui.history?.setup;
   const setupChanged = Boolean(ui.comparison && shownSetup && Object.keys(shownSetup).some(key => shownSetup[key as keyof WorldcraftSetup] !== ui.comparison!.setup[key as keyof WorldcraftSetup]));
@@ -800,7 +825,7 @@ export default function Worldcraft() {
     </header>
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
-        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (bell ? 'Play yard. Fixed rail. The post marks the release phase. Space fires at the travelling bell.' : ui.world.rules?.goal?.kind === 'contact-phrase' ? 'Play yard. Fixed rail. Space fires. The phrase is judged from contacts, not scored.' : ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
+        <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (bell ? 'Play yard. Fixed rail. The post marks the release phase. Space fires at the travelling bell.' : clock ? 'Play yard. Fixed rail. The post marks the release phase. Space fires at the clockwork figure.' : ui.world.rules?.goal?.kind === 'contact-phrase' ? 'Play yard. Fixed rail. Space fires. The phrase is judged from contacts, not scored.' : ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
         <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
@@ -833,6 +858,13 @@ export default function Worldcraft() {
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
+        {clock && clockPose && <section className={styles.goal} aria-label="Clockwork gallery">
+          <strong>Clockwork gallery</strong>
+          <p>Goal is contact with the wooden figure, not where the ball first touches the ground. First ground still ends the line. No score.</p>
+          <p>Phase {ui.launchPhase.toFixed(2)} s · {clockPose.heading} · {clockPose.degrees.toFixed(0)}° around the circle. The amber post is this release. Phase 0 is the near point, face toward the tee. One turn takes {clockPose.period.toFixed(2)} s.</p>
+          <input aria-label="Launch phase" className={styles.range} type="range" min={0} max={Math.max(0, clockPose.period - 0.05)} step={0.05} value={ui.launchPhase} disabled={locked} onChange={event => actions.current?.phase(Number(event.target.value))} />
+          <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.phase(ui.launchPhase - 0.05)}>−0.05 s</button><button type="button" disabled={locked} onClick={() => actions.current?.phase(ui.launchPhase + 0.05)}>+0.05 s</button><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
         {bell && bellPose && bellPeriod && <section className={styles.goal} aria-label="Travelling bell">
           <strong>Travelling bell</strong>
           <p>Goal is contact with the bell, not where the ball first touches the ground. First ground still ends the line. No score.</p>
@@ -840,7 +872,7 @@ export default function Worldcraft() {
           <input aria-label="Launch phase" className={styles.range} type="range" min={0} max={Math.max(0, bellPeriod.period - 0.05)} step={0.05} value={ui.launchPhase} disabled={locked} onChange={event => actions.current?.phase(Number(event.target.value))} />
           <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.phase(ui.launchPhase - 0.05)}>−0.05 s</button><button type="button" disabled={locked} onClick={() => actions.current?.phase(ui.launchPhase + 0.05)}>+0.05 s</button><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
-        {ui.world.rules?.target && !bell && ui.world.rules.goal?.kind !== 'contact-phrase' && <section className={styles.goal} aria-label="Fixed goal">
+        {ui.world.rules?.target && !bell && !clock && ui.world.rules.goal?.kind !== 'contact-phrase' && <section className={styles.goal} aria-label="Fixed goal">
           <strong>Bonk the stand-in orc</strong>
           <p>Any contact in flight counts. The ramp, bank, and plate each ring; the stand-in stays put. {fixedRail ? 'Rail fixed: move those three pieces, keep the shot.' : 'Free rail.'}</p>
           {fixedRail && <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>}

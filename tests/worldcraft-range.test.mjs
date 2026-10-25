@@ -104,6 +104,7 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
     { id: 'resonant-run-free', name: 'Resonant Run: Free', goal: 'none' },
     { id: 'resonant-run-phrase', name: 'Resonant Run: Phrase', goal: 'contact-phrase' },
     { id: 'travelling-bell', name: 'Travelling Bell', goal: 'target-contact' },
+    { id: 'clockwork-gallery', name: 'Clockwork Gallery', goal: 'target-contact' },
   ]);
   assert.deepEqual(inferOutcome(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), { kind: 'none', status: 'none', scored: false });
   assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72.5] }), null);
@@ -378,7 +379,7 @@ test('Back Pocket opening misses and both appendix imports clear under Havok', a
       assert.ok(shot.contacts.some(contact => contact.body === 'worldcraft-object-bank-yours'));
     }
   } finally { session.dispose(); }
-  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'back-pocket', 'soft-landing', 'resonant-run-free', 'resonant-run-phrase', 'travelling-bell']);
+  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'back-pocket', 'soft-landing', 'resonant-run-free', 'resonant-run-phrase', 'travelling-bell', 'clockwork-gallery']);
 });
 
 test('a contact phrase is the ledger order, and the stand-in is a separate judgement', async () => {
