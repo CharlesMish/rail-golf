@@ -71,3 +71,26 @@ Matched views, source provenance, authority checks and performance findings are
 recorded in the companion visual report. Headless Chrome / ANGLE SwiftShader
 is not a physical-phone or real-GPU test. Owner play remains necessary to judge
 comfort, attention and the world’s sense of place.
+
+## Corner and end dressing (`lib/yard-edge-dressing.js`)
+
+With the setting in place, the bare corners of the slab and the open fence ends
+read as unfinished. The dressing fills them without adding gameplay authority:
+
+- **Inside the fence:** flat floor detail only, never taller than the existing
+  sleepers (0.13 m), and kept out of every playable footprint (`keepClear`).
+  South-west is a log laydown on skids with forklift ruts from the loading
+  platform; south-east an outbound pallet bay with a drain; north-west sawdust
+  drifting past the mill and a hatched no-stack zone; north-east pallets behind
+  Lumber Walk. Stains, ruts and paint are a translucent wash so their edges fade
+  into the ground texture.
+- **On the perimeter:** the fence now closes around both ends with centreline
+  gate openings, open gate leaves, and a lamp standard in each corner with a soft
+  additive light pool (no real lights).
+- **Beyond the fence:** log decks past the rail siding, a row of stickered
+  drying stacks near the gate, and bark/sawdust mounds where the east woods
+  begin, all outside the environment's own margin (|x| > 62, z < -29 or > 211).
+
+Five draws, about 13k triangles, no textures, lights, shadow casters, colliders,
+picking or metadata. `tests/yard-edge-dressing.test.mjs` enforces the placement
+rules vertex by vertex.

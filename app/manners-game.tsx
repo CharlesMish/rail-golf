@@ -85,6 +85,7 @@ import type {GameCard} from "@/lib/line-lab";
 import { COURTYARD_HOLES, COURTYARD_TARGETS, isCourtyardChallengeUnlocked } from "@/lib/courtyard";
 import { buildCourtyard } from "@/lib/courtyard-scene";
 import { createYardEnvironment } from "@/lib/yard-environment";
+import { createYardEdgeDressing } from "@/lib/yard-edge-dressing";
 import { applyYardGroundUVs, applyYardSurfaceMaterials } from "@/lib/yard-surfaces";
 import { stationTargetDistanceLabel, yardFeatureLabels, isTreadLabelVisible } from '@/lib/yard-labels';
 import { layoutYardLabels } from '@/lib/yard-label-layout';
@@ -642,6 +643,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
     let engine: Engine | null = null;
     let scene: Scene | null = null;
     let yardEnvironment: ReturnType<typeof createYardEnvironment> | undefined;
+    let yardEdgeDressing: ReturnType<typeof createYardEdgeDressing> | undefined;
     let audioContext: AudioContext | null = null;
 
     const initialize = async () => {
@@ -717,7 +719,10 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
         const glow = new GlowLayer("range-glow", scene, { blurKernelSize: 32 });
         glow.intensity = 0.3;
         // Scene-owned surroundings persist across cards; labs retain their baseline.
-        if (publicYard) yardEnvironment = createYardEnvironment(scene, { camera, glow });
+        if (publicYard) {
+          yardEnvironment = createYardEnvironment(scene, { camera, glow });
+          yardEdgeDressing = createYardEdgeDressing(scene, { glow });
+        }
 
         const makeMaterial = (
           name: string,
@@ -2882,6 +2887,7 @@ export function MannersGame({ courtyard = false, diverterLab = false, courtyardD
       worldRef.current = null;
       audioMasterRef.current = null;
       audioContext?.close().catch(() => undefined);
+      yardEdgeDressing?.dispose();
       yardEnvironment?.dispose();
       scene?.dispose();
       engine?.dispose();
