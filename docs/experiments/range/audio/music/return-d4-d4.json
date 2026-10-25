@@ -1,0 +1,115 @@
+{
+  "branch": "lab/wc-range-music-20261025",
+  "gitSha": "6cf951576d29cd051109d119e1d11381aeae0450",
+  "presetId": "musical-workshop",
+  "catalogPresetHash": "6d96340191f363a5b240d2e255e40d8f9fbafcdfdb007d3511b5a5f85b1c7ec8",
+  "seed": 20261025,
+  "arrangementId": "opening-aim-24",
+  "headline": "Ramp D4 → Ramp D4",
+  "order": [
+    "D4",
+    "D4"
+  ],
+  "setup": {
+    "railIndex": 1,
+    "originX": -4,
+    "yaw": 0,
+    "elevation": 32,
+    "charge": 0.4
+  },
+  "objects": [
+    {
+      "id": "ramp-yours",
+      "kind": "ramp",
+      "x": 0,
+      "z": 42,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "bank-yours",
+      "kind": "bank",
+      "x": 14,
+      "z": 28,
+      "yaw": 0,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "plate-yours",
+      "kind": "plate",
+      "x": 0,
+      "z": 68,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    }
+  ],
+  "bindingHash": "aeaeef72aa3e6925084254ac9f66bece8e4a0fb802ad0eb0f3948a6af3f7aa47",
+  "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":14,\"z\":28,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":0,\"z\":68,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":0,\"z\":42,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+  "contactSequence": [
+    {
+      "body": "worldcraft-object-ramp-yours",
+      "count": 4,
+      "first": 2.008333333333329,
+      "last": 4.816666666666696,
+      "point": {
+        "x": -4,
+        "y": 1.845613956451416,
+        "z": 40.03483963012695
+      }
+    },
+    {
+      "body": "worldcraft-ground",
+      "count": 1,
+      "first": 7.133333333333478,
+      "last": 7.133333333333478,
+      "point": {
+        "x": -4,
+        "y": 0.0469764769077301,
+        "z": 32.03409194946289
+      }
+    }
+  ],
+  "impacts": [
+    {
+      "piece": "ramp-yours",
+      "role": "ramp",
+      "time": 2.008333333333329,
+      "material": "metal",
+      "degree": 1,
+      "note": "D4",
+      "hz": 293.6648,
+      "gain": 0.5753148297346086,
+      "callbacks": 2
+    },
+    {
+      "piece": "ramp-yours",
+      "role": "ramp",
+      "time": 4.808333333333362,
+      "material": "metal",
+      "degree": 1,
+      "note": "D4",
+      "hz": 293.6648,
+      "gain": 0.09327733968132473,
+      "callbacks": 2
+    }
+  ],
+  "wav": "docs/experiments/range/audio/music/return-d4-d4.wav",
+  "mix": 1,
+  "unscaledPeak": 0.268951416015625,
+  "peak": 0.268951416015625,
+  "peakDbfs": -11.40652329675197,
+  "sampleRate": 44100,
+  "seconds": 6.858344671201814,
+  "bytes": 604950,
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false
+}

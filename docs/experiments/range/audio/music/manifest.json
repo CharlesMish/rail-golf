@@ -1,0 +1,49 @@
+{
+  "source": "OfflineAudioContext",
+  "renderer": "lib/worldcraft-resonance.js renderResonanceWav",
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false,
+  "branch": "lab/wc-range-music-20261025",
+  "gitSha": "6cf951576d29cd051109d119e1d11381aeae0450",
+  "seed": 20261025,
+  "ceilingDbfs": -3,
+  "mix": 1,
+  "maxUnscaledPeak": 0.536865234375,
+  "files": [
+    {
+      "file": "docs/experiments/range/audio/music/opening-d4-e4.wav",
+      "headline": "Ramp D4 → Plate E4",
+      "peakDbfs": -7.088230450735118,
+      "seconds": 6.508344671201814,
+      "bindingHash": "12d2820f68243da2ea9134f21f4d887ae8d2d08dc48bee5fe9cd20d98827c9ee"
+    },
+    {
+      "file": "docs/experiments/range/audio/music/late-catch-d4-c4-e4.wav",
+      "headline": "Ramp D4 → Bank C4 → Plate E4",
+      "peakDbfs": -6.565355146498801,
+      "seconds": 8.85002267573696,
+      "bindingHash": "5bb60e1fc07707e382bcf0bd787824a94a92ff463e369620f553b0a50946626c"
+    },
+    {
+      "file": "docs/experiments/range/audio/music/early-plate-c4-d4-e4.wav",
+      "headline": "Bank C4 → Ramp D4 → Plate E4",
+      "peakDbfs": -5.402694372139679,
+      "seconds": 6.2916780045351475,
+      "bindingHash": "2d1acfcc52b4c0690d89d09e7d8192154ffc75359580aa24c30ed17566d79b92"
+    },
+    {
+      "file": "docs/experiments/range/audio/music/plate-e4.wav",
+      "headline": "Plate E4",
+      "peakDbfs": -11.59986108496216,
+      "seconds": 3.2583446712018143,
+      "bindingHash": "8b889dacbe27a4fcb7bc47bc626a6eb7f6d73862d4ac0b27de7c44955eff9f01"
+    },
+    {
+      "file": "docs/experiments/range/audio/music/return-d4-d4.wav",
+      "headline": "Ramp D4 → Ramp D4",
+      "peakDbfs": -11.40652329675197,
+      "seconds": 6.858344671201814,
+      "bindingHash": "aeaeef72aa3e6925084254ac9f66bece8e4a0fb802ad0eb0f3948a6af3f7aa47"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createOrcStaticWorld, createHouseShotWorld, parseWorldJSON } from '../lib/worldcraft-model.js';
 import {
   WORLDCRAFT_SCALE, WORLDCRAFT_RESONANCE_HOLD, RESONANCE_VOICES, impactGain, resonanceOf,
-  formatResonanceImpact, createResonanceEar, audioBufferToWav,
+  formatResonanceImpact, createResonanceEar, audioBufferToWav, describeImpactSequence, impactHeadline, recordedReplayTimes,
 } from '../lib/worldcraft-resonance.js';
 
 const world = createOrcStaticWorld();
@@ -63,6 +63,32 @@ test('wav bytes from a buffer start with a RIFF header and keep the samples', ()
   assert.equal(String.fromCharCode(...wav.slice(0, 4)), 'RIFF');
   assert.equal(String.fromCharCode(...wav.slice(8, 12)), 'WAVE');
   assert.equal(wav.length, 44 + 6);
+});
+
+test('the impact sequence is the notes that rang, and a kept replay uses those times', () => {
+  const contacts = [
+    { body: ramp, count: 4, first: 1.4 },
+    { body: 'worldcraft-object-plate-yours', count: 2, first: 4.4 },
+    { body: 'worldcraft-ground', count: 1, first: 7 },
+    { body: 'worldcraft-object-shield', count: 1, first: 3 },
+  ];
+  const impacts = [
+    { piece: 'ramp-yours', role: 'ramp', body: ramp, time: 1.4, material: 'metal', note: 'D4', callbacks: 4 },
+    { piece: 'plate-yours', role: 'plate', body: 'worldcraft-object-plate-yours', time: 4.4, material: 'metal', note: 'E4', callbacks: 2 },
+  ];
+  const described = describeImpactSequence(world, contacts, { impacts });
+  assert.equal(described.headline, 'Ramp D4 → Plate E4');
+  assert.equal(described.noteCount, 2);
+  assert.match(described.explanation, /2 notes/);
+  assert.match(described.explanation, /Repeat contacts on Ramp D4, Plate E4 are one note each/);
+  assert.match(described.explanation, /Block shield was touched and did not ring/);
+  assert.match(described.explanation, /Bank C4 was not touched/);
+  assert.equal(impactHeadline(impacts[0]), 'Ramp D4');
+  const twice = describeImpactSequence(world, contacts, { impacts: [...impacts, { ...impacts[0], time: 6.2, callbacks: 2 }] });
+  assert.equal(twice.headline, 'Ramp D4 → Plate E4 → Ramp D4');
+  assert.match(twice.explanation, /Ramp D4 was hit again later, so that later hit is its own note/);
+  assert.deepEqual(recordedReplayTimes(impacts, 10), [11.4, 14.4]);
+  assert.throws(() => recordedReplayTimes([{ time: Number.NaN }]), /time/);
 });
 
 test('the resonant example is the current Orc Stand-in world', () => {

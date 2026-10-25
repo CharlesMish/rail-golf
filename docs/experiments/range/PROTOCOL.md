@@ -9,11 +9,11 @@ Write two lines in a notebook after each experiment, before the next one:
 
 The offer to stop is a sentence, said out loud: "You can stop." Say it yourself, or have someone else say it. Say it once, after the first note, and wait long enough to notice what you do next.
 
-## Open Workshop
+## Fixed Shot Workshop
 
-Enter: **Range** → **Open Workshop**. Reset: **Reset preset**.
+Enter: **Range** → **Fixed Shot Workshop**. Reset: **Reset preset**.
 
-Fire the shot that is already set. Move or retune one piece. Fire the same shot again. The earlier trail is the one that was recorded. Success is seeing that the piece change changed the shot. There is no circle and no target.
+Fire the shot that is already set. Move or retune one piece. Fire the same shot again. The earlier trail is the one that was recorded. Success is seeing that the piece change changed the shot. There is no circle and no target. The shot stays locked. Musical Workshop is a different preset: there the shot can move.
 
 Then write the two lines.
 
@@ -21,7 +21,7 @@ Then write the two lines.
 
 Enter: **Range** → **Back Pocket**. Reset: **Reset preset**.
 
-The carriage stays put. Aim and power stay inside the window shown beside the goal. You may move the spare bank. The timber screen stays. Success is the first ground contact inside the gold circle.
+The carriage stays put. Aim and power stay inside the window shown beside the goal. You may move the spare bank. It is tinted, and the piece list marks it movable. The timber screen stays, and those banks are marked fixed. Success is the first ground contact inside the gold circle. One measured landing is about 0.081° of yaw wide, and the aim step is 0.5°, so do not hunt for that landing with these controls.
 
 Try. When you land in the circle, or when you decide to stop trying, write the two lines. The offer to stop comes after that, even if you have not landed in the circle.
 
@@ -39,15 +39,17 @@ Do Free first, then Phrase. Same two lines after each. The offer to stop comes a
 
 ### Free
 
-Enter: **Range** → **Resonant Run: Free**. Reset: **Reset preset**.
+Enter: **Range** → **Resonant Run: Free (fixed shot)**. Reset: **Reset preset**.
 
-Fire the shot that is already set. Move or retune a piece. Fire that same shot again. Success is firing the same shot after a change you can hear or see. There is no required order.
+Fire the shot that is already set. Move or retune a piece. Fire that same shot again. Success is firing the same shot after a change you can hear or see. There is no required order. The shot stays locked.
 
 ### Phrase
 
-Enter: **Range** → **Resonant Run: Phrase**. Reset: **Reset preset**.
+Enter: **Range** → **Resonant Phrase (fixed shot)**. Reset: **Reset preset**.
 
-The order on the goal note is C4, then D4, then E4. The stand-in is a separate hit, not one of those notes. Success is that order in the contact record. It is not a score.
+The order on the goal note is C4, then D4, then E4. The stand-in is a separate hit, not one of those notes. Success is that order in the contact record. It is not a score. The shot stays locked.
+
+Musical Workshop has its own short sitting: [PROTOCOL-MUSIC.md](PROTOCOL-MUSIC.md). Do that one after Phrase, or instead of Phrase if the sitting is already long. If you skip it, write "skipped".
 
 ## Travelling Bell (optional)
 

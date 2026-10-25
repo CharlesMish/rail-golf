@@ -2,7 +2,7 @@
   "format": "rail-golf-worldcraft-range-preset",
   "version": 1,
   "id": "resonant-run-phrase",
-  "name": "Resonant Run: Phrase",
+  "name": "Resonant Phrase (fixed shot)",
   "environment": {
     "preset": "forest-clearing-v1",
     "seed": 1

@@ -182,6 +182,8 @@ export async function runLayoutShots({ preset, layouts, seed, gitSha = rangeGitS
   try {
     for (let index = 0; index < layouts.length; index++) {
       const layout = layouts[index];
+      // Declared here. The non-bell branch used to read this name before it existed.
+      const requestedPhase = layout && Object.hasOwn(layout, 'launchPhase') ? layout.launchPhase : undefined;
       let document;
       let world;
       try {

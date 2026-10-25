@@ -1,0 +1,103 @@
+{
+  "branch": "lab/wc-range-music-20261025",
+  "gitSha": "6cf951576d29cd051109d119e1d11381aeae0450",
+  "presetId": "musical-workshop",
+  "catalogPresetHash": "6d96340191f363a5b240d2e255e40d8f9fbafcdfdb007d3511b5a5f85b1c7ec8",
+  "seed": 20261025,
+  "arrangementId": "ramp-aside",
+  "headline": "Plate E4",
+  "order": [
+    "E4"
+  ],
+  "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 18,
+    "charge": 0.55
+  },
+  "objects": [
+    {
+      "id": "ramp-yours",
+      "kind": "ramp",
+      "x": 18,
+      "z": 40,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "bank-yours",
+      "kind": "bank",
+      "x": 0,
+      "z": 64,
+      "yaw": 0,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "plate-yours",
+      "kind": "plate",
+      "x": 0,
+      "z": 36,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    }
+  ],
+  "bindingHash": "8b889dacbe27a4fcb7bc47bc626a6eb7f6d73862d4ac0b27de7c44955eff9f01",
+  "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":64,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":0,\"z\":36,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":18,\"z\":40,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+  "contactSequence": [
+    {
+      "body": "worldcraft-object-plate-yours",
+      "count": 2,
+      "first": 1.2083333333333315,
+      "last": 1.2166666666666648,
+      "point": {
+        "x": 0,
+        "y": 4.026167392730713,
+        "z": 35.643253326416016
+      }
+    },
+    {
+      "body": "worldcraft-ground",
+      "count": 1,
+      "first": 3.933333333333322,
+      "last": 3.933333333333322,
+      "point": {
+        "x": 0,
+        "y": 0.12052255868911743,
+        "z": -6.568124294281006
+      }
+    }
+  ],
+  "impacts": [
+    {
+      "piece": "plate-yours",
+      "role": "plate",
+      "time": 1.2083333333333315,
+      "material": "metal",
+      "degree": 2,
+      "note": "E4",
+      "hz": 329.6276,
+      "gain": 0.5434028503309694,
+      "callbacks": 2
+    }
+  ],
+  "wav": "docs/experiments/range/audio/music/plate-e4.wav",
+  "mix": 1,
+  "unscaledPeak": 0.263031005859375,
+  "peak": 0.263031005859375,
+  "peakDbfs": -11.59986108496216,
+  "sampleRate": 44100,
+  "seconds": 3.2583446712018143,
+  "bytes": 287430,
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false
+}
