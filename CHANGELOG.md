@@ -8,7 +8,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 - Charter (`docs/CHARTER.md`), MIT license (`LICENSE`), and this changelog.
 
 ### Changed
-- Public Timber Courtyard corners and ends are dressed: the fence now closes around both ends with gate openings and corner lamp standards; flat floor detail (log laydown bays, pallets, ruts, sawdust, worn paint) fills the bare corners; log decks, stickered drying stacks and bark mounds sit beyond the fence. No collision or ruling changes; see `docs/TIMBER-COURTYARD-WORLD.md`.
+- Public Timber Courtyard corners and ends are dressed: the fence now closes around both ends with gate openings and corner lamp standards; flat floor detail (log laydown bays, pallets, ruts, sawdust, worn paint) fills the bare corners; log decks, stickered drying stacks and bark mounds sit beyond the fence. A timber retaining edge and dusty shoulder ground the slab, a gravel road with a weigh hut leaves the Yard Gate, and young trees close the open east grass. No collision or ruling changes; see `docs/TIMBER-COURTYARD-WORLD.md`.
 - Public Timber Courtyard gains a wooded mill setting, an outside service siding, deterministic surface wear and a compact portrait Survey control. Gameplay authority and historical lab presentation are unchanged; see `docs/TIMBER-COURTYARD-WORLD.md`.
 - Public courtyard callouts now follow card requirements and Route Book focus; a compact Route Book disclosure keeps the course visible. Tread tops and supports have distinct paint. See `docs/YARD-LEGIBILITY-REVIEW.md`.
 - License changed from `UNLICENSED` to MIT in `package.json`, the README, and `THIRD_PARTY_NOTICES.md`.

@@ -91,6 +91,27 @@ read as unfinished. The dressing fills them without adding gameplay authority:
   drying stacks near the gate, and bark/sawdust mounds where the east woods
   begin, all outside the environment's own margin (|x| > 62, z < -29 or > 211).
 
-Five draws, about 13k triangles, no textures, lights, shadow casters, colliders,
+- **The slab edge:** a three-course timber sleeper retaining wall skins the
+  slab's faces (never above floor-detail height), and a dusty shoulder fades
+  out across the apron, so the yard reads as a built pad, not a floating tile.
+- **The gate approach:** the Yard Gate opens onto a gravel road south, with a
+  weigh hut (one warm window) and a parked log trailer, all below slab level
+  or beyond the south margin.
+- **East woods edge (in `yard-environment.js`):** a ragged band of younger
+  trees closes the open grass between the east fence and the woodland,
+  canopies outside the x 62 margin.
+
+### Collision audit
+
+The fence, sleepers, planks, station posts and distance markers already had no
+collision; the new perimeter work matches them. Solid pieces in the public yard
+are the banks, treads, mill (Mill route), loading platform, east lumber stacks,
+saw carriage and blade, and bell gantry. The public yard does not score line
+points (those run only in the Linecraft/line labs); touching any solid voids the
+Direct route. Making corner features solid would therefore change outcomes and
+is left as an owner decision.
+
+Five draws, about 18k triangles, no textures, lights, shadow casters, colliders,
 picking or metadata. `tests/yard-edge-dressing.test.mjs` enforces the placement
-rules vertex by vertex.
+rules vertex by vertex: floor detail, perimeter, slab skin, below-slab apron
+detail, or beyond the environment margin.
