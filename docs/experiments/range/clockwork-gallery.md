@@ -167,7 +167,7 @@ After the sweep the runtime was disposed. Physics bodies went from 5 to 0.
 
 ## Headed Chrome
 
-Chrome 156.0.8078.47, headless, SwiftShader, window 1400×900. Script: `scripts/range/clockwork-browser.mjs`. The page is `/lab/worldcraft?qa=1`. The footer build was `e5e1fd2e77-dirty` because the ornament and receipt edits were not committed yet.
+Chrome 156.0.8078.47, headless, SwiftShader, window 1400×900. Script: `scripts/range/clockwork-browser.mjs`. The page is `/lab/worldcraft?qa=1`. The dev server reported build `e5e1fd2e77-dirty`. That id was fixed when the server started, on the sweep commit with a dirty tree. The shot below was taken with the head sitting on the box. Three browser runs of this on-path phase repeated the same contact time, the same live point, and the same binding hash.
 
 Catalog opening, release phase 0. The shot missed. No ledger contact with `worldcraft-target-figure`. Terminal reason `first-ground-contact`. Notice: “The figure was not touched. First ground ended the line. No score.” Receipt: **Figure missed.**
 

@@ -3,7 +3,7 @@
 //
 //   node scripts/range/clockwork-browser.mjs --url http://127.0.0.1:5174/lab/worldcraft?qa=1
 import { spawn } from 'node:child_process';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 
@@ -179,6 +179,7 @@ try {
   };
   if (report.hitShot.status !== 'hit') throw new Error('On-path shot missed: ' + JSON.stringify(report.hitShot));
   const frameDir = `${out}/frames`;
+  await rm(frameDir, { recursive: true, force: true });
   await mkdir(frameDir, { recursive: true });
   for (let i = 0; i < frames.length; i++) await writeFile(`${frameDir}/f${String(i).padStart(2, '0')}.png`, frames[i]);
   const clip = `${out}/hit.mp4`;

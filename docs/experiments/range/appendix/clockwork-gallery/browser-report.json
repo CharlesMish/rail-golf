@@ -20,7 +20,7 @@
     "notice": "The figure was not touched. First ground ended the line. No score.",
     "launchPhase": 0
   },
-  "missBytes": 99928,
+  "missBytes": 100363,
   "hitPhase": 1.775,
   "hitShot": {
     "status": "hit",
@@ -37,7 +37,7 @@
     "comicHearts": 15,
     "bindingHash": "76e79d18372239f38c89000540dfb5ccd34ad9e6b6f1defa8a8d1ccea14b8294"
   },
-  "frames": 18,
+  "frames": 17,
   "heartCounts": [
     0,
     0,
@@ -55,10 +55,9 @@
     15,
     15,
     15,
-    15,
     0
   ],
   "heartFrame": 10,
   "maxHearts": 15,
-  "clipBytes": 109386
+  "clipBytes": 104069
 }
