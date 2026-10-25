@@ -2,7 +2,7 @@
   "format": "rail-golf-worldcraft-range-preset",
   "version": 1,
   "id": "resonant-run-free",
-  "name": "Resonant Run: Free",
+  "name": "Resonant Run: Free (fixed shot)",
   "environment": {
     "preset": "forest-clearing-v1",
     "seed": 1

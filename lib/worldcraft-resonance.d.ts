@@ -29,6 +29,10 @@ export const RESONANCE_VOICES: Readonly<Record<ResonanceMaterial, Readonly<{ hz?
 export function impactGain(speed: number): number;
 export function resonanceOf(world: { rules?: { target?: { id: string } } | null; objects?: { id: string; kind: string; voice?: { material: 'metal' | 'timber'; degree: number } }[] } | null, body: string): ResonanceSpec | null;
 export function formatResonanceImpact(impact: Pick<ResonanceImpact, 'piece' | 'time' | 'speed' | 'note' | 'material'>): string;
+export function impactHeadline(impact: Pick<ResonanceImpact, 'role' | 'material' | 'note'>): string;
+export function describeImpactSequence(world: Parameters<typeof resonanceOf>[0], contacts: { body?: string; count?: number }[] | null | undefined, resonance: { impacts?: ResonanceImpact[] } | null | undefined): { headline: string; noteCount: number; explanation: string; impacts: ResonanceImpact[] };
+export function recordedReplayTimes(impacts: { time: number }[], start?: number): number[];
+export function performanceFromResonance(resonance: { impacts?: ResonanceImpact[] } | null | undefined): { impacts: Pick<ResonanceImpact, 'piece' | 'role' | 'time' | 'material' | 'degree' | 'note' | 'hz' | 'gain' | 'callbacks'>[] };
 export function createResonanceEar(): {
   begin(): void;
   hear(input: { body: string; time: number; speed: number; world: Parameters<typeof resonanceOf>[0] }): ResonanceImpact | null;
@@ -42,4 +46,4 @@ export function createVoiceLedger(): {
 };
 export function audioBufferToWav(buffer: { getChannelData(channel: number): Float32Array; sampleRate: number; numberOfChannels?: number }): Uint8Array;
 export function renderResonanceWav(impacts: ResonanceImpact[], options?: { OfflineAudioContext?: typeof OfflineAudioContext; sampleRate?: number; tail?: number; mix?: number }): Promise<Uint8Array>;
-export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact): void; release(): number; counts(): { started: number; cleaned: number; finished: number; active: number }; state(): AudioContextState | 'uncreated'; dispose(): void };
+export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact): void; playRecorded(impacts: Pick<ResonanceImpact, 'material' | 'gain' | 'hz' | 'time'>[]): number; release(): number; counts(): { started: number; cleaned: number; finished: number; active: number }; state(): AudioContextState | 'uncreated'; dispose(): void };

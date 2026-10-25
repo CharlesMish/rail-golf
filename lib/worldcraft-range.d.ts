@@ -51,6 +51,7 @@ export function exportRangePreset(preset: RangePreset): string;
 export function parseRangePreset(text: string): RangePreset;
 export function importRangeDocument(text: string): { kind: 'preset'; preset: RangePreset } | { kind: 'world'; world: WorldcraftDocument };
 export function createOpenWorkshopPreset(): RangePreset;
+export function createMusicalWorkshopPreset(): RangePreset;
 export function createBackPocketPreset(): RangePreset;
 export function createSoftLandingPreset(): RangePreset;
 export function createResonantRunFreePreset(): RangePreset;

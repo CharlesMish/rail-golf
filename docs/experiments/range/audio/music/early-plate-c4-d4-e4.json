@@ -1,0 +1,149 @@
+{
+  "branch": "lab/wc-range-music-20261025",
+  "gitSha": "e36074d007fee2e649db73dc13c0973dc265c462",
+  "presetId": "musical-workshop",
+  "catalogPresetHash": "6d96340191f363a5b240d2e255e40d8f9fbafcdfdb007d3511b5a5f85b1c7ec8",
+  "seed": 20261025,
+  "arrangementId": "early-plate-14",
+  "headline": "Bank C4 → Ramp D4 → Plate E4",
+  "order": [
+    "C4",
+    "D4",
+    "E4"
+  ],
+  "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 18,
+    "charge": 0.55
+  },
+  "objects": [
+    {
+      "id": "ramp-yours",
+      "kind": "ramp",
+      "x": -8,
+      "z": 40,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "bank-yours",
+      "kind": "bank",
+      "x": 0,
+      "z": 16,
+      "yaw": 80,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "plate-yours",
+      "kind": "plate",
+      "x": -24,
+      "z": 58,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    }
+  ],
+  "bindingHash": "2d1acfcc52b4c0690d89d09e7d8192154ffc75359580aa24c30ed17566d79b92",
+  "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":16,\"yaw\":80,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":-24,\"z\":58,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":-8,\"z\":40,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+  "contactSequence": [
+    {
+      "body": "worldcraft-object-bank-yours",
+      "count": 2,
+      "first": 0.22499999999999998,
+      "last": 0.2333333333333333,
+      "point": {
+        "x": 0.4231705665588379,
+        "y": 4.679812908172607,
+        "z": 10.650684356689453
+      }
+    },
+    {
+      "body": "worldcraft-object-ramp-yours",
+      "count": 2,
+      "first": 1.4333333333333307,
+      "last": 1.441666666666664,
+      "point": {
+        "x": -9.20988941192627,
+        "y": 1.736019492149353,
+        "z": 37.72132110595703
+      }
+    },
+    {
+      "body": "worldcraft-object-plate-yours",
+      "count": 2,
+      "first": 4.241666666666667,
+      "last": 4.250000000000001,
+      "point": {
+        "x": -24.78708267211914,
+        "y": 4.100289821624756,
+        "z": 57.80457305908203
+      }
+    },
+    {
+      "body": "worldcraft-ground",
+      "count": 1,
+      "first": 5.558333333333399,
+      "last": 5.558333333333399,
+      "point": {
+        "x": -31.289148330688477,
+        "y": 0.013086169958114624,
+        "z": 40.61122131347656
+      }
+    }
+  ],
+  "impacts": [
+    {
+      "piece": "bank-yours",
+      "role": "bank",
+      "time": 0.22499999999999998,
+      "material": "timber",
+      "degree": 0,
+      "note": "C4",
+      "hz": 261.6256,
+      "gain": 1,
+      "callbacks": 2
+    },
+    {
+      "piece": "ramp-yours",
+      "role": "ramp",
+      "time": 1.4333333333333307,
+      "material": "metal",
+      "degree": 1,
+      "note": "D4",
+      "hz": 293.6648,
+      "gain": 0.9592140424041528,
+      "callbacks": 2
+    },
+    {
+      "piece": "plate-yours",
+      "role": "plate",
+      "time": 4.241666666666667,
+      "material": "metal",
+      "degree": 2,
+      "note": "E4",
+      "hz": 329.6276,
+      "gain": 0.45447274013987304,
+      "callbacks": 2
+    }
+  ],
+  "wav": "docs/experiments/range/audio/music/early-plate-c4-d4-e4.wav",
+  "mix": 1,
+  "unscaledPeak": 0.536865234375,
+  "peak": 0.536865234375,
+  "peakDbfs": -5.402694372139679,
+  "sampleRate": 44100,
+  "seconds": 6.2916780045351475,
+  "bytes": 554970,
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false
+}

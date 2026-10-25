@@ -2,7 +2,7 @@
   "format": "rail-golf-worldcraft-range-preset",
   "version": 1,
   "id": "open-workshop",
-  "name": "Open Workshop",
+  "name": "Fixed Shot Workshop",
   "environment": {
     "preset": "forest-clearing-v1",
     "seed": 1
