@@ -103,6 +103,11 @@
 .sequence { margin: 8px 0; padding: 10px; border: 1px solid #3d7a72; background: #102824; }
 .sequenceLine { margin: 0 0 4px; color: #f3fffb; font-size: 18px; font-weight: 700; line-height: 1.25; }
 .sequence p { margin: 0; color: #d5eee4; font-size: 13px; }
+.timeline { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; max-width: 100%; margin-top: 8px; }
+.timelineLabel { flex: 1 0 100%; margin: 0; color: #f0c27a; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.timelineItem { display: inline-flex; gap: 8px; align-items: baseline; max-width: 100%; }
+.timelineNote { color: #fff; font-weight: 700; font-size: 14px; }
+.timelineGap { color: #d7c4a2; font-size: 12px; }
 .flowSticky { display: grid; gap: 6px; }
 .details { margin: 8px 0; color: #b9d1c6; font-size: 12px; }
 .details summary { min-height: 44px; cursor: pointer; color: #d5eee4; }
@@ -167,6 +172,8 @@
   .presetSelect { flex: 1 1 100%; }
   .presetSelect select { min-width: 0; width: 100%; }
   .sequenceLine { font-size: 16px; }
+  .timelineNote { font-size: 13px; }
+  .timelineGap { font-size: 12px; }
   .viewTools { top: 43px; left: 8px; right: 8px; max-width: none; }
   .badge { top: 8px; left: 8px; max-width: calc(100% - 16px); font-size: 10px; }
   .hint { bottom: 7px; left: 8px; max-width: calc(100% - 16px); font-size: 11px; }

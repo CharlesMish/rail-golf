@@ -1,0 +1,107 @@
+{
+  "branch": "lab/wc-range-music2-20261025",
+  "gitSha": "fe5955825f5948dd2971def24e19c7a3c849cc18",
+  "parent": "6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4",
+  "clockwork": "3aede12c35154352b444ec65d41395011b9b8b1b",
+  "clockworkModified": false,
+  "presetId": "musical-workshop",
+  "seed": 20261025,
+  "seedAppliedToSolver": false,
+  "shotId": "square-bank",
+  "mapping": "total-speed",
+  "liveMapping": "normal-speed",
+  "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.55
+  },
+  "objects": [
+    {
+      "id": "ramp-yours",
+      "kind": "ramp",
+      "x": -20,
+      "z": 78,
+      "yaw": 0,
+      "material": "metal",
+      "degree": 1,
+      "note": "D4"
+    },
+    {
+      "id": "bank-yours",
+      "kind": "bank",
+      "x": 0,
+      "z": 24,
+      "yaw": 0,
+      "material": "timber",
+      "degree": 0,
+      "note": "C4"
+    },
+    {
+      "id": "plate-yours",
+      "kind": "plate",
+      "x": 0,
+      "z": 86,
+      "yaw": 0,
+      "material": "metal",
+      "degree": 2,
+      "note": "E4"
+    }
+  ],
+  "terminal": [
+    0,
+    0.43,
+    10.3377
+  ],
+  "trajectoriesBitIdentical": true,
+  "impacts": [
+    {
+      "piece": "bank-yours",
+      "role": "bank",
+      "note": "C4",
+      "material": "timber",
+      "time": 0.6917,
+      "speed": 2.9108,
+      "normalSpeed": 25.8245,
+      "impulse": 38.6613,
+      "point": {
+        "x": 0,
+        "y": 3.5446,
+        "z": 23.3585
+      },
+      "callbacks": 2,
+      "gainTotal": 0.0479,
+      "gainNormal": 0.9026,
+      "gainImpulse": 0.9012,
+      "gainLive": 0.0479,
+      "dynamics": "total-speed"
+    }
+  ],
+  "rawGains": [
+    {
+      "role": "bank",
+      "note": "C4",
+      "gain": 0.0479,
+      "speed": 2.9108,
+      "normalSpeed": 25.8245
+    }
+  ],
+  "wav": "docs/experiments/range/audio/music2/square-bank-total.wav",
+  "mix": 1,
+  "rmsMatch": "The two files of this shot are scaled so their RMS matches, then a shared factor sets the hotter peak near -6 dBFS without passing -3. A one-note shot then has the same envelope. The raw peaks and raw gains are the level difference.",
+  "rawPeak": 0.02691650390625,
+  "rawPeakDbfs": -31.399626996557966,
+  "rawRms": 0.0009624073157270337,
+  "rmsScale": 15.392290365497981,
+  "ceilingScale": 15.392290365497981,
+  "ceilingDbfs": -3,
+  "peak": 0.414306640625,
+  "peakDbfs": -7.65356211300197,
+  "rms": 0.014813400644081183,
+  "sampleRate": 44100,
+  "seconds": 2.7417006802721087,
+  "bytes": 241862,
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false
+}

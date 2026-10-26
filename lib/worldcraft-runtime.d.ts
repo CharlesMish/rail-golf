@@ -10,7 +10,8 @@ export type WorldcraftEvent = { kind:string;last?:WorldcraftRecord;[key:string]:
 export type WorldcraftRuntime = {
   readonly world:WorldcraftWorld;readonly flight:SpatialFlight|null;readonly last:WorldcraftRecord|null;readonly objectMeshes:Map<string,Mesh>;readonly mode:'build'|'play';readonly error:string;
   readonly launchPhase:number|null;
-  setMode(mode:'build'|'play'):boolean;launch(setup:WorldcraftSetup):boolean;replaceWorld(world:WorldcraftWorld,options?:{intent?:'edit'|'load'}):{ok:boolean;error?:string};setLaunchPhase(seconds:number):{ok:boolean;phase?:number;error?:string};clearShot():void;beforeStep():void;afterStep():void;dispose():void;
+  readonly dynamics:'total-speed'|'normal-speed';
+  setMode(mode:'build'|'play'):boolean;launch(setup:WorldcraftSetup):boolean;replaceWorld(world:WorldcraftWorld,options?:{intent?:'edit'|'load'}):{ok:boolean;error?:string};setLaunchPhase(seconds:number):{ok:boolean;phase?:number;error?:string};setDynamics(mapping:'total-speed'|'normal-speed'):boolean;clearShot():void;beforeStep():void;afterStep():void;dispose():void;
   diagnostics():{mode:string;revision:number;worldIdentity:string;objectCount:number;staticBodies:number;liveBodies:number;meshes:number;materials:number;textures:number;physicsBodies:number;shadowCasters:number;rebuildCount:number;rebuildMs:number;samples:number;live:boolean;disposed:boolean;error:string};
 };
 export function worldcraftWorldIdentity(world:WorldcraftWorld):string;

@@ -6,6 +6,10 @@ export type ResonanceImpact = {
   time: number;
   last: number;
   speed: number;
+  normalSpeed?: number | null;
+  impulse?: number | null;
+  point?: { x: number; y: number; z: number } | null;
+  dynamics?: 'total-speed' | 'normal-speed';
   material: ResonanceMaterial;
   degree: number | null;
   note: string;
@@ -26,7 +30,12 @@ export const WORLDCRAFT_SCALE: ReadonlyArray<Readonly<{ degree: number; name: st
 export const WORLDCRAFT_RESONANCE_HOLD: number;
 export const WORLDCRAFT_RESONANCE_FULL_SPEED: number;
 export const RESONANCE_VOICES: Readonly<Record<ResonanceMaterial, Readonly<{ hz?: number; partials: ReadonlyArray<Readonly<{ ratio: number; gain: number; decay: number }>>; noise: number; noiseDecay: number }>>>;
-export function impactGain(speed: number): number;
+export const WORLDCRAFT_RESONANCE_NORMAL_FULL: number;
+export const RESONANCE_DYNAMICS: 'normal-speed';
+export function impactGain(speed: number, full?: number): number;
+export function dynamicsGain(mapping: 'total-speed' | 'normal-speed' | 'impulse', sample: { speed?: number; normalSpeed?: number | null; impulse?: number | null }): number;
+export function contactStrike(event: { normal?: { x: number; y: number; z: number } | null; impulse?: number; point?: { x: number; y: number; z: number } | null; type?: string } | null | undefined, incoming: { x: number; y: number; z: number } | null | undefined): { normalSpeed: number | null; impulse: number | null; type: string | null; normalLength: number; point: { x: number; y: number; z: number } | null };
+export function noteTimeline(impacts: ResonanceImpact[] | null | undefined): { note: string; role: string; piece: string; time: number; gap: number | null; point: { x: number; y: number; z: number } | null }[];
 export function resonanceOf(world: { rules?: { target?: { id: string } } | null; objects?: { id: string; kind: string; voice?: { material: 'metal' | 'timber'; degree: number } }[] } | null, body: string): ResonanceSpec | null;
 export function formatResonanceImpact(impact: Pick<ResonanceImpact, 'piece' | 'time' | 'speed' | 'note' | 'material'>): string;
 export function impactHeadline(impact: Pick<ResonanceImpact, 'role' | 'material' | 'note'>): string;
@@ -35,7 +44,7 @@ export function recordedReplayTimes(impacts: { time: number }[], start?: number)
 export function performanceFromResonance(resonance: { impacts?: ResonanceImpact[] } | null | undefined): { impacts: Pick<ResonanceImpact, 'piece' | 'role' | 'time' | 'material' | 'degree' | 'note' | 'hz' | 'gain' | 'callbacks'>[] };
 export function createResonanceEar(): {
   begin(): void;
-  hear(input: { body: string; time: number; speed: number; world: Parameters<typeof resonanceOf>[0] }): ResonanceImpact | null;
+  hear(input: { body: string; time: number; speed: number; normalSpeed?: number | null; impulse?: number | null; point?: { x: number; y: number; z: number } | null; world: Parameters<typeof resonanceOf>[0]; dynamics?: 'total-speed' | 'normal-speed' }): ResonanceImpact | null;
   snapshot(): ResonanceLog;
 };
 export function scheduleImpact(ctx: OfflineAudioContext | AudioContext, when: number, impact: Pick<ResonanceImpact, 'material' | 'gain' | 'hz'>): AudioScheduledSourceNode[];

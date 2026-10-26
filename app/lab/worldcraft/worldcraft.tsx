@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import {
-  Camera, Color3, Color4, DirectionalLight, Engine, FreeCamera, HavokPlugin,
+  Camera, Color3, Color4, DirectionalLight, DynamicTexture, Engine, FreeCamera, HavokPlugin,
   HemisphericLight, LinesMesh, Matrix, Mesh, MeshBuilder, Plane, Scene,
-  ShadowGenerator, Vector3,
+  ShadowGenerator, StandardMaterial, Vector3,
 } from '@babylonjs/core';
 import HavokPhysics from '@babylonjs/havok';
 import { BUILD_ID } from '@/lib/build-identity';
@@ -16,7 +16,7 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
-import { WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
+import { WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
@@ -35,6 +35,7 @@ type Kind = 'bank' | 'ramp' | 'block' | 'plate';
 type Phase = 'loading' | 'ready' | 'charging' | 'flight' | 'result' | 'error';
 type Store = ReturnType<typeof createWorldcraftStore>;
 type RecordedTrail = { label: string; worldIdentity: string; setup: WorldcraftSetup; points: { x: number; y: number; z: number }[] };
+type NoteMark = ReturnType<typeof noteTimeline>[number];
 type UI = {
   mode: 'build' | 'play'; phase: Phase; view: 'address' | 'survey';
   world: WorldcraftWorld; selected: string | null; setup: WorldcraftSetup;
@@ -42,7 +43,7 @@ type UI = {
   notice: string; canUndo: boolean; canRedo: boolean; revision: number;
   memoryOpen: boolean; worlds: ReturnType<Store['worlds']>; lines: ReturnType<Store['lines']>;
   memoryWarning: string; showTrail: boolean; cameraTool: 'orbit' | 'pan';
-  history: RecordedTrail | null; comparison: RecordedTrail | null;
+  history: RecordedTrail | null; comparison: RecordedTrail | null; historyMarks: NoteMark[] | null; comparisonMarks: NoteMark[] | null;
   lastKept: boolean; liveNotes: ResonanceImpact[];
   preset: RangePreset | null; presetBaseline: RangePreset | null; presetId: string | null; shotRecord: RangeShot | null;
   launchPhase: number;
@@ -65,6 +66,17 @@ function noteName(degree: number) {
 }
 function noteOrder(notes: number[]) {
   return notes.map(noteName).join(' → ');
+}
+
+function NoteTimeline({ kind, rows }: { kind: 'current' | 'previous'; rows: NoteMark[] }) {
+  if (!rows.length) return null;
+  return <div className={styles.timeline} data-note-timeline={kind}>
+    <p className={styles.timelineLabel}>{kind === 'previous' ? 'Previous shot' : 'This shot'}</p>
+    {rows.map((row, index) => <span className={styles.timelineItem} key={`${kind}-${row.time}-${index}`}>
+      {index > 0 && row.gap !== null && <span className={styles.timelineGap}>{row.gap.toFixed(2)} s</span>}
+      <span className={styles.timelineNote}>{row.note} {row.time.toFixed(2)}s</span>
+    </span>)}
+  </div>;
 }
 
 function shotNotice(last: WorldcraftRecord): string {
@@ -104,7 +116,7 @@ function initialUI(): UI {
     setup: worldcraftFixedSetup(world)!,
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
-    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, lastKept: false, liveNotes: [],
+    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, historyMarks: null, comparisonMarks: null, lastKept: false, liveNotes: [],
     preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0,
   };
 }
@@ -214,12 +226,59 @@ export default function Worldcraft() {
           trail = MeshBuilder.CreateLines('worldcraft-actual-line', { points: points.map(p => new Vector3(p.x, p.y, p.z)) }, activeScene);
           trail.color = new Color3(.2, .83, .84); trail.isPickable = false;
         };
+        let contactMarks: Mesh[] = [];
+        const clearMarks = () => {
+          for (const mesh of contactMarks) mesh.dispose(false, true);
+          contactMarks = [];
+        };
+        const drawMarks = () => {
+          clearMarks();
+          const marks = uiRef.current.comparisonMarks;
+          if (!uiRef.current.showTrail || uiRef.current.presetId !== 'musical-workshop' || !marks?.length) return;
+          for (const mark of marks) {
+            if (!mark.point) continue;
+            const sphere = MeshBuilder.CreateSphere('worldcraft-contact-mark', { diameter: 0.55, segments: 8 }, activeScene);
+            sphere.position.set(mark.point.x, mark.point.y, mark.point.z);
+            sphere.isPickable = false;
+            const material = new StandardMaterial(`worldcraft-contact-mark-material-${contactMarks.length}`, activeScene);
+            material.diffuseColor = new Color3(1, .66, .28);
+            material.emissiveColor = new Color3(.9, .48, .12);
+            material.specularColor = new Color3(0, 0, 0);
+            sphere.material = material;
+            contactMarks.push(sphere);
+            const texture = new DynamicTexture(`worldcraft-contact-label-texture-${contactMarks.length}`, { width: 256, height: 64 }, activeScene, false);
+            texture.hasAlpha = true;
+            const ctx = texture.getContext() as CanvasRenderingContext2D;
+            ctx.clearRect(0, 0, 256, 64);
+            ctx.font = 'bold 36px sans-serif';
+            ctx.fillStyle = '#ffe0b0';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`${mark.note} ${mark.time.toFixed(2)}s`, 128, 34);
+            texture.update();
+            const plane = MeshBuilder.CreatePlane('worldcraft-contact-label', { width: 2.4, height: 0.6 }, activeScene);
+            plane.position.set(mark.point.x, mark.point.y + 1.2, mark.point.z);
+            plane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+            plane.isPickable = false;
+            const labelMaterial = new StandardMaterial(`worldcraft-contact-label-material-${contactMarks.length}`, activeScene);
+            labelMaterial.diffuseTexture = texture;
+            labelMaterial.emissiveTexture = texture;
+            labelMaterial.opacityTexture = texture;
+            labelMaterial.useAlphaFromDiffuseTexture = true;
+            labelMaterial.backFaceCulling = false;
+            labelMaterial.disableLighting = true;
+            plane.material = labelMaterial;
+            contactMarks.push(plane);
+          }
+        };
         const drawComparison = () => {
           comparisonTrail?.dispose(); comparisonTrail = null;
           const record = uiRef.current.comparison;
-          if (!record || record.points.length < 2 || !uiRef.current.showTrail) return;
-          comparisonTrail = MeshBuilder.CreateLineSystem('worldcraft-before-line', { lines: worldcraftTrailDashes(record.points).map(line=>line.map(p=>new Vector3(p.x,p.y,p.z))) }, activeScene);
-          comparisonTrail.color = new Color3(1,.66,.28); comparisonTrail.isPickable = false;
+          if (record && record.points.length >= 2 && uiRef.current.showTrail) {
+            comparisonTrail = MeshBuilder.CreateLineSystem('worldcraft-before-line', { lines: worldcraftTrailDashes(record.points).map(line=>line.map(p=>new Vector3(p.x,p.y,p.z))) }, activeScene);
+            comparisonTrail.color = new Color3(1,.66,.28); comparisonTrail.isPickable = false;
+          }
+          drawMarks();
         };
         const resonance = createResonanceOutput();
         let shotToken: object | null = null;
@@ -236,6 +295,7 @@ export default function Worldcraft() {
               const last = event.last;
               drawTrail(last.samples);
               const history = recordedTrail({ label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples });
+              const historyMarks = uiRef.current.presetId === 'musical-workshop' ? noteTimeline(last.resonance?.impacts) : null;
               const token = {};
               shotToken = token;
               const preset = uiRef.current.preset;
@@ -249,7 +309,7 @@ export default function Worldcraft() {
               }).catch(error => {
                 if (!disposed) publish({ notice: error instanceof Error ? error.message : String(error) });
               });
-              publish({ phase: 'result', last, lastKept: false, history, shotRecord: null, notice: shotNotice(last) });
+              publish({ phase: 'result', last, lastKept: false, history, historyMarks, shotRecord: null, notice: shotNotice(last) });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
             }
           },
@@ -332,6 +392,7 @@ export default function Worldcraft() {
           if (uiRef.current.world.rules?.originFixed) setup = { ...setup, originX: uiRef.current.world.launcher.x };
           if (window) setup = { ...setup, yaw: clamp(setup.yaw, window.yawMin, window.yawMax), elevation: clamp(setup.elevation, window.elevationMin, window.elevationMax), charge: clamp(setup.charge, window.chargeMin, window.chargeMax) };
           resonance.unlock();
+          runtime.setDynamics(uiRef.current.presetId === 'musical-workshop' ? 'normal-speed' : 'total-speed');
           publish({ liveNotes: [] });
           if (!runtime.launch(setup)) { publish({ phase: 'ready', notice: runtime.error }); return; }
           projectile?.dispose(); projectile = buildRangeProjectile(activeScene, runtime.flight!.mesh, presentation.materials, shadows);
@@ -339,7 +400,8 @@ export default function Worldcraft() {
           previous = null; heading = { x: Math.sin(setup.yaw * Math.PI / 180), y: 0, z: Math.cos(setup.yaw * Math.PI / 180) };
           flightPoints = []; trailTick = 0; trail?.dispose(); trail = null;
           const comparison = uiRef.current.history ? recordedTrail(uiRef.current.history) : null;
-          publish({ phase: 'flight', setup, charge, comparison, notice: 'Committed line · edits are locked.' });
+          const comparisonMarks = uiRef.current.presetId === 'musical-workshop' ? uiRef.current.historyMarks : null;
+          publish({ phase: 'flight', setup, charge, comparison, comparisonMarks, notice: 'Committed line · edits are locked.' });
           drawComparison();
           trace('fire', { setup, worldIdentity: worldcraftIdentity(uiRef.current.world), world: uiRef.current.world });
         };
@@ -349,7 +411,7 @@ export default function Worldcraft() {
           clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready' });
           if (!commit(world, label, 'commit', true)) return;
           runtime.setMode('play');
-          publish({ mode: 'play', phase: 'ready', view: 'address', setup: { ...setup }, powerMode: 'set', charge: 0, comparison: null, notice: label });
+          publish({ mode: 'play', phase: 'ready', view: 'address', setup: { ...setup }, powerMode: 'set', charge: 0, comparison: null, comparisonMarks: null, historyMarks: null, notice: label });
           drawComparison();
           selectedHighlight(); trace('restore', { setup, worldIdentity: worldcraftIdentity(world) });
         };
@@ -465,7 +527,7 @@ export default function Worldcraft() {
               if (loaded.kind === 'preset') {
                 const adapted = adaptRangePreset(loaded.preset);
                 if (commit(adapted.world, `${adapted.preset.name} imported.`, 'commit', true)) {
-                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: rangeOpeningSetup(adapted.preset), memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null });
+                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: rangeOpeningSetup(adapted.preset), memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null });
                   drawTrail([]); drawComparison();
                 }
                 trace('import-preset', { id: adapted.preset.id });
@@ -492,7 +554,7 @@ export default function Worldcraft() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createHouseShotWorld(), 'House Shot reset. Fire, turn the ramp, then compare.', 'commit', true)) {
-              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0 });
+              publish({ memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -500,7 +562,7 @@ export default function Worldcraft() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createOrcStaticWorld(), 'Orc Stand-in reset. Move the ramp, the bank, or the plate, then fire the same shot.', 'commit', true)) {
-              publish({ memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0 });
+              publish({ memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -526,7 +588,7 @@ export default function Worldcraft() {
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, opened, 'commit', true)) {
               if (bell) runtime.setLaunchPhase(0);
-              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
+              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -538,7 +600,7 @@ export default function Worldcraft() {
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, `${loaded.preset.name} reset to its preset.`, 'commit', true)) {
               if (bell) runtime.setLaunchPhase(0);
-              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
+              publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -558,7 +620,7 @@ export default function Worldcraft() {
             if (!commit(shot.worldSnapshot.world, 'Recorded shot imported.', 'commit', true)) return { ok: false, error: uiRef.current.notice };
             const phased = typeof shot.launchPhase === 'number' ? runtime.setLaunchPhase(shot.launchPhase) : { ok: true as const, phase: 0 };
             if (!phased.ok) return { ok: false, error: phased.error };
-            publish({ setup: shot.setup, launchPhase: phased.phase ?? 0, shotRecord: shot, history: null, comparison: null, last: null, lastKept: false, notice: 'Recorded shot imported. The release phase is restored. Fire to refire it.' });
+            publish({ setup: shot.setup, launchPhase: phased.phase ?? 0, shotRecord: shot, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, notice: 'Recorded shot imported. The release phase is restored. Fire to refire it.' });
             return { ok: true };
           },
           camera(action) {
@@ -662,7 +724,8 @@ export default function Worldcraft() {
                 worldIdentity: worldcraftIdentity(state.world), selectedObjectId: state.selected, setup: state.setup,
                 ...history.status(), editLock: busy(), diagnostics: runtime.diagnostics(), memory: store.status(),
                 lastShot: state.last ? { ...state.last, currentWorldChanged: worldcraftIdentity(state.world) !== state.last.worldIdentity, thisShotChangedWorld: false } : null,
-                comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
+                comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, comparisonMarks: state.comparisonMarks, historyMarks: state.historyMarks, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
+                contactMarkers: activeScene.meshes.filter(m => m.name === 'worldcraft-contact-mark').map(mesh => ({ x: mesh.position.x, y: mesh.position.y, z: mesh.position.z })),
                 previousTrail: state.showTrail && Boolean(state.comparison), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
                 presetId: state.presetId, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, launchPhase: state.launchPhase, voices: resonance.counts(), audio: resonance.state(),
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
@@ -729,7 +792,7 @@ export default function Worldcraft() {
           document.removeEventListener('visibilitychange', visibility);
           surface.removeEventListener('pointerdown', down); surface.removeEventListener('pointermove', move);
           surface.removeEventListener('pointerup', up); surface.removeEventListener('pointercancel', discardDrag); surface.removeEventListener('wheel', wheel);
-          projectile?.dispose(); trail?.dispose(); comparisonTrail?.dispose(); spine?.dispose(); resonance.dispose(); runtime.dispose(); presentation.dispose();
+          projectile?.dispose(); trail?.dispose(); comparisonTrail?.dispose(); clearMarks(); spine?.dispose(); resonance.dispose(); runtime.dispose(); presentation.dispose();
         };
         publish({ phase: 'ready', notice: 'House Shot: fire once, then turn the ramp. The rail and gold pin stay fixed.', ...memoryState() });
         selectedHighlight();
@@ -946,6 +1009,10 @@ export default function Worldcraft() {
           {impactReadout && <section className={styles.sequence} aria-label="Impact sequence" data-impact-sequence={impactReadout.headline}>
             <p className={styles.sequenceLine}>{impactReadout.headline}</p>
             <p>{impactReadout.explanation}</p>
+            {ui.presetId === 'musical-workshop' && <div data-note-timelines="">
+              <NoteTimeline kind="current" rows={noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts)} />
+              <NoteTimeline kind="previous" rows={ui.comparisonMarks ?? []} />
+            </div>}
           </section>}
           {ui.last && <div className={styles.receipt}>
             {ui.last.goalResult?.kind === 'none' && <p>No score. Goal is none. {ui.last.terminal.reason.replaceAll('-', ' ')}.</p>}
