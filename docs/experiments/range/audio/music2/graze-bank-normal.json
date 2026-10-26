@@ -1,0 +1,135 @@
+{
+  "branch": "lab/wc-range-music2-20261025",
+  "gitSha": "6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4",
+  "parent": "6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4",
+  "clockwork": "3aede12c35154352b444ec65d41395011b9b8b1b",
+  "clockworkModified": false,
+  "presetId": "musical-workshop",
+  "seed": 20261025,
+  "seedAppliedToSolver": false,
+  "shotId": "graze-bank",
+  "mapping": "normal-speed",
+  "liveMapping": "normal-speed",
+  "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.5
+  },
+  "objects": [
+    {
+      "id": "ramp-yours",
+      "kind": "ramp",
+      "x": 0,
+      "z": 36,
+      "yaw": 0,
+      "material": "metal",
+      "degree": 1,
+      "note": "D4"
+    },
+    {
+      "id": "bank-yours",
+      "kind": "bank",
+      "x": 1,
+      "z": 22,
+      "yaw": 85,
+      "material": "timber",
+      "degree": 0,
+      "note": "C4"
+    },
+    {
+      "id": "plate-yours",
+      "kind": "plate",
+      "x": 0,
+      "z": 86,
+      "yaw": 0,
+      "material": "metal",
+      "degree": 2,
+      "note": "E4"
+    }
+  ],
+  "terminal": [
+    -8.9208,
+    0.43,
+    34.4556
+  ],
+  "trajectoriesBitIdentical": true,
+  "impacts": [
+    {
+      "piece": "bank-yours",
+      "role": "bank",
+      "note": "C4",
+      "material": "timber",
+      "time": 0.7333,
+      "speed": 24.2194,
+      "normalSpeed": 2.0927,
+      "impulse": 3.133,
+      "point": {
+        "x": 0.4281,
+        "y": 3.1339,
+        "z": 22.7126
+      },
+      "callbacks": 2,
+      "gainTotal": 1,
+      "gainNormal": 0.0123,
+      "gainImpulse": 0.0122,
+      "gainLive": 0.0123,
+      "dynamics": "normal-speed"
+    },
+    {
+      "piece": "ramp-yours",
+      "role": "ramp",
+      "note": "D4",
+      "material": "metal",
+      "time": 1.0833,
+      "speed": 15.5804,
+      "normalSpeed": 19.9556,
+      "impulse": 20.6532,
+      "point": {
+        "x": -1.2877,
+        "y": 0.7928,
+        "z": 30.994
+      },
+      "callbacks": 2,
+      "gainTotal": 0.7943,
+      "gainNormal": 0.6816,
+      "gainImpulse": 0.3961,
+      "gainLive": 0.6816,
+      "dynamics": "normal-speed"
+    }
+  ],
+  "rawGains": [
+    {
+      "role": "bank",
+      "note": "C4",
+      "gain": 0.0123,
+      "speed": 24.2194,
+      "normalSpeed": 2.0927
+    },
+    {
+      "role": "ramp",
+      "note": "D4",
+      "gain": 0.6816,
+      "speed": 15.5804,
+      "normalSpeed": 19.9556
+    }
+  ],
+  "wav": "docs/experiments/range/audio/music2/graze-bank-normal.wav",
+  "mix": 1,
+  "rmsMatch": "The two files of this shot are scaled so their RMS matches, then a shared factor sets the hotter peak near -6 dBFS without passing -3. A one-note shot then has the same envelope. The raw peaks and raw gains are the level difference.",
+  "rawPeak": 0.32977294921875,
+  "rawPeakDbfs": -9.63569943513082,
+  "rawRms": 0.025008387930676616,
+  "rmsScale": 1.2153233677290027,
+  "ceilingScale": 1.2153233677290027,
+  "ceilingDbfs": -3,
+  "peak": 0.4007568359375,
+  "peakDbfs": -7.942381218048309,
+  "rms": 0.030392787998717405,
+  "sampleRate": 44100,
+  "seconds": 3.133310657596372,
+  "bytes": 276402,
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false
+}

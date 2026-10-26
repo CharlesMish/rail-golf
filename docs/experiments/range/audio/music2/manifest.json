@@ -1,0 +1,175 @@
+{
+  "source": "OfflineAudioContext",
+  "renderer": "lib/worldcraft-resonance.js renderResonanceWav",
+  "listeningQuality": "unverified",
+  "musicalQualityClaimed": false,
+  "branch": "lab/wc-range-music2-20261025",
+  "gitSha": "6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4",
+  "parent": "6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4",
+  "clockwork": "3aede12c35154352b444ec65d41395011b9b8b1b",
+  "seed": 20261025,
+  "ceilingDbfs": -3,
+  "levelMatch": "Per pair, scale so RMS matches. A shared factor then lifts a quiet pair until the hotter peak is about -6 dBFS, or cuts both if a peak would pass -3 dBFS. Relative contour is unchanged. A one-note pair becomes the same envelope; its raw peaks are the level difference.",
+  "calibration": {
+    "timberUnityDbfs": -5.22335569017773,
+    "metalUnityDbfs": -6.193547057225965,
+    "timberHalfDrop": -5.964196269112971,
+    "metalHalfDrop": -6.012491604848071
+  },
+  "levels": {
+    "timberUnityDbfs": -5.22335569017773,
+    "metalUnityDbfs": -6.193547057225965,
+    "timberHalfDrop": -5.964196269112971,
+    "metalHalfDrop": -6.012491604848071,
+    "bank": {
+      "totalSpeed": {
+        "n": 33,
+        "min": -33.335504682669196,
+        "median": -5.3511045313999235,
+        "max": -5.22335569017773,
+        "spread": 28.112148992491466,
+        "unityPeakDbfs": -5.22335569017773
+      },
+      "normalSpeed": {
+        "n": 33,
+        "min": -43.42525346138977,
+        "median": -9.49684700237633,
+        "max": -5.22335569017773,
+        "spread": 38.201897771212046,
+        "unityPeakDbfs": -5.22335569017773
+      },
+      "impulse": {
+        "n": 33,
+        "min": -52.758369882219725,
+        "median": -20.968952601820884,
+        "max": -6.126932029141866,
+        "spread": 46.631437853077855,
+        "unityPeakDbfs": -5.22335569017773
+      }
+    },
+    "ramp": {
+      "totalSpeed": {
+        "n": 4,
+        "min": -12.074563159020052,
+        "median": -6.497152160636743,
+        "max": -6.198760155094605,
+        "spread": 5.875803003925447,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "normalSpeed": {
+        "n": 4,
+        "min": -15.414535816938736,
+        "median": -12.4011552041285,
+        "max": -8.23660842563453,
+        "spread": 7.177927391304205,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "impulse": {
+        "n": 4,
+        "min": -16.945587099246843,
+        "median": -12.34983256102285,
+        "max": -8.255310240705462,
+        "spread": 8.690276858541381,
+        "unityPeakDbfs": -6.193547057225965
+      }
+    },
+    "plate": {
+      "totalSpeed": {
+        "n": 9,
+        "min": -20.719635298624123,
+        "median": -9.734502246276332,
+        "max": -6.194415689622115,
+        "spread": 14.525219609002008,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "normalSpeed": {
+        "n": 9,
+        "min": -16.180585789787727,
+        "median": -9.071058172379958,
+        "max": -7.664640100858179,
+        "spread": 8.515945688929548,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "impulse": {
+        "n": 9,
+        "min": -20.33514106522584,
+        "median": -9.091648034053527,
+        "max": -7.68214886635844,
+        "spread": 12.652992198867402,
+        "unityPeakDbfs": -6.193547057225965
+      }
+    }
+  },
+  "files": [
+    {
+      "file": "docs/experiments/range/audio/music2/graze-bank-total.wav",
+      "shotId": "graze-bank",
+      "mapping": "total-speed",
+      "peakDbfs": -6.0004777433190135,
+      "rawPeakDbfs": -5.408621284439297,
+      "rmsScale": 0.9341810734640761,
+      "notes": [
+        "C4",
+        "D4"
+      ]
+    },
+    {
+      "file": "docs/experiments/range/audio/music2/graze-bank-normal.wav",
+      "shotId": "graze-bank",
+      "mapping": "normal-speed",
+      "peakDbfs": -7.942381218048309,
+      "rawPeakDbfs": -9.63569943513082,
+      "rmsScale": 1.2153233677290027,
+      "notes": [
+        "C4",
+        "D4"
+      ]
+    },
+    {
+      "file": "docs/experiments/range/audio/music2/square-bank-total.wav",
+      "shotId": "square-bank",
+      "mapping": "total-speed",
+      "peakDbfs": -7.65356211300197,
+      "rawPeakDbfs": -31.399626996557966,
+      "rmsScale": 15.392290365497981,
+      "notes": [
+        "C4"
+      ]
+    },
+    {
+      "file": "docs/experiments/range/audio/music2/square-bank-normal.wav",
+      "shotId": "square-bank",
+      "mapping": "normal-speed",
+      "peakDbfs": -6.0004777433190135,
+      "rawPeakDbfs": -6.136409932880601,
+      "rmsScale": 1.0158287419742968,
+      "notes": [
+        "C4"
+      ]
+    },
+    {
+      "file": "docs/experiments/range/audio/music2/opening-total.wav",
+      "shotId": "opening",
+      "mapping": "total-speed",
+      "peakDbfs": -6.0004777433190135,
+      "rawPeakDbfs": -7.088230450735118,
+      "rmsScale": 1.1334738954723207,
+      "notes": [
+        "D4",
+        "E4"
+      ]
+    },
+    {
+      "file": "docs/experiments/range/audio/music2/opening-normal.wav",
+      "shotId": "opening",
+      "mapping": "normal-speed",
+      "peakDbfs": -8.621763528166255,
+      "rawPeakDbfs": -11.92011448988962,
+      "rmsScale": 1.4619416887837837,
+      "notes": [
+        "D4",
+        "E4"
+      ]
+    }
+  ]
+}

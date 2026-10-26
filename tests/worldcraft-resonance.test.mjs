@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createOrcStaticWorld, createHouseShotWorld, parseWorldJSON } from '../lib/worldcraft-model.js';
 import {
-  WORLDCRAFT_SCALE, WORLDCRAFT_RESONANCE_HOLD, RESONANCE_VOICES, impactGain, resonanceOf,
-  formatResonanceImpact, createResonanceEar, audioBufferToWav, describeImpactSequence, impactHeadline, recordedReplayTimes,
+  WORLDCRAFT_SCALE, WORLDCRAFT_RESONANCE_HOLD, WORLDCRAFT_RESONANCE_NORMAL_FULL, RESONANCE_VOICES, impactGain, dynamicsGain, contactStrike, noteTimeline, resonanceOf,
+  formatResonanceImpact, createResonanceEar, audioBufferToWav, describeImpactSequence, impactHeadline, recordedReplayTimes, performanceFromResonance,
 } from '../lib/worldcraft-resonance.js';
 
 const world = createOrcStaticWorld();
@@ -89,6 +89,42 @@ test('the impact sequence is the notes that rang, and a kept replay uses those t
   assert.match(twice.explanation, /Ramp D4 was hit again later, so that later hit is its own note/);
   assert.deepEqual(recordedReplayTimes(impacts, 10), [11.4, 14.4]);
   assert.throws(() => recordedReplayTimes([{ time: Number.NaN }]), /time/);
+});
+
+test('face speed stays expressive and a copied contact normal does not keep the plugin vector', () => {
+  assert.equal(WORLDCRAFT_RESONANCE_NORMAL_FULL, 32);
+  assert.ok(impactGain(2.1, 32) < impactGain(8, 32));
+  assert.ok(impactGain(8, 32) < impactGain(17, 32));
+  assert.ok(impactGain(17, 32) < impactGain(24, 32));
+  assert.ok(impactGain(24, 32) < 1);
+  assert.equal(impactGain(40, 32), 1);
+  assert.equal(impactGain(40), 1);
+  const normal = dynamicsGain('normal-speed', { speed: 24, normalSpeed: 2.1 });
+  const square = dynamicsGain('normal-speed', { speed: 22, normalSpeed: 24 });
+  assert.ok(normal < square * 0.2);
+  assert.ok(dynamicsGain('total-speed', { speed: 24, normalSpeed: 2.1 }) > normal);
+  const vector = { x: 0, y: 0, z: 1 };
+  const point = { x: 1, y: 2, z: 3 };
+  const strike = contactStrike({ normal: vector, impulse: 4.5, point, type: 'COLLISION_STARTED' }, { x: 0, y: 0, z: -10 });
+  vector.z = 0;
+  point.x = 9;
+  assert.equal(strike.normalSpeed, 10);
+  assert.equal(strike.impulse, 4.5);
+  assert.deepEqual(strike.point, { x: 1, y: 2, z: 3 });
+  const line = noteTimeline([
+    { role: 'bank', piece: 'bank-yours', note: 'C4', time: 0.2, point: { x: 0, y: 1, z: 2 } },
+    { role: 'orc', piece: 'stand-in', note: 'thunk', time: 0.4 },
+    { role: 'ramp', piece: 'ramp-yours', note: 'D4', time: 1.45, point: { x: 0, y: 2, z: 40 } },
+  ]);
+  assert.deepEqual(line.map(item => item.note), ['C4', 'D4']);
+  assert.equal(line[1].gap, 1.25);
+  assert.equal(line[0].gap, null);
+  const ear = createResonanceEar();
+  ear.begin();
+  ear.hear({ body: ramp, time: 1, speed: 20, normalSpeed: 4, impulse: 3, point: { x: 1, y: 2, z: 3 }, world, dynamics: 'normal-speed' });
+  const kept = performanceFromResonance(ear.snapshot());
+  assert.deepEqual(Object.keys(kept.impacts[0]).sort(), ['callbacks', 'degree', 'gain', 'hz', 'material', 'note', 'piece', 'role', 'time']);
+  assert.equal(kept.impacts[0].gain, dynamicsGain('normal-speed', { speed: 20, normalSpeed: 4 }));
 });
 
 test('the resonant example is the current Orc Stand-in world', () => {
