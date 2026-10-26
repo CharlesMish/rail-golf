@@ -77,7 +77,7 @@ Same shot, both mappings, Chrome `OfflineAudioContext` at mix 1. Each pair is sc
 
 The graze pair is two notes. Total speed plays a loud C4 then a D4. Face speed plays a quiet C4 then a D4. The square pair is one note, so after matching the files are the same knock at a similar level. The raw peaks, −31.40 and −6.14 dBFS, are the mapping. The opening pair keeps a relative balance: total speed leans on the ramp, face speed brings the plate up beside it.
 
-Sidecars record branch, the git SHA the renderer could see, both parent SHAs, preset, setup, objects, seed, both gains, raw and matched peaks, the RMS scale, and the ceiling. `gitSha` in those files is `6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4` when the renderer ran, because the commit that contains the wav bytes did not exist yet. The solver does not read the git SHA. The commit that contains the wav bytes is named in the commit message of the follow-up that only records it, and a later sentence that only records the preview URL does not change the wav bytes.
+Sidecars record branch, git SHA, both parent SHAs, preset, setup, objects, seed, both gains, raw and matched peaks, the RMS scale, and the ceiling. `gitSha` is `fe5955825f5948dd2971def24e19c7a3c849cc18`, the commit that contains the mapping, the shots, and these wav bytes. The renderer had read the parent `6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4` because that commit did not exist yet. The solver does not read the git SHA. A later sentence that only records the preview URL does not change the wav bytes.
 
 ## Browser
 
