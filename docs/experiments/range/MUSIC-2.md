@@ -4,7 +4,7 @@ Branch `lab/wc-range-music2-20261025`, from `lab/wc-range-music-20261025` at `6a
 
 `lab/wc-range-clockwork-20261025` at `3aede12c35154352b444ec65d41395011b9b8b1b` was not modified and is not an ancestor of this branch. The merge-base of this branch with that commit is `6cf951576d29cd051109d119e1d11381aeae0450`. Clockwork stays a sibling.
 
-Route `/lab/worldcraft`. No merge, no production deploy, no pull request against `main`. This is not `rail-golf.cmish.dev`.
+Route `/lab/worldcraft`. No merge, no production deploy, no pull request against `main`. The pinned non-production preview for `e5af421625ed5835832094a03d64acc1d3eb6940` is [https://900e1d9c-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://900e1d9c-rail-golf.charlesmish.workers.dev/lab/worldcraft). It is not `rail-golf.cmish.dev`.
 
 The sitting that omits the measurements is [PROTOCOL-MUSIC-2.md](PROTOCOL-MUSIC-2.md). The parent record is [MUSIC.md](MUSIC.md).
 
@@ -99,10 +99,16 @@ The cost is a second headless sim, or a fire that must not latch the amber trail
 
 What it would show is the note timeline of an aim before that aim is committed. The timeline and the amber markers already show the last committed shot while the next one is aimed. A later experiment could play recorded impacts, the way **Hear** does, without drawing a committed trail. That would stay out of the sporting presets. It was not built here.
 
+## Preview
+
+Pinned non-production version for `e5af421625ed5835832094a03d64acc1d3eb6940`: [https://900e1d9c-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://900e1d9c-rail-golf.charlesmish.workers.dev/lab/worldcraft).
+
+Workers build `c7c884e5-891d-4203-a355-62a1cde7e6ef`. Version `900e1d9c`. That version's bundle contains `Musical Workshop`, `normal-speed`, and `e5af421`. `/lab/worldcraft` returned 200. The branch alias [https://lab-wc-range-music2-20261025-rail-golf.charlesmish.workers.dev/lab/worldcraft](https://lab-wc-range-music2-20261025-rail-golf.charlesmish.workers.dev/lab/worldcraft) follows later commits on this branch. The `900e1d9c` URL stays on `e5af421`. A later commit that only names this URL does not change the workshop, the shots, or the wav bytes. Its own per-version preview is recorded on the draft pull request when Workers Builds publishes that commit. This is not `rail-golf.cmish.dev`.
+
 ## Not established
 
 - No one listened. Musical quality, pleasure, and whether the face-speed contour is the one a person wants were not judged.
 - The browser pass is headless Chrome with SwiftShader, not a handset GPU and not a person holding the phone.
 - The dBFS columns are single-note peaks inferred from gain after a two-point linearity check. Overlapping partials in a real phrase can sit above or below that sum. The six saved files are the measured phrase peaks.
 - The ramp lattice is four yaws and the plate lattice is twelve aims. They compare the two mappings. They are not a search of the yard.
-- The pinned preview for this commit is recorded on the draft pull request when Workers Builds publishes it. Listening on that preview was not done.
+- Listening on the pinned preview was not done. The preview was fetched: `/lab/worldcraft` returned 200, and the worldcraft bundle contains `Musical Workshop`, `normal-speed`, and `e5af421`.
