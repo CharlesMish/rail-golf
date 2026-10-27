@@ -8,7 +8,7 @@ This file is the map. It does not replace the branches it names. Those branches 
 | Musical Workshop | `lab/wc-range-music-20261025` | `6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4` | https://github.com/CharlesMish/rail-golf/pull/54 |
 | Face-speed dynamics | `lab/wc-range-music2-20261025` | `9d8278ba9126a0579cfce35104417aba704248cd` | https://github.com/CharlesMish/rail-golf/pull/55 |
 | Bank voice study, owner chose H | `lab/wc-range-music3-bank-voice` | `2c975014477264b870f578d7866a682431db2cd0` | https://github.com/CharlesMish/rail-golf/pull/56 |
-| Bank-role fix and mix limiter | `lab/wc-range-music3-20261026` | cut from `2c97501`; tip recorded on that branch | no pull request |
+| Bank-role fix and mix limiter | `lab/wc-range-music3-20261026` | fix `92acff9811c1ef839f5de3eba30b9aada991ad01`, then this index | no pull request |
 
 #54 contains 5 WAV blobs, 2.80 MB, not present on `6cf9515`. #55 adds 6 WAV blobs, 2.18 MB. #56 adds 248 WAV blobs, 97.90 MB, under `docs/experiments/range/audio/music3/`. The figure of about 72.5 MB / 198 files is the same study counted a different way; the object list from `9d8278b..2c97501` is the larger one.
 
