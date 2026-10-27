@@ -68,6 +68,11 @@ function noteOrder(notes: number[]) {
   return notes.map(noteName).join(' → ');
 }
 
+function recordedVoiceLabel(presetId: string | null, variant: string) {
+  if (presetId === 'musical-workshop') return SOUND_VARIANTS.find(item => item.id === variant)?.label ?? 'the current bank sound';
+  return 'A · PR #55';
+}
+
 function NoteTimeline({ kind, rows }: { kind: 'current' | 'previous'; rows: NoteMark[] }) {
   if (!rows.length) return null;
   return <div className={styles.timeline} data-note-timeline={kind}>
@@ -280,6 +285,11 @@ export default function Worldcraft() {
           }
           drawMarks();
         };
+        const clearShotRecord = () => {
+          publish({ history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false });
+          drawTrail([]);
+          drawComparison();
+        };
         const resonance = createResonanceOutput();
         let shotToken: object | null = null;
         let perfSlot: string | null = null;
@@ -469,8 +479,9 @@ export default function Worldcraft() {
           adjust() {
             const last = uiRef.current.last;
             if (last) {
+              const historyMarks = uiRef.current.presetId === 'musical-workshop' ? noteTimeline(last.resonance?.impacts) : null;
               restore(last.world, last.setup as WorldcraftSetup, 'Last line restored: its starting world, origin, aim and power. Fire when ready.');
-              publish({ history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples } }); drawTrail(last.samples);
+              publish({ history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, historyMarks }); drawTrail(last.samples);
             }
           },
           survey() { if (busy() || uiRef.current.mode !== 'play') return; const address = uiRef.current.view === 'survey'; publish({ view: address ? 'address' : 'survey' }); if (address && uiRef.current.phase === 'result') { clearRound(); publish({ phase: 'ready', notice: 'Ready · same setup, current world.' }); } },
@@ -479,9 +490,11 @@ export default function Worldcraft() {
             const entry = store.lines().find(line => line.id === id);
             const impacts = entry?.performance?.impacts;
             if (!impacts?.length) { publish({ notice: 'This kept line has no recorded sounds.' }); return; }
+            const workshop = uiRef.current.presetId === 'musical-workshop';
+            const label = recordedVoiceLabel(uiRef.current.presetId, uiRef.current.soundVariant);
             resonance.release();
-            resonance.playRecorded(impacts, uiRef.current.presetId === 'musical-workshop' ? uiRef.current.soundVariant : undefined);
-            publish({ notice: 'Playing the recorded sounds. The shot is not being fired again.' });
+            resonance.playRecorded(impacts, workshop ? uiRef.current.soundVariant : undefined);
+            publish({ notice: `Playing the recorded contacts with ${label}. A kept line stores the contacts, not a voice. The shot is not being fired again.` });
           },
           sound(variant) {
             // Acoustic A/B only: the next impacts and replays use this voice. Physics is untouched.
@@ -514,6 +527,7 @@ export default function Worldcraft() {
           load(id) {
             const entry = store.worlds().find(w => w.id === id); if (!entry || busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            clearShotRecord();
             if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
             trace('load-world', { id });
           },
@@ -544,6 +558,7 @@ export default function Worldcraft() {
                 }
                 trace('import-preset', { id: adapted.preset.id });
               } else if (commit(loaded.world, 'Imported world opened. Undo returns to your previous arrangement.', 'commit', true)) {
+                clearShotRecord();
                 publish({ preset: null, presetBaseline: null, presetId: null, shotRecord: null, setup: { ...uiRef.current.setup, originX: loaded.world.launcher.x }, memoryOpen: false });
                 trace('import-world', { worldIdentity: worldcraftIdentity(loaded.world) });
               }
@@ -559,6 +574,7 @@ export default function Worldcraft() {
             if (busy()) return;
             const world = createStarterWorld(); if (empty) { world.objects = []; world.name = 'An open clearing'; }
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            clearShotRecord();
             commit(world, empty ? 'Empty clearing. Add a piece to begin.' : 'Starter arrangement opened. Undo preserves your previous world.', 'commit', true);
             publish({ memoryOpen: false, setup: { ...uiRef.current.setup, originX: world.launcher.x }, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
           },
@@ -633,6 +649,7 @@ export default function Worldcraft() {
             const phased = typeof shot.launchPhase === 'number' ? runtime.setLaunchPhase(shot.launchPhase) : { ok: true as const, phase: 0 };
             if (!phased.ok) return { ok: false, error: phased.error };
             publish({ setup: shot.setup, launchPhase: phased.phase ?? 0, shotRecord: shot, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, notice: 'Recorded shot imported. The release phase is restored. Fire to refire it.' });
+            drawTrail([]); drawComparison();
             return { ok: true };
           },
           camera(action) {
@@ -869,6 +886,9 @@ export default function Worldcraft() {
     : ui.phase === 'flight'
       ? { headline: ui.liveNotes.length ? ui.liveNotes.map(impactHeadline).join(' → ') : 'No resonant note yet', explanation: 'Still in flight. This is the sounds so far.' }
       : null;
+  const timelineCurrent = ui.presetId === 'musical-workshop' ? noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts) : [];
+  const timelinePrevious = ui.presetId === 'musical-workshop' ? (ui.comparisonMarks ?? []) : [];
+  const heardVoice = recordedVoiceLabel(ui.presetId, ui.soundVariant);
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);
@@ -1021,20 +1041,20 @@ export default function Worldcraft() {
           {impactReadout && <section className={styles.sequence} aria-label="Impact sequence" data-impact-sequence={impactReadout.headline}>
             <p className={styles.sequenceLine}>{impactReadout.headline}</p>
             <p>{impactReadout.explanation}</p>
-            {ui.presetId === 'musical-workshop' && <div className={styles.soundAb} data-sound-ab={ui.soundVariant}>
-              <label>Bank sound (listening A/B)
-                <select value={ui.soundVariant} onChange={event => actions.current?.sound(event.target.value)}>
-                  {SOUND_VARIANTS.map(variant => <option key={variant.id} value={variant.id}>{variant.label}</option>)}
-                </select>
-              </label>
-              <button type="button" disabled={ui.phase === 'flight' || !ui.last?.resonance?.impacts?.length} onClick={() => actions.current?.hearLast()}>Replay last shot</button>
-              <p>{SOUND_VARIANTS.find(variant => variant.id === ui.soundVariant)?.detail} Sound only; the shot and its contacts are identical.</p>
-            </div>}
-            {ui.presetId === 'musical-workshop' && <div data-note-timelines="">
-              <NoteTimeline kind="current" rows={noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts)} />
-              <NoteTimeline kind="previous" rows={ui.comparisonMarks ?? []} />
-            </div>}
           </section>}
+          {ui.presetId === 'musical-workshop' && <div className={styles.soundAb} data-sound-ab={ui.soundVariant}>
+            <label>Bank sound
+              <select value={ui.soundVariant} onChange={event => actions.current?.sound(event.target.value)}>
+                {SOUND_VARIANTS.map(variant => <option key={variant.id} value={variant.id}>{variant.label}</option>)}
+              </select>
+            </label>
+            <button type="button" disabled={ui.phase === 'flight' || !ui.last?.resonance?.impacts?.length} onClick={() => actions.current?.hearLast()}>Replay last shot</button>
+            <p>{SOUND_VARIANTS.find(variant => variant.id === ui.soundVariant)?.detail} Sound only; the shot and its contacts are identical.</p>
+          </div>}
+          {(timelineCurrent.length > 0 || timelinePrevious.length > 0) && <div className={styles.noteTimelines} data-note-timelines="">
+            <NoteTimeline kind="current" rows={timelineCurrent} />
+            <NoteTimeline kind="previous" rows={timelinePrevious} />
+          </div>}
           {ui.last && <div className={styles.receipt}>
             {ui.last.goalResult?.kind === 'none' && <p>No score. Goal is none. {ui.last.terminal.reason.replaceAll('-', ' ')}.</p>}
             {phraseResult && <p>{phraseResult.status === 'match' ? 'Phrase matched' : phraseResult.status === 'miss' ? 'Phrase missed' : 'Phrase unfinished'}. Heard {phraseResult.heard.length ? noteOrder(phraseResult.heard) : 'no resonant contact'}. Not a score.</p>}
@@ -1070,7 +1090,7 @@ export default function Worldcraft() {
         <div className={styles.buttonRow}><button type="button" className={styles.primary} onClick={() => actions.current?.save()}>Save new world copy</button><button type="button" onClick={() => actions.current?.export()}>Export world JSON</button><button type="button" onClick={() => upload.current?.click()}>Import world JSON</button></div>
         <input ref={upload} className={styles.visuallyHidden} type="file" accept=".json,application/json" aria-label="Import world file" onChange={async e => { const file = e.target.files?.[0]; if (file) { if (file.size > 65536) actions.current?.import('oversized-file'); else actions.current?.import(await file.text()); } e.target.value = ''; }} />
         <div className={styles.memoryGrid}><section><h3>Worlds · {ui.worlds.length}/4</h3>{ui.worlds.length === 0 && <p className={styles.empty}>Save an arrangement worth revisiting.</p>}{ui.worlds.map(entry => <div className={styles.slot} key={entry.id}><strong>{entry.world.name}</strong><span>{entry.world.objects.length} pieces</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.load(entry.id)}>Open world</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetWorld(entry.id)}>Remove saved world</button></div></div>)}</section>
-          <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span>{entry.performance ? <span>{entry.performance.impacts.length ? entry.performance.impacts.map(impact => impact.material === 'thunk' ? 'thunk' : impact.note).join(' → ') : 'No resonant note'}</span> : null}<div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button>{entry.performance?.impacts.length ? <button type="button" onClick={() => actions.current?.hear(entry.id)}>Hear recorded sounds</button> : null}<button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
+          <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span>{entry.performance ? <span>{entry.performance.impacts.length ? entry.performance.impacts.map(impact => impact.material === 'thunk' ? 'thunk' : impact.note).join(' → ') : 'No resonant note'}</span> : null}{entry.performance?.impacts.length ? <span>Hears with {heardVoice}. A kept line stores the contacts, not a voice.</span> : null}<div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button>{entry.performance?.impacts.length ? <button type="button" onClick={() => actions.current?.hear(entry.id)}>Hear recorded sounds</button> : null}<button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
         <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.orc()}>Orc Stand-in</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
         <button type="button" onClick={() => actions.current?.exportMemory()}>Export local memory</button><p className={styles.muted}>Memory export includes kept paths for safekeeping; world JSON is the playable import format.</p>
         <p className={styles.notice} role="status">{ui.notice}</p>{ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
