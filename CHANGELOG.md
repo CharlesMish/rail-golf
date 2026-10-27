@@ -9,6 +9,7 @@ Notable changes to Rail Golf are recorded here. The format follows [Keep a Chang
 - Charter (`docs/CHARTER.md`), MIT license (`LICENSE`), and this changelog.
 
 ### Changed
+- Worldcraft Musical Workshop (lab only): a bank sound A/B with PR #55, an even-decibel face-speed curve, a woody timber voice and restrained strike colour, plus Replay last shot. Acoustic only; see `docs/experiments/range/MUSIC-3.md`.
 - Public courtyard callouts now follow card requirements and Route Book focus; a compact Route Book disclosure keeps the course visible. Tread tops and supports have distinct paint. See `docs/YARD-LEGIBILITY-REVIEW.md`.
 - License changed from `UNLICENSED` to MIT in `package.json`, the README, and `THIRD_PARTY_NOTICES.md`.
 - The README uses public-facing terms and defines the game's vocabulary. Existing game UI text is unchanged.
