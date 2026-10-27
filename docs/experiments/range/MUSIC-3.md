@@ -144,3 +144,28 @@ and −2.1 dBFS (F).
 dynamics. If those phrases should read as even melodies, the remaining lever is
 the curve's range (18 dB now; 12 dB would bring grazes up about 4–5 dB) or a
 firmer bank placement, not the voice.
+
+## Round 3: presence for the C
+
+Owner listening: F wins every row, but the bank's C is still too quiet next to
+the D and E, at in-game level and level-matched. Not "loud", but present.
+
+Three options on F (metal and the stand-in keep the B curve; peaks stay inside
+the original timber headroom):
+
+| Id | Label | Change |
+|---|---|---|
+| `tuned-presence` | G · F, more presence | bank trim ×1.36 (+2.7 dB): a full-strength bank sits about 1.7 dB under the plate at 400 ms |
+| `tuned-even` | H · G, grazes lifted | G, bank-only range 18 → 12 dB |
+| `tuned-forward` | I · H, midrange forward | H with a stronger octave and two-octave overtone (`timberTunedPresent`), trim ×1.3 |
+
+Bank gap to its metal neighbour (momentary 400 ms / phone 400 ms, dB under):
+
+| Phrase (bank face speed) | F | G | H | I |
+|---|---|---|---|---|
+| Ramp → Bank → Plate (16.8 m/s) | 3.8 / 8.0 | 1.3 / 5.5 | 0.3 / 4.0 | 0.5 / 2.6 |
+| Bank → Ramp → Plate (4.4 m/s) | 12.0 / 17.0 | 9.6 / 14.5 | 5.2 / 10.2 | 6.0 / 8.9 |
+| Bank graze → Ramp (2.1 m/s) | 15.8 / 20.7 | 13.3 / 18.3 | 8.4 / 13.4 | 9.1 / 12.0 |
+
+Headroom: real renders peak ≤ −5.4 dBFS; the full-strength pile-up peaks
+−1.9 dBFS (G, H) and −1.7 dBFS (I).

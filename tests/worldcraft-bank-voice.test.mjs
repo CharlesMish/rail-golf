@@ -2,15 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
-  DEFAULT_SOUND_VARIANT, EVEN_DB_CURVE, RESONANCE_VOICES, SOUND_VARIANTS, WORLDCRAFT_RESONANCE_NORMAL_FULL,
+  BANK_VARIANT_SETTINGS, DEFAULT_SOUND_VARIANT, EVEN_DB_CURVE, RESONANCE_VOICES, SOUND_VARIANTS, WORLDCRAFT_RESONANCE_NORMAL_FULL,
   createResonanceEar, evenDbGain, impactGain, isSoundVariant, strikeColour, strikeSpeedOf, voiceImpact,
 } from '../lib/worldcraft-resonance.js';
 
 const db = gain => 20 * Math.log10(gain);
 const REAL_FACE_SPEEDS = [2.0927, 4.1695, 8.2124, 13.7724, 18.3938, 20.3852, 22.5605, 24.0114, 25.8245, 31.2645, 36.7032];
 
-test('six listening variants, PR #55 stays the default', () => {
-  assert.deepEqual(SOUND_VARIANTS.map(v => v.id), ['pr55', 'even-db', 'woody', 'woody-bright', 'tuned', 'tuned-long']);
+test('listening variants, PR #55 stays the default', () => {
+  assert.deepEqual(SOUND_VARIANTS.map(v => v.id), ['pr55', 'even-db', 'woody', 'woody-bright', 'tuned', 'tuned-long', 'tuned-presence', 'tuned-even', 'tuned-forward']);
   assert.equal(DEFAULT_SOUND_VARIANT, 'pr55');
   assert.equal(isSoundVariant('woody'), true);
   assert.equal(isSoundVariant('louder'), false);
@@ -93,4 +93,16 @@ test('tuned wood is a pitched bar: harmonic overtones, fundamental never coloure
     assert.ok(strikeColour(voice, 1).partials[4] / strikeColour(voice, 1).partials[0] > strikeColour(voice, 0).partials[4] / strikeColour(voice, 0).partials[0], 'harder mallet, brighter top mode');
   }
   assert.ok(RESONANCE_VOICES.timberTunedLong.partials[1].decay > RESONANCE_VOICES.timberTuned.partials[1].decay);
+});
+
+test('presence variants stay inside the original timber headroom and only reshape the bank', () => {
+  const sum = (v, trim = 1) => trim * (v.level ?? 1) * (v.partials.reduce((s, p) => s + p.gain, 0) + v.noise);
+  for (const [id, settings] of Object.entries(BANK_VARIANT_SETTINGS)) {
+    assert.ok(sum(RESONANCE_VOICES[settings.voice], settings.trim) <= sum(RESONANCE_VOICES.timber) + 1e-9, id);
+    const plate = { material: 'metal', normalSpeed: 4.17, gain: 0 };
+    assert.equal(voiceImpact(plate, id).gain, evenDbGain(4.17), `${id} leaves metal on the B curve`);
+  }
+  const graze = { material: 'timber', normalSpeed: 2.0927, gain: 0 };
+  assert.ok(db(voiceImpact(graze, 'tuned-even').gain) > db(voiceImpact(graze, 'tuned-presence').gain) + 4, 'gentler bank range lifts a graze');
+  assert.equal(voiceImpact({ material: 'timber', normalSpeed: 40, gain: 0 }, 'tuned-even').gain, 1);
 });

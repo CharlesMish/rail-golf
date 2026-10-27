@@ -29,7 +29,7 @@ export type ResonanceSpec = { piece: string; role: string; material: ResonanceMa
 export const WORLDCRAFT_SCALE: ReadonlyArray<Readonly<{ degree: number; name: string; hz: number }>>;
 export const WORLDCRAFT_RESONANCE_HOLD: number;
 export const WORLDCRAFT_RESONANCE_FULL_SPEED: number;
-export const RESONANCE_VOICES: Readonly<Record<ResonanceMaterial | 'timberWoody' | 'timberTuned' | 'timberTunedLong', Readonly<{ hz?: number; level?: number; partials: ReadonlyArray<Readonly<{ ratio: number; gain: number; decay: number; colour?: number }>>; noise: number; noiseDecay: number; noiseBand?: Readonly<{ hz: number; q: number }> }>>>;
+export const RESONANCE_VOICES: Readonly<Record<ResonanceMaterial | 'timberWoody' | 'timberTuned' | 'timberTunedLong' | 'timberTunedPresent', Readonly<{ hz?: number; level?: number; partials: ReadonlyArray<Readonly<{ ratio: number; gain: number; decay: number; colour?: number }>>; noise: number; noiseDecay: number; noiseBand?: Readonly<{ hz: number; q: number }> }>>>;
 export const WORLDCRAFT_RESONANCE_NORMAL_FULL: number;
 export const RESONANCE_DYNAMICS: 'normal-speed';
 export function impactGain(speed: number, full?: number): number;
@@ -57,7 +57,7 @@ export function audioBufferToWav(buffer: { getChannelData(channel: number): Floa
 export function renderResonanceWav(impacts: ResonanceImpact[], options?: { OfflineAudioContext?: typeof OfflineAudioContext; sampleRate?: number; tail?: number; mix?: number; variant?: SoundVariantId }): Promise<Uint8Array>;
 export function createResonanceOutput(): { unlock(): void; play(impact: ResonanceImpact, variant?: SoundVariantId): void; playRecorded(impacts: Pick<ResonanceImpact, 'material' | 'gain' | 'hz' | 'time'>[], variant?: SoundVariantId): number; release(): number; counts(): { started: number; cleaned: number; finished: number; active: number }; state(): AudioContextState | 'uncreated'; dispose(): void };
 
-export type SoundVariantId = 'pr55' | 'even-db' | 'woody' | 'woody-bright' | 'tuned' | 'tuned-long' | (string & {});
+export type SoundVariantId = 'pr55' | 'even-db' | 'woody' | 'woody-bright' | 'tuned' | 'tuned-long' | 'tuned-presence' | 'tuned-even' | 'tuned-forward' | (string & {});
 export const SOUND_VARIANTS: ReadonlyArray<Readonly<{ id: SoundVariantId; label: string; detail: string }>>;
 export const DEFAULT_SOUND_VARIANT: 'pr55';
 export function isSoundVariant(id: unknown): boolean;
@@ -66,3 +66,4 @@ export function evenDbGain(speed: number, curve?: typeof EVEN_DB_CURVE): number;
 export function strikeSpeedOf(impact: { normalSpeed?: number | null; gain?: number }): number;
 export function voiceImpact<T extends { normalSpeed?: number | null; gain?: number }>(impact: T, variant?: SoundVariantId): T & { gain: number; sound: SoundVariantId; strike: number };
 export function strikeColour(voice: { partials: ReadonlyArray<{ gain: number; decay: number; colour?: number }>; noise: number; noiseDecay: number }, strike: number): { partials: number[]; noise: number };
+export const BANK_VARIANT_SETTINGS: Readonly<Record<string, Readonly<{ voice: string; trim: number; bankRangeDb: number }>>>;
