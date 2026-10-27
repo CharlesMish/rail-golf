@@ -16,7 +16,7 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
-import { SOUND_VARIANTS, DEFAULT_SOUND_VARIANT, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
+import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
@@ -116,7 +116,7 @@ function initialUI(): UI {
     setup: worldcraftFixedSetup(world)!,
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
-    memoryWarning: '', showTrail: true, cameraTool: 'orbit', soundVariant: DEFAULT_SOUND_VARIANT, history: null, comparison: null, historyMarks: null, comparisonMarks: null, lastKept: false, liveNotes: [],
+    memoryWarning: '', showTrail: true, cameraTool: 'orbit', soundVariant: MUSICAL_WORKSHOP_SOUND, history: null, comparison: null, historyMarks: null, comparisonMarks: null, lastKept: false, liveNotes: [],
     preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0,
   };
 }

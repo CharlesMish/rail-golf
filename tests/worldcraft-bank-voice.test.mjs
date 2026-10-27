@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
-  BANK_VARIANT_SETTINGS, DEFAULT_SOUND_VARIANT, EVEN_DB_CURVE, RESONANCE_VOICES, SOUND_VARIANTS, WORLDCRAFT_RESONANCE_NORMAL_FULL,
+  BANK_VARIANT_SETTINGS, DEFAULT_SOUND_VARIANT, MUSICAL_WORKSHOP_SOUND, EVEN_DB_CURVE, RESONANCE_VOICES, SOUND_VARIANTS, WORLDCRAFT_RESONANCE_NORMAL_FULL,
   createResonanceEar, evenDbGain, impactGain, isSoundVariant, strikeColour, strikeSpeedOf, voiceImpact,
 } from '../lib/worldcraft-resonance.js';
 
@@ -105,4 +105,11 @@ test('presence variants stay inside the original timber headroom and only reshap
   const graze = { material: 'timber', normalSpeed: 2.0927, gain: 0 };
   assert.ok(db(voiceImpact(graze, 'tuned-even').gain) > db(voiceImpact(graze, 'tuned-presence').gain) + 4, 'gentler bank range lifts a graze');
   assert.equal(voiceImpact({ material: 'timber', normalSpeed: 40, gain: 0 }, 'tuned-even').gain, 1);
+});
+
+test('the Musical Workshop plays the owner-chosen bank sound H by default', async () => {
+  assert.equal(MUSICAL_WORKSHOP_SOUND, 'tuned-even');
+  assert.equal(isSoundVariant(MUSICAL_WORKSHOP_SOUND), true);
+  const ui = await readFile(new URL('../app/lab/worldcraft/worldcraft.tsx', import.meta.url), 'utf8');
+  assert.match(ui, /soundVariant: MUSICAL_WORKSHOP_SOUND/);
 });

@@ -169,3 +169,12 @@ Bank gap to its metal neighbour (momentary 400 ms / phone 400 ms, dB under):
 
 Headroom: real renders peak ≤ −5.4 dBFS; the full-strength pile-up peaks
 −1.9 dBFS (G, H) and −1.7 dBFS (I).
+
+## Decision
+
+After phone listening the owner chose **H · G, grazes lifted** (`tuned-even`):
+tuned wood with the longer hum, bank trim ×1.36, bank-only range 12 dB, metal on
+the B curve. It is now the Musical Workshop default (`MUSICAL_WORKSHOP_SOUND`).
+The A/B selector stays in the lab so the level can be retuned after more play;
+the bank trim is the one number to raise (about 1.5–2 dB of headroom remains
+before a full-strength pile-up nears clipping). Other presets keep PR #55.
