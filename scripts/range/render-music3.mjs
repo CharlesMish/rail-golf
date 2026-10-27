@@ -14,7 +14,7 @@ import { rangeGitSha } from './run.mjs';
 const ROOT = new URL('../../', import.meta.url);
 const OUT = new URL('docs/experiments/range/audio/music3/', ROOT);
 const capture = JSON.parse(await readFile(new URL('docs/experiments/range/appendix/music3/contacts.json', ROOT), 'utf8'));
-const VARIANTS = ['pr55', 'even-db', 'woody', 'woody-bright'];
+const VARIANTS = ['pr55', 'even-db', 'woody', 'woody-bright', 'tuned', 'tuned-long'];
 const HZ = { C4: 261.6256, D4: 293.6648, E4: 329.6276 };
 const RATE = 44100;
 const LEVEL_MATCH_LUFS = -20; // loudest 400 ms window of each file

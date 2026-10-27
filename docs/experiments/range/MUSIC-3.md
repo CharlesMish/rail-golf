@@ -92,3 +92,55 @@ Nobody has judged these by ear yet; the owner chooses after phone listening.
 The phone figure is a band-pass approximation, not a handset measurement.
 Headless Chrome confirmed the selector and replay at 1400×900 and 390×844 (no
 page errors, voices started on replay); it did not play sound to a person.
+
+## Round 2: making the bank a note
+
+Owner listening: B is the right dynamics everywhere, and D is preferred over C.
+But as the C in a C–D–E phrase the bank is still weak: "our best, but not very
+good". The ring of the woody tail helps; it should stay recognisably wood, not
+another metal piece.
+
+Reading: the original and woody voices are knocks with a pitch on them. A melody
+note needs (1) enough sustained pitch for the ear to lock the note, (2) pitch
+energy where phones can play it, and (3) roughly the musical weight of its
+neighbours. The model that does all three in wood is a tuned bar (marimba).
+
+Two new variants, both on the B curve with strike colour (as D):
+
+| Id | Label | Voice |
+|---|---|---|
+| `tuned` | E · Tuned wood | `timberTuned`: bar fundamental (0.6 s), resonator hum (1.5 s), octave, a two-octave overtone (ratio 4, C6 ≈ 1046 Hz, well inside phone range), a short 10th mode, soft band-passed mallet. Harmonic and mellow, distinct from the inharmonic metal bar. |
+| `tuned-long` | F · Tuned wood, longer hum | same bar with a 2.3 s resonator, to find where the ring stops reading as wood |
+
+Strike colour now has per-partial sensitivity: the fundamental and hum never
+move; the octave moves a little, the ratio-4 overtone by the default ±1.5 dB, and
+the top mode most, as a harder mallet would.
+
+### Round 2 measurements (in-game gain)
+
+| Full-strength bank | strike 100 ms | momentary 400 ms | phone 400 ms | peak |
+|---|---|---|---|---|
+| B (original timber) | −22.1 | −28.2 | −41.3 | −5.2 |
+| D (woody + colour) | −22.1 | −27.8 | −37.3 | −8.6 |
+| E (tuned) | −20.7 | −26.0 | −34.7 | −8.7 |
+| F (tuned, long) | −20.1 | −24.8 | −33.9 | −9.0 |
+| metal plate | −16.5 | −20.6 | −25.9 | −6.2 |
+
+Ramp → Bank → Plate, bank at 16.8 m/s, gap to the ramp D4:
+
+| | momentary | phone |
+|---|---|---|
+| B | 7.5 dB | 16.9 dB |
+| D | 7.0 dB | 11.6 dB |
+| E | 5.0 dB | 8.8 dB |
+| F | 3.8 dB | 8.0 dB |
+
+The attack rises only 1.4 dB (E) / 2.0 dB (F) over the original; most of the
+gain is sustained pitch and the overtone. Worst-case pile-up peaks −2.2 dBFS (E)
+and −2.1 dBFS (F).
+
+**Arrangement note.** In two of the three real phrases the C is a graze (2.1 and
+4.4 m/s into the face), so it is quiet by design under any curve with real
+dynamics. If those phrases should read as even melodies, the remaining lever is
+the curve's range (18 dB now; 12 dB would bring grazes up about 4–5 dB) or a
+firmer bank placement, not the voice.

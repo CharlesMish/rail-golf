@@ -9,8 +9,8 @@ import {
 const db = gain => 20 * Math.log10(gain);
 const REAL_FACE_SPEEDS = [2.0927, 4.1695, 8.2124, 13.7724, 18.3938, 20.3852, 22.5605, 24.0114, 25.8245, 31.2645, 36.7032];
 
-test('four listening variants, PR #55 stays the default', () => {
-  assert.deepEqual(SOUND_VARIANTS.map(v => v.id), ['pr55', 'even-db', 'woody', 'woody-bright']);
+test('six listening variants, PR #55 stays the default', () => {
+  assert.deepEqual(SOUND_VARIANTS.map(v => v.id), ['pr55', 'even-db', 'woody', 'woody-bright', 'tuned', 'tuned-long']);
   assert.equal(DEFAULT_SOUND_VARIANT, 'pr55');
   assert.equal(isSoundVariant('woody'), true);
   assert.equal(isSoundVariant('louder'), false);
@@ -69,13 +69,28 @@ test('strike colour is restrained and energy-neutral', () => {
   assert.ok(strikeColour(voice, 1).partials[1] > strikeColour(voice, 0).partials[1], 'harder is brighter');
 });
 
-test('woody timber keeps at least the original headroom', () => {
+test('new timber voices keep at least the original headroom', () => {
   const sum = v => (v.level ?? 1) * (v.partials.reduce((s, p) => s + p.gain, 0) + v.noise);
-  assert.ok(sum(RESONANCE_VOICES.timberWoody) <= sum(RESONANCE_VOICES.timber) + 1e-9);
+  for (const name of ['timberWoody', 'timberTuned', 'timberTunedLong']) assert.ok(sum(RESONANCE_VOICES[name]) <= sum(RESONANCE_VOICES.timber) + 1e-9, name);
   assert.ok(RESONANCE_VOICES.timberWoody.partials[0].decay > RESONANCE_VOICES.timber.partials[0].decay * 3, 'longer body');
 });
 
 test('the study is acoustic only: runtime, physics and sessions are not edited', async () => {
   const runtime = await readFile(new URL('../lib/worldcraft-runtime.js', import.meta.url), 'utf8');
   assert.ok(!/voiceImpact|SOUND_VARIANTS|evenDbGain/.test(runtime), 'runtime does not select sound variants');
+});
+
+test('tuned wood is a pitched bar: harmonic overtones, fundamental never coloured', () => {
+  for (const name of ['timberTuned', 'timberTunedLong']) {
+    const voice = RESONANCE_VOICES[name];
+    assert.ok(voice.partials.some(p => p.ratio === 4), 'two-octave overtone');
+    assert.ok(voice.partials.filter(p => p.ratio === 1).some(p => p.decay >= 1.5), 'resonator hum');
+    for (const strike of [0, 1]) {
+      const colour = strikeColour(voice, strike);
+      const fundamentals = voice.partials.map((p, i) => [p, colour.partials[i]]).filter(([p]) => p.ratio === 1);
+      assert.ok(fundamentals.every(([, w]) => Math.abs(w - fundamentals[0][1]) < 1e-12), 'fundamental and hum move together');
+    }
+    assert.ok(strikeColour(voice, 1).partials[4] / strikeColour(voice, 1).partials[0] > strikeColour(voice, 0).partials[4] / strikeColour(voice, 0).partials[0], 'harder mallet, brighter top mode');
+  }
+  assert.ok(RESONANCE_VOICES.timberTunedLong.partials[1].decay > RESONANCE_VOICES.timberTuned.partials[1].decay);
 });
