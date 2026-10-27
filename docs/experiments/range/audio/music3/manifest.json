@@ -1,0 +1,1397 @@
+{
+ "branch": "lab/wc-range-music3-bank-voice",
+ "parent": "9d8278ba9126a0579cfce35104417aba704248cd",
+ "gitSha": "9d8278ba9126a0579cfce35104417aba704248cd",
+ "renderer": "lib/worldcraft-resonance.js renderResonanceWav (Chrome OfflineAudioContext)",
+ "sampleRate": 44100,
+ "variants": [
+  "pr55",
+  "even-db",
+  "woody",
+  "woody-bright"
+ ],
+ "inGame": "mix 1, no normalisation: what the lab plays",
+ "levelMatched": "scaled so the loudest 400 ms K-weighted window is -20 LUFS, peaks capped at -1 dBFS",
+ "measures": {
+  "strike100": "max 100 ms K-weighted loudness in the first 150 ms of the note (LUFS): how hard the hit reads",
+  "momentary400": "max 400 ms K-weighted loudness (BS.1770 momentary) within 0.5 s of the note",
+  "phone400": "momentary400 after a crude small-speaker band (500 Hz–9 kHz, 4th order)",
+  "peakDbfs": "sample peak"
+ },
+ "listeningQuality": "owner to judge",
+ "physicsChanged": false,
+ "results": {
+  "graze-85--pr55": {
+   "shot": "graze-85",
+   "variant": "pr55",
+   "peakDbfs": -43.3,
+   "loudest400": -63.3,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.8167,
+     "face": 2.0927,
+     "strike100": -57.3,
+     "momentary400": -63.3,
+     "phone400": -77.4,
+     "peakDbfs": -43.3
+    }
+   ],
+   "levelMatchDb": 42.3
+  },
+  "graze-85--even-db": {
+   "shot": "graze-85",
+   "variant": "even-db",
+   "peakDbfs": -21.3,
+   "loudest400": -43.3,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.8167,
+     "face": 2.0927,
+     "strike100": -37.3,
+     "momentary400": -43.3,
+     "phone400": -57.2,
+     "peakDbfs": -21.3
+    }
+   ],
+   "levelMatchDb": 20.3
+  },
+  "graze-85--woody": {
+   "shot": "graze-85",
+   "variant": "woody",
+   "peakDbfs": -24.9,
+   "loudest400": -42.7,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.8167,
+     "face": 2.0927,
+     "strike100": -37.4,
+     "momentary400": -42.7,
+     "phone400": -52.9,
+     "peakDbfs": -24.9
+    }
+   ],
+   "levelMatchDb": 22.7
+  },
+  "graze-85--woody-bright": {
+   "shot": "graze-85",
+   "variant": "woody-bright",
+   "peakDbfs": -25.3,
+   "loudest400": -42.8,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.8167,
+     "face": 2.0927,
+     "strike100": -37.4,
+     "momentary400": -42.8,
+     "phone400": -53.7,
+     "peakDbfs": -25.3
+    }
+   ],
+   "levelMatchDb": 22.8
+  },
+  "graze-80--pr55": {
+   "shot": "graze-80",
+   "variant": "pr55",
+   "peakDbfs": -31.7,
+   "loudest400": -53,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.5583,
+     "face": 4.1695,
+     "strike100": -47,
+     "momentary400": -53,
+     "phone400": -67.2,
+     "peakDbfs": -31.7
+    }
+   ],
+   "levelMatchDb": 30.7
+  },
+  "graze-80--even-db": {
+   "shot": "graze-80",
+   "variant": "even-db",
+   "peakDbfs": -19.4,
+   "loudest400": -41.6,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.5583,
+     "face": 4.1695,
+     "strike100": -35.6,
+     "momentary400": -41.6,
+     "phone400": -55.6,
+     "peakDbfs": -19.4
+    }
+   ],
+   "levelMatchDb": 18.4
+  },
+  "graze-80--woody": {
+   "shot": "graze-80",
+   "variant": "woody",
+   "peakDbfs": -23,
+   "loudest400": -41.1,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.5583,
+     "face": 4.1695,
+     "strike100": -35.6,
+     "momentary400": -41.1,
+     "phone400": -51.3,
+     "peakDbfs": -23
+    }
+   ],
+   "levelMatchDb": 21.1
+  },
+  "graze-80--woody-bright": {
+   "shot": "graze-80",
+   "variant": "woody-bright",
+   "peakDbfs": -23.4,
+   "loudest400": -41.1,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.5583,
+     "face": 4.1695,
+     "strike100": -35.7,
+     "momentary400": -41.1,
+     "phone400": -51.9,
+     "peakDbfs": -23.4
+    }
+   ],
+   "levelMatchDb": 21.1
+  },
+  "glance-70--pr55": {
+   "shot": "glance-70",
+   "variant": "pr55",
+   "peakDbfs": -21,
+   "loudest400": -42.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.675,
+     "face": 8.2124,
+     "strike100": -36.9,
+     "momentary400": -42.9,
+     "phone400": -56.6,
+     "peakDbfs": -21
+    }
+   ],
+   "levelMatchDb": 20
+  },
+  "glance-70--even-db": {
+   "shot": "glance-70",
+   "variant": "even-db",
+   "peakDbfs": -16.2,
+   "loudest400": -38.4,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.675,
+     "face": 8.2124,
+     "strike100": -32.4,
+     "momentary400": -38.4,
+     "phone400": -52,
+     "peakDbfs": -16.2
+    }
+   ],
+   "levelMatchDb": 15.2
+  },
+  "glance-70--woody": {
+   "shot": "glance-70",
+   "variant": "woody",
+   "peakDbfs": -19.7,
+   "loudest400": -38,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.675,
+     "face": 8.2124,
+     "strike100": -32.5,
+     "momentary400": -38,
+     "phone400": -48.1,
+     "peakDbfs": -19.7
+    }
+   ],
+   "levelMatchDb": 18
+  },
+  "glance-70--woody-bright": {
+   "shot": "glance-70",
+   "variant": "woody-bright",
+   "peakDbfs": -20,
+   "loudest400": -38,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.675,
+     "face": 8.2124,
+     "strike100": -32.5,
+     "momentary400": -38,
+     "phone400": -48.6,
+     "peakDbfs": -20
+    }
+   ],
+   "levelMatchDb": 18
+  },
+  "angled-55--pr55": {
+   "shot": "angled-55",
+   "variant": "pr55",
+   "peakDbfs": -14,
+   "loudest400": -36.1,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7167,
+     "face": 13.7724,
+     "strike100": -30,
+     "momentary400": -36.1,
+     "phone400": -51.3,
+     "peakDbfs": -14
+    }
+   ],
+   "levelMatchDb": 13
+  },
+  "angled-55--even-db": {
+   "shot": "angled-55",
+   "variant": "even-db",
+   "peakDbfs": -12.9,
+   "loudest400": -35,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7167,
+     "face": 13.7724,
+     "strike100": -29,
+     "momentary400": -35,
+     "phone400": -50.3,
+     "peakDbfs": -12.9
+    }
+   ],
+   "levelMatchDb": 11.9
+  },
+  "angled-55--woody": {
+   "shot": "angled-55",
+   "variant": "woody",
+   "peakDbfs": -16.9,
+   "loudest400": -34.5,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7167,
+     "face": 13.7724,
+     "strike100": -28.9,
+     "momentary400": -34.5,
+     "phone400": -44.8,
+     "peakDbfs": -16.9
+    }
+   ],
+   "levelMatchDb": 14.5
+  },
+  "angled-55--woody-bright": {
+   "shot": "angled-55",
+   "variant": "woody-bright",
+   "peakDbfs": -17,
+   "loudest400": -34.5,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7167,
+     "face": 13.7724,
+     "strike100": -28.9,
+     "momentary400": -34.5,
+     "phone400": -45,
+     "peakDbfs": -17
+    }
+   ],
+   "levelMatchDb": 14.5
+  },
+  "square-040--pr55": {
+   "shot": "square-040",
+   "variant": "pr55",
+   "peakDbfs": -8.5,
+   "loudest400": -31.1,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.875,
+     "face": 20.3852,
+     "strike100": -25.1,
+     "momentary400": -31.1,
+     "phone400": -44.4,
+     "peakDbfs": -8.5
+    }
+   ],
+   "levelMatchDb": 7.5
+  },
+  "square-040--even-db": {
+   "shot": "square-040",
+   "variant": "even-db",
+   "peakDbfs": -8.6,
+   "loudest400": -31.2,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.875,
+     "face": 20.3852,
+     "strike100": -25.2,
+     "momentary400": -31.2,
+     "phone400": -44.5,
+     "peakDbfs": -8.6
+    }
+   ],
+   "levelMatchDb": 7.6
+  },
+  "square-040--woody": {
+   "shot": "square-040",
+   "variant": "woody",
+   "peakDbfs": -12.1,
+   "loudest400": -30.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.875,
+     "face": 20.3852,
+     "strike100": -25.2,
+     "momentary400": -30.9,
+     "phone400": -41,
+     "peakDbfs": -12.1
+    }
+   ],
+   "levelMatchDb": 10.9
+  },
+  "square-040--woody-bright": {
+   "shot": "square-040",
+   "variant": "woody-bright",
+   "peakDbfs": -12,
+   "loudest400": -30.8,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.875,
+     "face": 20.3852,
+     "strike100": -25.2,
+     "momentary400": -30.8,
+     "phone400": -40.8,
+     "peakDbfs": -12
+    }
+   ],
+   "levelMatchDb": 10.8
+  },
+  "square-055--pr55": {
+   "shot": "square-055",
+   "variant": "pr55",
+   "peakDbfs": -6.1,
+   "loudest400": -29.2,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.6917,
+     "face": 25.8245,
+     "strike100": -23.2,
+     "momentary400": -29.2,
+     "phone400": -43,
+     "peakDbfs": -6.1
+    }
+   ],
+   "levelMatchDb": 5.1
+  },
+  "square-055--even-db": {
+   "shot": "square-055",
+   "variant": "even-db",
+   "peakDbfs": -6.3,
+   "loudest400": -29.4,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.6917,
+     "face": 25.8245,
+     "strike100": -23.4,
+     "momentary400": -29.4,
+     "phone400": -43.2,
+     "peakDbfs": -6.3
+    }
+   ],
+   "levelMatchDb": 5.3
+  },
+  "square-055--woody": {
+   "shot": "square-055",
+   "variant": "woody",
+   "peakDbfs": -10,
+   "loudest400": -29,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.6917,
+     "face": 25.8245,
+     "strike100": -23.3,
+     "momentary400": -29,
+     "phone400": -39.2,
+     "peakDbfs": -10
+    }
+   ],
+   "levelMatchDb": 9
+  },
+  "square-055--woody-bright": {
+   "shot": "square-055",
+   "variant": "woody-bright",
+   "peakDbfs": -9.8,
+   "loudest400": -29,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.6917,
+     "face": 25.8245,
+     "strike100": -23.3,
+     "momentary400": -29,
+     "phone400": -38.7,
+     "peakDbfs": -9.8
+    }
+   ],
+   "levelMatchDb": 8.8
+  },
+  "square-085--pr55": {
+   "shot": "square-085",
+   "variant": "pr55",
+   "peakDbfs": -5.4,
+   "loudest400": -28.2,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.4833,
+     "face": 36.7032,
+     "strike100": -22.2,
+     "momentary400": -28.2,
+     "phone400": -41.3,
+     "peakDbfs": -5.4
+    }
+   ],
+   "levelMatchDb": 4.4
+  },
+  "square-085--even-db": {
+   "shot": "square-085",
+   "variant": "even-db",
+   "peakDbfs": -5.4,
+   "loudest400": -28.2,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.4833,
+     "face": 36.7032,
+     "strike100": -22.2,
+     "momentary400": -28.2,
+     "phone400": -41.3,
+     "peakDbfs": -5.4
+    }
+   ],
+   "levelMatchDb": 4.4
+  },
+  "square-085--woody": {
+   "shot": "square-085",
+   "variant": "woody",
+   "peakDbfs": -8.9,
+   "loudest400": -27.8,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.4833,
+     "face": 36.7032,
+     "strike100": -22.1,
+     "momentary400": -27.8,
+     "phone400": -38,
+     "peakDbfs": -8.9
+    }
+   ],
+   "levelMatchDb": 7.8
+  },
+  "square-085--woody-bright": {
+   "shot": "square-085",
+   "variant": "woody-bright",
+   "peakDbfs": -8.5,
+   "loudest400": -27.8,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.4833,
+     "face": 36.7032,
+     "strike100": -22.1,
+     "momentary400": -27.8,
+     "phone400": -37.3,
+     "peakDbfs": -8.5
+    }
+   ],
+   "levelMatchDb": 7.5
+  },
+  "phrase-graze-ramp--pr55": {
+   "shot": "phrase-graze-ramp",
+   "variant": "pr55",
+   "peakDbfs": -9.6,
+   "loudest400": -23.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7333,
+     "face": 2.0927,
+     "strike100": -57.4,
+     "momentary400": -63.4,
+     "phone400": -77.5,
+     "peakDbfs": -43.3
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.0833,
+     "face": 19.9556,
+     "strike100": -19.9,
+     "momentary400": -23.9,
+     "phone400": -29.6,
+     "peakDbfs": -9.6
+    }
+   ],
+   "levelMatchDb": 3.9
+  },
+  "phrase-graze-ramp--even-db": {
+   "shot": "phrase-graze-ramp",
+   "variant": "even-db",
+   "peakDbfs": -9.7,
+   "loudest400": -23.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7333,
+     "face": 2.0927,
+     "strike100": -37.3,
+     "momentary400": -43.3,
+     "phone400": -57.4,
+     "peakDbfs": -21.3
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.0833,
+     "face": 19.9556,
+     "strike100": -20,
+     "momentary400": -23.9,
+     "phone400": -29.7,
+     "peakDbfs": -9.7
+    }
+   ],
+   "levelMatchDb": 3.9
+  },
+  "phrase-graze-ramp--woody": {
+   "shot": "phrase-graze-ramp",
+   "variant": "woody",
+   "peakDbfs": -9.7,
+   "loudest400": -23.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7333,
+     "face": 2.0927,
+     "strike100": -37.4,
+     "momentary400": -42.8,
+     "phone400": -52.9,
+     "peakDbfs": -24.9
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.0833,
+     "face": 19.9556,
+     "strike100": -20,
+     "momentary400": -23.9,
+     "phone400": -29.7,
+     "peakDbfs": -9.7
+    }
+   ],
+   "levelMatchDb": 3.9
+  },
+  "phrase-graze-ramp--woody-bright": {
+   "shot": "phrase-graze-ramp",
+   "variant": "woody-bright",
+   "peakDbfs": -9.7,
+   "loudest400": -23.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.7333,
+     "face": 2.0927,
+     "strike100": -37.4,
+     "momentary400": -42.8,
+     "phone400": -53.7,
+     "peakDbfs": -25.3
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.0833,
+     "face": 19.9556,
+     "strike100": -20,
+     "momentary400": -23.9,
+     "phone400": -29.7,
+     "peakDbfs": -9.7
+    }
+   ],
+   "levelMatchDb": 3.9
+  },
+  "phrase-early-plate--pr55": {
+   "shot": "phrase-early-plate",
+   "variant": "pr55",
+   "peakDbfs": -12,
+   "loudest400": -26.1,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.225,
+     "face": 4.3602,
+     "strike100": -46.3,
+     "momentary400": -52.3,
+     "phone400": -66,
+     "peakDbfs": -31.1
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4333,
+     "face": 16.4137,
+     "strike100": -22.2,
+     "momentary400": -26.1,
+     "phone400": -31.8,
+     "peakDbfs": -12
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.2417,
+     "face": 15.1925,
+     "strike100": -23.1,
+     "momentary400": -26.9,
+     "phone400": -32.1,
+     "peakDbfs": -12.9
+    }
+   ],
+   "levelMatchDb": 6.1
+  },
+  "phrase-early-plate--even-db": {
+   "shot": "phrase-early-plate",
+   "variant": "even-db",
+   "peakDbfs": -11.6,
+   "loudest400": -25.7,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.225,
+     "face": 4.3602,
+     "strike100": -35.3,
+     "momentary400": -41.3,
+     "phone400": -54.8,
+     "peakDbfs": -19.3
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4333,
+     "face": 16.4137,
+     "strike100": -21.9,
+     "momentary400": -25.7,
+     "phone400": -31.4,
+     "peakDbfs": -11.6
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.2417,
+     "face": 15.1925,
+     "strike100": -22.4,
+     "momentary400": -26.3,
+     "phone400": -31.5,
+     "peakDbfs": -12.2
+    }
+   ],
+   "levelMatchDb": 5.7
+  },
+  "phrase-early-plate--woody": {
+   "shot": "phrase-early-plate",
+   "variant": "woody",
+   "peakDbfs": -11.6,
+   "loudest400": -25.7,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.225,
+     "face": 4.3602,
+     "strike100": -35.4,
+     "momentary400": -40.9,
+     "phone400": -51,
+     "peakDbfs": -22.9
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4333,
+     "face": 16.4137,
+     "strike100": -21.9,
+     "momentary400": -25.7,
+     "phone400": -31.4,
+     "peakDbfs": -11.6
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.2417,
+     "face": 15.1925,
+     "strike100": -22.4,
+     "momentary400": -26.3,
+     "phone400": -31.5,
+     "peakDbfs": -12.2
+    }
+   ],
+   "levelMatchDb": 5.7
+  },
+  "phrase-early-plate--woody-bright": {
+   "shot": "phrase-early-plate",
+   "variant": "woody-bright",
+   "peakDbfs": -11.6,
+   "loudest400": -25.7,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.225,
+     "face": 4.3602,
+     "strike100": -35.4,
+     "momentary400": -40.9,
+     "phone400": -51.7,
+     "peakDbfs": -23.2
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4333,
+     "face": 16.4137,
+     "strike100": -21.9,
+     "momentary400": -25.7,
+     "phone400": -31.4,
+     "peakDbfs": -11.6
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.2417,
+     "face": 15.1925,
+     "strike100": -22.4,
+     "momentary400": -26.3,
+     "phone400": -31.5,
+     "peakDbfs": -12.2
+    }
+   ],
+   "levelMatchDb": 5.7
+  },
+  "phrase-late-catch--pr55": {
+   "shot": "phrase-late-catch",
+   "variant": "pr55",
+   "peakDbfs": -11.5,
+   "loudest400": -26.1,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4167,
+     "face": 16.3782,
+     "strike100": -22.3,
+     "momentary400": -26.1,
+     "phone400": -31.8,
+     "peakDbfs": -12.3
+    },
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 4.1417,
+     "face": 16.7839,
+     "strike100": -27.6,
+     "momentary400": -33.6,
+     "phone400": -48.7,
+     "peakDbfs": -11.5
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 6.8,
+     "face": 3.5771,
+     "strike100": -44.9,
+     "momentary400": -47.8,
+     "phone400": -52.5,
+     "peakDbfs": -35.4
+    }
+   ],
+   "levelMatchDb": 6.1
+  },
+  "phrase-late-catch--even-db": {
+   "shot": "phrase-late-catch",
+   "variant": "even-db",
+   "peakDbfs": -11.1,
+   "loudest400": -25.8,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4167,
+     "face": 16.3782,
+     "strike100": -21.9,
+     "momentary400": -25.8,
+     "phone400": -31.5,
+     "peakDbfs": -11.9
+    },
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 4.1417,
+     "face": 16.7839,
+     "strike100": -27.3,
+     "momentary400": -33.3,
+     "phone400": -48.4,
+     "peakDbfs": -11.1
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 6.8,
+     "face": 3.5771,
+     "strike100": -30.9,
+     "momentary400": -34.4,
+     "phone400": -39.5,
+     "peakDbfs": -20.9
+    }
+   ],
+   "levelMatchDb": 5.8
+  },
+  "phrase-late-catch--woody": {
+   "shot": "phrase-late-catch",
+   "variant": "woody",
+   "peakDbfs": -11.9,
+   "loudest400": -25.8,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4167,
+     "face": 16.3782,
+     "strike100": -21.9,
+     "momentary400": -25.8,
+     "phone400": -31.5,
+     "peakDbfs": -11.9
+    },
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 4.1417,
+     "face": 16.7839,
+     "strike100": -27.2,
+     "momentary400": -32.8,
+     "phone400": -43.2,
+     "peakDbfs": -15.5
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 6.8,
+     "face": 3.5771,
+     "strike100": -30.9,
+     "momentary400": -34.4,
+     "phone400": -39.5,
+     "peakDbfs": -20.9
+    }
+   ],
+   "levelMatchDb": 5.8
+  },
+  "phrase-late-catch--woody-bright": {
+   "shot": "phrase-late-catch",
+   "variant": "woody-bright",
+   "peakDbfs": -11.9,
+   "loudest400": -25.8,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.4167,
+     "face": 16.3782,
+     "strike100": -21.9,
+     "momentary400": -25.8,
+     "phone400": -31.5,
+     "peakDbfs": -11.9
+    },
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 4.1417,
+     "face": 16.7839,
+     "strike100": -27.2,
+     "momentary400": -32.8,
+     "phone400": -43.1,
+     "peakDbfs": -15.4
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 6.8,
+     "face": 3.5771,
+     "strike100": -30.9,
+     "momentary400": -34.4,
+     "phone400": -39.5,
+     "peakDbfs": -20.9
+    }
+   ],
+   "levelMatchDb": 5.8
+  },
+  "phrase-opening--pr55": {
+   "shot": "phrase-opening",
+   "variant": "pr55",
+   "peakDbfs": -11.9,
+   "loudest400": -25.3,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.425,
+     "face": 16.99,
+     "strike100": -21.9,
+     "momentary400": -25.7,
+     "phone400": -31.4,
+     "peakDbfs": -12.2
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.4583,
+     "face": 17.4918,
+     "strike100": -21.4,
+     "momentary400": -25.3,
+     "phone400": -30.4,
+     "peakDbfs": -11.9
+    }
+   ],
+   "levelMatchDb": 5.3
+  },
+  "phrase-opening--even-db": {
+   "shot": "phrase-opening",
+   "variant": "even-db",
+   "peakDbfs": -11.7,
+   "loudest400": -25.1,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.425,
+     "face": 16.99,
+     "strike100": -21.6,
+     "momentary400": -25.4,
+     "phone400": -31.1,
+     "peakDbfs": -11.9
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.4583,
+     "face": 17.4918,
+     "strike100": -21.2,
+     "momentary400": -25.1,
+     "phone400": -30.3,
+     "peakDbfs": -11.7
+    }
+   ],
+   "levelMatchDb": 5.1
+  },
+  "phrase-opening--woody": {
+   "shot": "phrase-opening",
+   "variant": "woody",
+   "peakDbfs": -11.7,
+   "loudest400": -25.1,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.425,
+     "face": 16.99,
+     "strike100": -21.6,
+     "momentary400": -25.4,
+     "phone400": -31.1,
+     "peakDbfs": -11.9
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.4583,
+     "face": 17.4918,
+     "strike100": -21.2,
+     "momentary400": -25.1,
+     "phone400": -30.3,
+     "peakDbfs": -11.7
+    }
+   ],
+   "levelMatchDb": 5.1
+  },
+  "phrase-opening--woody-bright": {
+   "shot": "phrase-opening",
+   "variant": "woody-bright",
+   "peakDbfs": -11.7,
+   "loudest400": -25.1,
+   "notes": [
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 1.425,
+     "face": 16.99,
+     "strike100": -21.6,
+     "momentary400": -25.4,
+     "phone400": -31.1,
+     "peakDbfs": -11.9
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 4.4583,
+     "face": 17.4918,
+     "strike100": -21.2,
+     "momentary400": -25.1,
+     "phone400": -30.3,
+     "peakDbfs": -11.7
+    }
+   ],
+   "levelMatchDb": 5.1
+  },
+  "cal-timber--pr55": {
+   "shot": null,
+   "variant": "pr55",
+   "peakDbfs": -5.2,
+   "loudest400": -28.2,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -22.1,
+     "momentary400": -28.2,
+     "phone400": -41.3,
+     "peakDbfs": -5.2
+    }
+   ]
+  },
+  "cal-metal--pr55": {
+   "shot": null,
+   "variant": "pr55",
+   "peakDbfs": -6.2,
+   "loudest400": -20.6,
+   "notes": [
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -16.5,
+     "momentary400": -20.6,
+     "phone400": -25.9,
+     "peakDbfs": -6.2
+    }
+   ]
+  },
+  "stress--pr55": {
+   "shot": null,
+   "variant": "pr55",
+   "peakDbfs": -2.8,
+   "loudest400": -17.5,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -23.7,
+     "momentary400": -29.7,
+     "phone400": -41.7,
+     "peakDbfs": -5.2
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 0.11,
+     "face": 40,
+     "strike100": -25.2,
+     "momentary400": -31.2,
+     "phone400": -35.6,
+     "peakDbfs": -7.5
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.12,
+     "face": 40,
+     "strike100": -13.9,
+     "momentary400": -17.9,
+     "phone400": -23.4,
+     "peakDbfs": -2.8
+    }
+   ]
+  },
+  "cal-timber--even-db": {
+   "shot": null,
+   "variant": "even-db",
+   "peakDbfs": -5.2,
+   "loudest400": -28.2,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -22.1,
+     "momentary400": -28.2,
+     "phone400": -41.3,
+     "peakDbfs": -5.2
+    }
+   ]
+  },
+  "cal-metal--even-db": {
+   "shot": null,
+   "variant": "even-db",
+   "peakDbfs": -6.2,
+   "loudest400": -20.6,
+   "notes": [
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -16.5,
+     "momentary400": -20.6,
+     "phone400": -25.9,
+     "peakDbfs": -6.2
+    }
+   ]
+  },
+  "stress--even-db": {
+   "shot": null,
+   "variant": "even-db",
+   "peakDbfs": -2.8,
+   "loudest400": -17.5,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -23.7,
+     "momentary400": -29.7,
+     "phone400": -41.7,
+     "peakDbfs": -5.2
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 0.11,
+     "face": 40,
+     "strike100": -25.2,
+     "momentary400": -31.2,
+     "phone400": -35.6,
+     "peakDbfs": -7.5
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.12,
+     "face": 40,
+     "strike100": -13.9,
+     "momentary400": -17.9,
+     "phone400": -23.4,
+     "peakDbfs": -2.8
+    }
+   ]
+  },
+  "cal-timber--woody": {
+   "shot": null,
+   "variant": "woody",
+   "peakDbfs": -9,
+   "loudest400": -27.9,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -22.2,
+     "momentary400": -27.9,
+     "phone400": -38,
+     "peakDbfs": -9
+    }
+   ]
+  },
+  "cal-metal--woody": {
+   "shot": null,
+   "variant": "woody",
+   "peakDbfs": -6.2,
+   "loudest400": -20.6,
+   "notes": [
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -16.5,
+     "momentary400": -20.6,
+     "phone400": -25.9,
+     "peakDbfs": -6.2
+    }
+   ]
+  },
+  "stress--woody": {
+   "shot": null,
+   "variant": "woody",
+   "peakDbfs": -2.6,
+   "loudest400": -17.4,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -27.2,
+     "momentary400": -33.2,
+     "phone400": -42.1,
+     "peakDbfs": -9
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 0.11,
+     "face": 40,
+     "strike100": -25.5,
+     "momentary400": -31.5,
+     "phone400": -36,
+     "peakDbfs": -6.8
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.12,
+     "face": 40,
+     "strike100": -13.7,
+     "momentary400": -17.7,
+     "phone400": -23.3,
+     "peakDbfs": -2.6
+    }
+   ]
+  },
+  "cal-timber--woody-bright": {
+   "shot": null,
+   "variant": "woody-bright",
+   "peakDbfs": -8.6,
+   "loudest400": -27.8,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -22.1,
+     "momentary400": -27.8,
+     "phone400": -37.3,
+     "peakDbfs": -8.6
+    }
+   ]
+  },
+  "cal-metal--woody-bright": {
+   "shot": null,
+   "variant": "woody-bright",
+   "peakDbfs": -6.2,
+   "loudest400": -20.6,
+   "notes": [
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -16.5,
+     "momentary400": -20.6,
+     "phone400": -25.9,
+     "peakDbfs": -6.2
+    }
+   ]
+  },
+  "stress--woody-bright": {
+   "shot": null,
+   "variant": "woody-bright",
+   "peakDbfs": -2.5,
+   "loudest400": -17.4,
+   "notes": [
+    {
+     "note": "C4",
+     "role": "bank",
+     "time": 0.1,
+     "face": 40,
+     "strike100": -27,
+     "momentary400": -33,
+     "phone400": -41.4,
+     "peakDbfs": -8.6
+    },
+    {
+     "note": "D4",
+     "role": "ramp",
+     "time": 0.11,
+     "face": 40,
+     "strike100": -25.4,
+     "momentary400": -31.5,
+     "phone400": -35.9,
+     "peakDbfs": -6.6
+    },
+    {
+     "note": "E4",
+     "role": "plate",
+     "time": 0.12,
+     "face": 40,
+     "strike100": -13.7,
+     "momentary400": -17.7,
+     "phone400": -23.3,
+     "peakDbfs": -2.5
+    }
+   ]
+  }
+ }
+}

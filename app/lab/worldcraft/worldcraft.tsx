@@ -16,7 +16,7 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
-import { WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
+import { SOUND_VARIANTS, DEFAULT_SOUND_VARIANT, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
@@ -42,7 +42,7 @@ type UI = {
   powerMode: 'hold' | 'set'; charge: number; last: WorldcraftRecord | null;
   notice: string; canUndo: boolean; canRedo: boolean; revision: number;
   memoryOpen: boolean; worlds: ReturnType<Store['worlds']>; lines: ReturnType<Store['lines']>;
-  memoryWarning: string; showTrail: boolean; cameraTool: 'orbit' | 'pan';
+  memoryWarning: string; showTrail: boolean; cameraTool: 'orbit' | 'pan'; soundVariant: string;
   history: RecordedTrail | null; comparison: RecordedTrail | null; historyMarks: NoteMark[] | null; comparisonMarks: NoteMark[] | null;
   lastKept: boolean; liveNotes: ResonanceImpact[];
   preset: RangePreset | null; presetBaseline: RangePreset | null; presetId: string | null; shotRecord: RangeShot | null;
@@ -53,7 +53,7 @@ type Actions = {
   change(patch: Partial<{ x: number; z: number; yaw: number; voice: WorldcraftVoice }>): void;
   remove(): void; undo(): void; redo(): void; setup(patch: Partial<WorldcraftSetup>): void;
   powerMode(mode: UI['powerMode']): void; begin(): void; release(): void; cancel(): void;
-  ready(): void; adjust(): void; survey(): void; trail(): void; keep(): void; hear(id: string): void;
+  ready(): void; adjust(): void; survey(): void; trail(): void; keep(): void; hear(id: string): void; sound(variant: string): void; hearLast(): void;
   memory(open: boolean): void; save(): void; load(id: string): void; forgetWorld(id: string): void;
   restoreLine(id: string): void; forgetLine(id: string): void; export(): void; exportMemory(): void; import(text: string): void;
   rename(name: string): void; starter(empty?: boolean): void; house(): void; orc(): void;
@@ -116,7 +116,7 @@ function initialUI(): UI {
     setup: worldcraftFixedSetup(world)!,
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
-    memoryWarning: '', showTrail: true, cameraTool: 'orbit', history: null, comparison: null, historyMarks: null, comparisonMarks: null, lastKept: false, liveNotes: [],
+    memoryWarning: '', showTrail: true, cameraTool: 'orbit', soundVariant: DEFAULT_SOUND_VARIANT, history: null, comparison: null, historyMarks: null, comparisonMarks: null, lastKept: false, liveNotes: [],
     preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0,
   };
 }
@@ -288,7 +288,7 @@ export default function Worldcraft() {
           onEvent(event) {
             if (event.kind === 'resonance' && event.impact) {
               const impact = event.impact as ResonanceImpact;
-              resonance.play(impact);
+              resonance.play(impact, uiRef.current.presetId === 'musical-workshop' ? uiRef.current.soundVariant : undefined);
               publish({ liveNotes: [...uiRef.current.liveNotes, impact] });
             }
             if (event.kind === 'end' && event.last) {
@@ -480,8 +480,20 @@ export default function Worldcraft() {
             const impacts = entry?.performance?.impacts;
             if (!impacts?.length) { publish({ notice: 'This kept line has no recorded sounds.' }); return; }
             resonance.release();
-            resonance.playRecorded(impacts);
+            resonance.playRecorded(impacts, uiRef.current.presetId === 'musical-workshop' ? uiRef.current.soundVariant : undefined);
             publish({ notice: 'Playing the recorded sounds. The shot is not being fired again.' });
+          },
+          sound(variant) {
+            // Acoustic A/B only: the next impacts and replays use this voice. Physics is untouched.
+            if (!isSoundVariant(variant)) return;
+            publish({ soundVariant: variant, notice: `Bank sound ${SOUND_VARIANTS.find(v => v.id === variant)?.label}. Replay the last shot to compare.` });
+          },
+          hearLast() {
+            const impacts = uiRef.current.last?.resonance?.impacts;
+            if (!impacts?.length) { publish({ notice: 'The last shot made no recorded sounds.' }); return; }
+            resonance.release();
+            resonance.playRecorded(impacts, uiRef.current.soundVariant);
+            publish({ notice: `Replaying the last shot's recorded sounds with ${SOUND_VARIANTS.find(v => v.id === uiRef.current.soundVariant)?.label}. The shot is not being fired again.` });
           },
           keep() {
             const last = uiRef.current.last;
@@ -1009,6 +1021,15 @@ export default function Worldcraft() {
           {impactReadout && <section className={styles.sequence} aria-label="Impact sequence" data-impact-sequence={impactReadout.headline}>
             <p className={styles.sequenceLine}>{impactReadout.headline}</p>
             <p>{impactReadout.explanation}</p>
+            {ui.presetId === 'musical-workshop' && <div className={styles.soundAb} data-sound-ab={ui.soundVariant}>
+              <label>Bank sound (listening A/B)
+                <select value={ui.soundVariant} onChange={event => actions.current?.sound(event.target.value)}>
+                  {SOUND_VARIANTS.map(variant => <option key={variant.id} value={variant.id}>{variant.label}</option>)}
+                </select>
+              </label>
+              <button type="button" disabled={ui.phase === 'flight' || !ui.last?.resonance?.impacts?.length} onClick={() => actions.current?.hearLast()}>Replay last shot</button>
+              <p>{SOUND_VARIANTS.find(variant => variant.id === ui.soundVariant)?.detail} Sound only; the shot and its contacts are identical.</p>
+            </div>}
             {ui.presetId === 'musical-workshop' && <div data-note-timelines="">
               <NoteTimeline kind="current" rows={noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts)} />
               <NoteTimeline kind="previous" rows={ui.comparisonMarks ?? []} />

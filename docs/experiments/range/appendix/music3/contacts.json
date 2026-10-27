@@ -1,0 +1,791 @@
+{
+ "branch": "lab/wc-range-music3-bank-voice",
+ "parent": "9d8278ba9126a0579cfce35104417aba704248cd",
+ "gitSha": "9d8278ba9126a0579cfce35104417aba704248cd",
+ "dynamics": "normal-speed",
+ "physicsChanged": false,
+ "shots": [
+  {
+   "id": "graze-85",
+   "group": "single",
+   "label": "Bank graze, 85°",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.5
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 1,
+     "z": 24,
+     "yaw": 85,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.8167,
+     "speed": 24.3962,
+     "normalSpeed": 2.0927,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "graze-80",
+   "group": "single",
+   "label": "Bank graze, 80°",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.5
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 24,
+     "yaw": 80,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.5583,
+     "speed": 23.7725,
+     "normalSpeed": 4.1695,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "glance-70",
+   "group": "single",
+   "label": "Bank glance, 70°",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.5
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 24,
+     "yaw": 70,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.675,
+     "speed": 22.7748,
+     "normalSpeed": 8.2124,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "angled-55",
+   "group": "single",
+   "label": "Bank angled, 55°",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.5
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 24,
+     "yaw": 55,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.7167,
+     "speed": 19.9951,
+     "normalSpeed": 13.7724,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "square-040",
+   "group": "single",
+   "label": "Bank square, charge 0.40",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.4
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 24,
+     "yaw": 0,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.875,
+     "speed": 19.6185,
+     "normalSpeed": 20.3852,
+     "callbacks": 3
+    }
+   ]
+  },
+  {
+   "id": "square-055",
+   "group": "single",
+   "label": "Bank square, charge 0.55",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.55
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 24,
+     "yaw": 0,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.6917,
+     "speed": 2.9108,
+     "normalSpeed": 25.8245,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "square-085",
+   "group": "single",
+   "label": "Bank square, charge 0.85",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.85
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -20,
+     "z": 78,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 24,
+     "yaw": 0,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.4833,
+     "speed": 16.3972,
+     "normalSpeed": 36.7032,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "phrase-graze-ramp",
+   "group": "phrase",
+   "label": "Bank graze → Ramp (C4 → D4)",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 12,
+    "charge": 0.5
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": 0,
+     "z": 36,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 1,
+     "z": 22,
+     "yaw": 85,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 86,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4",
+    "D4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.7333,
+     "speed": 24.2194,
+     "normalSpeed": 2.0927,
+     "callbacks": 2
+    },
+    {
+     "piece": "ramp-yours",
+     "role": "ramp",
+     "note": "D4",
+     "material": "metal",
+     "degree": 1,
+     "hz": 293.6648,
+     "time": 1.0833,
+     "speed": 15.5804,
+     "normalSpeed": 19.9556,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "phrase-early-plate",
+   "group": "phrase",
+   "label": "Bank → Ramp → Plate (C4 → D4 → E4)",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 18,
+    "charge": 0.55
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -8,
+     "z": 40,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 0,
+     "z": 16,
+     "yaw": 80,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": -24,
+     "z": 58,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "C4",
+    "D4",
+    "E4"
+   ],
+   "impacts": [
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 0.225,
+     "speed": 25.3018,
+     "normalSpeed": 4.3602,
+     "callbacks": 2
+    },
+    {
+     "piece": "ramp-yours",
+     "role": "ramp",
+     "note": "D4",
+     "material": "metal",
+     "degree": 1,
+     "hz": 293.6648,
+     "time": 1.4333,
+     "speed": 19.324,
+     "normalSpeed": 16.4137,
+     "callbacks": 2
+    },
+    {
+     "piece": "plate-yours",
+     "role": "plate",
+     "note": "E4",
+     "material": "metal",
+     "degree": 2,
+     "hz": 329.6276,
+     "time": 4.2417,
+     "speed": 10.3314,
+     "normalSpeed": 15.1925,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "phrase-late-catch",
+   "group": "phrase",
+   "label": "Ramp → Bank → Plate (D4 → C4 → E4)",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 18,
+    "charge": 0.55
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": -1,
+     "z": 42,
+     "yaw": 20,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": -6,
+     "z": 68,
+     "yaw": 20,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": -28,
+     "z": 58,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "D4",
+    "C4",
+    "E4"
+   ],
+   "impacts": [
+    {
+     "piece": "ramp-yours",
+     "role": "ramp",
+     "note": "D4",
+     "material": "metal",
+     "degree": 1,
+     "hz": 293.6648,
+     "time": 1.4167,
+     "speed": 20.9546,
+     "normalSpeed": 16.3782,
+     "callbacks": 2
+    },
+    {
+     "piece": "bank-yours",
+     "role": "bank",
+     "note": "C4",
+     "material": "timber",
+     "degree": 0,
+     "hz": 261.6256,
+     "time": 4.1417,
+     "speed": 6.3651,
+     "normalSpeed": 16.7839,
+     "callbacks": 2
+    },
+    {
+     "piece": "plate-yours",
+     "role": "plate",
+     "note": "E4",
+     "material": "metal",
+     "degree": 2,
+     "hz": 329.6276,
+     "time": 6.8,
+     "speed": 19.619,
+     "normalSpeed": 3.5771,
+     "callbacks": 2
+    }
+   ]
+  },
+  {
+   "id": "phrase-opening",
+   "group": "phrase",
+   "label": "Ramp → Plate, no bank (D4 → E4)",
+   "setup": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 18,
+    "charge": 0.55
+   },
+   "objects": [
+    {
+     "id": "ramp-yours",
+     "kind": "ramp",
+     "x": 0,
+     "z": 42,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 1
+     }
+    },
+    {
+     "id": "bank-yours",
+     "kind": "bank",
+     "x": 14,
+     "z": 28,
+     "yaw": 0,
+     "voice": {
+      "material": "timber",
+      "degree": 0
+     }
+    },
+    {
+     "id": "plate-yours",
+     "kind": "plate",
+     "x": 0,
+     "z": 68,
+     "yaw": 0,
+     "voice": {
+      "material": "metal",
+      "degree": 2
+     }
+    }
+   ],
+   "order": [
+    "D4",
+    "E4"
+   ],
+   "impacts": [
+    {
+     "piece": "ramp-yours",
+     "role": "ramp",
+     "note": "D4",
+     "material": "metal",
+     "degree": 1,
+     "hz": 293.6648,
+     "time": 1.425,
+     "speed": 20.5027,
+     "normalSpeed": 16.99,
+     "callbacks": 2
+    },
+    {
+     "piece": "plate-yours",
+     "role": "plate",
+     "note": "E4",
+     "material": "metal",
+     "degree": 2,
+     "hz": 329.6276,
+     "time": 4.4583,
+     "speed": 8.8726,
+     "normalSpeed": 17.4918,
+     "callbacks": 2
+    }
+   ]
+  }
+ ]
+}

@@ -218,3 +218,8 @@
   .shell[data-mode="play"] .goal { order: 1; margin-top: 10px; }
   .shell[data-mode="play"] .notice, .shell[data-mode="play"] .status { order: 2; }
 }
+
+.soundAb { display: grid; gap: 6px; margin: 8px 0; padding: 8px 10px; border: 1px solid rgba(255, 196, 120, .35); border-radius: 6px; }
+.soundAb label { display: grid; gap: 4px; font-size: .82rem; }
+.soundAb select, .soundAb button { min-height: 44px; }
+.soundAb p { margin: 0; font-size: .78rem; opacity: .85; }
