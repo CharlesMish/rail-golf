@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   BANK_VARIANT_SETTINGS, DEFAULT_SOUND_VARIANT, MUSICAL_WORKSHOP_SOUND, EVEN_DB_CURVE, RESONANCE_VOICES, SOUND_VARIANTS, WORLDCRAFT_RESONANCE_NORMAL_FULL,
-  createResonanceEar, evenDbGain, impactGain, isSoundVariant, strikeColour, strikeSpeedOf, voiceImpact,
+  createResonanceEar, evenDbGain, impactAcoustics, impactGain, isSoundVariant, strikeColour, strikeSpeedOf, voiceImpact,
 } from '../lib/worldcraft-resonance.js';
 
 const db = gain => 20 * Math.log10(gain);
@@ -99,12 +99,29 @@ test('presence variants stay inside the original timber headroom and only reshap
   const sum = (v, trim = 1) => trim * (v.level ?? 1) * (v.partials.reduce((s, p) => s + p.gain, 0) + v.noise);
   for (const [id, settings] of Object.entries(BANK_VARIANT_SETTINGS)) {
     assert.ok(sum(RESONANCE_VOICES[settings.voice], settings.trim) <= sum(RESONANCE_VOICES.timber) + 1e-9, id);
-    const plate = { material: 'metal', normalSpeed: 4.17, gain: 0 };
-    assert.equal(voiceImpact(plate, id).gain, evenDbGain(4.17), `${id} leaves metal on the B curve`);
+    const plate = { role: 'plate', material: 'metal', normalSpeed: 4.17, gain: 0 };
+    assert.equal(voiceImpact(plate, id).gain, evenDbGain(4.17), `${id} leaves a metal plate on the B curve`);
+    const timberRamp = { role: 'ramp', material: 'timber', normalSpeed: 4.17, gain: 0 };
+    assert.equal(voiceImpact(timberRamp, id).gain, evenDbGain(4.17), `${id} leaves a timber ramp on the B curve`);
+    const timberPlate = { role: 'plate', material: 'timber', normalSpeed: 4.17, gain: 0 };
+    assert.equal(voiceImpact(timberPlate, id).gain, evenDbGain(4.17), `${id} leaves a timber plate on the B curve`);
+    for (const impact of [timberRamp, timberPlate]) {
+      const acoustics = impactAcoustics(voiceImpact(impact, id));
+      assert.equal(acoustics.voiceName, 'timber', `${id} keeps ordinary timber on ${impact.role}`);
+      assert.equal(acoustics.trim, 1);
+      assert.equal(acoustics.coloured, false);
+    }
+    const bank = voiceImpact({ role: 'bank', material: 'timber', normalSpeed: 4.17, gain: 0 }, id);
+    const heard = impactAcoustics(bank);
+    assert.equal(heard.voiceName, settings.voice);
+    assert.equal(heard.trim, settings.trim);
+    assert.equal(bank.gain, evenDbGain(4.17, { ...EVEN_DB_CURVE, rangeDb: settings.bankRangeDb }));
   }
-  const graze = { material: 'timber', normalSpeed: 2.0927, gain: 0 };
+  const graze = { role: 'bank', material: 'timber', normalSpeed: 2.0927, gain: 0 };
   assert.ok(db(voiceImpact(graze, 'tuned-even').gain) > db(voiceImpact(graze, 'tuned-presence').gain) + 4, 'gentler bank range lifts a graze');
-  assert.equal(voiceImpact({ material: 'timber', normalSpeed: 40, gain: 0 }, 'tuned-even').gain, 1);
+  assert.equal(voiceImpact({ role: 'bank', material: 'metal', normalSpeed: 40, gain: 0 }, 'tuned-even').gain, 1);
+  assert.equal(impactAcoustics(voiceImpact({ role: 'bank', material: 'metal', normalSpeed: 40, gain: 0 }, 'tuned-even')).voiceName, 'timberTunedLong');
+  assert.equal(impactAcoustics(voiceImpact({ role: 'ramp', material: 'timber', normalSpeed: 10, gain: 0 }, 'tuned-long')).voiceName, 'timberTunedLong');
 });
 
 test('the Musical Workshop plays the owner-chosen bank sound H by default', async () => {

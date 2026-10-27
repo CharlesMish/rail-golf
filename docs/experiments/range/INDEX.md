@@ -36,7 +36,7 @@ Enter: header **Range** → **Musical Workshop**. Reset: **Reset preset**.
 | Success | The impact line names the sounds the shot actually made. The previous trail is the one that was recorded. |
 | Voices | The opening tuning is the same trio as Fixed Shot Workshop. Retuning a piece does not change the flight. |
 
-This is the unrestricted workshop. Fixed Shot Workshop is the locked shot, for comparing a geometry change. Measured arrangements are not on this page. They are under [appendix/music/](appendix/music/). The note is [MUSIC.md](MUSIC.md).
+This is the unrestricted workshop. Fixed Shot Workshop is the locked shot, for comparing a geometry change. Measured arrangements are not on this page. They are under [appendix/music/](appendix/music/). The note is [MUSIC.md](MUSIC.md). The bank-voice follow-up is [MUSIC-3.md](MUSIC-3.md). Its sitting is [PROTOCOL-MUSIC-3.md](PROTOCOL-MUSIC-3.md). Where the large listening renders live is [EVIDENCE-INDEX.md](EVIDENCE-INDEX.md).
 
 ## B — Back Pocket
 
