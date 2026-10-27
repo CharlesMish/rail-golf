@@ -1,0 +1,3311 @@
+{
+  "branch": "lab/wc-range-music2-20261025",
+  "parent": "6ac83e3ff73c9cf72f47f0b5009aa9036557c5e4",
+  "clockwork": "3aede12c35154352b444ec65d41395011b9b8b1b",
+  "gitSha": "fe5955825f5948dd2971def24e19c7a3c849cc18",
+  "seed": 20261025,
+  "seedAppliedToSolver": false,
+  "liveMapping": "normal-speed",
+  "knee": {
+    "totalSpeed": 22,
+    "normalSpeed": 32,
+    "impulse": 32
+  },
+  "projectileMass": 1.5,
+  "contactCallback": {
+    "when": "After HP_World_Step and the plugin sync. getLinearVelocity inside the callback is the post-step velocity.",
+    "observable": "Body getCollisionObservable receives COLLISION_STARTED and COLLISION_CONTINUED. COLLISION_FINISHED is not delivered on this observable.",
+    "fields": [
+      "collidedAgainst",
+      "collidedAgainstIndex",
+      "collider",
+      "colliderIndex",
+      "distance",
+      "impulse",
+      "normal",
+      "point",
+      "type"
+    ],
+    "typesSeen": [
+      "COLLISION_CONTINUED",
+      "COLLISION_STARTED"
+    ],
+    "pointAndNormal": "Reused Vector3 internals. The runtime copies x, y, and z during the callback.",
+    "impulse": "Scalar, shared by both bodies. The first STARTED impulse often understates a resolved bounce. The larger impulse arrives on a CONTINUED callback one frame later.",
+    "otherBodySpeed": "Static pieces read 0.",
+    "preStep": "The runtime copies getLinearVelocity into flight.acousticIncoming at the start of beforeStep, then the contact adapter dots that copy with the callback normal.",
+    "liveGain": "Fixed from the opening callback. Later callbacks inside the 5/120 s hold only increment the callback count.",
+    "normalLength": {
+      "n": 103,
+      "min": 0.9999999342648371,
+      "median": 1,
+      "max": 1.0000000912222309,
+      "spread": 1.5695739374876894e-7
+    },
+    "otherSpeedMax": 0,
+    "groupedPieceImpacts": 51,
+    "continuedImpulseRicher": 16
+  },
+  "exemplars": {
+    "squareCharge05": {
+      "piece": "bank-yours",
+      "role": "bank",
+      "note": "C4",
+      "material": "timber",
+      "time": 0.7417,
+      "speed": 21.7818,
+      "normalSpeed": 24.0114,
+      "impulse": 3.8638,
+      "point": {
+        "x": 0,
+        "y": 3.1026,
+        "z": 23.305
+      },
+      "callbacks": 2,
+      "gainTotal": 0.9997,
+      "gainNormal": 0.8442,
+      "gainImpulse": 0.0184,
+      "gainLive": 0.8442,
+      "dynamics": "normal-speed"
+    },
+    "grazeCharge05": {
+      "piece": "bank-yours",
+      "role": "bank",
+      "note": "C4",
+      "material": "timber",
+      "time": 0.8167,
+      "speed": 24.3962,
+      "normalSpeed": 2.0927,
+      "impulse": 3.133,
+      "point": {
+        "x": 0.4281,
+        "y": 2.7832,
+        "z": 24.7136
+      },
+      "callbacks": 2,
+      "gainTotal": 1,
+      "gainNormal": 0.0123,
+      "gainImpulse": 0.0122,
+      "gainLive": 0.0123,
+      "dynamics": "normal-speed"
+    },
+    "similarTotalSpeed": 0.10716423049491314
+  },
+  "byRole": {
+    "bank": {
+      "n": 33,
+      "misses": 6,
+      "postSpeed": {
+        "n": 33,
+        "min": 2.626,
+        "median": 20.4278,
+        "max": 24.3962,
+        "spread": 21.7702
+      },
+      "faceSpeed": {
+        "n": 33,
+        "min": 2.0927,
+        "median": 18.3938,
+        "max": 36.7032,
+        "spread": 34.6105
+      },
+      "impulseOverMass": {
+        "n": 33,
+        "min": 1.2109333333333334,
+        "median": 8.1964,
+        "max": 25.774199999999997,
+        "spread": 24.563266666666664
+      },
+      "gainTotal": {
+        "n": 33,
+        "min": 0.0393,
+        "median": 0.9854,
+        "max": 1,
+        "spread": 0.9607
+      },
+      "gainNormal": {
+        "n": 33,
+        "min": 0.0123,
+        "median": 0.6114,
+        "max": 1,
+        "spread": 0.9877
+      },
+      "gainImpulse": {
+        "n": 33,
+        "min": 0.0042,
+        "median": 0.1632,
+        "max": 0.9012,
+        "spread": 0.897
+      },
+      "gainMaxImpulse": {
+        "n": 33,
+        "min": 0.012224700780580872,
+        "median": 0.6097279690728369,
+        "max": 1,
+        "spread": 0.9877752992194191
+      }
+    },
+    "ramp": {
+      "n": 4,
+      "misses": 0,
+      "postSpeed": {
+        "n": 4,
+        "min": 11.1192,
+        "median": 19.6292,
+        "max": 21.6866,
+        "spread": 10.5674
+      },
+      "faceSpeed": {
+        "n": 4,
+        "min": 12.6632,
+        "median": 15.772649999999999,
+        "max": 22.5634,
+        "spread": 9.900200000000002
+      },
+      "impulseOverMass": {
+        "n": 4,
+        "min": 11.392266666666666,
+        "median": 15.834666666666667,
+        "max": 22.5194,
+        "spread": 11.127133333333335
+      },
+      "gainTotal": {
+        "n": 4,
+        "min": 0.5081,
+        "median": 0.96565,
+        "max": 0.9994,
+        "spread": 0.49129999999999996
+      },
+      "gainNormal": {
+        "n": 4,
+        "min": 0.3459,
+        "median": 0.48935,
+        "max": 0.7904,
+        "spread": 0.4445
+      },
+      "gainImpulse": {
+        "n": 4,
+        "min": 0.29,
+        "median": 0.49224999999999997,
+        "max": 0.7887,
+        "spread": 0.4987
+      },
+      "gainMaxImpulse": {
+        "n": 4,
+        "min": 0.3271598139676574,
+        "median": 0.4922706747533522,
+        "max": 0.7886845644335093,
+        "spread": 0.4615247504658519
+      }
+    },
+    "plate": {
+      "n": 9,
+      "misses": 3,
+      "postSpeed": {
+        "n": 9,
+        "min": 6.0962,
+        "median": 13.4648,
+        "max": 21.8461,
+        "spread": 15.7499
+      },
+      "faceSpeed": {
+        "n": 9,
+        "min": 12.0057,
+        "median": 20.7945,
+        "max": 24.0114,
+        "spread": 12.0057
+      },
+      "impulseOverMass": {
+        "n": 9,
+        "min": 9.090933333333334,
+        "median": 20.754,
+        "max": 23.9646,
+        "spread": 14.873666666666667
+      },
+      "gainTotal": {
+        "n": 9,
+        "min": 0.1878,
+        "median": 0.6652,
+        "max": 0.9999,
+        "spread": 0.8121
+      },
+      "gainNormal": {
+        "n": 9,
+        "min": 0.3167,
+        "median": 0.718,
+        "max": 0.8442,
+        "spread": 0.5275
+      },
+      "gainImpulse": {
+        "n": 9,
+        "min": 0.1963,
+        "median": 0.7163,
+        "max": 0.8425,
+        "spread": 0.6462
+      },
+      "gainMaxImpulse": {
+        "n": 9,
+        "min": 0.3156301117460509,
+        "median": 0.7352601965628267,
+        "max": 0.953420787470375,
+        "spread": 0.6377906757243241
+      }
+    }
+  },
+  "ab": [
+    {
+      "id": "graze-bank",
+      "source": "graze-ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": 0,
+          "z": 36,
+          "yaw": 0,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4"
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 1,
+          "z": 22,
+          "yaw": 85,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4"
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": 0,
+          "z": 86,
+          "yaw": 0,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4"
+        }
+      ],
+      "terminal": [
+        -8.9208,
+        0.43,
+        34.4556
+      ],
+      "identical": true,
+      "total": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7333,
+          "speed": 24.2194,
+          "normalSpeed": 2.0927,
+          "impulse": 3.133,
+          "point": {
+            "x": 0.4281,
+            "y": 3.1339,
+            "z": 22.7126
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0123,
+          "gainImpulse": 0.0122,
+          "gainLive": 1,
+          "dynamics": "total-speed"
+        },
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.0833,
+          "speed": 15.5804,
+          "normalSpeed": 19.9556,
+          "impulse": 20.6532,
+          "point": {
+            "x": -1.2877,
+            "y": 0.7928,
+            "z": 30.994
+          },
+          "callbacks": 2,
+          "gainTotal": 0.7943,
+          "gainNormal": 0.6816,
+          "gainImpulse": 0.3961,
+          "gainLive": 0.7943,
+          "dynamics": "total-speed"
+        }
+      ],
+      "normal": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7333,
+          "speed": 24.2194,
+          "normalSpeed": 2.0927,
+          "impulse": 3.133,
+          "point": {
+            "x": 0.4281,
+            "y": 3.1339,
+            "z": 22.7126
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0123,
+          "gainImpulse": 0.0122,
+          "gainLive": 0.0123,
+          "dynamics": "normal-speed"
+        },
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.0833,
+          "speed": 15.5804,
+          "normalSpeed": 19.9556,
+          "impulse": 20.6532,
+          "point": {
+            "x": -1.2877,
+            "y": 0.7928,
+            "z": 30.994
+          },
+          "callbacks": 2,
+          "gainTotal": 0.7943,
+          "gainNormal": 0.6816,
+          "gainImpulse": 0.3961,
+          "gainLive": 0.6816,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "square-bank",
+      "source": "bank-square-c0.55",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": -20,
+          "z": 78,
+          "yaw": 0,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4"
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 0,
+          "z": 24,
+          "yaw": 0,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4"
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": 0,
+          "z": 86,
+          "yaw": 0,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4"
+        }
+      ],
+      "terminal": [
+        0,
+        0.43,
+        10.3377
+      ],
+      "identical": true,
+      "total": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.6917,
+          "speed": 2.9108,
+          "normalSpeed": 25.8245,
+          "impulse": 38.6613,
+          "point": {
+            "x": 0,
+            "y": 3.5446,
+            "z": 23.3585
+          },
+          "callbacks": 2,
+          "gainTotal": 0.0479,
+          "gainNormal": 0.9026,
+          "gainImpulse": 0.9012,
+          "gainLive": 0.0479,
+          "dynamics": "total-speed"
+        }
+      ],
+      "normal": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.6917,
+          "speed": 2.9108,
+          "normalSpeed": 25.8245,
+          "impulse": 38.6613,
+          "point": {
+            "x": 0,
+            "y": 3.5446,
+            "z": 23.3585
+          },
+          "callbacks": 2,
+          "gainTotal": 0.0479,
+          "gainNormal": 0.9026,
+          "gainImpulse": 0.9012,
+          "gainLive": 0.9026,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "opening",
+      "source": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": 0,
+          "z": 42,
+          "yaw": 0,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4"
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 14,
+          "z": 28,
+          "yaw": 0,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4"
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": 0,
+          "z": 68,
+          "yaw": 0,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4"
+        }
+      ],
+      "terminal": [
+        0,
+        0.43,
+        91.8844
+      ],
+      "identical": true,
+      "total": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.425,
+          "speed": 20.5027,
+          "normalSpeed": 16.99,
+          "impulse": 25.5761,
+          "point": {
+            "x": 0,
+            "y": 2.1713,
+            "z": 40.8542
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9867,
+          "gainNormal": 0.5463,
+          "gainImpulse": 0.5492,
+          "gainLive": 0.9867,
+          "dynamics": "total-speed"
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 4.4583,
+          "speed": 8.8726,
+          "normalSpeed": 17.4918,
+          "impulse": 26.3365,
+          "point": {
+            "x": 0,
+            "y": 4.1031,
+            "z": 67.7696
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3568,
+          "gainNormal": 0.5697,
+          "gainImpulse": 0.5728,
+          "gainLive": 0.3568,
+          "dynamics": "total-speed"
+        }
+      ],
+      "normal": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.425,
+          "speed": 20.5027,
+          "normalSpeed": 16.99,
+          "impulse": 25.5761,
+          "point": {
+            "x": 0,
+            "y": 2.1713,
+            "z": 40.8542
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9867,
+          "gainNormal": 0.5463,
+          "gainImpulse": 0.5492,
+          "gainLive": 0.5463,
+          "dynamics": "normal-speed"
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 4.4583,
+          "speed": 8.8726,
+          "normalSpeed": 17.4918,
+          "impulse": 26.3365,
+          "point": {
+            "x": 0,
+            "y": 4.1031,
+            "z": 67.7696
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3568,
+          "gainNormal": 0.5697,
+          "gainImpulse": 0.5728,
+          "gainLive": 0.5697,
+          "dynamics": "normal-speed"
+        }
+      ]
+    }
+  ],
+  "traces": {
+    "bank-y0-x0": {
+      "terminal": [
+        0,
+        0.43,
+        13.9573
+      ],
+      "callbacks": [
+        {
+          "time": 0.7417,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 3.8638,
+          "normalLength": 1,
+          "preSpeed": 24.3097,
+          "postSpeed": 21.7818,
+          "normalPre": 24.0114,
+          "normalPost": 21.4305,
+          "signedPre": 24.0114,
+          "signedPost": 21.4305,
+          "otherSpeed": 0
+        },
+        {
+          "time": 0.75,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 62.9714,
+          "normalLength": 1,
+          "preSpeed": 21.7818,
+          "postSpeed": 20.9322,
+          "normalPre": 21.4305,
+          "normalPost": 20.6324,
+          "signedPre": 21.4305,
+          "signedPost": -20.6324,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 3.8638,
+          "maxImpulse": 62.9714,
+          "firstNormalPre": 24.0114,
+          "firstSignedPre": 24.0114,
+          "firstSignedPost": 21.4305,
+          "lastSignedPost": -20.6324,
+          "firstPostSpeed": 21.7818,
+          "normalLength": 1,
+          "otherSpeed": 0
+        }
+      ]
+    },
+    "bank-y85-x1": {
+      "terminal": [
+        -1.3191,
+        0.43,
+        32.9324
+      ],
+      "callbacks": [
+        {
+          "time": 0.8167,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 3.133,
+          "normalLength": 1.00000002,
+          "preSpeed": 24.4664,
+          "postSpeed": 24.3962,
+          "normalPre": 2.0927,
+          "normalPost": 0,
+          "signedPre": 2.0927,
+          "signedPost": 0,
+          "otherSpeed": 0
+        },
+        {
+          "time": 0.825,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 2.5741,
+          "normalLength": 1.00000002,
+          "preSpeed": 24.3962,
+          "postSpeed": 24.0992,
+          "normalPre": 0,
+          "normalPost": 1.7194,
+          "signedPre": 0,
+          "signedPost": -1.7194,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 3.133,
+          "maxImpulse": 3.133,
+          "firstNormalPre": 2.0927,
+          "firstSignedPre": 2.0927,
+          "firstSignedPost": 0,
+          "lastSignedPost": -1.7194,
+          "firstPostSpeed": 24.3962,
+          "normalLength": 1.00000002,
+          "otherSpeed": 0
+        }
+      ]
+    },
+    "bank-square-c0.55": {
+      "terminal": [
+        0,
+        0.43,
+        10.3377
+      ],
+      "callbacks": [
+        {
+          "time": 0.6917,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 38.6613,
+          "normalLength": 1,
+          "preSpeed": 25.977,
+          "postSpeed": 2.9108,
+          "normalPre": 25.8245,
+          "normalPost": 0,
+          "signedPre": 25.8245,
+          "signedPost": 0,
+          "otherSpeed": 0
+        },
+        {
+          "time": 0.7,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 33.15,
+          "normalLength": 1,
+          "preSpeed": 2.9108,
+          "postSpeed": 22.2446,
+          "normalPre": 0,
+          "normalPost": 22.1432,
+          "signedPre": 0,
+          "signedPost": -22.1432,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 38.6613,
+          "maxImpulse": 38.6613,
+          "firstNormalPre": 25.8245,
+          "firstSignedPre": 25.8245,
+          "firstSignedPost": 0,
+          "lastSignedPost": -22.1432,
+          "firstPostSpeed": 2.9108,
+          "normalLength": 1,
+          "otherSpeed": 0
+        }
+      ]
+    },
+    "ramp-y0": {
+      "terminal": [
+        0,
+        0.43,
+        55.3415
+      ],
+      "callbacks": [
+        {
+          "time": 1.075,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-ramp-yours",
+          "impulse": 24.9833,
+          "normalLength": 0.99999998,
+          "preSpeed": 25.2454,
+          "postSpeed": 18.9844,
+          "normalPre": 16.5961,
+          "normalPost": 0,
+          "signedPre": 16.5961,
+          "signedPost": 0,
+          "otherSpeed": 0
+        },
+        {
+          "time": 1.0833,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-ramp-yours",
+          "impulse": 18.5265,
+          "normalLength": 1,
+          "preSpeed": 18.9844,
+          "postSpeed": 20.7423,
+          "normalPre": 1.0311,
+          "normalPost": 13.3122,
+          "signedPre": -1.0311,
+          "signedPost": -13.3122,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 24.9833,
+          "maxImpulse": 24.9833,
+          "firstNormalPre": 16.5961,
+          "firstSignedPre": 16.5961,
+          "firstSignedPost": 0,
+          "lastSignedPost": -13.3122,
+          "firstPostSpeed": 18.9844,
+          "normalLength": 0.99999998,
+          "otherSpeed": 0
+        }
+      ]
+    },
+    "plate-y0-x0": {
+      "terminal": [
+        0,
+        0.43,
+        21.3772
+      ],
+      "callbacks": [
+        {
+          "time": 0.925,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-plate-yours",
+          "impulse": 35.9469,
+          "normalLength": 1,
+          "preSpeed": 24.7488,
+          "postSpeed": 6.0962,
+          "normalPre": 24.0114,
+          "normalPost": 0,
+          "signedPre": 24.0114,
+          "signedPost": 0,
+          "otherSpeed": 0
+        },
+        {
+          "time": 0.9333,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-plate-yours",
+          "impulse": 30.8883,
+          "normalLength": 1,
+          "preSpeed": 6.0962,
+          "postSpeed": 21.0875,
+          "normalPre": 0,
+          "normalPost": 20.6324,
+          "signedPre": 0,
+          "signedPost": -20.6324,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-plate-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 35.9469,
+          "maxImpulse": 35.9469,
+          "firstNormalPre": 24.0114,
+          "firstSignedPre": 24.0114,
+          "firstSignedPost": 0,
+          "lastSignedPost": -20.6324,
+          "firstPostSpeed": 6.0962,
+          "normalLength": 1,
+          "otherSpeed": 0
+        }
+      ]
+    },
+    "opening": {
+      "terminal": [
+        0,
+        0.43,
+        91.8844
+      ],
+      "callbacks": [
+        {
+          "time": 1.425,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-ramp-yours",
+          "impulse": 25.5761,
+          "normalLength": 1.00000004,
+          "preSpeed": 26.6538,
+          "postSpeed": 20.5027,
+          "normalPre": 16.99,
+          "normalPost": 0,
+          "signedPre": 16.99,
+          "signedPost": 0,
+          "otherSpeed": 0
+        },
+        {
+          "time": 1.4333,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-ramp-yours",
+          "impulse": 21.9163,
+          "normalLength": 0.99999999,
+          "preSpeed": 20.5027,
+          "postSpeed": 22.6645,
+          "normalPre": 0,
+          "normalPost": 14.5454,
+          "signedPre": 0,
+          "signedPost": -14.5454,
+          "otherSpeed": 0
+        },
+        {
+          "time": 4.4583,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-plate-yours",
+          "impulse": 26.3365,
+          "normalLength": 0.99999994,
+          "preSpeed": 19.6134,
+          "postSpeed": 8.8726,
+          "normalPre": 17.4918,
+          "normalPost": 0.0001,
+          "signedPre": 17.4918,
+          "signedPost": -0.0001,
+          "otherSpeed": 0
+        },
+        {
+          "time": 4.4667,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-plate-yours",
+          "impulse": 22.4757,
+          "normalLength": 1,
+          "preSpeed": 8.8726,
+          "postSpeed": 17.2866,
+          "normalPre": 0.0001,
+          "normalPost": 14.9132,
+          "signedPre": -0.0001,
+          "signedPost": -14.9132,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 25.5761,
+          "maxImpulse": 25.5761,
+          "firstNormalPre": 16.99,
+          "firstSignedPre": 16.99,
+          "firstSignedPost": 0,
+          "lastSignedPost": -14.5454,
+          "firstPostSpeed": 20.5027,
+          "normalLength": 1.00000004,
+          "otherSpeed": 0
+        },
+        {
+          "body": "worldcraft-object-plate-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 26.3365,
+          "maxImpulse": 26.3365,
+          "firstNormalPre": 17.4918,
+          "firstSignedPre": 17.4918,
+          "firstSignedPost": -0.0001,
+          "lastSignedPost": -14.9132,
+          "firstPostSpeed": 8.8726,
+          "normalLength": 0.99999994,
+          "otherSpeed": 0
+        }
+      ]
+    },
+    "graze-ramp": {
+      "terminal": [
+        -8.9208,
+        0.43,
+        34.4556
+      ],
+      "callbacks": [
+        {
+          "time": 0.7333,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 3.133,
+          "normalLength": 1.00000002,
+          "preSpeed": 24.2943,
+          "postSpeed": 24.2194,
+          "normalPre": 2.0927,
+          "normalPost": 0,
+          "signedPre": 2.0927,
+          "signedPost": 0,
+          "otherSpeed": 0
+        },
+        {
+          "time": 0.7417,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-bank-yours",
+          "impulse": 2.5741,
+          "normalLength": 0.99999996,
+          "preSpeed": 24.2194,
+          "postSpeed": 23.919,
+          "normalPre": 0,
+          "normalPost": 1.7194,
+          "signedPre": 0,
+          "signedPost": -1.7194,
+          "otherSpeed": 0
+        },
+        {
+          "time": 1.0833,
+          "type": "COLLISION_STARTED",
+          "body": "worldcraft-object-ramp-yours",
+          "impulse": 20.6532,
+          "normalLength": 1.00000001,
+          "preSpeed": 24.5699,
+          "postSpeed": 15.5804,
+          "normalPre": 19.9556,
+          "normalPost": 6.2402,
+          "signedPre": 19.9556,
+          "signedPost": 6.2402,
+          "otherSpeed": 0
+        },
+        {
+          "time": 1.0917,
+          "type": "COLLISION_CONTINUED",
+          "body": "worldcraft-object-ramp-yours",
+          "impulse": 28.4016,
+          "normalLength": 1.00000003,
+          "preSpeed": 15.5804,
+          "postSpeed": 19.5292,
+          "normalPre": 3.9171,
+          "normalPost": 14.9654,
+          "signedPre": 3.9171,
+          "signedPost": -14.9654,
+          "otherSpeed": 0
+        }
+      ],
+      "groups": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 3.133,
+          "maxImpulse": 3.133,
+          "firstNormalPre": 2.0927,
+          "firstSignedPre": 2.0927,
+          "firstSignedPost": 0,
+          "lastSignedPost": -1.7194,
+          "firstPostSpeed": 24.2194,
+          "normalLength": 1.00000002,
+          "otherSpeed": 0
+        },
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 2,
+          "types": [
+            "COLLISION_STARTED",
+            "COLLISION_CONTINUED"
+          ],
+          "span": 0.0083,
+          "firstImpulse": 20.6532,
+          "maxImpulse": 28.4016,
+          "firstNormalPre": 19.9556,
+          "firstSignedPre": 19.9556,
+          "firstSignedPost": 6.2402,
+          "lastSignedPost": -14.9654,
+          "firstPostSpeed": 15.5804,
+          "normalLength": 1.00000001,
+          "otherSpeed": 0
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "bank-y0-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        13.9573
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7417,
+          "speed": 21.7818,
+          "normalSpeed": 24.0114,
+          "impulse": 3.8638,
+          "point": {
+            "x": 0,
+            "y": 3.1026,
+            "z": 23.305
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9997,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.0184,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y0-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        13.9573
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7417,
+          "speed": 21.7818,
+          "normalSpeed": 24.0114,
+          "impulse": 3.8638,
+          "point": {
+            "x": 0,
+            "y": 3.1026,
+            "z": 23.305
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9997,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.0184,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y0-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        13.9573
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7417,
+          "speed": 21.7818,
+          "normalSpeed": 24.0114,
+          "impulse": 3.8638,
+          "point": {
+            "x": 0,
+            "y": 3.1026,
+            "z": 23.305
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9997,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.0184,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y0-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        13.9573
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7417,
+          "speed": 21.7818,
+          "normalSpeed": 24.0114,
+          "impulse": 3.8638,
+          "point": {
+            "x": 0,
+            "y": 3.1026,
+            "z": 23.305
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9997,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.0184,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y0-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        13.9573
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7417,
+          "speed": 21.7818,
+          "normalSpeed": 24.0114,
+          "impulse": 3.8638,
+          "point": {
+            "x": 0,
+            "y": 3.1026,
+            "z": 23.305
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9997,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.0184,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y20-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.7496,
+        0.43,
+        14.7896
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7417,
+          "speed": 9.0898,
+          "normalSpeed": 22.5634,
+          "impulse": 33.7791,
+          "point": {
+            "x": 0.147,
+            "y": 3.1026,
+            "z": 23.2791
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3711,
+          "gainNormal": 0.7904,
+          "gainImpulse": 0.7887,
+          "gainLive": 0.7904,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y20-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.654,
+        0.43,
+        15.1087
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.75,
+          "speed": 9.1331,
+          "normalSpeed": 22.5634,
+          "impulse": 33.7791,
+          "point": {
+            "x": 0.147,
+            "y": 3.0705,
+            "z": 23.4792
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3739,
+          "gainNormal": 0.7904,
+          "gainImpulse": 0.7887,
+          "gainLive": 0.7904,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y20-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.5586,
+        0.43,
+        15.4278
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7583,
+          "speed": 9.1773,
+          "normalSpeed": 22.5634,
+          "impulse": 33.7791,
+          "point": {
+            "x": 0.147,
+            "y": 3.0375,
+            "z": 23.6793
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3769,
+          "gainNormal": 0.7904,
+          "gainImpulse": 0.7887,
+          "gainLive": 0.7904,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y20-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.3682,
+        0.43,
+        16.0662
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.775,
+          "speed": 9.2683,
+          "normalSpeed": 22.5634,
+          "impulse": 33.7791,
+          "point": {
+            "x": 0.147,
+            "y": 2.969,
+            "z": 24.0794
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3829,
+          "gainNormal": 0.7904,
+          "gainImpulse": 0.7887,
+          "gainLive": 0.7904,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y20-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.0846,
+        0.43,
+        17.5504
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.8,
+          "speed": 20.4193,
+          "normalSpeed": 22.5634,
+          "impulse": 6.6503,
+          "point": {
+            "x": 0.147,
+            "y": 2.86,
+            "z": 24.6797
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9853,
+          "gainNormal": 0.7904,
+          "gainImpulse": 0.0523,
+          "gainLive": 0.7904,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y40-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.9135,
+        0.43,
+        19.7905
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7333,
+          "speed": 15.8943,
+          "normalSpeed": 18.3938,
+          "impulse": 27.5369,
+          "point": {
+            "x": 0.2762,
+            "y": 3.1339,
+            "z": 23.0044
+          },
+          "callbacks": 2,
+          "gainTotal": 0.8117,
+          "gainNormal": 0.6114,
+          "gainImpulse": 0.6097,
+          "gainLive": 0.6114,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y40-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.622,
+        0.43,
+        20.3089
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.75,
+          "speed": 15.9432,
+          "normalSpeed": 18.3938,
+          "impulse": 27.5369,
+          "point": {
+            "x": 0.2762,
+            "y": 3.0705,
+            "z": 23.4045
+          },
+          "callbacks": 2,
+          "gainTotal": 0.8143,
+          "gainNormal": 0.6114,
+          "gainImpulse": 0.6097,
+          "gainLive": 0.6114,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y40-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.33,
+        0.43,
+        20.8269
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7667,
+          "speed": 15.9945,
+          "normalSpeed": 18.3938,
+          "impulse": 27.5369,
+          "point": {
+            "x": 0.2762,
+            "y": 3.0036,
+            "z": 23.8047
+          },
+          "callbacks": 2,
+          "gainTotal": 0.8171,
+          "gainNormal": 0.6114,
+          "gainImpulse": 0.6097,
+          "gainLive": 0.6114,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y40-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -7.7596,
+        0.43,
+        21.8743
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.8,
+          "speed": 21.3571,
+          "normalSpeed": 18.3938,
+          "impulse": 6.536,
+          "point": {
+            "x": 0.2762,
+            "y": 2.86,
+            "z": 24.6051
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9975,
+          "gainNormal": 0.6114,
+          "gainImpulse": 0.0506,
+          "gainLive": 0.6114,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y40-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -6.5241,
+        0.43,
+        24.0611
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.875,
+          "speed": 16.3837,
+          "normalSpeed": 18.3938,
+          "impulse": 27.537,
+          "point": {
+            "x": 0.2762,
+            "y": 2.4881,
+            "z": 26.406
+          },
+          "callbacks": 2,
+          "gainTotal": 0.8378,
+          "gainNormal": 0.6114,
+          "gainImpulse": 0.6097,
+          "gainLive": 0.6114,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y55-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.9286,
+        0.43,
+        25.1886
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7167,
+          "speed": 19.9951,
+          "normalSpeed": 13.7724,
+          "impulse": 20.6183,
+          "point": {
+            "x": 0.352,
+            "y": 3.1941,
+            "z": 22.5215
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9766,
+          "gainNormal": 0.3963,
+          "gainImpulse": 0.395,
+          "gainLive": 0.3963,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y55-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.5152,
+        0.43,
+        25.8265
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.75,
+          "speed": 20.0709,
+          "normalSpeed": 13.7724,
+          "impulse": 20.6183,
+          "point": {
+            "x": 0.352,
+            "y": 3.0705,
+            "z": 23.3218
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9783,
+          "gainNormal": 0.3963,
+          "gainImpulse": 0.395,
+          "gainLive": 0.3963,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y55-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.0064,
+        0.43,
+        26.3281
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.775,
+          "speed": 20.1327,
+          "normalSpeed": 13.7724,
+          "impulse": 20.6183,
+          "point": {
+            "x": 0.352,
+            "y": 2.969,
+            "z": 23.9221
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9796,
+          "gainNormal": 0.3963,
+          "gainImpulse": 0.395,
+          "gainLive": 0.3963,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y55-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -6.9322,
+        0.43,
+        27.422
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.8333,
+          "speed": 20.4278,
+          "normalSpeed": 13.7724,
+          "impulse": 17.1192,
+          "point": {
+            "x": 0.352,
+            "y": 2.7031,
+            "z": 25.3228
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9854,
+          "gainNormal": 0.3963,
+          "gainImpulse": 0.2909,
+          "gainLive": 0.3963,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y55-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -4.4065,
+        0.43,
+        29.585
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.9583,
+          "speed": 20.714,
+          "normalSpeed": 13.7724,
+          "impulse": 20.6183,
+          "point": {
+            "x": 0.352,
+            "y": 1.9957,
+            "z": 28.3242
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9901,
+          "gainNormal": 0.3963,
+          "gainImpulse": 0.395,
+          "gainLive": 0.3963,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y70-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -6.8622,
+        0.43,
+        29.731
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.675,
+          "speed": 22.7748,
+          "normalSpeed": 8.2124,
+          "impulse": 12.2946,
+          "point": {
+            "x": 0.4038,
+            "y": 3.3299,
+            "z": 21.4215
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.1638,
+          "gainImpulse": 0.1632,
+          "gainLive": 0.1638,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y70-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -6.1426,
+        0.43,
+        30.1509
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.725,
+          "speed": 23.3693,
+          "normalSpeed": 8.2124,
+          "impulse": 5.0595,
+          "point": {
+            "x": 0.4038,
+            "y": 3.1644,
+            "z": 22.6221
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.1638,
+          "gainImpulse": 0.031,
+          "gainLive": 0.1638,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y70-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.3712,
+        0.43,
+        30.599
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7833,
+          "speed": 22.9913,
+          "normalSpeed": 8.2124,
+          "impulse": 11.6779,
+          "point": {
+            "x": 0.4038,
+            "y": 2.9335,
+            "z": 24.0227
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.1638,
+          "gainImpulse": 0.1488,
+          "gainLive": 0.1638,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y70-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -3.8315,
+        0.43,
+        31.504
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.9,
+          "speed": 23.2959,
+          "normalSpeed": 8.2124,
+          "impulse": 12.2946,
+          "point": {
+            "x": 0.4038,
+            "y": 2.3491,
+            "z": 26.8241
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.1638,
+          "gainImpulse": 0.1632,
+          "gainLive": 0.1638,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y70-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "bank-y80-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -4.4626,
+        0.43,
+        31.6513
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.5583,
+          "speed": 23.7725,
+          "normalSpeed": 4.1695,
+          "impulse": 3.6108,
+          "point": {
+            "x": 0.4232,
+            "y": 3.5992,
+            "z": 18.5478
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0465,
+          "gainImpulse": 0.0161,
+          "gainLive": 0.0465,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y80-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -3.5757,
+        0.43,
+        31.9849
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.6833,
+          "speed": 23.8617,
+          "normalSpeed": 4.1695,
+          "impulse": 6.2421,
+          "point": {
+            "x": 0.4232,
+            "y": 3.3044,
+            "z": 21.5492
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0465,
+          "gainImpulse": 0.0463,
+          "gainLive": 0.0465,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y80-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -2.716,
+        0.43,
+        32.3041
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.8,
+          "speed": 24.0892,
+          "normalSpeed": 4.1695,
+          "impulse": 6.2421,
+          "point": {
+            "x": 0.4232,
+            "y": 2.86,
+            "z": 24.3506
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0465,
+          "gainImpulse": 0.0463,
+          "gainLive": 0.0465,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y80-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "bank-y80-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "bank-y85-x0",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -2.6901,
+        0.43,
+        3.9306
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.5167,
+          "speed": 2.626,
+          "normalSpeed": 23.8974,
+          "impulse": 35.7762,
+          "point": {
+            "x": 0.0418,
+            "y": 3.6558,
+            "z": 17.9004
+          },
+          "callbacks": 2,
+          "gainTotal": 0.0393,
+          "gainNormal": 0.8401,
+          "gainImpulse": 0.8385,
+          "gainLive": 0.8401,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y85-x0.5",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -2.2146,
+        0.43,
+        32.6849
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.575,
+          "speed": 24.0112,
+          "normalSpeed": 2.0927,
+          "impulse": 1.8164,
+          "point": {
+            "x": 0.4281,
+            "y": 3.5707,
+            "z": 18.9108
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0123,
+          "gainImpulse": 0.0042,
+          "gainLive": 0.0123,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y85-x1",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -1.3191,
+        0.43,
+        32.9324
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.8167,
+          "speed": 24.3962,
+          "normalSpeed": 2.0927,
+          "impulse": 3.133,
+          "point": {
+            "x": 0.4281,
+            "y": 2.7832,
+            "z": 24.7136
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0123,
+          "gainImpulse": 0.0122,
+          "gainLive": 0.0123,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-y85-x2",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "bank-y85-x4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "bank-square-c0.25",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.25
+      },
+      "terminal": [
+        0,
+        0.43,
+        18.8917
+      ],
+      "impacts": []
+    },
+    {
+      "id": "bank-square-c0.4",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.4
+      },
+      "terminal": [
+        0,
+        0.43,
+        19.496
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.875,
+          "speed": 19.6185,
+          "normalSpeed": 20.3852,
+          "impulse": 2.6867,
+          "point": {
+            "x": 0,
+            "y": 1.8137,
+            "z": 23.3335
+          },
+          "callbacks": 3,
+          "gainTotal": 0.9674,
+          "gainNormal": 0.7004,
+          "gainImpulse": 0.009,
+          "gainLive": 0.7004,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-square-c0.55",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "terminal": [
+        0,
+        0.43,
+        10.3377
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.6917,
+          "speed": 2.9108,
+          "normalSpeed": 25.8245,
+          "impulse": 38.6613,
+          "point": {
+            "x": 0,
+            "y": 3.5446,
+            "z": 23.3585
+          },
+          "callbacks": 2,
+          "gainTotal": 0.0479,
+          "gainNormal": 0.9026,
+          "gainImpulse": 0.9012,
+          "gainLive": 0.9026,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-square-c0.7",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.7
+      },
+      "terminal": [
+        0,
+        0.73,
+        2.2293
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.575,
+          "speed": 0.3546,
+          "normalSpeed": 31.2638,
+          "impulse": 46.8044,
+          "point": {
+            "x": 0,
+            "y": 4.4571,
+            "z": 23.4732
+          },
+          "callbacks": 2,
+          "gainTotal": 0.0008,
+          "gainNormal": 0.9984,
+          "gainImpulse": 0.9982,
+          "gainLive": 0.9984,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "bank-square-c0.85",
+      "role": "bank",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.85
+      },
+      "terminal": [
+        0,
+        0.4673,
+        -8.0916
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.4833,
+          "speed": 16.3972,
+          "normalSpeed": 36.7032,
+          "impulse": 30.5652,
+          "point": {
+            "x": 0,
+            "y": 4.99,
+            "z": 23.2364
+          },
+          "callbacks": 2,
+          "gainTotal": 0.8385,
+          "gainNormal": 1,
+          "gainImpulse": 0.7,
+          "gainLive": 1,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "ramp-y0",
+      "role": "ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        55.3415
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.075,
+          "speed": 18.9844,
+          "normalSpeed": 16.5961,
+          "impulse": 24.9833,
+          "point": {
+            "x": 0,
+            "y": 0.7712,
+            "z": 31.0478
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9488,
+          "gainNormal": 0.5279,
+          "gainImpulse": 0.5307,
+          "gainLive": 0.5279,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "ramp-y20",
+      "role": "ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.1125,
+        0.43,
+        60.2921
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.0667,
+          "speed": 20.274,
+          "normalSpeed": 14.9492,
+          "impulse": 22.5207,
+          "point": {
+            "x": 0.0503,
+            "y": 0.8273,
+            "z": 30.8171
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9825,
+          "gainNormal": 0.4508,
+          "gainImpulse": 0.4538,
+          "gainLive": 0.4508,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "ramp-y45",
+      "role": "ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -12.2781,
+        0.43,
+        64.0598
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.0333,
+          "speed": 21.6866,
+          "normalSpeed": 12.6632,
+          "impulse": 17.0884,
+          "point": {
+            "x": 0.1039,
+            "y": 1.0776,
+            "z": 29.9825
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9994,
+          "gainNormal": 0.3459,
+          "gainImpulse": 0.29,
+          "gainLive": 0.3459,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "ramp-y70",
+      "role": "ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        1.9257,
+        0.43,
+        27.4846
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.0417,
+          "speed": 11.1192,
+          "normalSpeed": 22.5634,
+          "impulse": 33.7791,
+          "point": {
+            "x": -0.147,
+            "y": 1.42,
+            "z": 30.4825
+          },
+          "callbacks": 2,
+          "gainTotal": 0.5081,
+          "gainNormal": 0.7904,
+          "gainImpulse": 0.7887,
+          "gainLive": 0.7904,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y0-x0",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        21.3772
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.925,
+          "speed": 6.0962,
+          "normalSpeed": 24.0114,
+          "impulse": 35.9469,
+          "point": {
+            "x": 0,
+            "y": 2.2027,
+            "z": 27.7071
+          },
+          "callbacks": 2,
+          "gainTotal": 0.1878,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.8425,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y0-x1",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        21.3772
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.925,
+          "speed": 6.0962,
+          "normalSpeed": 24.0114,
+          "impulse": 35.9469,
+          "point": {
+            "x": 0,
+            "y": 2.2027,
+            "z": 27.7071
+          },
+          "callbacks": 2,
+          "gainTotal": 0.1878,
+          "gainNormal": 0.8442,
+          "gainImpulse": 0.8425,
+          "gainLive": 0.8442,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y0-x2",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -0.4341,
+        0.43,
+        21.3952
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.925,
+          "speed": 6.1638,
+          "normalSpeed": 23.9942,
+          "impulse": 35.9211,
+          "point": {
+            "x": 0.0163,
+            "y": 2.2027,
+            "z": 27.7068
+          },
+          "callbacks": 2,
+          "gainTotal": 0.1915,
+          "gainNormal": 0.8435,
+          "gainImpulse": 0.8419,
+          "gainLive": 0.8435,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y30-x0",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -4.9456,
+        0.43,
+        23.6274
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.925,
+          "speed": 13.4648,
+          "normalSpeed": 20.7945,
+          "impulse": 31.131,
+          "point": {
+            "x": 0.2149,
+            "y": 2.2027,
+            "z": 27.6495
+          },
+          "callbacks": 2,
+          "gainTotal": 0.6652,
+          "gainNormal": 0.718,
+          "gainImpulse": 0.7163,
+          "gainLive": 0.718,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y30-x1",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -4.3725,
+        0.43,
+        24.733
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.95,
+          "speed": 13.6032,
+          "normalSpeed": 20.7945,
+          "impulse": 31.131,
+          "point": {
+            "x": 0.2148,
+            "y": 2.0487,
+            "z": 28.2498
+          },
+          "callbacks": 2,
+          "gainTotal": 0.6742,
+          "gainNormal": 0.718,
+          "gainImpulse": 0.7163,
+          "gainLive": 0.718,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y30-x2",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -4.4464,
+        0.43,
+        26.0679
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.9667,
+          "speed": 18.0306,
+          "normalSpeed": 20.7453,
+          "impulse": 13.6364,
+          "point": {
+            "x": 0.2164,
+            "y": 1.9419,
+            "z": 28.6491
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9141,
+          "gainNormal": 0.7159,
+          "gainImpulse": 0.1963,
+          "gainLive": 0.7159,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y60-x0",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -5.114,
+        0.43,
+        29.655
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.9,
+          "speed": 21.5872,
+          "normalSpeed": 12.0057,
+          "impulse": 17.9735,
+          "point": {
+            "x": 0.3721,
+            "y": 2.3491,
+            "z": 26.8919
+          },
+          "callbacks": 2,
+          "gainTotal": 0.999,
+          "gainNormal": 0.3167,
+          "gainImpulse": 0.3156,
+          "gainLive": 0.3167,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y60-x1",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -3.702,
+        0.43,
+        30.6536
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.975,
+          "speed": 21.8461,
+          "normalSpeed": 12.0057,
+          "impulse": 17.9735,
+          "point": {
+            "x": 0.3721,
+            "y": 1.8872,
+            "z": 28.6928
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9999,
+          "gainNormal": 0.3167,
+          "gainImpulse": 0.3156,
+          "gainLive": 0.3167,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y60-x2",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "plate-y80-x0",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -6.089,
+        0.43,
+        20.863
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 0.85,
+          "speed": 12.3393,
+          "normalSpeed": 21.2436,
+          "impulse": 31.8033,
+          "point": {
+            "x": 0.2003,
+            "y": 2.6196,
+            "z": 25.8567
+          },
+          "callbacks": 2,
+          "gainTotal": 0.5909,
+          "gainNormal": 0.737,
+          "gainImpulse": 0.7353,
+          "gainLive": 0.737,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "plate-y80-x1",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "plate-y80-x2",
+      "role": "plate",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        0,
+        0.43,
+        33.0801
+      ],
+      "impacts": []
+    },
+    {
+      "id": "opening",
+      "role": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "terminal": [
+        0,
+        0.43,
+        91.8844
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.425,
+          "speed": 20.5027,
+          "normalSpeed": 16.99,
+          "impulse": 25.5761,
+          "point": {
+            "x": 0,
+            "y": 2.1713,
+            "z": 40.8542
+          },
+          "callbacks": 2,
+          "gainTotal": 0.9867,
+          "gainNormal": 0.5463,
+          "gainImpulse": 0.5492,
+          "gainLive": 0.5463,
+          "dynamics": "normal-speed"
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "note": "E4",
+          "material": "metal",
+          "time": 4.4583,
+          "speed": 8.8726,
+          "normalSpeed": 17.4918,
+          "impulse": 26.3365,
+          "point": {
+            "x": 0,
+            "y": 4.1031,
+            "z": 67.7696
+          },
+          "callbacks": 2,
+          "gainTotal": 0.3568,
+          "gainNormal": 0.5697,
+          "gainImpulse": 0.5728,
+          "gainLive": 0.5697,
+          "dynamics": "normal-speed"
+        }
+      ]
+    },
+    {
+      "id": "graze-ramp",
+      "role": "pair",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "terminal": [
+        -8.9208,
+        0.43,
+        34.4556
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "note": "C4",
+          "material": "timber",
+          "time": 0.7333,
+          "speed": 24.2194,
+          "normalSpeed": 2.0927,
+          "impulse": 3.133,
+          "point": {
+            "x": 0.4281,
+            "y": 3.1339,
+            "z": 22.7126
+          },
+          "callbacks": 2,
+          "gainTotal": 1,
+          "gainNormal": 0.0123,
+          "gainImpulse": 0.0122,
+          "gainLive": 0.0123,
+          "dynamics": "normal-speed"
+        },
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "note": "D4",
+          "material": "metal",
+          "time": 1.0833,
+          "speed": 15.5804,
+          "normalSpeed": 19.9556,
+          "impulse": 20.6532,
+          "point": {
+            "x": -1.2877,
+            "y": 0.7928,
+            "z": 30.994
+          },
+          "callbacks": 2,
+          "gainTotal": 0.7943,
+          "gainNormal": 0.6816,
+          "gainImpulse": 0.3961,
+          "gainLive": 0.6816,
+          "dynamics": "normal-speed"
+        }
+      ]
+    }
+  ],
+  "levels": {
+    "timberUnityDbfs": -5.22335569017773,
+    "metalUnityDbfs": -6.193547057225965,
+    "timberHalfDrop": -5.964196269112971,
+    "metalHalfDrop": -6.012491604848071,
+    "bank": {
+      "totalSpeed": {
+        "n": 33,
+        "min": -33.335504682669196,
+        "median": -5.3511045313999235,
+        "max": -5.22335569017773,
+        "spread": 28.112148992491466,
+        "unityPeakDbfs": -5.22335569017773
+      },
+      "normalSpeed": {
+        "n": 33,
+        "min": -43.42525346138977,
+        "median": -9.49684700237633,
+        "max": -5.22335569017773,
+        "spread": 38.201897771212046,
+        "unityPeakDbfs": -5.22335569017773
+      },
+      "impulse": {
+        "n": 33,
+        "min": -52.758369882219725,
+        "median": -20.968952601820884,
+        "max": -6.126932029141866,
+        "spread": 46.631437853077855,
+        "unityPeakDbfs": -5.22335569017773
+      }
+    },
+    "ramp": {
+      "totalSpeed": {
+        "n": 4,
+        "min": -12.074563159020052,
+        "median": -6.497152160636743,
+        "max": -6.198760155094605,
+        "spread": 5.875803003925447,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "normalSpeed": {
+        "n": 4,
+        "min": -15.414535816938736,
+        "median": -12.4011552041285,
+        "max": -8.23660842563453,
+        "spread": 7.177927391304205,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "impulse": {
+        "n": 4,
+        "min": -16.945587099246843,
+        "median": -12.34983256102285,
+        "max": -8.255310240705462,
+        "spread": 8.690276858541381,
+        "unityPeakDbfs": -6.193547057225965
+      }
+    },
+    "plate": {
+      "totalSpeed": {
+        "n": 9,
+        "min": -20.719635298624123,
+        "median": -9.734502246276332,
+        "max": -6.194415689622115,
+        "spread": 14.525219609002008,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "normalSpeed": {
+        "n": 9,
+        "min": -16.180585789787727,
+        "median": -9.071058172379958,
+        "max": -7.664640100858179,
+        "spread": 8.515945688929548,
+        "unityPeakDbfs": -6.193547057225965
+      },
+      "impulse": {
+        "n": 9,
+        "min": -20.33514106522584,
+        "median": -9.091648034053527,
+        "max": -7.68214886635844,
+        "spread": 12.652992198867402,
+        "unityPeakDbfs": -6.193547057225965
+      }
+    }
+  }
+}

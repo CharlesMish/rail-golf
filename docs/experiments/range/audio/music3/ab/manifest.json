@@ -1,0 +1,104 @@
+{
+  "source": "scripts/range/music3-headroom.mjs",
+  "tailSeconds": 2.5,
+  "files": [
+    {
+      "file": "graze-85--pr55.wav",
+      "variant": "pr55",
+      "bytes": 292574,
+      "wavPeak": 0.007,
+      "wavPeakDbfs": -43.07,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "graze-85--even-db.wav",
+      "variant": "even-db",
+      "bytes": 292574,
+      "wavPeak": 0.088,
+      "wavPeakDbfs": -21.12,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "graze-85--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 292574,
+      "wavPeak": 0.1314,
+      "wavPeakDbfs": -17.63,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "square-055--pr55.wav",
+      "variant": "pr55",
+      "bytes": 281550,
+      "wavPeak": 0.485,
+      "wavPeakDbfs": -6.28,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "square-055--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 281550,
+      "wavPeak": 0.4405,
+      "wavPeakDbfs": -7.12,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "phrase-early-plate--pr55.wav",
+      "variant": "pr55",
+      "bytes": 594660,
+      "wavPeak": 0.255,
+      "wavPeakDbfs": -11.87,
+      "notes": [
+        "bank:C4:timber",
+        "ramp:D4:metal",
+        "plate:E4:metal"
+      ]
+    },
+    {
+      "file": "phrase-early-plate--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 594660,
+      "wavPeak": 0.2666,
+      "wavPeakDbfs": -11.48,
+      "notes": [
+        "bank:C4:timber",
+        "ramp:D4:metal",
+        "plate:E4:metal"
+      ]
+    },
+    {
+      "file": "phrase-early-plate-all-timber--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 594660,
+      "wavPeak": 0.299,
+      "wavPeakDbfs": -10.49,
+      "notes": [
+        "bank:C4:timber",
+        "ramp:D4:timber",
+        "plate:E4:timber"
+      ]
+    },
+    {
+      "file": "phrase-late-catch--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 820306,
+      "wavPeak": 0.2555,
+      "wavPeakDbfs": -11.85,
+      "notes": [
+        "ramp:D4:metal",
+        "bank:C4:timber",
+        "plate:E4:metal"
+      ]
+    }
+  ]
+}

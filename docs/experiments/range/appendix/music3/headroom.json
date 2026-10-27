@@ -1,0 +1,440 @@
+{
+  "seed": 20261026,
+  "seedMeaning": "Provenance only. Not applied to gravity, mass, or the solver.",
+  "dynamics": "normal-speed",
+  "objectLimit": 12,
+  "workshopAllowance": {
+    "ramp": 1,
+    "bank": 1,
+    "plate": 1
+  },
+  "renderer": "Chrome headless OfflineAudioContext, lib/worldcraft-resonance.js scheduleImpact after voiceImpact. Float peak is before WAV clamp.",
+  "limiter": {
+    "knee": 0.85,
+    "ceilingDb": -1,
+    "preGain": 0.0625,
+    "law": "identity at and below the knee; tanh toward -1 dBFS above it"
+  },
+  "physics": {
+    "layout": "phrase-early-plate",
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "samples": 224,
+    "sampleMismatchMetalVsAllTimber": 0,
+    "terminalReason": "first-ground-contact",
+    "metalNotes": [
+      {
+        "role": "bank",
+        "note": "C4",
+        "material": "timber",
+        "time": 0.225,
+        "normalSpeed": 4.3602,
+        "gain": 0.050637538766405074
+      },
+      {
+        "role": "ramp",
+        "note": "D4",
+        "material": "metal",
+        "time": 1.4333,
+        "normalSpeed": 16.4137,
+        "gain": 0.5193856819732391
+      },
+      {
+        "role": "plate",
+        "note": "E4",
+        "material": "metal",
+        "time": 4.2417,
+        "normalSpeed": 15.1925,
+        "gain": 0.4621809214643083
+      }
+    ],
+    "timberNotes": [
+      {
+        "role": "bank",
+        "note": "C4",
+        "material": "timber",
+        "time": 0.225,
+        "normalSpeed": 4.3602,
+        "gain": 0.050637538766405074
+      },
+      {
+        "role": "ramp",
+        "note": "D4",
+        "material": "timber",
+        "time": 1.4333,
+        "normalSpeed": 16.4137,
+        "gain": 0.5193856819732391
+      },
+      {
+        "role": "plate",
+        "note": "E4",
+        "material": "timber",
+        "time": 4.2417,
+        "normalSpeed": 15.1925,
+        "gain": 0.4621809214643083
+      }
+    ],
+    "graze": [
+      {
+        "role": "bank",
+        "note": "C4",
+        "material": "timber",
+        "time": 0.8167,
+        "normalSpeed": 2.0927,
+        "gain": 0.012271255794653251
+      }
+    ],
+    "square": [
+      {
+        "role": "bank",
+        "note": "C4",
+        "material": "timber",
+        "time": 0.6917,
+        "normalSpeed": 25.8245,
+        "gain": 0.9026466366636396
+      }
+    ],
+    "lateCatch": [
+      {
+        "role": "ramp",
+        "note": "D4",
+        "material": "metal",
+        "time": 1.4167,
+        "normalSpeed": 16.3782,
+        "gain": 0.51772286884115
+      },
+      {
+        "role": "bank",
+        "note": "C4",
+        "material": "timber",
+        "time": 4.1417,
+        "normalSpeed": 16.7839,
+        "gain": 0.5367166928497031
+      },
+      {
+        "role": "plate",
+        "note": "E4",
+        "material": "metal",
+        "time": 6.8,
+        "normalSpeed": 3.5771,
+        "gain": 0.034693928629098744
+      }
+    ]
+  },
+  "before": {
+    "note": "Chrome float peak, tuned-even, before the bank-role fix and before the mix limiter. Timber ramp and plate matched the bank because both took the bank voice.",
+    "tuned-even": {
+      "bankFull": {
+        "peak": 0.4847,
+        "peakDbfs": -6.29,
+        "over": 0
+      },
+      "bankGraze": {
+        "peak": 0.1314,
+        "peakDbfs": -17.63,
+        "over": 0
+      },
+      "bankSquare": {
+        "peak": 0.4847,
+        "peakDbfs": -6.29,
+        "over": 0
+      },
+      "rampTimberFull": {
+        "peak": 0.4847,
+        "peakDbfs": -6.29,
+        "over": 0
+      },
+      "plateTimberFull": {
+        "peak": 0.4847,
+        "peakDbfs": -6.29,
+        "over": 0
+      },
+      "rampMetalFull": {
+        "peak": 0.4902,
+        "peakDbfs": -6.19,
+        "over": 0
+      },
+      "trioStagger20": {
+        "peak": 0.7581,
+        "peakDbfs": -2.41,
+        "over": 0
+      },
+      "trioTogether": {
+        "peak": 1.4486,
+        "peakDbfs": 3.22,
+        "over": 21
+      },
+      "timberTrioTogether": {
+        "peak": 1.454,
+        "peakDbfs": 3.25,
+        "over": 21
+      },
+      "twelveTogether": {
+        "peak": 5.7943,
+        "peakDbfs": 15.26,
+        "over": 813
+      },
+      "twelveBanks": {
+        "peak": 5.8158,
+        "peakDbfs": 15.29,
+        "over": 826
+      },
+      "twelveStagger5": {
+        "peak": 1.5285,
+        "peakDbfs": 3.69,
+        "over": 206
+      }
+    }
+  },
+  "after": {
+    "tuned-even": {
+      "bankFull": {
+        "peak": 0.4847,
+        "peakDbfs": -6.29,
+        "over": 0
+      },
+      "bankGraze": {
+        "peak": 0.1314,
+        "peakDbfs": -17.63,
+        "over": 0
+      },
+      "bankSquare": {
+        "peak": 0.4847,
+        "peakDbfs": -6.29,
+        "over": 0
+      },
+      "rampTimberFull": {
+        "peak": 0.5481,
+        "peakDbfs": -5.22,
+        "over": 0
+      },
+      "plateTimberFull": {
+        "peak": 0.5481,
+        "peakDbfs": -5.22,
+        "over": 0
+      },
+      "rampMetalFull": {
+        "peak": 0.4902,
+        "peakDbfs": -6.19,
+        "over": 0
+      },
+      "trioStagger20": {
+        "peak": 0.7581,
+        "peakDbfs": -2.41,
+        "over": 0
+      },
+      "trioTogether": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "timberTrioTogether": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "twelveTogether": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "twelveBanks": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "twelveStagger5": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "phraseTimber": {
+        "peak": 0.2991,
+        "peakDbfs": -10.48,
+        "over": 0
+      },
+      "phraseMetal": {
+        "peak": 0.2667,
+        "peakDbfs": -11.48,
+        "over": 0
+      }
+    },
+    "pr55": {
+      "bankFull": {
+        "peak": 0.5481,
+        "peakDbfs": -5.22,
+        "over": 0
+      },
+      "bankGraze": {
+        "peak": 0.007,
+        "peakDbfs": -43.07,
+        "over": 0
+      },
+      "bankSquare": {
+        "peak": 0.5481,
+        "peakDbfs": -5.22,
+        "over": 0
+      },
+      "rampTimberFull": {
+        "peak": 0.5481,
+        "peakDbfs": -5.22,
+        "over": 0
+      },
+      "plateTimberFull": {
+        "peak": 0.5481,
+        "peakDbfs": -5.22,
+        "over": 0
+      },
+      "rampMetalFull": {
+        "peak": 0.4902,
+        "peakDbfs": -6.19,
+        "over": 0
+      },
+      "trioStagger20": {
+        "peak": 0.7621,
+        "peakDbfs": -2.36,
+        "over": 0
+      },
+      "trioTogether": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "timberTrioTogether": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "twelveTogether": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "twelveBanks": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "twelveStagger5": {
+        "peak": 0.8913,
+        "peakDbfs": -1,
+        "over": 0
+      },
+      "phraseTimber": {
+        "peak": 0.2861,
+        "peakDbfs": -10.87,
+        "over": 0
+      },
+      "phraseMetal": {
+        "peak": 0.255,
+        "peakDbfs": -11.87,
+        "over": 0
+      }
+    }
+  },
+  "ab": [
+    {
+      "file": "graze-85--pr55.wav",
+      "variant": "pr55",
+      "bytes": 292574,
+      "wavPeak": 0.007,
+      "wavPeakDbfs": -43.07,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "graze-85--even-db.wav",
+      "variant": "even-db",
+      "bytes": 292574,
+      "wavPeak": 0.088,
+      "wavPeakDbfs": -21.12,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "graze-85--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 292574,
+      "wavPeak": 0.1314,
+      "wavPeakDbfs": -17.63,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "square-055--pr55.wav",
+      "variant": "pr55",
+      "bytes": 281550,
+      "wavPeak": 0.485,
+      "wavPeakDbfs": -6.28,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "square-055--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 281550,
+      "wavPeak": 0.4405,
+      "wavPeakDbfs": -7.12,
+      "notes": [
+        "bank:C4:timber"
+      ]
+    },
+    {
+      "file": "phrase-early-plate--pr55.wav",
+      "variant": "pr55",
+      "bytes": 594660,
+      "wavPeak": 0.255,
+      "wavPeakDbfs": -11.87,
+      "notes": [
+        "bank:C4:timber",
+        "ramp:D4:metal",
+        "plate:E4:metal"
+      ]
+    },
+    {
+      "file": "phrase-early-plate--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 594660,
+      "wavPeak": 0.2666,
+      "wavPeakDbfs": -11.48,
+      "notes": [
+        "bank:C4:timber",
+        "ramp:D4:metal",
+        "plate:E4:metal"
+      ]
+    },
+    {
+      "file": "phrase-early-plate-all-timber--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 594660,
+      "wavPeak": 0.299,
+      "wavPeakDbfs": -10.49,
+      "notes": [
+        "bank:C4:timber",
+        "ramp:D4:timber",
+        "plate:E4:timber"
+      ]
+    },
+    {
+      "file": "phrase-late-catch--tuned-even.wav",
+      "variant": "tuned-even",
+      "bytes": 820306,
+      "wavPeak": 0.2555,
+      "wavPeakDbfs": -11.85,
+      "notes": [
+        "ramp:D4:metal",
+        "bank:C4:timber",
+        "plate:E4:metal"
+      ]
+    }
+  ]
+}

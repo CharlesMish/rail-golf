@@ -134,6 +134,24 @@ test('Worldcraft storage saves/reopens four explicit slots, never auto-evicts, a
  assert.throws(()=>parseWorldJSON(store.exportLocal()),/fields/,'a study export is not a playable-world import');
 });
 
+test('a kept line can store recorded sounds, and a line without them still loads',()=>{
+ const plain=line('line-plain');
+ assert.equal(Object.hasOwn(plain,'performance'),false);
+ const sound={piece:'ramp-yours',role:'ramp',time:1.425,material:'metal',degree:1,note:'D4',hz:293.6648,gain:0.5,callbacks:4};
+ const performed=packWorldcraftLine({...line('line-sound'),performance:{impacts:[sound]}});
+ assert.equal(performed.performance.impacts[0].note,'D4');
+ assert.equal(performed.performance.impacts[0].time,1.425);
+ const raw=storage();
+ const store=createWorldcraftStore(raw);
+ store.keepLine(plain);
+ store.keepLine(performed);
+ const loaded=createWorldcraftStore(raw).lines();
+ assert.equal(Object.hasOwn(loaded.find(item=>item.id==='line-plain'),'performance'),false);
+ assert.deepEqual(loaded.find(item=>item.id==='line-sound').performance.impacts,[sound]);
+ assert.throws(()=>packWorldcraftLine({...line('line-bad'),performance:{impacts:[{...sound,gain:2}]}}),/gain/);
+ assert.throws(()=>packWorldcraftLine({...line('line-extra'),performance:{impacts:[sound],extra:true}}),/fields/);
+});
+
 test('corrupt/unsupported collections remain byte-for-byte intact and new choices remain exportable in memory',()=>{
  for(const original of ['broken JSON',JSON.stringify({version:2,entries:[]}),JSON.stringify({version:1,entries:[{id:'bad'}]})]){
   const raw=storage(),key=WORLDCRAFT_STORAGE_PREFIX+'worlds';raw.setItem(key,original);

@@ -64,13 +64,13 @@ Hypothesis: with no pin and no target, a committed shot still shows whether a pi
 
 Hypothesis: the pocket behind the screen is reachable inside the aim window by moving the spare bank, and not by aiming alone. Setup: origin fixed at 0, yaw −60..60, elevation 8..26, charge 0.30..0.90, screen locked, goal circle (−8, 54) radius 4.
 
-Uniform grid (not a neighbourhood of a known shot): 994 legal poses, 41,696 fired pairs after a proximity filter, 708 clears. Family 1 is 644 clears. Family 2 is 28 clears and is a knife-edge: aim yaw clears only at exactly 0. ±0.1° misses by 8.496 m and 8.789 m. Bank x clears only at 4 m. Bank yaw clears only at −45° (and the half-turn 135° once, the same slab).
+Uniform grid (not a neighbourhood of a known shot): 994 legal poses, 41,696 fired pairs after a proximity filter, 708 clears. Family 1 is 644 clears. Family 2 is 28 clears. Its aim yaw is about 0.081° wide (bisection in [REVIEW.md](REVIEW.md): last clear −0.04203125° / first miss −0.0421875°; last clear +0.03921875° / first miss +0.039375°). The editor yaw step is 0.5°, so that landing is not a route the controls can sit on. ±0.1° still misses by 8.496 m and 8.789 m. Bank x clears only at 4 m. Bank yaw clears only at −45° (and the half-turn 135° once, the same slab).
 
 Direct Havok, no spare bank and with the bank parked, is a separate sweep: 15,067 aims, 0 clears, nearest 8.699 m. The geometric occlusion count (1,073,173 aims, 0 unoccluded landings in the pocket) is not that Havok grid.
 
 Player-like: not run. The browser check on the lane was SwiftShader, not a person.
 
-Integrated `run.mjs` replay: every `failures.json` row matches terminal and binding hash, including the family 2 aim-yaw 0.5° miss. The ±0.1° misses (8.496 m and 8.789 m) are in `yaw-fine.jsonl`, not in that failure file. Appendix family-1 and family-2 terminals match `reproduce.json` (those files store the terminal, not a binding hash). Family 2's reproduced clear is aim yaw exactly 0, elevation 26, charge 0.70, first ground about 0.113 m from the centre.
+Integrated `run.mjs` replay: every `failures.json` row matches terminal and binding hash, including the family 2 aim-yaw 0.5° miss. The ±0.1° misses (8.496 m and 8.789 m) are in `yaw-fine.jsonl`, not in that failure file. Appendix family-1 and family-2 terminals match `reproduce.json` (those files store the terminal, not a binding hash). Family 2's reproduced clear was fired at aim yaw 0, elevation 26, charge 0.70, first ground about 0.113 m from the centre. The yaw band around that shot is about 0.081°, which the 0.5° editor step does not sit in.
 
 Negative: aim alone does not reach the pocket on the sweeps that were fired. Family 2 is not an aim region. Not established: that a person can find either family, or tell them apart.
 
@@ -160,5 +160,5 @@ After 20 cycles, ending on Travelling Bell reset: static 5, physics 6, live 0, m
 - Phone, a desktop GPU, or the production host.
 - A Chrome pass on any commit after `02fb406`. That pass is the one recorded above. Later edits to this file do not change the lab.
 - Bitwise equality of the bell solution's terminal position between a fresh plugin and the long sweep session.
-- Family 2 aim yaw below the 0.1° sample. The measured clear is exactly 0 on the samples that were fired. That does not prove an unmeasured 0.01° neighbour.
+- Family 2 aim yaw below the 0.1° sample was measured later. The band is about 0.081° (see [REVIEW.md](REVIEW.md)). It is not a 0.5° editor step, and it is not a normally accessible alternative.
 - That every coarse cell between Back Pocket's direct-fire samples was visited.

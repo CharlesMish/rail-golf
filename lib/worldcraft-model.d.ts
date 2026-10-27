@@ -20,7 +20,9 @@ export type WorldcraftSnapshot={version:1;world:WorldcraftDocument;worldIdentity
 export type WorldcraftTerminal={reason:string;[key:string]:WorldcraftJSON};
 export type WorldcraftLaunch={station:{id:string;label:string;x:number;z:number;yaw:number};muzzle:{x:number;y:number;z:number};rail:{x:number;y:number;z:number};aim:{x:number;y:number;z:number};direction:{x:number;y:number;z:number};speed:number;mass:number;radius:number};
 export type WorldcraftContact={body:string;point:{x:number;y:number;z:number};count:number;first:number;last:number};
-export type WorldcraftLine={version:1;id:string;createdAt:string;worldSnapshot:WorldcraftSnapshot;setup:WorldcraftSetup;launch:WorldcraftLaunch;points:WorldcraftPoint[];events:WorldcraftJSON[];contacts:WorldcraftContact[];terminal:WorldcraftTerminal};
+export type WorldcraftPerformanceImpact={piece:string;role:string;time:number;material:'metal'|'timber'|'thunk';degree:number|null;note:string;hz:number;gain:number;callbacks:number};
+export type WorldcraftPerformance={impacts:WorldcraftPerformanceImpact[]};
+export type WorldcraftLine={version:1;id:string;createdAt:string;worldSnapshot:WorldcraftSnapshot;setup:WorldcraftSetup;launch:WorldcraftLaunch;points:WorldcraftPoint[];events:WorldcraftJSON[];contacts:WorldcraftContact[];terminal:WorldcraftTerminal;performance?:WorldcraftPerformance};
 export type WorldcraftSavedWorld={id:string;savedAt:string;world:WorldcraftDocument};
 export type WorldcraftStoreStatus={warning:string;memoryOnly:boolean;worldCount:number;lineCount:number};
 export type WorldcraftSaveResult<T>={entry:T;persisted:boolean;status:WorldcraftStoreStatus};
@@ -66,7 +68,7 @@ export function createWorldHistory(initial:WorldcraftDocument):{
  reset(next:WorldcraftDocument):WorldcraftDocument;
 };
 /** Preserves actual supplied samples/events; rejects oversized records instead of silently truncating. */
-export function packWorldcraftLine(input:{id?:string;createdAt?:string;worldSnapshot:WorldcraftSnapshot;setup:WorldcraftSetup;launch:WorldcraftLaunch;points:WorldcraftPoint[];events:unknown[];contacts:WorldcraftContact[];terminal:WorldcraftTerminal}):WorldcraftLine;
+export function packWorldcraftLine(input:{id?:string;createdAt?:string;worldSnapshot:WorldcraftSnapshot;setup:WorldcraftSetup;launch:WorldcraftLaunch;points:WorldcraftPoint[];events:unknown[];contacts:WorldcraftContact[];terminal:WorldcraftTerminal;performance?:WorldcraftPerformance}):WorldcraftLine;
 export function createWorldcraftStore(storage:Pick<Storage,'getItem'|'setItem'>):{
  worlds():WorldcraftSavedWorld[];
  lines():WorldcraftLine[];

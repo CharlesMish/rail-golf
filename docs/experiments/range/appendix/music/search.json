@@ -1,0 +1,785 @@
+{
+  "seed": 20261025,
+  "gitSha": "e36074d007fee2e649db73dc13c0973dc265c462",
+  "presetId": "musical-workshop",
+  "catalogPresetHash": "6d96340191f363a5b240d2e255e40d8f9fbafcdfdb007d3511b5a5f85b1c7ec8",
+  "fired": 300,
+  "rejected": 10,
+  "jobs": 310,
+  "orders": [
+    {
+      "order": "D4>C4>E4",
+      "headline": "Ramp D4 → Bank C4 → Plate E4",
+      "noteCount": 3,
+      "count": 3,
+      "sources": {
+        "late-catch": 3
+      },
+      "exampleId": "late-catch-4"
+    },
+    {
+      "order": "C4>D4>E4",
+      "headline": "Bank C4 → Ramp D4 → Plate E4",
+      "noteCount": 3,
+      "count": 1,
+      "sources": {
+        "early-plate": 1
+      },
+      "exampleId": "early-plate-14"
+    },
+    {
+      "order": "C4>D4",
+      "headline": "Bank C4 → Ramp D4",
+      "noteCount": 2,
+      "count": 40,
+      "sources": {
+        "known-phrase-geometry": 2,
+        "early-plate": 38
+      },
+      "exampleId": "early-cooccur"
+    },
+    {
+      "order": "D4>C4",
+      "headline": "Ramp D4 → Bank C4",
+      "noteCount": 2,
+      "count": 39,
+      "sources": {
+        "known-phrase-geometry": 2,
+        "late-catch": 37
+      },
+      "exampleId": "late-plate"
+    },
+    {
+      "order": "D4>E4",
+      "headline": "Ramp D4 → Plate E4",
+      "noteCount": 2,
+      "count": 20,
+      "sources": {
+        "opening": 1,
+        "opening-aim": 1,
+        "bank-between": 18
+      },
+      "exampleId": "opening"
+    },
+    {
+      "order": "D4>D4",
+      "headline": "Ramp D4 → Ramp D4",
+      "noteCount": 2,
+      "count": 3,
+      "sources": {
+        "opening-aim": 3
+      },
+      "exampleId": "opening-aim-24"
+    },
+    {
+      "order": "C4",
+      "headline": "Bank C4",
+      "noteCount": 1,
+      "count": 24,
+      "sources": {
+        "bank-lead": 2,
+        "opening-aim": 19,
+        "side-plate": 3
+      },
+      "exampleId": "bank-on-line"
+    },
+    {
+      "order": "D4",
+      "headline": "Ramp D4",
+      "noteCount": 1,
+      "count": 12,
+      "sources": {
+        "opening-aim": 11,
+        "lob": 1
+      },
+      "exampleId": "opening-aim-20"
+    },
+    {
+      "order": "E4",
+      "headline": "Plate E4",
+      "noteCount": 1,
+      "count": 2,
+      "sources": {
+        "plate-lead": 1,
+        "opening-aim": 1
+      },
+      "exampleId": "ramp-aside"
+    },
+    {
+      "order": "(none)",
+      "headline": "No resonant note",
+      "noteCount": 0,
+      "count": 156,
+      "sources": {
+        "plate-lead": 3,
+        "opening-aim": 100,
+        "lob": 11,
+        "plate-forward": 36,
+        "side-plate": 6
+      },
+      "exampleId": "plate-lead-center"
+    }
+  ],
+  "arrangements": [
+    {
+      "id": "opening",
+      "source": "opening",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": 0,
+          "z": 42,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 1
+          }
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 14,
+          "z": 28,
+          "yaw": 0,
+          "voice": {
+            "material": "timber",
+            "degree": 0
+          }
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": 0,
+          "z": 68,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 2
+          }
+        }
+      ],
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "headline": "Ramp D4 → Plate E4",
+      "explanation": "2 notes. Touched Ramp D4, Plate E4. Repeat contacts on Ramp D4, Plate E4 are one note each. Bank C4 was not touched.",
+      "order": [
+        "D4",
+        "E4"
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "time": 1.4249999999999974,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.9867339302026538,
+          "callbacks": 2
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "time": 4.458333333333345,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.3567558698325212,
+          "callbacks": 2
+        }
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 2,
+          "first": 1.4249999999999974,
+          "last": 1.4333333333333307,
+          "point": {
+            "x": 0,
+            "y": 2.17132568359375,
+            "z": 40.85417175292969
+          }
+        },
+        {
+          "body": "worldcraft-object-plate-yours",
+          "count": 2,
+          "first": 4.458333333333345,
+          "last": 4.466666666666678,
+          "point": {
+            "x": 0,
+            "y": 4.103073596954346,
+            "z": 67.76956176757812
+          }
+        },
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 7.208333333333481,
+          "last": 7.208333333333481,
+          "point": {
+            "x": 0,
+            "y": 0.0265464186668396,
+            "z": 91.81153869628906
+          }
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 7.216666666666815,
+        "position": [
+          0,
+          0.429999977350235,
+          91.8843994140625
+        ]
+      },
+      "bindingHash": "12d2820f68243da2ea9134f21f4d887ae8d2d08dc48bee5fe9cd20d98827c9ee",
+      "presetHash": "6d96340191f363a5b240d2e255e40d8f9fbafcdfdb007d3511b5a5f85b1c7ec8",
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":14,\"z\":28,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":0,\"z\":68,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":0,\"z\":42,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "pointHash": "872de0f3085f0e342543ca90793c61d0ac6f71f9ffa657fa3e45b7ee515bf574",
+      "pointCount": 290,
+      "confirmed": true,
+      "confirmedBindingHash": "12d2820f68243da2ea9134f21f4d887ae8d2d08dc48bee5fe9cd20d98827c9ee",
+      "confirmedPointHash": "872de0f3085f0e342543ca90793c61d0ac6f71f9ffa657fa3e45b7ee515bf574"
+    },
+    {
+      "id": "late-catch-4",
+      "source": "late-catch",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": -1,
+          "z": 42,
+          "yaw": 20,
+          "voice": {
+            "material": "metal",
+            "degree": 1
+          }
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": -6,
+          "z": 68,
+          "yaw": 20,
+          "voice": {
+            "material": "timber",
+            "degree": 0
+          }
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": -28,
+          "z": 58,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 2
+          }
+        }
+      ],
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "headline": "Ramp D4 → Bank C4 → Plate E4",
+      "explanation": "3 notes. Touched Ramp D4, Bank C4, Plate E4. Repeat contacts on Ramp D4, Bank C4, Plate E4 are one note each.",
+      "order": [
+        "D4",
+        "C4",
+        "E4"
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "time": 1.416666666666664,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.9934401707241937,
+          "callbacks": 2
+        },
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "time": 4.141666666666662,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4",
+          "hz": 261.6256,
+          "gain": 0.20268744358709562,
+          "callbacks": 2
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "time": 6.800000000000128,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.9673962041731159,
+          "callbacks": 2
+        }
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 2,
+          "first": 1.416666666666664,
+          "last": 1.4249999999999974,
+          "point": {
+            "x": 0.050273459404706955,
+            "y": 2.2455248832702637,
+            "z": 40.63606262207031
+          }
+        },
+        {
+          "body": "worldcraft-object-bank-yours",
+          "count": 2,
+          "first": 4.141666666666662,
+          "last": 4.149999999999996,
+          "point": {
+            "x": -8.255899429321289,
+            "y": 7.033234119415283,
+            "z": 68.27694702148438
+          }
+        },
+        {
+          "body": "worldcraft-object-plate-yours",
+          "count": 2,
+          "first": 6.800000000000128,
+          "last": 6.8083333333334615,
+          "point": {
+            "x": -26.50084686279297,
+            "y": 0.987135112285614,
+            "z": 58.17638397216797
+          }
+        },
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 6.825000000000129,
+          "last": 6.825000000000129,
+          "point": {
+            "x": -26.666217803955078,
+            "y": 0.10630607604980469,
+            "z": 58.65481185913086
+          }
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 6.833333333333463,
+        "position": [
+          -26.71848487854004,
+          0.43000274896621704,
+          58.67972946166992
+        ]
+      },
+      "bindingHash": "5bb60e1fc07707e382bcf0bd787824a94a92ff463e369620f553b0a50946626c",
+      "presetHash": "3c3b75c42572bc11accb96ddbb15404ae161b1d7e51c2010eb3592addc0de109",
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":-6,\"z\":68,\"yaw\":20,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":-28,\"z\":58,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":-1,\"z\":42,\"yaw\":20,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "pointHash": "66d7cd97ee03728f5b67134e5d1c96c3f30d3e71b7663cde009dd653ac1b76a2",
+      "pointCount": 275,
+      "confirmed": true,
+      "confirmedBindingHash": "5bb60e1fc07707e382bcf0bd787824a94a92ff463e369620f553b0a50946626c",
+      "confirmedPointHash": "66d7cd97ee03728f5b67134e5d1c96c3f30d3e71b7663cde009dd653ac1b76a2"
+    },
+    {
+      "id": "early-plate-14",
+      "source": "early-plate",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": -8,
+          "z": 40,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 1
+          }
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 0,
+          "z": 16,
+          "yaw": 80,
+          "voice": {
+            "material": "timber",
+            "degree": 0
+          }
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": -24,
+          "z": 58,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 2
+          }
+        }
+      ],
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "headline": "Bank C4 → Ramp D4 → Plate E4",
+      "explanation": "3 notes. Touched Bank C4, Ramp D4, Plate E4. Repeat contacts on Bank C4, Ramp D4, Plate E4 are one note each.",
+      "order": [
+        "C4",
+        "D4",
+        "E4"
+      ],
+      "impacts": [
+        {
+          "piece": "bank-yours",
+          "role": "bank",
+          "time": 0.22499999999999998,
+          "material": "timber",
+          "degree": 0,
+          "note": "C4",
+          "hz": 261.6256,
+          "gain": 1,
+          "callbacks": 2
+        },
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "time": 1.4333333333333307,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.9592140424041528,
+          "callbacks": 2
+        },
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "time": 4.241666666666667,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.45447274013987304,
+          "callbacks": 2
+        }
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-bank-yours",
+          "count": 2,
+          "first": 0.22499999999999998,
+          "last": 0.2333333333333333,
+          "point": {
+            "x": 0.4231705665588379,
+            "y": 4.679812908172607,
+            "z": 10.650684356689453
+          }
+        },
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 2,
+          "first": 1.4333333333333307,
+          "last": 1.441666666666664,
+          "point": {
+            "x": -9.20988941192627,
+            "y": 1.736019492149353,
+            "z": 37.72132110595703
+          }
+        },
+        {
+          "body": "worldcraft-object-plate-yours",
+          "count": 2,
+          "first": 4.241666666666667,
+          "last": 4.250000000000001,
+          "point": {
+            "x": -24.78708267211914,
+            "y": 4.100289821624756,
+            "z": 57.80457305908203
+          }
+        },
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 5.558333333333399,
+          "last": 5.558333333333399,
+          "point": {
+            "x": -31.289148330688477,
+            "y": 0.013086169958114624,
+            "z": 40.61122131347656
+          }
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 5.566666666666733,
+        "position": [
+          -31.330244064331055,
+          0.4300069510936737,
+          40.503875732421875
+        ]
+      },
+      "bindingHash": "2d1acfcc52b4c0690d89d09e7d8192154ffc75359580aa24c30ed17566d79b92",
+      "presetHash": "ff8c836c98106903a449cd5d8c671e27cd6a3d80ba9115c137500cc0ed3dc551",
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":16,\"yaw\":80,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":-24,\"z\":58,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":-8,\"z\":40,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "pointHash": "0b54850dbdddac5a20c99b1512ea9a69b5dc3c00151361751f561251cf4328d2",
+      "pointCount": 224,
+      "confirmed": true,
+      "confirmedBindingHash": "2d1acfcc52b4c0690d89d09e7d8192154ffc75359580aa24c30ed17566d79b92",
+      "confirmedPointHash": "0b54850dbdddac5a20c99b1512ea9a69b5dc3c00151361751f561251cf4328d2"
+    },
+    {
+      "id": "ramp-aside",
+      "source": "plate-lead",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": 18,
+          "z": 40,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 1
+          }
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 0,
+          "z": 64,
+          "yaw": 0,
+          "voice": {
+            "material": "timber",
+            "degree": 0
+          }
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": 0,
+          "z": 36,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 2
+          }
+        }
+      ],
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "headline": "Plate E4",
+      "explanation": "1 note. Touched Plate E4. Repeat contacts on Plate E4 are one note each. Ramp D4, Bank C4 were not touched.",
+      "order": [
+        "E4"
+      ],
+      "impacts": [
+        {
+          "piece": "plate-yours",
+          "role": "plate",
+          "time": 1.2083333333333315,
+          "material": "metal",
+          "degree": 2,
+          "note": "E4",
+          "hz": 329.6276,
+          "gain": 0.5434028503309694,
+          "callbacks": 2
+        }
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-plate-yours",
+          "count": 2,
+          "first": 1.2083333333333315,
+          "last": 1.2166666666666648,
+          "point": {
+            "x": 0,
+            "y": 4.026167392730713,
+            "z": 35.643253326416016
+          }
+        },
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 3.933333333333322,
+          "last": 3.933333333333322,
+          "point": {
+            "x": 0,
+            "y": 0.12052255868911743,
+            "z": -6.568124294281006
+          }
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.9416666666666553,
+        "position": [
+          0,
+          0.4300001561641693,
+          -6.697024822235107
+        ]
+      },
+      "bindingHash": "8b889dacbe27a4fcb7bc47bc626a6eb7f6d73862d4ac0b27de7c44955eff9f01",
+      "presetHash": "0bb14f43b28b4e319c9d4ebe927d4de486a74a479150a96838e188c2468b974c",
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":64,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":0,\"z\":36,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":18,\"z\":40,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "pointHash": "8c365cd8321e01c5d6877fc88e85b026ea7c5b9187a5985d2bbeb74cc445ea90",
+      "pointCount": 159,
+      "confirmed": true,
+      "confirmedBindingHash": "8b889dacbe27a4fcb7bc47bc626a6eb7f6d73862d4ac0b27de7c44955eff9f01",
+      "confirmedPointHash": "8c365cd8321e01c5d6877fc88e85b026ea7c5b9187a5985d2bbeb74cc445ea90"
+    },
+    {
+      "id": "opening-aim-24",
+      "source": "opening-aim",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "kind": "ramp",
+          "x": 0,
+          "z": 42,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 1
+          }
+        },
+        {
+          "id": "bank-yours",
+          "kind": "bank",
+          "x": 14,
+          "z": 28,
+          "yaw": 0,
+          "voice": {
+            "material": "timber",
+            "degree": 0
+          }
+        },
+        {
+          "id": "plate-yours",
+          "kind": "plate",
+          "x": 0,
+          "z": 68,
+          "yaw": 0,
+          "voice": {
+            "material": "metal",
+            "degree": 2
+          }
+        }
+      ],
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 0,
+        "elevation": 32,
+        "charge": 0.4
+      },
+      "headline": "Ramp D4 → Ramp D4",
+      "explanation": "2 notes. Touched Ramp D4, Ramp D4. Repeat contacts on Ramp D4 are one note each. Ramp D4 was hit again later, so that later hit is its own note. Bank C4, Plate E4 were not touched.",
+      "order": [
+        "D4",
+        "D4"
+      ],
+      "impacts": [
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "time": 2.008333333333329,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.5753148297346086,
+          "callbacks": 2
+        },
+        {
+          "piece": "ramp-yours",
+          "role": "ramp",
+          "time": 4.808333333333362,
+          "material": "metal",
+          "degree": 1,
+          "note": "D4",
+          "hz": 293.6648,
+          "gain": 0.09327733968132473,
+          "callbacks": 2
+        }
+      ],
+      "contacts": [
+        {
+          "body": "worldcraft-object-ramp-yours",
+          "count": 4,
+          "first": 2.008333333333329,
+          "last": 4.816666666666696,
+          "point": {
+            "x": -4,
+            "y": 1.845613956451416,
+            "z": 40.03483963012695
+          }
+        },
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 7.133333333333478,
+          "last": 7.133333333333478,
+          "point": {
+            "x": -4,
+            "y": 0.0469764769077301,
+            "z": 32.03409194946289
+          }
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 7.141666666666811,
+        "position": [
+          -4,
+          0.4299997389316559,
+          31.990327835083008
+        ]
+      },
+      "bindingHash": "aeaeef72aa3e6925084254ac9f66bece8e4a0fb802ad0eb0f3948a6af3f7aa47",
+      "presetHash": "6d96340191f363a5b240d2e255e40d8f9fbafcdfdb007d3511b5a5f85b1c7ec8",
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":14,\"z\":28,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-yours\",\"kind\":\"plate\",\"x\":0,\"z\":68,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":0,\"z\":42,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1,\"plate\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "pointHash": "7ee299854b387362055fccc7a1af4f24a68b9e98eef1347b572a21116d227b5b",
+      "pointCount": 287,
+      "confirmed": true,
+      "confirmedBindingHash": "aeaeef72aa3e6925084254ac9f66bece8e4a0fb802ad0eb0f3948a6af3f7aa47",
+      "confirmedPointHash": "7ee299854b387362055fccc7a1af4f24a68b9e98eef1347b572a21116d227b5b"
+    }
+  ],
+  "retune": {
+    "id": "opening",
+    "identicalSamples": true,
+    "identicalTerminal": true,
+    "notesBefore": "D4>E4",
+    "notesAfter": "E4>G4",
+    "notesChanged": true
+  }
+}

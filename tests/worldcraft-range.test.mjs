@@ -13,19 +13,19 @@ import {
   createHouseShotWorld, createOrcStaticWorld, createStarterWorld, createEmptyWorld,
   exportWorldJSON, parseWorldJSON, worldcraftIdentity, validateWorld, validateWorldEdit,
   validateWorldcraftShot, worldcraftFixedSetup, worldcraftPinResult, worldcraftTargetResult,
-  worldcraftGoalResult, contactPhraseHeard, WORLDCRAFT_CATALOG,
+  worldcraftGoalResult, contactPhraseHeard, WORLDCRAFT_CATALOG, captureWorldSnapshot, packWorldcraftLine,
 } from '../lib/worldcraft-model.js';
 import {
-  adaptRangePreset, bindRangeShot, createBackPocketPreset, createOpenWorkshopPreset, createResonantRunFreePreset,
+  adaptRangePreset, bindRangeShot, createBackPocketPreset, createMusicalWorkshopPreset, createOpenWorkshopPreset, createResonantRunFreePreset,
   createResonantRunPhrasePreset, createSoftLandingPreset,
   exportRangePreset, importRangeDocument,
   inferOutcome, latchRecordedComparison, listRangePresets, parseRangePreset, projectRangePreset,
   rangeBindingText, rangeOpeningSetup, rangePreset, rangeStartingSetup, recordedTrail, retargetRangeOpening, sha256Hex, validateRangePreset,
 } from '../lib/worldcraft-range.js';
-import { createVoiceLedger } from '../lib/worldcraft-resonance.js';
+import { createVoiceLedger, performanceFromResonance } from '../lib/worldcraft-resonance.js';
 import { buildWorldcraftScene, createWorldcraftMaterials, WORLDCRAFT_CONTACTS } from '../lib/worldcraft-scene.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
-import { createRangeHarness, runRange } from '../scripts/range/run.mjs';
+import { createRangeHarness, runLayoutShots, runRange } from '../scripts/range/run.mjs';
 
 Logger.LogLevels = 0;
 const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
@@ -98,13 +98,18 @@ test('Open Workshop is a versioned preset with a fixed launcher, movable resonan
     ['ramp-yours', 'metal', 1], ['bank-yours', 'timber', 0], ['plate-yours', 'metal', 2],
   ]);
   assert.deepEqual(listRangePresets(), [
-    { id: 'open-workshop', name: 'Open Workshop', goal: 'none' },
+    { id: 'open-workshop', name: 'Fixed Shot Workshop', goal: 'none' },
+    { id: 'musical-workshop', name: 'Musical Workshop', goal: 'none' },
     { id: 'back-pocket', name: 'Back Pocket', goal: 'first-ground-zone' },
     { id: 'soft-landing', name: 'Soft Landing', goal: 'first-ground-zone' },
-    { id: 'resonant-run-free', name: 'Resonant Run: Free', goal: 'none' },
-    { id: 'resonant-run-phrase', name: 'Resonant Run: Phrase', goal: 'contact-phrase' },
+    { id: 'resonant-run-free', name: 'Resonant Run: Free (fixed shot)', goal: 'none' },
+    { id: 'resonant-run-phrase', name: 'Resonant Phrase (fixed shot)', goal: 'contact-phrase' },
     { id: 'travelling-bell', name: 'Travelling Bell', goal: 'target-contact' },
   ]);
+  const legacy = validateRangePreset({ ...JSON.parse(text), name: 'Open Workshop' });
+  assert.equal(legacy.name, 'Open Workshop');
+  assert.equal(legacy.rules.launcher.fixed, true);
+  assert.equal(worldcraftIdentity(adaptRangePreset(legacy).world), worldcraftIdentity(world));
   assert.deepEqual(inferOutcome(world, { reason: 'first-ground-contact', position: [0, .43, 90], contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), { kind: 'none', status: 'none', scored: false });
   assert.equal(worldcraftPinResult(world, { reason: 'first-ground-contact', position: [0, .43, 72.5] }), null);
   assert.equal(worldcraftTargetResult(world, { reason: 'first-ground-contact', contacts: [{ body: 'worldcraft-target-stand-in-orc' }] }), null);
@@ -378,7 +383,7 @@ test('Back Pocket opening misses and both appendix imports clear under Havok', a
       assert.ok(shot.contacts.some(contact => contact.body === 'worldcraft-object-bank-yours'));
     }
   } finally { session.dispose(); }
-  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'back-pocket', 'soft-landing', 'resonant-run-free', 'resonant-run-phrase', 'travelling-bell']);
+  assert.deepEqual(listRangePresets().map(item => item.id), ['open-workshop', 'musical-workshop', 'back-pocket', 'soft-landing', 'resonant-run-free', 'resonant-run-phrase', 'travelling-bell']);
 });
 
 test('a contact phrase is the ledger order, and the stand-in is a separate judgement', async () => {
@@ -418,7 +423,7 @@ test('a contact phrase is the ledger order, and the stand-in is a separate judge
   assert.equal(Object.hasOwn(free.world.rules, 'target'), false);
   assert.deepEqual(free.world.objects, adaptRangePreset(createOpenWorkshopPreset()).world.objects);
   assert.deepEqual(free.preset.rules.allowance, { bank: 1, plate: 1, ramp: 1 });
-  assert.equal(exportRangePreset(rangePreset('resonant-run-free')).includes('"Resonant Run: Free"'), true);
+  assert.equal(exportRangePreset(rangePreset('resonant-run-free')).includes('"Resonant Run: Free (fixed shot)"'), true);
   assert.equal(await readFile(new URL('../docs/examples/worldcraft-resonant-run-free.json', import.meta.url), 'utf8'), exportRangePreset(createResonantRunFreePreset()));
   assert.equal(await readFile(new URL('../docs/examples/worldcraft-resonant-run-phrase.json', import.meta.url), 'utf8'), exportRangePreset(createResonantRunPhrasePreset()));
   assert.throws(() => validateRangePreset({ ...free.preset, rules: { ...free.preset.rules, goal: { kind: 'contact-phrase', notes: [0], standIn: null } } }));
@@ -488,4 +493,150 @@ test('Resonant Run opening misses the phrase, and retuning leaves Havok material
     assert.equal(WORLDCRAFT_CATALOG.bank.friction, .18);
     assert.equal(WORLDCRAFT_CATALOG.bank.restitution, .86);
   } finally { session.dispose(); }
+});
+
+test('Musical Workshop leaves the shot adjustable and keeps an old fixed-shot preset loadable', async () => {
+  const preset = createMusicalWorkshopPreset();
+  const text = exportRangePreset(preset);
+  assert.equal(await readFile(new URL('../docs/examples/worldcraft-musical-workshop.json', import.meta.url), 'utf8'), text);
+  assert.equal(exportRangePreset(parseRangePreset(text)), text);
+  const { world } = adaptRangePreset(preset);
+  assert.equal(world.rules.goal.kind, 'none');
+  assert.equal(world.rules.rail, null);
+  assert.equal(worldcraftFixedSetup(world), null);
+  assert.equal(preset.rules.launcher.fixed, false);
+  assert.equal(Object.hasOwn(preset.rules.launcher, 'window'), false);
+  assert.deepEqual(rangeStartingSetup(preset), { railIndex: 1, originX: 0, yaw: 0, elevation: 18, charge: 0.55 });
+  const aimed = { ...rangeStartingSetup(preset), originX: -2, yaw: 12, elevation: 24, charge: 0.4 };
+  assert.deepEqual(validateWorldcraftShot(world, aimed), aimed);
+  assert.throws(() => validateWorldcraftShot(world, { ...aimed, yaw: 71 }));
+  assert.throws(() => validateWorldcraftShot(world, { ...aimed, originX: 0.25 }));
+  const legacyFree = validateRangePreset({ ...JSON.parse(exportRangePreset(createResonantRunFreePreset())), name: 'Resonant Run: Free' });
+  const legacyPhrase = validateRangePreset({ ...JSON.parse(exportRangePreset(createResonantRunPhrasePreset())), name: 'Resonant Run: Phrase' });
+  assert.equal(legacyFree.rules.launcher.fixed, true);
+  assert.equal(legacyPhrase.rules.goal.kind, 'contact-phrase');
+  assert.equal(worldcraftIdentity(adaptRangePreset(legacyFree).world), worldcraftIdentity(adaptRangePreset(createResonantRunFreePreset()).world));
+  assert.equal(worldcraftIdentity(adaptRangePreset(legacyPhrase).world), worldcraftIdentity(adaptRangePreset(createResonantRunPhrasePreset()).world));
+});
+
+test('Musical Workshop retune leaves the trajectory bit-identical', () => {
+  const { world } = adaptRangePreset(createMusicalWorkshopPreset());
+  const setup = rangeStartingSetup(createMusicalWorkshopPreset());
+  const session = harness(world);
+  try {
+    const opening = session.shoot(setup);
+    const performance = performanceFromResonance(opening.resonance);
+    const kept = packWorldcraftLine({
+      id: 'music-opening',
+      createdAt: '2026-10-25T00:00:00.000Z',
+      worldSnapshot: captureWorldSnapshot(world, 'unknown'),
+      setup,
+      launch: opening.launch,
+      points: opening.samples,
+      events: opening.evidence,
+      contacts: opening.contacts,
+      terminal: opening.terminal,
+      performance,
+    });
+    assert.deepEqual(kept.performance.impacts.map(impact => impact.note), opening.resonance.impacts.map(impact => impact.note));
+    assert.ok(kept.performance.impacts.every((impact, index) => Object.is(impact.time, opening.resonance.impacts[index].time)));
+    const replay = session.shoot(setup);
+    assert.equal(replay.resonance.impacts.length, opening.resonance.impacts.length);
+    for (let i = 0; i < opening.resonance.impacts.length; i++) {
+      assert.equal(Object.is(replay.resonance.impacts[i].time, opening.resonance.impacts[i].time), true);
+      assert.equal(replay.resonance.impacts[i].note, opening.resonance.impacts[i].note);
+      assert.equal(replay.resonance.impacts[i].piece, opening.resonance.impacts[i].piece);
+    }
+    const retuned = validateWorld({
+      ...world,
+      objects: world.objects.map(object => ({
+        ...object,
+        voice: { material: 'timber', degree: (object.voice.degree + 1) % 5 },
+      })),
+    });
+    assert.equal(session.runtime.replaceWorld(retuned, { intent: 'load' }).ok, true);
+    const again = session.shoot(setup);
+    assert.equal(again.samples.length, opening.samples.length);
+    for (let i = 0; i < opening.samples.length; i++) {
+      assert.equal(Object.is(again.samples[i].t, opening.samples[i].t), true);
+      assert.equal(Object.is(again.samples[i].x, opening.samples[i].x), true);
+      assert.equal(Object.is(again.samples[i].y, opening.samples[i].y), true);
+      assert.equal(Object.is(again.samples[i].z, opening.samples[i].z), true);
+    }
+    assert.deepEqual(again.terminal.position, opening.terminal.position);
+    assert.notEqual(worldcraftIdentity(retuned), worldcraftIdentity(world));
+    assert.notEqual(again.resonance.impacts.map(impact => impact.note).join(), opening.resonance.impacts.map(impact => impact.note).join());
+    const shifted = { ...setup, yaw: 8 };
+    const other = session.shoot(shifted);
+    assert.notDeepEqual(other.terminal.position, opening.terminal.position);
+  } finally { session.dispose(); }
+});
+
+test('movable pieces are tinted and fixed pieces are not, without an extra body', () => {
+  const pocket = adaptRangePreset(createBackPocketPreset()).world;
+  const engine = new NullEngine(), scene = new Scene(engine);
+  scene.enablePhysics(new Vector3(0, -RAIL_RULES.gravity, 0), new HavokPlugin(true, havok));
+  const palette = createWorldcraftMaterials(scene);
+  const built = buildWorldcraftScene(scene, pocket, { materials: palette.materials });
+  try {
+    assert.equal(built.objectMeshes.get('bank-yours').renderOverlay, true);
+    assert.equal(built.objectMeshes.get('bank-yours').metadata.worldcraftMovable, true);
+    for (const id of ['screen-a', 'screen-b', 'screen-c']) {
+      assert.equal(built.objectMeshes.get(id).renderOverlay, false);
+      assert.equal(built.objectMeshes.get(id).metadata.worldcraftMovable, false);
+    }
+    assert.equal(built.bodies.length, 6);
+    assert.equal(built.meshes.length, 6);
+  } finally {
+    built.dispose();
+    palette.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+test('switching every range preset does not leak Havok bodies', () => {
+  const presets = listRangePresets().map(item => rangePreset(item.id));
+  const session = harness(adaptRangePreset(presets[0]).world);
+  try {
+    const counts = [];
+    for (let round = 0; round < 3; round++) {
+      for (const preset of presets) {
+        const world = adaptRangePreset(preset).world;
+        assert.equal(session.runtime.setMode('build'), true);
+        assert.equal(session.runtime.replaceWorld(world, { intent: 'load' }).ok, true);
+        const diagnostics = session.runtime.diagnostics();
+        counts.push({ id: preset.id, staticBodies: diagnostics.staticBodies, physicsBodies: diagnostics.physicsBodies, meshes: diagnostics.meshes });
+        assert.equal(diagnostics.liveBodies, 0);
+      }
+    }
+    const width = presets.length;
+    for (let index = 0; index < width; index++) assert.deepEqual(counts[index], counts[index + 2 * width]);
+    assert.equal(counts.find(row => row.id === 'musical-workshop').staticBodies, 5);
+    assert.equal(counts.find(row => row.id === 'back-pocket').staticBodies, 6);
+  } finally { session.dispose(); }
+});
+
+test('runLayoutShots fires a non-bell layout and rejects a phase on it', async () => {
+  const preset = createOpenWorkshopPreset();
+  const opened = await runLayoutShots({
+    preset,
+    layouts: [{ id: 'opening', objects: preset.objects }],
+    seed: 20261025,
+    gitSha: '4a2be209',
+    havok,
+  });
+  assert.equal(opened.rejected, 0);
+  assert.equal(opened.lines[1].type, 'shot');
+  assert.equal(opened.lines[1].outcome.scored, false);
+  const phased = await runLayoutShots({
+    preset,
+    layouts: [{ id: 'phased', objects: preset.objects, launchPhase: 1 }],
+    seed: 20261025,
+    gitSha: '4a2be209',
+    havok,
+  });
+  assert.equal(phased.rejected, 1);
+  assert.equal(phased.lines[1].type, 'rejected');
+  assert.match(phased.lines[1].error, /Launch phase requires a travelling bell/);
 });
