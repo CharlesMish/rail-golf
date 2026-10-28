@@ -128,6 +128,7 @@
 .dialogHeader h2 { font-size: 20px; }
 .memoryGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
 .slot { min-width: 0; padding: 12px; border: 1px solid #3c5356; border-radius: 3px; background: #0c1a1e; overflow-wrap: anywhere; }
+.slot > strong, .slot > span { display: block; margin: 0 0 4px; }
 .slot :is(h3, p) { margin: 0 0 7px; }
 .slot h3 { font-size: 14px; }
 .empty { padding: 15px 0; color: var(--wc-muted); font-size: 13px; }
@@ -156,9 +157,9 @@
   .tools { flex: 0 1 380px; width: 100%; max-height: min(460px, 54dvh); padding: 10px 12px; border-top: 1px solid var(--wc-line); border-left: 0; }
   .section { margin-bottom: 10px; padding-bottom: 10px; }
   .sectionTitle { margin-bottom: 6px; }
-  .parts { display: flex; gap: 5px; max-height: none; overflow-x: auto; overflow-y: hidden; }
-  .parts > * { flex: 0 0 auto; }
-  .partButton { width: auto; white-space: nowrap; }
+  .parts { display: flex; flex-wrap: wrap; gap: 5px; max-height: none; overflow: visible; }
+  .parts > * { flex: 1 1 calc(50% - 5px); min-width: 0; max-width: 100%; }
+  .partButton { width: 100%; white-space: normal; }
   .inspector { gap: 6px; }
   .playControls { display: flex; flex-direction: column; gap: 7px; }
   .playControls > .flowSticky { position: sticky; top: 0; z-index: 3; order: -1; flex: 0 0 auto; padding-bottom: 6px; background: #0c1c21; }
@@ -219,7 +220,10 @@
   .shell[data-mode="play"] .notice, .shell[data-mode="play"] .status { order: 2; }
 }
 
-.soundAb { display: grid; gap: 6px; margin: 8px 0; padding: 8px 10px; border: 1px solid rgba(255, 196, 120, .35); border-radius: 6px; }
-.soundAb label { display: grid; gap: 4px; font-size: .82rem; }
-.soundAb select, .soundAb button { min-height: 44px; }
+.playControls > .soundAb, .playControls > .noteTimelines { order: -1; }
+.noteTimelines { margin: 8px 0; }
+.soundAb { display: grid; gap: 6px; margin: 8px 0; padding: 8px 10px; border: 1px solid rgba(255, 196, 120, .35); border-radius: 6px; min-width: 0; }
+.soundAb select { width: 100%; max-width: 100%; }
+.soundAb label { display: grid; gap: 4px; min-width: 0; font-size: .82rem; }
+.soundAb select, .soundAb button { min-height: 44px; min-width: 0; }
 .soundAb p { margin: 0; font-size: .78rem; opacity: .85; }

@@ -63,6 +63,7 @@ export function retargetRangeOpening(preset: RangePreset, setup: WorldcraftSetup
 export function listRangePresets(): { id: string; name: string; goal: WorldcraftGoal['kind'] }[];
 export function rangePreset(id: string): RangePreset;
 export function recordedTrail(record: { label?: string; worldIdentity: string; setup: WorldcraftSetup; points: WorldcraftPoint[] }): RecordedTrail;
+export function workshopTrailStep<T>(memory: { presetId?: string | null; history?: RecordedTrail | null; historyMarks?: T[] | null; comparison?: RecordedTrail | null; comparisonMarks?: T[] | null }, step: { kind: 'ready' | 'fire' | 'resolve' | 'adjust'; worldIdentity?: string; setup?: WorldcraftSetup; points?: WorldcraftPoint[]; marks?: T[] | null }): { presetId: string | null; history: RecordedTrail | null; historyMarks: T[] | null; comparison: RecordedTrail | null; comparisonMarks: T[] | null };
 export function latchRecordedComparison(previous: RecordedTrail | null, next: { label?: string; worldIdentity: string; setup: WorldcraftSetup; points: WorldcraftPoint[] }): { comparison: RecordedTrail | null; history: RecordedTrail };
 export function inferOutcome(world: WorldcraftDocument, input: unknown): WorldcraftGoalResult;
 export function rangeBindingText(worldIdentity: string, setup: WorldcraftSetup, launchPhase?: number): string;

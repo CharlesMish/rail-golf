@@ -61,6 +61,8 @@ export type SoundVariantId = 'pr55' | 'even-db' | 'woody' | 'woody-bright' | 'tu
 export const SOUND_VARIANTS: ReadonlyArray<Readonly<{ id: SoundVariantId; label: string; detail: string }>>;
 export const DEFAULT_SOUND_VARIANT: 'pr55';
 export const MUSICAL_WORKSHOP_SOUND: 'tuned-even';
+export function presetDynamics(presetId: string | null | undefined): 'normal-speed' | 'total-speed';
+export function recordedDynamicsLabel(presetId: string | null | undefined, variant: string | null | undefined): string;
 export function isSoundVariant(id: unknown): boolean;
 export const EVEN_DB_CURVE: Readonly<{ rangeDb: number; shape: number; knee: number; gate: number; gateFull: number }>;
 export function evenDbGain(speed: number, curve?: typeof EVEN_DB_CURVE): number;

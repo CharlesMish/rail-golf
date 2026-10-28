@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import Havok from '@babylonjs/havok';
 import { Logger } from '@babylonjs/core';
-import { adaptRangePreset, createMusicalWorkshopPreset, validateRangePreset } from '../lib/worldcraft-range.js';
-import { impactGain } from '../lib/worldcraft-resonance.js';
+import { adaptRangePreset, createMusicalWorkshopPreset, listRangePresets, validateRangePreset } from '../lib/worldcraft-range.js';
+import { impactGain, presetDynamics, recordedDynamicsLabel } from '../lib/worldcraft-resonance.js';
 import { createRangeHarness } from '../scripts/range/run.mjs';
 
 Logger.LogLevels = 0;
@@ -63,4 +63,20 @@ test('a grazing bank is quieter than a square bank at similar speed, and the map
     assert.notEqual(bankHit(total).gain, hard.gain);
     assert.equal(session.runtime.setDynamics('normal-speed'), true);
   } finally { session.dispose(); }
+});
+
+test('the kept-line label names each preset dynamics rule and does not call a total-speed preset A · PR #55', () => {
+  assert.equal(presetDynamics('musical-workshop'), 'normal-speed');
+  assert.equal(recordedDynamicsLabel('musical-workshop', 'tuned-even'), 'H · G, grazes lifted');
+  assert.equal(recordedDynamicsLabel('musical-workshop', 'pr55'), 'A · PR #55');
+  for (const preset of listRangePresets()) {
+    if (preset.id === 'musical-workshop') continue;
+    assert.equal(presetDynamics(preset.id), 'total-speed', preset.id);
+    const label = recordedDynamicsLabel(preset.id, 'tuned-even');
+    assert.equal(label, 'Total speed · original knock', preset.id);
+    assert.equal(label.includes('PR #55'), false, preset.id);
+  }
+  assert.equal(presetDynamics(null), 'total-speed');
+  assert.equal(presetDynamics(undefined), 'total-speed');
+  assert.equal(recordedDynamicsLabel(null, 'pr55'), 'Total speed · original knock');
 });
