@@ -240,3 +240,7 @@ First ground ends it. The gaps are the flight, not a grid. The opening C is a li
 What the player can do on purpose is limited to moving the three pieces and the shot until one of these orders shows up, then keeping it. What they cannot do is pick a duration, a pulse, or a fourth note. The impact line and the timeline report the order the shot made. They do not help the player construct one.
 
 One small next experiment, and only this: sit on the known `early-plate-14` layout with the bank left on H, and change only aim and power, and see whether that same C→D→E order can be found again on purpose. No new piece, no new mode, no new voice. This follow-up did not run that sitting.
+
+## A metal bank stays metal
+
+The earlier note that H replaces a bank even when its material switch says metal is no longer the rule. H (`tuned-even`) applies only when the role is `bank` and the material is `timber`: voice `timberTunedLong`, trim ×1.36, 12 dB range. A metal bank keeps the ordinary metal voice, trim 1, and the 18 dB curve, the same curve a metal ramp or plate already used. A timber ramp and a timber plate stay ordinary timber. G and I use that same timber-bank gate. C–F are unchanged: they still retimbre every timber piece, and a metal piece, including a metal bank, stays metal. The selector and the default stay H. Degree still chooses the note.

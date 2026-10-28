@@ -119,9 +119,60 @@ test('presence variants stay inside the original timber headroom and only reshap
   }
   const graze = { role: 'bank', material: 'timber', normalSpeed: 2.0927, gain: 0 };
   assert.ok(db(voiceImpact(graze, 'tuned-even').gain) > db(voiceImpact(graze, 'tuned-presence').gain) + 4, 'gentler bank range lifts a graze');
-  assert.equal(voiceImpact({ role: 'bank', material: 'metal', normalSpeed: 40, gain: 0 }, 'tuned-even').gain, 1);
-  assert.equal(impactAcoustics(voiceImpact({ role: 'bank', material: 'metal', normalSpeed: 40, gain: 0 }, 'tuned-even')).voiceName, 'timberTunedLong');
+  const metalBank = voiceImpact({ role: 'bank', material: 'metal', normalSpeed: 4.17, gain: 0 }, 'tuned-even');
+  assert.equal(metalBank.gain, evenDbGain(4.17), 'a metal bank stays on the 18 dB curve');
+  assert.notEqual(metalBank.gain, evenDbGain(4.17, { ...EVEN_DB_CURVE, rangeDb: 12 }));
+  const metalHeard = impactAcoustics(metalBank);
+  assert.equal(metalHeard.voiceName, 'metal');
+  assert.equal(metalHeard.trim, 1);
+  assert.equal(metalHeard.coloured, false);
   assert.equal(impactAcoustics(voiceImpact({ role: 'ramp', material: 'timber', normalSpeed: 10, gain: 0 }, 'tuned-long')).voiceName, 'timberTunedLong');
+});
+
+test('H is a timber bank; a metal bank and timber ramp or plate stay ordinary', () => {
+  const speed = 4.17;
+  const timberBank = { role: 'bank', material: 'timber', normalSpeed: speed, gain: 0 };
+  const metalBank = { role: 'bank', material: 'metal', normalSpeed: speed, gain: 0 };
+  const timberRamp = { role: 'ramp', material: 'timber', normalSpeed: speed, gain: 0 };
+  const timberPlate = { role: 'plate', material: 'timber', normalSpeed: speed, gain: 0 };
+  const heard = impactAcoustics(voiceImpact(timberBank, 'tuned-even'));
+  assert.equal(heard.voiceName, 'timberTunedLong');
+  assert.equal(heard.voice, RESONANCE_VOICES.timberTunedLong);
+  assert.equal(heard.trim, 1.36);
+  assert.equal(heard.coloured, true);
+  assert.equal(voiceImpact(timberBank, 'tuned-even').gain, evenDbGain(speed, { rangeDb: 12, shape: 1.7, knee: 32, gate: 1, gateFull: 2 }));
+  const metal = impactAcoustics(voiceImpact(metalBank, 'tuned-even'));
+  assert.equal(metal.voiceName, 'metal');
+  assert.equal(metal.voice, RESONANCE_VOICES.metal);
+  assert.equal(metal.trim, 1);
+  assert.equal(metal.coloured, false);
+  assert.equal(voiceImpact(metalBank, 'tuned-even').gain, evenDbGain(speed));
+  for (const piece of [timberRamp, timberPlate]) {
+    const ordinary = impactAcoustics(voiceImpact(piece, 'tuned-even'));
+    assert.equal(ordinary.voiceName, 'timber');
+    assert.equal(ordinary.voice, RESONANCE_VOICES.timber);
+    assert.equal(ordinary.trim, 1);
+    assert.equal(ordinary.coloured, false);
+    assert.equal(voiceImpact(piece, 'tuned-even').gain, evenDbGain(speed));
+  }
+  // C–F still retimbre every timber piece and leave a metal bank on ordinary metal.
+  const study = { woody: 'timberWoody', 'woody-bright': 'timberWoody', tuned: 'timberTuned', 'tuned-long': 'timberTunedLong' };
+  for (const [id, voiceName] of Object.entries(study)) {
+    const timber = impactAcoustics(voiceImpact(timberBank, id));
+    assert.equal(timber.voiceName, voiceName, id);
+    assert.equal(timber.trim, 1);
+    const metalPiece = impactAcoustics(voiceImpact(metalBank, id));
+    assert.equal(metalPiece.voiceName, 'metal', id);
+    assert.equal(metalPiece.trim, 1);
+    assert.equal(metalPiece.coloured, false);
+    assert.equal(voiceImpact(metalBank, id).gain, evenDbGain(speed), id);
+  }
+  // G and I share H's timber-bank gate.
+  for (const id of ['tuned-presence', 'tuned-forward']) {
+    assert.equal(impactAcoustics(voiceImpact(metalBank, id)).voiceName, 'metal', id);
+    assert.equal(impactAcoustics(voiceImpact(timberBank, id)).voiceName, BANK_VARIANT_SETTINGS[id].voice, id);
+    assert.equal(impactAcoustics(voiceImpact(timberBank, id)).trim, BANK_VARIANT_SETTINGS[id].trim, id);
+  }
 });
 
 test('the Musical Workshop plays the owner-chosen bank sound H by default', async () => {

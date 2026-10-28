@@ -16,7 +16,7 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
-import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, type ResonanceImpact } from '@/lib/worldcraft-resonance';
+import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, presetDynamics, recordedDynamicsLabel, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
@@ -26,7 +26,7 @@ import {
 } from '@/lib/worldcraft-model';
 import {
   adaptRangePreset, bindRangeShot, exportRangePreset, exportRangeShot, importRangeDocument, listRangePresets,
-  parseRangeShot, projectRangePreset, rangeOpeningSetup, rangePreset, recordedTrail, retargetRangeOpening,
+  parseRangeShot, projectRangePreset, rangeOpeningSetup, rangePreset, retargetRangeOpening, workshopTrailStep,
   type RangePreset, type RangeShot,
 } from '@/lib/worldcraft-range';
 import styles from './worldcraft.module.css';
@@ -66,11 +66,6 @@ function noteName(degree: number) {
 }
 function noteOrder(notes: number[]) {
   return notes.map(noteName).join(' → ');
-}
-
-function recordedVoiceLabel(presetId: string | null, variant: string) {
-  if (presetId === 'musical-workshop') return SOUND_VARIANTS.find(item => item.id === variant)?.label ?? 'the current bank sound';
-  return 'A · PR #55';
 }
 
 function NoteTimeline({ kind, rows }: { kind: 'current' | 'previous'; rows: NoteMark[] }) {
@@ -290,6 +285,7 @@ export default function Worldcraft() {
           drawTrail([]);
           drawComparison();
         };
+        const trailMemory = () => ({ presetId: uiRef.current.presetId, history: uiRef.current.history, historyMarks: uiRef.current.historyMarks, comparison: uiRef.current.comparison, comparisonMarks: uiRef.current.comparisonMarks });
         const resonance = createResonanceOutput();
         let shotToken: object | null = null;
         let perfSlot: string | null = null;
@@ -304,8 +300,9 @@ export default function Worldcraft() {
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
-              const history = recordedTrail({ label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples });
-              const historyMarks = uiRef.current.presetId === 'musical-workshop' ? noteTimeline(last.resonance?.impacts) : null;
+              const stepped = workshopTrailStep(trailMemory(), { kind: 'resolve', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples, marks: noteTimeline(last.resonance?.impacts) });
+              const history = stepped.history;
+              const historyMarks = stepped.historyMarks;
               const token = {};
               shotToken = token;
               const preset = uiRef.current.preset;
@@ -402,16 +399,15 @@ export default function Worldcraft() {
           if (uiRef.current.world.rules?.originFixed) setup = { ...setup, originX: uiRef.current.world.launcher.x };
           if (window) setup = { ...setup, yaw: clamp(setup.yaw, window.yawMin, window.yawMax), elevation: clamp(setup.elevation, window.elevationMin, window.elevationMax), charge: clamp(setup.charge, window.chargeMin, window.chargeMax) };
           resonance.unlock();
-          runtime.setDynamics(uiRef.current.presetId === 'musical-workshop' ? 'normal-speed' : 'total-speed');
+          runtime.setDynamics(presetDynamics(uiRef.current.presetId));
           publish({ liveNotes: [] });
           if (!runtime.launch(setup)) { publish({ phase: 'ready', notice: runtime.error }); return; }
           projectile?.dispose(); projectile = buildRangeProjectile(activeScene, runtime.flight!.mesh, presentation.materials, shadows);
           projectile.sync(runtime.flight!.aggregate.body.getLinearVelocity());
           previous = null; heading = { x: Math.sin(setup.yaw * Math.PI / 180), y: 0, z: Math.cos(setup.yaw * Math.PI / 180) };
           flightPoints = []; trailTick = 0; trail?.dispose(); trail = null;
-          const comparison = uiRef.current.history ? recordedTrail(uiRef.current.history) : null;
-          const comparisonMarks = uiRef.current.presetId === 'musical-workshop' ? uiRef.current.historyMarks : null;
-          publish({ phase: 'flight', setup, charge, comparison, comparisonMarks, notice: 'Committed line · edits are locked.' });
+          const stepped = workshopTrailStep(trailMemory(), { kind: 'fire' });
+          publish({ phase: 'flight', setup, charge, comparison: stepped.comparison, comparisonMarks: stepped.comparisonMarks, notice: 'Committed line · edits are locked.' });
           drawComparison();
           trace('fire', { setup, worldIdentity: worldcraftIdentity(uiRef.current.world), world: uiRef.current.world });
         };
@@ -472,16 +468,19 @@ export default function Worldcraft() {
           cancel,
           ready() {
             if (uiRef.current.phase === 'loading' || uiRef.current.phase === 'error') return;
-            cancel(); clearRound(); publish({ phase: 'ready', view: 'address', notice: 'Ready · same setup, current world.' });
-            if (uiRef.current.history) drawTrail(uiRef.current.history.points);
+            cancel(); clearRound();
+            const kept = workshopTrailStep(trailMemory(), { kind: 'ready' });
+            publish({ phase: 'ready', view: 'address', notice: 'Ready · same setup, current world.', history: kept.history, historyMarks: kept.historyMarks, comparison: kept.comparison, comparisonMarks: kept.comparisonMarks });
+            if (kept.history) drawTrail(kept.history.points);
             trace('ready-current');
           },
           adjust() {
             const last = uiRef.current.last;
             if (last) {
-              const historyMarks = uiRef.current.presetId === 'musical-workshop' ? noteTimeline(last.resonance?.impacts) : null;
+              const stepped = workshopTrailStep(trailMemory(), { kind: 'adjust', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples, marks: noteTimeline(last.resonance?.impacts) });
               restore(last.world, last.setup as WorldcraftSetup, 'Last line restored: its starting world, origin, aim and power. Fire when ready.');
-              publish({ history: { label: 'Latest line', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples }, historyMarks }); drawTrail(last.samples);
+              publish({ history: stepped.history, historyMarks: stepped.historyMarks, comparison: stepped.comparison, comparisonMarks: stepped.comparisonMarks });
+              if (stepped.history) drawTrail(stepped.history.points);
             }
           },
           survey() { if (busy() || uiRef.current.mode !== 'play') return; const address = uiRef.current.view === 'survey'; publish({ view: address ? 'address' : 'survey' }); if (address && uiRef.current.phase === 'result') { clearRound(); publish({ phase: 'ready', notice: 'Ready · same setup, current world.' }); } },
@@ -491,7 +490,7 @@ export default function Worldcraft() {
             const impacts = entry?.performance?.impacts;
             if (!impacts?.length) { publish({ notice: 'This kept line has no recorded sounds.' }); return; }
             const workshop = uiRef.current.presetId === 'musical-workshop';
-            const label = recordedVoiceLabel(uiRef.current.presetId, uiRef.current.soundVariant);
+            const label = recordedDynamicsLabel(uiRef.current.presetId, uiRef.current.soundVariant);
             resonance.release();
             resonance.playRecorded(impacts, workshop ? uiRef.current.soundVariant : undefined);
             publish({ notice: `Playing the recorded contacts with ${label}. A kept line stores the contacts, not a voice. The shot is not being fired again.` });
@@ -888,7 +887,7 @@ export default function Worldcraft() {
       : null;
   const timelineCurrent = ui.presetId === 'musical-workshop' ? noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts) : [];
   const timelinePrevious = ui.presetId === 'musical-workshop' ? (ui.comparisonMarks ?? []) : [];
-  const heardVoice = recordedVoiceLabel(ui.presetId, ui.soundVariant);
+  const heardVoice = recordedDynamicsLabel(ui.presetId, ui.soundVariant);
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);
