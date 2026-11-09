@@ -1,0 +1,58 @@
+{
+  "gitSha": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "ceilingDbfs": -3,
+  "musicalQualityClaimed": false,
+  "livePlaybackUsesTunedEven": false,
+  "totalBytes": 1236448,
+  "files": [
+    {
+      "file": "opening-gallery.wav",
+      "voice": "gallery",
+      "shot": "opening",
+      "scale": 1,
+      "rawPeak": 0.082733154296875,
+      "rawRms": 0.002512458690493785,
+      "peak": 0.082733154296875,
+      "rms": 0.002512458690493785,
+      "seconds": 3.1666666666666665,
+      "bytes": 279344
+    },
+    {
+      "file": "opening-tuned-even.wav",
+      "voice": "tuned-even",
+      "shot": "opening",
+      "scale": 0.0916627022809436,
+      "rawPeak": 0.43121337890625,
+      "rawRms": 0.02740982567580399,
+      "peak": 0.039520263671875,
+      "rms": 0.002512445384138508,
+      "seconds": 3.1666666666666665,
+      "bytes": 279344
+    },
+    {
+      "file": "rattle-gallery.wav",
+      "voice": "gallery",
+      "shot": "rattle",
+      "scale": 1,
+      "rawPeak": 0.190093994140625,
+      "rawRms": 0.011330910844222023,
+      "peak": 0.190093994140625,
+      "rms": 0.011330910844222023,
+      "seconds": 3.8416780045351473,
+      "bytes": 338880
+    },
+    {
+      "file": "rattle-tuned-even.wav",
+      "voice": "tuned-even",
+      "shot": "rattle",
+      "scale": 0.28844817801856326,
+      "rawPeak": 0.430572509765625,
+      "rawRms": 0.03928231033406914,
+      "peak": 0.12420654296875,
+      "rms": 0.011330732689548782,
+      "seconds": 3.8416780045351473,
+      "bytes": 338880
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "desktopGallery": "docs/experiments/foundry/lanes/expressive/screenshots/desktop-gallery.png",
+  "desktopPlay": "docs/experiments/foundry/lanes/expressive/screenshots/desktop-play.png",
+  "phoneGallery": "docs/experiments/foundry/lanes/expressive/screenshots/phone-gallery.png",
+  "phonePlay": "docs/experiments/foundry/lanes/expressive/screenshots/phone-play.png",
+  "presetId": "open-contacts",
+  "goal": {
+    "kind": "none"
+  },
+  "view": "survey",
+  "openingOrder": "bank-timber:C4",
+  "resetFoundryId": "open-contacts",
+  "remixNotice": "Copy of Open Contacts saved as its own world. The foundry arrangement is unchanged."
+}
