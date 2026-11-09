@@ -1,0 +1,121 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "open-contacts",
+  "name": "Open Contacts",
+  "kind": "workshop",
+  "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+  "physicalQuestion": "Which contact orders can a free aim reach, and which orders appear when the timber bank is turned?",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": null,
+  "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [0, 0.4300021231174469, 20.351707458496094]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "two-note",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 4,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.7666666666666628,
+        "position": [-1.2770898342132568, 0.43000075221061707, 22.326326370239258]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "rattle",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 6,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8666666666666625,
+        "position": [4.330662727355957, 0.43000397086143494, 32.025428771972656]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "lob",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 26,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.2749999999999946,
+        "position": [0, 0.42999887466430664, 45.30239486694336]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "The aim sliders step yaw by 0.5°. At elevation 18° and charge 0.55, yaw 0.5° and yaw -0.5° still touch only the timber bank. First ground stays on the return toward the tee. Elevation 17.5° and 18.5°, and charge 0.54 and 0.56, at yaw 0, do the same. This is the neighbourhood of the opening contact.",
+  "validationEvidence": "954 headless Havok shots, seed 20261109, from scripts/foundry/open-contacts-sweep.mjs. Face speed was recorded and was not applied to the flight. The validator replays the four tested shots. Enjoyment, a physical phone, and live tuned-even playback were not run. This preset id keeps the gallery ear on total speed.",
+  "limitations": [
+    {
+      "category": "presentation",
+      "concept": "Hear the timber bank with Musical Workshop sound H, plates staying ordinary metal, and read the contact order.",
+      "missing": "Live tuned-even, face-speed dynamics, contact markers, and the note timeline run only when the preset id is musical-workshop.",
+      "extension": "One allow-list entry so this preset id uses the existing tuned-even bank sound and face speed. No new voice and no new gain curve."
+    },
+    {
+      "category": "presentation",
+      "concept": "The in-play panel should describe this clearing.",
+      "missing": "A free launcher with no goal always shows the Musical Workshop heading and says the ramp, bank, and plate can move. This world has no ramp, the plates are fixed, and only the bank moves.",
+      "extension": "When a foundry card is open, show that card's invitation in the aside. No new geometry."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "A return that stays high enough for a clean third contact.",
+      "missing": "Pieces have no height offset, a plate is 4 m tall, and first ground ends the line. The third bank contact in the rattle is low because the ball is already descending.",
+      "extension": "One height offset on the existing plate, keeping its friction and restitution. Do not change first-ground termination."
+    }
+  ],
+  "customCode": null
+}

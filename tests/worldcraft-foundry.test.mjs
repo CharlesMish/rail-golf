@@ -24,7 +24,7 @@ function memoryStorage() {
   return { getItem: key => data.has(key) ? data.get(key) : null, setItem: (key, value) => { data.set(key, String(value)); } };
 }
 
-test('foundry files stay declarative and the gallery lists one seed', async () => {
+test('foundry files stay declarative and the gallery lists the registered worlds', async () => {
   const preset = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/preset.json', import.meta.url), 'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/manifest.json', import.meta.url), 'utf8'));
   const pair = loadFoundryPair(preset, manifest);
@@ -33,7 +33,18 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.notEqual(pair.manifest.challenge.id, pair.manifest.id);
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
-  assert.deepEqual(cards.map(card => card.id), ['soft-landing']);
+  assert.deepEqual(cards.map(card => card.id), ['soft-landing', 'open-contacts']);
+  const open = cards.find(card => card.id === 'open-contacts');
+  assert.equal(open.kind, 'workshop');
+  assert.equal(open.name, 'Open Contacts');
+  assert.equal(open.editable.launcher, true);
+  assert.equal(open.editable.geometry, true);
+  assert.equal(open.hasChallenge, false);
+  assert.equal(/\d/.test(open.invitation), false);
+  assert.equal(foundryRecord('open-contacts').manifest.challenge, null);
+  assert.equal(foundryRecord('open-contacts').manifest.customCode, null);
+  assert.equal(foundryRecord('open-contacts').preset.rules.goal.kind, 'none');
+  assert.deepEqual(foundryRecord('open-contacts').manifest.testedShots.map(shot => shot.id), ['opening', 'two-note', 'rattle', 'lob']);
   assert.equal(cards[0].kind, 'shot-study');
   assert.equal(cards[0].editable.launcher, true);
   assert.equal(cards[0].editable.geometry, true);
@@ -99,11 +110,15 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   const template = await validateFoundryDirectory('worlds/foundry/_template', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
+  const open = await validateFoundryDirectory('worlds/foundry/open-contacts', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);
+  assert.equal(open.id, 'open-contacts');
+  assert.equal(open.customCode, null);
+  assert.deepEqual(open.shots, ['opening', 'two-note', 'rattle', 'lob']);
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');

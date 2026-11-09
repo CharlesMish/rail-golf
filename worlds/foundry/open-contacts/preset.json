@@ -1,0 +1,102 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "open-contacts",
+  "name": "Open Contacts",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "bank-timber",
+      "kind": "bank",
+      "x": 0,
+      "z": 34,
+      "yaw": 0,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "plate-return-left",
+      "kind": "plate",
+      "x": -5,
+      "z": 26,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "plate-return-right",
+      "kind": "plate",
+      "x": 5,
+      "z": 26,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    },
+    {
+      "id": "plate-aim-left",
+      "kind": "plate",
+      "x": -12,
+      "z": 20,
+      "yaw": 20,
+      "voice": {
+        "material": "metal",
+        "degree": 3
+      }
+    },
+    {
+      "id": "plate-aim-right",
+      "kind": "plate",
+      "x": 12,
+      "z": 20,
+      "yaw": -20,
+      "voice": {
+        "material": "metal",
+        "degree": 4
+      }
+    },
+    {
+      "id": "plate-deep",
+      "kind": "plate",
+      "x": 0,
+      "z": 52,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 0
+      }
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "fixed": [
+      "plate-return-left",
+      "plate-return-right",
+      "plate-aim-left",
+      "plate-aim-right",
+      "plate-deep"
+    ],
+    "allowance": {
+      "bank": 1
+    },
+    "goal": {
+      "kind": "none"
+    }
+  }
+}
