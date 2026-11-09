@@ -12,7 +12,7 @@ import { parseRangePreset } from '../../lib/worldcraft-range.js';
 import { runRange } from '../range/run.mjs';
 
 const roots = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
-const dirs = roots.length ? roots : ['worlds/foundry/_template', 'worlds/foundry/soft-landing'];
+const dirs = roots.length ? roots : ['worlds/foundry/_template', 'worlds/foundry/soft-landing', 'worlds/foundry/right-angle'];
 
 function sameTerminal(actual, expected) {
   return actual.reason === expected.reason

@@ -1,0 +1,2409 @@
+{
+  "seed": 20261109,
+  "grid": {
+    "yaws": [
+      0,
+      55,
+      2.5
+    ],
+    "elevations": [
+      12,
+      16,
+      20,
+      24,
+      28
+    ],
+    "charges": [
+      0.5,
+      0.65,
+      0.8,
+      0.9
+    ]
+  },
+  "reports": [
+    {
+      "id": "ell-20-24",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 14,
+          "z": 24.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 20.5,
+          "z": 18,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 34,
+      "twoHome": 32,
+      "oneHome": 3,
+      "yawSpan": [
+        30,
+        52.5
+      ],
+      "closest": [
+        {
+          "yaw": 42.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 1,
+          "z": 0.9,
+          "x": 0.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 40,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 5.7,
+          "z": 2.6,
+          "x": 5.1,
+          "order": [
+            "side-face",
+            "back-face",
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 5.8,
+          "z": 0.8,
+          "x": 5.8,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 20,
+        "elevation": 16,
+        "charge": 0.65,
+        "home": 14.8,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-24-24",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 18,
+          "z": 24.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 24.5,
+          "z": 18,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 34,
+      "twoHome": 22,
+      "oneHome": 0,
+      "yawSpan": [
+        35,
+        55
+      ],
+      "closest": [
+        {
+          "yaw": 45,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 2.2,
+          "z": -1.4,
+          "x": -1.7,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 45,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 4.5,
+          "z": 3.4,
+          "x": 3,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 47.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 7.1,
+          "z": 3.1,
+          "x": -6.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "ell-22-28",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 16,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 22.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 29,
+      "twoHome": 15,
+      "oneHome": 0,
+      "yawSpan": [
+        30,
+        50
+      ],
+      "closest": [
+        {
+          "yaw": 40,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 3.4,
+          "z": 3.4,
+          "x": -0.1,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 9.2,
+          "z": 4.6,
+          "x": 8,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 10,
+          "z": 3.3,
+          "x": 9.5,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "ell-20-28",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 14,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 20.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 31,
+      "twoHome": 18,
+      "oneHome": 2,
+      "yawSpan": [
+        30,
+        47.5
+      ],
+      "closest": [
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 2.6,
+          "z": -1.3,
+          "x": -2.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 4.8,
+          "z": -1.5,
+          "x": 4.6,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 42.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 8,
+          "z": 8,
+          "x": 0,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 17.5,
+        "elevation": 12,
+        "charge": 0.8,
+        "home": 15.2,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-22-24",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 16,
+          "z": 24.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 22.5,
+          "z": 18,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 33,
+      "twoHome": 26,
+      "oneHome": 7,
+      "yawSpan": [
+        35,
+        52.5
+      ],
+      "closest": [
+        {
+          "yaw": 42.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 1.9,
+          "z": -1.2,
+          "x": -1.4,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 42.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 3.2,
+          "z": 2.5,
+          "x": 2,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 47.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 4.4,
+          "z": 4.4,
+          "x": 0.3,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 22.5,
+        "elevation": 16,
+        "charge": 0.65,
+        "home": 8.3,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-24-28",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 18,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 24.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 28,
+      "twoHome": 13,
+      "oneHome": 0,
+      "yawSpan": [
+        32.5,
+        47.5
+      ],
+      "closest": [
+        {
+          "yaw": 45,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 11.5,
+          "z": 11.2,
+          "x": 2.8,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 40,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 12.2,
+          "z": 8,
+          "x": 9.1,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 42.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 12.3,
+          "z": 10.4,
+          "x": 6.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "ell-26-24",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 20,
+          "z": 24.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 26.5,
+          "z": 18,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 31,
+      "twoHome": 13,
+      "oneHome": 0,
+      "yawSpan": [
+        40,
+        55
+      ],
+      "closest": [
+        {
+          "yaw": 45,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 3.7,
+          "z": -3,
+          "x": 2.2,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 50,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 6.2,
+          "z": 3.8,
+          "x": -4.8,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 47.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 6.6,
+          "z": 4.7,
+          "x": 4.6,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t30-17.5-30",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 10,
+          "z": 28,
+          "yaw": 165
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 19.5,
+          "z": 22.5,
+          "yaw": 75
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 31,
+      "twoHome": 10,
+      "oneHome": 0,
+      "yawSpan": [
+        25,
+        37.5
+      ],
+      "closest": [
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 9.2,
+          "z": 5,
+          "x": -7.8,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 10.4,
+          "z": 1.8,
+          "x": 10.2,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 32.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 11.9,
+          "z": 11.8,
+          "x": -0.7,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "ell-26-28",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 20,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 26.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 25,
+      "twoHome": 9,
+      "oneHome": 0,
+      "yawSpan": [
+        37.5,
+        50
+      ],
+      "closest": [
+        {
+          "yaw": 42.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 12.8,
+          "z": 7.1,
+          "x": 10.6,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 47.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 13,
+          "z": 11.3,
+          "x": 6.3,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 45,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14,
+          "z": 12.6,
+          "x": 6.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "ell-18-24",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 24.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 18,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 43,
+      "twoHome": 33,
+      "oneHome": 15,
+      "yawSpan": [
+        27.5,
+        50
+      ],
+      "closest": [
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 1.7,
+          "z": 1.6,
+          "x": -0.5,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 3.4,
+          "z": 1.1,
+          "x": 3.3,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 40,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 3.4,
+          "z": 3.4,
+          "x": -0.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 15,
+        "elevation": 16,
+        "charge": 0.65,
+        "home": 11.3,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-18-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 25,
+      "twoHome": 12,
+      "oneHome": 4,
+      "yawSpan": [
+        25,
+        37.5
+      ],
+      "closest": [
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 6.1,
+          "z": 5.8,
+          "x": 1.8,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 30,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 11,
+          "z": 9.2,
+          "x": 6.1,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 11.8,
+          "z": 6.9,
+          "x": 9.6,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 12.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 13.2,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-18-28",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 33,
+      "twoHome": 22,
+      "oneHome": 12,
+      "yawSpan": [
+        27.5,
+        45
+      ],
+      "closest": [
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 2.3,
+          "z": -0.7,
+          "x": -2.1,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 32.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 3.9,
+          "z": 3.4,
+          "x": 1.9,
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 6.5,
+          "z": 5.6,
+          "x": 3.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 12.5,
+        "elevation": 12,
+        "charge": 0.8,
+        "home": 11.1,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "fold-t40-25-30",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 17,
+          "z": 29.5,
+          "yaw": 175
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 25.5,
+          "z": 22,
+          "yaw": 85
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 19,
+      "twoHome": 2,
+      "oneHome": 0,
+      "yawSpan": [
+        37.5,
+        42.5
+      ],
+      "closest": [
+        {
+          "yaw": 42.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.7,
+          "z": 11.9,
+          "x": 8.7,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15.8,
+          "z": 7.3,
+          "x": 14.1,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "ell-24-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 18,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 24.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 24,
+      "twoHome": 2,
+      "oneHome": 1,
+      "yawSpan": [
+        37.5,
+        40
+      ],
+      "closest": [
+        {
+          "yaw": 40,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15.8,
+          "z": 13.3,
+          "x": 8.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 20,
+          "charge": 0.65,
+          "home": 16,
+          "z": 12.7,
+          "x": 9.7,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 50,
+        "elevation": 12,
+        "charge": 0.8,
+        "home": 15.9,
+        "id": "side-face"
+      }
+    },
+    {
+      "id": "ell-26-36",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 20,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 26.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 19,
+      "twoHome": 0,
+      "oneHome": 0,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t20-15.5-42",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 8,
+          "z": 38.5,
+          "yaw": 155
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 19,
+          "z": 34.5,
+          "yaw": 65
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 24,
+      "twoHome": 0,
+      "oneHome": 0,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t30-21-36",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 13.5,
+          "z": 34,
+          "yaw": 165
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 23,
+          "z": 28.5,
+          "yaw": 75
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 20,
+      "twoHome": 0,
+      "oneHome": 0,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t30-24-42",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 40,
+          "yaw": 165
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 26,
+          "z": 34.5,
+          "yaw": 75
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 11,
+      "twoHome": 0,
+      "oneHome": 0,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t35-25-36",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 17,
+          "z": 34.5,
+          "yaw": 170
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 26.5,
+          "z": 28,
+          "yaw": 80
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 18,
+      "twoHome": 0,
+      "oneHome": 0,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": null
+    },
+    {
+      "id": "ell-22-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 16,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 22.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 21,
+      "twoHome": 4,
+      "oneHome": 3,
+      "yawSpan": [
+        32.5,
+        40
+      ],
+      "closest": [
+        {
+          "yaw": 40,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.7,
+          "z": 14.4,
+          "x": 3.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.8,
+          "z": 11.6,
+          "x": 9.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15,
+          "z": 13.5,
+          "x": 6.6,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 17.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 13.5,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-20-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 14,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 20.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 24,
+      "twoHome": 9,
+      "oneHome": 7,
+      "yawSpan": [
+        27.5,
+        37.5
+      ],
+      "closest": [
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 12.4,
+          "z": 10.6,
+          "x": 6.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 13.2,
+          "z": 11.6,
+          "x": 6.3,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 30,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 13.4,
+          "z": 8.2,
+          "x": 10.7,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 45,
+        "elevation": 12,
+        "charge": 0.9,
+        "home": 3.2,
+        "id": "side-face"
+      }
+    },
+    {
+      "id": "fold-t25-19.5-42",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 39.5,
+          "yaw": 160
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 22,
+          "z": 34.5,
+          "yaw": 70
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 18,
+      "twoHome": 0,
+      "oneHome": 2,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": {
+        "yaw": 10,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 9.1,
+        "id": "left-face"
+      }
+    },
+    {
+      "id": "ell-18-36",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 21,
+      "twoHome": 2,
+      "oneHome": 4,
+      "yawSpan": [
+        27.5,
+        32.5
+      ],
+      "closest": [
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15.8,
+          "z": 14.1,
+          "x": 7.1,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15.8,
+          "z": 15.7,
+          "x": 2.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 10,
+        "elevation": 12,
+        "charge": 0.9,
+        "home": 13.4,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "fold-t35-21-30",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 13,
+          "z": 28.5,
+          "yaw": 170
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 22.5,
+          "z": 22,
+          "yaw": 80
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 27,
+      "twoHome": 7,
+      "oneHome": 7,
+      "yawSpan": [
+        30,
+        40
+      ],
+      "closest": [
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 11.1,
+          "z": 9.9,
+          "x": 5.1,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 12.6,
+          "z": 3.8,
+          "x": 12.1,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 13.1,
+          "z": 11.4,
+          "x": 6.3,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 15,
+        "elevation": 12,
+        "charge": 0.8,
+        "home": 6.7,
+        "id": "left-face"
+      }
+    },
+    {
+      "id": "ell-16-36",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 10,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 20,
+      "twoHome": 5,
+      "oneHome": 6,
+      "yawSpan": [
+        20,
+        27.5
+      ],
+      "closest": [
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.2,
+          "z": 13.9,
+          "x": 3.1,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 25,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.4,
+          "z": 13.2,
+          "x": 5.7,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 22.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.6,
+          "z": 10.7,
+          "x": 9.9,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 7.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 10.4,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-20-36",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 14,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 20.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 24,
+      "twoHome": 0,
+      "oneHome": 3,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": {
+        "yaw": 12.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 9.7,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-16-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 10,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 31,
+      "twoHome": 14,
+      "oneHome": 12,
+      "yawSpan": [
+        22.5,
+        37.5
+      ],
+      "closest": [
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 7.2,
+          "z": 6.3,
+          "x": 3.5,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 30,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 9.8,
+          "z": 9.5,
+          "x": 2.4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 25,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 10.2,
+          "z": 5.7,
+          "x": 8.5,
+          "order": [
+            "back-face",
+            "side-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 7.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 7.8,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-22-36",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 16,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 22.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 22,
+      "twoHome": 0,
+      "oneHome": 4,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": {
+        "yaw": 42.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 2.6,
+        "id": "side-face"
+      }
+    },
+    {
+      "id": "ell-24-36",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 18,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 24.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 20,
+      "twoHome": 0,
+      "oneHome": 4,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": {
+        "yaw": 45,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 0,
+        "id": "side-face"
+      }
+    },
+    {
+      "id": "ell-26-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 20,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 26.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 23,
+      "twoHome": 0,
+      "oneHome": 4,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": {
+        "yaw": 52.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 7.9,
+        "id": "side-face"
+      }
+    },
+    {
+      "id": "fold-t25-14-30",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 6.5,
+          "z": 27.5,
+          "yaw": 160
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 22.5,
+          "yaw": 70
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 33,
+      "twoHome": 19,
+      "oneHome": 16,
+      "yawSpan": [
+        15,
+        32.5
+      ],
+      "closest": [
+        {
+          "yaw": 22.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 9.6,
+          "z": 3.5,
+          "x": 8.9,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 22.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 10,
+          "z": 4.6,
+          "x": 8.9,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 10.4,
+          "z": 9.5,
+          "x": -4.2,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 2.5,
+        "elevation": 16,
+        "charge": 0.65,
+        "home": 6.5,
+        "id": "left-face"
+      }
+    },
+    {
+      "id": "fold-t25-17-36",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 9.5,
+          "z": 33.5,
+          "yaw": 160
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 19.5,
+          "z": 28.5,
+          "yaw": 70
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 21,
+      "twoHome": 0,
+      "oneHome": 5,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": {
+        "yaw": 7.5,
+        "elevation": 16,
+        "charge": 0.8,
+        "home": 6.4,
+        "id": "left-face"
+      }
+    },
+    {
+      "id": "ell-16-24",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 10,
+          "z": 24.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 18,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 44,
+      "twoHome": 43,
+      "oneHome": 32,
+      "yawSpan": [
+        27.5,
+        47.5
+      ],
+      "closest": [
+        {
+          "yaw": 37.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 1.3,
+          "z": 1.3,
+          "x": -0.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 35,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 2.4,
+          "z": 1.4,
+          "x": 1.9,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 37.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 2.7,
+          "z": 2.5,
+          "x": -1.1,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 10,
+        "elevation": 16,
+        "charge": 0.65,
+        "home": 7.6,
+        "id": "back-face"
+      }
+    },
+    {
+      "id": "ell-16-28",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 10,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "opening": {
+        "x": 0,
+        "z": 46.1,
+        "ids": []
+      },
+      "twoBack": 34,
+      "twoHome": 29,
+      "oneHome": 27,
+      "yawSpan": [
+        25,
+        42.5
+      ],
+      "closest": [
+        {
+          "yaw": 30,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 4.3,
+          "z": 2.9,
+          "x": 3.2,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 32.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 5.1,
+          "z": 4.7,
+          "x": 1.9,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 5.8,
+          "z": 4.2,
+          "x": 4,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 45,
+        "elevation": 16,
+        "charge": 0.65,
+        "home": 2.4,
+        "id": "side-face"
+      }
+    },
+    {
+      "id": "fold-t20-11-30",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 3.5,
+          "z": 26.5,
+          "yaw": 155
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 14.5,
+          "z": 22.5,
+          "yaw": 65
+        }
+      ],
+      "opening": {
+        "x": 13,
+        "z": 10.2,
+        "ids": [
+          "left-face"
+        ]
+      },
+      "twoBack": 40,
+      "twoHome": 24,
+      "oneHome": 3,
+      "yawSpan": [
+        10,
+        30
+      ],
+      "closest": [
+        {
+          "yaw": 22.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 5.6,
+          "z": 5.6,
+          "x": 0.5,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 22.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 6.8,
+          "z": 6.7,
+          "x": 1,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 17.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 9.1,
+          "z": 3.2,
+          "x": 8.5,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 42.5,
+        "elevation": 12,
+        "charge": 0.65,
+        "home": 14.9,
+        "id": "right-face"
+      }
+    },
+    {
+      "id": "fold-t15-8-30",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 1,
+          "z": 26,
+          "yaw": 150
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 23,
+          "yaw": 60
+        }
+      ],
+      "opening": {
+        "x": 14.7,
+        "z": 13.5,
+        "ids": [
+          "left-face"
+        ]
+      },
+      "twoBack": 43,
+      "twoHome": 25,
+      "oneHome": 11,
+      "yawSpan": [
+        5,
+        25
+      ],
+      "closest": [
+        {
+          "yaw": 12.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 8.4,
+          "z": 2.9,
+          "x": 7.9,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 17.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 8.4,
+          "z": 5.9,
+          "x": -6,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 12.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 8.6,
+          "z": 3.4,
+          "x": 7.9,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        }
+      ],
+      "oneExample": {
+        "yaw": 40,
+        "elevation": 12,
+        "charge": 0.65,
+        "home": 13.4,
+        "id": "right-face"
+      }
+    },
+    {
+      "id": "fold-t15-9.5-36",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 2.5,
+          "z": 32,
+          "yaw": 150
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 13.5,
+          "z": 29,
+          "yaw": 60
+        }
+      ],
+      "opening": {
+        "x": 12.1,
+        "z": 20.5,
+        "ids": [
+          "left-face"
+        ]
+      },
+      "twoBack": 32,
+      "twoHome": 6,
+      "oneHome": 0,
+      "yawSpan": [
+        10,
+        20
+      ],
+      "closest": [
+        {
+          "yaw": 12.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 13.9,
+          "z": 10.1,
+          "x": 9.7,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 17.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 14.2,
+          "z": 13.6,
+          "x": -4,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 12.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "home": 14.7,
+          "z": 11.2,
+          "x": 9.5,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t20-13-36",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 5.5,
+          "z": 32.5,
+          "yaw": 155
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 28.5,
+          "yaw": 65
+        }
+      ],
+      "opening": {
+        "x": -14.9,
+        "z": 28.3,
+        "ids": [
+          "left-face"
+        ]
+      },
+      "twoBack": 28,
+      "twoHome": 2,
+      "oneHome": 0,
+      "yawSpan": [
+        17.5,
+        22.5
+      ],
+      "closest": [
+        {
+          "yaw": 17.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15,
+          "z": 9.6,
+          "x": 11.6,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 22.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "home": 15.4,
+          "z": 15.3,
+          "x": -2,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        }
+      ],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t15-11.5-42",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 4.5,
+          "z": 38,
+          "yaw": 150
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 15.5,
+          "z": 35,
+          "yaw": 60
+        }
+      ],
+      "opening": {
+        "x": 9.2,
+        "z": 27.5,
+        "ids": [
+          "left-face"
+        ]
+      },
+      "twoBack": 23,
+      "twoHome": 0,
+      "oneHome": 0,
+      "yawSpan": null,
+      "closest": [],
+      "oneExample": null
+    },
+    {
+      "id": "fold-t35-29.5-42",
+      "error": "Piece 2 x: expected -30 to 30"
+    },
+    {
+      "id": "fold-t40-30-36",
+      "error": "Piece 2 x: expected -30 to 30"
+    },
+    {
+      "id": "fold-t40-35-42",
+      "error": "Piece 1: its whole footprint must fit inside the yard"
+    }
+  ]
+}
