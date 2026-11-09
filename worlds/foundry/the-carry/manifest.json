@@ -1,0 +1,64 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "the-carry",
+  "name": "The Carry",
+  "kind": "workshop",
+  "invitation": "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+  "physicalQuestion": "A locked flight falls short of the circle. Can one placed ramp carry the landing in, and do many placements do it?",
+  "editable": {
+    "launcher": false,
+    "geometry": true
+  },
+  "challenge": {
+    "id": "carry-the-circle",
+    "label": "First ground inside the circle"
+  },
+  "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "position": [0, 0.43000006675720215, 36.76214599609375]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss"
+      }
+    }
+  ],
+  "nearbySensitivity": "The rail is fixed. Yaw 0.5° and charge 0.46 are rejected before a shot is fired. The opening ramp moved 0.5 m down the yard was fired: the ball still misses the ramp and the landing does not change. That neighbour is not a clear.",
+  "validationEvidence": "Headless Havok, seed 20261109, scripts/foundry/construction-sweep.mjs and construction-followup.mjs. The opening misses, and so does the same shot with the ramp removed. A 0.5 m and 5° ramp grid found a connected family of clears, each one touching the ramp. One-axis runs around three placements are bracketed on the next player step. Direct aims with no ramp also clear, and the fixed rail rejects them. Block and bank lattices on this shot did not clear. The shared panel sentence was not changed. A real phone and enjoyment were not tested.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A locked shot carried into a farther circle by a ramp the player places",
+      "missing": "The ramp pitch is frozen at -20°, so the player cannot choose a shorter or longer carry.",
+      "extension": "One extra pitch on the existing ramp, keeping its friction and restitution. No new prefab and no new contact law."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "A placement family the player can walk with half-metre and five-degree steps",
+      "missing": "The validator replays the opening shot. It does not search neighbouring placements or the direct aims a free launcher would allow.",
+      "extension": "Leave the replay as it is. The sweep scripts and the lane solutions keep the family and the rejected aims."
+    },
+    {
+      "category": "presentation",
+      "concept": "A fixed shot and one movable ramp, read from the yard and the panel",
+      "missing": "The shared landing panel still says aim and power stay inside the rail stops, and that the block and the bank can move. Bank and block buttons show, disabled.",
+      "extension": "One sentence chosen from the preset: fixed launcher, and the allowance. No new geometry."
+    }
+  ],
+  "customCode": null
+}

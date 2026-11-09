@@ -24,7 +24,7 @@ function memoryStorage() {
   return { getItem: key => data.has(key) ? data.get(key) : null, setItem: (key, value) => { data.set(key, String(value)); } };
 }
 
-test('foundry files stay declarative and the gallery lists one seed', async () => {
+test('foundry files stay declarative and the gallery lists the registered worlds', async () => {
   const preset = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/preset.json', import.meta.url), 'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/manifest.json', import.meta.url), 'utf8'));
   const pair = loadFoundryPair(preset, manifest);
@@ -33,11 +33,17 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.notEqual(pair.manifest.challenge.id, pair.manifest.id);
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
-  assert.deepEqual(cards.map(card => card.id), ['soft-landing']);
+  assert.deepEqual(cards.map(card => card.id), ['soft-landing', 'the-carry']);
   assert.equal(cards[0].kind, 'shot-study');
   assert.equal(cards[0].editable.launcher, true);
   assert.equal(cards[0].editable.geometry, true);
   assert.equal(cards[0].hasChallenge, true);
+  assert.equal(cards[1].kind, 'workshop');
+  assert.equal(cards[1].editable.launcher, false);
+  assert.equal(cards[1].editable.geometry, true);
+  assert.equal(cards[1].hasChallenge, true);
+  assert.equal(cards[1].invitation.includes('locked'), true);
+  assert.equal(/\d/.test(cards[1].invitation), false);
   assert.equal(Object.hasOwn(cards[0], 'testedShots'), false);
   assert.equal(JSON.stringify(cards).includes('testedShots'), false);
   assert.equal(foundryRecord('soft-landing').manifest.testedShots[0].outcome.status, 'miss');
@@ -99,11 +105,18 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   const template = await validateFoundryDirectory('worlds/foundry/_template', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
+  const carry = await validateFoundryDirectory('worlds/foundry/the-carry', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);
+  assert.equal(carry.id, 'the-carry');
+  assert.equal(carry.customCode, null);
+  assert.equal(carry.kind, 'workshop');
+  assert.deepEqual(carry.shots, ['opening']);
+  assert.equal(foundryRecord('the-carry').manifest.testedShots[0].outcome.status, 'miss');
+  assert.equal(foundryRecord('the-carry').manifest.editable.launcher, false);
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');
