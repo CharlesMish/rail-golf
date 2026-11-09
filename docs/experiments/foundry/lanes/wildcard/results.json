@@ -1,0 +1,2120 @@
+{
+  "seed": 20261109,
+  "wallZ": 36,
+  "shotCount": 1153,
+  "rejected": 0,
+  "opening": {
+    "label": "opening",
+    "setup": {
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 16,
+      "charge": 0.55
+    },
+    "kind": "met-middle",
+    "ids": [
+      "middle-stop"
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 1.5749999999999968,
+      "position": [
+        0,
+        0.4300004243850708,
+        28.5777645111084
+      ]
+    },
+    "outcome": {
+      "kind": "none",
+      "status": "none"
+    },
+    "contacts": [
+      {
+        "body": "worldcraft-object-middle-stop",
+        "count": 2,
+        "first": 1.0999999999999985
+      },
+      {
+        "body": "worldcraft-ground",
+        "count": 1,
+        "first": 1.5666666666666635
+      }
+    ]
+  },
+  "yaw": {
+    "counts": {
+      "out-of-bounds": 88,
+      "short-left": 17,
+      "beside-left": 24,
+      "met-left": 20,
+      "skipped-left": 5,
+      "clear-left": 19,
+      "met-middle": 23,
+      "clear-right": 19,
+      "skipped-right": 5,
+      "met-right": 20,
+      "beside-right": 24,
+      "short-right": 17
+    },
+    "windows": {
+      "out-of-bounds": [
+        {
+          "min": -70,
+          "max": -48.5,
+          "count": 44,
+          "zMin": 11.685070037841797,
+          "zMax": 28.383939743041992,
+          "sampleX": -32.10447311401367,
+          "reason": "out-of-bounds"
+        },
+        {
+          "min": 48.5,
+          "max": 70,
+          "count": 44,
+          "zMin": 11.685070037841797,
+          "zMax": 28.383939743041992,
+          "sampleX": 32.08220291137695,
+          "reason": "out-of-bounds"
+        }
+      ],
+      "short-left": [
+        {
+          "min": -48,
+          "max": -40,
+          "count": 17,
+          "zMin": 28.804338455200195,
+          "zMax": 32.97623062133789,
+          "sampleX": -31.990459442138672,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "beside-left": [
+        {
+          "min": -39.5,
+          "max": -28,
+          "count": 24,
+          "zMin": 33.21643829345703,
+          "zMax": 38.008609771728516,
+          "sampleX": -27.381515502929688,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-left": [
+        {
+          "min": -27.5,
+          "max": -18,
+          "count": 20,
+          "zMin": 29.221654891967773,
+          "zMax": 37.5498161315918,
+          "sampleX": -20.64291000366211,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-left": [
+        {
+          "min": -17.5,
+          "max": -15.5,
+          "count": 5,
+          "zMin": 40.737632751464844,
+          "zMax": 41.353214263916016,
+          "sampleX": -9.614677429199219,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-left": [
+        {
+          "min": -15,
+          "max": -6,
+          "count": 19,
+          "zMin": 41.58060836791992,
+          "zMax": 42.811588287353516,
+          "sampleX": -11.14148998260498,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-middle": [
+        {
+          "min": -5.5,
+          "max": 5.5,
+          "count": 23,
+          "zMin": 28.360515594482422,
+          "zMax": 33.47252655029297,
+          "sampleX": -8.928047180175781,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-right": [
+        {
+          "min": 6,
+          "max": 15,
+          "count": 19,
+          "zMin": 41.58060836791992,
+          "zMax": 42.811588287353516,
+          "sampleX": 4.499679088592529,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-right": [
+        {
+          "min": 15.5,
+          "max": 17.5,
+          "count": 5,
+          "zMin": 40.737632751464844,
+          "zMax": 41.353214263916016,
+          "sampleX": 10.209512710571289,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-right": [
+        {
+          "min": 18,
+          "max": 27.5,
+          "count": 20,
+          "zMin": 29.221654891967773,
+          "zMax": 37.5498161315918,
+          "sampleX": 6.835630416870117,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "beside-right": [
+        {
+          "min": 28,
+          "max": 39.5,
+          "count": 24,
+          "zMin": 33.21643829345703,
+          "zMax": 38.008609771728516,
+          "sampleX": 20.209529876708984,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "short-right": [
+        {
+          "min": 40,
+          "max": 48,
+          "count": 17,
+          "zMin": 28.804338455200195,
+          "zMax": 32.97623062133789,
+          "sampleX": 27.670337677001953,
+          "reason": "first-ground-contact"
+        }
+      ]
+    }
+  },
+  "yaw18": {
+    "counts": {
+      "beside-left": 16,
+      "clear-left": 29,
+      "skipped-left": 7,
+      "met-left": 18,
+      "skipped-middle": 21,
+      "clear-right": 29,
+      "skipped-right": 7,
+      "met-right": 18,
+      "beside-right": 16
+    },
+    "windows": {
+      "beside-left": [
+        {
+          "min": -40,
+          "max": -32.5,
+          "count": 16,
+          "zMin": 35.351070404052734,
+          "zMax": 38.920448303222656,
+          "sampleX": -29.663074493408203,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-left": [
+        {
+          "min": -32,
+          "max": -28,
+          "count": 9,
+          "zMin": 39.13534164428711,
+          "zMax": 40.74586868286133,
+          "sampleX": -24.45448112487793,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": -15,
+          "max": -5.5,
+          "count": 20,
+          "zMin": 44.57509994506836,
+          "zMax": 45.93510818481445,
+          "sampleX": -11.943867683410645,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-left": [
+        {
+          "min": -27.5,
+          "max": -27.5,
+          "count": 1,
+          "zMin": 40.18321228027344,
+          "zMax": 40.18321228027344,
+          "sampleX": -22.228940963745117,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": -18,
+          "max": -15.5,
+          "count": 6,
+          "zMin": 43.61809158325195,
+          "zMax": 50.69482421875,
+          "sampleX": -2.2533469200134277,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-left": [
+        {
+          "min": -27,
+          "max": -18.5,
+          "count": 18,
+          "zMin": 22.722774505615234,
+          "zMax": 37.759857177734375,
+          "sampleX": -20.302167892456055,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-middle": [
+        {
+          "min": -5,
+          "max": 5,
+          "count": 21,
+          "zMin": 57.47704315185547,
+          "zMax": 58.18388748168945,
+          "sampleX": -5.616714954376221,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-right": [
+        {
+          "min": 5.5,
+          "max": 15,
+          "count": 20,
+          "zMin": 44.57509994506836,
+          "zMax": 45.93510818481445,
+          "sampleX": 4.423046588897705,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": 28,
+          "max": 32,
+          "count": 9,
+          "zMin": 39.13534164428711,
+          "zMax": 40.74586868286133,
+          "sampleX": 21.664962768554688,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-right": [
+        {
+          "min": 15.5,
+          "max": 18,
+          "count": 6,
+          "zMin": 43.61809158325195,
+          "zMax": 50.69482421875,
+          "sampleX": 9.880049705505371,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": 27.5,
+          "max": 27.5,
+          "count": 1,
+          "zMin": 40.18321228027344,
+          "zMax": 40.18321228027344,
+          "sampleX": 22.228940963745117,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-right": [
+        {
+          "min": 18.5,
+          "max": 27,
+          "count": 18,
+          "zMin": 22.722774505615234,
+          "zMax": 37.759857177734375,
+          "sampleX": 21.915056228637695,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "beside-right": [
+        {
+          "min": 32.5,
+          "max": 40,
+          "count": 16,
+          "zMin": 35.351070404052734,
+          "zMax": 38.920448303222656,
+          "sampleX": 24.795059204101562,
+          "reason": "first-ground-contact"
+        }
+      ]
+    }
+  },
+  "yaw24": {
+    "counts": {
+      "out-of-bounds": 16,
+      "clear-left": 66,
+      "clear-over": 13,
+      "clear-right": 66
+    },
+    "windows": {
+      "out-of-bounds": [
+        {
+          "min": -40,
+          "max": -36.5,
+          "count": 8,
+          "zMin": 38.26788330078125,
+          "zMax": 43.38817596435547,
+          "sampleX": -32.11056900024414,
+          "reason": "out-of-bounds"
+        },
+        {
+          "min": 36.5,
+          "max": 40,
+          "count": 8,
+          "zMin": 38.26788330078125,
+          "zMax": 43.38817596435547,
+          "sampleX": 32.105560302734375,
+          "reason": "out-of-bounds"
+        }
+      ],
+      "clear-left": [
+        {
+          "min": -36,
+          "max": -3.5,
+          "count": 66,
+          "zMin": 43.99190139770508,
+          "zMax": 54.27555847167969,
+          "sampleX": -31.96198844909668,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-over": [
+        {
+          "min": -3,
+          "max": 3,
+          "count": 13,
+          "zMin": 54.302459716796875,
+          "zMax": 54.37699508666992,
+          "sampleX": -2.845871686935425,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-right": [
+        {
+          "min": 3.5,
+          "max": 36,
+          "count": 66,
+          "zMin": 43.99190139770508,
+          "zMax": 54.27555847167969,
+          "sampleX": 3.3196353912353516,
+          "reason": "first-ground-contact"
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "counts": {
+      "short": 32,
+      "beside-middle": 1,
+      "met-middle": 15,
+      "skipped-middle": 11,
+      "clear-over": 102
+    },
+    "windows": {
+      "short": [
+        {
+          "min": 5,
+          "max": 9.5,
+          "count": 10,
+          "zMin": 24.666860580444336,
+          "zMax": 32.23331832885742,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": 74.5,
+          "max": 85,
+          "count": 22,
+          "zMin": 11.07459831237793,
+          "zMax": 32.898799896240234,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "beside-middle": [
+        {
+          "min": 10,
+          "max": 10,
+          "count": 1,
+          "zMin": 33.06999969482422,
+          "zMax": 33.06999969482422,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-middle": [
+        {
+          "min": 10.5,
+          "max": 17,
+          "count": 14,
+          "zMin": 23.843612670898438,
+          "zMax": 32.660972595214844,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": 74,
+          "max": 74,
+          "count": 1,
+          "zMin": 32.72960662841797,
+          "zMax": 32.72960662841797,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-middle": [
+        {
+          "min": 17.5,
+          "max": 19.5,
+          "count": 5,
+          "zMin": 58.18388748168945,
+          "zMax": 61.68404769897461,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        },
+        {
+          "min": 71,
+          "max": 73.5,
+          "count": 6,
+          "zMin": 44.356056213378906,
+          "zMax": 50.187042236328125,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-over": [
+        {
+          "min": 20,
+          "max": 70.5,
+          "count": 102,
+          "zMin": 40.285953521728516,
+          "zMax": 66.43217468261719,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ]
+    }
+  },
+  "charge": {
+    "counts": {
+      "short": 23,
+      "beside-middle": 1,
+      "met-middle": 15,
+      "skipped-middle": 6,
+      "clear-over": 36
+    },
+    "windows": {
+      "short": [
+        {
+          "min": 0.2,
+          "max": 0.42,
+          "count": 23,
+          "zMin": 18.315597534179688,
+          "zMax": 32.294921875,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "beside-middle": [
+        {
+          "min": 0.43,
+          "max": 0.43,
+          "count": 1,
+          "zMin": 33.06999969482422,
+          "zMax": 33.06999969482422,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-middle": [
+        {
+          "min": 0.44,
+          "max": 0.58,
+          "count": 15,
+          "zMin": 24.365554809570312,
+          "zMax": 32.732383728027344,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "skipped-middle": [
+        {
+          "min": 0.59,
+          "max": 0.64,
+          "count": 6,
+          "zMin": 59.37075424194336,
+          "zMax": 65.14408111572266,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-over": [
+        {
+          "min": 0.65,
+          "max": 1,
+          "count": 36,
+          "zMin": 52.49299621582031,
+          "zMax": 95.05696105957031,
+          "sampleX": 0,
+          "reason": "first-ground-contact"
+        }
+      ]
+    }
+  },
+  "origin": {
+    "counts": {
+      "clear-left": 14,
+      "met-middle": 13,
+      "clear-right": 14
+    },
+    "windows": {
+      "clear-left": [
+        {
+          "min": -10,
+          "max": -3.5,
+          "count": 14,
+          "zMin": 43.04741287231445,
+          "zMax": 43.04741287231445,
+          "sampleX": -10,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "met-middle": [
+        {
+          "min": -3,
+          "max": 3,
+          "count": 13,
+          "zMin": 28.5777645111084,
+          "zMax": 28.607519149780273,
+          "sampleX": -3.5785655975341797,
+          "reason": "first-ground-contact"
+        }
+      ],
+      "clear-right": [
+        {
+          "min": 3.5,
+          "max": 10,
+          "count": 14,
+          "zMin": 43.04741287231445,
+          "zMax": 43.04741287231445,
+          "sampleX": 3.5,
+          "reason": "first-ground-contact"
+        }
+      ]
+    }
+  },
+  "examples": {
+    "left": {
+      "label": "yaw",
+      "setup": {
+        "originX": 0,
+        "yaw": -10.5,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "kind": "clear-left",
+      "ids": [],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [
+          -7.8447675704956055,
+          0.43000006675720215,
+          42.32658767700195
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 1.4916666666666638
+        }
+      ]
+    },
+    "right": {
+      "label": "yaw",
+      "setup": {
+        "originX": 0,
+        "yaw": 10.5,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "kind": "clear-right",
+      "ids": [],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [
+          7.8447675704956055,
+          0.43000006675720215,
+          42.32658767700195
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 1.4916666666666638
+        }
+      ]
+    },
+    "over": {
+      "label": "elevation",
+      "setup": {
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "kind": "clear-over",
+      "ids": [],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.0583333333333287,
+        "position": [
+          0,
+          0.43000006675720215,
+          54.37699508666992
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        {
+          "body": "worldcraft-ground",
+          "count": 1,
+          "first": 2.0499999999999954
+        }
+      ]
+    }
+  },
+  "neighbors": {
+    "opening": [
+      {
+        "label": "opening-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": -0.5,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "position": [
+            -0.36182287335395813,
+            0.4300013482570648,
+            28.5777645111084
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.0999999999999985
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5666666666666635
+          }
+        ]
+      },
+      {
+        "label": "opening-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": 0.5,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "position": [
+            0.36182287335395813,
+            0.4300013482570648,
+            28.5777645111084
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.0999999999999985
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5666666666666635
+          }
+        ]
+      },
+      {
+        "label": "opening-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 15.5,
+          "charge": 0.55
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "position": [
+            0,
+            0.4300016462802887,
+            28.978857040405273
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.0999999999999985
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.524999999999997
+          }
+        ]
+      },
+      {
+        "label": "opening-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 16.5,
+          "charge": 0.55
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.60833333333333,
+          "position": [
+            0,
+            0.43000006675720215,
+            28.360515594482422
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.1083333333333318
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5999999999999968
+          }
+        ]
+      },
+      {
+        "label": "opening-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 16,
+          "charge": 0.54
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5583333333333302,
+          "position": [
+            0,
+            0.4300006926059723,
+            28.960527420043945
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.1166666666666651
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.549999999999997
+          }
+        ]
+      },
+      {
+        "label": "opening-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 16,
+          "charge": 0.56
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5916666666666635,
+          "position": [
+            0,
+            0.4299999177455902,
+            28.594585418701172
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 3,
+            "first": 1.083333333333332
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5833333333333302
+          }
+        ]
+      },
+      {
+        "label": "opening-origin",
+        "setup": {
+          "originX": -0.5,
+          "yaw": 0,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "position": [
+            -0.5,
+            0.4300004243850708,
+            28.5777645111084
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.0999999999999985
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5666666666666635
+          }
+        ]
+      },
+      {
+        "label": "opening-origin",
+        "setup": {
+          "originX": 0.5,
+          "yaw": 0,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "met-middle",
+        "ids": [
+          "middle-stop"
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "position": [
+            0.5,
+            0.4300004243850708,
+            28.5777645111084
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-object-middle-stop",
+            "count": 2,
+            "first": 1.0999999999999985
+          },
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5666666666666635
+          }
+        ]
+      }
+    ],
+    "left": [
+      {
+        "label": "left-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": -11,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            -8.213833808898926,
+            0.43000006675720215,
+            42.25651168823242
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      },
+      {
+        "label": "left-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": -10,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            -7.475103378295898,
+            0.43000006675720215,
+            42.393428802490234
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      },
+      {
+        "label": "left-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": -10.5,
+          "elevation": 15.5,
+          "charge": 0.55
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.466666666666664,
+          "position": [
+            -7.7095561027526855,
+            0.4300000071525574,
+            41.597049713134766
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4583333333333306
+          }
+        ]
+      },
+      {
+        "label": "left-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": -10.5,
+          "elevation": 16.5,
+          "charge": 0.55
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "position": [
+            -7.978611469268799,
+            0.43000003695487976,
+            43.04873275756836
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.524999999999997
+          }
+        ]
+      },
+      {
+        "label": "left-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": -10.5,
+          "elevation": 16,
+          "charge": 0.54
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "position": [
+            -7.671355724334717,
+            0.43000009655952454,
+            41.39092254638672
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4749999999999972
+          }
+        ]
+      },
+      {
+        "label": "left-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": -10.5,
+          "elevation": 16,
+          "charge": 0.56
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "position": [
+            -8.020343780517578,
+            0.4300000071525574,
+            43.273902893066406
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5083333333333304
+          }
+        ]
+      },
+      {
+        "label": "left-origin",
+        "setup": {
+          "originX": -0.5,
+          "yaw": -10.5,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            -8.344767570495605,
+            0.43000006675720215,
+            42.32658767700195
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      },
+      {
+        "label": "left-origin",
+        "setup": {
+          "originX": 0.5,
+          "yaw": -10.5,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-left",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            -7.3447675704956055,
+            0.43000006675720215,
+            42.32658767700195
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      }
+    ],
+    "right": [
+      {
+        "label": "right-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": 10,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            7.475103378295898,
+            0.43000006675720215,
+            42.393428802490234
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      },
+      {
+        "label": "right-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": 11,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            8.213833808898926,
+            0.43000006675720215,
+            42.25651168823242
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      },
+      {
+        "label": "right-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": 10.5,
+          "elevation": 15.5,
+          "charge": 0.55
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.466666666666664,
+          "position": [
+            7.7095561027526855,
+            0.4300000071525574,
+            41.597049713134766
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4583333333333306
+          }
+        ]
+      },
+      {
+        "label": "right-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": 10.5,
+          "elevation": 16.5,
+          "charge": 0.55
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "position": [
+            7.978611469268799,
+            0.43000003695487976,
+            43.04873275756836
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.524999999999997
+          }
+        ]
+      },
+      {
+        "label": "right-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": 10.5,
+          "elevation": 16,
+          "charge": 0.54
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "position": [
+            7.671355724334717,
+            0.43000009655952454,
+            41.39092254638672
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4749999999999972
+          }
+        ]
+      },
+      {
+        "label": "right-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": 10.5,
+          "elevation": 16,
+          "charge": 0.56
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "position": [
+            8.020343780517578,
+            0.4300000071525574,
+            43.273902893066406
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.5083333333333304
+          }
+        ]
+      },
+      {
+        "label": "right-origin",
+        "setup": {
+          "originX": -0.5,
+          "yaw": 10.5,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            7.3447675704956055,
+            0.43000006675720215,
+            42.32658767700195
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      },
+      {
+        "label": "right-origin",
+        "setup": {
+          "originX": 0.5,
+          "yaw": 10.5,
+          "elevation": 16,
+          "charge": 0.55
+        },
+        "kind": "clear-right",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "position": [
+            8.344767570495605,
+            0.43000006675720215,
+            42.32658767700195
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 1.4916666666666638
+          }
+        ]
+      }
+    ],
+    "over": [
+      {
+        "label": "over-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": -0.5,
+          "elevation": 24,
+          "charge": 0.55
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.0583333333333287,
+          "position": [
+            -0.4745226800441742,
+            0.43000006675720215,
+            54.37489318847656
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.0499999999999954
+          }
+        ]
+      },
+      {
+        "label": "over-yaw",
+        "setup": {
+          "originX": 0,
+          "yaw": 0.5,
+          "elevation": 24,
+          "charge": 0.55
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.0583333333333287,
+          "position": [
+            0.4745226800441742,
+            0.43000006675720215,
+            54.37489318847656
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.0499999999999954
+          }
+        ]
+      },
+      {
+        "label": "over-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 23.5,
+          "charge": 0.55
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.016666666666662,
+          "position": [
+            0,
+            0.429999977350235,
+            53.57735061645508
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.008333333333329
+          }
+        ]
+      },
+      {
+        "label": "over-elevation",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 24.5,
+          "charge": 0.55
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.091666666666662,
+          "position": [
+            0,
+            0.43000003695487976,
+            54.964447021484375
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.0833333333333286
+          }
+        ]
+      },
+      {
+        "label": "over-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 24,
+          "charge": 0.54
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.0333333333333288,
+          "position": [
+            0,
+            0.43000003695487976,
+            53.08536148071289
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.0249999999999955
+          }
+        ]
+      },
+      {
+        "label": "over-charge",
+        "setup": {
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 24,
+          "charge": 0.56
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.0749999999999953,
+          "position": [
+            0,
+            0.43000003695487976,
+            55.481712341308594
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.066666666666662
+          }
+        ]
+      },
+      {
+        "label": "over-origin",
+        "setup": {
+          "originX": -0.5,
+          "yaw": 0,
+          "elevation": 24,
+          "charge": 0.55
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.0583333333333287,
+          "position": [
+            -0.5,
+            0.43000006675720215,
+            54.37699508666992
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.0499999999999954
+          }
+        ]
+      },
+      {
+        "label": "over-origin",
+        "setup": {
+          "originX": 0.5,
+          "yaw": 0,
+          "elevation": 24,
+          "charge": 0.55
+        },
+        "kind": "clear-over",
+        "ids": [],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.0583333333333287,
+          "position": [
+            0.5,
+            0.43000006675720215,
+            54.37699508666992
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        },
+        "contacts": [
+          {
+            "body": "worldcraft-ground",
+            "count": 1,
+            "first": 2.0499999999999954
+          }
+        ]
+      }
+    ]
+  },
+  "families": {
+    "leftElevation": {
+      "counts": {
+        "short-left": 5,
+        "beside-left": 7,
+        "clear-left": 53
+      },
+      "windows": {
+        "short-left": [
+          {
+            "min": 8,
+            "max": 10,
+            "count": 5,
+            "zMin": 29.250869750976562,
+            "zMax": 32.71128845214844,
+            "sampleX": -5.421328544616699,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "beside-left": [
+          {
+            "min": 10.5,
+            "max": 13.5,
+            "count": 7,
+            "zMin": 33.510528564453125,
+            "zMax": 38.39833450317383,
+            "sampleX": -6.21081018447876,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "clear-left": [
+          {
+            "min": 14,
+            "max": 40,
+            "count": 53,
+            "zMin": 39.156028747558594,
+            "zMax": 65.05121612548828,
+            "sampleX": -7.257142066955566,
+            "reason": "first-ground-contact"
+          }
+        ]
+      }
+    },
+    "rightElevation": {
+      "counts": {
+        "short-right": 5,
+        "beside-right": 7,
+        "clear-right": 53
+      },
+      "windows": {
+        "short-right": [
+          {
+            "min": 8,
+            "max": 10,
+            "count": 5,
+            "zMin": 29.250869750976562,
+            "zMax": 32.71128845214844,
+            "sampleX": 5.421328544616699,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "beside-right": [
+          {
+            "min": 10.5,
+            "max": 13.5,
+            "count": 7,
+            "zMin": 33.510528564453125,
+            "zMax": 38.39833450317383,
+            "sampleX": 6.21081018447876,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "clear-right": [
+          {
+            "min": 14,
+            "max": 40,
+            "count": 53,
+            "zMin": 39.156028747558594,
+            "zMax": 65.05121612548828,
+            "sampleX": 7.257142066955566,
+            "reason": "first-ground-contact"
+          }
+        ]
+      }
+    },
+    "leftCharge": {
+      "counts": {
+        "short-left": 3,
+        "beside-left": 2,
+        "clear-left": 8
+      },
+      "windows": {
+        "short-left": [
+          {
+            "min": 0.3,
+            "max": 0.3,
+            "count": 1,
+            "zMin": 23.653881072998047,
+            "zMax": 23.653881072998047,
+            "sampleX": -4.3839874267578125,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.35,
+            "max": 0.35,
+            "count": 1,
+            "zMin": 26.879638671875,
+            "zMax": 26.879638671875,
+            "sampleX": -4.981846332550049,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.4,
+            "max": 0.4,
+            "count": 1,
+            "zMin": 30.338993072509766,
+            "zMax": 30.338993072509766,
+            "sampleX": -5.623000144958496,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "beside-left": [
+          {
+            "min": 0.45,
+            "max": 0.45,
+            "count": 1,
+            "zMin": 34.031944274902344,
+            "zMax": 34.031944274902344,
+            "sampleX": -6.307448387145996,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.5,
+            "max": 0.5,
+            "count": 1,
+            "zMin": 37.958492279052734,
+            "zMax": 37.958492279052734,
+            "sampleX": -7.035190105438232,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "clear-left": [
+          {
+            "min": 0.55,
+            "max": 0.55,
+            "count": 1,
+            "zMin": 42.32658767700195,
+            "zMax": 42.32658767700195,
+            "sampleX": -7.8447675704956055,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.6,
+            "max": 0.6,
+            "count": 1,
+            "zMin": 46.95745849609375,
+            "zMax": 46.95745849609375,
+            "sampleX": -8.70305061340332,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.65,
+            "max": 0.65,
+            "count": 1,
+            "zMin": 51.6140022277832,
+            "zMax": 51.6140022277832,
+            "sampleX": -9.566089630126953,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.7,
+            "max": 0.7,
+            "count": 1,
+            "zMin": 56.755889892578125,
+            "zMax": 56.755889892578125,
+            "sampleX": -10.51908016204834,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.75,
+            "max": 0.75,
+            "count": 1,
+            "zMin": 62.160545349121094,
+            "zMax": 62.160545349121094,
+            "sampleX": -11.520773887634277,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.8,
+            "max": 0.8,
+            "count": 1,
+            "zMin": 67.82801055908203,
+            "zMax": 67.82801055908203,
+            "sampleX": -12.57117748260498,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.85,
+            "max": 0.85,
+            "count": 1,
+            "zMin": 73.75828552246094,
+            "zMax": 73.75828552246094,
+            "sampleX": -13.670287132263184,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.9,
+            "max": 0.9,
+            "count": 1,
+            "zMin": 80.26148223876953,
+            "zMax": 80.26148223876953,
+            "sampleX": -14.875587463378906,
+            "reason": "first-ground-contact"
+          }
+        ]
+      }
+    },
+    "rightCharge": {
+      "counts": {
+        "short-right": 3,
+        "beside-right": 2,
+        "clear-right": 8
+      },
+      "windows": {
+        "short-right": [
+          {
+            "min": 0.3,
+            "max": 0.3,
+            "count": 1,
+            "zMin": 23.653881072998047,
+            "zMax": 23.653881072998047,
+            "sampleX": 4.3839874267578125,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.35,
+            "max": 0.35,
+            "count": 1,
+            "zMin": 26.879638671875,
+            "zMax": 26.879638671875,
+            "sampleX": 4.981846332550049,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.4,
+            "max": 0.4,
+            "count": 1,
+            "zMin": 30.338993072509766,
+            "zMax": 30.338993072509766,
+            "sampleX": 5.623000144958496,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "beside-right": [
+          {
+            "min": 0.45,
+            "max": 0.45,
+            "count": 1,
+            "zMin": 34.031944274902344,
+            "zMax": 34.031944274902344,
+            "sampleX": 6.307448387145996,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.5,
+            "max": 0.5,
+            "count": 1,
+            "zMin": 37.958492279052734,
+            "zMax": 37.958492279052734,
+            "sampleX": 7.035190105438232,
+            "reason": "first-ground-contact"
+          }
+        ],
+        "clear-right": [
+          {
+            "min": 0.55,
+            "max": 0.55,
+            "count": 1,
+            "zMin": 42.32658767700195,
+            "zMax": 42.32658767700195,
+            "sampleX": 7.8447675704956055,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.6,
+            "max": 0.6,
+            "count": 1,
+            "zMin": 46.95745849609375,
+            "zMax": 46.95745849609375,
+            "sampleX": 8.70305061340332,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.65,
+            "max": 0.65,
+            "count": 1,
+            "zMin": 51.6140022277832,
+            "zMax": 51.6140022277832,
+            "sampleX": 9.566089630126953,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.7,
+            "max": 0.7,
+            "count": 1,
+            "zMin": 56.755889892578125,
+            "zMax": 56.755889892578125,
+            "sampleX": 10.51908016204834,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.75,
+            "max": 0.75,
+            "count": 1,
+            "zMin": 62.160545349121094,
+            "zMax": 62.160545349121094,
+            "sampleX": 11.520773887634277,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.8,
+            "max": 0.8,
+            "count": 1,
+            "zMin": 67.82801055908203,
+            "zMax": 67.82801055908203,
+            "sampleX": 12.57117748260498,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.85,
+            "max": 0.85,
+            "count": 1,
+            "zMin": 73.75828552246094,
+            "zMax": 73.75828552246094,
+            "sampleX": 13.670287132263184,
+            "reason": "first-ground-contact"
+          },
+          {
+            "min": 0.9,
+            "max": 0.9,
+            "count": 1,
+            "zMin": 80.26148223876953,
+            "zMax": 80.26148223876953,
+            "sampleX": 14.875587463378906,
+            "reason": "first-ground-contact"
+          }
+        ]
+      }
+    }
+  }
+}
