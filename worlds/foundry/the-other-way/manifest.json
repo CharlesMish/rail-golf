@@ -1,0 +1,124 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "the-other-way",
+  "name": "The Other Way",
+  "kind": "shot-study",
+  "invitation": "Three blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+  "physicalQuestion": "Why fire again after a finished stop, when nothing was scored and the stop itself was not a mistake?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": {
+    "id": "spare-way",
+    "label": "Send one line past the blocks"
+  },
+  "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5749999999999968,
+        "position": [0, 0.4300004243850708, 28.5777645111084]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "left",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10.5,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [-7.8447675704956055, 0.43000006675720215, 42.32658767700195]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "right",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 10.5,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [7.8447675704956055, 0.43000006675720215, 42.32658767700195]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "carry",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.0583333333333287,
+        "position": [0, 0.43000006675720215, 54.37699508666992]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "At the opening, yaw 0, elevation 16, charge 0.55, one slider step still meets the middle block and stops short of it: yaw plus or minus 0.5 degrees, elevation plus or minus 0.5 degrees, charge plus or minus 0.01, and origin plus or minus 0.5 m. The left example at yaw -10.5, and the right example at yaw 10.5, stay clear of every block at those same one-step changes. The straight carry at elevation 24 stays a carry at those same one-step changes. These are neighbours of tested shots, not a search for a lip.",
+  "validationEvidence": "1153 headless Havok shots, seed 20261109, via docs/experiments/foundry/lanes/wildcard/sweep.mjs and scripts/range/run.mjs. Zero setups were rejected. The four tested shots are replayed by scripts/foundry/validate.mjs. Neighbour steps were fired and are not replayed. Not run: a physical phone, and no claim is made that anyone enjoys the lines.",
+  "limitations": [
+    {
+      "category": "authoring-tooling",
+      "concept": "Several finished lines, and none of them is the miss.",
+      "missing": "A goal can name one circle, one contact, or a phrase. Naming any one landing would mark the other finished lines as misses, so this world has no goal.",
+      "extension": "An optional goal that accepts any of two or three existing first-ground circles, with no new collider and no score. Not built."
+    },
+    {
+      "category": "presentation",
+      "concept": "The choice should read as the blocks and the open air, not as a music exercise.",
+      "missing": "Nothing on the ground marks a side, and Survey has no caption for the gaps. On a 390 by 844 play view the invitation sits below the fire control. A saved copy drops the invitation, because that sentence is not stored on the world file.",
+      "extension": "Two non-colliding ground marks. Leave the invitation on the foundry card. Not built."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "A dull face tall enough that a straight shot could not carry it.",
+      "missing": "Blocks are 4 m tall and have no height control, so a higher or harder straight shot carries the middle. That carry stays as one of the ways.",
+      "extension": "One height offset on the existing block, keeping its friction and restitution. Not built."
+    }
+  ],
+  "customCode": null
+}

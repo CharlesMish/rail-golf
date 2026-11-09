@@ -917,6 +917,8 @@ export default function Worldcraft() {
   const locked = ['loading', 'error', 'charging', 'flight'].includes(ui.phase);
   const selected = ui.world.objects.find(o => o.id === ui.selected);
   const fixedRail = Boolean(worldcraftFixedSetup(ui.world));
+  const foundryCard = ui.foundryId ? listFoundryWorlds().find(card => card.id === ui.foundryId) ?? null : null;
+  const resonantPieces = ui.world.objects.some(object => object.kind === 'ramp' || object.kind === 'bank' || object.kind === 'plate');
   const bell = worldcraftBellTarget(ui.world);
   const bellPose = bell ? worldcraftBellPose(bell, ui.launchPhase) : null;
   const bellPeriod = bell ? worldcraftBellPose(bell, 0) : null;
@@ -990,10 +992,21 @@ export default function Worldcraft() {
           <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
-        {ui.world.rules?.goal?.kind === 'none' && !fixedRail && <section className={styles.goal} aria-label="Musical workshop">
+        {ui.world.rules?.goal?.kind === 'none' && !fixedRail && foundryCard && <section className={styles.goal} aria-label={foundryCard.name}>
+          <strong>{foundryCard.name}</strong>
+          <p>{foundryCard.invitation}</p>
+          <p>{foundryCard.editable.geometry ? 'Pieces that are not fixed can move.' : 'These pieces stay where they are.'} Origin, aim, and power can change. First ground ends the line. No score.</p>
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
+        {ui.world.rules?.goal?.kind === 'none' && !fixedRail && !foundryCard && resonantPieces && <section className={styles.goal} aria-label="Musical workshop">
           <strong>Musical Workshop</strong>
           <p>The ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
+        {ui.world.rules?.goal?.kind === 'none' && !fixedRail && !foundryCard && !resonantPieces && <section className={styles.goal} aria-label={ui.world.name}>
+          <strong>{ui.world.name}</strong>
+          <p>Origin, aim, and power can change. Fixed pieces stay. First ground ends the line. No score.</p>
+          {ui.presetId && <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>}
         </section>}
         {ui.world.rules?.goal?.kind === 'contact-phrase' && <section className={styles.goal} aria-label="Contact phrase">
           <strong>Fixed shot · phrase {noteOrder(ui.world.rules.goal.notes)}</strong>

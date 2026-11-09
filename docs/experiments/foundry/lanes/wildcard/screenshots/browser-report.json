@@ -1,0 +1,29 @@
+{
+  "desktop-gallery": "docs/experiments/foundry/lanes/wildcard/screenshots/desktop-gallery.png",
+  "desktop-play": "docs/experiments/foundry/lanes/wildcard/screenshots/desktop-play.png",
+  "desktop-stop": "docs/experiments/foundry/lanes/wildcard/screenshots/desktop-stop.png",
+  "phone-gallery": "docs/experiments/foundry/lanes/wildcard/screenshots/phone-gallery.png",
+  "phone-play": "docs/experiments/foundry/lanes/wildcard/screenshots/phone-play.png",
+  "phone-stop": "docs/experiments/foundry/lanes/wildcard/screenshots/phone-stop.png",
+  "checks": {
+    "desktopOpeningZ": 28.5777645111084,
+    "phoneOpeningZ": 28.5777645111084,
+    "left": [
+      -7.8447675704956055,
+      0.43000006675720215,
+      42.32658767700195
+    ],
+    "carry": [
+      0,
+      0.43000006675720215,
+      54.37699508666992
+    ],
+    "trails": [
+      "worldcraft-before-line",
+      "worldcraft-actual-line"
+    ],
+    "remix": true,
+    "blocksFixed": true,
+    "addBlocked": true
+  }
+}

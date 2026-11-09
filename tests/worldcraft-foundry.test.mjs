@@ -24,7 +24,7 @@ function memoryStorage() {
   return { getItem: key => data.has(key) ? data.get(key) : null, setItem: (key, value) => { data.set(key, String(value)); } };
 }
 
-test('foundry files stay declarative and the gallery lists one seed', async () => {
+test('foundry files stay declarative and the gallery lists the registered worlds', async () => {
   const preset = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/preset.json', import.meta.url), 'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/manifest.json', import.meta.url), 'utf8'));
   const pair = loadFoundryPair(preset, manifest);
@@ -33,7 +33,7 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.notEqual(pair.manifest.challenge.id, pair.manifest.id);
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
-  assert.deepEqual(cards.map(card => card.id), ['soft-landing']);
+  assert.deepEqual(cards.map(card => card.id), ['soft-landing', 'the-other-way']);
   assert.equal(cards[0].kind, 'shot-study');
   assert.equal(cards[0].editable.launcher, true);
   assert.equal(cards[0].editable.geometry, true);
@@ -47,6 +47,18 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.match(foundryRecord('soft-landing').manifest.nearbySensitivity, /0\.5°/);
   assert.equal(JSON.stringify(cards).includes('17.86'), false);
   assert.equal(JSON.stringify(cards).includes('stepped descent'), false);
+  assert.equal(cards[1].kind, 'shot-study');
+  assert.equal(cards[1].editable.launcher, true);
+  assert.equal(cards[1].editable.geometry, false);
+  assert.equal(cards[1].hasChallenge, true);
+  assert.equal(cards[1].name, 'The Other Way');
+  assert.doesNotMatch(cards[1].invitation, /\d/);
+  assert.equal(JSON.stringify(cards).includes('10.5'), false);
+  assert.equal(Object.hasOwn(cards[1], 'testedShots'), false);
+  assert.equal(cards[1].challengeId, 'spare-way');
+  assert.equal(foundryRecord('the-other-way').manifest.customCode, null);
+  assert.equal(foundryRecord('the-other-way').manifest.testedShots[0].outcome.status, 'none');
+  assert.equal(foundryRecord('the-other-way').manifest.testedShots[0].id, 'opening');
   const badCategory = structuredClone(manifest);
   badCategory.limitations = [{ category: 'vertical', concept: 'Keep the landing.', missing: 'No stairs.', extension: 'Do not add a prefab.' }];
   assert.throws(() => validateFoundryManifest(badCategory, preset), /category must be/);
@@ -99,11 +111,15 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   const template = await validateFoundryDirectory('worlds/foundry/_template', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
+  const otherWay = await validateFoundryDirectory('worlds/foundry/the-other-way', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);
+  assert.equal(otherWay.id, 'the-other-way');
+  assert.equal(otherWay.customCode, null);
+  assert.deepEqual(otherWay.shots, ['opening', 'left', 'right', 'carry']);
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');
