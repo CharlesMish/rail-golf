@@ -38,7 +38,15 @@
       }
     }
   ],
-  "validationEvidence": "The tested shot is the opening arrangement and the opening aim. Headless Havok through scripts/range/run.mjs reproduces that first-ground terminal. The shot misses. It is the arrangement a player enters. Measured clears stay in the range appendix and are not stored here.",
-  "knownLimitations": "One ground plane. Pieces cannot change height, scale, or ramp angle. Aim controls step by half a degree, and power by one percent. A landing that exists only between those steps is not a route the controls can sit on.",
+  "nearbySensitivity": "The aim sliders step yaw by 0.5°. At elevation 18° and charge 0.55, yaw 0.5° and yaw -0.5° both still miss. First ground stays about 17.86 m from the circle centre. This is the neighbourhood of the opening miss, not a clear.",
+  "validationEvidence": "The tested shot is the opening arrangement and the opening aim. Headless Havok through scripts/range/run.mjs reproduces that first-ground terminal. The shot misses. It is the arrangement a player enters. The nearby note was fired the same way and is not replayed by the validator. Measured clears stay in the range appendix and are not stored here.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A first-ground landing that can be made easier to repeat with the block and the bank",
+      "missing": "Pieces have no height, scale, or ramp-pitch control, so a stepped descent or a second floor cannot be built.",
+      "extension": "One height offset on the existing block, keeping its friction and restitution. No new contact law and no general mesh."
+    }
+  ],
   "customCode": null
 }

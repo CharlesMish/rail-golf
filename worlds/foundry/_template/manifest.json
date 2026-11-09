@@ -35,7 +35,15 @@
       }
     }
   ],
+  "nearbySensitivity": "The rail is fixed. Yaw 0.5° and yaw -0.5° are rejected before a shot is fired. The only legal tested shot is the recorded opening aim.",
   "validationEvidence": "The tested shot is the fixed opening aim. Headless Havok through scripts/range/run.mjs ends on first ground, short of the bank. This pair is the copyable template. It is not listed in the gallery.",
-  "knownLimitations": "One bank, one fixed shot, no challenge. Not a creative world and not registered for play.",
+  "limitations": [
+    {
+      "category": "authoring-tooling",
+      "concept": "A copyable pair that proves the validator on one fixed shot",
+      "missing": "The validator replays recorded shots. It does not search neighbouring aims on its own.",
+      "extension": "Leave the replay as it is. A later check can append neighbour setups to testedShots when the launcher is free."
+    }
+  ],
   "customCode": null
 }
