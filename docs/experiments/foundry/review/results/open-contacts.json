@@ -1,0 +1,861 @@
+{
+  "id": "open-contacts",
+  "sha": "a3c719c5ba660d48f8ee954855a038508dc4fecc",
+  "presetHash": "b4f8211f1d020cfe3f7cbc9cb507006e3b1ddc5330ef23813acdae93be022c17",
+  "manifest": [
+    {
+      "id": "opening",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [
+          0,
+          0.4300021231174469,
+          20.351707458496094
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "elapsedExact": "1.7166666666666630",
+        "position": [
+          0,
+          0.4300021231174469,
+          20.351707458496094
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "bank-timber"
+        ],
+        "notes": [
+          "bank-timber:C4@1.117/0.148"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 20.351707458496094,
+        "y": 0.4300021231174469,
+        "z": 20.351707458496094
+      }
+    },
+    {
+      "id": "two-note",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.7666666666666628,
+        "position": [
+          -1.2770898342132568,
+          0.43000075221061707,
+          22.326326370239258
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 4,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.7666666666666628,
+        "elapsedExact": "1.7666666666666628",
+        "position": [
+          -1.2770898342132568,
+          0.43000075221061707,
+          22.326326370239258
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "bank-timber",
+          "plate-return-right"
+        ],
+        "notes": [
+          "bank-timber:C4@1.117/0.750",
+          "plate-return-right:E4@1.433/0.957"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 22.362821996230522,
+        "y": 0.43000075221061707,
+        "z": 22.326326370239258
+      }
+    },
+    {
+      "id": "rattle",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8666666666666625,
+        "position": [
+          4.330662727355957,
+          0.43000397086143494,
+          32.025428771972656
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 6,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.8666666666666625,
+        "elapsedExact": "1.8666666666666625",
+        "position": [
+          4.330662727355957,
+          0.43000397086143494,
+          32.025428771972656
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "bank-timber",
+          "plate-return-right",
+          "bank-timber"
+        ],
+        "notes": [
+          "bank-timber:C4@1.125/0.185",
+          "plate-return-right:E4@1.433/0.283",
+          "bank-timber:C4@1.792/0.310"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 32.31691086237675,
+        "y": 0.43000397086143494,
+        "z": 32.025428771972656
+      }
+    },
+    {
+      "id": "lob",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.2749999999999946,
+        "position": [
+          0,
+          0.42999887466430664,
+          45.30239486694336
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 26,
+          "charge": 0.55
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 2.2749999999999946,
+        "elapsedExact": "2.2749999999999946",
+        "position": [
+          0,
+          0.42999887466430664,
+          45.30239486694336
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "plate-deep"
+        ],
+        "notes": [
+          "plate-deep:C4@1.967/0.577"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 45.30239486694336,
+        "y": 0.42999887466430664,
+        "z": 45.30239486694336
+      }
+    }
+  ],
+  "neighbours": {
+    "opening": [
+      {
+        "label": "yaw-0.5",
+        "order": "bank-timber"
+      },
+      {
+        "label": "yaw+0.5",
+        "order": "bank-timber"
+      },
+      {
+        "label": "elev-0.5",
+        "order": "bank-timber"
+      },
+      {
+        "label": "elev+0.5",
+        "order": "bank-timber"
+      },
+      {
+        "label": "charge-0.01",
+        "order": "bank-timber"
+      },
+      {
+        "label": "charge+0.01",
+        "order": "bank-timber"
+      },
+      {
+        "label": "origin-0.5",
+        "order": "bank-timber"
+      },
+      {
+        "label": "origin+0.5",
+        "order": "bank-timber"
+      }
+    ],
+    "twoNote": [
+      {
+        "label": "yaw-0.5",
+        "order": "bank-timber"
+      },
+      {
+        "label": "yaw+0.5",
+        "order": "bank-timber>plate-return-right"
+      },
+      {
+        "label": "elev-0.5",
+        "order": "bank-timber>plate-return-right"
+      },
+      {
+        "label": "elev+0.5",
+        "order": "bank-timber>plate-return-right"
+      },
+      {
+        "label": "charge-0.01",
+        "order": "bank-timber>plate-return-right"
+      },
+      {
+        "label": "charge+0.01",
+        "order": "bank-timber>plate-return-right"
+      }
+    ],
+    "rattle": [
+      {
+        "label": "yaw-0.5",
+        "order": "bank-timber>plate-return-right>bank-timber"
+      },
+      {
+        "label": "yaw+0.5",
+        "order": "bank-timber>plate-return-right>bank-timber"
+      },
+      {
+        "label": "elev-0.5",
+        "order": "bank-timber>plate-return-right"
+      },
+      {
+        "label": "elev+0.5",
+        "order": "bank-timber>plate-return-right>bank-timber"
+      },
+      {
+        "label": "charge-0.01",
+        "order": "bank-timber>plate-return-right"
+      },
+      {
+        "label": "charge+0.01",
+        "order": "bank-timber>plate-return-right>bank-timber"
+      }
+    ],
+    "lob": [
+      {
+        "label": "yaw-0.5",
+        "order": "plate-deep"
+      },
+      {
+        "label": "yaw+0.5",
+        "order": "plate-deep"
+      },
+      {
+        "label": "elev-0.5",
+        "order": "plate-deep"
+      },
+      {
+        "label": "elev+0.5",
+        "order": "plate-deep"
+      },
+      {
+        "label": "charge-0.01",
+        "order": "plate-deep"
+      },
+      {
+        "label": "charge+0.01",
+        "order": "plate-deep"
+      }
+    ]
+  },
+  "aimFamily": [
+    {
+      "yaw": -14,
+      "order": "silent"
+    },
+    {
+      "yaw": -13.5,
+      "order": "silent"
+    },
+    {
+      "yaw": -13,
+      "order": "silent"
+    },
+    {
+      "yaw": -12.5,
+      "order": "silent"
+    },
+    {
+      "yaw": -12,
+      "order": "silent"
+    },
+    {
+      "yaw": -11.5,
+      "order": "silent"
+    },
+    {
+      "yaw": -11,
+      "order": "silent"
+    },
+    {
+      "yaw": -10.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -10,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": -9.5,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": -9,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": -8.5,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -8,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -7.5,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -7,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -6.5,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -6,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -5.5,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -5,
+      "order": "bank-timber>plate-return-left>bank-timber"
+    },
+    {
+      "yaw": -4.5,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": -4,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": -3.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -3,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -2.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -2,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -1.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -1,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -0.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 0,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 0.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 1,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 1.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 2,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 2.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 3,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 3.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 4,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": 4.5,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": 5,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 5.5,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 6,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 6.5,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 7,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 7.5,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 8,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 8.5,
+      "order": "bank-timber>plate-return-right>bank-timber"
+    },
+    {
+      "yaw": 9,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": 9.5,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": 10,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": 10.5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 11,
+      "order": "silent"
+    },
+    {
+      "yaw": 11.5,
+      "order": "silent"
+    },
+    {
+      "yaw": 12,
+      "order": "silent"
+    },
+    {
+      "yaw": 12.5,
+      "order": "silent"
+    },
+    {
+      "yaw": 13,
+      "order": "silent"
+    },
+    {
+      "yaw": 13.5,
+      "order": "silent"
+    },
+    {
+      "yaw": 14,
+      "order": "silent"
+    }
+  ],
+  "bankTurns": [
+    {
+      "yaw": -30,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -25,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": -20,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": -15,
+      "order": "bank-timber>plate-return-right"
+    },
+    {
+      "yaw": -10,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": -5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 0,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 5,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 10,
+      "order": "bank-timber"
+    },
+    {
+      "yaw": 15,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": 20,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": 25,
+      "order": "bank-timber>plate-return-left"
+    },
+    {
+      "yaw": 30,
+      "order": "bank-timber"
+    }
+  ],
+  "lobs": [
+    {
+      "elevation": 20,
+      "order": "bank-timber"
+    },
+    {
+      "elevation": 23,
+      "order": "bank-timber"
+    },
+    {
+      "elevation": 23.5,
+      "order": "plate-deep"
+    },
+    {
+      "elevation": 26,
+      "order": "plate-deep"
+    },
+    {
+      "elevation": 28,
+      "order": "plate-deep"
+    },
+    {
+      "elevation": 28.5,
+      "order": "silent"
+    },
+    {
+      "elevation": 32,
+      "order": "silent"
+    }
+  ],
+  "lobCharge": [
+    {
+      "charge": 0.5,
+      "order": "bank-timber"
+    },
+    {
+      "charge": 0.51,
+      "order": "plate-deep"
+    },
+    {
+      "charge": 0.52,
+      "order": "plate-deep"
+    },
+    {
+      "charge": 0.55,
+      "order": "plate-deep"
+    },
+    {
+      "charge": 0.57,
+      "order": "plate-deep"
+    },
+    {
+      "charge": 0.58,
+      "order": "silent"
+    },
+    {
+      "charge": 0.6,
+      "order": "silent"
+    }
+  ],
+  "directPlates": [
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 6,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "order": "plate-return-right"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 10,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "order": "plate-return-right"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 16,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "order": "plate-return-right"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 16.5,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "order": "silent"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 27,
+        "elevation": 10,
+        "charge": 0.55
+      },
+      "order": "plate-aim-right"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 30,
+        "elevation": 10,
+        "charge": 0.55
+      },
+      "order": "plate-aim-right"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 35,
+        "elevation": 10,
+        "charge": 0.55
+      },
+      "order": "plate-aim-right"
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -30,
+        "elevation": 10,
+        "charge": 0.55
+      },
+      "order": "plate-aim-left"
+    }
+  ],
+  "simpler": {
+    "noBank": [
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "order": "silent"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 4,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "order": "silent"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 6,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "order": "silent"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 26,
+          "charge": 0.55
+        },
+        "order": "plate-deep"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.55
+        },
+        "order": "plate-return-right"
+      }
+    ],
+    "bankOnly": [
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "order": "bank-timber"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 4,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "order": "bank-timber"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 6,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "order": "bank-timber"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 26,
+          "charge": 0.55
+        },
+        "order": "silent"
+      }
+    ]
+  },
+  "rattleBankHeights": [
+    {
+      "y": 4.721262454986572,
+      "first": 1.1249999999999984,
+      "count": 2
+    },
+    {
+      "y": 0.8402578234672546,
+      "first": 1.7916666666666627,
+      "count": 2
+    }
+  ]
+}

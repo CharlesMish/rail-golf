@@ -1,0 +1,241 @@
+{
+  "id": "bell-loft",
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": {
+    "opening": {
+      "foundryId": "bell-loft",
+      "presetId": "bell-loft",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.49
+      },
+      "worldName": "Bell Loft",
+      "objects": [
+        {
+          "id": "floor-west",
+          "x": -7,
+          "z": 52,
+          "yaw": 0
+        },
+        {
+          "id": "floor-east",
+          "x": -1,
+          "z": 52,
+          "yaw": 0
+        },
+        {
+          "id": "bell-west",
+          "x": -10.5,
+          "z": 52,
+          "yaw": 90
+        },
+        {
+          "id": "bell-east",
+          "x": 2.5,
+          "z": 52,
+          "yaw": 90
+        },
+        {
+          "id": "bell-back",
+          "x": -4,
+          "z": 55,
+          "yaw": 0
+        },
+        {
+          "id": "door",
+          "x": 9,
+          "z": 49,
+          "yaw": 0
+        },
+        {
+          "id": "stair",
+          "x": 0,
+          "z": 28,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 5.191666666666714,
+        "position": [
+          0,
+          0.4300006330013275,
+          45.49125671386719
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "beforeSuccess": {
+      "foundryId": "bell-loft",
+      "presetId": "bell-loft",
+      "mode": "play",
+      "phase": "ready",
+      "view": "address",
+      "notice": "No pin or score. Move a piece, or change origin, aim, and power inside the rail stops. Fire when the shot is the one you want.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.49
+      },
+      "worldName": "Bell Loft",
+      "objects": [
+        {
+          "id": "floor-west",
+          "x": -7,
+          "z": 52,
+          "yaw": 0
+        },
+        {
+          "id": "floor-east",
+          "x": -1,
+          "z": 52,
+          "yaw": 0
+        },
+        {
+          "id": "bell-west",
+          "x": -10.5,
+          "z": 52,
+          "yaw": 90
+        },
+        {
+          "id": "bell-east",
+          "x": 2.5,
+          "z": 52,
+          "yaw": 90
+        },
+        {
+          "id": "bell-back",
+          "x": -4,
+          "z": 55,
+          "yaw": 0
+        },
+        {
+          "id": "door",
+          "x": -4,
+          "z": 49,
+          "yaw": 0
+        },
+        {
+          "id": "stair",
+          "x": 0,
+          "z": 28,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 5.191666666666714,
+        "position": [
+          0,
+          0.4300006330013275,
+          45.49125671386719
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "success": {
+      "foundryId": "bell-loft",
+      "presetId": "bell-loft",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "Line ended: settled. No pin, no target, no score.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.49
+      },
+      "worldName": "Bell Loft",
+      "objects": [
+        {
+          "id": "floor-west",
+          "x": -7,
+          "z": 52,
+          "yaw": 0
+        },
+        {
+          "id": "floor-east",
+          "x": -1,
+          "z": 52,
+          "yaw": 0
+        },
+        {
+          "id": "bell-west",
+          "x": -10.5,
+          "z": 52,
+          "yaw": 90
+        },
+        {
+          "id": "bell-east",
+          "x": 2.5,
+          "z": 52,
+          "yaw": 90
+        },
+        {
+          "id": "bell-back",
+          "x": -4,
+          "z": 55,
+          "yaw": 0
+        },
+        {
+          "id": "door",
+          "x": -4,
+          "z": 49,
+          "yaw": 0
+        },
+        {
+          "id": "stair",
+          "x": 0,
+          "z": 28,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "settled",
+        "elapsed": 15.249999999999774,
+        "position": [
+          0,
+          4.429999828338623,
+          53.87986755371094
+        ]
+      },
+      "reason": "settled"
+    }
+  },
+  "galleryDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-desktop-gallery.png",
+  "galleryText": "Bell Loft\n\nA stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.\n\nAuthored world · Launcher editable · Geometry editable\nOptional challenge\nPlay\nReset\nMake a copy",
+  "openingDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-desktop-opening.png",
+  "panelDesktop": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n12.0°\nPower\nSet power\nHold to charge\n49%\nFire line\n\nA stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "openingDesktopAddress": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-desktop-address.png",
+  "openingDesktopResult": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-desktop-opening-result.png",
+  "successDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-desktop-success.png",
+  "panelSuccess": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n12.0°\nPower\nSet power\nHold to charge\n49%\nReady again\nBack to Build\n\nRamp D4 → Bank E4 → Bank C4 → Bank E4 → Bank C4\n\n5 notes. Touched Ramp D4, Bank E4, Bank C4, Bank E4, Bank C4. Repeat contacts on Ramp D4, Bank E4, Bank C4 are one note each. Bank E4, Bank C4 were hit again later, so each later hit is its own note. Block floor-east was touched and did not ring. Bank G4, Bank A4 were not touched.\n\nNo score. Goal is none. settled.\n\nAdjust last line\nKeep line\nContact record\n\nLine ended: settled. No pin, no target, no score.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "successDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-desktop-success-survey.png",
+  "panelPhone": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n12.0°\nPower\nSet power\nHold to charge\n49%\nFire line\n\nA stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "openingPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-phone-opening.png",
+  "successPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-phone-success.png",
+  "successPhoneSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/bell-loft-phone-success-survey.png"
+}

@@ -1,0 +1,221 @@
+{
+  "id": "open-contacts",
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": {
+    "opening": {
+      "foundryId": "open-contacts",
+      "presetId": "open-contacts",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "worldName": "Open Contacts",
+      "objects": [
+        {
+          "id": "bank-timber",
+          "x": 0,
+          "z": 34,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-left",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [
+          0,
+          0.4300021231174469,
+          20.351707458496094
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "beforeSuccess": {
+      "foundryId": "open-contacts",
+      "presetId": "open-contacts",
+      "mode": "play",
+      "phase": "ready",
+      "view": "address",
+      "notice": "Ready in the current world.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 6,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "worldName": "Open Contacts",
+      "objects": [
+        {
+          "id": "bank-timber",
+          "x": 0,
+          "z": 34,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-left",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [
+          0,
+          0.4300021231174469,
+          20.351707458496094
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "success": {
+      "foundryId": "open-contacts",
+      "presetId": "open-contacts",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 6,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "worldName": "Open Contacts",
+      "objects": [
+        {
+          "id": "bank-timber",
+          "x": 0,
+          "z": 34,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-left",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8666666666666625,
+        "position": [
+          4.330662727355957,
+          0.43000397086143494,
+          32.025428771972656
+        ]
+      },
+      "reason": "first-ground-contact"
+    }
+  },
+  "galleryDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-desktop-gallery.png",
+  "galleryText": "Open Contacts\n\nA timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.\n\nWorkshop · Launcher editable · Geometry editable\nNo separate challenge\nPlay\nReset\nMake a copy",
+  "openingDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-desktop-opening.png",
+  "panelDesktop": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n18.0°\nPower\nSet power\nHold to charge\n55%\nFire line\n\nA timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "openingDesktopAddress": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-desktop-address.png",
+  "openingDesktopResult": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-desktop-opening-result.png",
+  "successDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-desktop-success.png",
+  "panelSuccess": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n6.0°\nElevation\n18.0°\nPower\nSet power\nHold to charge\n55%\nReady again\nBack to Build\n\nBank C4 → Plate E4 → Bank C4\n\n3 notes. Touched Bank C4, Plate E4, Bank C4. Repeat contacts on Bank C4, Plate E4 are one note each. Bank C4 was hit again later, so that later hit is its own note. Plate D4, Plate G4, Plate A4, Plate C4 were not touched.\n\nNo score. Goal is none. first ground contact.\n\nAdjust last line\nKeep line\nContact record\n\nFirst ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "panelPhone": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n18.0°\nPower\nSet power\nHold to charge\n55%\nFire line\n\nA timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "openingPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-phone-opening.png",
+  "successPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/open-contacts-phone-success.png"
+}

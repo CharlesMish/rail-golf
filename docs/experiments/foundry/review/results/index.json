@@ -1,0 +1,38 @@
+{
+  "seed": 20261109,
+  "kit": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "node": "v22.23.4",
+  "note": "the-other-way through return-address ran in one Havok process (3966 shots, 7.3 s) and every manifest terminal matched. bell-loft was then run alone in a fresh process (31 shots); that file is the one kept. A bell opening fired at the end of the long process landed about 5 mm off the recorded terminal and some settle times moved. The fresh process matched the five open-door terminals exactly.",
+  "worlds": {
+    "the-other-way": {
+      "sha": "40e805546277e9b328db280374f5957dfac99936",
+      "presetHash": "42d131e8fab5e5729a44c659b13bd1e4bfcc08b467c372674e0950554c2b6f5b",
+      "manifestMatches": true
+    },
+    "open-contacts": {
+      "sha": "a3c719c5ba660d48f8ee954855a038508dc4fecc",
+      "presetHash": "b4f8211f1d020cfe3f7cbc9cb507006e3b1ddc5330ef23813acdae93be022c17",
+      "manifestMatches": true
+    },
+    "right-angle": {
+      "sha": "57b82bd95d3d726ebb559e7f8533fab52e58ba32",
+      "presetHash": "6f4f6156431f9b46c1eec4ed2f0f4a93a14b3f81c2969e37224bfdf800a5c649",
+      "manifestMatches": true
+    },
+    "the-carry": {
+      "sha": "5b8244389bde44ffbd8ee2d553cbefa0f4b6ea37",
+      "presetHash": "293e8a03d95894da2b27c4e23e8af4693e3ad20a7ecb438f3ef4f6e2420b0b87",
+      "manifestMatches": true
+    },
+    "return-address": {
+      "sha": "4041bb67cd9051a3b7e265ed6512e88c6ac2e5b0",
+      "presetHash": "ca3537f60481e8ff7bc7e3b7be6d1aeec66fbd314356e43e60280275b4a748b8",
+      "manifestMatches": true
+    },
+    "bell-loft": {
+      "sha": "8c2df88b4f5b7ea81dcf3ce3a59ba5c95aefec2b",
+      "presetHash": "4faba8fecdce3e59358565ad096752cba541daaf39b3676d5a8e217da987abb4",
+      "manifestMatches": true
+    }
+  }
+}
