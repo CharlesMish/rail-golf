@@ -29,6 +29,10 @@ import {
   parseRangeShot, projectRangePreset, rangeOpeningSetup, rangePreset, retargetRangeOpening, workshopTrailStep,
   type RangePreset, type RangeShot,
 } from '@/lib/worldcraft-range';
+import {
+  foundryCopyName, foundryPreset, foundryRemixWorld, listFoundryWorlds,
+  type FoundryCard,
+} from '@/lib/worldcraft-foundry';
 import styles from './worldcraft.module.css';
 
 type Kind = 'bank' | 'ramp' | 'block' | 'plate';
@@ -46,7 +50,7 @@ type UI = {
   history: RecordedTrail | null; comparison: RecordedTrail | null; historyMarks: NoteMark[] | null; comparisonMarks: NoteMark[] | null;
   lastKept: boolean; liveNotes: ResonanceImpact[];
   preset: RangePreset | null; presetBaseline: RangePreset | null; presetId: string | null; shotRecord: RangeShot | null;
-  launchPhase: number;
+  launchPhase: number; foundryOpen: boolean; foundryId: string | null;
 };
 type Actions = {
   mode(mode: UI['mode']): void; select(id: string): void; add(kind: Kind): void;
@@ -59,7 +63,14 @@ type Actions = {
   rename(name: string): void; starter(empty?: boolean): void; house(): void; orc(): void;
   enter(id: string): void; resetPreset(): void; phase(seconds: number): void; importShot(text: string): { ok: boolean; error?: string };
   camera(action: 'left' | 'right' | 'in' | 'out' | 'home' | 'focus' | 'tool'): void;
+  foundry(open: boolean): void; playFoundry(id: string): void; resetFoundry(id: string): void; remixFoundry(id: string): void;
 };
+
+function foundryKindLabel(kind: FoundryCard['kind']) {
+  if (kind === 'shot-study') return 'Shot study';
+  if (kind === 'workshop') return 'Workshop';
+  return 'Authored world';
+}
 
 function noteName(degree: number) {
   return WORLDCRAFT_SCALE[degree]?.name ?? String(degree);
@@ -117,7 +128,7 @@ function initialUI(): UI {
     powerMode: 'set', charge: 0, last: null, notice: 'Loading the physical yard…',
     canUndo: false, canRedo: false, revision: 0, memoryOpen: false, worlds: [], lines: [],
     memoryWarning: '', showTrail: true, cameraTool: 'orbit', soundVariant: MUSICAL_WORKSHOP_SOUND, history: null, comparison: null, historyMarks: null, comparisonMarks: null, lastKept: false, liveNotes: [],
-    preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0,
+    preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0, foundryOpen: false, foundryId: null,
   };
 }
 
@@ -153,7 +164,7 @@ export default function Worldcraft() {
   useEffect(() => { if (toolsPanel.current) toolsPanel.current.scrollTop = 0; }, [ui.mode]);
 
   useEffect(() => {
-    if (!ui.memoryOpen || !dialog.current) return;
+    if (!(ui.memoryOpen || ui.foundryOpen) || !dialog.current) return;
     const previous = document.activeElement as HTMLElement | null;
     const element = dialog.current;
     const focusables = () => [...element.querySelectorAll<HTMLElement>('button:not(:disabled),input:not([type=file]):not(:disabled),select:not(:disabled),a[href]')];
@@ -166,7 +177,7 @@ export default function Worldcraft() {
     };
     element.addEventListener('keydown', trap);
     return () => { element.removeEventListener('keydown', trap); previous?.focus(); };
-  }, [ui.memoryOpen]);
+  }, [ui.memoryOpen, ui.foundryOpen]);
 
   useEffect(() => {
     let disposed = false;
@@ -417,7 +428,7 @@ export default function Worldcraft() {
           clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready' });
           if (!commit(world, label, 'commit', true)) return;
           runtime.setMode('play');
-          publish({ mode: 'play', phase: 'ready', view: 'address', setup: { ...setup }, powerMode: 'set', charge: 0, comparison: null, comparisonMarks: null, historyMarks: null, notice: label });
+          publish({ mode: 'play', phase: 'ready', view: 'address', setup: { ...setup }, powerMode: 'set', charge: 0, comparison: null, comparisonMarks: null, historyMarks: null, foundryId: null, notice: label });
           drawComparison();
           selectedHighlight(); trace('restore', { setup, worldIdentity: worldcraftIdentity(world) });
         };
@@ -425,6 +436,23 @@ export default function Worldcraft() {
           const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
           const a = document.createElement('a'); a.href = url; a.download = name; a.click();
           window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        };
+        const openFoundry = (id: string, play: boolean) => {
+          if (busy()) return;
+          let loaded: ReturnType<typeof adaptRangePreset>;
+          try { loaded = adaptRangePreset(foundryPreset(id)); }
+          catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
+          const card = listFoundryWorlds().find(item => item.id === id);
+          const notice = card?.invitation ?? loaded.preset.name;
+          clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+          if (!commit(loaded.world, notice, 'commit', true)) return;
+          publish({
+            preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, foundryId: id,
+            foundryOpen: false, memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null,
+            last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0, notice,
+          });
+          drawTrail([]); drawComparison();
+          if (play) { switchMode('play'); publish({ view: 'survey', notice }); }
         };
         actions.current = {
           mode: switchMode,
@@ -460,7 +488,7 @@ export default function Worldcraft() {
           setup: updateSetup,
           powerMode(mode) { if (busy() || worldcraftFixedSetup(uiRef.current.world)) return; publish({ powerMode: mode, charge: 0 }); },
           begin() {
-            if (uiRef.current.mode !== 'play' || uiRef.current.phase !== 'ready' || uiRef.current.memoryOpen) return;
+            if (uiRef.current.mode !== 'play' || uiRef.current.phase !== 'ready' || uiRef.current.memoryOpen || uiRef.current.foundryOpen) return;
             if (uiRef.current.powerMode === 'set') { shoot(uiRef.current.setup.charge); return; }
             chargeStart = performance.now(); publish({ phase: 'charging', charge: 0 });
           },
@@ -516,7 +544,7 @@ export default function Worldcraft() {
               publish({ ...memoryState(), lastKept: true, notice: result.persisted ? 'Line kept with its world, note order, and contact times.' : 'Line kept only in memory. Export local memory before leaving.' }); trace('keep', { worldIdentity: last.worldIdentity, persisted: result.persisted, sounds: line.performance?.impacts.length ?? 0 });
             } catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); }
           },
-          memory(open) { if (open && busy()) return; publish({ memoryOpen: open, ...memoryState() }); },
+          memory(open) { if (open && busy()) return; publish({ memoryOpen: open, foundryOpen: open ? false : uiRef.current.foundryOpen, ...memoryState() }); },
           save() {
             try {
               const world = { ...uiRef.current.world, id: `world-${crypto.randomUUID().slice(0, 8)}`, launcher: { x: uiRef.current.setup.originX } };
@@ -527,7 +555,7 @@ export default function Worldcraft() {
             const entry = store.worlds().find(w => w.id === id); if (!entry || busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             clearShotRecord();
-            if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
+            if (commit(entry.world, 'Saved world opened. Your previous arrangement is in Undo.', 'commit', true)) publish({ setup: { ...uiRef.current.setup, originX: entry.world.launcher.x }, memoryOpen: false, preset: null, presetBaseline: null, presetId: null, foundryId: null, shotRecord: null });
             trace('load-world', { id });
           },
           forgetWorld(id) { store.removeWorld(id); publish(memoryState()); },
@@ -552,13 +580,13 @@ export default function Worldcraft() {
               if (loaded.kind === 'preset') {
                 const adapted = adaptRangePreset(loaded.preset);
                 if (commit(adapted.world, `${adapted.preset.name} imported.`, 'commit', true)) {
-                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, setup: rangeOpeningSetup(adapted.preset), memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null });
+                  publish({ preset: adapted.preset, presetBaseline: adapted.preset, presetId: adapted.preset.id, foundryId: null, setup: rangeOpeningSetup(adapted.preset), memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null });
                   drawTrail([]); drawComparison();
                 }
                 trace('import-preset', { id: adapted.preset.id });
               } else if (commit(loaded.world, 'Imported world opened. Undo returns to your previous arrangement.', 'commit', true)) {
                 clearShotRecord();
-                publish({ preset: null, presetBaseline: null, presetId: null, shotRecord: null, setup: { ...uiRef.current.setup, originX: loaded.world.launcher.x }, memoryOpen: false });
+                publish({ preset: null, presetBaseline: null, presetId: null, foundryId: null, shotRecord: null, setup: { ...uiRef.current.setup, originX: loaded.world.launcher.x }, memoryOpen: false });
                 trace('import-world', { worldIdentity: worldcraftIdentity(loaded.world) });
               }
             } catch (e) { publish({ notice: `Import rejected: ${e instanceof Error ? e.message : String(e)}` }); trace('import-rejected'); }
@@ -575,13 +603,13 @@ export default function Worldcraft() {
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             clearShotRecord();
             commit(world, empty ? 'Empty clearing. Add a piece to begin.' : 'Starter arrangement opened. Undo preserves your previous world.', 'commit', true);
-            publish({ memoryOpen: false, setup: { ...uiRef.current.setup, originX: world.launcher.x }, preset: null, presetBaseline: null, presetId: null, shotRecord: null });
+            publish({ memoryOpen: false, setup: { ...uiRef.current.setup, originX: world.launcher.x }, preset: null, presetBaseline: null, presetId: null, foundryId: null, shotRecord: null });
           },
           house() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createHouseShotWorld(), 'House Shot reset. Fire, turn the ramp, then compare.', 'commit', true)) {
-              publish({ memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0 });
+              publish({ memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, foundryId: null, shotRecord: null, launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -589,7 +617,7 @@ export default function Worldcraft() {
             if (busy()) return;
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(createOrcStaticWorld(), 'Orc Stand-in reset. Move the ramp, the bank, or the plate, then fire the same shot.', 'commit', true)) {
-              publish({ memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, shotRecord: null, launchPhase: 0 });
+              publish({ memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, preset: null, presetBaseline: null, presetId: null, foundryId: null, shotRecord: null, launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -615,7 +643,7 @@ export default function Worldcraft() {
             clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, opened, 'commit', true)) {
               if (bell) runtime.setLaunchPhase(0);
-              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
+              publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, foundryId: null, memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
           },
@@ -630,6 +658,20 @@ export default function Worldcraft() {
               publish({ preset: loaded.preset, presetId: loaded.preset.id, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
               drawTrail([]); drawComparison();
             }
+          },
+          foundry(open) { if (open && busy()) return; publish({ foundryOpen: open, memoryOpen: open ? false : uiRef.current.memoryOpen, ...(open ? { notice: 'Prepared arrangements. A copy is saved separately.' } : {}) }); },
+          playFoundry(id) { openFoundry(id, true); },
+          resetFoundry(id) { openFoundry(id, uiRef.current.foundryId === id && uiRef.current.mode === 'play'); },
+          remixFoundry(id) {
+            try {
+              const card = listFoundryWorlds().find(item => item.id === id);
+              if (!card) throw new Error('Unknown foundry world');
+              const authored = adaptRangePreset(foundryPreset(id)).world;
+              const live = uiRef.current.foundryId === id ? { ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } } : authored;
+              const copy = foundryRemixWorld(live, { name: foundryCopyName(card.name), challengeId: card.challengeId });
+              const result = store.saveWorld(copy);
+              publish({ ...memoryState(), notice: result.persisted ? `Copy of ${card.name} saved as its own world. The foundry arrangement is unchanged.` : 'Copy kept only in memory. Export it before leaving. The foundry arrangement is unchanged.' });
+            } catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); }
           },
           phase(seconds) {
             const result = runtime.setLaunchPhase(seconds);
@@ -647,7 +689,7 @@ export default function Worldcraft() {
             if (!commit(shot.worldSnapshot.world, 'Recorded shot imported.', 'commit', true)) return { ok: false, error: uiRef.current.notice };
             const phased = typeof shot.launchPhase === 'number' ? runtime.setLaunchPhase(shot.launchPhase) : { ok: true as const, phase: 0 };
             if (!phased.ok) return { ok: false, error: phased.error };
-            publish({ setup: shot.setup, launchPhase: phased.phase ?? 0, shotRecord: shot, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, notice: 'Recorded shot imported. The release phase is restored. Fire to refire it.' });
+            publish({ setup: shot.setup, launchPhase: phased.phase ?? 0, shotRecord: shot, foundryId: null, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, notice: 'Recorded shot imported. The release phase is restored. Fire to refire it.' });
             drawTrail([]); drawComparison();
             return { ok: true };
           },
@@ -667,7 +709,7 @@ export default function Worldcraft() {
           return distance === null ? null : ray.origin.add(ray.direction.scale(distance));
         };
         const down = (e: PointerEvent) => {
-          if (busy() || uiRef.current.memoryOpen || drag || e.button !== 0 && e.pointerType === 'mouse') return;
+          if (busy() || uiRef.current.memoryOpen || uiRef.current.foundryOpen || drag || e.button !== 0 && e.pointerType === 'mouse') return;
           const state = uiRef.current; e.preventDefault();
           let object: WorldcraftWorld['objects'][number] | undefined, original: Mesh | undefined;
           if (state.mode === 'build') {
@@ -718,7 +760,7 @@ export default function Worldcraft() {
         const blur = () => { discardDrag(); cancel(); };
         const keydown = (e: KeyboardEvent) => {
           if (e.code === 'Escape') { discardDrag(); cancel(); return; }
-          if (e.target instanceof Element && e.target.closest('input,select,textarea,button,a,[contenteditable]') || uiRef.current.memoryOpen) return;
+          if (e.target instanceof Element && e.target.closest('input,select,textarea,button,a,[contenteditable]') || uiRef.current.memoryOpen || uiRef.current.foundryOpen) return;
           if ((e.ctrlKey || e.metaKey) && e.code === 'KeyZ') { e.preventDefault(); if (e.shiftKey) actions.current?.redo(); else actions.current?.undo(); return; }
           if (e.ctrlKey || e.metaKey || e.altKey) return;
           if (e.code === 'Space') { e.preventDefault(); if (!e.repeat) { keyboardCharge = true; actions.current?.begin(); } return; }
@@ -755,7 +797,7 @@ export default function Worldcraft() {
                 comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, comparisonMarks: state.comparisonMarks, historyMarks: state.historyMarks, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
                 contactMarkers: activeScene.meshes.filter(m => m.name === 'worldcraft-contact-mark').map(mesh => ({ x: mesh.position.x, y: mesh.position.y, z: mesh.position.z })),
                 previousTrail: state.showTrail && Boolean(state.comparison), trailIdentity: state.history?.worldIdentity, trailLabel: state.history?.label, notice: state.notice,
-                presetId: state.presetId, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, launchPhase: state.launchPhase, voices: resonance.counts(), audio: resonance.state(),
+                presetId: state.presetId, foundryId: state.foundryId, foundryOpen: state.foundryOpen, goal: state.world.rules?.goal ?? null, shotRecord: state.shotRecord, launchPhase: state.launchPhase, voices: resonance.counts(), audio: resonance.state(),
                 projectedObjects: [...runtime.objectMeshes].map(([id, mesh]) => {
                   const p = Vector3.Project(mesh.position, Matrix.Identity(), activeScene.getTransformMatrix(), camera.viewport.toGlobal(activeEngine.getRenderWidth(), activeEngine.getRenderHeight()));
                   return { id, x: rect.left + p.x / activeEngine.getRenderWidth() * rect.width, y: rect.top + p.y / activeEngine.getRenderHeight() * rect.height };
@@ -763,6 +805,10 @@ export default function Worldcraft() {
               };
             }, events: () => structuredClone(events),
             enterPreset(id: string) { actions.current?.enter(id); },
+            listFoundry() { return listFoundryWorlds(); },
+            playFoundry(id: string) { actions.current?.playFoundry(id); },
+            resetFoundry(id: string) { actions.current?.resetFoundry(id); },
+            remixFoundry(id: string) { actions.current?.remixFoundry(id); },
             resetPreset() { actions.current?.resetPreset(); },
             setLaunchPhase(seconds: number) { actions.current?.phase(seconds); return uiRef.current.launchPhase; },
             exportShot() { return uiRef.current.shotRecord ? exportRangeShot(uiRef.current.shotRecord) : null; },
@@ -908,6 +954,7 @@ export default function Worldcraft() {
           {ui.presetId && !listRangePresets().some(preset => preset.id === ui.presetId) ? <option value={ui.presetId}>{ui.preset?.name ?? ui.presetId}</option> : null}
         </select>
       </label>
+      <button type="button" disabled={locked} aria-pressed={ui.foundryOpen} onClick={() => actions.current?.foundry(true)}>Foundry</button>
       <button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button>
       <div className={styles.modeSwitch} aria-label="Worldcraft mode">
         <button type="button" aria-pressed={ui.mode === 'build'} className={ui.mode === 'build' ? styles.active : ''} disabled={locked} onClick={() => actions.current?.mode('build')}>Build</button>
@@ -1093,6 +1140,23 @@ export default function Worldcraft() {
         <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.orc()}>Orc Stand-in</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
         <button type="button" onClick={() => actions.current?.exportMemory()}>Export local memory</button><p className={styles.muted}>Memory export includes kept paths for safekeeping; world JSON is the playable import format.</p>
         <p className={styles.notice} role="status">{ui.notice}</p>{ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
+      </div>
+    </div>}
+    {ui.foundryOpen && <div ref={dialog} className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="foundry-title" onKeyDown={e => { if (e.key === 'Escape') actions.current?.foundry(false); }}>
+      <div className={styles.dialogBody}><div className={styles.dialogHeader}><h2 id="foundry-title">Foundry</h2><button type="button" onClick={() => actions.current?.foundry(false)}>Close</button></div>
+        <p className={styles.muted}>A short list of prepared arrangements. A copy is a new saved world. It does not change the arrangement you opened.</p>
+        <div className={styles.foundryList}>{listFoundryWorlds().map(card => <article className={styles.slot} key={card.id} data-foundry-card={card.id}>
+          <h3>{card.name}</h3>
+          <p>{card.invitation}</p>
+          <span>{foundryKindLabel(card.kind)} · {card.editable.launcher ? 'Launcher editable' : 'Launcher fixed'} · {card.editable.geometry ? 'Geometry editable' : 'Geometry fixed'}</span>
+          <span>{card.hasChallenge ? 'Optional challenge' : 'No separate challenge'}</span>
+          <div className={styles.buttonRow}>
+            <button type="button" className={styles.primary} disabled={locked} onClick={() => actions.current?.playFoundry(card.id)}>Play</button>
+            <button type="button" disabled={locked} onClick={() => actions.current?.resetFoundry(card.id)}>Reset</button>
+            <button type="button" disabled={locked} onClick={() => actions.current?.remixFoundry(card.id)}>Make a copy</button>
+          </div>
+        </article>)}</div>
+        <p className={styles.notice} role="status">{ui.notice}</p>
       </div>
     </div>}
   </main>;
