@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "reports": [
+    {
+      "id": "return-address",
+      "kind": "authored-world",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"east\",\"kind\":\"bank\",\"x\":5,\"z\":16,\"yaw\":45,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"west\",\"kind\":\"bank\",\"x\":-5,\"z\":16,\"yaw\":-45,\"voice\":{\"material\":\"timber\",\"degree\":0}}],\"launcher\":{\"x\":-4},\"rules\":{\"pin\":null,\"locked\":[\"west\"],\"allowance\":{\"bank\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "serve",
+        "reply",
+        "edge-catch",
+        "yaw-neighbour",
+        "unturned-reply",
+        "short-lob",
+        "centre-seam"
+      ]
+    }
+  ]
+}
