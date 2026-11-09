@@ -1,0 +1,1037 @@
+{
+  "id": "the-carry",
+  "sha": "5b8244389bde44ffbd8ee2d553cbefa0f4b6ea37",
+  "presetHash": "293e8a03d95894da2b27c4e23e8af4693e3ad20a7ecb438f3ef4f6e2420b0b87",
+  "manifest": [
+    {
+      "id": "opening",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "position": [
+          0,
+          0.43000006675720215,
+          36.76214599609375
+        ],
+        "outcome": {
+          "kind": "first-ground-zone",
+          "status": "miss"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 18,
+          "charge": 0.45
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "elapsedExact": "1.4749999999999972",
+        "position": [
+          0,
+          0.43000006675720215,
+          36.76214599609375
+        ],
+        "outcome": {
+          "kind": "first-ground-zone",
+          "status": "miss",
+          "distance": 16.23785400390625
+        },
+        "order": [],
+        "notes": [],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 36.76214599609375,
+        "y": 0.43000006675720215,
+        "z": 36.76214599609375
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "rejected": true,
+      "error": "This rail is fixed. Revise the piece, then fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0.5,
+        "elevation": 18,
+        "charge": 0.45
+      }
+    },
+    {
+      "rejected": true,
+      "error": "This rail is fixed. Revise the piece, then fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18.5,
+        "charge": 0.45
+      }
+    },
+    {
+      "rejected": true,
+      "error": "This rail is fixed. Revise the piece, then fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.46
+      }
+    },
+    {
+      "rejected": true,
+      "error": "This rail is fixed. Revise the piece, then fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 19,
+        "charge": 0.6
+      }
+    }
+  ],
+  "neighbour": {
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.45
+    },
+    "reason": "first-ground-contact",
+    "elapsed": 1.4749999999999972,
+    "elapsedExact": "1.4749999999999972",
+    "position": [
+      0,
+      0.43000006675720215,
+      36.76214599609375
+    ],
+    "outcome": {
+      "kind": "first-ground-zone",
+      "status": "miss",
+      "distance": 16.23785400390625
+    },
+    "order": [],
+    "notes": [],
+    "tee": null,
+    "carriage": null,
+    "horizontal": 36.76214599609375,
+    "y": 0.43000006675720215,
+    "z": 36.76214599609375
+  },
+  "examples": [
+    {
+      "pose": [
+        0,
+        24,
+        0
+      ],
+      "clear": true,
+      "distance": 0.7039718627929688,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 3.7249999999999894,
+      "position": [
+        0,
+        0.4300025701522827,
+        53.70397186279297
+      ]
+    },
+    {
+      "pose": [
+        0,
+        32,
+        0
+      ],
+      "clear": true,
+      "distance": 0.19816970825195312,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.049999999999991,
+      "position": [
+        0,
+        0.430001437664032,
+        53.19816970825195
+      ]
+    },
+    {
+      "pose": [
+        0,
+        36,
+        0
+      ],
+      "clear": true,
+      "distance": 0.23819351196289062,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.191666666666665,
+      "position": [
+        0,
+        0.43000292778015137,
+        52.76180648803711
+      ]
+    },
+    {
+      "pose": [
+        0,
+        40,
+        0
+      ],
+      "clear": true,
+      "distance": 0.7457122802734375,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.316666666666671,
+      "position": [
+        0,
+        0.4300011694431305,
+        52.25428771972656
+      ]
+    },
+    {
+      "pose": [
+        4,
+        32,
+        0
+      ],
+      "clear": true,
+      "distance": 0.19815826416015625,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.049999999999991,
+      "position": [
+        0,
+        0.4299972653388977,
+        53.198158264160156
+      ]
+    },
+    {
+      "pose": [
+        0,
+        32,
+        5
+      ],
+      "clear": true,
+      "distance": 1.9536500229080493,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.041666666666657,
+      "position": [
+        -1.9301469326019287,
+        0.4300014078617096,
+        53.302127838134766
+      ]
+    },
+    {
+      "pose": [
+        0,
+        32,
+        10
+      ],
+      "clear": false,
+      "distance": 3.865505283357678,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.02499999999999,
+      "position": [
+        -3.8067069053649902,
+        0.43000322580337524,
+        53.67164993286133
+      ]
+    },
+    {
+      "pose": [
+        4.5,
+        32,
+        0
+      ],
+      "clear": true,
+      "distance": 0.19815826416015625,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.049999999999991,
+      "position": [
+        0,
+        0.4299972653388977,
+        53.198158264160156
+      ]
+    },
+    {
+      "pose": [
+        5,
+        32,
+        0
+      ],
+      "clear": false,
+      "distance": 2.632293369823025,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 4.041666666666657,
+      "position": [
+        -2.625554323196411,
+        0.430000364780426,
+        53.188236236572266
+      ]
+    },
+    {
+      "pose": [
+        0,
+        20,
+        0
+      ],
+      "clear": true,
+      "distance": 1.5328216552734375,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 2.341666666666661,
+      "position": [
+        0,
+        0.4300009310245514,
+        51.46717834472656
+      ]
+    },
+    {
+      "pose": [
+        0,
+        20.5,
+        0
+      ],
+      "clear": false,
+      "distance": 5.995761871337891,
+      "order": [
+        "ramp-yours"
+      ],
+      "elapsed": 3.6416666666666564,
+      "position": [
+        0,
+        0.43000033497810364,
+        58.99576187133789
+      ]
+    }
+  ],
+  "xRun": [
+    {
+      "x": -6,
+      "ok": true,
+      "clear": false,
+      "error": null
+    },
+    {
+      "x": -5.5,
+      "ok": true,
+      "clear": false,
+      "error": null
+    },
+    {
+      "x": -5,
+      "ok": true,
+      "clear": false,
+      "error": null
+    },
+    {
+      "x": -4.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -4,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -3.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -3,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -2.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -2,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -1.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -1,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": -0.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 0,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 0.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 1,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 1.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 2,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 2.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 3,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 3.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 4,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 4.5,
+      "ok": true,
+      "clear": true,
+      "error": null
+    },
+    {
+      "x": 5,
+      "ok": true,
+      "clear": false,
+      "error": null
+    },
+    {
+      "x": 5.5,
+      "ok": true,
+      "clear": false,
+      "error": null
+    },
+    {
+      "x": 6,
+      "ok": true,
+      "clear": false,
+      "error": null
+    }
+  ],
+  "zRun": [
+    {
+      "z": 20,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 20.5,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "z": 21,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 21.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 22,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 22.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 23,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 23.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 24,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 24.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 25,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 25.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 26,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 26.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 27,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 27.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 28,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 28.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 29,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 29.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 30,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 30.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 31,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 31.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 32,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 32.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 33,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 33.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 34,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 34.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 35,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 35.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 36,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 36.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 37,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 37.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 38,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 38.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 39,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 39.5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 40,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "z": 40.5,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "z": 41,
+      "ok": true,
+      "clear": false
+    }
+  ],
+  "yawRun": [
+    {
+      "yaw": -20,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "yaw": -15,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "yaw": -10,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "yaw": -5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "yaw": 0,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "yaw": 5,
+      "ok": true,
+      "clear": true
+    },
+    {
+      "yaw": 10,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "yaw": 15,
+      "ok": true,
+      "clear": false
+    },
+    {
+      "yaw": 20,
+      "ok": true,
+      "clear": false
+    }
+  ],
+  "direct": {
+    "setup": {
+      "railIndex": 1,
+      "originX": 0,
+      "yaw": 0,
+      "elevation": 19,
+      "charge": 0.6
+    },
+    "reason": "first-ground-contact",
+    "elapsed": 1.799999999999996,
+    "elapsedExact": "1.7999999999999960",
+    "position": [
+      0,
+      0.4300000071525574,
+      52.986053466796875
+    ],
+    "outcome": {
+      "kind": "first-ground-zone",
+      "status": "clear",
+      "distance": 0.013946533203125
+    },
+    "order": [],
+    "notes": [],
+    "tee": null,
+    "carriage": null,
+    "horizontal": 52.986053466796875,
+    "y": 0.4300000071525574,
+    "z": 52.986053466796875,
+    "clear": true,
+    "onShippedPreset": {
+      "rejected": true,
+      "error": "This rail is fixed. Revise the piece, then fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 19,
+        "charge": 0.6
+      }
+    }
+  },
+  "directNeighbours": [
+    {
+      "label": "yaw-0.5",
+      "clear": true,
+      "distance": 0.4626604512224985,
+      "order": [],
+      "rejected": false,
+      "error": null
+    },
+    {
+      "label": "yaw+0.5",
+      "clear": true,
+      "distance": 0.4626604512224985,
+      "order": [],
+      "rejected": false,
+      "error": null
+    },
+    {
+      "label": "elev-0.5",
+      "clear": true,
+      "distance": 0.9732208251953125,
+      "order": [],
+      "rejected": false,
+      "error": null
+    },
+    {
+      "label": "elev+0.5",
+      "clear": true,
+      "distance": 0.7126312255859375,
+      "order": [],
+      "rejected": false,
+      "error": null
+    },
+    {
+      "label": "charge-0.01",
+      "clear": true,
+      "distance": 1.3040313720703125,
+      "order": [],
+      "rejected": false,
+      "error": null
+    },
+    {
+      "label": "charge+0.01",
+      "clear": true,
+      "distance": 1.0680961608886719,
+      "order": [],
+      "rejected": false,
+      "error": null
+    }
+  ],
+  "directWidths": {
+    "yaw": [
+      {
+        "yaw": -4,
+        "clear": false
+      },
+      {
+        "yaw": -3.5,
+        "clear": false
+      },
+      {
+        "yaw": -3,
+        "clear": false
+      },
+      {
+        "yaw": -2.5,
+        "clear": true
+      },
+      {
+        "yaw": -2,
+        "clear": true
+      },
+      {
+        "yaw": -1.5,
+        "clear": true
+      },
+      {
+        "yaw": -1,
+        "clear": true
+      },
+      {
+        "yaw": -0.5,
+        "clear": true
+      },
+      {
+        "yaw": 0,
+        "clear": true
+      },
+      {
+        "yaw": 0.5,
+        "clear": true
+      },
+      {
+        "yaw": 1,
+        "clear": true
+      },
+      {
+        "yaw": 1.5,
+        "clear": true
+      },
+      {
+        "yaw": 2,
+        "clear": true
+      },
+      {
+        "yaw": 2.5,
+        "clear": true
+      },
+      {
+        "yaw": 3,
+        "clear": false
+      },
+      {
+        "yaw": 3.5,
+        "clear": false
+      },
+      {
+        "yaw": 4,
+        "clear": false
+      }
+    ],
+    "elevation": [
+      {
+        "elevation": 17,
+        "clear": false
+      },
+      {
+        "elevation": 17.5,
+        "clear": false
+      },
+      {
+        "elevation": 18,
+        "clear": true
+      },
+      {
+        "elevation": 18.5,
+        "clear": true
+      },
+      {
+        "elevation": 19,
+        "clear": true
+      },
+      {
+        "elevation": 19.5,
+        "clear": true
+      },
+      {
+        "elevation": 20,
+        "clear": true
+      },
+      {
+        "elevation": 20.5,
+        "clear": true
+      },
+      {
+        "elevation": 21,
+        "clear": false
+      },
+      {
+        "elevation": 21.5,
+        "clear": false
+      },
+      {
+        "elevation": 22,
+        "clear": false
+      }
+    ],
+    "charge": [
+      {
+        "charge": 0.56,
+        "clear": false
+      },
+      {
+        "charge": 0.57,
+        "clear": false
+      },
+      {
+        "charge": 0.58,
+        "clear": true
+      },
+      {
+        "charge": 0.59,
+        "clear": true
+      },
+      {
+        "charge": 0.6,
+        "clear": true
+      },
+      {
+        "charge": 0.61,
+        "clear": true
+      },
+      {
+        "charge": 0.62,
+        "clear": true
+      },
+      {
+        "charge": 0.63,
+        "clear": false
+      },
+      {
+        "charge": 0.64,
+        "clear": false
+      }
+    ]
+  },
+  "simpler": {
+    "empty": {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.45
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.4749999999999972,
+      "elapsedExact": "1.4749999999999972",
+      "position": [
+        0,
+        0.43000006675720215,
+        36.76214599609375
+      ],
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss",
+        "distance": 16.23785400390625
+      },
+      "order": [],
+      "notes": [],
+      "tee": null,
+      "carriage": null,
+      "horizontal": 36.76214599609375,
+      "y": 0.43000006675720215,
+      "z": 36.76214599609375,
+      "clear": false
+    },
+    "blockNearestClaim": {
+      "ok": false,
+      "error": "Movable block allowance exceeded"
+    },
+    "bankWhereRampClears": {
+      "ok": false,
+      "error": "Movable bank allowance exceeded"
+    },
+    "firedWithFixedFlag": {
+      "note": "Allowance rejects a movable block or bank. These were marked fixed so the preset would validate, then fired on the locked shot. Distances are from that run.",
+      "blockAtMinus1_28": { "distance": 2.651, "clear": false },
+      "bankAt0_32": { "distance": 28.242, "clear": false },
+      "bankAtMinus2_40_yaw45": { "distance": 16.277, "clear": false }
+    }
+  }
+}

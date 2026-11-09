@@ -1,0 +1,167 @@
+{
+  "id": "the-other-way",
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": {
+    "opening": {
+      "foundryId": "the-other-way",
+      "presetId": "the-other-way",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "worldName": "The Other Way",
+      "objects": [
+        {
+          "id": "left-stop",
+          "x": -14,
+          "z": 36,
+          "yaw": 0
+        },
+        {
+          "id": "middle-stop",
+          "x": 0,
+          "z": 36,
+          "yaw": 0
+        },
+        {
+          "id": "right-stop",
+          "x": 14,
+          "z": 36,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5749999999999968,
+        "position": [
+          0,
+          0.4300004243850708,
+          28.5777645111084
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "beforeSuccess": {
+      "foundryId": "the-other-way",
+      "presetId": "the-other-way",
+      "mode": "play",
+      "phase": "ready",
+      "view": "address",
+      "notice": "Ready in the current world.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10.5,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "worldName": "The Other Way",
+      "objects": [
+        {
+          "id": "left-stop",
+          "x": -14,
+          "z": 36,
+          "yaw": 0
+        },
+        {
+          "id": "middle-stop",
+          "x": 0,
+          "z": 36,
+          "yaw": 0
+        },
+        {
+          "id": "right-stop",
+          "x": 14,
+          "z": 36,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5749999999999968,
+        "position": [
+          0,
+          0.4300004243850708,
+          28.5777645111084
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "success": {
+      "foundryId": "the-other-way",
+      "presetId": "the-other-way",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10.5,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "worldName": "The Other Way",
+      "objects": [
+        {
+          "id": "left-stop",
+          "x": -14,
+          "z": 36,
+          "yaw": 0
+        },
+        {
+          "id": "middle-stop",
+          "x": 0,
+          "z": 36,
+          "yaw": 0
+        },
+        {
+          "id": "right-stop",
+          "x": 14,
+          "z": 36,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [
+          -7.8447675704956055,
+          0.43000006675720215,
+          42.32658767700195
+        ]
+      },
+      "reason": "first-ground-contact"
+    }
+  },
+  "galleryDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-desktop-gallery.png",
+  "galleryText": "The Other Way\n\nThree blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.\n\nShot study · Launcher editable · Geometry fixed\nOptional challenge\nPlay\nReset\nMake a copy",
+  "openingDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-desktop-opening.png",
+  "panelDesktop": {
+    "panel": "The Other Way\n\nThree blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.\n\nThese pieces stay where they are. Origin, aim, and power can change. First ground ends the line. No score.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n16.0°\nPower\nSet power\nHold to charge\n55%\nFire line\n\nThree blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "openingDesktopAddress": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-desktop-address.png",
+  "openingDesktopResult": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-desktop-opening-result.png",
+  "successDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-desktop-success.png",
+  "panelSuccess": {
+    "panel": "The Other Way\n\nThree blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.\n\nThese pieces stay where they are. Origin, aim, and power can change. First ground ends the line. No score.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n-10.5°\nElevation\n16.0°\nPower\nSet power\nHold to charge\n55%\nReady again\nBack to Build\n\nNo resonant note\n\n0 notes.\n\nNo score. Goal is none. first ground contact.\n\nAdjust last line\nKeep line\nContact record\n\nFirst ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "panelPhone": {
+    "panel": "The Other Way\n\nThree blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.\n\nThese pieces stay where they are. Origin, aim, and power can change. First ground ends the line. No score.\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n16.0°\nPower\nSet power\nHold to charge\n55%\nFire line\n\nThree blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "openingPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-phone-opening.png",
+  "successPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-other-way-phone-success.png"
+}

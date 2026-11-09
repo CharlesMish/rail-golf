@@ -1,0 +1,149 @@
+{
+  "id": "return-address",
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": {
+    "opening": {
+      "foundryId": "return-address",
+      "presetId": "return-address",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.58
+      },
+      "worldName": "Return Address",
+      "objects": [
+        {
+          "id": "west",
+          "x": -5,
+          "z": 16,
+          "yaw": -45
+        },
+        {
+          "id": "east",
+          "x": 5,
+          "z": 16,
+          "yaw": 45
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.358333333333331,
+        "position": [
+          3.5606234073638916,
+          0.43000075221061707,
+          4.97658109664917
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "beforeSuccess": {
+      "foundryId": "return-address",
+      "presetId": "return-address",
+      "mode": "play",
+      "phase": "ready",
+      "view": "address",
+      "notice": "Ready in the current world.",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "worldName": "Return Address",
+      "objects": [
+        {
+          "id": "west",
+          "x": -5,
+          "z": 16,
+          "yaw": -45
+        },
+        {
+          "id": "east",
+          "x": 5,
+          "z": 16,
+          "yaw": 45
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.358333333333331,
+        "position": [
+          3.5606234073638916,
+          0.43000075221061707,
+          4.97658109664917
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "success": {
+      "foundryId": "return-address",
+      "presetId": "return-address",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "worldName": "Return Address",
+      "objects": [
+        {
+          "id": "west",
+          "x": -5,
+          "z": 16,
+          "yaw": -45
+        },
+        {
+          "id": "east",
+          "x": 5,
+          "z": 16,
+          "yaw": 45
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.993374824523926,
+          0.7300000786781311,
+          1.0933390855789185
+        ]
+      },
+      "reason": "first-ground-contact"
+    }
+  },
+  "galleryDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-desktop-gallery.png",
+  "galleryText": "Return Address\n\nPlay catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.\n\nAuthored world · Launcher editable · Geometry editable\nNo separate challenge\nPlay\nReset\nMake a copy",
+  "openingDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-desktop-opening.png",
+  "panelDesktop": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n-4.0 m\n← .5 m\n.5 m →\nYaw\n4.0°\nElevation\n13.0°\nPower\nSet power\nHold to charge\n58%\nFire line\n\nPlay catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "openingDesktopAddress": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-desktop-address.png",
+  "openingDesktopResult": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-desktop-opening-result.png",
+  "successDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-desktop-success.png",
+  "panelSuccess": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n-4.0 m\n← .5 m\n.5 m →\nYaw\n4.0°\nElevation\n13.0°\nPower\nSet power\nHold to charge\n68%\nReady again\nBack to Build\n\nBank C4 → Bank G4\n\n2 notes. Touched Bank C4, Bank G4. Repeat contacts on Bank C4, Bank G4 are one note each. A silent piece was touched and did not ring.\n\nNo score. Goal is none. first ground contact.\n\nAdjust last line\nKeep line\nContact record\n\nFirst ground contact. No pin, no target, no score. Revise a piece and fire the same shot.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "panelPhone": {
+    "panel": "Musical Workshop\n\nThe ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.\n\nReset preset\nSurvey\nShow trails\nOrigin\n-4.0 m\n← .5 m\n.5 m →\nYaw\n4.0°\nElevation\n13.0°\nPower\nSet power\nHold to charge\n58%\nFire line\n\nPlay catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": true
+  },
+  "openingPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-phone-opening.png",
+  "successPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/return-address-phone-success.png"
+}

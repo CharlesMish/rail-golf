@@ -1,0 +1,2475 @@
+{
+  "id": "right-angle",
+  "sha": "57b82bd95d3d726ebb559e7f8533fab52e58ba32",
+  "presetHash": "6f4f6156431f9b46c1eec4ed2f0f4a93a14b3f81c2969e37224bfdf800a5c649",
+  "manifest": [
+    {
+      "id": "opening",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 18,
+          "charge": 0.55
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "elapsedExact": "1.6416666666666633",
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [],
+        "notes": [],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 46.14754867553711,
+        "y": 0.43000003695487976,
+        "z": 46.14754867553711
+      }
+    },
+    {
+      "id": "both-faces",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8083333333333294,
+        "position": [
+          4.2935285568237305,
+          0.43000006675720215,
+          4.310322284698486
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 14.5,
+          "charge": 0.86
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.8083333333333294,
+        "elapsedExact": "1.8083333333333294",
+        "position": [
+          4.2935285568237305,
+          0.43000006675720215,
+          4.310322284698486
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "notes": [
+          "side-face:E4@0.800/1.000",
+          "back-face:C4@0.817/1.000"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 6.083852863624271,
+        "y": 0.43000006675720215,
+        "z": 4.310322284698486
+      }
+    }
+  ],
+  "recorded": {
+    "order": [
+      "side-face",
+      "back-face"
+    ],
+    "distance": 6.084,
+    "both": true,
+    "inside14": true,
+    "inside16": true,
+    "reason": "first-ground-contact",
+    "position": [
+      4.2935285568237305,
+      0.43000006675720215,
+      4.310322284698486
+    ]
+  },
+  "recordedContacts": [
+    {
+      "body": "worldcraft-object-side-face",
+      "piece": "side-face",
+      "first": 0.7999999999999996,
+      "count": 2,
+      "x": 21.822086334228516,
+      "y": 6.587304592132568,
+      "z": 26.89395523071289
+    },
+    {
+      "body": "worldcraft-object-back-face",
+      "piece": "back-face",
+      "first": 0.8166666666666662,
+      "count": 2,
+      "x": 21.407068252563477,
+      "y": 6.583624839782715,
+      "z": 27.796417236328125
+    },
+    {
+      "body": "worldcraft-ground",
+      "piece": null,
+      "first": 1.799999999999996,
+      "count": 1,
+      "x": 4.437110424041748,
+      "y": 0.1003599762916565,
+      "z": 4.507442474365234
+    }
+  ],
+  "neighbours26": [
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 5.52,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        3.609436273574829,
+        0.43000009655952454,
+        4.176155090332031
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 5.207,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        3.3673107624053955,
+        0.43000009655952454,
+        3.971128225326538
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ],
+      "distance": 7.371,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        3.031712055206299,
+        0.4299998879432678,
+        6.718932151794434
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 4.594,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        3.0846710205078125,
+        0.44153374433517456,
+        3.4049272537231445
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 4.315,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.87557315826416,
+        0.6667515635490417,
+        3.2176599502563477
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 3.7,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.506279230117798,
+        0.7300000190734863,
+        2.7220726013183594
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 4.134,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.7706503868103027,
+        0.723494291305542,
+        3.067659616470337
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 3.302,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.241123676300049,
+        0.7300000786781311,
+        2.424778938293457
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "distance": 2.392,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        1.7045066356658936,
+        0.7300000786781311,
+        1.6780420541763306
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 10.549,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        7.062866687774658,
+        0.429999977350235,
+        7.836294651031494
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 9.62,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        6.288484573364258,
+        0.4300002455711365,
+        7.280188083648682
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 8.625,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.1816911697387695,
+        0.43000006675720215,
+        6.895137786865234
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.027,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.454253673553467,
+        0.429999977350235,
+        5.434754371643066
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 9.408,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.7226076126098633,
+        0.43000003695487976,
+        9.005067825317383
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 6.541,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        1.7490599155426025,
+        0.429999977350235,
+        6.302678108215332
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 5.86,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        1.2019580602645874,
+        0.43000009655952454,
+        5.735341548919678
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 5.197,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        0.6476529240608215,
+        0.43000009655952454,
+        5.1562628746032715
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 9.653,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.781608581542969,
+        0.4300001263618469,
+        8.385193824768066
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 9,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.1011528968811035,
+        0.43000003695487976,
+        8.0109224319458
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 8.03,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.9794678688049316,
+        0.4300000071525574,
+        7.456621170043945
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 9.728,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        6.041031360626221,
+        0.430000364780426,
+        7.625332832336426
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 9.026,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.61154842376709,
+        0.4300003945827484,
+        7.069232940673828
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 8.042,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.269867897033691,
+        0.4299998879432678,
+        6.074293613433838
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.403,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.893310546875,
+        0.4300003945827484,
+        4.480648994445801
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.82,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.630979537963867,
+        0.43000006675720215,
+        5.426296710968018
+      ]
+    },
+    {
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.324,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.68658447265625,
+        0.4300000071525574,
+        5.628261566162109
+      ]
+    }
+  ],
+  "robust26": 26,
+  "neighbourCount": 26,
+  "openingNeighbours": [
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -0.5,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "order": [],
+      "distance": 46.148,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        -0.4027082026004791,
+        0.43000003695487976,
+        46.145790100097656
+      ]
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0.5,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "order": [],
+      "distance": 46.148,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        0.4027082026004791,
+        0.43000003695487976,
+        46.145790100097656
+      ]
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "order": [],
+      "distance": 46.148,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        -0.8053857684135437,
+        0.43000003695487976,
+        46.140525817871094
+      ]
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 1,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "order": [],
+      "distance": 46.148,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        0.8053857684135437,
+        0.43000003695487976,
+        46.140525817871094
+      ]
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 5,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "order": [],
+      "distance": 46.148,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        4.022024631500244,
+        0.43000003695487976,
+        45.97195053100586
+      ]
+    }
+  ],
+  "origins": [
+    {
+      "originX": -2,
+      "order": [
+        "back-face",
+        "side-face"
+      ],
+      "distance": 9.389,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        6.651601791381836,
+        0.43000006675720215,
+        3.647148370742798
+      ]
+    },
+    {
+      "originX": -1.5,
+      "order": [
+        "back-face",
+        "side-face"
+      ],
+      "distance": 9.126,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        6.10413122177124,
+        0.4300000071525574,
+        5.04520320892334
+      ]
+    },
+    {
+      "originX": -1,
+      "order": [
+        "back-face",
+        "side-face"
+      ],
+      "distance": 9.184,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.693544864654541,
+        0.4300000071525574,
+        6.288735389709473
+      ]
+    },
+    {
+      "originX": -0.5,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ],
+      "distance": 15.052,
+      "both": true,
+      "inside14": false,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        13.133661270141602,
+        0.4300000071525574,
+        6.377521514892578
+      ]
+    },
+    {
+      "originX": 0,
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 6.084,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.2935285568237305,
+        0.43000006675720215,
+        4.310322284698486
+      ]
+    },
+    {
+      "originX": 0.5,
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 8.498,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.751621246337891,
+        0.43000006675720215,
+        6.681472301483154
+      ]
+    },
+    {
+      "originX": 1,
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.255,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        2.783766746520996,
+        0.43000003695487976,
+        7.032541751861572
+      ]
+    },
+    {
+      "originX": 1.5,
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.652,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.89714241027832,
+        0.43000009655952454,
+        6.856999397277832
+      ]
+    },
+    {
+      "originX": 2,
+      "order": [
+        "side-face",
+        "back-face"
+      ],
+      "distance": 7.475,
+      "both": true,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        4.533611297607422,
+        0.43000033497810364,
+        7.0325398445129395
+      ]
+    }
+  ],
+  "sample": {
+    "cells": 100,
+    "returnsInside14ExactlyTwo": 19,
+    "robustAll26Inside16": 12,
+    "rows": [
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 12,
+          "charge": 0.6
+        },
+        "order": [
+          "back-face"
+        ],
+        "distance": 29.61,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 12,
+          "charge": 0.7
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 24.426,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 12,
+          "charge": 0.8
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 18.938,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 12,
+          "charge": 0.86
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 14.902,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 12,
+          "charge": 0.9
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 14.339,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 14.5,
+          "charge": 0.6
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 26.848,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 14.5,
+          "charge": 0.7
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 20.572,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 14.5,
+          "charge": 0.8
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 15.106,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 14.5,
+          "charge": 0.86
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 9.459,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 14.5,
+          "charge": 0.9
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 11.706,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 18,
+          "charge": 0.6
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 22.548,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 18,
+          "charge": 0.7
+        },
+        "order": [
+          "back-face"
+        ],
+        "distance": 33.27,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 18,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 60.618,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 18,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 60.487,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 18,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 60.477,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 24,
+          "charge": 0.6
+        },
+        "order": [],
+        "distance": 60.444,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 24,
+          "charge": 0.7
+        },
+        "order": [],
+        "distance": 60.454,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 24,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 60.399,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 24,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 60.409,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 32,
+          "elevation": 24,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 60.489,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 12,
+          "charge": 0.6
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 30.497,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 12,
+          "charge": 0.7
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 23.688,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 12,
+          "charge": 0.8
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 17.759,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 12,
+          "charge": 0.86
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 13.277,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 12,
+          "charge": 0.9
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 11.376,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 14.5,
+          "charge": 0.6
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 26.268,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 14.5,
+          "charge": 0.7
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 19.324,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 14.5,
+          "charge": 0.8
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 13.554,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 14.5,
+          "charge": 0.86
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 9.606,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 14.5,
+          "charge": 0.9
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 7.898,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 18,
+          "charge": 0.6
+        },
+        "order": [
+          "back-face",
+          "side-face"
+        ],
+        "distance": 21.719,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 18,
+          "charge": 0.7
+        },
+        "order": [
+          "back-face"
+        ],
+        "distance": 34.133,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 18,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 54.681,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 18,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 54.48,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 18,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 54.547,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 24,
+          "charge": 0.6
+        },
+        "order": [],
+        "distance": 54.636,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 24,
+          "charge": 0.7
+        },
+        "order": [],
+        "distance": 54.614,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 24,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 54.697,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 24,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 54.639,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 36,
+          "elevation": 24,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 54.494,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 12,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 29.965,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 12,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 23.684,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 12,
+          "charge": 0.8
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 17.38,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 12,
+          "charge": 0.86
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 13.516,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 12,
+          "charge": 0.9
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 10.184,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 14.5,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 26.024,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 14.5,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 19.032,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 14.5,
+          "charge": 0.8
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 12.411,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 14.5,
+          "charge": 0.86
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 6.084,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 14.5,
+          "charge": 0.9
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 4.098,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 18,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 21.396,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 18,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 17.041,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 18,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 51.572,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 18,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 51.477,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 18,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 51.426,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 24,
+          "charge": 0.6
+        },
+        "order": [],
+        "distance": 51.409,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 24,
+          "charge": 0.7
+        },
+        "order": [],
+        "distance": 51.451,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 24,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 51.438,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 24,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 51.466,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 38.5,
+          "elevation": 24,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 51.496,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 12,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 30.459,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 12,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 24.086,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 12,
+          "charge": 0.8
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 18.095,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 12,
+          "charge": 0.86
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 12.967,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 12,
+          "charge": 0.9
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 12.252,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 14.5,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 26.489,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 14.5,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 20.134,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 14.5,
+          "charge": 0.8
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 13.425,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 14.5,
+          "charge": 0.86
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 9.768,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 14.5,
+          "charge": 0.9
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 7.453,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 18,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 21.333,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 18,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face"
+        ],
+        "distance": 69.846,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 18,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 47.897,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 18,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 47.873,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 18,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 47.993,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 24,
+          "charge": 0.6
+        },
+        "order": [],
+        "distance": 47.968,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 24,
+          "charge": 0.7
+        },
+        "order": [],
+        "distance": 48.044,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 24,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 47.908,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 24,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 48.004,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 42,
+          "elevation": 24,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 47.899,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 12,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face"
+        ],
+        "distance": 30.99,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 12,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 25.5,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 12,
+          "charge": 0.8
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 19.823,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 12,
+          "charge": 0.86
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 16.833,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 12,
+          "charge": 0.9
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 14.811,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 14.5,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 27.826,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 14.5,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 20.82,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 14.5,
+          "charge": 0.8
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 15.568,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 14.5,
+          "charge": 0.86
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 13.037,
+        "returned": true,
+        "robust": true
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 14.5,
+          "charge": 0.9
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 12.901,
+        "returned": true,
+        "robust": false
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 18,
+          "charge": 0.6
+        },
+        "order": [
+          "side-face",
+          "back-face"
+        ],
+        "distance": 22.571,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 18,
+          "charge": 0.7
+        },
+        "order": [
+          "side-face"
+        ],
+        "distance": 70.781,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 18,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 44.504,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 18,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 44.57,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 18,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 44.561,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 24,
+          "charge": 0.6
+        },
+        "order": [],
+        "distance": 44.526,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 24,
+          "charge": 0.7
+        },
+        "order": [],
+        "distance": 44.637,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 24,
+          "charge": 0.8
+        },
+        "order": [],
+        "distance": 44.65,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 24,
+          "charge": 0.86
+        },
+        "order": [],
+        "distance": 44.543,
+        "returned": false,
+        "robust": null
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 46,
+          "elevation": 24,
+          "charge": 0.9
+        },
+        "order": [],
+        "distance": 44.602,
+        "returned": false,
+        "robust": null
+      }
+    ]
+  },
+  "edges": [
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 28,
+        "elevation": 14.5,
+        "charge": 0.86
+      },
+      "order": [
+        "back-face"
+      ],
+      "distance": 26.93,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        26.85274887084961,
+        0.430000364780426,
+        -2.0347917079925537
+      ]
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 50,
+        "elevation": 14.5,
+        "charge": 0.86
+      },
+      "order": [
+        "side-face"
+      ],
+      "distance": 39.583,
+      "both": false,
+      "inside14": false,
+      "inside16": false,
+      "reason": "first-ground-contact",
+      "position": [
+        -5.726956844329834,
+        0.43000003695487976,
+        39.16616439819336
+      ]
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 54,
+        "elevation": 14,
+        "charge": 0.7
+      },
+      "order": [
+        "side-face"
+      ],
+      "distance": 5.164,
+      "both": false,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        5.031620025634766,
+        0.7300006151199341,
+        1.1597086191177368
+      ]
+    }
+  ],
+  "simpler": {
+    "sideOnly": {
+      "recorded": {
+        "order": [
+          "side-face"
+        ],
+        "distance": 54.783,
+        "both": false,
+        "inside14": false,
+        "inside16": false,
+        "reason": "first-ground-contact",
+        "position": [
+          2.0166726112365723,
+          0.429999977350235,
+          54.74566650390625
+        ]
+      },
+      "opening": {
+        "order": [],
+        "distance": 46.148,
+        "both": false,
+        "inside14": false,
+        "inside16": false,
+        "reason": "first-ground-contact",
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      }
+    },
+    "backOnly": {
+      "recorded": {
+        "order": [
+          "back-face"
+        ],
+        "distance": 37.848,
+        "both": false,
+        "inside14": false,
+        "inside16": false,
+        "reason": "out-of-bounds",
+        "position": [
+          32.1495475769043,
+          5.299981117248535,
+          19.972515106201172
+        ]
+      },
+      "opening": {
+        "order": [],
+        "distance": 46.148,
+        "both": false,
+        "inside14": false,
+        "inside16": false,
+        "reason": "first-ground-contact",
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      }
+    },
+    "angledSingle": {
+      "order": [
+        "only-face"
+      ],
+      "distance": 7.167,
+      "both": false,
+      "inside14": true,
+      "inside16": true,
+      "reason": "first-ground-contact",
+      "position": [
+        -6.541522979736328,
+        0.7376646995544434,
+        2.9277026653289795
+      ]
+    }
+  },
+  "note": "Sample is an independent 5×4×5 lattice inside the claimed 32–46° / 12–24° / 0.60–0.90 window. It is not a recount of 4263 or 2650."
+}

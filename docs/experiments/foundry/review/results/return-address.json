@@ -1,0 +1,1837 @@
+{
+  "id": "return-address",
+  "sha": "4041bb67cd9051a3b7e265ed6512e88c6ac2e5b0",
+  "presetHash": "ca3537f60481e8ff7bc7e3b7be6d1aeec66fbd314356e43e60280275b4a748b8",
+  "manifest": [
+    {
+      "id": "opening",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.358333333333331,
+        "position": [
+          3.5606234073638916,
+          0.43000075221061707,
+          4.97658109664917
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.58
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.358333333333331,
+        "elapsedExact": "1.3583333333333310",
+        "position": [
+          3.5606234073638916,
+          0.43000075221061707,
+          4.97658109664917
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "west",
+          "east"
+        ],
+        "notes": [
+          "west:C4@0.442/0.982",
+          "east:G4@0.708/0.775"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 6.119182826210825,
+        "y": 0.43000075221061707,
+        "z": 4.97658109664917
+      }
+    },
+    {
+      "id": "serve",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.993374824523926,
+          0.7300000786781311,
+          1.0933390855789185
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "elapsedExact": "1.3749999999999976",
+        "position": [
+          3.993374824523926,
+          0.7300000786781311,
+          1.0933390855789185
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "west",
+          "east"
+        ],
+        "notes": [
+          "west:C4@0.383/1.000",
+          "east:G4@0.625/0.875"
+        ],
+        "tee": {
+          "x": 3.981315851211548,
+          "y": 0.35033395886421204,
+          "z": 1.2694132328033447,
+          "first": 1.3666666666666643
+        },
+        "carriage": {
+          "contactX": 3.981315851211548,
+          "nearest": 4,
+          "reachable": true
+        },
+        "horizontal": 4.140342116926576,
+        "y": 0.7300000786781311,
+        "z": 1.0933390855789185
+      }
+    },
+    {
+      "id": "reply",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          -3.995471715927124,
+          0.7300001382827759,
+          1.0937411785125732
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 4,
+          "yaw": -4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "elapsedExact": "1.3749999999999976",
+        "position": [
+          -3.995471715927124,
+          0.7300001382827759,
+          1.0937411785125732
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "east",
+          "west"
+        ],
+        "notes": [
+          "east:G4@0.383/1.000",
+          "west:C4@0.625/0.875"
+        ],
+        "tee": {
+          "x": -3.983403444290161,
+          "y": 0.3556143343448639,
+          "z": 1.2698029279708862,
+          "first": 1.3666666666666643
+        },
+        "carriage": {
+          "contactX": -3.983403444290161,
+          "nearest": -4,
+          "reachable": true
+        },
+        "horizontal": 4.142470760107754,
+        "y": 0.7300001382827759,
+        "z": 1.0937411785125732
+      }
+    },
+    {
+      "id": "edge-catch",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.7599499225616455,
+          0.5069491863250732,
+          3.3707141876220703
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.62
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "elapsedExact": "1.3749999999999976",
+        "position": [
+          3.7599499225616455,
+          0.5069491863250732,
+          3.3707141876220703
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "west",
+          "east"
+        ],
+        "notes": [
+          "west:C4@0.417/0.998",
+          "east:G4@0.675/0.818"
+        ],
+        "tee": {
+          "x": 3.74960994720459,
+          "y": 0.31857335567474365,
+          "z": 3.058241844177246,
+          "first": 1.3666666666666643
+        },
+        "carriage": {
+          "contactX": 3.74960994720459,
+          "nearest": 3.5,
+          "reachable": true
+        },
+        "horizontal": 5.049647270335626,
+        "y": 0.5069491863250732,
+        "z": 3.3707141876220703
+      }
+    },
+    {
+      "id": "yaw-neighbour",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.51689076423645,
+          0.7300000190734863,
+          1.1440398693084717
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4.5,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "elapsedExact": "1.3749999999999976",
+        "position": [
+          3.51689076423645,
+          0.7300000190734863,
+          1.1440398693084717
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "west",
+          "east"
+        ],
+        "notes": [
+          "west:C4@0.392/1.000",
+          "east:G4@0.617/0.867"
+        ],
+        "tee": {
+          "x": 3.5077311992645264,
+          "y": 0.3695908784866333,
+          "z": 1.3201271295547485,
+          "first": 1.3666666666666643
+        },
+        "carriage": {
+          "contactX": 3.5077311992645264,
+          "nearest": 3.5,
+          "reachable": true
+        },
+        "horizontal": 3.6982898575069783,
+        "y": 0.7300000190734863,
+        "z": 1.1440398693084717
+      }
+    },
+    {
+      "id": "unturned-reply",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          -10.317688941955566,
+          0.7299999594688416,
+          2.137204647064209
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "elapsedExact": "1.3749999999999976",
+        "position": [
+          -10.317688941955566,
+          0.7299999594688416,
+          2.137204647064209
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "east",
+          "west"
+        ],
+        "notes": [
+          "east:G4@0.317/0.981",
+          "west:C4@0.883/0.982"
+        ],
+        "tee": {
+          "x": -10.275745391845703,
+          "y": 0.3580426871776581,
+          "z": 2.3037822246551514,
+          "first": 1.3666666666666643
+        },
+        "carriage": {
+          "contactX": -10.275745391845703,
+          "nearest": -10.5,
+          "reachable": false
+        },
+        "horizontal": 10.536714326885068,
+        "y": 0.7299999594688416,
+        "z": 2.137204647064209
+      }
+    },
+    {
+      "id": "short-lob",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5166666666666637,
+        "position": [
+          1.6780924797058105,
+          0.7300000190734863,
+          2.0666568279266357
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 70,
+          "elevation": 65,
+          "charge": 0
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.5166666666666637,
+        "elapsedExact": "1.5166666666666637",
+        "position": [
+          1.6780924797058105,
+          0.7300000190734863,
+          2.0666568279266357
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [],
+        "notes": [],
+        "tee": {
+          "x": 1.6581971645355225,
+          "y": 0.36386793851852417,
+          "z": 2.059415578842163,
+          "first": 1.5083333333333304
+        },
+        "carriage": {
+          "contactX": 1.6581971645355225,
+          "nearest": 1.5,
+          "reachable": true
+        },
+        "horizontal": 2.6621541681241863,
+        "y": 0.7300000190734863,
+        "z": 2.0666568279266357
+      }
+    },
+    {
+      "id": "centre-seam",
+      "match": true,
+      "expected": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4333333333333307,
+        "position": [
+          0.03334396332502365,
+          0.4300006031990051,
+          46.396732330322266
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none"
+        }
+      },
+      "actual": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.4333333333333307,
+        "elapsedExact": "1.4333333333333307",
+        "position": [
+          0.03334396332502365,
+          0.4300006031990051,
+          46.396732330322266
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "east",
+          "west",
+          "east",
+          "west",
+          "east",
+          "west"
+        ],
+        "notes": [
+          "east:G4@0.475/1.000",
+          "west:C4@0.475/1.000"
+        ],
+        "tee": null,
+        "carriage": null,
+        "horizontal": 46.396744311982296,
+        "y": 0.4300006031990051,
+        "z": 46.396732330322266
+      }
+    }
+  ],
+  "serveDetail": {
+    "terminal": [
+      3.993374824523926,
+      0.7300000786781311,
+      1.0933390855789185
+    ],
+    "tee": {
+      "x": 3.981315851211548,
+      "y": 0.35033395886421204,
+      "z": 1.2694132328033447,
+      "first": 1.3666666666666643
+    },
+    "carriage": {
+      "contactX": 3.981315851211548,
+      "nearest": 4,
+      "reachable": true
+    },
+    "order": [
+      "west",
+      "east"
+    ],
+    "contacts": [
+      {
+        "body": "worldcraft-object-west",
+        "piece": "west",
+        "first": 0.3833333333333337,
+        "count": 2,
+        "x": -3.138306140899658,
+        "y": 4.5210113525390625,
+        "z": 16.971641540527344
+      },
+      {
+        "body": "worldcraft-object-east",
+        "piece": "east",
+        "first": 0.6250000000000002,
+        "count": 2,
+        "x": 3.0573015213012695,
+        "y": 4.608108997344971,
+        "z": 17.10214614868164
+      },
+      {
+        "body": "worldcraft-tee",
+        "piece": null,
+        "first": 1.3666666666666643,
+        "count": 1,
+        "x": 3.981315851211548,
+        "y": 0.35033395886421204,
+        "z": 1.2694132328033447
+      }
+    ],
+    "readableFromExistingLedger": true
+  },
+  "neighbours": [
+    {
+      "label": "yaw-0.5",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 4.048601150512695,
+        "y": 0.3615167737007141,
+        "z": 1.3800945281982422,
+        "first": 1.3749999999999976
+      },
+      "terminalX": 4.059930324554443,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "yaw+0.5",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 3.5077311992645264,
+        "y": 0.3695908784866333,
+        "z": 1.3201271295547485,
+        "first": 1.3666666666666643
+      },
+      "terminalX": 3.51689076423645,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "elev-0.5",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 3.8982324600219727,
+        "y": 0.30770641565322876,
+        "z": 1.7896356582641602,
+        "first": 1.3416666666666643
+      },
+      "terminalX": 3.9095959663391113,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "elev+0.5",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 4.325198173522949,
+        "y": 0.32517188787460327,
+        "z": 0.28765425086021423,
+        "first": 1.3999999999999975
+      },
+      "terminalX": 4.340452194213867,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "charge-0.01",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 3.840510606765747,
+        "y": 0.3211294114589691,
+        "z": 1.720951795578003,
+        "first": 1.3666666666666643
+      },
+      "terminalX": 3.8515167236328125,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "charge+0.01",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 3.8671844005584717,
+        "y": 0.3342718183994293,
+        "z": 0.8228128552436829,
+        "first": 1.3749999999999976
+      },
+      "terminalX": 3.8784444332122803,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "origin-0.5",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 4.457606792449951,
+        "y": 0.37810248136520386,
+        "z": 1.4491991996765137,
+        "first": 1.3666666666666643
+      },
+      "terminalX": 4.468714714050293,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    },
+    {
+      "label": "origin+0.5",
+      "twoFace": true,
+      "opposite": true,
+      "tee": {
+        "x": 3.7971272468566895,
+        "y": 0.36382895708084106,
+        "z": 0.9640874266624451,
+        "first": 1.3666666666666643
+      },
+      "terminalX": 3.812291145324707,
+      "order": [
+        "west",
+        "east"
+      ],
+      "rejected": false
+    }
+  ],
+  "chain": [
+    {
+      "exchange": 1,
+      "sameSetupAs": null,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        3.993374824523926,
+        0.7300000786781311,
+        1.0933390855789185
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "west",
+        "east"
+      ],
+      "notes": [
+        "west:C4@0.383/1.000",
+        "east:G4@0.625/0.875"
+      ],
+      "tee": {
+        "x": 3.981315851211548,
+        "y": 0.35033395886421204,
+        "z": 1.2694132328033447,
+        "first": 1.3666666666666643
+      },
+      "carriage": {
+        "contactX": 3.981315851211548,
+        "nearest": 4,
+        "reachable": true
+      },
+      "horizontal": 4.140342116926576,
+      "y": 0.7300000786781311,
+      "z": 1.0933390855789185,
+      "twoFace": true,
+      "opposite": true
+    },
+    {
+      "exchange": 2,
+      "sameSetupAs": null,
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": -4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        -3.995471715927124,
+        0.7300001382827759,
+        1.0937411785125732
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "east",
+        "west"
+      ],
+      "notes": [
+        "east:G4@0.383/1.000",
+        "west:C4@0.625/0.875"
+      ],
+      "tee": {
+        "x": -3.983403444290161,
+        "y": 0.3556143343448639,
+        "z": 1.2698029279708862,
+        "first": 1.3666666666666643
+      },
+      "carriage": {
+        "contactX": -3.983403444290161,
+        "nearest": -4,
+        "reachable": true
+      },
+      "horizontal": 4.142470760107754,
+      "y": 0.7300001382827759,
+      "z": 1.0937411785125732,
+      "twoFace": true,
+      "opposite": true
+    },
+    {
+      "exchange": 3,
+      "sameSetupAs": 1,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        3.993374824523926,
+        0.7300000786781311,
+        1.0933390855789185
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "west",
+        "east"
+      ],
+      "notes": [
+        "west:C4@0.383/1.000",
+        "east:G4@0.625/0.875"
+      ],
+      "tee": {
+        "x": 3.981315851211548,
+        "y": 0.35033395886421204,
+        "z": 1.2694132328033447,
+        "first": 1.3666666666666643
+      },
+      "carriage": {
+        "contactX": 3.981315851211548,
+        "nearest": 4,
+        "reachable": true
+      },
+      "horizontal": 4.140342116926576,
+      "y": 0.7300000786781311,
+      "z": 1.0933390855789185,
+      "twoFace": true,
+      "opposite": true
+    },
+    {
+      "exchange": 4,
+      "sameSetupAs": 2,
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": -4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        -3.995471715927124,
+        0.7300001382827759,
+        1.0937411785125732
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "east",
+        "west"
+      ],
+      "notes": [
+        "east:G4@0.383/1.000",
+        "west:C4@0.625/0.875"
+      ],
+      "tee": {
+        "x": -3.983403444290161,
+        "y": 0.3556143343448639,
+        "z": 1.2698029279708862,
+        "first": 1.3666666666666643
+      },
+      "carriage": {
+        "contactX": -3.983403444290161,
+        "nearest": -4,
+        "reachable": true
+      },
+      "horizontal": 4.142470760107754,
+      "y": 0.7300001382827759,
+      "z": 1.0937411785125732,
+      "twoFace": true,
+      "opposite": true
+    }
+  ],
+  "drifted": [
+    {
+      "exchange": 1,
+      "sameSetupAs": null,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4.5,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        3.51689076423645,
+        0.7300000190734863,
+        1.1440398693084717
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "west",
+        "east"
+      ],
+      "notes": [
+        "west:C4@0.392/1.000",
+        "east:G4@0.617/0.867"
+      ],
+      "tee": {
+        "x": 3.5077311992645264,
+        "y": 0.3695908784866333,
+        "z": 1.3201271295547485,
+        "first": 1.3666666666666643
+      },
+      "carriage": {
+        "contactX": 3.5077311992645264,
+        "nearest": 3.5,
+        "reachable": true
+      },
+      "horizontal": 3.6982898575069783,
+      "y": 0.7300000190734863,
+      "z": 1.1440398693084717,
+      "twoFace": true,
+      "opposite": true
+    },
+    {
+      "exchange": 2,
+      "sameSetupAs": null,
+      "setup": {
+        "railIndex": 1,
+        "originX": 3.5,
+        "yaw": -4.5,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3833333333333309,
+      "elapsedExact": "1.3833333333333309",
+      "position": [
+        -2.7659521102905273,
+        0.7299999594688416,
+        1.0629785060882568
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "east",
+        "west"
+      ],
+      "notes": [
+        "east:G4@0.408/1.000",
+        "west:C4@0.583/0.922"
+      ],
+      "tee": {
+        "x": -2.75891375541687,
+        "y": 0.31220993399620056,
+        "z": 1.2369177341461182,
+        "first": 1.3749999999999976
+      },
+      "carriage": {
+        "contactX": -2.75891375541687,
+        "nearest": -3,
+        "reachable": true
+      },
+      "horizontal": 2.963176400558402,
+      "y": 0.7299999594688416,
+      "z": 1.0629785060882568,
+      "twoFace": true,
+      "opposite": true
+    },
+    {
+      "exchange": 3,
+      "sameSetupAs": null,
+      "setup": {
+        "railIndex": 1,
+        "originX": -3,
+        "yaw": 4.5,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        2.5120131969451904,
+        0.7300000786781311,
+        0.9858415126800537
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "west",
+        "east"
+      ],
+      "notes": [
+        "west:C4@0.425/1.000",
+        "east:G4@0.558/0.865"
+      ],
+      "tee": {
+        "x": 2.5025744438171387,
+        "y": 0.3256044387817383,
+        "z": 1.1621719598770142,
+        "first": 1.3666666666666643
+      },
+      "carriage": {
+        "contactX": 2.5025744438171387,
+        "nearest": 2.5,
+        "reachable": true
+      },
+      "horizontal": 2.698535489807405,
+      "y": 0.7300000786781311,
+      "z": 0.9858415126800537,
+      "twoFace": true,
+      "opposite": true
+    },
+    {
+      "exchange": 4,
+      "sameSetupAs": null,
+      "setup": {
+        "railIndex": 1,
+        "originX": 2.5,
+        "yaw": -4.5,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3666666666666643,
+      "elapsedExact": "1.3666666666666643",
+      "position": [
+        -2.466928243637085,
+        0.7300001382827759,
+        0.8585293889045715
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "east",
+        "west"
+      ],
+      "notes": [
+        "east:G4@0.442/1.000",
+        "west:C4@0.525/1.000"
+      ],
+      "tee": {
+        "x": -2.4530861377716064,
+        "y": 0.38025525212287903,
+        "z": 1.037607192993164,
+        "first": 1.358333333333331
+      },
+      "carriage": {
+        "contactX": -2.4530861377716064,
+        "nearest": -2.5,
+        "reachable": true
+      },
+      "horizontal": 2.612050472496121,
+      "y": 0.7300001382827759,
+      "z": 0.8585293889045715,
+      "twoFace": true,
+      "opposite": true
+    }
+  ],
+  "power": [
+    {
+      "charge": 0.54,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 6.642975807189941
+    },
+    {
+      "charge": 0.55,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 6.151003360748291
+    },
+    {
+      "charge": 0.56,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 5.811402320861816
+    },
+    {
+      "charge": 0.57,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 5.186489105224609
+    },
+    {
+      "charge": 0.58,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 4.97658109664917
+    },
+    {
+      "charge": 0.59,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 4.4666948318481445
+    },
+    {
+      "charge": 0.6,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 4.1068501472473145
+    },
+    {
+      "charge": 0.61,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": 3.637639045715332
+    },
+    {
+      "charge": 0.62,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.74960994720459,
+      "terminalZ": 3.3707141876220703
+    },
+    {
+      "charge": 0.63,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.8043484687805176,
+      "terminalZ": 3.232217311859131
+    },
+    {
+      "charge": 0.64,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.7886857986450195,
+      "terminalZ": 2.947464942932129
+    },
+    {
+      "charge": 0.65,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.843343496322632,
+      "terminalZ": 2.3638534545898438
+    },
+    {
+      "charge": 0.66,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.250219821929932,
+      "terminalZ": 1.646975040435791
+    },
+    {
+      "charge": 0.67,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.840510606765747,
+      "terminalZ": 1.5475994348526
+    },
+    {
+      "charge": 0.68,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.981315851211548,
+      "terminalZ": 1.0933390855789185
+    },
+    {
+      "charge": 0.69,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.8671844005584717,
+      "terminalZ": 0.6449622511863708
+    },
+    {
+      "charge": 0.7,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.8297481536865234,
+      "terminalZ": 0.18821723759174347
+    },
+    {
+      "charge": 0.71,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.712531328201294,
+      "terminalZ": -0.18804599344730377
+    },
+    {
+      "charge": 0.72,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.058633804321289,
+      "terminalZ": -0.7873180508613586
+    },
+    {
+      "charge": 0.73,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 3.970404624938965,
+      "terminalZ": -1.0738842487335205
+    },
+    {
+      "charge": 0.74,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.118635654449463,
+      "terminalZ": -1.6991386413574219
+    },
+    {
+      "charge": 0.75,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.016122817993164,
+      "terminalZ": -1.9894167184829712
+    },
+    {
+      "charge": 0.76,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.1314520835876465,
+      "terminalZ": -2.4962573051452637
+    },
+    {
+      "charge": 0.77,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.1339111328125,
+      "terminalZ": -3.0806517601013184
+    },
+    {
+      "charge": 0.78,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.309839248657227,
+      "terminalZ": -3.657578229904175
+    },
+    {
+      "charge": 0.79,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.1739501953125,
+      "terminalZ": -3.839992046356201
+    },
+    {
+      "charge": 0.8,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.8154401779174805,
+      "terminalZ": -4.8993964195251465
+    },
+    {
+      "charge": 0.81,
+      "twoFace": true,
+      "opposite": true,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": 4.290269374847412,
+      "terminalZ": -4.9743194580078125
+    },
+    {
+      "charge": 0.82,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -6.10451078414917
+    },
+    {
+      "charge": 0.83,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -6.546706676483154
+    },
+    {
+      "charge": 0.84,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -7.080336093902588
+    },
+    {
+      "charge": 0.85,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -8.077113151550293
+    },
+    {
+      "charge": 0.86,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -8.020539283752441
+    },
+    {
+      "charge": 0.87,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -8.135970115661621
+    },
+    {
+      "charge": 0.88,
+      "twoFace": false,
+      "opposite": false,
+      "order": [
+        "west",
+        "east"
+      ],
+      "teeX": null,
+      "terminalZ": -8.017901420593262
+    }
+  ],
+  "faceEdits": [
+    {
+      "label": "x+0.5",
+      "twoFace": true,
+      "teeX": 4.503462791442871,
+      "terminal": [
+        4.515449047088623,
+        0.7300002574920654,
+        1.3992220163345337
+      ],
+      "order": [
+        "west",
+        "east"
+      ]
+    },
+    {
+      "label": "x-0.5",
+      "twoFace": true,
+      "teeX": 3.5580410957336426,
+      "terminal": [
+        3.570141315460205,
+        0.7300000190734863,
+        0.6885090470314026
+      ],
+      "order": [
+        "west",
+        "east"
+      ]
+    },
+    {
+      "label": "z+0.5",
+      "twoFace": true,
+      "teeX": 4.503520965576172,
+      "terminal": [
+        4.515517234802246,
+        0.7300001382827759,
+        1.3992489576339722
+      ],
+      "order": [
+        "west",
+        "east"
+      ]
+    },
+    {
+      "label": "z-0.5",
+      "twoFace": true,
+      "teeX": 3.558056116104126,
+      "terminal": [
+        3.5701558589935303,
+        0.7299999594688416,
+        0.688521146774292
+      ],
+      "order": [
+        "west",
+        "east"
+      ]
+    },
+    {
+      "label": "yaw+5",
+      "twoFace": true,
+      "teeX": 1.6502529382705688,
+      "terminal": [
+        1.6332042217254639,
+        0.7300000190734863,
+        1.2875580787658691
+      ],
+      "order": [
+        "west",
+        "east"
+      ]
+    },
+    {
+      "label": "yaw-5",
+      "twoFace": true,
+      "teeX": 6.2127604484558105,
+      "terminal": [
+        6.2518744468688965,
+        0.7300000190734863,
+        1.2776364088058472
+      ],
+      "order": [
+        "west",
+        "east"
+      ]
+    }
+  ],
+  "localBox": {
+    "fired": 1225,
+    "firstCatch": 1223,
+    "secondCatch": 1138,
+    "backToSender": 306,
+    "firstMisses": [
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": -5,
+          "yaw": 2.5,
+          "elevation": 12,
+          "charge": 0.65
+        },
+        "order": [
+          "west",
+          "east"
+        ],
+        "teeX": null,
+        "reason": "first-ground-contact"
+      },
+      {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 12,
+          "charge": 0.65
+        },
+        "order": [
+          "west",
+          "east"
+        ],
+        "teeX": null,
+        "reason": "first-ground-contact"
+      }
+    ]
+  },
+  "controls": {
+    "westOnly": {
+      "fired": 147,
+      "opposite": 1,
+      "withPieceContact": 112
+    },
+    "flat": {
+      "fired": 147,
+      "opposite": 18,
+      "withPieceContact": 105
+    },
+    "empty": {
+      "fired": 147,
+      "opposite": 0,
+      "withPieceContact": 0
+    },
+    "serveOnWestOnly": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "elapsedExact": "1.3749999999999976",
+      "position": [
+        20.460567474365234,
+        0.4300001859664917,
+        16.377023696899414
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "west"
+      ],
+      "notes": [
+        "west:C4@0.383/1.000"
+      ],
+      "tee": null,
+      "carriage": null,
+      "horizontal": 26.20766541571106,
+      "y": 0.4300001859664917,
+      "z": 16.377023696899414
+    },
+    "serveOnFlat": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "out-of-bounds",
+      "elapsed": 1.224999999999998,
+      "elapsedExact": "1.2249999999999981",
+      "position": [
+        -1.5903888940811157,
+        1.5529381036758423,
+        -8.1382417678833
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "flat"
+      ],
+      "notes": [
+        "flat:C4@0.325/0.075"
+      ],
+      "tee": null,
+      "carriage": null,
+      "horizontal": 8.292184025149037,
+      "y": 1.5529381036758423,
+      "z": -8.1382417678833
+    },
+    "serveOnEmpty": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.441666666666664,
+      "elapsedExact": "1.4416666666666640",
+      "position": [
+        -0.5886505246162415,
+        0.4300000071525574,
+        48.78459167480469
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [],
+      "notes": [],
+      "tee": null,
+      "carriage": null,
+      "horizontal": 48.78814296852827,
+      "y": 0.4300000071525574,
+      "z": 48.78459167480469
+    },
+    "flatRally": {
+      "serve": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 14.5,
+          "elevation": 13,
+          "charge": 0.58
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.2583333333333313,
+        "elapsedExact": "1.2583333333333313",
+        "position": [
+          3.9788818359375,
+          0.7300000190734863,
+          -4.028842449188232
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "flat"
+        ],
+        "notes": [
+          "flat:C4@0.392/0.231"
+        ],
+        "tee": {
+          "x": 3.939756393432617,
+          "y": 0.30134692788124084,
+          "z": -3.8434255123138428,
+          "first": 1.249999999999998
+        },
+        "carriage": {
+          "contactX": 3.939756393432617,
+          "nearest": 4,
+          "reachable": true
+        },
+        "horizontal": 5.6624263478419214,
+        "y": 0.7300000190734863,
+        "z": -4.028842449188232
+      },
+      "reply": {
+        "setup": {
+          "railIndex": 1,
+          "originX": 4,
+          "yaw": -14.5,
+          "elevation": 13,
+          "charge": 0.58
+        },
+        "reason": "first-ground-contact",
+        "elapsed": 1.2583333333333313,
+        "elapsedExact": "1.2583333333333313",
+        "position": [
+          -3.9788818359375,
+          0.7300007343292236,
+          -4.028842449188232
+        ],
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "distance": null
+        },
+        "order": [
+          "flat"
+        ],
+        "notes": [
+          "flat:C4@0.392/0.231"
+        ],
+        "tee": {
+          "x": -3.9397692680358887,
+          "y": 0.30135229229927063,
+          "z": -3.8434290885925293,
+          "first": 1.249999999999998
+        },
+        "carriage": {
+          "contactX": -3.9397692680358887,
+          "nearest": -4,
+          "reachable": true
+        },
+        "horizontal": 5.6624263478419214,
+        "y": 0.7300007343292236,
+        "z": -4.028842449188232
+      }
+    },
+    "directLob": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 70,
+        "elevation": 65,
+        "charge": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.5166666666666637,
+      "elapsedExact": "1.5166666666666637",
+      "position": [
+        1.6780924797058105,
+        0.7300000190734863,
+        2.0666568279266357
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [],
+      "notes": [],
+      "tee": {
+        "x": 1.6581971645355225,
+        "y": 0.36386793851852417,
+        "z": 2.059415578842163,
+        "first": 1.5083333333333304
+      },
+      "carriage": {
+        "contactX": 1.6581971645355225,
+        "nearest": 1.5,
+        "reachable": true
+      },
+      "horizontal": 2.6621541681241863,
+      "y": 0.7300000190734863,
+      "z": 2.0666568279266357,
+      "opposite": true
+    },
+    "openingStillShort": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.58
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.358333333333331,
+      "elapsedExact": "1.3583333333333310",
+      "position": [
+        3.5606234073638916,
+        0.43000075221061707,
+        4.97658109664917
+      ],
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "distance": null
+      },
+      "order": [
+        "west",
+        "east"
+      ],
+      "notes": [
+        "west:C4@0.442/0.982",
+        "east:G4@0.708/0.775"
+      ],
+      "tee": null,
+      "carriage": null,
+      "horizontal": 6.119182826210825,
+      "y": 0.43000075221061707,
+      "z": 4.97658109664917
+    }
+  },
+  "controlGrid": "yaw -20..20 step 2, charge 0.52..0.76 step 0.04, elevation 13, origin -4. Not the author 1053-shot grid."
+}

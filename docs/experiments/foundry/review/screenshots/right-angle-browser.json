@@ -1,0 +1,149 @@
+{
+  "id": "right-angle",
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": {
+    "opening": {
+      "foundryId": "right-angle",
+      "presetId": "right-angle",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin and no score. The pieces stay. Aim and power can change.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "worldName": "Right Angle",
+      "objects": [
+        {
+          "id": "back-face",
+          "x": 16,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "x": 22.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "beforeSuccess": {
+      "foundryId": "right-angle",
+      "presetId": "right-angle",
+      "mode": "play",
+      "phase": "ready",
+      "view": "address",
+      "notice": "Ready in the current world.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 38.5,
+        "elevation": 14.5,
+        "charge": 0.86
+      },
+      "worldName": "Right Angle",
+      "objects": [
+        {
+          "id": "back-face",
+          "x": 16,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "x": 22.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "success": {
+      "foundryId": "right-angle",
+      "presetId": "right-angle",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "First ground contact. No pin and no score. The pieces stay. Aim and power can change.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 38.5,
+        "elevation": 14.5,
+        "charge": 0.86
+      },
+      "worldName": "Right Angle",
+      "objects": [
+        {
+          "id": "back-face",
+          "x": 16,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "x": 22.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8083333333333294,
+        "position": [
+          4.2935285568237305,
+          0.43000006675720215,
+          4.310322284698486
+        ]
+      },
+      "reason": "first-ground-contact"
+    }
+  },
+  "galleryDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-desktop-gallery.png",
+  "galleryText": "Right Angle\n\nTwo banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.\n\nShot study · Launcher editable · Geometry fixed\nNo separate challenge\nPlay\nReset\nMake a copy",
+  "openingDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-desktop-opening.png",
+  "panelDesktop": {
+    "panel": "Right Angle\n\nThese pieces stay put. Origin, aim, and power can change. No pin and no score.\n\n0 m origin · 0° yaw · 18° elevation · 55% power\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n18.0°\nPower\nSet power\nHold to charge\n55%\nFire line\n\nTwo banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "openingDesktopAddress": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-desktop-address.png",
+  "openingDesktopResult": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-desktop-opening-result.png",
+  "successDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-desktop-success.png",
+  "panelSuccess": {
+    "panel": "Right Angle\n\nThese pieces stay put. Origin, aim, and power can change. No pin and no score.\n\n0 m origin · 38.5° yaw · 14.5° elevation · 86% power\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n38.5°\nElevation\n14.5°\nPower\nSet power\nHold to charge\n86%\nReady again\nBack to Build\n\nBank E4 → Bank C4\n\n2 notes. Touched Bank E4, Bank C4. Repeat contacts on Bank E4, Bank C4 are one note each.\n\nNo score. Goal is none. first ground contact.\n\nAdjust last line\nKeep line\nContact record\n\nFirst ground contact. No pin and no score. The pieces stay. Aim and power can change.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "panelPhone": {
+    "panel": "Right Angle\n\nThese pieces stay put. Origin, aim, and power can change. No pin and no score.\n\n0 m origin · 0° yaw · 18° elevation · 55% power\n\nReset preset\nSurvey\nShow trails\nOrigin\n0.0 m\n← .5 m\n.5 m →\nYaw\n0.0°\nElevation\n18.0°\nPower\nSet power\nHold to charge\n55%\nFire line\n\nTwo banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "openingPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-phone-opening.png",
+  "successPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/right-angle-phone-success.png"
+}

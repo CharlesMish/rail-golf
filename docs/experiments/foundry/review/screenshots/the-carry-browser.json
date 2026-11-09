@@ -1,0 +1,131 @@
+{
+  "id": "the-carry",
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": {
+    "opening": {
+      "foundryId": "the-carry",
+      "presetId": "the-carry",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "Outside the circle · 16.2 m from centre. Not a score.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.45
+      },
+      "worldName": "The Carry",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "x": 0,
+          "z": 18,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "position": [
+          0,
+          0.43000006675720215,
+          36.76214599609375
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "beforeSuccess": {
+      "foundryId": "the-carry",
+      "presetId": "the-carry",
+      "mode": "play",
+      "phase": "ready",
+      "view": "address",
+      "notice": "First kiss inside the gold circle clears the pin.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.45
+      },
+      "worldName": "The Carry",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "x": 0,
+          "z": 36,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "position": [
+          0,
+          0.43000006675720215,
+          36.76214599609375
+        ]
+      },
+      "reason": "first-ground-contact"
+    },
+    "success": {
+      "foundryId": "the-carry",
+      "presetId": "the-carry",
+      "mode": "play",
+      "phase": "result",
+      "view": "address",
+      "notice": "Inside the circle · 0.2 m from centre. Not a score.",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.45
+      },
+      "worldName": "The Carry",
+      "objects": [
+        {
+          "id": "ramp-yours",
+          "x": 0,
+          "z": 36,
+          "yaw": 0
+        }
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 4.191666666666665,
+        "position": [
+          0,
+          0.43000292778015137,
+          52.76180648803711
+        ]
+      },
+      "reason": "first-ground-contact"
+    }
+  },
+  "galleryDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-desktop-gallery.png",
+  "galleryText": "The Carry\n\nThe shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.\n\nWorkshop · Launcher fixed · Geometry editable\nOptional challenge\nPlay\nReset\nMake a copy",
+  "openingDesktopSurvey": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-desktop-opening.png",
+  "panelDesktop": {
+    "panel": "First ground in the gold circle\n\nThe circle judges the landing. Aim and power stay inside the rail stops. The block and the bank can move. A landing here is not a score.\n\n0 m origin · 0° yaw · 18° elevation · 45% power\n\nReset preset\nSurvey\nShow trails\nFire line\n\nThe shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "openingDesktopAddress": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-desktop-address.png",
+  "openingDesktopResult": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-desktop-opening-result.png",
+  "successDesktop": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-desktop-success.png",
+  "panelSuccess": {
+    "panel": "First ground in the gold circle\n\nThe circle judges the landing. Aim and power stay inside the rail stops. The block and the bank can move. A landing here is not a score.\n\n0 m origin · 0° yaw · 18° elevation · 45% power\n\nReset preset\nSurvey\nShow trails\nReady again\nBack to Build\n\nNo resonant note\n\n0 notes. Ramp ramp-yours was touched and did not ring.\n\nInside the circle · 0.2 m from centre. Not a score.\n\nAdjust last line\nKeep line\nContact record\n\nInside the circle · 0.2 m from centre. Not a score.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "panelPhone": {
+    "panel": "First ground in the gold circle\n\nThe circle judges the landing. Aim and power stay inside the rail stops. The block and the bank can move. A landing here is not a score.\n\n0 m origin · 0° yaw · 18° elevation · 45% power\n\nReset preset\nSurvey\nShow trails\nFire line\n\nThe shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+    "badge": "RAIL GOLF · LAB",
+    "musical": false
+  },
+  "openingPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-phone-opening.png",
+  "successPhone": "/agent/repos/rail-golf/docs/experiments/foundry/review/screenshots/the-carry-phone-success.png"
+}
