@@ -1,0 +1,278 @@
+{
+  "seed": 20261109,
+  "shots": 21750,
+  "cleanCells": 4263,
+  "backCells": 5799,
+  "fatClean": 2650,
+  "closestFat": [
+    {
+      "yaw": 38.5,
+      "elevation": 14.5,
+      "charge": 0.86,
+      "home": 6.1,
+      "z": 4.3,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "held": 26
+    },
+    {
+      "yaw": 38,
+      "elevation": 14,
+      "charge": 0.88,
+      "home": 7,
+      "z": 6.3,
+      "hits": [
+        "back-face",
+        "side-face"
+      ],
+      "held": 26
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 14.5,
+      "charge": 0.85,
+      "home": 7,
+      "z": 5.4,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "held": 26
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 14,
+      "charge": 0.88,
+      "home": 7.2,
+      "z": 5.3,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "held": 26
+    },
+    {
+      "yaw": 41.5,
+      "elevation": 14,
+      "charge": 0.87,
+      "home": 7.2,
+      "z": 6,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "held": 26
+    }
+  ],
+  "chosen": {
+    "yaw": 38.5,
+    "elevation": 14.5,
+    "charge": 0.86,
+    "home": 6.1,
+    "z": 4.3,
+    "hits": [
+      "side-face",
+      "back-face"
+    ],
+    "held": 26
+  },
+  "chosenTerminal": {
+    "reason": "first-ground-contact",
+    "elapsed": 1.8083333333333294,
+    "position": [
+      4.2935285568237305,
+      0.43000006675720215,
+      4.310322284698486
+    ],
+    "hits": [
+      "side-face",
+      "back-face"
+    ]
+  },
+  "neighbors": [
+    {
+      "yaw": 38,
+      "elevation": 14.5,
+      "charge": 0.86,
+      "home": 4.1,
+      "z": 3.3,
+      "hits": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ],
+      "back": true
+    },
+    {
+      "yaw": 39,
+      "elevation": 14.5,
+      "charge": 0.86,
+      "home": 9,
+      "z": 7.1,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 14,
+      "charge": 0.86,
+      "home": 9.6,
+      "z": 7.3,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 15,
+      "charge": 0.86,
+      "home": 5.9,
+      "z": 5.7,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 14.5,
+      "charge": 0.85,
+      "home": 7,
+      "z": 5.4,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 14.5,
+      "charge": 0.87,
+      "home": 10.2,
+      "z": 9.8,
+      "hits": [
+        "side-face",
+        "back-face",
+        "side-face",
+        "back-face"
+      ],
+      "back": true
+    }
+  ],
+  "origins": [
+    {
+      "originX": -2,
+      "home": 7.6,
+      "z": 3.6,
+      "hits": [
+        "back-face",
+        "side-face"
+      ],
+      "back": true,
+      "clean": true
+    },
+    {
+      "originX": -1,
+      "home": 8.5,
+      "z": 6.3,
+      "hits": [
+        "back-face",
+        "side-face"
+      ],
+      "back": true,
+      "clean": true
+    },
+    {
+      "originX": -0.5,
+      "home": 14.6,
+      "z": 6.4,
+      "hits": [
+        "back-face",
+        "side-face"
+      ],
+      "back": true,
+      "clean": true
+    },
+    {
+      "originX": 0.5,
+      "home": 8.8,
+      "z": 6.7,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true,
+      "clean": true
+    },
+    {
+      "originX": 1,
+      "home": 7.6,
+      "z": 7,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true,
+      "clean": true
+    },
+    {
+      "originX": 2,
+      "home": 8.4,
+      "z": 7,
+      "hits": [
+        "side-face",
+        "back-face"
+      ],
+      "back": true,
+      "clean": true
+    }
+  ],
+  "opening": [
+    {
+      "yaw": -1,
+      "ids": [],
+      "z": 46.1,
+      "home": 46.1
+    },
+    {
+      "yaw": -0.5,
+      "ids": [],
+      "z": 46.1,
+      "home": 46.1
+    },
+    {
+      "yaw": 0,
+      "ids": [],
+      "z": 46.1,
+      "home": 46.1
+    },
+    {
+      "yaw": 0.5,
+      "ids": [],
+      "z": 46.1,
+      "home": 46.1
+    },
+    {
+      "yaw": 1,
+      "ids": [],
+      "z": 46.1,
+      "home": 46.1
+    },
+    {
+      "yaw": 5,
+      "ids": [],
+      "z": 46,
+      "home": 46.1
+    }
+  ]
+}

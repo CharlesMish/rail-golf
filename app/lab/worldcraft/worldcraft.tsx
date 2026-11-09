@@ -103,8 +103,11 @@ function shotNotice(last: WorldcraftRecord): string {
     if (last.targetResult?.status === 'unfinished') return 'No bell contact was recorded. No score.';
   }
   if (last.goalResult?.kind === 'none') {
-    if (last.reason === 'first-ground-contact') return 'First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.';
-    return `Line ended: ${last.reason.replaceAll('-', ' ')}. No pin, no target, no score.`;
+    if (last.reason !== 'first-ground-contact') return `Line ended: ${last.reason.replaceAll('-', ' ')}. No pin, no target, no score.`;
+    const rules = last.world?.rules;
+    const geometryLocked = Boolean(rules && last.world.objects.length > 0 && last.world.objects.every(object => rules.locked.includes(object.id)) && !Object.values(rules.allowance).some(count => count > 0));
+    if (!rules?.rail && geometryLocked) return 'First ground contact. No pin and no score. The pieces stay. Aim and power can change.';
+    return 'First ground contact. No pin, no target, no score. Revise a piece and fire the same shot.';
   }
   if (last.goalResult?.kind === 'first-ground-zone') {
     if (last.goalResult.status === 'clear') return `Inside the circle · ${last.goalResult.distance?.toFixed(1)} m from centre. Not a score.`;
@@ -135,7 +138,11 @@ function initialUI(): UI {
 function playNoticeFor(world: WorldcraftWorld, preset: RangePreset | null): string {
   if (worldcraftBellTarget(world)) return 'Time the release. The post marks the phase. First ground still ends the line. Contact with the bell is the goal. No score.';
   if (world.rules?.goal?.kind === 'contact-phrase') return 'Fixed shot. The phrase is the order of resonant contacts. The stand-in, when shown, is a separate hit. Not a score.';
-  if (world.rules?.goal?.kind === 'none' && preset?.rules.launcher.fixed === false) return 'No pin or score. Move a piece, or change origin, aim, and power inside the rail stops. Fire when the shot is the one you want.';
+  if (world.rules?.goal?.kind === 'none' && preset?.rules.launcher.fixed === false) {
+    const geometryLocked = Boolean(world.objects.length > 0 && world.objects.every(object => world.rules?.locked.includes(object.id)) && !Object.values(world.rules.allowance).some(count => count > 0));
+    if (geometryLocked) return 'No pin or score. The pieces stay. Origin, aim, and power can change.';
+    return 'No pin or score. Move a piece, or change origin, aim, and power inside the rail stops. Fire when the shot is the one you want.';
+  }
   if (world.rules?.goal?.kind === 'none') return 'No pin or score. The shot stays fixed. Move a piece, then fire that same shot. The earlier trail is the one that was recorded.';
   if (world.rules?.aimWindow) return 'Land the first kiss in the pocket. The carriage stays put. Aim and power stay in the window. The spare bank is the piece you can move.';
   if (world.rules?.goal?.kind === 'first-ground-zone' && preset?.rules.launcher.fixed === false) return 'First ground in the gold circle. Aim within the rail stops. This is not a score.';
@@ -380,14 +387,18 @@ export default function Worldcraft() {
           if (mode === 'play') runtime.clearShot();
           const windowed = Boolean(uiRef.current.world.rules?.aimWindow);
           const adjustable = uiRef.current.preset?.rules.launcher.fixed === false && !windowed;
+          const rules = uiRef.current.world.rules;
+          const geometryLocked = Boolean(rules && uiRef.current.world.objects.length > 0 && uiRef.current.world.objects.every(object => rules.locked.includes(object.id)) && !Object.values(rules.allowance).some(count => count > 0));
           const buildNotice = worldcraftBellTarget(uiRef.current.world)
             ? 'The pieces stay. Set the release phase, then fire.'
             : windowed
               ? 'Move the bank. The carriage stays put. Aim and power stay in the window.'
               : adjustable
-                ? (uiRef.current.world.rules?.goal?.kind === 'none'
-                  ? 'Build, then Play. Move a piece here. Origin, aim, and power change in Play.'
-                  : 'Move a piece. The rail can change before the next shot.')
+                ? (geometryLocked
+                  ? 'The pieces stay. Origin, aim, and power change in Play.'
+                  : uiRef.current.world.rules?.goal?.kind === 'none'
+                    ? 'Build, then Play. Move a piece here. Origin, aim, and power change in Play.'
+                    : 'Move a piece. The rail can change before the next shot.')
                 : 'Build, then Play. Move a piece, then fire the same shot.';
           publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? buildNotice : playNoticeFor(uiRef.current.world, uiRef.current.preset) });
           selectedHighlight(); trace('mode', { mode });
@@ -917,6 +928,7 @@ export default function Worldcraft() {
   const locked = ['loading', 'error', 'charging', 'flight'].includes(ui.phase);
   const selected = ui.world.objects.find(o => o.id === ui.selected);
   const fixedRail = Boolean(worldcraftFixedSetup(ui.world));
+  const geometryLocked = Boolean(ui.world.rules && ui.world.objects.length > 0 && ui.world.objects.every(object => ui.world.rules?.locked.includes(object.id)) && !Object.values(ui.world.rules.allowance).some(count => count > 0));
   const bell = worldcraftBellTarget(ui.world);
   const bellPose = bell ? worldcraftBellPose(bell, ui.launchPhase) : null;
   const bellPeriod = bell ? worldcraftBellPose(bell, 0) : null;
@@ -990,9 +1002,15 @@ export default function Worldcraft() {
           <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
-        {ui.world.rules?.goal?.kind === 'none' && !fixedRail && <section className={styles.goal} aria-label="Musical workshop">
+        {ui.presetId === 'musical-workshop' && <section className={styles.goal} aria-label="Musical workshop">
           <strong>Musical Workshop</strong>
           <p>The ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.</p>
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
+        {ui.preset && ui.presetId !== 'musical-workshop' && !fixedRail && geometryLocked && ui.world.rules?.goal?.kind === 'none' && <section className={styles.goal} aria-label="Shot study">
+          <strong>{ui.preset.name}</strong>
+          <p>These pieces stay put. Origin, aim, and power can change. No pin and no score.</p>
+          <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
         {ui.world.rules?.goal?.kind === 'contact-phrase' && <section className={styles.goal} aria-label="Contact phrase">

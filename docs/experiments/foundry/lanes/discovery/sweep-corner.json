@@ -1,0 +1,369 @@
+{
+  "seed": 20261109,
+  "objects": [
+    {
+      "id": "back-face",
+      "kind": "bank",
+      "x": 16,
+      "z": 28.5,
+      "yaw": 0
+    },
+    {
+      "id": "side-face",
+      "kind": "bank",
+      "x": 22.5,
+      "z": 22,
+      "yaw": 90
+    }
+  ],
+  "shots": 42525,
+  "grid": {
+    "yaw": [
+      20,
+      60,
+      0.5
+    ],
+    "elevation": [
+      10,
+      30,
+      1
+    ],
+    "charge": [
+      0.45,
+      0.95,
+      0.02
+    ],
+    "originX": 0
+  },
+  "twoBack": {
+    "count": 3686,
+    "yaw": [
+      28,
+      50
+    ],
+    "elevation": [
+      10,
+      30
+    ],
+    "charge": [
+      0.45,
+      0.93
+    ]
+  },
+  "twoHome": {
+    "count": 1327,
+    "yaw": [
+      28.5,
+      50
+    ],
+    "elevation": [
+      10,
+      28
+    ],
+    "charge": [
+      0.45,
+      0.93
+    ]
+  },
+  "oneHome": {
+    "count": 199,
+    "examples": [
+      {
+        "yaw": 54,
+        "elevation": 17,
+        "charge": 0.69,
+        "x": 1.4,
+        "z": -1.5,
+        "home": 2.1,
+        "order": [
+          "side-face"
+        ],
+        "id": "side-face"
+      },
+      {
+        "yaw": 54,
+        "elevation": 11,
+        "charge": 0.85,
+        "x": 1.8,
+        "z": -1.3,
+        "home": 2.2,
+        "order": [
+          "side-face"
+        ],
+        "id": "side-face"
+      },
+      {
+        "yaw": 54,
+        "elevation": 10,
+        "charge": 0.89,
+        "x": 2,
+        "z": -1,
+        "home": 2.3,
+        "order": [
+          "side-face"
+        ],
+        "id": "side-face"
+      },
+      {
+        "yaw": 54,
+        "elevation": 18,
+        "charge": 0.67,
+        "x": 1.8,
+        "z": -1.5,
+        "home": 2.3,
+        "order": [
+          "side-face"
+        ],
+        "id": "side-face"
+      },
+      {
+        "yaw": 54,
+        "elevation": 10,
+        "charge": 0.91,
+        "x": 1.4,
+        "z": -1.9,
+        "home": 2.4,
+        "order": [
+          "side-face"
+        ],
+        "id": "side-face"
+      },
+      {
+        "yaw": 54,
+        "elevation": 12,
+        "charge": 0.83,
+        "x": 1.3,
+        "z": -2,
+        "home": 2.4,
+        "order": [
+          "side-face"
+        ],
+        "id": "side-face"
+      }
+    ]
+  },
+  "yawInterior": {
+    "count": 1126,
+    "of": 1327
+  },
+  "closest": [
+    {
+      "yaw": 38,
+      "elevation": 14,
+      "charge": 0.93,
+      "x": 0,
+      "z": 0.2,
+      "home": 0.2,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 14,
+      "charge": 0.91,
+      "x": 1.1,
+      "z": 1.5,
+      "home": 1.8,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 15,
+      "charge": 0.87,
+      "x": 1.4,
+      "z": 1.9,
+      "home": 2.4,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 24,
+      "charge": 0.53,
+      "x": -1.4,
+      "z": -2.6,
+      "home": 3,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 13,
+      "charge": 0.93,
+      "x": 1.8,
+      "z": 2.5,
+      "home": 3.1,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 39.5,
+      "elevation": 14,
+      "charge": 0.91,
+      "x": 0.1,
+      "z": 3.5,
+      "home": 3.5,
+      "order": [
+        "side-face",
+        "back-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 14,
+      "charge": 0.89,
+      "x": 1.9,
+      "z": 3.2,
+      "home": 3.7,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 15,
+      "charge": 0.85,
+      "x": 2.3,
+      "z": 3.2,
+      "home": 3.9,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    }
+  ],
+  "mild": [
+    {
+      "yaw": 38,
+      "elevation": 20,
+      "charge": 0.63,
+      "x": -4.4,
+      "z": -2.9,
+      "home": 5.3,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 16,
+      "charge": 0.79,
+      "x": 3.8,
+      "z": 5.1,
+      "home": 6.3,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 16,
+      "charge": 0.77,
+      "x": 4.8,
+      "z": 6.3,
+      "home": 7.9,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 36,
+      "elevation": 16,
+      "charge": 0.79,
+      "x": 7.2,
+      "z": 6.6,
+      "home": 9.8,
+      "order": [
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 17,
+      "charge": 0.75,
+      "x": -5.6,
+      "z": -8.1,
+      "home": 9.8,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 38.5,
+      "elevation": 16,
+      "charge": 0.79,
+      "x": 7.9,
+      "z": 6,
+      "home": 9.9,
+      "order": [
+        "side-face",
+        "back-face"
+      ]
+    },
+    {
+      "yaw": 38,
+      "elevation": 16,
+      "charge": 0.75,
+      "x": 6.3,
+      "z": 8.1,
+      "home": 10.2,
+      "order": [
+        "back-face",
+        "side-face",
+        "back-face",
+        "side-face"
+      ]
+    },
+    {
+      "yaw": 40,
+      "elevation": 16,
+      "charge": 0.79,
+      "x": 3,
+      "z": 9.8,
+      "home": 10.2,
+      "order": [
+        "side-face",
+        "back-face"
+      ]
+    }
+  ]
+}

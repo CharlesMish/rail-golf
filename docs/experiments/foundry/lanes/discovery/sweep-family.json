@@ -1,0 +1,568 @@
+{
+  "seed": 20261109,
+  "grid": {
+    "yaws": [
+      0,
+      40,
+      0.5
+    ],
+    "elevations": [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34
+    ],
+    "charges": [
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9
+    ],
+    "originX": 0
+  },
+  "reports": [
+    {
+      "id": "fold-12-30-r7.5",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 6.5,
+          "z": 24.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 17.5,
+          "z": 24.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 10530,
+      "opening": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "x": 0,
+        "z": 46.15,
+        "home": 46.15,
+        "ids": [],
+        "order": [],
+        "cameBack": false,
+        "oneBack": false
+      },
+      "doubles": 1544,
+      "returns": 1217,
+      "oneBankReturns": 1568,
+      "returnSpan": {
+        "yaw": [
+          8.5,
+          28.5
+        ],
+        "elevation": [
+          10,
+          26
+        ],
+        "charge": [
+          0.45,
+          0.9
+        ],
+        "count": 1217
+      },
+      "homeSpan": {
+        "yaw": [
+          8.5,
+          28.5
+        ],
+        "elevation": [
+          10,
+          26
+        ],
+        "charge": [
+          0.45,
+          0.9
+        ],
+        "count": 614
+      },
+      "homeExamples": [
+        {
+          "yaw": 21,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 3.13,
+          "z": 0.33,
+          "home": 3.14,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 20.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 3.82,
+          "z": 0.21,
+          "home": 3.83,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 20,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 4.55,
+          "z": -0.3,
+          "home": 4.56,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 19.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 4.92,
+          "z": 0.02,
+          "home": 4.92,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 24.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": -4.44,
+          "z": 2.23,
+          "home": 4.97,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 21,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": 4.09,
+          "z": 2.9,
+          "home": 5.01,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        }
+      ],
+      "oneBackExamples": [
+        {
+          "yaw": 7.5,
+          "elevation": 12,
+          "charge": 0.65,
+          "x": 1.22,
+          "z": -0.26,
+          "home": 1.25,
+          "id": "left-face"
+        },
+        {
+          "yaw": 7.5,
+          "elevation": 20,
+          "charge": 0.5,
+          "x": 1.21,
+          "z": -0.35,
+          "home": 1.26,
+          "id": "left-face"
+        },
+        {
+          "yaw": 7.5,
+          "elevation": 16,
+          "charge": 0.55,
+          "x": 1.25,
+          "z": 0.29,
+          "home": 1.28,
+          "id": "left-face"
+        },
+        {
+          "yaw": 7.5,
+          "elevation": 10,
+          "charge": 0.7,
+          "x": 1.26,
+          "z": 0.4,
+          "home": 1.33,
+          "id": "left-face"
+        }
+      ]
+    },
+    {
+      "id": "fold-14-32-r8.5",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 8,
+          "z": 26,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 20,
+          "z": 26,
+          "yaw": 45
+        }
+      ],
+      "shots": 10530,
+      "opening": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "x": 0,
+        "z": 46.15,
+        "home": 46.15,
+        "ids": [],
+        "order": [],
+        "cameBack": false,
+        "oneBack": false
+      },
+      "doubles": 1126,
+      "returns": 795,
+      "oneBankReturns": 1392,
+      "returnSpan": {
+        "yaw": [
+          12,
+          29.5
+        ],
+        "elevation": [
+          10,
+          28
+        ],
+        "charge": [
+          0.45,
+          0.9
+        ],
+        "count": 795
+      },
+      "homeSpan": {
+        "yaw": [
+          12,
+          29.5
+        ],
+        "elevation": [
+          10,
+          22
+        ],
+        "charge": [
+          0.55,
+          0.9
+        ],
+        "count": 285
+      },
+      "homeExamples": [
+        {
+          "yaw": 27.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": -4.06,
+          "z": 4.38,
+          "home": 5.97,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 27.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": -4.37,
+          "z": 4.25,
+          "home": 6.1,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 28,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": -4.85,
+          "z": 4.18,
+          "home": 6.4,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 21.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 5.87,
+          "z": 3.04,
+          "home": 6.61,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        },
+        {
+          "yaw": 28,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": -3.36,
+          "z": 5.75,
+          "home": 6.66,
+          "order": [
+            "right-face",
+            "left-face"
+          ]
+        },
+        {
+          "yaw": 21,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 6.51,
+          "z": 3.07,
+          "home": 7.19,
+          "order": [
+            "left-face",
+            "right-face"
+          ]
+        }
+      ],
+      "oneBackExamples": [
+        {
+          "yaw": 40,
+          "elevation": 14,
+          "charge": 0.85,
+          "x": -3.33,
+          "z": 3.52,
+          "home": 4.84,
+          "id": "right-face"
+        },
+        {
+          "yaw": 40,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": -4.13,
+          "z": 3.19,
+          "home": 5.22,
+          "id": "right-face"
+        },
+        {
+          "yaw": 40,
+          "elevation": 12,
+          "charge": 0.9,
+          "x": -2.41,
+          "z": 4.66,
+          "home": 5.25,
+          "id": "right-face"
+        },
+        {
+          "yaw": 11,
+          "elevation": 18,
+          "charge": 0.55,
+          "x": 5.37,
+          "z": 0.61,
+          "home": 5.41,
+          "id": "left-face"
+        }
+      ]
+    },
+    {
+      "id": "ell-16-32",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 10,
+          "z": 32.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 16.5,
+          "z": 26,
+          "yaw": 90
+        }
+      ],
+      "shots": 10530,
+      "opening": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "x": 0,
+        "z": 46.15,
+        "home": 46.15,
+        "ids": [],
+        "order": [],
+        "cameBack": false,
+        "oneBack": false
+      },
+      "doubles": 1363,
+      "returns": 818,
+      "oneBankReturns": 1638,
+      "returnSpan": {
+        "yaw": [
+          20.5,
+          38
+        ],
+        "elevation": [
+          10,
+          28
+        ],
+        "charge": [
+          0.45,
+          0.9
+        ],
+        "count": 818
+      },
+      "homeSpan": {
+        "yaw": [
+          20.5,
+          37.5
+        ],
+        "elevation": [
+          10,
+          20
+        ],
+        "charge": [
+          0.6,
+          0.9
+        ],
+        "count": 341
+      },
+      "homeExamples": [
+        {
+          "yaw": 28,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": 0.9,
+          "z": 2.08,
+          "home": 2.27,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 29,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": 2.79,
+          "z": -0.13,
+          "home": 2.79,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 26.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 4.17,
+          "z": 3.79,
+          "home": 5.63,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 27.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 2.9,
+          "z": 5,
+          "home": 5.78,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 28,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 2.46,
+          "z": 5.43,
+          "home": 5.97,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        },
+        {
+          "yaw": 28.5,
+          "elevation": 14,
+          "charge": 0.9,
+          "x": 2.04,
+          "z": 5.76,
+          "home": 6.11,
+          "order": [
+            "side-face",
+            "back-face"
+          ]
+        }
+      ],
+      "oneBackExamples": [
+        {
+          "yaw": 7.5,
+          "elevation": 14,
+          "charge": 0.85,
+          "x": 7.49,
+          "z": 1.35,
+          "home": 7.61,
+          "id": "back-face"
+        },
+        {
+          "yaw": 7.5,
+          "elevation": 16,
+          "charge": 0.8,
+          "x": 7.76,
+          "z": -0.84,
+          "home": 7.8,
+          "id": "back-face"
+        },
+        {
+          "yaw": 7.5,
+          "elevation": 12,
+          "charge": 0.9,
+          "x": 7.32,
+          "z": 2.94,
+          "home": 7.89,
+          "id": "back-face"
+        },
+        {
+          "yaw": 8,
+          "elevation": 14,
+          "charge": 0.85,
+          "x": 7.98,
+          "z": 1.35,
+          "home": 8.1,
+          "id": "back-face"
+        }
+      ]
+    }
+  ]
+}

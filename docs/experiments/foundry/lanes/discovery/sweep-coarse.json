@@ -1,0 +1,5083 @@
+{
+  "seed": 20261109,
+  "fired": 4320,
+  "rejectedLayouts": [
+    {
+      "id": "fold-8-30-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-8-38-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-8-48-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-12-30-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-12-38-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-12-48-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-16-30-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-16-38-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    },
+    {
+      "id": "fold-16-48-r6.5",
+      "error": "Piece 2: overlaps another piece"
+    }
+  ],
+  "grid": {
+    "yaws": [
+      -10,
+      -5,
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45
+    ],
+    "elevations": [
+      12,
+      18,
+      24,
+      32,
+      42
+    ],
+    "charges": [
+      0.45,
+      0.6,
+      0.75,
+      0.9
+    ],
+    "originX": 0
+  },
+  "reports": [
+    {
+      "id": "fold-12-30-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 6.5,
+          "z": 24.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 17.5,
+          "z": 24.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 23,
+      "returns": 20,
+      "yawSpan": [
+        10,
+        25
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6166666666666634,
+          "x": -2.962822914123535,
+          "y": 0.43000003695487976,
+          "z": 5.229913234710693,
+          "home": 6.010849529231083,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            27.9,
+            25.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5999999999999968,
+          "x": 5.425990104675293,
+          "y": 0.430000364780426,
+          "z": 3.6248128414154053,
+          "home": 6.525384030945935,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            26.5,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5916666666666635,
+          "x": 11.13831615447998,
+          "y": 0.4300050437450409,
+          "z": 3.409722328186035,
+          "home": 11.648531800724077,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            22.9,
+            25.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "x": 1.500714898109436,
+          "y": 0.4299999177455902,
+          "z": 13.148730278015137,
+          "home": 13.234094344888117,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            27.9,
+            25.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8166666666666627,
+          "x": 1.9513705968856812,
+          "y": 0.43000078201293945,
+          "z": 14.168655395507812,
+          "home": 14.302399900822332,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            27.9,
+            25.7
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "x": 8.39964771270752,
+          "y": 0.4299996495246887,
+          "z": 11.827621459960938,
+          "home": 14.506781555456094,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            26.3,
+            27.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8083333333333294,
+          "x": 8.390169143676758,
+          "y": 0.43000051379203796,
+          "z": 12.758258819580078,
+          "home": 15.269843036747249,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            26.4,
+            27.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.933333333333329,
+          "x": 16.824874877929688,
+          "y": 0.4300011396408081,
+          "z": 2.858337163925171,
+          "home": 17.065945798597433,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.5,
+            22.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.3083333333333311,
+          "x": 18.44313621520996,
+          "y": 0.4300011396408081,
+          "z": 21.01892852783203,
+          "home": 27.963272875521927,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.5,
+            22.5
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "x": 17.59873390197754,
+          "y": 0.4300004839897156,
+          "z": 11.975595474243164,
+          "home": 21.28685796249242,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.5,
+            22.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5833333333333302,
+          "x": 16.7943172454834,
+          "y": 0.43000558018684387,
+          "z": 3.598763942718506,
+          "home": 17.175569674900217,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.5,
+            22.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-14-28",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 8,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 14.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 23,
+      "returns": 15,
+      "yawSpan": [
+        25,
+        40
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5916666666666635,
+          "x": -0.9845874905586243,
+          "y": 0.43000057339668274,
+          "z": 4.673985004425049,
+          "home": 4.776562398645574,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            23.3,
+            27.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 35,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6166666666666634,
+          "x": -3.1758480072021484,
+          "y": 0.4299999475479126,
+          "z": 5.229356288909912,
+          "home": 6.118184188238493,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            19.1,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 6.351351261138916,
+          "y": 0.746914267539978,
+          "z": 2.9239180088043213,
+          "home": 6.992064027494394,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.7,
+            26.1
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 40,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.60833333333333,
+          "x": -6.9744391441345215,
+          "y": 0.43000128865242004,
+          "z": 11.806487083435059,
+          "home": 13.712619685040298,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            15.9,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7833333333333294,
+          "x": 8.009932518005371,
+          "y": 0.4300001263618469,
+          "z": 11.349800109863281,
+          "home": 13.89161550997048,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.8,
+            26
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4583333333333306,
+          "x": 3.099961996078491,
+          "y": 0.4299999177455902,
+          "z": 13.614336967468262,
+          "home": 13.962805428741886,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            23.5,
+            27.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.824999999999996,
+          "x": 4.698568344116211,
+          "y": 0.4300002455711365,
+          "z": 13.308588981628418,
+          "home": 14.113648896237017,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            23.5,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5083333333333304,
+          "x": 8.725015640258789,
+          "y": 0.4300004541873932,
+          "z": 11.23432445526123,
+          "home": 14.224483958613085,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.8,
+            26
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.3666666666666643,
+          "x": 11.271200180053711,
+          "y": 0.42999666929244995,
+          "z": 18.541563034057617,
+          "home": 21.698606251203664,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            26
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5083333333333304,
+          "x": 8.725015640258789,
+          "y": 0.4300004541873932,
+          "z": 11.23432445526123,
+          "home": 14.224483958613085,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.8,
+            26
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 6.351351261138916,
+          "y": 0.746914267539978,
+          "z": 2.9239180088043213,
+          "home": 6.992064027494394,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.7,
+            26.1
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-10-28",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 4,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 10.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 23,
+      "returns": 14,
+      "yawSpan": [
+        15,
+        30
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.549999999999997,
+          "x": 1.44198477268219,
+          "y": 0.7299999594688416,
+          "z": 0.9413667321205139,
+          "home": 1.7220602222310817,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            26.2,
+            27.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5666666666666635,
+          "x": -3.1620116233825684,
+          "y": 0.6103811264038086,
+          "z": 3.288707971572876,
+          "home": 4.562227266225724,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            20.3,
+            28
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5666666666666635,
+          "x": 5.782447338104248,
+          "y": 0.7299999594688416,
+          "z": -1.2303146123886108,
+          "home": 5.911883901380832,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            18
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5999999999999968,
+          "x": -5.919343948364258,
+          "y": 0.4300001859664917,
+          "z": 4.134615421295166,
+          "home": 7.220365465892178,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            16.3,
+            28
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4749999999999972,
+          "x": 3.4783365726470947,
+          "y": 0.43000084161758423,
+          "z": 9.274188995361328,
+          "home": 9.905019274806863,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            26.3,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7749999999999961,
+          "x": 4.383950710296631,
+          "y": 0.42999860644340515,
+          "z": 9.212148666381836,
+          "home": 10.202093259808546,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            26.1,
+            28
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "x": 7.51224422454834,
+          "y": 0.4300009608268738,
+          "z": 7.311646461486816,
+          "home": 10.48303330468012,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            18
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "x": 0.09436244517564774,
+          "y": 0.42999953031539917,
+          "z": 11.134744644165039,
+          "home": 11.135144478713404,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            20.3,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.3083333333333311,
+          "x": 9.105582237243652,
+          "y": 0.4300004541873932,
+          "z": 17.232894897460938,
+          "home": 19.49062067831967,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.8,
+            19.4
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "x": 7.51224422454834,
+          "y": 0.4300009608268738,
+          "z": 7.311646461486816,
+          "home": 10.48303330468012,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            18
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5666666666666635,
+          "x": 5.782447338104248,
+          "y": 0.7299999594688416,
+          "z": -1.2303146123886108,
+          "home": 5.911883901380832,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            18
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-8-30-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 2.5,
+          "z": 24.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 13.5,
+          "z": 24.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 16,
+      "returns": 14,
+      "yawSpan": [
+        5,
+        20
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5999999999999968,
+          "x": -6.681602954864502,
+          "y": 0.43000009655952454,
+          "z": 5.190115928649902,
+          "home": 8.460562711739657,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            27.1,
+            23.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 8.915478706359863,
+          "y": 0.5429912805557251,
+          "z": 3.347672939300537,
+          "home": 9.52327016691647,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            25.2,
+            26.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "x": -2.9478955268859863,
+          "y": 0.43000125885009766,
+          "z": 12.478076934814453,
+          "home": 12.821563556313357,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            27.1,
+            23.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8166666666666627,
+          "x": -2.371103525161743,
+          "y": 0.4299998879432678,
+          "z": 13.254672050476074,
+          "home": 13.465083107530605,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            27,
+            23.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "x": 9.295631408691406,
+          "y": 0.43000009655952454,
+          "z": 10.828198432922363,
+          "home": 14.270902024363858,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            25.4,
+            26.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5916666666666635,
+          "x": 14.571745872497559,
+          "y": 0.4300038516521454,
+          "z": 3.2084128856658936,
+          "home": 14.920780509663581,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            22.9,
+            23.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8083333333333294,
+          "x": 9.847023963928223,
+          "y": 0.4299975037574768,
+          "z": 11.741897583007812,
+          "home": 15.324360991441747,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            25.2,
+            26.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5083333333333304,
+          "x": 14.208273887634277,
+          "y": 0.4299999475479126,
+          "z": 11.27221965789795,
+          "home": 18.136647509447027,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            22.9,
+            23.2
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.3499999999999976,
+          "x": 14.111405372619629,
+          "y": 0.42999961972236633,
+          "z": 19.80733871459961,
+          "home": 24.3200005868683,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            22.8,
+            23
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5083333333333304,
+          "x": 14.208273887634277,
+          "y": 0.4299999475479126,
+          "z": 11.27221965789795,
+          "home": 18.136647509447027,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            22.9,
+            23.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5916666666666635,
+          "x": 14.571745872497559,
+          "y": 0.4300038516521454,
+          "z": 3.2084128856658936,
+          "home": 14.920780509663581,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            22.9,
+            23.2
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-18-28",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 28.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 22,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 24,
+      "returns": 11,
+      "yawSpan": [
+        25,
+        40
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 35,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6249999999999967,
+          "x": 3.7380475997924805,
+          "y": 0.4300002455711365,
+          "z": 7.069944858551025,
+          "home": 7.997319561032084,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            24.9,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 9.002208709716797,
+          "y": 0.7300000190734863,
+          "z": 2.970684051513672,
+          "home": 9.479700701352265,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.9,
+            24.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 40,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6249999999999967,
+          "x": -1.1424838304519653,
+          "y": 0.43000006675720215,
+          "z": 12.248919486999512,
+          "home": 12.30208510382856,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            20.8,
+            27.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "x": 12.216577529907227,
+          "y": 0.4300006031990051,
+          "z": 11.226239204406738,
+          "home": 16.59135959524695,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            24.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 35,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.524999999999997,
+          "x": 8.02519702911377,
+          "y": 0.4300035834312439,
+          "z": 14.538592338562012,
+          "home": 16.606458217903977,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            24.9,
+            28
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 35,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.799999999999996,
+          "x": 8.293975830078125,
+          "y": 0.43000030517578125,
+          "z": 15.490175247192383,
+          "home": 17.570872609482198,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            24.9,
+            27.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8083333333333294,
+          "x": 12.533114433288574,
+          "y": 0.43000128865242004,
+          "z": 12.318758964538574,
+          "home": 17.573581872353337,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            24.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7916666666666627,
+          "x": 16.08760643005371,
+          "y": 0.4300011992454529,
+          "z": 10.542530059814453,
+          "home": 19.23424084050101,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.8,
+            16.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7916666666666627,
+          "x": 16.08760643005371,
+          "y": 0.4300011992454529,
+          "z": 10.542530059814453,
+          "home": 19.23424084050101,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            27.8,
+            16.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.333333333333331,
+          "x": 15.893086433410645,
+          "y": 0.43000009655952454,
+          "z": 20.331912994384766,
+          "home": 25.806527902666286,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            24.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "x": 12.216577529907227,
+          "y": 0.4300006031990051,
+          "z": 11.226239204406738,
+          "home": 16.59135959524695,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            28,
+            24.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-8-38-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 2.5,
+          "z": 32.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 13.5,
+          "z": 32.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 12,
+      "returns": 10,
+      "yawSpan": [
+        5,
+        15
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.691666666666663,
+          "x": -2.0708556175231934,
+          "y": 0.4300021827220917,
+          "z": 15.60368824005127,
+          "home": 15.740506017321733,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.3,
+            33.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6749999999999965,
+          "x": 7.732275485992432,
+          "y": 0.4300001859664917,
+          "z": 14.226377487182617,
+          "home": 16.19190849156133,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            35,
+            35.7
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 13.892670631408691,
+          "y": 0.43000108003616333,
+          "z": 14.330328941345215,
+          "home": 19.95907374704452,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            31.6,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.549999999999997,
+          "x": 8.677929878234863,
+          "y": 0.43000397086143494,
+          "z": 23.19864845275879,
+          "home": 24.768604260358497,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            34.9,
+            35.6
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.883333333333329,
+          "x": 1.4389876127243042,
+          "y": 0.43000105023384094,
+          "z": 24.940998077392578,
+          "home": 24.982475266595863,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.3,
+            33.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 1.8030943870544434,
+          "y": 0.4299992620944977,
+          "z": 24.976171493530273,
+          "home": 25.041171934293764,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.3,
+            34.1
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8749999999999958,
+          "x": 8.69195556640625,
+          "y": 0.4300041198730469,
+          "z": 24.009517669677734,
+          "home": 25.53442833311425,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            34.9,
+            35.6
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 13.324203491210938,
+          "y": 0.43000099062919617,
+          "z": 23.269392013549805,
+          "home": 26.814156771292534,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            31.7,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5749999999999968,
+          "x": 13.324203491210938,
+          "y": 0.43000099062919617,
+          "z": 23.269392013549805,
+          "home": 26.814156771292534,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            31.7,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 13.892670631408691,
+          "y": 0.43000108003616333,
+          "z": 14.330328941345215,
+          "home": 19.95907374704452,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            31.6,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8749999999999958,
+          "x": 13.602072715759277,
+          "y": 0.4300002455711365,
+          "z": 24.211992263793945,
+          "home": 27.771153226807503,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            31.5,
+            31.8
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-12-38-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 6.5,
+          "z": 32.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 17.5,
+          "z": 32.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 12,
+      "returns": 10,
+      "yawSpan": [
+        10,
+        20
+      ],
+      "elevationSpan": [
+        12,
+        32
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.691666666666663,
+          "x": 0.19814732670783997,
+          "y": 0.43000105023384094,
+          "z": 16.470434188842773,
+          "home": 16.471626050031684,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.8,
+            34.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6749999999999965,
+          "x": 8.756112098693848,
+          "y": 0.43000078201293945,
+          "z": 15.448934555053711,
+          "home": 17.757789219698083,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            33.7,
+            35.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6666666666666632,
+          "x": 15.691570281982422,
+          "y": 0.43000030517578125,
+          "z": 14.918545722961426,
+          "home": 21.65152152626888,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            30.3,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5583333333333302,
+          "x": 4.686921119689941,
+          "y": 0.43000534176826477,
+          "z": 25.212024688720703,
+          "home": 25.64397431146073,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.9,
+            34.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8666666666666625,
+          "x": 5.163986682891846,
+          "y": 0.4300013780593872,
+          "z": 26.08983612060547,
+          "home": 26.595982915867843,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.9,
+            34.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5416666666666636,
+          "x": 11.576910972595215,
+          "y": 0.43000146746635437,
+          "z": 24.230302810668945,
+          "home": 26.853909249196974,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            34,
+            35.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8666666666666625,
+          "x": 11.882003784179688,
+          "y": 0.4300021231174469,
+          "z": 24.814029693603516,
+          "home": 27.51214429233566,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            33.8,
+            35.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 32,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 2.4666666666666606,
+          "x": 6.211478233337402,
+          "y": 0.43000298738479614,
+          "z": 28.14690589904785,
+          "home": 28.824135260803214,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            35.9,
+            34.2
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.549999999999997,
+          "x": 16.45917510986328,
+          "y": 0.4300018846988678,
+          "z": 24.045560836791992,
+          "home": 29.139207972300962,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            30.3,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6666666666666632,
+          "x": 15.691570281982422,
+          "y": 0.43000030517578125,
+          "z": 14.918545722961426,
+          "home": 21.65152152626888,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            30.3,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8583333333333292,
+          "x": 16.805156707763672,
+          "y": 0.43000268936157227,
+          "z": 24.953039169311523,
+          "home": 30.08433904472042,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            30.1,
+            31.8
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-16-38-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 10.5,
+          "z": 32.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 21.5,
+          "z": 32.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 11,
+      "returns": 9,
+      "yawSpan": [
+        15,
+        25
+      ],
+      "elevationSpan": [
+        12,
+        32
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 3.5177066326141357,
+          "y": 0.4300006628036499,
+          "z": 17.391956329345703,
+          "home": 17.74413719838205,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            36,
+            34.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6749999999999965,
+          "x": 11.67903995513916,
+          "y": 0.42999938130378723,
+          "z": 15.638845443725586,
+          "home": 19.518541469240816,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            32.8,
+            35.1
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6666666666666632,
+          "x": 17.817035675048828,
+          "y": 0.43000051379203796,
+          "z": 15.514569282531738,
+          "home": 23.6251692114245,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            28.5,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.549999999999997,
+          "x": 8.596808433532715,
+          "y": 0.43000051379203796,
+          "z": 26.340635299682617,
+          "home": 27.708016587871192,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            36.1,
+            34.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8583333333333292,
+          "x": 9.153911590576172,
+          "y": 0.43000543117523193,
+          "z": 27.355308532714844,
+          "home": 28.846264963216747,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            36.2,
+            34.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "x": 14.82644271850586,
+          "y": 0.4300059676170349,
+          "z": 25.32811737060547,
+          "home": 29.348542267450046,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            32.8,
+            35
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8583333333333292,
+          "x": 15.03816032409668,
+          "y": 0.42999935150146484,
+          "z": 25.995372772216797,
+          "home": 30.03174439655056,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            32.7,
+            35
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 32,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 2.4416666666666607,
+          "x": 10.50292682647705,
+          "y": 0.43000155687332153,
+          "z": 29.39472007751465,
+          "home": 31.214756772362882,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            36.1,
+            34.3
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.524999999999997,
+          "x": 19.84389305114746,
+          "y": 0.4300008714199066,
+          "z": 25.151466369628906,
+          "home": 32.03710898267745,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            28.4,
+            31.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6666666666666632,
+          "x": 17.817035675048828,
+          "y": 0.43000051379203796,
+          "z": 15.514569282531738,
+          "home": 23.6251692114245,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            28.5,
+            31.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8333333333333293,
+          "x": 19.942079544067383,
+          "y": 0.43000316619873047,
+          "z": 26.09799575805664,
+          "home": 32.844967942280796,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            28.4,
+            31.9
+          ],
+          "cameBack": false,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-16-30-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 10.5,
+          "z": 24.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 21.5,
+          "z": 24.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 11,
+      "returns": 8,
+      "yawSpan": [
+        20,
+        25
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6166666666666634,
+          "x": 8.703490257263184,
+          "y": 0.43000033497810364,
+          "z": 4.885948657989502,
+          "home": 9.981144070034487,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            23.8,
+            27.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5999999999999968,
+          "x": 13.408353805541992,
+          "y": 0.4300011694431305,
+          "z": 4.118992805480957,
+          "home": 14.026762046395323,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.1,
+            24.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "x": 11.661465644836426,
+          "y": 0.4300000071525574,
+          "z": 13.18714427947998,
+          "home": 17.603708564774692,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            23.9,
+            27.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8083333333333294,
+          "x": 11.894265174865723,
+          "y": 0.43000108003616333,
+          "z": 13.991693496704102,
+          "home": 18.364123473657415,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            24,
+            27.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4916666666666638,
+          "x": 16.31182289123535,
+          "y": 0.4300003945827484,
+          "z": 12.774110794067383,
+          "home": 20.718433160211184,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.1,
+            24.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7916666666666627,
+          "x": 16.544662475585938,
+          "y": 0.430000364780426,
+          "z": 13.59175968170166,
+          "home": 21.411720801378674,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.1,
+            24.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 24,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 1.9666666666666621,
+          "x": 14.282696723937988,
+          "y": 0.4299998879432678,
+          "z": 19.489694595336914,
+          "home": 24.162856228672425,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            24,
+            27.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "out-of-bounds",
+          "elapsed": 3.2916666666666576,
+          "x": 32.01968765258789,
+          "y": 18.780710220336914,
+          "z": 4.021568775177002,
+          "home": 32.27124746245128,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20,
+            24.8
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.333333333333331,
+          "x": 19.175048828125,
+          "y": 0.4299992322921753,
+          "z": 21.637788772583008,
+          "home": 28.91152712203036,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.2,
+            24.9
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4916666666666638,
+          "x": 16.31182289123535,
+          "y": 0.4300003945827484,
+          "z": 12.774110794067383,
+          "home": 20.718433160211184,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.1,
+            24.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5999999999999968,
+          "x": 13.408353805541992,
+          "y": 0.4300011694431305,
+          "z": 4.118992805480957,
+          "home": 14.026762046395323,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            20.1,
+            24.9
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-14-36",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 8,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 14.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 11,
+      "returns": 8,
+      "yawSpan": [
+        20,
+        25
+      ],
+      "elevationSpan": [
+        12,
+        32
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6583333333333299,
+          "x": 8.33132553100586,
+          "y": 0.4300004541873932,
+          "z": 11.881843566894531,
+          "home": 14.511691550323931,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            36,
+            33.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6583333333333299,
+          "x": 2.5782177448272705,
+          "y": 0.4300003945827484,
+          "z": 14.996932029724121,
+          "home": 15.216937176840398,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            29,
+            35.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 32,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 2.59166666666666,
+          "x": 11.032312393188477,
+          "y": 0.4300031363964081,
+          "z": 22.55462646484375,
+          "home": 25.108227570052215,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "x": 6.438717842102051,
+          "y": 0.4300011694431305,
+          "z": 24.385650634765625,
+          "home": 25.22136087389117,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            29.1,
+            35.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8666666666666625,
+          "x": 11.141302108764648,
+          "y": 0.4300026297569275,
+          "z": 22.718103408813477,
+          "home": 25.3029807566679,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            36,
+            33.6
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.466666666666664,
+          "x": 10.03612232208252,
+          "y": 0.43000099062919617,
+          "z": 23.627758026123047,
+          "home": 25.67089208821589,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.8,
+            34
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8583333333333292,
+          "x": 6.930401802062988,
+          "y": 0.42999961972236633,
+          "z": 25.05307388305664,
+          "home": 25.993979690073093,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            29,
+            36
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 24,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 1.9166666666666623,
+          "x": 12.754063606262207,
+          "y": 0.4300024211406708,
+          "z": 30.56230926513672,
+          "home": 33.11677650512568,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.6
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.3083333333333311,
+          "x": 13.48600959777832,
+          "y": 0.43000853061676025,
+          "z": 32.992305755615234,
+          "home": 35.642175774542316,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.5
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.466666666666664,
+          "x": 10.03612232208252,
+          "y": 0.43000099062919617,
+          "z": 23.627758026123047,
+          "home": 25.67089208821589,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.8,
+            34
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6583333333333299,
+          "x": 8.33132553100586,
+          "y": 0.4300004541873932,
+          "z": 11.881843566894531,
+          "home": 14.511691550323931,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            36,
+            33.8
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-18-36",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 12,
+      "returns": 7,
+      "yawSpan": [
+        25,
+        35
+      ],
+      "elevationSpan": [
+        12,
+        32
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6749999999999965,
+          "x": 11.658683776855469,
+          "y": 0.43000173568725586,
+          "z": 13.377795219421387,
+          "home": 17.745148980537937,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.1
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 5.816219329833984,
+          "y": 0.4300011992454529,
+          "z": 16.934452056884766,
+          "home": 17.905420234098475,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            30.2,
+            35.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 35,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 1.3130629062652588,
+          "y": 0.4300001859664917,
+          "z": 20.58919906616211,
+          "home": 20.631026450030554,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            24.9,
+            36
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "x": 14.581876754760742,
+          "y": 0.430000364780426,
+          "z": 23.53910255432129,
+          "home": 27.689717924780073,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            36,
+            33.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8333333333333293,
+          "x": 14.832051277160645,
+          "y": 0.4300008714199066,
+          "z": 24.63973617553711,
+          "home": 28.759456599323897,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.1
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 30,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8166666666666627,
+          "x": 11.143097877502441,
+          "y": 0.4299996495246887,
+          "z": 26.70697784423828,
+          "home": 28.938405206234744,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            30.3,
+            35.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 32,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 2.4083333333333274,
+          "x": 15.316117286682129,
+          "y": 0.4300033152103424,
+          "z": 27.430686950683594,
+          "home": 31.416970498853104,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            36,
+            33.3
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5333333333333303,
+          "x": 14.581876754760742,
+          "y": 0.430000364780426,
+          "z": 23.53910255432129,
+          "home": 27.689717924780073,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            36,
+            33.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6749999999999965,
+          "x": 11.658683776855469,
+          "y": 0.43000173568725586,
+          "z": 13.377795219421387,
+          "home": 17.745148980537937,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.1
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8333333333333293,
+          "x": 14.832051277160645,
+          "y": 0.4300008714199066,
+          "z": 24.63973617553711,
+          "home": 28.759456599323897,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            33.1
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-10-36",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 4,
+          "z": 36.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 10.5,
+          "z": 30,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 10,
+      "returns": 7,
+      "yawSpan": [
+        15,
+        20
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.45,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6416666666666633,
+          "x": 5.574698448181152,
+          "y": 0.43000006675720215,
+          "z": 11.512524604797363,
+          "home": 12.791226898316598,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.7,
+            35.6,
+            36,
+            35.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6416666666666633,
+          "x": -0.41173771023750305,
+          "y": 0.4300028085708618,
+          "z": 13.298786163330078,
+          "home": 13.305158449263624,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            26.2,
+            35.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "x": 5.714821815490723,
+          "y": 0.43000295758247375,
+          "z": 20.48307991027832,
+          "home": 21.265365056675044,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face",
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            35.5,
+            35.9,
+            35.6,
+            36
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.8333333333333293,
+          "x": 3.582914113998413,
+          "y": 0.430001437664032,
+          "z": 22.737327575683594,
+          "home": 23.01789171128039,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            26.1,
+            35.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.824999999999996,
+          "x": 6.326058387756348,
+          "y": 0.4300003945827484,
+          "z": 22.805667877197266,
+          "home": 23.666801686124163,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            35.6,
+            36,
+            35.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 24,
+          "charge": 0.45,
+          "reason": "first-ground-contact",
+          "elapsed": 1.933333333333329,
+          "x": 8.902560234069824,
+          "y": 0.42999932169914246,
+          "z": 29.33551597595215,
+          "home": 30.656615538845525,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.9,
+            35.6,
+            36,
+            35.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.2999999999999978,
+          "x": 9.180522918701172,
+          "y": 0.4300040006637573,
+          "z": 32.34128952026367,
+          "home": 33.6190572279223,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.8,
+            35.6,
+            36,
+            35.4
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 1.2999999999999978,
+          "x": 9.180522918701172,
+          "y": 0.4300040006637573,
+          "z": 32.34128952026367,
+          "home": 33.6190572279223,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.8,
+            35.6,
+            36,
+            35.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.5166666666666637,
+          "x": 5.714821815490723,
+          "y": 0.43000295758247375,
+          "z": 20.48307991027832,
+          "home": 21.265365056675044,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face",
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            35.5,
+            35.9,
+            35.6,
+            36
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6416666666666633,
+          "x": 5.574698448181152,
+          "y": 0.43000006675720215,
+          "z": 11.512524604797363,
+          "home": 12.791226898316598,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face",
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            35.7,
+            35.6,
+            36,
+            35.3
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-16-48-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 10.5,
+          "z": 42.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 21.5,
+          "z": 42.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 7,
+      "returns": 5,
+      "yawSpan": [
+        15,
+        20
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.6,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.3833333333333275,
+          "x": 15.209233283996582,
+          "y": 0.4300001263618469,
+          "z": 23.538671493530273,
+          "home": 28.024807452815164,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.1,
+            44
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.1333333333333284,
+          "x": 7.267824172973633,
+          "y": 0.4300053119659424,
+          "z": 31.158159255981445,
+          "home": 31.994564482586135,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            46.2,
+            45.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7333333333333296,
+          "x": 7.577478885650635,
+          "y": 0.4300003945827484,
+          "z": 32.32695388793945,
+          "home": 33.203164516886716,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            46.1,
+            45
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.716666666666663,
+          "x": 16.28968048095703,
+          "y": 0.43000179529190063,
+          "z": 31.117984771728516,
+          "home": 35.123819075168925,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.1,
+            44.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.3333333333333277,
+          "x": 9.856167793273926,
+          "y": 0.43000131845474243,
+          "z": 36.62654495239258,
+          "home": 37.92951144845929,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            46.2,
+            45.1
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4749999999999972,
+          "x": 18.716482162475586,
+          "y": 0.4299997091293335,
+          "z": 43.26386260986328,
+          "home": 47.13882171271778,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.2,
+            44.2
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.716666666666663,
+          "x": 16.28968048095703,
+          "y": 0.43000179529190063,
+          "z": 31.117984771728516,
+          "home": 35.123819075168925,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.1,
+            44.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.3833333333333275,
+          "x": 15.209233283996582,
+          "y": 0.4300001263618469,
+          "z": 23.538671493530273,
+          "home": 28.024807452815164,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.1,
+            44
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-10-46",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 4,
+          "z": 46.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 10.5,
+          "z": 40,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 7,
+      "returns": 4,
+      "yawSpan": [
+        10,
+        15
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.6,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 10,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.0749999999999953,
+          "x": 8.250260353088379,
+          "y": 0.4300035238265991,
+          "z": 24.735464096069336,
+          "home": 26.075083507856256,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            35.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 8.440271377563477,
+          "y": 0.42999935150146484,
+          "z": 26.21842384338379,
+          "home": 27.54349160433791,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            35.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6749999999999965,
+          "x": 3.386054039001465,
+          "y": 0.4300011694431305,
+          "z": 28.37487030029297,
+          "home": 28.576189852978757,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            35.6,
+            45.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.291666666666661,
+          "x": 9.18642520904541,
+          "y": 0.4300006031990051,
+          "z": 30.966922760009766,
+          "home": 32.30078502677289,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            46,
+            34.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 8.440271377563477,
+          "y": 0.42999935150146484,
+          "z": 26.21842384338379,
+          "home": 27.54349160433791,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            35.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.0749999999999953,
+          "x": 8.250260353088379,
+          "y": 0.4300035238265991,
+          "z": 24.735464096069336,
+          "home": 26.075083507856256,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            35.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.291666666666661,
+          "x": 9.18642520904541,
+          "y": 0.4300006031990051,
+          "z": 30.966922760009766,
+          "home": 32.30078502677289,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            46,
+            34.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-18-46",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 12,
+          "z": 46.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 18.5,
+          "z": 40,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 7,
+      "returns": 4,
+      "yawSpan": [
+        20,
+        25
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.6,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.1333333333333284,
+          "x": 14.116874694824219,
+          "y": 0.43000155687332153,
+          "z": 26.77471351623535,
+          "home": 30.26832395468643,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            41.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.716666666666663,
+          "x": 14.387371063232422,
+          "y": 0.4299977421760559,
+          "z": 28.150508880615234,
+          "home": 31.614041126511097,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            42.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 25,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6999999999999964,
+          "x": 8.717329978942871,
+          "y": 0.43000009655952454,
+          "z": 31.854610443115234,
+          "home": 33.0258693821132,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            37.5,
+            45.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.316666666666661,
+          "x": 15.375106811523438,
+          "y": 0.43000128865242004,
+          "z": 33.47810363769531,
+          "home": 36.83988779355907,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            42.3
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4833333333333305,
+          "x": 17.42378044128418,
+          "y": 0.4300011992454529,
+          "z": 41.16322708129883,
+          "home": 44.6989864383148,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            42
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.716666666666663,
+          "x": 14.387371063232422,
+          "y": 0.4299977421760559,
+          "z": 28.150508880615234,
+          "home": 31.614041126511097,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            42.2
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.1333333333333284,
+          "x": 14.116874694824219,
+          "y": 0.43000155687332153,
+          "z": 26.77471351623535,
+          "home": 30.26832395468643,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            41.9
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "ell-14-46",
+      "kind": "ell",
+      "objects": [
+        {
+          "id": "back-face",
+          "kind": "bank",
+          "x": 8,
+          "z": 46.5,
+          "yaw": 0
+        },
+        {
+          "id": "side-face",
+          "kind": "bank",
+          "x": 14.5,
+          "z": 40,
+          "yaw": 90
+        }
+      ],
+      "shots": 240,
+      "doubles": 6,
+      "returns": 4,
+      "yawSpan": [
+        15,
+        20
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.6,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.091666666666662,
+          "x": 11.026198387145996,
+          "y": 0.4299995005130768,
+          "z": 25.841487884521484,
+          "home": 28.095543186750664,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.8,
+            39.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6999999999999964,
+          "x": 11.203801155090332,
+          "y": 0.42999905347824097,
+          "z": 27.348304748535156,
+          "home": 29.554270976316673,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            39.7
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 20,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6833333333333298,
+          "x": 6.251892566680908,
+          "y": 0.43000128865242004,
+          "z": 29.484193801879883,
+          "home": 30.139738632113783,
+          "ids": [
+            "side-face",
+            "back-face"
+          ],
+          "order": [
+            "side-face",
+            "back-face"
+          ],
+          "hitZ": [
+            37,
+            45.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.3333333333333277,
+          "x": 12.456547737121582,
+          "y": 0.43000033497810364,
+          "z": 31.337282180786133,
+          "home": 33.722260244612976,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            38.4
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.6999999999999964,
+          "x": 11.203801155090332,
+          "y": 0.42999905347824097,
+          "z": 27.348304748535156,
+          "home": 29.554270976316673,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            39.7
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.091666666666662,
+          "x": 11.026198387145996,
+          "y": 0.4299995005130768,
+          "z": 25.841487884521484,
+          "home": 28.095543186750664,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.8,
+            39.3
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.3333333333333277,
+          "x": 12.456547737121582,
+          "y": 0.43000033497810364,
+          "z": 31.337282180786133,
+          "home": 33.722260244612976,
+          "ids": [
+            "back-face",
+            "side-face"
+          ],
+          "order": [
+            "back-face",
+            "side-face"
+          ],
+          "hitZ": [
+            45.9,
+            38.4
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-8-48-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 2.5,
+          "z": 42.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 13.5,
+          "z": 42.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 5,
+      "returns": 4,
+      "yawSpan": [
+        5,
+        15
+      ],
+      "elevationSpan": [
+        12,
+        24
+      ],
+      "chargeSpan": [
+        0.6,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 15,
+          "elevation": 24,
+          "charge": 0.6,
+          "reason": "first-ground-contact",
+          "elapsed": 2.6916666666666598,
+          "x": -4.7237443923950195,
+          "y": 0.43000081181526184,
+          "z": 28.813119888305664,
+          "home": 29.1977677020446,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            43.3,
+            38.4
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 18,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 2.124999999999995,
+          "x": -3.6918153762817383,
+          "y": 0.4300011992454529,
+          "z": 30.099552154541016,
+          "home": 30.32511402577878,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            43.4,
+            38.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7333333333333296,
+          "x": -3.2456512451171875,
+          "y": 0.4300001561641693,
+          "z": 31.147052764892578,
+          "home": 31.315701300528673,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            43.3,
+            38.9
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.741666666666663,
+          "x": 12.764761924743652,
+          "y": 0.4300014078617096,
+          "z": 29.450307846069336,
+          "home": 32.09766002722999,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.4,
+            42.8
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4999999999999971,
+          "x": 12.083845138549805,
+          "y": 0.43000003695487976,
+          "z": 41.66739273071289,
+          "home": 43.384224440548884,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.7,
+            42.9
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.741666666666663,
+          "x": 12.764761924743652,
+          "y": 0.4300014078617096,
+          "z": 29.450307846069336,
+          "home": 32.09766002722999,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.4,
+            42.8
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 15,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7333333333333296,
+          "x": -3.2456512451171875,
+          "y": 0.4300001561641693,
+          "z": 31.147052764892578,
+          "home": 31.315701300528673,
+          "ids": [
+            "right-face",
+            "left-face"
+          ],
+          "order": [
+            "right-face",
+            "left-face"
+          ],
+          "hitZ": [
+            43.3,
+            38.9
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    },
+    {
+      "id": "fold-12-48-r7.5",
+      "kind": "fold",
+      "objects": [
+        {
+          "id": "left-face",
+          "kind": "bank",
+          "x": 6.5,
+          "z": 42.5,
+          "yaw": 135
+        },
+        {
+          "id": "right-face",
+          "kind": "bank",
+          "x": 17.5,
+          "z": 42.5,
+          "yaw": 45
+        }
+      ],
+      "shots": 240,
+      "doubles": 3,
+      "returns": 2,
+      "yawSpan": [
+        5,
+        10
+      ],
+      "elevationSpan": [
+        12,
+        12
+      ],
+      "chargeSpan": [
+        0.9,
+        0.9
+      ],
+      "closest": [
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7333333333333296,
+          "x": 14.420570373535156,
+          "y": 0.4299999475479126,
+          "z": 30.084537506103516,
+          "home": 33.36213792391353,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.3,
+            43.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7249999999999963,
+          "x": 20.6837215423584,
+          "y": 0.43000003695487976,
+          "z": 30.48261260986328,
+          "home": 36.83756246502769,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            38.3,
+            38.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ],
+      "sampleDouble": [
+        {
+          "yaw": 5,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7249999999999963,
+          "x": 20.6837215423584,
+          "y": 0.43000003695487976,
+          "z": 30.48261260986328,
+          "home": 36.83756246502769,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            38.3,
+            38.5
+          ],
+          "cameBack": true,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.75,
+          "reason": "first-ground-contact",
+          "elapsed": 1.4916666666666638,
+          "x": 15.450018882751465,
+          "y": 0.4300006031990051,
+          "z": 42.177608489990234,
+          "home": 44.918300740480746,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.2,
+            43.5
+          ],
+          "cameBack": false,
+          "both": true
+        },
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.9,
+          "reason": "first-ground-contact",
+          "elapsed": 1.7333333333333296,
+          "x": 14.420570373535156,
+          "y": 0.4299999475479126,
+          "z": 30.084537506103516,
+          "home": 33.36213792391353,
+          "ids": [
+            "left-face",
+            "right-face"
+          ],
+          "order": [
+            "left-face",
+            "right-face"
+          ],
+          "hitZ": [
+            42.3,
+            43.5
+          ],
+          "cameBack": true,
+          "both": true
+        }
+      ]
+    }
+  ]
+}
