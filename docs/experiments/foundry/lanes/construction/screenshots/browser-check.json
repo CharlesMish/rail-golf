@@ -1,0 +1,24 @@
+{
+  "desktopGallery": "/agent/repos/rail-golf/docs/experiments/foundry/lanes/construction/screenshots/desktop-gallery.png",
+  "desktopPlay": "/agent/repos/rail-golf/docs/experiments/foundry/lanes/construction/screenshots/desktop-play.png",
+  "phoneGallery": "/agent/repos/rail-golf/docs/experiments/foundry/lanes/construction/screenshots/phone-gallery.png",
+  "phonePlay": "/agent/repos/rail-golf/docs/experiments/foundry/lanes/construction/screenshots/phone-play.png",
+  "gallery": [
+    "The Carry",
+    "",
+    "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+    ""
+  ],
+  "opening": {
+    "status": "miss",
+    "distance": 16.23785400390625,
+    "view": "survey",
+    "aimHidden": true
+  },
+  "movedClear": "clear",
+  "resetZ": 18,
+  "remixFoundryId": "the-carry",
+  "worldsBefore": 0,
+  "worldsAfter": 1,
+  "notice": "Copy of The Carry saved as its own world. The foundry arrangement is unchanged."
+}

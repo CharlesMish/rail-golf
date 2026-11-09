@@ -1,0 +1,379 @@
+{
+  "seed": 20261109,
+  "gitSha": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "circle": {
+    "x": 0,
+    "z": 53,
+    "r": 2.5
+  },
+  "named": [
+    {
+      "label": "opening",
+      "pose": {
+        "x": 0,
+        "z": 18,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 1.4749999999999972,
+      "position": [
+        0,
+        0.43000006675720215,
+        36.76214599609375
+      ],
+      "distance": 16.237854,
+      "status": "miss",
+      "contacted": false,
+      "bodies": []
+    },
+    {
+      "label": "isolated",
+      "pose": {
+        "x": 0,
+        "z": 20,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 2.341666666666661,
+      "position": [
+        0,
+        0.4300009310245514,
+        51.46717834472656
+      ],
+      "distance": 1.532822,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "gap",
+      "pose": {
+        "x": 0,
+        "z": 20.5,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 3.6416666666666564,
+      "position": [
+        0,
+        0.43000033497810364,
+        58.99576187133789
+      ],
+      "distance": 5.995762,
+      "status": "miss",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "band-near",
+      "pose": {
+        "x": 0,
+        "z": 24,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 3.7249999999999894,
+      "position": [
+        0,
+        0.4300025701522827,
+        53.70397186279297
+      ],
+      "distance": 0.703972,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "band-mid",
+      "pose": {
+        "x": 0,
+        "z": 32,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.049999999999991,
+      "position": [
+        0,
+        0.430001437664032,
+        53.19816970825195
+      ],
+      "distance": 0.19817,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "band-far",
+      "pose": {
+        "x": 0,
+        "z": 40,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.316666666666671,
+      "position": [
+        0,
+        0.4300011694431305,
+        52.25428771972656
+      ],
+      "distance": 0.745712,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "offset-x",
+      "pose": {
+        "x": 4,
+        "z": 32,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.049999999999991,
+      "position": [
+        0,
+        0.4299972653388977,
+        53.198158264160156
+      ],
+      "distance": 0.198158,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "turned",
+      "pose": {
+        "x": 0,
+        "z": 32,
+        "yaw": 5
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.041666666666657,
+      "position": [
+        -1.9301469326019287,
+        0.4300014078617096,
+        53.302127838134766
+      ],
+      "distance": 1.95365,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "turned-out",
+      "pose": {
+        "x": 0,
+        "z": 32,
+        "yaw": 10
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.02499999999999,
+      "position": [
+        -3.8067069053649902,
+        0.43000322580337524,
+        53.67164993286133
+      ],
+      "distance": 3.865505,
+      "status": "miss",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "x-edge",
+      "pose": {
+        "x": 4.5,
+        "z": 32,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.049999999999991,
+      "position": [
+        0,
+        0.4299972653388977,
+        53.198158264160156
+      ],
+      "distance": 0.198158,
+      "status": "clear",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "x-miss",
+      "pose": {
+        "x": 5,
+        "z": 32,
+        "yaw": 0
+      },
+      "reason": "first-ground-contact",
+      "elapsed": 4.041666666666657,
+      "position": [
+        -2.625554323196411,
+        0.430000364780426,
+        53.188236236572266
+      ],
+      "distance": 2.632293,
+      "status": "miss",
+      "contacted": true,
+      "bodies": [
+        "worldcraft-object-ramp-yours"
+      ]
+    },
+    {
+      "label": "empty",
+      "pose": null,
+      "reason": "first-ground-contact",
+      "elapsed": 1.4749999999999972,
+      "position": [
+        0,
+        0.43000006675720215,
+        36.76214599609375
+      ],
+      "distance": 16.237854,
+      "status": "miss",
+      "contacted": false,
+      "bodies": []
+    }
+  ],
+  "block": {
+    "fired": 2275,
+    "scored": 0,
+    "nearest": {
+      "x": -1,
+      "z": 28,
+      "yaw": 0,
+      "distance": 2.651325,
+      "position": [
+        0,
+        0.43000075221061707,
+        50.34867477416992
+      ],
+      "scored": false
+    }
+  },
+  "bank": {
+    "fired": 420,
+    "contacted": 362,
+    "scored": 0,
+    "nearestContact": {
+      "x": -2,
+      "z": 40,
+      "yaw": 45,
+      "distance": 16.276581,
+      "position": [
+        -0.038681887090206146,
+        0.43000006675720215,
+        36.72346496582031
+      ]
+    }
+  },
+  "direct": {
+    "setup": {
+      "yaw": 0,
+      "elevation": 19,
+      "charge": 0.6
+    },
+    "distance": 0.013947,
+    "position": [
+      0,
+      0.4300000071525574,
+      52.986053466796875
+    ],
+    "elapsed": 1.799999999999996,
+    "yaw": {
+      "first": -2.5,
+      "last": 2.5,
+      "count": 11,
+      "width": 5,
+      "bracketLow": -3,
+      "bracketHigh": 3,
+      "censoredLow": false,
+      "censoredHigh": false
+    },
+    "elevation": {
+      "first": 18,
+      "last": 20.5,
+      "count": 6,
+      "width": 2.5,
+      "bracketLow": 17.5,
+      "bracketHigh": 21,
+      "censoredLow": false,
+      "censoredHigh": false
+    },
+    "charge": {
+      "first": 0.58,
+      "last": 0.62,
+      "count": 5,
+      "width": 0.04,
+      "bracketLow": 0.57,
+      "bracketHigh": 0.63,
+      "censoredLow": false,
+      "censoredHigh": false
+    },
+    "yaw0GridClears": 144,
+    "yaw0GridFired": 1189
+  },
+  "slices": {
+    "24": {
+      "x": {
+        "first": -5,
+        "last": 5,
+        "count": 21,
+        "width": 10,
+        "bracketLow": -5.5,
+        "bracketHigh": 5.5,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "yaw": {
+        "first": -5,
+        "last": 5,
+        "count": 3,
+        "width": 10,
+        "bracketLow": -10,
+        "bracketHigh": 10,
+        "censoredLow": false,
+        "censoredHigh": false
+      }
+    },
+    "40": {
+      "x": {
+        "first": -4.5,
+        "last": 4.5,
+        "count": 19,
+        "width": 9,
+        "bracketLow": -5,
+        "bracketHigh": 5,
+        "censoredLow": false,
+        "censoredHigh": false
+      },
+      "yaw": {
+        "first": -5,
+        "last": 5,
+        "count": 3,
+        "width": 10,
+        "bracketLow": -10,
+        "bracketHigh": 10,
+        "censoredLow": false,
+        "censoredHigh": false
+      }
+    }
+  }
+}
