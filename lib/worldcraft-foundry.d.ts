@@ -14,12 +14,20 @@ export type FoundryLimitation = {
   missing: string;
   extension: string;
 };
+export type FoundryPresentation = {
+  dynamics?: 'normal-speed' | 'total-speed';
+  bankVoice?: boolean;
+  timeline?: boolean;
+};
+export type FoundryLayout = { objects: { id: string; x: number; z: number; yaw: number }[] };
 export type FoundryShot = {
   id: string;
   setup: { railIndex: 1; originX: number; yaw: number; elevation: number; charge: number };
   launchPhase: number | null;
+  layout?: FoundryLayout;
   terminal: { reason: string; elapsed: number; position: number[] };
   outcome: { kind: string; status: string };
+  contacts?: string[];
 };
 export type FoundryManifest = {
   format: 'rail-golf-worldcraft-foundry-manifest';
@@ -32,6 +40,8 @@ export type FoundryManifest = {
   editable: { launcher: boolean; geometry: boolean };
   challenge: { id: string; label: string } | null;
   sourceBuild: string;
+  sourceSha: string | null;
+  presentation: FoundryPresentation | null;
   seed: number;
   testedShots: FoundryShot[];
   nearbySensitivity: string;
@@ -39,6 +49,7 @@ export type FoundryManifest = {
   limitations: FoundryLimitation[];
   customCode: { module: string; reason: string } | null;
 };
+export type FoundrySection = 'featured' | 'construction' | 'studies';
 export type FoundryCard = {
   id: string;
   name: string;
@@ -47,6 +58,7 @@ export type FoundryCard = {
   editable: { launcher: boolean; geometry: boolean };
   hasChallenge: boolean;
   challengeId: string | null;
+  section: FoundrySection;
 };
 export type FoundryPair = {
   preset: RangePreset;
@@ -55,9 +67,13 @@ export type FoundryPair = {
   worldIdentity: string;
 };
 
+export function applyFoundryLayout(preset: RangePreset, layout: unknown): { preset: RangePreset; layout: FoundryLayout };
+export function foundryContactBodies(contacts: { body?: string }[] | null | undefined): string[];
+export function foundryContactsMatch(expected: string[], contacts: { body?: string }[] | null | undefined): boolean;
 export function validateFoundryManifest(value: unknown, preset: unknown): FoundryManifest;
 export function loadFoundryPair(preset: unknown, manifest: unknown): FoundryPair;
 export function listFoundryWorlds(): FoundryCard[];
+export function foundryPresentation(id: string | null | undefined): FoundryPresentation | null;
 export function foundryPreset(id: string): RangePreset;
 export function foundryRecord(id: string): FoundryPair;
 export function foundryRemixWorld(authored: WorldcraftDocument, options?: { id?: string; name?: string; challengeId?: string | null }): WorldcraftDocument;

@@ -75,12 +75,13 @@ test('a preset other than Musical Workshop does not keep note marks on the compa
 
 test('the play controls use the trail step and the preset dynamics label', async () => {
   const ui = await readFile(new URL('../app/lab/worldcraft/worldcraft.tsx', import.meta.url), 'utf8');
-  assert.match(ui, /setDynamics\(presetDynamics\(uiRef\.current\.presetId\)\)/);
+  assert.match(ui, /setDynamics\(presetDynamics\(uiRef\.current\.presetId, foundryPresentation\(uiRef\.current\.foundryId\)\)\)/);
   assert.match(ui, /workshopTrailStep\(trailMemory\(\), \{ kind: 'fire' \}\)/);
   assert.match(ui, /workshopTrailStep\(trailMemory\(\), \{ kind: 'ready' \}\)/);
   assert.match(ui, /kind: 'adjust'/);
   assert.match(ui, /kind: 'resolve'/);
-  assert.match(ui, /recordedDynamicsLabel\(uiRef\.current\.presetId, uiRef\.current\.soundVariant\)/);
-  assert.match(ui, /playRecorded\(impacts, workshop \? uiRef\.current\.soundVariant : undefined\)/);
+  assert.match(ui, /recordedDynamicsLabel\(uiRef\.current\.presetId, uiRef\.current\.soundVariant, presentation\)/);
+  assert.match(ui, /playRecorded\(impacts, bankVoice \? uiRef\.current\.soundVariant : undefined\)/);
+  assert.match(ui, /presetId === 'musical-workshop' \|\| presentation\?\.bankVoice === true/);
   assert.equal(ui.includes("'A · PR #55'"), false);
 });

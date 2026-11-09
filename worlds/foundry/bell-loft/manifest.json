@@ -1,0 +1,211 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "bell-loft",
+  "name": "Bell Loft",
+  "kind": "authored-world",
+  "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+  "physicalQuestion": "Can a line end without ever touching the ground? The stone floor takes the bounce out of a landing, the bells keep the roll in, and an open side lets it go.",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": {
+    "id": "bell-loft-upstairs",
+    "label": "A line that comes to rest in the loft and never touches the ground"
+  },
+  "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.49
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 5.191666666666714,
+        "position": [
+          0,
+          0.4300006330013275,
+          45.49125671386719
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "opening-charge-up",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.5
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 4.875000000000032,
+        "position": [
+          0,
+          0.43000125885009766,
+          46.8441162109375
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "lob",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 50,
+        "charge": 0.5
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 4.900000000000033,
+        "position": [
+          0,
+          0.42999953031539917,
+          39.3762321472168
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "slam",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 30,
+        "charge": 0.57
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.4833333333333236,
+        "position": [
+          0,
+          0.4300028085708618,
+          30.906965255737305
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "stock-aim",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "door-shut",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.49
+      },
+      "launchPhase": null,
+      "layout": {
+        "objects": [
+          {
+            "id": "door",
+            "x": -4,
+            "z": 49,
+            "yaw": 0
+          }
+        ]
+      },
+      "terminal": {
+        "reason": "settled",
+        "elapsed": 15.249999999999774,
+        "position": [
+          0,
+          4.429999828338623,
+          53.87986755371094
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "Opening, one slider step each way (charge 0.48 and 0.50, yaw -0.5\u00b0 and +0.5\u00b0, elevation 11.5\u00b0 and 12.5\u00b0): all six strike the stair, land on the loft floor and roll out of the open front, first ground at z 42.07 to 46.84. With only the fourth wall moved into the front at x -4, z 49, the opening and the same six neighbours each come to rest in the loft at y 4.43, settled in 12.42 to 15.62 s. That move is not one editor step. It is recorded in the appendix and is not replayed here.",
+  "validationEvidence": "Validator harness, headless Havok, kit 1ad3166. The five tested shots fire on the authored arrangement with the fourth wall aside: four reach the loft floor and leave by the open front; the stock 18\u00b0 aim clears the stair and lands short of the loft. The door-shut preset in docs/experiments/foundry/bell-loft differs only in that wall. The stock runner fired eleven setups on it and ten settled at y 4.43. Slider-grid maps of three families, both door states, fired the same way. Headless Chrome: card, Play, opening, door move, catch, Reset, copy; same terminals. No listening test.",
+  "limitations": [
+    {
+      "category": "authoring-tooling",
+      "concept": "A line that comes to rest in the loft, 4.43 m up, and never touches the ground",
+      "missing": "No goal kind reads a settled terminal. The goal is none, and the challenge is only a label. The receipt can say the ball rests on a raised piece, but that sentence is not a clear.",
+      "extension": "A goal kind that clears when the recorded terminal reason is settled and the terminal height is above 1 m. It reads the existing terminal only: no new collider, contact law, or score."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Catches that need one Build move: the fourth wall into the open front",
+      "missing": "One closed-door arrangement is a tested shot. The wider family of door poses is not in this gallery, and the validator does not search them.",
+      "extension": "Keep the one recorded pose. Do not search neighbouring door positions, and do not add a goal kind."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "A catch that comes to rest soon after it lands, with every wall strike heard",
+      "missing": "The only closable floor is two blocks inside four 12 m banks. On a flat dull top the round rolls with almost no loss and crawls between front and back walls just above 0.6 m/s, so a catch takes 12 to 18 s to read settled, and strikes after the first two sound at gain under 0.1. The ramp is the only slope, and at 0.86 restitution it is a poor cradle.",
+      "extension": "One small pitch value on the existing block, for example 5\u00b0, keeping block friction and restitution, so a loft floor can fall toward a wall and the round runs into a corner instead of crawling."
+    },
+    {
+      "category": "presentation",
+      "concept": "Watching the round come to rest upstairs",
+      "missing": "During flight the follow camera can still sit in a wall. When the ball settles above the ground, the result switches to Survey on that rest.",
+      "extension": "Survey at the result is the existing view. No new camera mode and no change to settle timing."
+    },
+    {
+      "category": "presentation",
+      "concept": "A play panel that speaks for the world that is open",
+      "missing": "The play card uses this world's name and invitation, and names the movable bank and ramp. It does not invent a plate.",
+      "extension": "The sentence is derived from the loaded preset. No new state and no change to the preset."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "8c2df88b4f5b7ea81dcf3ce3a59ba5c95aefec2b"
+}

@@ -1,0 +1,100 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "right-angle",
+  "name": "Right Angle",
+  "kind": "shot-study",
+  "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+  "physicalQuestion": "What does a shot into that right angle do, and how does a small aim step move the landing?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "both-faces",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 38.5,
+        "elevation": 14.5,
+        "charge": 0.86
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8083333333333294,
+        "position": [
+          4.2935285568237305,
+          0.43000006675720215,
+          4.310322284698486
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-side-face",
+        "worldcraft-object-back-face"
+      ]
+    }
+  ],
+  "nearbySensitivity": "At the recorded return, yaw 38.5\u00b0, elevation 14.5\u00b0, and charge 0.86, one slider step still strikes both banks and lands back toward the carriage. Yaw 38.0\u00b0 lands about 4.1 m from the origin and yaw 39.0\u00b0 about 9.0 m. Elevation 14.0\u00b0 and 15.0\u00b0 land about 9.6 m and 5.9 m out. Charge 0.85 and 0.87 land about 7.0 m and 10.2 m out. Opening yaw 0.5\u00b0 and yaw -0.5\u00b0, at elevation 18\u00b0 and charge 0.55, still miss both banks and land near 46.1 m.",
+  "validationEvidence": "Headless Havok at 120 Hz, seed 20261109, through scripts/range/run.mjs and scripts/foundry/discovery-*.mjs. The corner map fired 42525 player-step shots. The neighbour grid fired 21750. The validator replays the opening miss and one two-face return. Enjoyment and a physical phone were not tested.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A right angle that can send a shot back toward the carriage",
+      "missing": "Banks have no height offset, so the corner cannot be lifted or given a lip over a pocket.",
+      "extension": "One height offset on the existing bank, keeping its friction and restitution. No new contact law. Not built."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "A landing that only the two-face path can reach",
+      "missing": "Open ground in front of the corner can also be reached by a short arc that never touches a bank.",
+      "extension": "Do not add a circle in that open ground. A later lip would be the same height offset, not a new goal kind. Not built."
+    },
+    {
+      "category": "presentation",
+      "concept": "The corner reads as the subject, including on a phone",
+      "missing": "Survey is a free orbit and does not label the corner.",
+      "extension": "A one-line caption under Survey, with no new geometry. Not built."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "The family of aims was measured outside the replay",
+      "missing": "The validator replays recorded shots. It does not search neighbouring aims on its own.",
+      "extension": "Leave the replay as it is. The neighbour grid stays a lane script."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "57b82bd95d3d726ebb559e7f8533fab52e58ba32"
+}
