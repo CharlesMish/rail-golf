@@ -1,0 +1,71 @@
+{
+  "opening": {
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 1.358333333333331,
+      "position": [
+        3.5606234073638916,
+        0.43000075221061707,
+        4.97658109664917
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-west",
+      "worldcraft-object-east",
+      "worldcraft-ground"
+    ],
+    "delta": [
+      0,
+      0,
+      0
+    ]
+  },
+  "serve": {
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "position": [
+        3.993374824523926,
+        0.7300000786781311,
+        1.0933390855789185
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-west",
+      "worldcraft-object-east",
+      "worldcraft-tee"
+    ],
+    "delta": [
+      0,
+      0,
+      0
+    ]
+  },
+  "reply": {
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 1.3749999999999976,
+      "position": [
+        -3.995471715927124,
+        0.7300001382827759,
+        1.0937411785125732
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-east",
+      "worldcraft-object-west",
+      "worldcraft-tee"
+    ],
+    "delta": [
+      0,
+      0,
+      0
+    ]
+  },
+  "gallery": {
+    "card": true,
+    "openedInSurvey": true,
+    "copyPreservedEdit": true,
+    "resetRestoredPreset": true
+  }
+}

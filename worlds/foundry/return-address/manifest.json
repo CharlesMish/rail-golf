@@ -1,0 +1,227 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "return-address",
+  "name": "Return Address",
+  "kind": "authored-world",
+  "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+  "physicalQuestion": "Can the end of one flight choose the starting place for another? Can a player trade sides, then steer a reply back to the first sender?",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": null,
+  "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.58
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.358333333333331,
+        "position": [
+          3.5606234073638916,
+          0.43000075221061707,
+          4.97658109664917
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "serve",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.993374824523926,
+          0.7300000786781311,
+          1.0933390855789185
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "reply",
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": -4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          -3.995471715927124,
+          0.7300001382827759,
+          1.0937411785125732
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "edge-catch",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.62
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.7599499225616455,
+          0.5069491863250732,
+          3.3707141876220703
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "yaw-neighbour",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4.5,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.51689076423645,
+          0.7300000190734863,
+          1.1440398693084717
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "unturned-reply",
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          -10.317688941955566,
+          0.7299999594688416,
+          2.137204647064209
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "short-lob",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 70,
+        "elevation": 65,
+        "charge": 0
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5166666666666637,
+        "position": [
+          1.6780924797058105,
+          0.7300000190734863,
+          2.0666568279266357
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "centre-seam",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4333333333333307,
+        "position": [
+          0.03334396332502365,
+          0.4300006031990051,
+          46.396732330322266
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "From the serve, one yaw step from 4 to 4.5 degrees moves the tee landing from x +3.99 to +3.52 m. At the opening aim, every integer power setting from 62 through 81 percent returns via both faces to a reachable spot on the opposite half of the deck. The opening at 58 percent falls short. Moving the east face 0.5 m right gives a serve landing at x +4.52 m. Turning it by one 5-degree step shifts the landing by roughly 2.3 m.",
+  "validationEvidence": "The Foundry checker replays eight terminals with the existing Havok range runner. The offline check also reads the body ledger, fires replies from the visible tee-contact x rounded to a carriage step, sweeps 1,225 local starting setups, and tests one-wall and empty controls. The short lob touches the opposite deck without a wall. A separately aimed flat bank can sustain a rally too. No owner or fresh-player trial.",
+  "limitations": [
+    {
+      "category": "authoring-tooling",
+      "concept": "Verify that a return actually travelled down the yard.",
+      "missing": "The manifest checker can replay the terminal and the none outcome, but cannot assert which bodies the ball touched in order. A short lob can also end on the opposite deck.",
+      "extension": "Allow an optional ordered list of expected body IDs on a tested shot, checked against the existing contact record."
+    },
+    {
+      "category": "presentation",
+      "concept": "Use the landing as the address for the next serve.",
+      "missing": "The contact x is inside the expanded Contact record. A free-launch world with no goal inherits the Musical Workshop panel and its unrelated instructions.",
+      "extension": "Reuse the Foundry invitation in that panel. For this handoff, show the contacted tee x and nearest carriage stop together in the receipt."
+    }
+  ],
+  "customCode": null
+}

@@ -1,0 +1,18 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "return-address",
+  "name": "Return Address",
+  "environment": { "preset": "forest-clearing-v1", "seed": 1 },
+  "launcher": { "x": -4 },
+  "objects": [
+    { "id": "west", "kind": "bank", "x": -5, "z": 16, "yaw": -45, "voice": { "material": "timber", "degree": 0 } },
+    { "id": "east", "kind": "bank", "x": 5, "z": 16, "yaw": 45, "voice": { "material": "metal", "degree": 3 } }
+  ],
+  "rules": {
+    "launcher": { "fixed": false, "yaw": 4, "elevation": 13, "charge": 0.58 },
+    "fixed": ["west"],
+    "allowance": { "bank": 1 },
+    "goal": { "kind": "none" }
+  }
+}

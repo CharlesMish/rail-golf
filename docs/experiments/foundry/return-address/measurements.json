@@ -1,0 +1,819 @@
+{
+  "seed": 20261109,
+  "cases": {
+    "opening": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.58
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-ground"
+      ],
+      "finalContactPoint": {
+        "x": 3.5511832237243652,
+        "y": 0.07257455587387085,
+        "z": 5.130794525146484
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.358333333333331,
+        "position": [
+          3.5606234073638916,
+          0.43000075221061707,
+          4.97658109664917
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "serve": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 3.981315851211548,
+        "y": 0.35033395886421204,
+        "z": 1.2694132328033447
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.993374824523926,
+          0.7300000786781311,
+          1.0933390855789185
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "reply": {
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": -4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-east",
+        "worldcraft-object-west",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": -3.983403444290161,
+        "y": 0.3556143343448639,
+        "z": 1.2698029279708862
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          -3.995471715927124,
+          0.7300001382827759,
+          1.0937411785125732
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "edge-catch": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.62
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 3.74960994720459,
+        "y": 0.31857335567474365,
+        "z": 3.058241844177246
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.7599499225616455,
+          0.5069491863250732,
+          3.3707141876220703
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "yaw-neighbour": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4.5,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 3.5077311992645264,
+        "y": 0.3695908784866333,
+        "z": 1.3201271295547485
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.51689076423645,
+          0.7300000190734863,
+          1.1440398693084717
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "unturned-reply": {
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-east",
+        "worldcraft-object-west",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": -10.275745391845703,
+        "y": 0.3580426871776581,
+        "z": 2.3037822246551514
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          -10.317688941955566,
+          0.7299999594688416,
+          2.137204647064209
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "short-lob": {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 70,
+        "elevation": 65,
+        "charge": 0
+      },
+      "contacts": [
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 1.6581971645355225,
+        "y": 0.36386793851852417,
+        "z": 2.059415578842163
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5166666666666637,
+        "position": [
+          1.6780924797058105,
+          0.7300000190734863,
+          2.0666568279266357
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "centre-seam": {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-east",
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-object-west",
+        "worldcraft-ground"
+      ],
+      "finalContactPoint": {
+        "x": 0.03307076543569565,
+        "y": 0.007363438606262207,
+        "z": 46.163185119628906
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4333333333333307,
+        "position": [
+          0.03334396332502365,
+          0.4300006031990051,
+          46.396732330322266
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    }
+  },
+  "localResults": {
+    "tried": 1225,
+    "firstCatch": 1223,
+    "twoCatches": 1138,
+    "withinOneOriginStep": 304,
+    "uniqueReplyShots": 1056
+  },
+  "catchPercentages": [
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "comparisons": {
+    "pair": {
+      "sameServe": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "contacts": [
+          "worldcraft-object-west",
+          "worldcraft-object-east",
+          "worldcraft-tee"
+        ],
+        "finalContactPoint": {
+          "x": 3.981315851211548,
+          "y": 0.35033395886421204,
+          "z": 1.2694132328033447
+        },
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.3749999999999976,
+          "position": [
+            3.993374824523926,
+            0.7300000786781311,
+            1.0933390855789185
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      },
+      "gridSize": 1053,
+      "oppositeDeck": 195,
+      "anyDownrangeFace": 195,
+      "example": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 2.5,
+          "elevation": 13,
+          "charge": 0.76
+        },
+        "contacts": [
+          "worldcraft-object-west",
+          "worldcraft-object-east",
+          "worldcraft-tee"
+        ],
+        "finalContactPoint": {
+          "x": 6.124670028686523,
+          "y": 0.33039936423301697,
+          "z": -2.7669873237609863
+        },
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.416666666666664,
+          "position": [
+            6.149572849273682,
+            0.7300000190734863,
+            -2.9637651443481445
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      }
+    },
+    "westOnly": {
+      "sameServe": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "contacts": [
+          "worldcraft-object-west",
+          "worldcraft-ground"
+        ],
+        "finalContactPoint": {
+          "x": 20.263826370239258,
+          "y": 0.039097487926483154,
+          "z": 16.38169288635254
+        },
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.3749999999999976,
+          "position": [
+            20.460567474365234,
+            0.4300001859664917,
+            16.377023696899414
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      },
+      "gridSize": 1053,
+      "oppositeDeck": 7,
+      "anyDownrangeFace": 7,
+      "example": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": -19.5,
+          "elevation": 13,
+          "charge": 0.56
+        },
+        "contacts": [
+          "worldcraft-object-west",
+          "worldcraft-tee"
+        ],
+        "finalContactPoint": {
+          "x": 9.026820182800293,
+          "y": 0.3110094368457794,
+          "z": 3.017550468444824
+        },
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.1833333333333316,
+          "position": [
+            9.186389923095703,
+            0.6461406350135803,
+            3.2450971603393555
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      }
+    },
+    "flat": {
+      "sameServe": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "contacts": [
+          "worldcraft-object-west"
+        ],
+        "finalContactPoint": {
+          "x": -2.9582600593566895,
+          "y": 4.3599700927734375,
+          "z": 15.327266693115234
+        },
+        "terminal": {
+          "reason": "out-of-bounds",
+          "elapsed": 1.224999999999998,
+          "position": [
+            -1.5903888940811157,
+            1.5529381036758423,
+            -8.1382417678833
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      },
+      "gridSize": 1053,
+      "oppositeDeck": 117,
+      "anyDownrangeFace": 117,
+      "example": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 14.5,
+          "elevation": 13,
+          "charge": 0.58
+        },
+        "contacts": [
+          "worldcraft-object-west",
+          "worldcraft-tee"
+        ],
+        "finalContactPoint": {
+          "x": 3.939756393432617,
+          "y": 0.30134692788124084,
+          "z": -3.8434255123138428
+        },
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.2583333333333313,
+          "position": [
+            3.9788818359375,
+            0.7300000190734863,
+            -4.028842449188232
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      }
+    },
+    "empty": {
+      "sameServe": {
+        "setup": {
+          "railIndex": 1,
+          "originX": -4,
+          "yaw": 4,
+          "elevation": 13,
+          "charge": 0.68
+        },
+        "contacts": [
+          "worldcraft-ground"
+        ],
+        "finalContactPoint": {
+          "x": -0.6063341498374939,
+          "y": 0.0075872838497161865,
+          "z": 48.53170394897461
+        },
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.441666666666664,
+          "position": [
+            -0.5886505246162415,
+            0.4300000071525574,
+            48.78459167480469
+          ]
+        },
+        "outcome": {
+          "kind": "none",
+          "status": "none",
+          "scored": false
+        }
+      },
+      "gridSize": 1053,
+      "oppositeDeck": 0,
+      "anyDownrangeFace": 0,
+      "example": null
+    }
+  },
+  "flatRally": [
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 14.5,
+        "elevation": 13,
+        "charge": 0.58
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 3.939756393432617,
+        "y": 0.30134692788124084,
+        "z": -3.8434255123138428
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.2583333333333313,
+        "position": [
+          3.9788818359375,
+          0.7300000190734863,
+          -4.028842449188232
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 4,
+        "yaw": -14.5,
+        "elevation": 13,
+        "charge": 0.58
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": -3.9397692680358887,
+        "y": 0.30135229229927063,
+        "z": -3.8434290885925293
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.2583333333333313,
+        "position": [
+          -3.9788818359375,
+          0.7300007343292236,
+          -4.028842449188232
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    }
+  ],
+  "pieceSteps": {
+    "left": {
+      "catch": true,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 3.5580410957336426,
+        "y": 0.31299686431884766,
+        "z": 0.8646233677864075
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.570141315460205,
+          0.7300000190734863,
+          0.6885090470314026
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "right": {
+      "catch": true,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 4.503462791442871,
+        "y": 0.32310888171195984,
+        "z": 1.5752235651016235
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3833333333333309,
+        "position": [
+          4.515449047088623,
+          0.7300002574920654,
+          1.3992220163345337
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "near": {
+      "catch": true,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 3.558056116104126,
+        "y": 0.31299683451652527,
+        "z": 0.8646350502967834
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          3.5701558589935303,
+          0.7299999594688416,
+          0.688521146774292
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "far": {
+      "catch": true,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 4.503520965576172,
+        "y": 0.3231063187122345,
+        "z": 1.5752581357955933
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3833333333333309,
+        "position": [
+          4.515517234802246,
+          0.7300001382827759,
+          1.3992489576339722
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "clockwise": {
+      "catch": true,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 1.6502529382705688,
+        "y": 0.3625372052192688,
+        "z": 1.463586449623108
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3749999999999976,
+        "position": [
+          1.6332042217254639,
+          0.7300000190734863,
+          1.2875580787658691
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    },
+    "counterclockwise": {
+      "catch": true,
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 4,
+        "elevation": 13,
+        "charge": 0.68
+      },
+      "contacts": [
+        "worldcraft-object-west",
+        "worldcraft-object-east",
+        "worldcraft-tee"
+      ],
+      "finalContactPoint": {
+        "x": 6.2127604484558105,
+        "y": 0.3197779655456543,
+        "z": 1.4473381042480469
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3833333333333309,
+        "position": [
+          6.2518744468688965,
+          0.7300000190734863,
+          1.2776364088058472
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none",
+        "scored": false
+      }
+    }
+  }
+}

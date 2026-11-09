@@ -24,7 +24,7 @@ function memoryStorage() {
   return { getItem: key => data.has(key) ? data.get(key) : null, setItem: (key, value) => { data.set(key, String(value)); } };
 }
 
-test('foundry files stay declarative and the gallery lists one seed', async () => {
+test('foundry files stay declarative and the gallery keeps evidence private', async () => {
   const preset = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/preset.json', import.meta.url), 'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/manifest.json', import.meta.url), 'utf8'));
   const pair = loadFoundryPair(preset, manifest);
@@ -33,12 +33,22 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.notEqual(pair.manifest.challenge.id, pair.manifest.id);
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
-  assert.deepEqual(cards.map(card => card.id), ['soft-landing']);
-  assert.equal(cards[0].kind, 'shot-study');
-  assert.equal(cards[0].editable.launcher, true);
-  assert.equal(cards[0].editable.geometry, true);
-  assert.equal(cards[0].hasChallenge, true);
-  assert.equal(Object.hasOwn(cards[0], 'testedShots'), false);
+  const rally = cards.find(card => card.id === 'return-address');
+  assert.equal(rally.kind, 'authored-world');
+  assert.equal(rally.hasChallenge, false);
+  assert.deepEqual(rally.editable, { launcher: true, geometry: true });
+  assert.equal(cards.some(card => card.id === 'foundry-template'), false);
+  for (const card of cards) {
+    for (const field of ['testedShots', 'nearbySensitivity', 'limitations', 'validationEvidence']) {
+      assert.equal(Object.hasOwn(card, field), false);
+    }
+  }
+  const seedCard = cards.find(card => card.id === 'soft-landing');
+  assert.equal(seedCard.kind, 'shot-study');
+  assert.equal(seedCard.editable.launcher, true);
+  assert.equal(seedCard.editable.geometry, true);
+  assert.equal(seedCard.hasChallenge, true);
+  assert.equal(Object.hasOwn(seedCard, 'testedShots'), false);
   assert.equal(JSON.stringify(cards).includes('testedShots'), false);
   assert.equal(foundryRecord('soft-landing').manifest.testedShots[0].outcome.status, 'miss');
   assert.equal(foundryRecord('soft-landing').manifest.testedShots.length, 1);
@@ -104,6 +114,8 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);
+  const rally = await validateFoundryDirectory('worlds/foundry/return-address', havok);
+  assert.ok(rally.shots.includes('serve') && rally.shots.includes('reply'));
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');
