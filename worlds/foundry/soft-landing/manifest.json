@@ -1,0 +1,44 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "soft-landing",
+  "name": "Soft Landing",
+  "kind": "shot-study",
+  "invitation": "A gold circle sits down the clearing. A block and a bank start off to the side. The shot can change, and so can those two pieces.",
+  "physicalQuestion": "Can a landing be made easier to repeat?",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": {
+    "id": "soft-landing-circle",
+    "label": "First ground inside the circle"
+  },
+  "sourceBuild": "46e59a781722081546457086e1d87a7d2e8f7453",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [0, 0.43000003695487976, 46.14754867553711]
+      },
+      "outcome": {
+        "kind": "first-ground-zone",
+        "status": "miss"
+      }
+    }
+  ],
+  "validationEvidence": "The tested shot is the opening arrangement and the opening aim. Headless Havok through scripts/range/run.mjs reproduces that first-ground terminal. The shot misses. It is the arrangement a player enters. Measured clears stay in the range appendix and are not stored here.",
+  "knownLimitations": "One ground plane. Pieces cannot change height, scale, or ramp angle. Aim controls step by half a degree, and power by one percent. A landing that exists only between those steps is not a route the controls can sit on.",
+  "customCode": null
+}

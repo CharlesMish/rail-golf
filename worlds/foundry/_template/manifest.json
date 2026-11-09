@@ -1,0 +1,41 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "foundry-template",
+  "name": "Foundry template",
+  "kind": "workshop",
+  "invitation": "Copy this pair, then change the preset and the words. This template is not listed in the gallery.",
+  "physicalQuestion": "What does one fixed shot do against one bank?",
+  "editable": {
+    "launcher": false,
+    "geometry": true
+  },
+  "challenge": null,
+  "sourceBuild": "46e59a781722081546457086e1d87a7d2e8f7453",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [0, 0.42999863624572754, 24.143016815185547]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "validationEvidence": "The tested shot is the fixed opening aim. Headless Havok through scripts/range/run.mjs ends on first ground, short of the bank. This pair is the copyable template. It is not listed in the gallery.",
+  "knownLimitations": "One bank, one fixed shot, no challenge. Not a creative world and not registered for play.",
+  "customCode": null
+}
