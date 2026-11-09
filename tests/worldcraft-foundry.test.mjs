@@ -24,7 +24,7 @@ function memoryStorage() {
   return { getItem: key => data.has(key) ? data.get(key) : null, setItem: (key, value) => { data.set(key, String(value)); } };
 }
 
-test('foundry files stay declarative and the gallery lists one seed', async () => {
+test('foundry files stay declarative and the gallery lists the seed first', async () => {
   const preset = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/preset.json', import.meta.url), 'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/manifest.json', import.meta.url), 'utf8'));
   const pair = loadFoundryPair(preset, manifest);
@@ -33,7 +33,7 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.notEqual(pair.manifest.challenge.id, pair.manifest.id);
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
-  assert.deepEqual(cards.map(card => card.id), ['soft-landing']);
+  assert.deepEqual(cards.map(card => card.id), ['soft-landing', 'bell-loft']);
   assert.equal(cards[0].kind, 'shot-study');
   assert.equal(cards[0].editable.launcher, true);
   assert.equal(cards[0].editable.geometry, true);
@@ -161,4 +161,23 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.equal(ear.state(), 'uncreated');
   assert.deepEqual(ear.counts(), { started: 0, cleaned: 0, finished: 0, active: 0 });
   assert.ok(worldcraftFixedSetup(house));
+});
+
+test('bell loft replays its authored shots and its card carries no evidence', async () => {
+  const Havok = (await import('@babylonjs/havok')).default;
+  const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
+  const report = await validateFoundryDirectory('worlds/foundry/bell-loft', havok);
+  assert.equal(report.id, 'bell-loft');
+  assert.equal(report.customCode, null);
+  assert.deepEqual(report.shots, ['opening', 'opening-charge-up', 'lob', 'slam', 'stock-aim']);
+  const record = foundryRecord('bell-loft');
+  assert.equal(record.manifest.challenge.id === record.manifest.id, false);
+  assert.equal(JSON.stringify(record.preset).includes(record.manifest.challenge.id), false);
+  assert.ok(record.manifest.testedShots.every(shot => shot.terminal.reason === 'first-ground-contact'));
+  const card = listFoundryWorlds().find(item => item.id === 'bell-loft');
+  assert.equal(card.kind, 'authored-world');
+  assert.deepEqual(card.editable, { launcher: true, geometry: true });
+  assert.equal(card.hasChallenge, true);
+  const text = JSON.stringify(card);
+  for (const leak of ['testedShots', 'nearbySensitivity', 'limitations', '45.49', 'z 49', 'settled']) assert.equal(text.includes(leak), false, leak);
 });
