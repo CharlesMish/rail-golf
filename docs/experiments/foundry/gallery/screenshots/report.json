@@ -1,0 +1,563 @@
+{
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "gallery": {
+    "desktop": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/gallery-desktop-1280x800.png",
+    "portrait": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/gallery-portrait-390x844.png",
+    "landscape": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/gallery-landscape-844x390.png"
+  },
+  "worlds": {
+    "bell-loft": {
+      "viewports": {
+        "desktop": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/bell-loft-opening-desktop-1280x800.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/bell-loft-success-desktop-1280x800.png",
+          "openingPanel": {
+            "heading": "Bell Loft",
+            "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair. Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Bell Loft",
+            "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "The ball came to rest up on the block, above the ground.",
+            "carriage": "",
+            "returned": "",
+            "notice": "The line ended: settled. Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles. The ball came to rest up on the block, above the ground."
+          },
+          "view": "survey",
+          "reason": "settled",
+          "settling": true
+        },
+        "portrait": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/bell-loft-opening-portrait-390x844.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/bell-loft-success-portrait-390x844.png",
+          "openingPanel": {
+            "heading": "Bell Loft",
+            "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair. Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Bell Loft",
+            "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "The ball came to rest up on the block, above the ground.",
+            "carriage": "",
+            "returned": "",
+            "notice": "The line ended: settled. Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles. The ball came to rest up on the block, above the ground."
+          },
+          "view": "survey",
+          "reason": "settled",
+          "settling": true
+        },
+        "landscape": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/bell-loft-opening-landscape-844x390.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/bell-loft-success-landscape-844x390.png",
+          "openingPanel": {
+            "heading": "Bell Loft",
+            "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair. Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Bell Loft",
+            "invitation": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A stone loft stands in the clearing. Three of its walls are bells; the fourth stands aside. Down here, the ground ends every line it touches. The loft floor is not the ground. The shot can change, and so can that fourth wall and the wooden stair.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "The ball came to rest up on the block, above the ground.",
+            "carriage": "",
+            "returned": "",
+            "notice": "The line ended: settled. Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles. The ball came to rest up on the block, above the ground."
+          },
+          "view": "survey",
+          "reason": "settled",
+          "settling": true
+        }
+      }
+    },
+    "return-address": {
+      "viewports": {
+        "desktop": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/return-address-opening-desktop-1280x800.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/return-address-success-desktop-1280x800.png",
+          "openingPanel": {
+            "heading": "Return Address",
+            "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Return Address",
+            "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "Deck contact at x 3.98. The nearest carriage stop is 4. The next launch starts from here.",
+            "returned": "",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles. Deck contact at x 3.98. The nearest carriage stop is 4. The next launch starts from here."
+          },
+          "view": "address",
+          "reason": "first-ground-contact",
+          "settling": false
+        },
+        "portrait": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/return-address-opening-portrait-390x844.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/return-address-success-portrait-390x844.png",
+          "openingPanel": {
+            "heading": "Return Address",
+            "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Return Address",
+            "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "Deck contact at x 3.98. The nearest carriage stop is 4. The next launch starts from here.",
+            "returned": "",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles. Deck contact at x 3.98. The nearest carriage stop is 4. The next launch starts from here."
+          },
+          "view": "address",
+          "reason": "first-ground-contact",
+          "settling": false
+        },
+        "landscape": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/return-address-opening-landscape-844x390.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/return-address-success-landscape-844x390.png",
+          "openingPanel": {
+            "heading": "Return Address",
+            "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Return Address",
+            "invitation": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Play catch across the launch deck. Send a ball down the clearing and bring it home to the other half of the deck. Start your reply from where it landed.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "Deck contact at x 3.98. The nearest carriage stop is 4. The next launch starts from here.",
+            "returned": "",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles. Deck contact at x 3.98. The nearest carriage stop is 4. The next launch starts from here."
+          },
+          "view": "address",
+          "reason": "first-ground-contact",
+          "settling": false
+        }
+      }
+    },
+    "right-angle": {
+      "viewports": {
+        "desktop": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/right-angle-opening-desktop-1280x800.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/right-angle-success-desktop-1280x800.png",
+          "openingPanel": {
+            "heading": "Right Angle",
+            "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Right Angle",
+            "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "Both faces were touched. The ball came back to 6.1 m from the carriage.",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles. Both faces were touched. The ball came back to 6.1 m from the carriage."
+          },
+          "view": "survey",
+          "reason": "first-ground-contact",
+          "settling": false
+        },
+        "portrait": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/right-angle-opening-portrait-390x844.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/right-angle-success-portrait-390x844.png",
+          "openingPanel": {
+            "heading": "Right Angle",
+            "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Right Angle",
+            "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "Both faces were touched. The ball came back to 6.1 m from the carriage.",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles. Both faces were touched. The ball came back to 6.1 m from the carriage."
+          },
+          "view": "survey",
+          "reason": "first-ground-contact",
+          "settling": false
+        },
+        "landscape": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/right-angle-opening-landscape-844x390.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/right-angle-success-landscape-844x390.png",
+          "openingPanel": {
+            "heading": "Right Angle",
+            "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Right Angle",
+            "invitation": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "Two banks meet at a right angle, off to the right of the clearing. The first shot runs straight past them. The banks stay put. Aim and power are yours.",
+            "bankSound": false,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "Both faces were touched. The ball came back to 6.1 m from the carriage.",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles. Both faces were touched. The ball came back to 6.1 m from the carriage."
+          },
+          "view": "survey",
+          "reason": "first-ground-contact",
+          "settling": false
+        }
+      }
+    },
+    "open-contacts": {
+      "viewports": {
+        "desktop": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/open-contacts-opening-desktop-1280x800.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/open-contacts-success-desktop-1280x800.png",
+          "openingPanel": {
+            "heading": "Open Contacts",
+            "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "bankSound": true,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Open Contacts",
+            "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "bankSound": true,
+            "timeline": true,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "view": "address",
+          "reason": "first-ground-contact",
+          "settling": false
+        },
+        "portrait": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/open-contacts-opening-portrait-390x844.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/open-contacts-success-portrait-390x844.png",
+          "openingPanel": {
+            "heading": "Open Contacts",
+            "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "bankSound": true,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Open Contacts",
+            "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "block",
+            "inviteText": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "bankSound": true,
+            "timeline": true,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "view": "address",
+          "reason": "first-ground-contact",
+          "settling": false
+        },
+        "landscape": {
+          "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/open-contacts-opening-landscape-844x390.png",
+          "success": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/open-contacts-success-landscape-844x390.png",
+          "openingPanel": {
+            "heading": "Open Contacts",
+            "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "bankSound": true,
+            "timeline": false,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "successPanel": {
+            "heading": "Open Contacts",
+            "invitation": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+            "inviteDisplay": "none",
+            "inviteText": "A timber bank faces the tee. Metal plates stand to the sides and farther down the clearing. There is no target. The shot can change, and the bank can be moved.",
+            "bankSound": true,
+            "timeline": true,
+            "musicalHeading": false,
+            "resting": "",
+            "carriage": "",
+            "returned": "",
+            "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles."
+          },
+          "view": "address",
+          "reason": "first-ground-contact",
+          "settling": false
+        }
+      }
+    },
+    "the-carry": {
+      "openingPanel": {
+        "heading": "The Carry",
+        "invitation": "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+        "rules": "The shot stays on the printed origin, yaw, elevation, and power. The ramp can move. The gold circle judges the first landing, and the landing is not a score.",
+        "inviteDisplay": "none",
+        "inviteText": "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+        "bankSound": false,
+        "timeline": false,
+        "musicalHeading": false,
+        "resting": "",
+        "carriage": "",
+        "returned": "",
+        "notice": "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground. The shot stays on the printed origin, yaw, elevation, and power. The ramp can move. The gold circle judges the first landing, and the landing is not a score."
+      },
+      "successPanel": {
+        "heading": "The Carry",
+        "invitation": "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+        "rules": "The shot stays on the printed origin, yaw, elevation, and power. The ramp can move. The gold circle judges the first landing, and the landing is not a score.",
+        "inviteDisplay": "none",
+        "inviteText": "The shot is locked. A gold circle sits down the clearing, and one ramp starts on the near ground.",
+        "bankSound": false,
+        "timeline": false,
+        "musicalHeading": false,
+        "resting": "",
+        "carriage": "",
+        "returned": "",
+        "notice": "Inside the circle · 0.2 m from centre. The shot stays on the printed origin, yaw, elevation, and power. The ramp can move. The gold circle judges the first landing, and the landing is not a score."
+      },
+      "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/the-carry-desktop-1280x800.png"
+    },
+    "the-other-way": {
+      "openingPanel": {
+        "heading": "The Other Way",
+        "invitation": "Three blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+        "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+        "inviteDisplay": "none",
+        "inviteText": "Three blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+        "bankSound": false,
+        "timeline": false,
+        "musicalHeading": false,
+        "resting": "",
+        "carriage": "",
+        "returned": "",
+        "notice": "Three blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles."
+      },
+      "successPanel": {
+        "heading": "The Other Way",
+        "invitation": "Three blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+        "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+        "inviteDisplay": "none",
+        "inviteText": "Three blocks stand across the clearing. The opening shot meets the middle one and stops. A way past them is still unused, and taking one leaves the others.",
+        "bankSound": false,
+        "timeline": false,
+        "musicalHeading": false,
+        "resting": "",
+        "carriage": "",
+        "returned": "",
+        "notice": "First ground ended the line. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles."
+      },
+      "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/the-other-way-desktop-1280x800.png"
+    },
+    "soft-landing": {
+      "openingPanel": {
+        "heading": "Soft Landing",
+        "invitation": "A gold circle sits down the clearing. A block and a bank start off to the side. The shot can change, and so can those two pieces.",
+        "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The block and the bank can move. The gold circle judges the first landing, and the landing is not a score.",
+        "inviteDisplay": "none",
+        "inviteText": "A gold circle sits down the clearing. A block and a bank start off to the side. The shot can change, and so can those two pieces.",
+        "bankSound": false,
+        "timeline": false,
+        "musicalHeading": false,
+        "resting": "",
+        "carriage": "",
+        "returned": "",
+        "notice": "A gold circle sits down the clearing. A block and a bank start off to the side. The shot can change, and so can those two pieces. Origin, yaw, elevation, and power can change inside the rail stops. The block and the bank can move. The gold circle judges the first landing, and the landing is not a score."
+      },
+      "successPanel": null,
+      "opening": "/agent/repos/rail-golf/docs/experiments/foundry/gallery/screenshots/soft-landing-desktop-1280x800.png"
+    }
+  },
+  "cards": [
+    {
+      "id": "bell-loft",
+      "section": "featured",
+      "name": "Bell Loft"
+    },
+    {
+      "id": "return-address",
+      "section": "featured",
+      "name": "Return Address"
+    },
+    {
+      "id": "right-angle",
+      "section": "featured",
+      "name": "Right Angle"
+    },
+    {
+      "id": "open-contacts",
+      "section": "featured",
+      "name": "Open Contacts"
+    },
+    {
+      "id": "the-carry",
+      "section": "construction",
+      "name": "The Carry"
+    },
+    {
+      "id": "the-other-way",
+      "section": "studies",
+      "name": "The Other Way"
+    },
+    {
+      "id": "soft-landing",
+      "section": "studies",
+      "name": "Soft Landing"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ function memoryStorage() {
   return { getItem: key => data.has(key) ? data.get(key) : null, setItem: (key, value) => { data.set(key, String(value)); } };
 }
 
-test('foundry files stay declarative and the gallery lists one seed', async () => {
+test('foundry files stay declarative and the gallery lists the prepared worlds', async () => {
   const preset = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/preset.json', import.meta.url), 'utf8'));
   const manifest = JSON.parse(await readFile(new URL('../worlds/foundry/soft-landing/manifest.json', import.meta.url), 'utf8'));
   const pair = loadFoundryPair(preset, manifest);
@@ -33,13 +33,25 @@ test('foundry files stay declarative and the gallery lists one seed', async () =
   assert.notEqual(pair.manifest.challenge.id, pair.manifest.id);
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
-  assert.deepEqual(cards.map(card => card.id), ['soft-landing']);
-  assert.equal(cards[0].kind, 'shot-study');
-  assert.equal(cards[0].editable.launcher, true);
-  assert.equal(cards[0].editable.geometry, true);
-  assert.equal(cards[0].hasChallenge, true);
-  assert.equal(Object.hasOwn(cards[0], 'testedShots'), false);
+  assert.deepEqual(cards.map(card => [card.id, card.section]), [
+    ['bell-loft', 'featured'],
+    ['return-address', 'featured'],
+    ['right-angle', 'featured'],
+    ['open-contacts', 'featured'],
+    ['the-carry', 'construction'],
+    ['the-other-way', 'studies'],
+    ['soft-landing', 'studies'],
+  ]);
+  const landing = cards.find(card => card.id === 'soft-landing');
+  assert.equal(landing.kind, 'shot-study');
+  assert.equal(landing.editable.launcher, true);
+  assert.equal(landing.editable.geometry, true);
+  assert.equal(landing.hasChallenge, true);
+  assert.equal(Object.hasOwn(landing, 'testedShots'), false);
   assert.equal(JSON.stringify(cards).includes('testedShots'), false);
+  assert.equal(JSON.stringify(cards).includes('"layout"'), false);
+  assert.equal(JSON.stringify(cards).includes('worldcraft-object'), false);
+  assert.equal(JSON.stringify(cards).includes('sourceSha'), false);
   assert.equal(foundryRecord('soft-landing').manifest.testedShots[0].outcome.status, 'miss');
   assert.equal(foundryRecord('soft-landing').manifest.testedShots.length, 1);
   assert.equal(foundryRecord('soft-landing').manifest.limitations.length, 1);
@@ -98,9 +110,22 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const Havok = (await import('@babylonjs/havok')).default;
   const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
   const template = await validateFoundryDirectory('worlds/foundry/_template', havok);
+  const bell = await validateFoundryDirectory('worlds/foundry/bell-loft', havok);
+  const address = await validateFoundryDirectory('worlds/foundry/return-address', havok);
+  const angle = await validateFoundryDirectory('worlds/foundry/right-angle', havok);
+  const contacts = await validateFoundryDirectory('worlds/foundry/open-contacts', havok);
+  const carry = await validateFoundryDirectory('worlds/foundry/the-carry', havok);
+  const other = await validateFoundryDirectory('worlds/foundry/the-other-way', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
+  assert.deepEqual(bell.shots, ['opening', 'opening-charge-up', 'lob', 'slam', 'stock-aim', 'door-shut']);
+  assert.equal(bell.sourceBuild, '1ad3166d0839ea042379f5a861ed7523cb46d47e');
+  assert.deepEqual(address.shots, ['opening', 'serve', 'reply', 'edge-catch', 'yaw-neighbour', 'unturned-reply', 'short-lob', 'centre-seam']);
+  assert.deepEqual(angle.shots, ['opening', 'both-faces']);
+  assert.deepEqual(contacts.shots, ['opening', 'two-note', 'rattle', 'lob']);
+  assert.deepEqual(carry.shots, ['opening', 'ramp-down-the-clearing']);
+  assert.deepEqual(other.shots, ['opening', 'left', 'right', 'carry']);
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);

@@ -7,18 +7,39 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import Havok from '@babylonjs/havok';
-import { loadFoundryPair } from '../../lib/worldcraft-foundry.js';
+import { applyFoundryLayout, foundryContactBodies, foundryContactsMatch, loadFoundryPair } from '../../lib/worldcraft-foundry.js';
 import { parseRangePreset } from '../../lib/worldcraft-range.js';
 import { runRange } from '../range/run.mjs';
 
 const roots = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
-const dirs = roots.length ? roots : ['worlds/foundry/_template', 'worlds/foundry/soft-landing'];
+const dirs = roots.length ? roots : [
+  'worlds/foundry/_template',
+  'worlds/foundry/bell-loft',
+  'worlds/foundry/return-address',
+  'worlds/foundry/right-angle',
+  'worlds/foundry/open-contacts',
+  'worlds/foundry/the-carry',
+  'worlds/foundry/the-other-way',
+  'worlds/foundry/soft-landing',
+];
 
 function sameTerminal(actual, expected) {
   return actual.reason === expected.reason
     && Object.is(actual.elapsed, expected.elapsed)
     && actual.position.length === expected.position.length
     && actual.position.every((item, index) => Object.is(item, expected.position[index]));
+}
+
+export function evaluateFoundryShot(actual, expected) {
+  const terminal = sameTerminal(actual.terminal, expected.terminal);
+  const outcome = actual.outcome?.kind === expected.outcome.kind && actual.outcome?.status === expected.outcome.status;
+  const contacts = expected.contacts ? foundryContactsMatch(expected.contacts, actual.contacts) : true;
+  return {
+    terminal,
+    outcome,
+    contacts,
+    actualContacts: foundryContactBodies(actual.contacts),
+  };
 }
 
 export async function validateFoundryDirectory(dir, havok) {
@@ -37,22 +58,32 @@ export async function validateFoundryDirectory(dir, havok) {
     seed: pair.manifest.seed,
     havok,
     omitPoints: true,
+    documentAt: (_setup, index) => {
+      const shot = pair.manifest.testedShots[index];
+      return shot.layout ? applyFoundryLayout(preset, shot.layout).preset : preset;
+    },
   });
   if (rejected) throw new Error(`${pair.manifest.id}: ${rejected} tested shot${rejected === 1 ? '' : 's'} rejected`);
   const shots = lines.filter(line => line.type === 'shot');
   if (shots.length !== pair.manifest.testedShots.length) throw new Error(`${pair.manifest.id}: shot count mismatch`);
   const checks = shots.map((shot, index) => {
     const expected = pair.manifest.testedShots[index];
-    const terminal = sameTerminal(shot.terminal, expected.terminal);
-    const outcome = shot.outcome?.kind === expected.outcome.kind && shot.outcome?.status === expected.outcome.status;
+    const verdict = evaluateFoundryShot(shot, expected);
     return {
       id: expected.id,
-      terminal,
-      outcome,
-      actual: { reason: shot.terminal.reason, elapsed: shot.terminal.elapsed, position: shot.terminal.position, outcome: { kind: shot.outcome.kind, status: shot.outcome.status } },
+      terminal: verdict.terminal,
+      outcome: verdict.outcome,
+      contacts: verdict.contacts,
+      actual: {
+        reason: shot.terminal.reason,
+        elapsed: shot.terminal.elapsed,
+        position: shot.terminal.position,
+        outcome: { kind: shot.outcome.kind, status: shot.outcome.status },
+        contacts: verdict.actualContacts,
+      },
     };
   });
-  const failed = checks.filter(check => !check.terminal || !check.outcome);
+  const failed = checks.filter(check => !check.terminal || !check.outcome || !check.contacts);
   if (failed.length) {
     const error = new Error(`${pair.manifest.id}: tested shot mismatch`);
     error.checks = failed;

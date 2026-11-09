@@ -30,9 +30,13 @@ import {
   type RangePreset, type RangeShot,
 } from '@/lib/worldcraft-range';
 import {
-  foundryCopyName, foundryPreset, foundryRemixWorld, listFoundryWorlds,
+  foundryCopyName, foundryPresentation, foundryPreset, foundryRecord, foundryRemixWorld, listFoundryWorlds,
   type FoundryCard,
 } from '@/lib/worldcraft-foundry';
+import {
+  deckExchangeSentence, foundryPlayCopy, foundryRulesSentence, foundryShotNotice,
+  musicalWorkshopPlayCard, restingPlace, resultFraming, returnReadout,
+} from '@/lib/worldcraft-play-copy';
 import styles from './worldcraft.module.css';
 
 type Kind = 'bank' | 'ramp' | 'block' | 'plate';
@@ -90,7 +94,8 @@ function NoteTimeline({ kind, rows }: { kind: 'current' | 'previous'; rows: Note
   </div>;
 }
 
-function shotNotice(last: WorldcraftRecord): string {
+function shotNotice(last: WorldcraftRecord, foundryId: string | null): string {
+  if (foundryId) return foundryShotNotice(last, foundryRecord(foundryId).preset);
   if (last.goalResult?.kind === 'contact-phrase') {
     const heard = last.goalResult.heard.length ? noteOrder(last.goalResult.heard) : 'no resonant contact';
     const phrase = last.goalResult.status === 'match' ? 'Phrase matched.' : last.goalResult.status === 'miss' ? 'Phrase missed.' : 'Phrase unfinished.';
@@ -132,7 +137,11 @@ function initialUI(): UI {
   };
 }
 
-function playNoticeFor(world: WorldcraftWorld, preset: RangePreset | null): string {
+function playNoticeFor(world: WorldcraftWorld, preset: RangePreset | null, foundryId: string | null = null): string {
+  if (foundryId) {
+    const record = foundryRecord(foundryId);
+    return foundryPlayCopy(record.manifest, preset ?? record.preset).playNotice;
+  }
   if (worldcraftBellTarget(world)) return 'Time the release. The post marks the phase. First ground still ends the line. Contact with the bell is the goal. No score.';
   if (world.rules?.goal?.kind === 'contact-phrase') return 'Fixed shot. The phrase is the order of resonant contacts. The stand-in, when shown, is a separate hit. Not a score.';
   if (world.rules?.goal?.kind === 'none' && preset?.rules.launcher.fixed === false) return 'No pin or score. Move a piece, or change origin, aim, and power inside the rail stops. Fire when the shot is the one you want.';
@@ -245,7 +254,8 @@ export default function Worldcraft() {
         const drawMarks = () => {
           clearMarks();
           const marks = uiRef.current.comparisonMarks;
-          if (!uiRef.current.showTrail || uiRef.current.presetId !== 'musical-workshop' || !marks?.length) return;
+          const markPresentation = foundryPresentation(uiRef.current.foundryId);
+          if (!uiRef.current.showTrail || (uiRef.current.presetId !== 'musical-workshop' && markPresentation?.timeline !== true) || !marks?.length) return;
           for (const mark of marks) {
             if (!mark.point) continue;
             const sphere = MeshBuilder.CreateSphere('worldcraft-contact-mark', { diameter: 0.55, segments: 8 }, activeScene);
@@ -296,7 +306,14 @@ export default function Worldcraft() {
           drawTrail([]);
           drawComparison();
         };
-        const trailMemory = () => ({ presetId: uiRef.current.presetId, history: uiRef.current.history, historyMarks: uiRef.current.historyMarks, comparison: uiRef.current.comparison, comparisonMarks: uiRef.current.comparisonMarks });
+        const trailMemory = () => {
+          const presentation = foundryPresentation(uiRef.current.foundryId);
+          return {
+            presetId: uiRef.current.presetId,
+            timeline: uiRef.current.presetId === 'musical-workshop' || presentation?.timeline === true,
+            history: uiRef.current.history, historyMarks: uiRef.current.historyMarks, comparison: uiRef.current.comparison, comparisonMarks: uiRef.current.comparisonMarks,
+          };
+        };
         const resonance = createResonanceOutput();
         let shotToken: object | null = null;
         let perfSlot: string | null = null;
@@ -305,7 +322,8 @@ export default function Worldcraft() {
           onEvent(event) {
             if (event.kind === 'resonance' && event.impact) {
               const impact = event.impact as ResonanceImpact;
-              resonance.play(impact, uiRef.current.presetId === 'musical-workshop' ? uiRef.current.soundVariant : undefined);
+              const voicePresentation = foundryPresentation(uiRef.current.foundryId);
+              resonance.play(impact, uiRef.current.presetId === 'musical-workshop' || voicePresentation?.bankVoice === true ? uiRef.current.soundVariant : undefined);
               publish({ liveNotes: [...uiRef.current.liveNotes, impact] });
             }
             if (event.kind === 'end' && event.last) {
@@ -327,13 +345,17 @@ export default function Worldcraft() {
               }).catch(error => {
                 if (!disposed) publish({ notice: error instanceof Error ? error.message : String(error) });
               });
-              publish({ phase: 'result', last, lastKept: false, history, historyMarks, shotRecord: null, notice: shotNotice(last) });
+              const frame = resultFraming(last.world, { terminal: last.terminal, contacts: last.contacts, setup: last.setup });
+              if (frame) { orbit.x = frame.x; orbit.z = frame.z; orbit.radius = frame.radius; orbit.elevation = frame.elevation; orbit.angle = frame.angle; }
+              publish({ phase: 'result', view: frame ? 'survey' : uiRef.current.view, last, lastKept: false, history, historyMarks, shotRecord: null, notice: shotNotice(last, uiRef.current.foundryId) });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
             }
           },
         });
         const { launcher, yaw, loft } = buildRangeLauncher(scene, presentation.materials, shadows);
-        const orbit = { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 };
+        const orbitHome = { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 };
+        const orbit = { ...orbitHome };
+        const resetOrbit = () => { orbit.angle = orbitHome.angle; orbit.elevation = orbitHome.elevation; orbit.radius = orbitHome.radius; orbit.x = orbitHome.x; orbit.z = orbitHome.z; };
         let drag: null | {
           id: number; x: number; y: number; startX: number; startY: number;
           type: 'object' | 'view' | 'aim'; ground?: Vector3; object?: WorldcraftWorld['objects'][number];
@@ -380,7 +402,9 @@ export default function Worldcraft() {
           if (mode === 'play') runtime.clearShot();
           const windowed = Boolean(uiRef.current.world.rules?.aimWindow);
           const adjustable = uiRef.current.preset?.rules.launcher.fixed === false && !windowed;
-          const buildNotice = worldcraftBellTarget(uiRef.current.world)
+          const buildNotice = uiRef.current.foundryId
+            ? foundryRulesSentence(foundryRecord(uiRef.current.foundryId).preset)
+            : worldcraftBellTarget(uiRef.current.world)
             ? 'The pieces stay. Set the release phase, then fire.'
             : windowed
               ? 'Move the bank. The carriage stays put. Aim and power stay in the window.'
@@ -389,7 +413,7 @@ export default function Worldcraft() {
                   ? 'Build, then Play. Move a piece here. Origin, aim, and power change in Play.'
                   : 'Move a piece. The rail can change before the next shot.')
                 : 'Build, then Play. Move a piece, then fire the same shot.';
-          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? buildNotice : playNoticeFor(uiRef.current.world, uiRef.current.preset) });
+          publish({ mode, phase: 'ready', view: mode === 'build' ? 'survey' : 'address', notice: mode === 'build' ? buildNotice : playNoticeFor(uiRef.current.world, uiRef.current.preset, uiRef.current.foundryId) });
           selectedHighlight(); trace('mode', { mode });
         };
         const updateSetup = (patch: Partial<WorldcraftSetup>) => {
@@ -410,8 +434,9 @@ export default function Worldcraft() {
           if (uiRef.current.world.rules?.originFixed) setup = { ...setup, originX: uiRef.current.world.launcher.x };
           if (window) setup = { ...setup, yaw: clamp(setup.yaw, window.yawMin, window.yawMax), elevation: clamp(setup.elevation, window.elevationMin, window.elevationMax), charge: clamp(setup.charge, window.chargeMin, window.chargeMax) };
           resonance.unlock();
-          runtime.setDynamics(presetDynamics(uiRef.current.presetId));
+          runtime.setDynamics(presetDynamics(uiRef.current.presetId, foundryPresentation(uiRef.current.foundryId)));
           publish({ liveNotes: [] });
+          resetOrbit();
           if (!runtime.launch(setup)) { publish({ phase: 'ready', notice: runtime.error }); return; }
           projectile?.dispose(); projectile = buildRangeProjectile(activeScene, runtime.flight!.mesh, presentation.materials, shadows);
           projectile.sync(runtime.flight!.aggregate.body.getLinearVelocity());
@@ -443,7 +468,8 @@ export default function Worldcraft() {
           try { loaded = adaptRangePreset(foundryPreset(id)); }
           catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
           const card = listFoundryWorlds().find(item => item.id === id);
-          const notice = card?.invitation ?? loaded.preset.name;
+          const notice = card ? foundryPlayCopy(foundryRecord(id).manifest, loaded.preset).playNotice : loaded.preset.name;
+          resetOrbit();
           clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
           if (!commit(loaded.world, notice, 'commit', true)) return;
           publish({
@@ -496,7 +522,7 @@ export default function Worldcraft() {
           cancel,
           ready() {
             if (uiRef.current.phase === 'loading' || uiRef.current.phase === 'error') return;
-            cancel(); clearRound();
+            cancel(); clearRound(); resetOrbit();
             const kept = workshopTrailStep(trailMemory(), { kind: 'ready' });
             publish({ phase: 'ready', view: 'address', notice: 'Ready · same setup, current world.', history: kept.history, historyMarks: kept.historyMarks, comparison: kept.comparison, comparisonMarks: kept.comparisonMarks });
             if (kept.history) drawTrail(kept.history.points);
@@ -517,10 +543,11 @@ export default function Worldcraft() {
             const entry = store.lines().find(line => line.id === id);
             const impacts = entry?.performance?.impacts;
             if (!impacts?.length) { publish({ notice: 'This kept line has no recorded sounds.' }); return; }
-            const workshop = uiRef.current.presetId === 'musical-workshop';
-            const label = recordedDynamicsLabel(uiRef.current.presetId, uiRef.current.soundVariant);
+            const presentation = foundryPresentation(uiRef.current.foundryId);
+            const bankVoice = uiRef.current.presetId === 'musical-workshop' || presentation?.bankVoice === true;
+            const label = recordedDynamicsLabel(uiRef.current.presetId, uiRef.current.soundVariant, presentation);
             resonance.release();
-            resonance.playRecorded(impacts, workshop ? uiRef.current.soundVariant : undefined);
+            resonance.playRecorded(impacts, bankVoice ? uiRef.current.soundVariant : undefined);
             publish({ notice: `Playing the recorded contacts with ${label}. A kept line stores the contacts, not a voice. The shot is not being fired again.` });
           },
           sound(variant) {
@@ -640,7 +667,7 @@ export default function Worldcraft() {
                     : loaded.preset.rules.goal.kind === 'contact-phrase'
                       ? `${loaded.preset.name} opened. Fixed shot. Move the pieces. The phrase is judged from contacts, not scored.`
                       : `${loaded.preset.name} opened. Fixed shot. Move a piece, then fire the same shot. The earlier trail is the one that was recorded.`;
-            clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
+            clearRound(); resetOrbit(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
             if (commit(loaded.world, opened, 'commit', true)) {
               if (bell) runtime.setLaunchPhase(0);
               publish({ preset: loaded.preset, presetBaseline: loaded.preset, presetId: loaded.preset.id, foundryId: null, memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null, last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0 });
@@ -890,6 +917,7 @@ export default function Worldcraft() {
             publish({ charge: window ? clamp(held, window.chargeMin, window.chargeMax) : held });
           }
           if (state.phase === 'flight' && runtime.flight) {
+            if (!runtime.flight.ended && runtime.flight.elapsed >= 3 && state.notice === 'Committed line · edits are locked.') publish({ notice: 'Still settling. The line has not ended.' });
             const p = runtime.flight.mesh.position, v = runtime.flight.aggregate.body.getLinearVelocity();
             heading = followHeading(heading, v, dt);
             const frame = advanceFlightCamera({ position: camera.position, target: look, fov: camera.fov }, p, previous, followOffsets(p, v, heading), dt, activeEngine.getAspectRatio(camera), horizontal, horizontal ? .96 : .69);
@@ -931,9 +959,19 @@ export default function Worldcraft() {
     : ui.phase === 'flight'
       ? { headline: ui.liveNotes.length ? ui.liveNotes.map(impactHeadline).join(' → ') : 'No resonant note yet', explanation: 'Still in flight. This is the sounds so far.' }
       : null;
-  const timelineCurrent = ui.presetId === 'musical-workshop' ? noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts) : [];
-  const timelinePrevious = ui.presetId === 'musical-workshop' ? (ui.comparisonMarks ?? []) : [];
-  const heardVoice = recordedDynamicsLabel(ui.presetId, ui.soundVariant);
+  const foundryLive = ui.foundryId ? foundryRecord(ui.foundryId) : null;
+  const foundryCopy = foundryLive ? foundryPlayCopy(foundryLive.manifest, foundryLive.preset) : null;
+  const presentation = foundryLive?.manifest.presentation ?? null;
+  const workshopEar = ui.presetId === 'musical-workshop' || presentation?.bankVoice === true;
+  const workshopMarks = ui.presetId === 'musical-workshop' || presentation?.timeline === true;
+  const workshopCard = musicalWorkshopPlayCard();
+  const timelineCurrent = workshopMarks ? noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts) : [];
+  const timelinePrevious = workshopMarks ? (ui.comparisonMarks ?? []) : [];
+  const heardVoice = recordedDynamicsLabel(ui.presetId, ui.soundVariant, presentation);
+  const restLine = ui.last ? restingPlace(ui.last.world, ui.last.terminal)?.sentence ?? null : null;
+  const deckLine = ui.last ? deckExchangeSentence(ui.last.contacts) : null;
+  const returnLine = ui.last ? returnReadout(ui.last.world, ui.last.contacts, ui.last.terminal, ui.last.setup)?.sentence ?? null : null;
+  const foundrySections: [FoundryCard['section'], string][] = [['featured', 'Featured'], ['construction', 'Construction lesson'], ['studies', 'Short studies']];
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);
@@ -978,21 +1016,27 @@ export default function Worldcraft() {
         <p className={styles.hint}>{ui.comparison && ui.showTrail ? `Amber dashed: before${ui.comparison.worldIdentity !== worldcraftIdentity(ui.world) ? ' (earlier world)' : ''} · cyan: ${ui.phase === 'flight' ? 'live' : 'latest'}${earlierWorld && ui.phase !== 'flight' ? ' (earlier world)' : ''} · ${setupChanged ? 'launch setup changed' : 'same launch setup'}` : ui.phase === 'flight' ? 'Actual flight trail' : ui.history && ui.showTrail ? `${ui.history.label} · ${earlierWorld ? 'earlier world · recorded history' : 'actual recorded history'}` : ui.mode === 'build' ? 'Drag a piece · empty space moves the view' : 'One committed launch. No predicted arc.'}</p>
       </section>
       <aside ref={toolsPanel} className={styles.tools} aria-label={ui.mode === 'build' ? 'Build controls' : 'Shot controls'}>
-        {ui.preset && ui.presetId !== 'back-pocket' && !ui.world.rules?.aimWindow && ui.world.rules?.goal?.kind === 'first-ground-zone' && <section className={styles.goal} aria-label="Landing zone">
+        {foundryCopy && <section className={styles.goal} aria-label={foundryCopy.heading} data-foundry-play={ui.foundryId}>
+          <strong>{foundryCopy.heading}</strong>
+          <p>{foundryCopy.invitation}</p>
+          <p data-foundry-rules="">{foundryCopy.rules}</p>
+          <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
+        </section>}
+        {!foundryCopy && ui.preset && ui.presetId !== 'back-pocket' && !ui.world.rules?.aimWindow && ui.world.rules?.goal?.kind === 'first-ground-zone' && <section className={styles.goal} aria-label="Landing zone">
           <strong>First ground in the gold circle</strong>
           <p>The circle judges the landing. Aim and power stay inside the rail stops. The block and the bank can move. A landing here is not a score.</p>
           <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
-        {ui.world.rules?.goal?.kind === 'none' && fixedRail && <section className={styles.goal} aria-label="Fixed shot workshop">
+        {!foundryCopy && ui.world.rules?.goal?.kind === 'none' && fixedRail && <section className={styles.goal} aria-label="Fixed shot workshop">
           <strong>Fixed shot</strong>
           <p>For comparing a piece change. The ramp, bank, and plate can move and ring. Origin, aim, and power stay on this shot. First ground ends the line. No score. The earlier trail is the one that was recorded.</p>
           <p>{ui.setup.originX} m origin · {ui.setup.yaw}° yaw · {ui.setup.elevation}° elevation · {Math.round(ui.setup.charge * 100)}% power</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
-        {ui.world.rules?.goal?.kind === 'none' && !fixedRail && <section className={styles.goal} aria-label="Musical workshop">
-          <strong>Musical Workshop</strong>
-          <p>The ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.</p>
+        {!foundryCopy && ui.presetId === 'musical-workshop' && <section className={styles.goal} aria-label="Musical workshop">
+          <strong>{workshopCard.heading}</strong>
+          <p>{workshopCard.body}</p>
           <div className={styles.buttonRow}><button type="button" disabled={locked || !ui.presetId} onClick={() => actions.current?.resetPreset()}>Reset preset</button></div>
         </section>}
         {ui.world.rules?.goal?.kind === 'contact-phrase' && <section className={styles.goal} aria-label="Contact phrase">
@@ -1072,6 +1116,7 @@ export default function Worldcraft() {
           {ui.powerMode === 'set' && <input aria-label="Power" className={styles.range} disabled={locked} type="range" min={ui.world.rules?.aimWindow?.chargeMin ?? 0} max={ui.world.rules?.aimWindow?.chargeMax ?? 1} step=".01" value={ui.setup.charge} onChange={e => actions.current?.setup({ charge: Number(e.target.value) })} />}
           </>}
           <div className={styles.flowSticky}>
+          {foundryCopy && <p className={styles.foundryInvite} data-foundry-invite="">{foundryCopy.invitation}</p>}
           {ui.phase === 'ready' || ui.phase === 'charging' ? <button key="launch-control" type="button" className={styles.chargeButton} aria-label={ui.powerMode === 'set' ? 'Fire line' : 'Hold to charge'}
             onClick={() => { if (ui.powerMode === 'set') actions.current?.begin(); }}
             onPointerDown={e => { if (ui.powerMode === 'hold') { e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId); actions.current?.begin(); } }}
@@ -1088,7 +1133,7 @@ export default function Worldcraft() {
             <p className={styles.sequenceLine}>{impactReadout.headline}</p>
             <p>{impactReadout.explanation}</p>
           </section>}
-          {ui.presetId === 'musical-workshop' && <div className={styles.soundAb} data-sound-ab={ui.soundVariant}>
+          {workshopEar && <div className={styles.soundAb} data-sound-ab={ui.soundVariant}>
             <label>Bank sound
               <select value={ui.soundVariant} onChange={event => actions.current?.sound(event.target.value)}>
                 {SOUND_VARIANTS.map(variant => <option key={variant.id} value={variant.id}>{variant.label}</option>)}
@@ -1113,6 +1158,9 @@ export default function Worldcraft() {
             {!bell && !phraseResult && ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
             {!bell && !phraseResult && ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}
             {ui.preset && ui.last.goalResult?.kind === 'first-ground-zone' && <p>{`${ui.last.goalResult.status === 'clear' ? 'Inside the circle' : ui.last.goalResult.status === 'miss' ? 'Outside the circle' : 'No landing'}${ui.last.goalResult.distance === null ? '' : ` · ${ui.last.goalResult.distance.toFixed(1)} m from centre`}. Not a score.`}</p>}
+            {restLine && <p data-resting="">{restLine}</p>}
+            {deckLine && <p data-carriage="">{deckLine}</p>}
+            {returnLine && <p data-return="">{returnLine}</p>}
             {ui.last.pinResult && !(ui.preset && ui.last.goalResult?.kind === 'first-ground-zone') && <p>{`${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}`}</p>}
             <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div>
           </div>}
@@ -1145,17 +1193,23 @@ export default function Worldcraft() {
     {ui.foundryOpen && <div ref={dialog} className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="foundry-title" onKeyDown={e => { if (e.key === 'Escape') actions.current?.foundry(false); }}>
       <div className={styles.dialogBody}><div className={styles.dialogHeader}><h2 id="foundry-title">Foundry</h2><button type="button" onClick={() => actions.current?.foundry(false)}>Close</button></div>
         <p className={styles.muted}>A short list of prepared arrangements. A copy is a new saved world. It does not change the arrangement you opened.</p>
-        <div className={styles.foundryList}>{listFoundryWorlds().map(card => <article className={styles.slot} key={card.id} data-foundry-card={card.id}>
-          <h3>{card.name}</h3>
-          <p>{card.invitation}</p>
-          <span>{foundryKindLabel(card.kind)} · {card.editable.launcher ? 'Launcher editable' : 'Launcher fixed'} · {card.editable.geometry ? 'Geometry editable' : 'Geometry fixed'}</span>
-          <span>{card.hasChallenge ? 'Optional challenge' : 'No separate challenge'}</span>
-          <div className={styles.buttonRow}>
-            <button type="button" className={styles.primary} disabled={locked} onClick={() => actions.current?.playFoundry(card.id)}>Play</button>
-            <button type="button" disabled={locked} onClick={() => actions.current?.resetFoundry(card.id)}>Reset</button>
-            <button type="button" disabled={locked} onClick={() => actions.current?.remixFoundry(card.id)}>Make a copy</button>
-          </div>
-        </article>)}</div>
+        {foundrySections.map(([section, title]) => {
+          const cards = listFoundryWorlds().filter(card => card.section === section);
+          if (!cards.length) return null;
+          return <section key={section} data-foundry-section={section}>
+            <h3 className={styles.sectionTitle}>{title}</h3>
+            <div className={styles.foundryList}>{cards.map(card => <article className={styles.slot} key={card.id} data-foundry-card={card.id}>
+              <h3>{card.name}</h3>
+              <p>{card.invitation}</p>
+              <span>{foundryKindLabel(card.kind)} · {card.editable.launcher ? 'Launcher editable' : 'Launcher fixed'} · {card.editable.geometry ? 'Geometry editable' : 'Geometry fixed'}</span>
+              <div className={styles.buttonRow}>
+                <button type="button" className={styles.primary} disabled={locked} onClick={() => actions.current?.playFoundry(card.id)}>Play</button>
+                <button type="button" disabled={locked} onClick={() => actions.current?.resetFoundry(card.id)}>Reset</button>
+                <button type="button" disabled={locked} onClick={() => actions.current?.remixFoundry(card.id)}>Make a copy</button>
+              </div>
+            </article>)}</div>
+          </section>;
+        })}
         <p className={styles.notice} role="status">{ui.notice}</p>
       </div>
     </div>}

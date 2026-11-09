@@ -1,0 +1,42 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "right-angle",
+  "name": "Right Angle",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "back-face",
+      "kind": "bank",
+      "x": 16,
+      "z": 28.5,
+      "yaw": 0,
+      "voice": { "material": "timber", "degree": 0 }
+    },
+    {
+      "id": "side-face",
+      "kind": "bank",
+      "x": 22.5,
+      "z": 22,
+      "yaw": 90,
+      "voice": { "material": "metal", "degree": 2 }
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "fixed": ["back-face", "side-face"],
+    "allowance": {},
+    "goal": { "kind": "none" }
+  }
+}

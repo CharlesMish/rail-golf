@@ -129,6 +129,7 @@
 .memoryGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
 .slot { min-width: 0; padding: 12px; border: 1px solid #3c5356; border-radius: 3px; background: #0c1a1e; overflow-wrap: anywhere; }
 .foundryList { display: grid; gap: 10px; }
+.foundryInvite { display: none; margin: 0; color: #f1d7ae; font-size: 13px; line-height: 1.35; }
 .slot > strong, .slot > span { display: block; margin: 0 0 4px; }
 .slot :is(h3, p) { margin: 0 0 7px; }
 .slot h3 { font-size: 14px; }
@@ -164,6 +165,7 @@
   .inspector { gap: 6px; }
   .playControls { display: flex; flex-direction: column; gap: 7px; }
   .playControls > .flowSticky { position: sticky; top: 0; z-index: 3; order: -1; flex: 0 0 auto; padding-bottom: 6px; background: #0c1c21; }
+  .foundryInvite { display: block; }
   .shell[data-mode="build"] .tools { display: flex; flex-direction: column; }
   .shell[data-mode="build"] .section { order: 0; }
   .shell[data-mode="build"] .buttonRow { order: 1; }
