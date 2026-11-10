@@ -1,0 +1,3548 @@
+{
+ "seed": 20261110,
+ "seedAppliedToSolver": false,
+ "definitions": {
+  "note": "One impact the resonance ear kept. It is what the player hears and what the note timeline draws.",
+  "beat": "Notes that begin within 80 ms of each other. A ball on the seam between two pieces sounds two notes in one beat. Counts and phrases are in beats.",
+  "phrase": "The pieces of each beat, in order. A seam beat is written a+b.",
+  "ledgerOrder": "Piece rows of the contact ledger, in order. Consecutive callbacks on one body are one row, so two bounces on one piece are one row and two beats.",
+  "neighbour": "One slider step: 0.5° yaw, 0.5° elevation, or 0.01 charge.",
+  "neighbourhood": "For each lattice cell with at least `floor` beats and all six neighbours on the lattice: same is an identical phrase; variation is a different phrase that still has at least `floor` beats; thinner has fewer but is not silent; silent has none.",
+  "mixBound": "Summed level entering the mix limiter with every partial in phase, on the tuned-even bank voice. An upper bound, not a measured peak."
+ },
+ "aimSets": {
+  "broad": {
+   "shots": 875,
+   "yaw": "-24..24 step 2",
+   "elevation": [
+    8,
+    12,
+    16,
+    20,
+    24,
+    30,
+    40
+   ],
+   "charge": [
+    0.35,
+    0.45,
+    0.55,
+    0.65,
+    0.8
+   ],
+   "originX": 0
+  },
+  "lattice": {
+   "shots": 17325,
+   "yaw": "-6..6 step 0.5",
+   "elevation": "10..26 step 0.5",
+   "charge": "0.45..0.65 step 0.01",
+   "originX": 0
+  },
+  "wide": {
+   "shots": 2275,
+   "originX": [
+    -8,
+    -4,
+    0,
+    4,
+    8
+   ],
+   "yaw": "-30..30 step 5",
+   "elevation": [
+    10,
+    15,
+    20,
+    25,
+    30,
+    40,
+    50
+   ],
+   "charge": [
+    0.3,
+    0.45,
+    0.6,
+    0.75,
+    0.9
+   ]
+  }
+ },
+ "worlds": {
+  "elevated": {
+   "pieces": 12,
+   "elevatedPieces": 6,
+   "sets": {
+    "broad": {
+     "summary": {
+      "shots": 875,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 220,
+       "1": 332,
+       "2": 158,
+       "3": 103,
+       "4": 48,
+       "5": 12,
+       "7": 2
+      },
+      "silent": 220,
+      "silentShare": 0.2514,
+      "one": 332,
+      "twoPlus": 323,
+      "twoPlusShare": 0.3691,
+      "threePlus": 165,
+      "threePlusShare": 0.1886,
+      "threeToFive": 163,
+      "threeToFiveShare": 0.1863,
+      "sixPlus": 2,
+      "sixPlusShare": 0.0023,
+      "maxNotes": 7,
+      "distinctPhrases": 117,
+      "distinctMultiBeatPhrases": 106,
+      "distinctThreePlusPhrases": 72,
+      "distinctLedgerOrders": 114,
+      "distinctPitchPhrases": 82,
+      "shotsRepeatingAPiece": 89,
+      "shotsWithSamePieceTwiceInARow": 5,
+      "shotsWithASeamChord": 9,
+      "firstSoundSeconds": {
+       "median": 0.717,
+       "p10": 0.392,
+       "p90": 1.275
+      },
+      "gapSeconds": {
+       "count": 568,
+       "median": 0.583,
+       "p10": 0.258,
+       "p90": 1.533,
+       "under150ms": 0,
+       "over1s": 119
+      },
+      "flightSeconds": {
+       "median": 2.708,
+       "p90": 3.767,
+       "max": 7.017
+      },
+      "terminalReasons": {
+       "first-ground-contact": 777,
+       "out-of-bounds": 98
+      },
+      "pieceShots": {
+       "ramp-w": 237,
+       "ramp-e": 179,
+       "wall-near-w": 149,
+       "wall-near-e": 213,
+       "wall-far-w": 53,
+       "wall-far-e": 54,
+       "high-w": 36,
+       "high-c": 33,
+       "high-e": 35,
+       "top-w": 42,
+       "top-c": 33,
+       "top-e": 42
+      },
+      "pieceNotes": {
+       "ramp-w": 276,
+       "ramp-e": 200,
+       "wall-near-w": 168,
+       "wall-near-e": 245,
+       "wall-far-w": 53,
+       "wall-far-e": 55,
+       "high-w": 37,
+       "high-c": 36,
+       "high-e": 36,
+       "top-w": 45,
+       "top-c": 37,
+       "top-e": 45
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 220
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 81
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 77
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 74
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 70
+       },
+       {
+        "phrase": "ramp-w > wall-far-w",
+        "count": 18
+       },
+       {
+        "phrase": "ramp-e > wall-far-e",
+        "count": 17
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 13
+       },
+       {
+        "phrase": "high-e > wall-near-e",
+        "count": 11
+       },
+       {
+        "phrase": "high-w > wall-near-w",
+        "count": 11
+       },
+       {
+        "phrase": "ramp-w > top-w > ramp-w",
+        "count": 9
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 9
+       },
+       {
+        "phrase": "high-c > wall-near-e",
+        "count": 8
+       },
+       {
+        "phrase": "high-e > wall-near-e > wall-far-e",
+        "count": 8
+       },
+       {
+        "phrase": "high-w > wall-near-w > wall-far-w",
+        "count": 8
+       },
+       {
+        "phrase": "ramp-w > top-w",
+        "count": 7
+       }
+      ]
+     },
+     "rowsSha256": "f9d79a362c8fcbe7690b7a7ba82101f6ee2a0269528d3a12965ce6d7be595a10"
+    },
+    "lattice": {
+     "summary": {
+      "shots": 17325,
+      "rejected": 0,
+      "beatHistogram": {
+       "1": 4882,
+       "2": 2708,
+       "3": 6688,
+       "4": 2456,
+       "5": 392,
+       "6": 107,
+       "7": 59,
+       "8": 29,
+       "9": 2,
+       "14": 2
+      },
+      "silent": 0,
+      "silentShare": 0,
+      "one": 4882,
+      "twoPlus": 12443,
+      "twoPlusShare": 0.7182,
+      "threePlus": 9735,
+      "threePlusShare": 0.5619,
+      "threeToFive": 9536,
+      "threeToFiveShare": 0.5504,
+      "sixPlus": 199,
+      "sixPlusShare": 0.0115,
+      "maxNotes": 14,
+      "distinctPhrases": 766,
+      "distinctMultiBeatPhrases": 747,
+      "distinctThreePlusPhrases": 672,
+      "distinctLedgerOrders": 875,
+      "distinctPitchPhrases": 610,
+      "shotsRepeatingAPiece": 5977,
+      "shotsWithSamePieceTwiceInARow": 148,
+      "shotsWithASeamChord": 2043,
+      "firstSoundSeconds": {
+       "median": 0.8,
+       "p10": 0.475,
+       "p90": 1.1
+      },
+      "gapSeconds": {
+       "count": 26154,
+       "median": 0.35,
+       "p10": 0.233,
+       "p90": 0.967,
+       "under150ms": 10,
+       "over1s": 1959
+      },
+      "flightSeconds": {
+       "median": 2.492,
+       "p90": 4.05,
+       "max": 16.108
+      },
+      "terminalReasons": {
+       "first-ground-contact": 16503,
+       "out-of-bounds": 822
+      },
+      "pieceShots": {
+       "ramp-w": 7036,
+       "ramp-e": 2715,
+       "wall-near-w": 3040,
+       "wall-near-e": 11254,
+       "wall-far-w": 2714,
+       "wall-far-e": 1007,
+       "high-w": 1133,
+       "high-c": 2802,
+       "high-e": 1125,
+       "top-w": 1326,
+       "top-c": 2551,
+       "top-e": 1283
+      },
+      "pieceNotes": {
+       "ramp-w": 10195,
+       "ramp-e": 3548,
+       "wall-near-w": 3636,
+       "wall-near-e": 13556,
+       "wall-far-w": 3178,
+       "wall-far-e": 1147,
+       "high-w": 1178,
+       "high-c": 2868,
+       "high-e": 1166,
+       "top-w": 1346,
+       "top-c": 2597,
+       "top-e": 1302
+      },
+      "topPhrases": [
+       {
+        "phrase": "wall-near-e",
+        "count": 3815
+       },
+       {
+        "phrase": "high-c > wall-near-e > wall-far-w",
+        "count": 871
+       },
+       {
+        "phrase": "ramp-w > top-c > ramp-w",
+        "count": 771
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 592
+       },
+       {
+        "phrase": "ramp-w > top-w > ramp-w",
+        "count": 538
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 531
+       },
+       {
+        "phrase": "wall-near-e > ramp-w > wall-near-e",
+        "count": 482
+       },
+       {
+        "phrase": "high-w > wall-near-w > wall-far-w",
+        "count": 388
+       },
+       {
+        "phrase": "high-e > wall-near-e > wall-far-e",
+        "count": 387
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 346
+       },
+       {
+        "phrase": "ramp-e > top-e > ramp-e",
+        "count": 286
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e",
+        "count": 275
+       },
+       {
+        "phrase": "ramp-w > top-c > wall-near-e",
+        "count": 258
+       },
+       {
+        "phrase": "high-c > wall-near-e",
+        "count": 247
+       },
+       {
+        "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+        "count": 232
+       },
+       {
+        "phrase": "ramp-w > top-c > ramp-w > wall-near-e",
+        "count": 217
+       }
+      ]
+     },
+     "rowsSha256": "18ad5f7399719f2f7298fcb984baa433ec21e107a9e3c6392b5daef0a2cec5f9",
+     "neighbourhoodFloor3": {
+      "floor": 3,
+      "cells": 7546,
+      "neighbours": 45276,
+      "same": 25431,
+      "variation": 15486,
+      "thinner": 4359,
+      "silent": 0,
+      "cellsAllSix": 1373,
+      "cellsNoCollapse": 5028,
+      "cellsWithVariation": 5779,
+      "sameShare": 0.5617,
+      "variationShare": 0.342,
+      "thinnerShare": 0.0963,
+      "silentShare": 0,
+      "keptRichShare": 0.9037,
+      "cellsNoCollapseShare": 0.6663
+     },
+     "neighbourhoodFloor2": {
+      "floor": 2,
+      "cells": 9395,
+      "neighbours": 56370,
+      "same": 30640,
+      "variation": 23031,
+      "thinner": 2699,
+      "silent": 0,
+      "cellsAllSix": 1429,
+      "cellsNoCollapse": 7858,
+      "cellsWithVariation": 7780,
+      "sameShare": 0.5436,
+      "variationShare": 0.4086,
+      "thinnerShare": 0.0479,
+      "silentShare": 0,
+      "keptRichShare": 0.9521,
+      "cellsNoCollapseShare": 0.8364
+     },
+     "audio": {
+      "soundingShots": 17325,
+      "limiterKnee": 0.85,
+      "limiterCeilingDb": -1,
+      "medianBound": 0.394,
+      "p99Bound": 0.676,
+      "worstBound": 1.16,
+      "shotsOverKnee": 21
+     },
+     "longAndRepeated": {
+      "eightOrMoreBeats": {
+       "shots": 33,
+       "bouncingOnAWallTop": 2,
+       "ramps": 31,
+       "other": 0
+      },
+      "samePieceTwiceInARowByKind": {
+       "ramp": 130,
+       "bank": 20,
+       "plate": 1
+      }
+     }
+    },
+    "wide": {
+     "summary": {
+      "shots": 2275,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 1183,
+       "1": 595,
+       "2": 303,
+       "3": 115,
+       "4": 42,
+       "5": 31,
+       "6": 6
+      },
+      "silent": 1183,
+      "silentShare": 0.52,
+      "one": 595,
+      "twoPlus": 497,
+      "twoPlusShare": 0.2185,
+      "threePlus": 194,
+      "threePlusShare": 0.0853,
+      "threeToFive": 188,
+      "threeToFiveShare": 0.0826,
+      "sixPlus": 6,
+      "sixPlusShare": 0.0026,
+      "maxNotes": 6,
+      "distinctPhrases": 161,
+      "distinctMultiBeatPhrases": 147,
+      "distinctThreePlusPhrases": 101,
+      "distinctLedgerOrders": 158,
+      "distinctPitchPhrases": 103,
+      "shotsRepeatingAPiece": 112,
+      "shotsWithSamePieceTwiceInARow": 12,
+      "shotsWithASeamChord": 21,
+      "firstSoundSeconds": {
+       "median": 0.779,
+       "p10": 0.433,
+       "p90": 1.567
+      },
+      "gapSeconds": {
+       "count": 813,
+       "median": 0.5,
+       "p10": 0.217,
+       "p90": 1.417,
+       "under150ms": 0,
+       "over1s": 179
+      },
+      "flightSeconds": {
+       "median": 2.592,
+       "p90": 3.975,
+       "max": 7.017
+      },
+      "terminalReasons": {
+       "first-ground-contact": 1682,
+       "out-of-bounds": 593
+      },
+      "pieceShots": {
+       "ramp-w": 339,
+       "ramp-e": 280,
+       "wall-near-w": 317,
+       "wall-near-e": 376,
+       "wall-far-w": 52,
+       "wall-far-e": 56,
+       "high-w": 40,
+       "high-c": 37,
+       "high-e": 40,
+       "top-w": 68,
+       "top-c": 71,
+       "top-e": 68
+      },
+      "pieceNotes": {
+       "ramp-w": 381,
+       "ramp-e": 308,
+       "wall-near-w": 353,
+       "wall-near-e": 443,
+       "wall-far-w": 52,
+       "wall-far-e": 56,
+       "high-w": 43,
+       "high-c": 39,
+       "high-e": 43,
+       "top-w": 69,
+       "top-c": 72,
+       "top-e": 69
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 1183
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 185
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 163
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 114
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 83
+       },
+       {
+        "phrase": "ramp-w > wall-near-w",
+        "count": 30
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 22
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 18
+       },
+       {
+        "phrase": "top-w > ramp-w",
+        "count": 17
+       },
+       {
+        "phrase": "wall-near-w > ramp-w",
+        "count": 17
+       },
+       {
+        "phrase": "top-e > ramp-e",
+        "count": 15
+       },
+       {
+        "phrase": "ramp-w > top-w",
+        "count": 14
+       },
+       {
+        "phrase": "ramp-w > wall-far-w",
+        "count": 14
+       },
+       {
+        "phrase": "top-c > ramp-w",
+        "count": 14
+       },
+       {
+        "phrase": "ramp-e > wall-near-e",
+        "count": 13
+       },
+       {
+        "phrase": "ramp-w > wall-near-e",
+        "count": 13
+       }
+      ]
+     },
+     "rowsSha256": "83620d84b1afd6fb287cb5df986515ca2b4103949003ffff42e631adaff16c07",
+     "unusedPieces": []
+    }
+   },
+   "identity": {
+    "presetId": "descending-resonance",
+    "presetHash": "c6cb821fce4afd50e1f457846f3948d0b792a7930c1a95a5220a05f279a53a72",
+    "worldIdentityHash": "5d230f89f21e7799c240279345bee9256b96ef3c3529a3d9a1c72212ff1f8e4e",
+    "pieces": 12,
+    "gitSha": "43a9f2aa820db4664076c466749b48344a92de15"
+   },
+   "diagnosticsBeforeDispose": {
+    "staticBodies": 14,
+    "meshes": 14,
+    "physicsBodies": 14
+   }
+  },
+  "flat": {
+   "pieces": 10,
+   "elevatedPieces": 0,
+   "sets": {
+    "broad": {
+     "summary": {
+      "shots": 875,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 295,
+       "1": 380,
+       "2": 157,
+       "3": 38,
+       "4": 2,
+       "5": 2,
+       "8": 1
+      },
+      "silent": 295,
+      "silentShare": 0.3371,
+      "one": 380,
+      "twoPlus": 200,
+      "twoPlusShare": 0.2286,
+      "threePlus": 43,
+      "threePlusShare": 0.0491,
+      "threeToFive": 42,
+      "threeToFiveShare": 0.048,
+      "sixPlus": 1,
+      "sixPlusShare": 0.0011,
+      "maxNotes": 8,
+      "distinctPhrases": 54,
+      "distinctMultiBeatPhrases": 46,
+      "distinctThreePlusPhrases": 26,
+      "distinctLedgerOrders": 53,
+      "distinctPitchPhrases": 35,
+      "shotsRepeatingAPiece": 20,
+      "shotsWithSamePieceTwiceInARow": 1,
+      "shotsWithASeamChord": 12,
+      "firstSoundSeconds": {
+       "median": 0.717,
+       "p10": 0.383,
+       "p90": 1.508
+      },
+      "gapSeconds": {
+       "count": 254,
+       "median": 0.417,
+       "p10": 0.292,
+       "p90": 2.008,
+       "under150ms": 3,
+       "over1s": 87
+      },
+      "flightSeconds": {
+       "median": 2.817,
+       "p90": 3.85,
+       "max": 6.883
+      },
+      "terminalReasons": {
+       "first-ground-contact": 800,
+       "out-of-bounds": 75
+      },
+      "pieceShots": {
+       "ramp-w": 208,
+       "ramp-e": 147,
+       "row-a": 23,
+       "row-b": 11,
+       "row-c": 18,
+       "row-d": 15,
+       "wall-near-w": 138,
+       "wall-near-e": 146,
+       "wall-far-w": 55,
+       "wall-far-e": 57
+      },
+      "pieceNotes": {
+       "ramp-w": 210,
+       "ramp-e": 148,
+       "row-a": 23,
+       "row-b": 12,
+       "row-c": 18,
+       "row-d": 15,
+       "wall-near-w": 145,
+       "wall-near-e": 159,
+       "wall-far-w": 57,
+       "wall-far-e": 59
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 295
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 130
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 93
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 73
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 41
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 26
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 21
+       },
+       {
+        "phrase": "ramp-w > wall-far-w",
+        "count": 20
+       },
+       {
+        "phrase": "ramp-e > wall-far-e",
+        "count": 17
+       },
+       {
+        "phrase": "wall-far-w",
+        "count": 15
+       },
+       {
+        "phrase": "ramp-w > wall-near-w",
+        "count": 13
+       },
+       {
+        "phrase": "wall-near-w > row-a",
+        "count": 12
+       },
+       {
+        "phrase": "wall-near-e > row-c",
+        "count": 11
+       },
+       {
+        "phrase": "wall-near-w > ramp-w",
+        "count": 11
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 9
+       },
+       {
+        "phrase": "wall-near-e > row-d",
+        "count": 8
+       }
+      ]
+     },
+     "rowsSha256": "e8cb9a799a2d6a9413c380fd8c4b343291e7d1d0bb980795edc6a593ccf17647"
+    },
+    "lattice": {
+     "summary": {
+      "shots": 17325,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 2086,
+       "1": 7176,
+       "2": 2589,
+       "3": 2948,
+       "4": 1783,
+       "5": 410,
+       "6": 227,
+       "7": 82,
+       "8": 22,
+       "9": 2
+      },
+      "silent": 2086,
+      "silentShare": 0.1204,
+      "one": 7176,
+      "twoPlus": 8063,
+      "twoPlusShare": 0.4654,
+      "threePlus": 5474,
+      "threePlusShare": 0.316,
+      "threeToFive": 5141,
+      "threeToFiveShare": 0.2967,
+      "sixPlus": 333,
+      "sixPlusShare": 0.0192,
+      "maxNotes": 9,
+      "distinctPhrases": 561,
+      "distinctMultiBeatPhrases": 548,
+      "distinctThreePlusPhrases": 504,
+      "distinctLedgerOrders": 613,
+      "distinctPitchPhrases": 487,
+      "shotsRepeatingAPiece": 5120,
+      "shotsWithSamePieceTwiceInARow": 262,
+      "shotsWithASeamChord": 1480,
+      "firstSoundSeconds": {
+       "median": 0.917,
+       "p10": 0.475,
+       "p90": 1.183
+      },
+      "gapSeconds": {
+       "count": 17271,
+       "median": 0.325,
+       "p10": 0.25,
+       "p90": 0.583,
+       "under150ms": 558,
+       "over1s": 703
+      },
+      "flightSeconds": {
+       "median": 2.925,
+       "p90": 4.067,
+       "max": 11.908
+      },
+      "terminalReasons": {
+       "first-ground-contact": 16830,
+       "out-of-bounds": 495
+      },
+      "pieceShots": {
+       "ramp-w": 6104,
+       "ramp-e": 1620,
+       "row-a": 907,
+       "row-b": 2779,
+       "row-c": 2160,
+       "row-d": 9,
+       "wall-near-w": 2416,
+       "wall-near-e": 8095,
+       "wall-far-w": 1489,
+       "wall-far-e": 607
+      },
+      "pieceNotes": {
+       "ramp-w": 6887,
+       "ramp-e": 2027,
+       "row-a": 1043,
+       "row-b": 3337,
+       "row-c": 2529,
+       "row-d": 10,
+       "wall-near-w": 3468,
+       "wall-near-e": 11780,
+       "wall-far-w": 2214,
+       "wall-far-e": 833
+      },
+      "topPhrases": [
+       {
+        "phrase": "ramp-w",
+        "count": 4108
+       },
+       {
+        "phrase": "(silent)",
+        "count": 2086
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 1287
+       },
+       {
+        "phrase": "wall-near-e > row-c > wall-near-e",
+        "count": 660
+       },
+       {
+        "phrase": "wall-near-e > row-b",
+        "count": 584
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 557
+       },
+       {
+        "phrase": "wall-near-e > row-b > wall-near-e",
+        "count": 524
+       },
+       {
+        "phrase": "wall-near-e > row-c",
+        "count": 513
+       },
+       {
+        "phrase": "wall-far-w",
+        "count": 507
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 421
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 276
+       },
+       {
+        "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+        "count": 263
+       },
+       {
+        "phrase": "wall-near-e > row-c > wall-near-e > row-c",
+        "count": 260
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 259
+       },
+       {
+        "phrase": "wall-far-w > wall-near-e > wall-far-w",
+        "count": 208
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 171
+       }
+      ]
+     },
+     "rowsSha256": "9763927a834455e2c8c17434bc1c6534d7eedaf42c993eb065a410f451067caa",
+     "neighbourhoodFloor3": {
+      "floor": 3,
+      "cells": 4614,
+      "neighbours": 27684,
+      "same": 12707,
+      "variation": 9515,
+      "thinner": 5462,
+      "silent": 0,
+      "cellsAllSix": 381,
+      "cellsNoCollapse": 1670,
+      "cellsWithVariation": 3630,
+      "sameShare": 0.459,
+      "variationShare": 0.3437,
+      "thinnerShare": 0.1973,
+      "silentShare": 0,
+      "keptRichShare": 0.8027,
+      "cellsNoCollapseShare": 0.3619
+     },
+     "neighbourhoodFloor2": {
+      "floor": 2,
+      "cells": 6660,
+      "neighbours": 39960,
+      "same": 19114,
+      "variation": 17983,
+      "thinner": 2863,
+      "silent": 0,
+      "cellsAllSix": 551,
+      "cellsNoCollapse": 5070,
+      "cellsWithVariation": 5837,
+      "sameShare": 0.4783,
+      "variationShare": 0.45,
+      "thinnerShare": 0.0716,
+      "silentShare": 0,
+      "keptRichShare": 0.9284,
+      "cellsNoCollapseShare": 0.7613
+     },
+     "audio": {
+      "soundingShots": 15239,
+      "limiterKnee": 0.85,
+      "limiterCeilingDb": -1,
+      "medianBound": 0.385,
+      "p99Bound": 0.834,
+      "worstBound": 0.98,
+      "shotsOverKnee": 111
+     },
+     "longAndRepeated": {
+      "eightOrMoreBeats": {
+       "shots": 24,
+       "bouncingOnAWallTop": 0,
+       "ramps": 13,
+       "other": 11
+      },
+      "samePieceTwiceInARowByKind": {
+       "ramp": 246,
+       "bank": 14,
+       "plate": 4
+      }
+     }
+    },
+    "wide": {
+     "summary": {
+      "shots": 2275,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 1400,
+       "1": 648,
+       "2": 152,
+       "3": 21,
+       "4": 46,
+       "5": 7,
+       "6": 1
+      },
+      "silent": 1400,
+      "silentShare": 0.6154,
+      "one": 648,
+      "twoPlus": 227,
+      "twoPlusShare": 0.0998,
+      "threePlus": 75,
+      "threePlusShare": 0.033,
+      "threeToFive": 74,
+      "threeToFiveShare": 0.0325,
+      "sixPlus": 1,
+      "sixPlusShare": 0.0004,
+      "maxNotes": 6,
+      "distinctPhrases": 92,
+      "distinctMultiBeatPhrases": 79,
+      "distinctThreePlusPhrases": 54,
+      "distinctLedgerOrders": 96,
+      "distinctPitchPhrases": 70,
+      "shotsRepeatingAPiece": 68,
+      "shotsWithSamePieceTwiceInARow": 0,
+      "shotsWithASeamChord": 21,
+      "firstSoundSeconds": {
+       "median": 0.833,
+       "p10": 0.417,
+       "p90": 1.725
+      },
+      "gapSeconds": {
+       "count": 365,
+       "median": 0.408,
+       "p10": 0.192,
+       "p90": 1.792,
+       "under150ms": 27,
+       "over1s": 109
+      },
+      "flightSeconds": {
+       "median": 2.542,
+       "p90": 3.567,
+       "max": 5.5
+      },
+      "terminalReasons": {
+       "first-ground-contact": 1659,
+       "out-of-bounds": 616
+      },
+      "pieceShots": {
+       "ramp-w": 242,
+       "ramp-e": 204,
+       "row-a": 32,
+       "row-b": 36,
+       "row-c": 39,
+       "row-d": 35,
+       "wall-near-w": 248,
+       "wall-near-e": 262,
+       "wall-far-w": 22,
+       "wall-far-e": 44
+      },
+      "pieceNotes": {
+       "ramp-w": 250,
+       "ramp-e": 211,
+       "row-a": 40,
+       "row-b": 44,
+       "row-c": 47,
+       "row-d": 42,
+       "wall-near-w": 265,
+       "wall-near-e": 297,
+       "wall-far-w": 22,
+       "wall-far-e": 44
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 1400
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 162
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 154
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 149
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 132
+       },
+       {
+        "phrase": "ramp-w > wall-near-w",
+        "count": 33
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 27
+       },
+       {
+        "phrase": "ramp-e > wall-near-e",
+        "count": 19
+       },
+       {
+        "phrase": "ramp-w > wall-near-e",
+        "count": 19
+       },
+       {
+        "phrase": "wall-far-w > wall-near-w",
+        "count": 12
+       },
+       {
+        "phrase": "wall-near-e > row-d",
+        "count": 10
+       },
+       {
+        "phrase": "wall-far-e > wall-near-e",
+        "count": 9
+       },
+       {
+        "phrase": "wall-near-w > row-a",
+        "count": 8
+       },
+       {
+        "phrase": "wall-near-e > row-c",
+        "count": 7
+       },
+       {
+        "phrase": "ramp-e > wall-near-w",
+        "count": 5
+       },
+       {
+        "phrase": "row-a",
+        "count": 5
+       }
+      ]
+     },
+     "rowsSha256": "f4f71a78262aedd33f9615070f630ec6d91228635abeaa1d2e91ef5aafe0dce9",
+     "unusedPieces": []
+    }
+   },
+   "identity": {
+    "presetId": "descending-resonance-flat",
+    "presetHash": "b0b048e2b4a68d50119e9843b887cceb035e50a56432a34b47d4d8afef0509d7",
+    "worldIdentityHash": "31a5133741c624d771c99c9fe32b9c5ce20999fb0d8b5cc1f2bf1ccde710d09d",
+    "pieces": 10,
+    "gitSha": "43a9f2aa820db4664076c466749b48344a92de15"
+   },
+   "diagnosticsBeforeDispose": {
+    "staticBodies": 12,
+    "meshes": 12,
+    "physicsBodies": 12
+   }
+  },
+  "loop": {
+   "pieces": 10,
+   "elevatedPieces": 0,
+   "sets": {
+    "broad": {
+     "summary": {
+      "shots": 875,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 480,
+       "1": 288,
+       "2": 83,
+       "3": 9,
+       "4": 12,
+       "5": 3
+      },
+      "silent": 480,
+      "silentShare": 0.5486,
+      "one": 288,
+      "twoPlus": 107,
+      "twoPlusShare": 0.1223,
+      "threePlus": 24,
+      "threePlusShare": 0.0274,
+      "threeToFive": 24,
+      "threeToFiveShare": 0.0274,
+      "sixPlus": 0,
+      "sixPlusShare": 0,
+      "maxNotes": 5,
+      "distinctPhrases": 47,
+      "distinctMultiBeatPhrases": 36,
+      "distinctThreePlusPhrases": 18,
+      "distinctLedgerOrders": 47,
+      "distinctPitchPhrases": 31,
+      "shotsRepeatingAPiece": 16,
+      "shotsWithSamePieceTwiceInARow": 1,
+      "shotsWithASeamChord": 2,
+      "firstSoundSeconds": {
+       "median": 0.875,
+       "p10": 0.45,
+       "p90": 1.525
+      },
+      "gapSeconds": {
+       "count": 149,
+       "median": 0.258,
+       "p10": 0.133,
+       "p90": 0.442,
+       "under150ms": 18,
+       "over1s": 0
+      },
+      "flightSeconds": {
+       "median": 1.908,
+       "p90": 3.075,
+       "max": 4.558
+      },
+      "terminalReasons": {
+       "first-ground-contact": 818,
+       "out-of-bounds": 57
+      },
+      "pieceShots": {
+       "bank-back": 126,
+       "bank-flank": 56,
+       "plate-mouth-w": 79,
+       "plate-mouth-e": 78,
+       "plate-east": 28,
+       "plate-west": 21,
+       "plate-side-e": 24,
+       "plate-side-w": 22,
+       "plate-corner-e": 30,
+       "plate-hook": 64
+      },
+      "pieceNotes": {
+       "bank-back": 133,
+       "bank-flank": 56,
+       "plate-mouth-w": 79,
+       "plate-mouth-e": 78,
+       "plate-east": 32,
+       "plate-west": 21,
+       "plate-side-e": 24,
+       "plate-side-w": 22,
+       "plate-corner-e": 34,
+       "plate-hook": 68
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 480
+       },
+       {
+        "phrase": "bank-back",
+        "count": 70
+       },
+       {
+        "phrase": "plate-mouth-w",
+        "count": 67
+       },
+       {
+        "phrase": "plate-mouth-e",
+        "count": 62
+       },
+       {
+        "phrase": "bank-flank",
+        "count": 34
+       },
+       {
+        "phrase": "plate-hook",
+        "count": 22
+       },
+       {
+        "phrase": "bank-back > plate-hook",
+        "count": 21
+       },
+       {
+        "phrase": "bank-flank > plate-side-w",
+        "count": 16
+       },
+       {
+        "phrase": "plate-east",
+        "count": 11
+       },
+       {
+        "phrase": "plate-side-e",
+        "count": 8
+       },
+       {
+        "phrase": "plate-mouth-e > plate-mouth-w",
+        "count": 7
+       },
+       {
+        "phrase": "bank-back > plate-mouth-e",
+        "count": 6
+       },
+       {
+        "phrase": "bank-back > plate-west",
+        "count": 6
+       },
+       {
+        "phrase": "plate-west",
+        "count": 6
+       },
+       {
+        "phrase": "plate-corner-e",
+        "count": 5
+       },
+       {
+        "phrase": "plate-west > bank-flank",
+        "count": 5
+       }
+      ]
+     },
+     "rowsSha256": "b3c500467a6dbf88918fb38d26cd86d53bf8dfba74d0f0b468bfe5ad43aeeeef"
+    },
+    "lattice": {
+     "summary": {
+      "shots": 17325,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 3622,
+       "1": 5805,
+       "2": 5662,
+       "3": 1493,
+       "4": 530,
+       "5": 184,
+       "6": 21,
+       "7": 3,
+       "8": 1,
+       "9": 2,
+       "10": 1,
+       "11": 1
+      },
+      "silent": 3622,
+      "silentShare": 0.2091,
+      "one": 5805,
+      "twoPlus": 7898,
+      "twoPlusShare": 0.4559,
+      "threePlus": 2236,
+      "threePlusShare": 0.1291,
+      "threeToFive": 2207,
+      "threeToFiveShare": 0.1274,
+      "sixPlus": 29,
+      "sixPlusShare": 0.0017,
+      "maxNotes": 11,
+      "distinctPhrases": 221,
+      "distinctMultiBeatPhrases": 217,
+      "distinctThreePlusPhrases": 198,
+      "distinctLedgerOrders": 211,
+      "distinctPitchPhrases": 150,
+      "shotsRepeatingAPiece": 1213,
+      "shotsWithSamePieceTwiceInARow": 6,
+      "shotsWithASeamChord": 223,
+      "firstSoundSeconds": {
+       "median": 1.083,
+       "p10": 0.858,
+       "p90": 1.283
+      },
+      "gapSeconds": {
+       "count": 11139,
+       "median": 0.275,
+       "p10": 0.167,
+       "p90": 0.592,
+       "under150ms": 738,
+       "over1s": 58
+      },
+      "flightSeconds": {
+       "median": 1.875,
+       "p90": 2.825,
+       "max": 15.75
+      },
+      "terminalReasons": {
+       "first-ground-contact": 17190,
+       "out-of-bounds": 135
+      },
+      "pieceShots": {
+       "bank-back": 11372,
+       "bank-flank": 113,
+       "plate-mouth-w": 429,
+       "plate-mouth-e": 1004,
+       "plate-east": 1725,
+       "plate-west": 52,
+       "plate-side-e": 690,
+       "plate-side-w": 269,
+       "plate-corner-e": 1173,
+       "plate-hook": 6831
+      },
+      "pieceNotes": {
+       "bank-back": 12167,
+       "bank-flank": 135,
+       "plate-mouth-w": 430,
+       "plate-mouth-e": 1004,
+       "plate-east": 2010,
+       "plate-west": 52,
+       "plate-side-e": 695,
+       "plate-side-w": 302,
+       "plate-corner-e": 1224,
+       "plate-hook": 7050
+      },
+      "topPhrases": [
+       {
+        "phrase": "bank-back",
+        "count": 4461
+       },
+       {
+        "phrase": "(silent)",
+        "count": 3622
+       },
+       {
+        "phrase": "bank-back > plate-hook",
+        "count": 3178
+       },
+       {
+        "phrase": "plate-hook",
+        "count": 1217
+       },
+       {
+        "phrase": "bank-back > plate-mouth-e",
+        "count": 823
+       },
+       {
+        "phrase": "bank-back > plate-east",
+        "count": 661
+       },
+       {
+        "phrase": "plate-hook > plate-side-e",
+        "count": 347
+       },
+       {
+        "phrase": "bank-back > plate-corner-e > bank-back",
+        "count": 321
+       },
+       {
+        "phrase": "bank-back > plate-east > plate-hook",
+        "count": 243
+       },
+       {
+        "phrase": "plate-hook > plate-side-e > plate-corner-e",
+        "count": 212
+       },
+       {
+        "phrase": "bank-back > plate-east > plate-hook > plate-east",
+        "count": 181
+       },
+       {
+        "phrase": "plate-mouth-w",
+        "count": 127
+       },
+       {
+        "phrase": "bank-back > plate-hook > plate-side-w",
+        "count": 124
+       },
+       {
+        "phrase": "bank-back > plate-corner-e",
+        "count": 113
+       },
+       {
+        "phrase": "bank-back > plate-hook > bank-back",
+        "count": 113
+       },
+       {
+        "phrase": "plate-hook > plate-mouth-e",
+        "count": 110
+       }
+      ]
+     },
+     "rowsSha256": "f693884b5724417d7f9e661b319dd34725cfbe852e38defef4a9f59f903b419f",
+     "neighbourhoodFloor3": {
+      "floor": 3,
+      "cells": 1790,
+      "neighbours": 10740,
+      "same": 4014,
+      "variation": 3093,
+      "thinner": 3633,
+      "silent": 0,
+      "cellsAllSix": 94,
+      "cellsNoCollapse": 344,
+      "cellsWithVariation": 1352,
+      "sameShare": 0.3737,
+      "variationShare": 0.288,
+      "thinnerShare": 0.3383,
+      "silentShare": 0,
+      "keptRichShare": 0.6617,
+      "cellsNoCollapseShare": 0.1922
+     },
+     "neighbourhoodFloor2": {
+      "floor": 2,
+      "cells": 6632,
+      "neighbours": 39792,
+      "same": 25981,
+      "variation": 10555,
+      "thinner": 3244,
+      "silent": 12,
+      "cellsAllSix": 2118,
+      "cellsNoCollapse": 4954,
+      "cellsWithVariation": 3679,
+      "sameShare": 0.6529,
+      "variationShare": 0.2653,
+      "thinnerShare": 0.0815,
+      "silentShare": 0.0003,
+      "keptRichShare": 0.9182,
+      "cellsNoCollapseShare": 0.747
+     },
+     "audio": {
+      "soundingShots": 13703,
+      "limiterKnee": 0.85,
+      "limiterCeilingDb": -1,
+      "medianBound": 0.395,
+      "p99Bound": 0.495,
+      "worstBound": 0.641,
+      "shotsOverKnee": 0
+     },
+     "longAndRepeated": {
+      "eightOrMoreBeats": {
+       "shots": 5,
+       "bouncingOnAWallTop": 1,
+       "ramps": 0,
+       "other": 4
+      },
+      "samePieceTwiceInARowByKind": {
+       "ramp": 0,
+       "bank": 1,
+       "plate": 1
+      }
+     }
+    },
+    "wide": {
+     "summary": {
+      "shots": 2275,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 1675,
+       "1": 490,
+       "2": 75,
+       "3": 22,
+       "4": 7,
+       "5": 6
+      },
+      "silent": 1675,
+      "silentShare": 0.7363,
+      "one": 490,
+      "twoPlus": 110,
+      "twoPlusShare": 0.0484,
+      "threePlus": 35,
+      "threePlusShare": 0.0154,
+      "threeToFive": 35,
+      "threeToFiveShare": 0.0154,
+      "sixPlus": 0,
+      "sixPlusShare": 0,
+      "maxNotes": 5,
+      "distinctPhrases": 57,
+      "distinctMultiBeatPhrases": 46,
+      "distinctThreePlusPhrases": 22,
+      "distinctLedgerOrders": 57,
+      "distinctPitchPhrases": 38,
+      "shotsRepeatingAPiece": 26,
+      "shotsWithSamePieceTwiceInARow": 0,
+      "shotsWithASeamChord": 1,
+      "firstSoundSeconds": {
+       "median": 0.883,
+       "p10": 0.45,
+       "p90": 1.542
+      },
+      "gapSeconds": {
+       "count": 164,
+       "median": 0.267,
+       "p10": 0.142,
+       "p90": 0.5,
+       "under150ms": 24,
+       "over1s": 0
+      },
+      "flightSeconds": {
+       "median": 2.175,
+       "p90": 3.467,
+       "max": 4.7
+      },
+      "terminalReasons": {
+       "first-ground-contact": 1749,
+       "out-of-bounds": 526
+      },
+      "pieceShots": {
+       "bank-back": 168,
+       "bank-flank": 111,
+       "plate-mouth-w": 93,
+       "plate-mouth-e": 119,
+       "plate-east": 38,
+       "plate-west": 36,
+       "plate-side-e": 30,
+       "plate-side-w": 30,
+       "plate-corner-e": 36,
+       "plate-hook": 67
+      },
+      "pieceNotes": {
+       "bank-back": 181,
+       "bank-flank": 124,
+       "plate-mouth-w": 93,
+       "plate-mouth-e": 119,
+       "plate-east": 38,
+       "plate-west": 36,
+       "plate-side-e": 31,
+       "plate-side-w": 34,
+       "plate-corner-e": 40,
+       "plate-hook": 69
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 1675
+       },
+       {
+        "phrase": "bank-back",
+        "count": 103
+       },
+       {
+        "phrase": "plate-mouth-e",
+        "count": 96
+       },
+       {
+        "phrase": "bank-flank",
+        "count": 89
+       },
+       {
+        "phrase": "plate-mouth-w",
+        "count": 81
+       },
+       {
+        "phrase": "plate-hook",
+        "count": 27
+       },
+       {
+        "phrase": "plate-east",
+        "count": 25
+       },
+       {
+        "phrase": "plate-west",
+        "count": 24
+       },
+       {
+        "phrase": "plate-side-e",
+        "count": 17
+       },
+       {
+        "phrase": "bank-back > plate-hook",
+        "count": 15
+       },
+       {
+        "phrase": "plate-side-w",
+        "count": 15
+       },
+       {
+        "phrase": "bank-back > plate-mouth-e",
+        "count": 13
+       },
+       {
+        "phrase": "plate-corner-e",
+        "count": 13
+       },
+       {
+        "phrase": "bank-flank > plate-side-w",
+        "count": 4
+       },
+       {
+        "phrase": "bank-flank > plate-side-w > bank-flank > plate-side-w > bank-flank",
+        "count": 4
+       },
+       {
+        "phrase": "plate-mouth-w > plate-mouth-e",
+        "count": 4
+       }
+      ]
+     },
+     "rowsSha256": "6cae62d66315024c7eb673adf9cf54463024b8e95f5becfd9de168039155a716",
+     "unusedPieces": []
+    }
+   },
+   "identity": {
+    "presetId": "ricochet-garden-loop",
+    "presetHash": "14f443d0bafd7d103ce90121facfbe485a3e0b760cc3c819ac63b5a011806210",
+    "worldIdentityHash": "7080477ee51fb19d84047fc664395311d35bdcb0e90301e76b110480dc307a27",
+    "pieces": 10,
+    "gitSha": "43a9f2aa820db4664076c466749b48344a92de15"
+   },
+   "diagnosticsBeforeDispose": {
+    "staticBodies": 12,
+    "meshes": 12,
+    "physicsBodies": 12
+   }
+  },
+  "lift-only": {
+   "pieces": 12,
+   "elevatedPieces": 6,
+   "sets": {
+    "broad": {
+     "summary": {
+      "shots": 875,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 231,
+       "1": 384,
+       "2": 136,
+       "3": 69,
+       "4": 38,
+       "5": 17
+      },
+      "silent": 231,
+      "silentShare": 0.264,
+      "one": 384,
+      "twoPlus": 260,
+      "twoPlusShare": 0.2971,
+      "threePlus": 124,
+      "threePlusShare": 0.1417,
+      "threeToFive": 124,
+      "threeToFiveShare": 0.1417,
+      "sixPlus": 0,
+      "sixPlusShare": 0,
+      "maxNotes": 5,
+      "distinctPhrases": 102,
+      "distinctMultiBeatPhrases": 86,
+      "distinctThreePlusPhrases": 60,
+      "distinctLedgerOrders": 100,
+      "distinctPitchPhrases": 71,
+      "shotsRepeatingAPiece": 84,
+      "shotsWithSamePieceTwiceInARow": 8,
+      "shotsWithASeamChord": 13,
+      "firstSoundSeconds": {
+       "median": 0.708,
+       "p10": 0.392,
+       "p90": 1.283
+      },
+      "gapSeconds": {
+       "count": 456,
+       "median": 0.675,
+       "p10": 0.258,
+       "p90": 1.65,
+       "under150ms": 0,
+       "over1s": 151
+      },
+      "flightSeconds": {
+       "median": 2.742,
+       "p90": 3.633,
+       "max": 7.033
+      },
+      "terminalReasons": {
+       "first-ground-contact": 780,
+       "out-of-bounds": 95
+      },
+      "pieceShots": {
+       "ramp-w": 221,
+       "ramp-e": 169,
+       "wall-near-w": 126,
+       "wall-near-e": 175,
+       "wall-far-w": 49,
+       "wall-far-e": 52,
+       "high-w": 35,
+       "high-c": 31,
+       "high-e": 34,
+       "top-w": 34,
+       "top-c": 31,
+       "top-e": 34
+      },
+      "pieceNotes": {
+       "ramp-w": 258,
+       "ramp-e": 190,
+       "wall-near-w": 147,
+       "wall-near-e": 204,
+       "wall-far-w": 51,
+       "wall-far-e": 55,
+       "high-w": 38,
+       "high-c": 35,
+       "high-e": 37,
+       "top-w": 34,
+       "top-c": 31,
+       "top-e": 34
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 231
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 81
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 81
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 78
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 70
+       },
+       {
+        "phrase": "ramp-w > wall-far-w",
+        "count": 18
+       },
+       {
+        "phrase": "ramp-e > wall-far-e",
+        "count": 17
+       },
+       {
+        "phrase": "ramp-w > top-c",
+        "count": 15
+       },
+       {
+        "phrase": "ramp-w > top-w",
+        "count": 15
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 13
+       },
+       {
+        "phrase": "top-e",
+        "count": 11
+       },
+       {
+        "phrase": "top-w",
+        "count": 11
+       },
+       {
+        "phrase": "ramp-e > top-e",
+        "count": 10
+       },
+       {
+        "phrase": "top-c",
+        "count": 9
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 9
+       },
+       {
+        "phrase": "high-e",
+        "count": 8
+       }
+      ]
+     },
+     "rowsSha256": "dc14cd10db92e4f2488f5b6b99352cbaebd24fce72d3b187be6a6337f5ca6eb9"
+    },
+    "lattice": {
+     "summary": {
+      "shots": 17325,
+      "rejected": 0,
+      "beatHistogram": {
+       "1": 6623,
+       "2": 5246,
+       "3": 3374,
+       "4": 1440,
+       "5": 560,
+       "6": 65,
+       "7": 11,
+       "8": 4,
+       "9": 2
+      },
+      "silent": 0,
+      "silentShare": 0,
+      "one": 6623,
+      "twoPlus": 10702,
+      "twoPlusShare": 0.6177,
+      "threePlus": 5456,
+      "threePlusShare": 0.3149,
+      "threeToFive": 5374,
+      "threeToFiveShare": 0.3102,
+      "sixPlus": 82,
+      "sixPlusShare": 0.0047,
+      "maxNotes": 9,
+      "distinctPhrases": 539,
+      "distinctMultiBeatPhrases": 508,
+      "distinctThreePlusPhrases": 413,
+      "distinctLedgerOrders": 631,
+      "distinctPitchPhrases": 378,
+      "shotsRepeatingAPiece": 4624,
+      "shotsWithSamePieceTwiceInARow": 129,
+      "shotsWithASeamChord": 2032,
+      "firstSoundSeconds": {
+       "median": 0.8,
+       "p10": 0.475,
+       "p90": 1.117
+      },
+      "gapSeconds": {
+       "count": 18989,
+       "median": 0.375,
+       "p10": 0.233,
+       "p90": 1.358,
+       "under150ms": 23,
+       "over1s": 4179
+      },
+      "flightSeconds": {
+       "median": 2.592,
+       "p90": 3.983,
+       "max": 9.208
+      },
+      "terminalReasons": {
+       "first-ground-contact": 16676,
+       "out-of-bounds": 649
+      },
+      "pieceShots": {
+       "ramp-w": 6923,
+       "ramp-e": 2361,
+       "wall-near-w": 2017,
+       "wall-near-e": 8723,
+       "wall-far-w": 1617,
+       "wall-far-e": 564,
+       "high-w": 1128,
+       "high-c": 2669,
+       "high-e": 1112,
+       "top-w": 1343,
+       "top-c": 2542,
+       "top-e": 1302
+      },
+      "pieceNotes": {
+       "ramp-w": 8742,
+       "ramp-e": 2856,
+       "wall-near-w": 2634,
+       "wall-near-e": 11050,
+       "wall-far-w": 2263,
+       "wall-far-e": 781,
+       "high-w": 1149,
+       "high-c": 2720,
+       "high-e": 1133,
+       "top-w": 1346,
+       "top-c": 2545,
+       "top-e": 1306
+      },
+      "topPhrases": [
+       {
+        "phrase": "wall-near-e",
+        "count": 3837
+       },
+       {
+        "phrase": "ramp-w > top-c",
+        "count": 1334
+       },
+       {
+        "phrase": "high-c",
+        "count": 833
+       },
+       {
+        "phrase": "ramp-w > top-w",
+        "count": 691
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 592
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 533
+       },
+       {
+        "phrase": "wall-near-e > ramp-w > wall-near-e",
+        "count": 482
+       },
+       {
+        "phrase": "ramp-w > top-c > ramp-w",
+        "count": 416
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 346
+       },
+       {
+        "phrase": "ramp-e > top-e",
+        "count": 343
+       },
+       {
+        "phrase": "high-e",
+        "count": 317
+       },
+       {
+        "phrase": "high-w",
+        "count": 317
+       },
+       {
+        "phrase": "ramp-w > top-w > ramp-w",
+        "count": 316
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e",
+        "count": 275
+       },
+       {
+        "phrase": "ramp-w > top-e",
+        "count": 256
+       },
+       {
+        "phrase": "high-c > wall-near-e",
+        "count": 248
+       }
+      ]
+     },
+     "rowsSha256": "c06d36ca4b4e7527bff12e820a06c5497fef1ac37522c51f5bfaf4cbe7052d57",
+     "neighbourhoodFloor3": {
+      "floor": 3,
+      "cells": 4198,
+      "neighbours": 25188,
+      "same": 13211,
+      "variation": 7780,
+      "thinner": 4197,
+      "silent": 0,
+      "cellsAllSix": 450,
+      "cellsNoCollapse": 1916,
+      "cellsWithVariation": 3296,
+      "sameShare": 0.5245,
+      "variationShare": 0.3089,
+      "thinnerShare": 0.1666,
+      "silentShare": 0,
+      "keptRichShare": 0.8334,
+      "cellsNoCollapseShare": 0.4564
+     },
+     "neighbourhoodFloor2": {
+      "floor": 2,
+      "cells": 8188,
+      "neighbours": 49128,
+      "same": 28699,
+      "variation": 17110,
+      "thinner": 3319,
+      "silent": 0,
+      "cellsAllSix": 1532,
+      "cellsNoCollapse": 6356,
+      "cellsWithVariation": 6413,
+      "sameShare": 0.5842,
+      "variationShare": 0.3483,
+      "thinnerShare": 0.0676,
+      "silentShare": 0,
+      "keptRichShare": 0.9324,
+      "cellsNoCollapseShare": 0.7763
+     },
+     "audio": {
+      "soundingShots": 17325,
+      "limiterKnee": 0.85,
+      "limiterCeilingDb": -1,
+      "medianBound": 0.397,
+      "p99Bound": 0.606,
+      "worstBound": 1.116,
+      "shotsOverKnee": 34
+     },
+     "longAndRepeated": {
+      "eightOrMoreBeats": {
+       "shots": 6,
+       "bouncingOnAWallTop": 0,
+       "ramps": 3,
+       "other": 3
+      },
+      "samePieceTwiceInARowByKind": {
+       "ramp": 114,
+       "bank": 18,
+       "plate": 0
+      }
+     }
+    },
+    "wide": {
+     "summary": {
+      "shots": 2275,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 1179,
+       "1": 727,
+       "2": 230,
+       "3": 74,
+       "4": 56,
+       "5": 5,
+       "6": 4
+      },
+      "silent": 1179,
+      "silentShare": 0.5182,
+      "one": 727,
+      "twoPlus": 369,
+      "twoPlusShare": 0.1622,
+      "threePlus": 139,
+      "threePlusShare": 0.0611,
+      "threeToFive": 135,
+      "threeToFiveShare": 0.0593,
+      "sixPlus": 4,
+      "sixPlusShare": 0.0018,
+      "maxNotes": 6,
+      "distinctPhrases": 118,
+      "distinctMultiBeatPhrases": 98,
+      "distinctThreePlusPhrases": 61,
+      "distinctLedgerOrders": 119,
+      "distinctPitchPhrases": 77,
+      "shotsRepeatingAPiece": 88,
+      "shotsWithSamePieceTwiceInARow": 9,
+      "shotsWithASeamChord": 39,
+      "firstSoundSeconds": {
+       "median": 0.792,
+       "p10": 0.433,
+       "p90": 1.608
+      },
+      "gapSeconds": {
+       "count": 586,
+       "median": 0.758,
+       "p10": 0.258,
+       "p90": 1.5,
+       "under150ms": 3,
+       "over1s": 207
+      },
+      "flightSeconds": {
+       "median": 2.592,
+       "p90": 3.833,
+       "max": 6.25
+      },
+      "terminalReasons": {
+       "first-ground-contact": 1576,
+       "out-of-bounds": 699
+      },
+      "pieceShots": {
+       "ramp-w": 308,
+       "ramp-e": 259,
+       "wall-near-w": 281,
+       "wall-near-e": 311,
+       "wall-far-w": 48,
+       "wall-far-e": 54,
+       "high-w": 39,
+       "high-c": 38,
+       "high-e": 39,
+       "top-w": 69,
+       "top-c": 74,
+       "top-e": 69
+      },
+      "pieceNotes": {
+       "ramp-w": 345,
+       "ramp-e": 281,
+       "wall-near-w": 307,
+       "wall-near-e": 357,
+       "wall-far-w": 48,
+       "wall-far-e": 54,
+       "high-w": 39,
+       "high-c": 39,
+       "high-e": 39,
+       "top-w": 69,
+       "top-c": 74,
+       "top-e": 69
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 1179
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 185
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 163
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 117
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 86
+       },
+       {
+        "phrase": "ramp-w > wall-near-w",
+        "count": 30
+       },
+       {
+        "phrase": "top-c",
+        "count": 30
+       },
+       {
+        "phrase": "top-e",
+        "count": 27
+       },
+       {
+        "phrase": "top-w",
+        "count": 27
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 22
+       },
+       {
+        "phrase": "high-c",
+        "count": 21
+       },
+       {
+        "phrase": "high-e",
+        "count": 20
+       },
+       {
+        "phrase": "high-w",
+        "count": 20
+       },
+       {
+        "phrase": "ramp-w > top-w",
+        "count": 19
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 18
+       },
+       {
+        "phrase": "wall-near-w > ramp-w",
+        "count": 17
+       }
+      ]
+     },
+     "rowsSha256": "84b410e85e7e277045c35084ed47d0a986625dca112fd994117ebbfcbe0ab533",
+     "unusedPieces": []
+    }
+   },
+   "identity": {
+    "presetId": "descending-resonance-lift-only",
+    "presetHash": "2683e03eb4762877e72152a240fbcf41de924b6a403431219b2d493422b21cbb",
+    "worldIdentityHash": "60c9f9a1556321cd43d21d1bbf63d98c9e1a0a4dda80e39d40ed25bef1ffaa1a",
+    "pieces": 12,
+    "gitSha": "43a9f2aa820db4664076c466749b48344a92de15"
+   },
+   "diagnosticsBeforeDispose": {
+    "staticBodies": 14,
+    "meshes": 14,
+    "physicsBodies": 14
+   }
+  },
+  "no-tiers": {
+   "pieces": 6,
+   "elevatedPieces": 0,
+   "sets": {
+    "broad": {
+     "summary": {
+      "shots": 875,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 330,
+       "1": 410,
+       "2": 90,
+       "3": 22,
+       "4": 19,
+       "5": 4
+      },
+      "silent": 330,
+      "silentShare": 0.3771,
+      "one": 410,
+      "twoPlus": 135,
+      "twoPlusShare": 0.1543,
+      "threePlus": 45,
+      "threePlusShare": 0.0514,
+      "threeToFive": 45,
+      "threeToFiveShare": 0.0514,
+      "sixPlus": 0,
+      "sixPlusShare": 0,
+      "maxNotes": 5,
+      "distinctPhrases": 36,
+      "distinctMultiBeatPhrases": 27,
+      "distinctThreePlusPhrases": 15,
+      "distinctLedgerOrders": 34,
+      "distinctPitchPhrases": 23,
+      "shotsRepeatingAPiece": 39,
+      "shotsWithSamePieceTwiceInARow": 4,
+      "shotsWithASeamChord": 4,
+      "firstSoundSeconds": {
+       "median": 0.65,
+       "p10": 0.383,
+       "p90": 1.25
+      },
+      "gapSeconds": {
+       "count": 207,
+       "median": 0.425,
+       "p10": 0.25,
+       "p90": 1.717,
+       "under150ms": 0,
+       "over1s": 71
+      },
+      "flightSeconds": {
+       "median": 2.733,
+       "p90": 3.442,
+       "max": 5.417
+      },
+      "terminalReasons": {
+       "first-ground-contact": 800,
+       "out-of-bounds": 75
+      },
+      "pieceShots": {
+       "ramp-w": 213,
+       "ramp-e": 153,
+       "wall-near-w": 105,
+       "wall-near-e": 137,
+       "wall-far-w": 39,
+       "wall-far-e": 45
+      },
+      "pieceNotes": {
+       "ramp-w": 226,
+       "ramp-e": 165,
+       "wall-near-w": 121,
+       "wall-near-e": 160,
+       "wall-far-w": 39,
+       "wall-far-e": 46
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 330
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 143
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 96
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 81
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 70
+       },
+       {
+        "phrase": "ramp-w > wall-far-w",
+        "count": 24
+       },
+       {
+        "phrase": "ramp-e > wall-far-e",
+        "count": 19
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 13
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 11
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 8
+       },
+       {
+        "phrase": "ramp-w > wall-near-w",
+        "count": 7
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e > ramp-e",
+        "count": 7
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e",
+        "count": 6
+       },
+       {
+        "phrase": "wall-near-w > ramp-w > wall-near-w",
+        "count": 6
+       },
+       {
+        "phrase": "wall-near-w > ramp-w > wall-near-w > ramp-w",
+        "count": 6
+       },
+       {
+        "phrase": "wall-far-w",
+        "count": 5
+       }
+      ]
+     },
+     "rowsSha256": "2fcefe8d6670f0f27ddff05967b3fb4b9276a17a71de3a800aa82ab90d244632"
+    },
+    "lattice": {
+     "summary": {
+      "shots": 17325,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 3080,
+       "1": 10323,
+       "2": 1606,
+       "3": 1437,
+       "4": 806,
+       "5": 55,
+       "6": 14,
+       "7": 3,
+       "8": 1
+      },
+      "silent": 3080,
+      "silentShare": 0.1778,
+      "one": 10323,
+      "twoPlus": 3922,
+      "twoPlusShare": 0.2264,
+      "threePlus": 2316,
+      "threePlusShare": 0.1337,
+      "threeToFive": 2298,
+      "threeToFiveShare": 0.1326,
+      "sixPlus": 18,
+      "sixPlusShare": 0.001,
+      "maxNotes": 8,
+      "distinctPhrases": 159,
+      "distinctMultiBeatPhrases": 149,
+      "distinctThreePlusPhrases": 119,
+      "distinctLedgerOrders": 173,
+      "distinctPitchPhrases": 94,
+      "shotsRepeatingAPiece": 2157,
+      "shotsWithSamePieceTwiceInARow": 104,
+      "shotsWithASeamChord": 665,
+      "firstSoundSeconds": {
+       "median": 0.75,
+       "p10": 0.467,
+       "p90": 0.975
+      },
+      "gapSeconds": {
+       "count": 7213,
+       "median": 0.275,
+       "p10": 0.208,
+       "p90": 0.925,
+       "under150ms": 6,
+       "over1s": 590
+      },
+      "flightSeconds": {
+       "median": 2.475,
+       "p90": 3.358,
+       "max": 7.433
+      },
+      "terminalReasons": {
+       "first-ground-contact": 16826,
+       "out-of-bounds": 499
+      },
+      "pieceShots": {
+       "ramp-w": 6632,
+       "ramp-e": 1700,
+       "wall-near-w": 1543,
+       "wall-near-e": 7529,
+       "wall-far-w": 1236,
+       "wall-far-e": 409
+      },
+      "pieceNotes": {
+       "ramp-w": 7190,
+       "ramp-e": 1903,
+       "wall-near-w": 1886,
+       "wall-near-e": 9087,
+       "wall-far-w": 1588,
+       "wall-far-e": 504
+      },
+      "topPhrases": [
+       {
+        "phrase": "ramp-w",
+        "count": 4093
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 4000
+       },
+       {
+        "phrase": "(silent)",
+        "count": 3080
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 669
+       },
+       {
+        "phrase": "wall-far-w",
+        "count": 611
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 555
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 554
+       },
+       {
+        "phrase": "wall-near-e > ramp-w > wall-near-e",
+        "count": 482
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 386
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e",
+        "count": 275
+       },
+       {
+        "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+        "count": 232
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 168
+       },
+       {
+        "phrase": "wall-near-e+wall-near-w",
+        "count": 167
+       },
+       {
+        "phrase": "wall-near-w > ramp-w",
+        "count": 163
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e > ramp-e",
+        "count": 151
+       },
+       {
+        "phrase": "ramp-e+ramp-w",
+        "count": 150
+       }
+      ]
+     },
+     "rowsSha256": "47f1266b48fa72aa4fc295a9f3179d11b035b226bc5393556f093cf44b87b1f1",
+     "neighbourhoodFloor3": {
+      "floor": 3,
+      "cells": 1923,
+      "neighbours": 11538,
+      "same": 5805,
+      "variation": 3129,
+      "thinner": 2604,
+      "silent": 0,
+      "cellsAllSix": 152,
+      "cellsNoCollapse": 583,
+      "cellsWithVariation": 1417,
+      "sameShare": 0.5031,
+      "variationShare": 0.2712,
+      "thinnerShare": 0.2257,
+      "silentShare": 0,
+      "keptRichShare": 0.7743,
+      "cellsNoCollapseShare": 0.3032
+     },
+     "neighbourhoodFloor2": {
+      "floor": 2,
+      "cells": 3100,
+      "neighbours": 18600,
+      "same": 9016,
+      "variation": 6850,
+      "thinner": 2734,
+      "silent": 0,
+      "cellsAllSix": 179,
+      "cellsNoCollapse": 1646,
+      "cellsWithVariation": 2665,
+      "sameShare": 0.4847,
+      "variationShare": 0.3683,
+      "thinnerShare": 0.147,
+      "silentShare": 0,
+      "keptRichShare": 0.853,
+      "cellsNoCollapseShare": 0.531
+     },
+     "audio": {
+      "soundingShots": 14245,
+      "limiterKnee": 0.85,
+      "limiterCeilingDb": -1,
+      "medianBound": 0.378,
+      "p99Bound": 0.495,
+      "worstBound": 0.86,
+      "shotsOverKnee": 1
+     },
+     "longAndRepeated": {
+      "eightOrMoreBeats": {
+       "shots": 1,
+       "bouncingOnAWallTop": 0,
+       "ramps": 1,
+       "other": 0
+      },
+      "samePieceTwiceInARowByKind": {
+       "ramp": 92,
+       "bank": 15,
+       "plate": 0
+      }
+     }
+    },
+    "wide": {
+     "summary": {
+      "shots": 2275,
+      "rejected": 0,
+      "beatHistogram": {
+       "0": 1368,
+       "1": 680,
+       "2": 153,
+       "3": 38,
+       "4": 32,
+       "5": 4
+      },
+      "silent": 1368,
+      "silentShare": 0.6013,
+      "one": 680,
+      "twoPlus": 227,
+      "twoPlusShare": 0.0998,
+      "threePlus": 74,
+      "threePlusShare": 0.0325,
+      "threeToFive": 74,
+      "threeToFiveShare": 0.0325,
+      "sixPlus": 0,
+      "sixPlusShare": 0,
+      "maxNotes": 5,
+      "distinctPhrases": 51,
+      "distinctMultiBeatPhrases": 43,
+      "distinctThreePlusPhrases": 23,
+      "distinctLedgerOrders": 47,
+      "distinctPitchPhrases": 33,
+      "shotsRepeatingAPiece": 53,
+      "shotsWithSamePieceTwiceInARow": 9,
+      "shotsWithASeamChord": 9,
+      "firstSoundSeconds": {
+       "median": 0.733,
+       "p10": 0.417,
+       "p90": 1.608
+      },
+      "gapSeconds": {
+       "count": 341,
+       "median": 0.667,
+       "p10": 0.225,
+       "p90": 1.942,
+       "under150ms": 0,
+       "over1s": 136
+      },
+      "flightSeconds": {
+       "median": 2.6,
+       "p90": 3.833,
+       "max": 6.25
+      },
+      "terminalReasons": {
+       "first-ground-contact": 1660,
+       "out-of-bounds": 615
+      },
+      "pieceShots": {
+       "ramp-w": 285,
+       "ramp-e": 241,
+       "wall-near-w": 268,
+       "wall-near-e": 287,
+       "wall-far-w": 39,
+       "wall-far-e": 48
+      },
+      "pieceNotes": {
+       "ramp-w": 304,
+       "ramp-e": 255,
+       "wall-near-w": 288,
+       "wall-near-e": 323,
+       "wall-far-w": 39,
+       "wall-far-e": 48
+      },
+      "topPhrases": [
+       {
+        "phrase": "(silent)",
+        "count": 1368
+       },
+       {
+        "phrase": "wall-near-w",
+        "count": 188
+       },
+       {
+        "phrase": "wall-near-e",
+        "count": 169
+       },
+       {
+        "phrase": "ramp-w",
+        "count": 148
+       },
+       {
+        "phrase": "ramp-e",
+        "count": 147
+       },
+       {
+        "phrase": "ramp-w > wall-near-w",
+        "count": 30
+       },
+       {
+        "phrase": "wall-near-e > ramp-e",
+        "count": 23
+       },
+       {
+        "phrase": "wall-far-e",
+        "count": 20
+       },
+       {
+        "phrase": "wall-near-w > ramp-w",
+        "count": 17
+       },
+       {
+        "phrase": "ramp-w > wall-far-w",
+        "count": 14
+       },
+       {
+        "phrase": "ramp-e > wall-near-e",
+        "count": 13
+       },
+       {
+        "phrase": "ramp-w > wall-near-e",
+        "count": 13
+       },
+       {
+        "phrase": "ramp-e > wall-far-e",
+        "count": 12
+       },
+       {
+        "phrase": "wall-near-e > ramp-e > wall-near-e > ramp-e",
+        "count": 10
+       },
+       {
+        "phrase": "wall-near-e > ramp-w",
+        "count": 10
+       },
+       {
+        "phrase": "wall-near-w > ramp-w > wall-near-w > ramp-w",
+        "count": 9
+       }
+      ]
+     },
+     "rowsSha256": "4bba7639744d731f2fb6020813db7f913c9b380b17dfafe3c4ebad4df6474cd0",
+     "unusedPieces": []
+    }
+   },
+   "identity": {
+    "presetId": "descending-resonance-no-tiers",
+    "presetHash": "6b05c4c2798d089f1b34c7b3f2cb22fc6c99ca8a618cb69269b44d87b3209b73",
+    "worldIdentityHash": "968ba295bcec41113381448b8e90182155455f6060bef067b0cc5932ffb2cc15",
+    "pieces": 6,
+    "gitSha": "43a9f2aa820db4664076c466749b48344a92de15"
+   },
+   "diagnosticsBeforeDispose": {
+    "staticBodies": 8,
+    "meshes": 8,
+    "physicsBodies": 8
+   }
+  }
+ },
+ "families": {
+  "elevated": [
+   {
+    "id": "opening",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": 0,
+     "elevation": 18,
+     "charge": 0.55
+    },
+    "phrase": "wall-near-e",
+    "ledger": [
+     "wall-near-e"
+    ],
+    "notes": [
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 0.8
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 1.6749999999999965,
+     "position": [
+      0,
+      0.4300045073032379,
+      6.440391540527344
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -0.5,
+      "phrase": "wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": 0.5,
+      "phrase": "wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 17.5,
+      "phrase": "wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 18.5,
+      "phrase": "wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.54,
+      "phrase": "wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.56,
+      "phrase": "wall-near-e",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 30,
+     "elevation": 10,
+     "charge": 23
+    }
+   },
+   {
+    "id": "descent",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -1,
+     "elevation": 24,
+     "charge": 0.56
+    },
+    "phrase": "high-c > wall-near-e > wall-far-w",
+    "ledger": [
+     "high-c",
+     "wall-near-e",
+     "wall-far-w"
+    ],
+    "notes": [
+     {
+      "piece": "high-c",
+      "note": "G4",
+      "time": 1.1083
+     },
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 1.375
+     },
+     {
+      "piece": "wall-far-w",
+      "note": "C4",
+      "time": 1.6917
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 1.9666666666666621,
+     "position": [
+      -0.7058256268501282,
+      0.43000108003616333,
+      28.29458236694336
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -1.5,
+      "phrase": "high-c > wall-near-e > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -0.5,
+      "phrase": "high-c > wall-near-e > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 23.5,
+      "phrase": "high-c > wall-near-e > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 24.5,
+      "phrase": "high-c > wall-near-e > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.55,
+      "phrase": "high-c > wall-near-e > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.57,
+      "phrase": "high-c > wall-near-e > wall-far-w",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 11,
+     "elevation": 8,
+     "charge": 9
+    }
+   },
+   {
+    "id": "west-descent",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -5,
+     "elevation": 24,
+     "charge": 0.56
+    },
+    "phrase": "high-w > wall-near-w > wall-far-w",
+    "ledger": [
+     "high-w",
+     "wall-near-w",
+     "wall-far-w"
+    ],
+    "notes": [
+     {
+      "piece": "high-w",
+      "note": "E4",
+      "time": 1.1167
+     },
+     {
+      "piece": "wall-near-w",
+      "note": "D4",
+      "time": 1.3917
+     },
+     {
+      "piece": "wall-far-w",
+      "note": "C4",
+      "time": 1.7083
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 1.908333333333329,
+     "position": [
+      -3.644886016845703,
+      0.42999574542045593,
+      29.397785186767578
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -5.5,
+      "phrase": "high-w > wall-near-w > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -4.5,
+      "phrase": "high-w > wall-near-w > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 23.5,
+      "phrase": "high-w > wall-near-w > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 24.5,
+      "phrase": "high-w > wall-near-w > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.55,
+      "phrase": "high-w > wall-near-w > wall-far-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.57,
+      "phrase": "high-w > wall-near-w > wall-far-w",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 14,
+     "elevation": 8,
+     "charge": 8
+    }
+   },
+   {
+    "id": "skip-to-crown",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -1,
+     "elevation": 11.5,
+     "charge": 0.57
+    },
+    "phrase": "ramp-w > top-c > ramp-w",
+    "ledger": [
+     "ramp-w",
+     "top-c",
+     "ramp-w"
+    ],
+    "notes": [
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 0.475
+     },
+     {
+      "piece": "top-c",
+      "note": "A4",
+      "time": 1.2333
+     },
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 2.0583
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 2.916666666666659,
+     "position": [
+      -1.1101750135421753,
+      0.5459094643592834,
+      3.3454933166503906
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -1.5,
+      "phrase": "ramp-w > top-c > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -0.5,
+      "phrase": "ramp-w > top-c > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 11,
+      "phrase": "ramp-w > top-c > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 12,
+      "phrase": "ramp-w > top-c > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.56,
+      "phrase": "ramp-w > top-c > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.58,
+      "phrase": "ramp-w > top-c > ramp-w",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 9,
+     "elevation": 9,
+     "charge": 15
+    }
+   },
+   {
+    "id": "west-crown",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -5,
+     "elevation": 12,
+     "charge": 0.56
+    },
+    "phrase": "ramp-w > top-w > ramp-w",
+    "ledger": [
+     "ramp-w",
+     "top-w",
+     "ramp-w"
+    ],
+    "notes": [
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 0.4917
+     },
+     {
+      "piece": "top-w",
+      "note": "G4",
+      "time": 1.2583
+     },
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 2.0333
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 2.949999999999992,
+     "position": [
+      -5.69379997253418,
+      0.43000149726867676,
+      3.965454578399658
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -5.5,
+      "phrase": "ramp-w > top-w > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -4.5,
+      "phrase": "ramp-w > top-w > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 11.5,
+      "phrase": "ramp-w > top-w > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 12.5,
+      "phrase": "ramp-w > top-w > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.55,
+      "phrase": "ramp-w > top-w > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.57,
+      "phrase": "ramp-w > top-w > ramp-w",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 13,
+     "elevation": 10,
+     "charge": 15
+    }
+   },
+   {
+    "id": "wall-and-ramp",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -2.5,
+     "elevation": 15,
+     "charge": 0.55
+    },
+    "phrase": "wall-near-e > ramp-w > wall-near-e",
+    "ledger": [
+     "wall-near-e",
+     "ramp-w",
+     "wall-near-e"
+    ],
+    "notes": [
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 0.7833
+     },
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 0.9917
+     },
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 1.2667
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 2.5249999999999937,
+     "position": [
+      -1.551015019416809,
+      0.4299974739551544,
+      7.237843990325928
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -3,
+      "phrase": "wall-near-e > ramp-w > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -2,
+      "phrase": "wall-near-e > ramp-w > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 14.5,
+      "phrase": "wall-near-e > ramp-w > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 15.5,
+      "phrase": "wall-near-e > ramp-w > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.54,
+      "phrase": "wall-near-e > ramp-w > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.56,
+      "phrase": "wall-near-e > ramp-w > wall-near-e",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 12,
+     "elevation": 3,
+     "charge": 6
+    }
+   },
+   {
+    "id": "four",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -2.5,
+     "elevation": 18.5,
+     "charge": 0.46
+    },
+    "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+    "ledger": [
+     "wall-near-e",
+     "ramp-w",
+     "wall-near-e",
+     "ramp-w"
+    ],
+    "notes": [
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 0.9167
+     },
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 1.1583
+     },
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 1.4583
+     },
+     {
+      "piece": "ramp-w",
+      "note": "C4",
+      "time": 2.4167
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 2.8416666666666592,
+     "position": [
+      -1.5521295070648193,
+      0.4300031363964081,
+      6.691521644592285
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -3,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -2,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 18,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 19,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.45,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.47,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 11,
+     "elevation": 4,
+     "charge": 4
+    }
+   }
+  ],
+  "flat": [
+   {
+    "id": "opening",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": 0,
+     "elevation": 18,
+     "charge": 0.55
+    },
+    "phrase": "wall-near-e > row-b",
+    "ledger": [
+     "wall-near-e",
+     "row-b"
+    ],
+    "notes": [
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 0.9583
+     },
+     {
+      "piece": "row-b",
+      "note": "G4",
+      "time": 1.225
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 4.308333333333337,
+     "position": [
+      0,
+      0.7299999594688416,
+      1.8195627927780151
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -0.5,
+      "phrase": "wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": 0.5,
+      "phrase": "wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 17.5,
+      "phrase": "wall-near-e > row-b > wall-near-e > ramp-w",
+      "exact": false
+     },
+     {
+      "axis": "elevation",
+      "value": 18.5,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w > ramp-w > ramp-w",
+      "exact": false
+     },
+     {
+      "axis": "charge",
+      "value": 0.54,
+      "phrase": "wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.56,
+      "phrase": "wall-near-e > ramp-w > wall-near-e > ramp-w",
+      "exact": false
+     }
+    ],
+    "exactNeighbours": 3,
+    "widthInSliderSteps": {
+     "yaw": 9,
+     "elevation": 1,
+     "charge": 2
+    }
+   },
+   {
+    "id": "wall-and-row",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": 4,
+     "elevation": 17,
+     "charge": 0.52
+    },
+    "phrase": "wall-near-e > row-c > wall-near-e",
+    "ledger": [
+     "wall-near-e",
+     "row-c",
+     "wall-near-e"
+    ],
+    "notes": [
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 1
+     },
+     {
+      "piece": "row-c",
+      "note": "A4",
+      "time": 1.2667
+     },
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 1.5833
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 1.8333333333333293,
+     "position": [
+      2.5037643909454346,
+      0.43000227212905884,
+      25.413822174072266
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": 3.5,
+      "phrase": "wall-near-e > row-c > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": 4.5,
+      "phrase": "wall-near-e > row-c > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 16.5,
+      "phrase": "wall-near-e > row-c > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 17.5,
+      "phrase": "wall-near-e > row-c > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.51,
+      "phrase": "wall-near-e > row-c > wall-near-e",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.53,
+      "phrase": "wall-near-e > row-c > wall-near-e",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 13,
+     "elevation": 7,
+     "charge": 6
+    }
+   },
+   {
+    "id": "four",
+    "setup": {
+     "railIndex": 1,
+     "originX": 0,
+     "yaw": -2,
+     "elevation": 14,
+     "charge": 0.63
+    },
+    "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+    "ledger": [
+     "wall-near-e",
+     "row-b",
+     "wall-near-e",
+     "row-b"
+    ],
+    "notes": [
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 0.8417
+     },
+     {
+      "piece": "row-b",
+      "note": "G4",
+      "time": 1.0667
+     },
+     {
+      "piece": "wall-near-e",
+      "note": "E4",
+      "time": 1.3333
+     },
+     {
+      "piece": "row-b",
+      "note": "G4",
+      "time": 1.6417
+     }
+    ],
+    "terminal": {
+     "reason": "first-ground-contact",
+     "elapsed": 1.7666666666666628,
+     "position": [
+      -1.309217095375061,
+      0.4300016462802887,
+      25.39522933959961
+     ]
+    },
+    "neighbours": [
+     {
+      "axis": "yaw",
+      "value": -2.5,
+      "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "yaw",
+      "value": -1.5,
+      "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 13.5,
+      "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "elevation",
+      "value": 14.5,
+      "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.62,
+      "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+      "exact": true
+     },
+     {
+      "axis": "charge",
+      "value": 0.64,
+      "phrase": "wall-near-e > row-b > wall-near-e > row-b",
+      "exact": true
+     }
+    ],
+    "exactNeighbours": 6,
+    "widthInSliderSteps": {
+     "yaw": 8,
+     "elevation": 3,
+     "charge": 4
+    }
+   }
+  ]
+ },
+ "seconds": 383.1
+}

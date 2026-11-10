@@ -1,0 +1,262 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "descending-resonance",
+  "name": "Descending Resonance",
+  "kind": "shot-study",
+  "invitation": "Two ramps lie ahead of the tee. Behind them stands a wall, then a second wall with six plates hung above it in two leaning rows. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "physicalQuestion": "After a ball meets a hung plate or a ramp, which pieces does it meet on the way down, and does the next slider step keep that order?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "5301964e13561fe83b2af16733c5585b50a973d3",
+  "seed": 20261110,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6749999999999965,
+        "position": [
+          0,
+          0.4300045073032379,
+          6.440391540527344
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e"
+      ]
+    },
+    {
+      "id": "descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 24,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.9666666666666621,
+        "position": [
+          -0.7058256268501282,
+          0.43000108003616333,
+          28.29458236694336
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-high-c",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-wall-far-w"
+      ]
+    },
+    {
+      "id": "west-descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -5,
+        "elevation": 24,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.908333333333329,
+        "position": [
+          -3.644886016845703,
+          0.42999574542045593,
+          29.397785186767578
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-high-w",
+        "worldcraft-object-wall-near-w",
+        "worldcraft-object-wall-far-w"
+      ]
+    },
+    {
+      "id": "skip-to-crown",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 11.5,
+        "charge": 0.57
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.916666666666659,
+        "position": [
+          -1.1101750135421753,
+          0.5459094643592834,
+          3.3454933166503906
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-top-c",
+        "worldcraft-object-ramp-w",
+        "worldcraft-tee"
+      ]
+    },
+    {
+      "id": "west-crown",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -5,
+        "elevation": 12,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.949999999999992,
+        "position": [
+          -5.69379997253418,
+          0.43000149726867676,
+          3.965454578399658
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-top-w",
+        "worldcraft-object-ramp-w"
+      ]
+    },
+    {
+      "id": "wall-and-ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2.5,
+        "elevation": 15,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.5249999999999937,
+        "position": [
+          -1.551015019416809,
+          0.4299974739551544,
+          7.237843990325928
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-wall-near-e"
+      ]
+    },
+    {
+      "id": "four",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2.5,
+        "elevation": 18.5,
+        "charge": 0.46
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.8416666666666592,
+        "position": [
+          -1.5521295070648193,
+          0.4300031363964081,
+          6.691521644592285
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w"
+      ]
+    }
+  ],
+  "nearbySensitivity": "At yaw -1°, elevation 24°, charge 0.56 the order is the centre hung plate, the back of the near wall, then the far wall. Yaw -1.5° and -0.5°, elevation 23.5° and 24.5°, and charge 0.55 and 0.57 keep that order. Each of the seven tested shots keeps its order at all six neighbouring steps. The opening aim, yaw 0° elevation 18° charge 0.55, rings the near wall once.",
+  "validationEvidence": "Headless Havok on three aim sets: the 875-shot Loop broad grid, a 17,325-shot lattice of every slider detent around the opening aim, and a 2,275-shot wide set over five carriage stops. The same sets were fired at a flat control, at Ricochet Garden — Loop, and at two derived ablations. The seed is not applied to the solver. The validator replays seven tested shots. Enjoyment, a physical phone, and speaker playback were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A plate hung above a wall, leaning toward the tee, so a ball that would have cleared the wall is turned down between two walls.",
+      "missing": "This world uses the experimental lift and tilt pair on six plates. Banks, ramps, and blocks cannot carry it. A build without the extension rejects this document; it does not load it as a flat world.",
+      "extension": "Keep the pair on plates only until an owner session says the hung tier is worth it. Friction, restitution, and first-ground termination stay as they are."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "Some lines run long.",
+      "missing": "On the lattice 33 of 17,325 setups made eight or more beats. In 31 a ramp sounded three or more times, as the ball went back and forth between it and a wall or the top tier. In 2 the ball landed on the level 1 m top of a wall and bounced there, for 14 beats and up to 16 seconds.",
+      "extension": "No new collider. A later pass could move the ramps back, or leave these as rare long lines."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Place and turn a hung plate in Build.",
+      "missing": "Build has no lift or tilt control. It can move or turn an elevated plate on the ground plan and keeps the pair, and overlap is judged in three dimensions, but the height can only be typed in the document. Every piece here is fixed.",
+      "extension": "Two number fields on the selected plate, and a side view. Not built here."
+    },
+    {
+      "category": "presentation",
+      "concept": "See how high a hung plate is, and tell the two tiers apart in the note timeline.",
+      "missing": "A thin ground outline and a drop line mark each elevated plate. Labels name a plate by note and x only, so two tiers that share a note read the same apart from x. The launch camera was not retuned for a 15 m structure.",
+      "extension": "Name the tier in the label, and let the launch camera look up when the world has elevated pieces. Not built here."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear timber walls, timber and metal plates, and read the contact order.",
+      "missing": "This manifest opts in to the existing face-speed dynamics, the H timber-bank voice, and the note timeline. Listening on a real speaker is not checked here.",
+      "extension": "No new sound engine."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "5301964e13561fe83b2af16733c5585b50a973d3",
+  "presentation": {
+    "dynamics": "normal-speed",
+    "bankVoice": true,
+    "timeline": true
+  }
+}
