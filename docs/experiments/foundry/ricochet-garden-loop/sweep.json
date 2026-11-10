@@ -1,0 +1,5882 @@
+{
+  "seed": 20261110,
+  "seedAppliedToSolver": false,
+  "gridCountsAreNotProbabilities": true,
+  "definitions": {
+    "order": "Piece contacts in ledger order. Ground omitted. Repeats kept.",
+    "edge": "Contact point within 0.7 m of a piece side (local width) or 0.55 m of its top.",
+    "rebound": "Two or more piece contacts before ground.",
+    "return": "A piece id repeats, or a later contact is more than 1.5 m uprange of the previous one.",
+    "loop": "A piece id, then a different piece, then the first id again.",
+    "chaotic": "Seven or more piece contacts.",
+    "interesting": "An edge, a rebound, or a return.",
+    "near": "Same order, one substituted contact, or one inserted or dropped contact.",
+    "gridIsNotAProbability": true
+  },
+  "broadGrid": {
+    "yaws": [
+      -24,
+      -22,
+      -20,
+      -18,
+      -16,
+      -14,
+      -12,
+      -10,
+      -8,
+      -6,
+      -4,
+      -2,
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24
+    ],
+    "elevs": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      30,
+      40
+    ],
+    "charges": [
+      0.35,
+      0.45,
+      0.55,
+      0.65,
+      0.8
+    ],
+    "shots": 875,
+    "originX": 0
+  },
+  "runs": {
+    "pocket-default": {
+      "seconds": 3.11,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": -15
+        },
+        {
+          "id": "bank-flank",
+          "kind": "bank",
+          "x": -12,
+          "z": 26,
+          "yaw": 90
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-west",
+          "kind": "plate",
+          "x": -5.5,
+          "z": 26,
+          "yaw": 35
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-side-w",
+          "kind": "plate",
+          "x": -8,
+          "z": 32,
+          "yaw": 70
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 47,
+        "multi": 107,
+        "multiShare": 0.1223,
+        "loop": 16,
+        "return": 67,
+        "returnShare": 0.0766,
+        "repeat": 16,
+        "uprange": 64,
+        "edge": 232,
+        "edgeShare": 0.2651,
+        "rebound": 107,
+        "reboundShare": 0.1223,
+        "interesting": 263,
+        "interestingShare": 0.3006,
+        "chaotic": 0,
+        "histogram": {
+          "0": 480,
+          "1": 288,
+          "2": 82,
+          "3": 9,
+          "4": 12,
+          "5": 4
+        },
+        "pieceHits": {
+          "bank-back": 126,
+          "bank-flank": 56,
+          "plate-mouth-w": 79,
+          "plate-mouth-e": 78,
+          "plate-east": 28,
+          "plate-west": 21,
+          "plate-side-e": 24,
+          "plate-side-w": 22,
+          "plate-corner-e": 30,
+          "plate-hook": 64
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 480,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 40,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 70,
+            "loops": 0,
+            "returns": 0,
+            "edges": 26,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 16,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-flank",
+            "count": 34,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -20
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 22,
+            "loops": 0,
+            "returns": 0,
+            "edges": 16,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 21,
+            "loops": 0,
+            "returns": 21,
+            "edges": 9,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 12,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "bank-flank>plate-side-w",
+            "count": 16,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -22
+            ],
+            "elevation": [
+              8,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 11,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 7,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -8
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back>plate-west",
+            "count": 6,
+            "loops": 0,
+            "returns": 6,
+            "edges": 6,
+            "yaw": [
+              -10,
+              -10
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 20,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-back>plate-mouth-e",
+            "count": 6,
+            "loops": 0,
+            "returns": 6,
+            "edges": 3,
+            "yaw": [
+              -6,
+              -4
+            ],
+            "elevation": [
+              12,
+              20
+            ],
+            "charge": [
+              0.55,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-west>bank-flank",
+            "count": 5,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -10
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 3,
+            "yaw": [
+              6,
+              8
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          }
+        ]
+      }
+    },
+    "simpler": {
+      "seconds": 2.54,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": -15
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 37,
+        "multi": 79,
+        "multiShare": 0.0903,
+        "loop": 16,
+        "return": 57,
+        "returnShare": 0.0651,
+        "repeat": 16,
+        "uprange": 54,
+        "edge": 209,
+        "edgeShare": 0.2389,
+        "rebound": 79,
+        "reboundShare": 0.0903,
+        "interesting": 229,
+        "interestingShare": 0.2617,
+        "chaotic": 0,
+        "histogram": {
+          "0": 543,
+          "1": 253,
+          "2": 57,
+          "3": 7,
+          "4": 11,
+          "5": 4
+        },
+        "pieceHits": {
+          "bank-back": 129,
+          "plate-mouth-w": 81,
+          "plate-mouth-e": 77,
+          "plate-east": 28,
+          "plate-side-e": 24,
+          "plate-corner-e": 30,
+          "plate-hook": 64
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 543,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 12,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 77,
+            "loops": 0,
+            "returns": 0,
+            "edges": 32,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 40,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 23,
+            "loops": 0,
+            "returns": 0,
+            "edges": 17,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 12,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 21,
+            "loops": 0,
+            "returns": 21,
+            "edges": 9,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 12,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 11,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-mouth-e",
+            "count": 6,
+            "loops": 0,
+            "returns": 6,
+            "edges": 3,
+            "yaw": [
+              -6,
+              -4
+            ],
+            "elevation": [
+              12,
+              20
+            ],
+            "charge": [
+              0.55,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 3,
+            "yaw": [
+              6,
+              8
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          }
+        ]
+      }
+    },
+    "open-default": {
+      "seconds": 2.49,
+      "objects": [
+        {
+          "id": "bank-timber",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-left",
+          "kind": "plate",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "kind": "plate",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "kind": "plate",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "kind": "plate",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "kind": "plate",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 13,
+        "multi": 48,
+        "multiShare": 0.0549,
+        "loop": 6,
+        "return": 46,
+        "returnShare": 0.0526,
+        "repeat": 6,
+        "uprange": 46,
+        "edge": 156,
+        "edgeShare": 0.1783,
+        "rebound": 48,
+        "reboundShare": 0.0549,
+        "interesting": 166,
+        "interestingShare": 0.1897,
+        "chaotic": 0,
+        "histogram": {
+          "0": 615,
+          "1": 212,
+          "2": 42,
+          "3": 4,
+          "5": 2
+        },
+        "pieceHits": {
+          "bank-timber": 136,
+          "plate-return-left": 83,
+          "plate-return-right": 83,
+          "plate-aim-left": 0,
+          "plate-aim-right": 0,
+          "plate-deep": 6
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 615,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "bank-timber",
+            "count": 88,
+            "loops": 0,
+            "returns": 0,
+            "edges": 27,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 16,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-return-left",
+            "count": 59,
+            "loops": 0,
+            "returns": 0,
+            "edges": 43,
+            "yaw": [
+              -16,
+              -6
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-return-right",
+            "count": 59,
+            "loops": 0,
+            "returns": 0,
+            "edges": 43,
+            "yaw": [
+              6,
+              16
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 12,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-left",
+            "count": 20,
+            "loops": 0,
+            "returns": 20,
+            "edges": 15,
+            "yaw": [
+              -10,
+              -4
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -6,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-right",
+            "count": 20,
+            "loops": 0,
+            "returns": 20,
+            "edges": 15,
+            "yaw": [
+              4,
+              10
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 6,
+              "elevation": 20,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-deep",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              20,
+              24
+            ],
+            "charge": [
+              0.55,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.55
+            }
+          }
+        ]
+      }
+    },
+    "pocket-yaw-0": {
+      "seconds": 2.54,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": 0
+        },
+        {
+          "id": "bank-flank",
+          "kind": "bank",
+          "x": -12,
+          "z": 26,
+          "yaw": 90
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-west",
+          "kind": "plate",
+          "x": -5.5,
+          "z": 26,
+          "yaw": 35
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-side-w",
+          "kind": "plate",
+          "x": -8,
+          "z": 32,
+          "yaw": 70
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 50,
+        "multi": 104,
+        "multiShare": 0.1189,
+        "loop": 18,
+        "return": 63,
+        "returnShare": 0.072,
+        "repeat": 18,
+        "uprange": 59,
+        "edge": 229,
+        "edgeShare": 0.2617,
+        "rebound": 104,
+        "reboundShare": 0.1189,
+        "interesting": 257,
+        "interestingShare": 0.2937,
+        "chaotic": 3,
+        "histogram": {
+          "0": 483,
+          "1": 288,
+          "2": 78,
+          "3": 10,
+          "4": 8,
+          "5": 4,
+          "6": 1,
+          "7": 2,
+          "8": 1
+        },
+        "pieceHits": {
+          "bank-back": 124,
+          "bank-flank": 57,
+          "plate-mouth-w": 81,
+          "plate-mouth-e": 74,
+          "plate-east": 26,
+          "plate-west": 29,
+          "plate-side-e": 25,
+          "plate-side-w": 22,
+          "plate-corner-e": 30,
+          "plate-hook": 55
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 483,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 40,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 70,
+            "loops": 0,
+            "returns": 0,
+            "edges": 23,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 16,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-flank",
+            "count": 34,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -20
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 23,
+            "loops": 0,
+            "returns": 0,
+            "edges": 17,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 12,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-flank>plate-side-w",
+            "count": 16,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -22
+            ],
+            "elevation": [
+              8,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-back>plate-west",
+            "count": 12,
+            "loops": 0,
+            "returns": 12,
+            "edges": 8,
+            "yaw": [
+              -10,
+              -6
+            ],
+            "elevation": [
+              12,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -8,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 11,
+            "loops": 0,
+            "returns": 11,
+            "edges": 5,
+            "yaw": [
+              2,
+              4
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 2,
+              "elevation": 24,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 10,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 7,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -8
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west>bank-flank",
+            "count": 5,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -10
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e",
+            "count": 4,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              8,
+              10
+            ],
+            "elevation": [
+              24,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 40,
+              "charge": 0.35
+            }
+          }
+        ]
+      }
+    },
+    "pocket-yaw-30": {
+      "seconds": 2.54,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": -30
+        },
+        {
+          "id": "bank-flank",
+          "kind": "bank",
+          "x": -12,
+          "z": 26,
+          "yaw": 90
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-west",
+          "kind": "plate",
+          "x": -5.5,
+          "z": 26,
+          "yaw": 35
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-side-w",
+          "kind": "plate",
+          "x": -8,
+          "z": 32,
+          "yaw": 70
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 44,
+        "multi": 107,
+        "multiShare": 0.1223,
+        "loop": 20,
+        "return": 60,
+        "returnShare": 0.0686,
+        "repeat": 20,
+        "uprange": 57,
+        "edge": 243,
+        "edgeShare": 0.2777,
+        "rebound": 107,
+        "reboundShare": 0.1223,
+        "interesting": 269,
+        "interestingShare": 0.3074,
+        "chaotic": 0,
+        "histogram": {
+          "0": 486,
+          "1": 282,
+          "2": 74,
+          "3": 25,
+          "4": 7,
+          "5": 1
+        },
+        "pieceHits": {
+          "bank-back": 120,
+          "bank-flank": 56,
+          "plate-mouth-w": 78,
+          "plate-mouth-e": 71,
+          "plate-east": 30,
+          "plate-west": 13,
+          "plate-side-e": 29,
+          "plate-side-w": 27,
+          "plate-corner-e": 36,
+          "plate-hook": 57
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 486,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 40,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 64,
+            "loops": 0,
+            "returns": 0,
+            "edges": 32,
+            "yaw": [
+              -10,
+              8
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-flank",
+            "count": 34,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -20
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 22,
+            "loops": 0,
+            "returns": 0,
+            "edges": 16,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-flank>plate-side-w",
+            "count": 16,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -22
+            ],
+            "elevation": [
+              8,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 11,
+            "loops": 0,
+            "returns": 11,
+            "edges": 7,
+            "yaw": [
+              -6,
+              -2
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 11,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e",
+            "count": 9,
+            "loops": 0,
+            "returns": 9,
+            "edges": 8,
+            "yaw": [
+              2,
+              6
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-hook>bank-back",
+            "count": 8,
+            "loops": 8,
+            "returns": 8,
+            "edges": 2,
+            "yaw": [
+              -4,
+              -2
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 7,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -8
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west>bank-flank",
+            "count": 5,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -10
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-side-w",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              -10,
+              -10
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 24,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e>bank-back",
+            "count": 5,
+            "loops": 5,
+            "returns": 5,
+            "edges": 3,
+            "yaw": [
+              2,
+              6
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-east",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 4,
+            "yaw": [
+              0,
+              0
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          }
+        ]
+      }
+    },
+    "pocket-yaw-15": {
+      "seconds": 2.55,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": 15
+        },
+        {
+          "id": "bank-flank",
+          "kind": "bank",
+          "x": -12,
+          "z": 26,
+          "yaw": 90
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-west",
+          "kind": "plate",
+          "x": -5.5,
+          "z": 26,
+          "yaw": 35
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-side-w",
+          "kind": "plate",
+          "x": -8,
+          "z": 32,
+          "yaw": 70
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 43,
+        "multi": 106,
+        "multiShare": 0.1211,
+        "loop": 13,
+        "return": 64,
+        "returnShare": 0.0731,
+        "repeat": 13,
+        "uprange": 61,
+        "edge": 233,
+        "edgeShare": 0.2663,
+        "rebound": 106,
+        "reboundShare": 0.1211,
+        "interesting": 263,
+        "interestingShare": 0.3006,
+        "chaotic": 0,
+        "histogram": {
+          "0": 484,
+          "1": 285,
+          "2": 82,
+          "3": 17,
+          "4": 6,
+          "6": 1
+        },
+        "pieceHits": {
+          "bank-back": 123,
+          "bank-flank": 62,
+          "plate-mouth-w": 87,
+          "plate-mouth-e": 71,
+          "plate-east": 19,
+          "plate-west": 36,
+          "plate-side-e": 23,
+          "plate-side-w": 30,
+          "plate-corner-e": 20,
+          "plate-hook": 44
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 484,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 2,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 27,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-flank",
+            "count": 34,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -20
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 23,
+            "loops": 0,
+            "returns": 0,
+            "edges": 17,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 12,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-flank>plate-side-w",
+            "count": 16,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -22
+            ],
+            "elevation": [
+              8,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-back>plate-west",
+            "count": 15,
+            "loops": 0,
+            "returns": 15,
+            "edges": 7,
+            "yaw": [
+              -6,
+              0
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 10,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-mouth-w",
+            "count": 7,
+            "loops": 0,
+            "returns": 7,
+            "edges": 4,
+            "yaw": [
+              2,
+              6
+            ],
+            "elevation": [
+              12,
+              20
+            ],
+            "charge": [
+              0.55,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 16,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 7,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -8
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back>plate-side-w",
+            "count": 6,
+            "loops": 0,
+            "returns": 4,
+            "edges": 3,
+            "yaw": [
+              -10,
+              -8
+            ],
+            "elevation": [
+              12,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -8,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-west>bank-flank",
+            "count": 5,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -10
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-west>bank-back",
+            "count": 5,
+            "loops": 5,
+            "returns": 5,
+            "edges": 5,
+            "yaw": [
+              -4,
+              0
+            ],
+            "elevation": [
+              12,
+              20
+            ],
+            "charge": [
+              0.55,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 20,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 5,
+            "loops": 0,
+            "returns": 5,
+            "edges": 4,
+            "yaw": [
+              6,
+              8
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 6,
+              "elevation": 40,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>bank-flank",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 2,
+            "yaw": [
+              -8,
+              -6
+            ],
+            "elevation": [
+              12,
+              16
+            ],
+            "charge": [
+              0.65,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -6,
+              "elevation": 16,
+              "charge": 0.65
+            }
+          }
+        ]
+      }
+    },
+    "pocket-x-plus-2": {
+      "seconds": 2.6,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 2,
+          "z": 34,
+          "yaw": -15
+        },
+        {
+          "id": "bank-flank",
+          "kind": "bank",
+          "x": -12,
+          "z": 26,
+          "yaw": 90
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-west",
+          "kind": "plate",
+          "x": -5.5,
+          "z": 26,
+          "yaw": 35
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-side-w",
+          "kind": "plate",
+          "x": -8,
+          "z": 32,
+          "yaw": 70
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 52,
+        "multi": 112,
+        "multiShare": 0.128,
+        "loop": 16,
+        "return": 71,
+        "returnShare": 0.0811,
+        "repeat": 16,
+        "uprange": 67,
+        "edge": 242,
+        "edgeShare": 0.2766,
+        "rebound": 112,
+        "reboundShare": 0.128,
+        "interesting": 268,
+        "interestingShare": 0.3063,
+        "chaotic": 0,
+        "histogram": {
+          "0": 491,
+          "1": 272,
+          "2": 79,
+          "3": 18,
+          "4": 14,
+          "5": 1
+        },
+        "pieceHits": {
+          "bank-back": 117,
+          "bank-flank": 56,
+          "plate-mouth-w": 80,
+          "plate-mouth-e": 79,
+          "plate-east": 29,
+          "plate-west": 13,
+          "plate-side-e": 32,
+          "plate-side-w": 22,
+          "plate-corner-e": 35,
+          "plate-hook": 64
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 491,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 55,
+            "loops": 0,
+            "returns": 0,
+            "edges": 27,
+            "yaw": [
+              -6,
+              12
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 12,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-flank",
+            "count": 34,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -20
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 23,
+            "loops": 0,
+            "returns": 0,
+            "edges": 17,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 12,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 19,
+            "loops": 0,
+            "returns": 19,
+            "edges": 12,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-flank>plate-side-w",
+            "count": 16,
+            "loops": 0,
+            "returns": 0,
+            "edges": 6,
+            "yaw": [
+              -24,
+              -22
+            ],
+            "elevation": [
+              8,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 10,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back>plate-mouth-e",
+            "count": 7,
+            "loops": 0,
+            "returns": 7,
+            "edges": 3,
+            "yaw": [
+              -6,
+              -2
+            ],
+            "elevation": [
+              12,
+              20
+            ],
+            "charge": [
+              0.55,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 16,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 7,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 7,
+            "loops": 0,
+            "returns": 0,
+            "edges": 7,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-west",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -8
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-west>bank-flank",
+            "count": 5,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              -14,
+              -10
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-side-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 5,
+            "edges": 5,
+            "yaw": [
+              10,
+              12
+            ],
+            "elevation": [
+              12,
+              20
+            ],
+            "charge": [
+              0.55,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 12,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e>bank-back",
+            "count": 4,
+            "loops": 4,
+            "returns": 4,
+            "edges": 2,
+            "yaw": [
+              6,
+              12
+            ],
+            "elevation": [
+              24,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 10,
+              "elevation": 40,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e",
+            "count": 4,
+            "loops": 0,
+            "returns": 3,
+            "edges": 4,
+            "yaw": [
+              6,
+              12
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          }
+        ]
+      }
+    },
+    "open-yaw-minus-15": {
+      "seconds": 2.14,
+      "objects": [
+        {
+          "id": "bank-timber",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": -15
+        },
+        {
+          "id": "plate-return-left",
+          "kind": "plate",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "kind": "plate",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "kind": "plate",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "kind": "plate",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "kind": "plate",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 10,
+        "multi": 31,
+        "multiShare": 0.0354,
+        "loop": 2,
+        "return": 31,
+        "returnShare": 0.0354,
+        "repeat": 2,
+        "uprange": 31,
+        "edge": 147,
+        "edgeShare": 0.168,
+        "rebound": 31,
+        "reboundShare": 0.0354,
+        "interesting": 154,
+        "interestingShare": 0.176,
+        "chaotic": 0,
+        "histogram": {
+          "0": 614,
+          "1": 230,
+          "2": 28,
+          "3": 3
+        },
+        "pieceHits": {
+          "bank-timber": 136,
+          "plate-return-left": 66,
+          "plate-return-right": 81,
+          "plate-aim-left": 0,
+          "plate-aim-right": 4,
+          "plate-deep": 6
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 614,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 20,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-timber",
+            "count": 105,
+            "loops": 0,
+            "returns": 0,
+            "edges": 31,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-return-left",
+            "count": 60,
+            "loops": 0,
+            "returns": 0,
+            "edges": 44,
+            "yaw": [
+              -16,
+              -6
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-return-right",
+            "count": 59,
+            "loops": 0,
+            "returns": 0,
+            "edges": 43,
+            "yaw": [
+              6,
+              16
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 12,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-right",
+            "count": 21,
+            "loops": 0,
+            "returns": 21,
+            "edges": 16,
+            "yaw": [
+              0,
+              4
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 2,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-deep",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              20,
+              24
+            ],
+            "charge": [
+              0.55,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-timber>plate-aim-right",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 2,
+            "yaw": [
+              6,
+              8
+            ],
+            "elevation": [
+              12,
+              16
+            ],
+            "charge": [
+              0.65,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          }
+        ]
+      }
+    },
+    "open-yaw-15": {
+      "seconds": 2.2,
+      "objects": [
+        {
+          "id": "bank-timber",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": 15
+        },
+        {
+          "id": "plate-return-left",
+          "kind": "plate",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "kind": "plate",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "kind": "plate",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "kind": "plate",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "kind": "plate",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 10,
+        "multi": 31,
+        "multiShare": 0.0354,
+        "loop": 2,
+        "return": 31,
+        "returnShare": 0.0354,
+        "repeat": 2,
+        "uprange": 31,
+        "edge": 147,
+        "edgeShare": 0.168,
+        "rebound": 31,
+        "reboundShare": 0.0354,
+        "interesting": 154,
+        "interestingShare": 0.176,
+        "chaotic": 0,
+        "histogram": {
+          "0": 614,
+          "1": 230,
+          "2": 28,
+          "3": 3
+        },
+        "pieceHits": {
+          "bank-timber": 136,
+          "plate-return-left": 81,
+          "plate-return-right": 66,
+          "plate-aim-left": 4,
+          "plate-aim-right": 0,
+          "plate-deep": 6
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 614,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 30,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "bank-timber",
+            "count": 105,
+            "loops": 0,
+            "returns": 0,
+            "edges": 31,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 40,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-return-right",
+            "count": 60,
+            "loops": 0,
+            "returns": 0,
+            "edges": 44,
+            "yaw": [
+              6,
+              16
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 12,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-return-left",
+            "count": 59,
+            "loops": 0,
+            "returns": 0,
+            "edges": 43,
+            "yaw": [
+              -16,
+              -6
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-left",
+            "count": 21,
+            "loops": 0,
+            "returns": 21,
+            "edges": 16,
+            "yaw": [
+              -4,
+              0
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-deep",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              20,
+              24
+            ],
+            "charge": [
+              0.55,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-timber>plate-aim-left",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 2,
+            "yaw": [
+              -8,
+              -6
+            ],
+            "elevation": [
+              12,
+              16
+            ],
+            "charge": [
+              0.65,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -6,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          }
+        ]
+      }
+    },
+    "open-yaw-minus-30": {
+      "seconds": 2.19,
+      "objects": [
+        {
+          "id": "bank-timber",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": -30
+        },
+        {
+          "id": "plate-return-left",
+          "kind": "plate",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "kind": "plate",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "kind": "plate",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "kind": "plate",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "kind": "plate",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 9,
+        "multi": 22,
+        "multiShare": 0.0251,
+        "loop": 1,
+        "return": 22,
+        "returnShare": 0.0251,
+        "repeat": 1,
+        "uprange": 22,
+        "edge": 143,
+        "edgeShare": 0.1634,
+        "rebound": 22,
+        "reboundShare": 0.0251,
+        "interesting": 150,
+        "interestingShare": 0.1714,
+        "chaotic": 0,
+        "histogram": {
+          "0": 623,
+          "1": 230,
+          "2": 20,
+          "3": 1,
+          "4": 1
+        },
+        "pieceHits": {
+          "bank-timber": 128,
+          "plate-return-left": 62,
+          "plate-return-right": 79,
+          "plate-aim-left": 0,
+          "plate-aim-right": 1,
+          "plate-deep": 6
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 623,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-timber",
+            "count": 106,
+            "loops": 0,
+            "returns": 0,
+            "edges": 37,
+            "yaw": [
+              -10,
+              8
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 2,
+              "elevation": 8,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "plate-return-left",
+            "count": 60,
+            "loops": 0,
+            "returns": 0,
+            "edges": 44,
+            "yaw": [
+              -16,
+              -6
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -10,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-return-right",
+            "count": 58,
+            "loops": 0,
+            "returns": 0,
+            "edges": 42,
+            "yaw": [
+              6,
+              16
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-right",
+            "count": 19,
+            "loops": 0,
+            "returns": 19,
+            "edges": 12,
+            "yaw": [
+              -6,
+              -2
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 16,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-deep",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              20,
+              24
+            ],
+            "charge": [
+              0.55,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.55
+            }
+          }
+        ]
+      }
+    },
+    "open-x-plus-2": {
+      "seconds": 2.18,
+      "objects": [
+        {
+          "id": "bank-timber",
+          "kind": "bank",
+          "x": 2,
+          "z": 34,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-left",
+          "kind": "plate",
+          "x": -5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-return-right",
+          "kind": "plate",
+          "x": 5,
+          "z": 26,
+          "yaw": 0
+        },
+        {
+          "id": "plate-aim-left",
+          "kind": "plate",
+          "x": -12,
+          "z": 20,
+          "yaw": 20
+        },
+        {
+          "id": "plate-aim-right",
+          "kind": "plate",
+          "x": 12,
+          "z": 20,
+          "yaw": -20
+        },
+        {
+          "id": "plate-deep",
+          "kind": "plate",
+          "x": 0,
+          "z": 52,
+          "yaw": 0
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 12,
+        "multi": 37,
+        "multiShare": 0.0423,
+        "loop": 6,
+        "return": 36,
+        "returnShare": 0.0411,
+        "repeat": 6,
+        "uprange": 36,
+        "edge": 154,
+        "edgeShare": 0.176,
+        "rebound": 37,
+        "reboundShare": 0.0423,
+        "interesting": 159,
+        "interestingShare": 0.1817,
+        "chaotic": 0,
+        "histogram": {
+          "0": 616,
+          "1": 222,
+          "2": 31,
+          "3": 4,
+          "4": 1,
+          "5": 1
+        },
+        "pieceHits": {
+          "bank-timber": 134,
+          "plate-return-left": 73,
+          "plate-return-right": 83,
+          "plate-aim-left": 0,
+          "plate-aim-right": 0,
+          "plate-deep": 6
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 616,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-timber",
+            "count": 97,
+            "loops": 0,
+            "returns": 0,
+            "edges": 30,
+            "yaw": [
+              -6,
+              14
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 2,
+              "elevation": 16,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-return-right",
+            "count": 60,
+            "loops": 0,
+            "returns": 0,
+            "edges": 44,
+            "yaw": [
+              6,
+              16
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 12,
+              "elevation": 8,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-return-left",
+            "count": 59,
+            "loops": 0,
+            "returns": 0,
+            "edges": 43,
+            "yaw": [
+              -16,
+              -6
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 24,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-right",
+            "count": 18,
+            "loops": 0,
+            "returns": 18,
+            "edges": 13,
+            "yaw": [
+              4,
+              10
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 6,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-timber>plate-return-left",
+            "count": 12,
+            "loops": 0,
+            "returns": 12,
+            "edges": 12,
+            "yaw": [
+              -6,
+              -4
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -4,
+              "elevation": 12,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-deep",
+            "count": 6,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              -2,
+              2
+            ],
+            "elevation": [
+              20,
+              24
+            ],
+            "charge": [
+              0.55,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 24,
+              "charge": 0.55
+            }
+          }
+        ]
+      }
+    },
+    "pocket-rev": {
+      "seconds": 2.42,
+      "objects": [
+        {
+          "id": "bank-back",
+          "kind": "bank",
+          "x": 0,
+          "z": 34,
+          "yaw": -10
+        },
+        {
+          "id": "bank-flank",
+          "kind": "bank",
+          "x": -9,
+          "z": 30,
+          "yaw": 105
+        },
+        {
+          "id": "plate-mouth-w",
+          "kind": "plate",
+          "x": -4,
+          "z": 18,
+          "yaw": 20
+        },
+        {
+          "id": "plate-mouth-e",
+          "kind": "plate",
+          "x": 4.5,
+          "z": 18,
+          "yaw": -20
+        },
+        {
+          "id": "plate-east",
+          "kind": "plate",
+          "x": 6,
+          "z": 26,
+          "yaw": -30
+        },
+        {
+          "id": "plate-west",
+          "kind": "plate",
+          "x": -4,
+          "z": 28,
+          "yaw": 50
+        },
+        {
+          "id": "plate-side-e",
+          "kind": "plate",
+          "x": 10,
+          "z": 30,
+          "yaw": -80
+        },
+        {
+          "id": "plate-side-w",
+          "kind": "plate",
+          "x": -8,
+          "z": 24,
+          "yaw": 80
+        },
+        {
+          "id": "plate-corner-e",
+          "kind": "plate",
+          "x": 6.5,
+          "z": 32,
+          "yaw": -40
+        },
+        {
+          "id": "plate-hook",
+          "kind": "plate",
+          "x": 2.5,
+          "z": 28,
+          "yaw": -55
+        }
+      ],
+      "summary": {
+        "shots": 875,
+        "rejected": 0,
+        "distinctOrders": 72,
+        "multi": 150,
+        "multiShare": 0.1714,
+        "loop": 44,
+        "return": 99,
+        "returnShare": 0.1131,
+        "repeat": 44,
+        "uprange": 79,
+        "edge": 290,
+        "edgeShare": 0.3314,
+        "rebound": 150,
+        "reboundShare": 0.1714,
+        "interesting": 319,
+        "interestingShare": 0.3646,
+        "chaotic": 1,
+        "histogram": {
+          "0": 440,
+          "1": 285,
+          "2": 73,
+          "3": 37,
+          "4": 24,
+          "5": 12,
+          "6": 3,
+          "10": 1
+        },
+        "pieceHits": {
+          "bank-back": 156,
+          "bank-flank": 96,
+          "plate-mouth-w": 83,
+          "plate-mouth-e": 73,
+          "plate-east": 28,
+          "plate-west": 39,
+          "plate-side-e": 30,
+          "plate-side-w": 30,
+          "plate-corner-e": 43,
+          "plate-hook": 70
+        },
+        "families": [
+          {
+            "order": "(no piece)",
+            "count": 440,
+            "loops": 0,
+            "returns": 0,
+            "edges": 0,
+            "yaw": [
+              -24,
+              24
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 20,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-w",
+            "count": 67,
+            "loops": 0,
+            "returns": 0,
+            "edges": 46,
+            "yaw": [
+              -18,
+              -6
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -12,
+              "elevation": 8,
+              "charge": 0.65
+            }
+          },
+          {
+            "order": "plate-mouth-e",
+            "count": 62,
+            "loops": 0,
+            "returns": 0,
+            "edges": 34,
+            "yaw": [
+              8,
+              20
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-back",
+            "count": 60,
+            "loops": 0,
+            "returns": 0,
+            "edges": 17,
+            "yaw": [
+              -10,
+              10
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -2,
+              "elevation": 12,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-flank",
+            "count": 38,
+            "loops": 0,
+            "returns": 0,
+            "edges": 25,
+            "yaw": [
+              -24,
+              -12
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -18,
+              "elevation": 30,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-hook",
+            "count": 17,
+            "loops": 0,
+            "returns": 0,
+            "edges": 11,
+            "yaw": [
+              2,
+              8
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 4,
+              "elevation": 20,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "bank-flank>bank-back",
+            "count": 14,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              -22,
+              -14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -18,
+              "elevation": 24,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-side-w",
+            "count": 12,
+            "loops": 0,
+            "returns": 0,
+            "edges": 12,
+            "yaw": [
+              -20,
+              -18
+            ],
+            "elevation": [
+              8,
+              20
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -20,
+              "elevation": 12,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "bank-back>plate-hook",
+            "count": 11,
+            "loops": 0,
+            "returns": 11,
+            "edges": 8,
+            "yaw": [
+              -2,
+              4
+            ],
+            "elevation": [
+              8,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 20,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-east",
+            "count": 11,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              10,
+              16
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-flank>plate-side-w>bank-flank>plate-side-w",
+            "count": 9,
+            "loops": 9,
+            "returns": 9,
+            "edges": 9,
+            "yaw": [
+              -22,
+              -22
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -22,
+              "elevation": 12,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-mouth-e>plate-mouth-w",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              8,
+              8
+            ],
+            "elevation": [
+              8,
+              16
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.35
+            }
+          },
+          {
+            "order": "plate-side-e",
+            "count": 8,
+            "loops": 0,
+            "returns": 0,
+            "edges": 8,
+            "yaw": [
+              18,
+              20
+            ],
+            "elevation": [
+              16,
+              30
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 20,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-flank>bank-back>bank-flank>bank-back>bank-flank",
+            "count": 5,
+            "loops": 5,
+            "returns": 5,
+            "edges": 5,
+            "yaw": [
+              -14,
+              -14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-west",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 3,
+            "yaw": [
+              -10,
+              -6
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -6,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-west",
+            "count": 5,
+            "loops": 0,
+            "returns": 5,
+            "edges": 3,
+            "yaw": [
+              -10,
+              -8
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -8,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-back>plate-hook>plate-west",
+            "count": 5,
+            "loops": 0,
+            "returns": 5,
+            "edges": 0,
+            "yaw": [
+              0,
+              2
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.45,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 0,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-hook>plate-west",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              2,
+              2
+            ],
+            "elevation": [
+              8,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.65
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 2,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "plate-corner-e",
+            "count": 5,
+            "loops": 0,
+            "returns": 0,
+            "edges": 5,
+            "yaw": [
+              10,
+              14
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 14,
+              "elevation": 20,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-flank>plate-west>plate-side-w",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 4,
+            "yaw": [
+              -22,
+              -20
+            ],
+            "elevation": [
+              16,
+              20
+            ],
+            "charge": [
+              0.45,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -20,
+              "elevation": 16,
+              "charge": 0.55
+            }
+          },
+          {
+            "order": "plate-west>bank-flank",
+            "count": 4,
+            "loops": 0,
+            "returns": 0,
+            "edges": 1,
+            "yaw": [
+              -10,
+              -8
+            ],
+            "elevation": [
+              16,
+              24
+            ],
+            "charge": [
+              0.35,
+              0.45
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": -8,
+              "elevation": 16,
+              "charge": 0.45
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e",
+            "count": 4,
+            "loops": 0,
+            "returns": 4,
+            "edges": 3,
+            "yaw": [
+              6,
+              8
+            ],
+            "elevation": [
+              12,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.8
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 12,
+              "charge": 0.8
+            }
+          },
+          {
+            "order": "bank-back>plate-corner-e>bank-back",
+            "count": 4,
+            "loops": 4,
+            "returns": 4,
+            "edges": 3,
+            "yaw": [
+              6,
+              10
+            ],
+            "elevation": [
+              16,
+              40
+            ],
+            "charge": [
+              0.35,
+              0.55
+            ],
+            "example": {
+              "railIndex": 1,
+              "originX": 0,
+              "yaw": 8,
+              "elevation": 24,
+              "charge": 0.45
+            }
+          }
+        ]
+      }
+    }
+  },
+  "starterWalks": [
+    {
+      "requested": "bank-back>plate-hook",
+      "order": "bank-back>plate-hook",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.65
+      },
+      "widths": {
+        "yaw": {
+          "neg": 7,
+          "pos": 3,
+          "steps": 11
+        },
+        "elevation": {
+          "neg": 5,
+          "pos": 1,
+          "steps": 7
+        },
+        "charge": {
+          "neg": 8,
+          "pos": 2,
+          "steps": 11
+        }
+      },
+      "exactNeighbours": 6,
+      "nearNeighbours": 6,
+      "neighbourOrders": []
+    },
+    {
+      "requested": "bank-back>plate-corner-e>bank-back",
+      "order": "bank-back>plate-corner-e>bank-back",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 6,
+        "elevation": 24,
+        "charge": 0.45
+      },
+      "widths": {
+        "yaw": {
+          "neg": 2,
+          "pos": 3,
+          "steps": 6
+        },
+        "elevation": {
+          "neg": 7,
+          "pos": 2,
+          "steps": 10
+        },
+        "charge": {
+          "neg": 3,
+          "pos": 0,
+          "steps": 4
+        }
+      },
+      "exactNeighbours": 5,
+      "nearNeighbours": 6,
+      "neighbourOrders": [
+        {
+          "axis": "charge",
+          "dir": 1,
+          "order": "bank-back>plate-corner-e>bank-back>plate-hook",
+          "near": true
+        }
+      ]
+    },
+    {
+      "requested": "plate-hook>plate-side-e>plate-corner-e",
+      "order": "plate-hook>plate-side-e>plate-corner-e",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 6,
+        "elevation": 12,
+        "charge": 0.65
+      },
+      "widths": {
+        "yaw": {
+          "neg": 3,
+          "pos": 0,
+          "steps": 4
+        },
+        "elevation": {
+          "neg": 4,
+          "pos": 0,
+          "steps": 5
+        },
+        "charge": {
+          "neg": 7,
+          "pos": 1,
+          "steps": 9
+        }
+      },
+      "exactNeighbours": 4,
+      "nearNeighbours": 5,
+      "neighbourOrders": [
+        {
+          "axis": "yaw",
+          "dir": 1,
+          "order": "plate-hook>plate-side-e>plate-corner-e>plate-side-e",
+          "near": true
+        },
+        {
+          "axis": "elevation",
+          "dir": 1,
+          "order": "plate-hook",
+          "near": false
+        }
+      ]
+    },
+    {
+      "requested": "bank-back>plate-mouth-e",
+      "order": "bank-back>plate-mouth-e",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -4,
+        "elevation": 12,
+        "charge": 0.8
+      },
+      "widths": {
+        "yaw": {
+          "neg": 5,
+          "pos": 0,
+          "steps": 6
+        },
+        "elevation": {
+          "neg": 5,
+          "pos": 0,
+          "steps": 6
+        },
+        "charge": {
+          "neg": 9,
+          "pos": 0,
+          "steps": 10
+        }
+      },
+      "exactNeighbours": 3,
+      "nearNeighbours": 6,
+      "neighbourOrders": [
+        {
+          "axis": "yaw",
+          "dir": 1,
+          "order": "bank-back>plate-hook",
+          "near": true
+        },
+        {
+          "axis": "elevation",
+          "dir": 1,
+          "order": "bank-back>plate-mouth-e>plate-hook",
+          "near": true
+        },
+        {
+          "axis": "charge",
+          "dir": 1,
+          "order": "bank-back>plate-mouth-e>plate-hook",
+          "near": true
+        }
+      ]
+    },
+    {
+      "requested": "plate-mouth-e",
+      "order": "plate-mouth-e",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 14,
+        "elevation": 16,
+        "charge": 0.35
+      },
+      "widths": {
+        "yaw": {
+          "neg": 11,
+          "pos": 12,
+          "steps": 24
+        },
+        "elevation": {
+          "neg": 12,
+          "pos": 5,
+          "steps": 18
+        },
+        "charge": {
+          "neg": 12,
+          "pos": 7,
+          "steps": 20
+        }
+      },
+      "exactNeighbours": 6,
+      "nearNeighbours": 6,
+      "neighbourOrders": []
+    },
+    {
+      "requested": "plate-mouth-w",
+      "order": "plate-mouth-w",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -12,
+        "elevation": 8,
+        "charge": 0.65
+      },
+      "widths": {
+        "yaw": {
+          "neg": 12,
+          "pos": 11,
+          "steps": 24
+        },
+        "elevation": {
+          "neg": 6,
+          "pos": 9,
+          "steps": 16
+        },
+        "charge": {
+          "neg": 12,
+          "pos": 12,
+          "steps": 25
+        }
+      },
+      "exactNeighbours": 6,
+      "nearNeighbours": 6,
+      "neighbourOrders": []
+    },
+    {
+      "requested": "bank-back",
+      "order": "bank-back",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2,
+        "elevation": 16,
+        "charge": 0.8
+      },
+      "widths": {
+        "yaw": {
+          "neg": 12,
+          "pos": 12,
+          "steps": 25
+        },
+        "elevation": {
+          "neg": 2,
+          "pos": 1,
+          "steps": 4
+        },
+        "charge": {
+          "neg": 3,
+          "pos": 5,
+          "steps": 9
+        }
+      },
+      "exactNeighbours": 6,
+      "nearNeighbours": 6,
+      "neighbourOrders": []
+    },
+    {
+      "requested": "bank-back>plate-corner-e>bank-back>plate-hook",
+      "order": "bank-back>plate-corner-e>bank-back>plate-hook",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 24,
+        "charge": 0.45
+      },
+      "widths": {
+        "yaw": {
+          "neg": 0,
+          "pos": 1,
+          "steps": 2
+        },
+        "elevation": {
+          "neg": 0,
+          "pos": 2,
+          "steps": 3
+        },
+        "charge": {
+          "neg": 0,
+          "pos": 1,
+          "steps": 2
+        }
+      },
+      "exactNeighbours": 3,
+      "nearNeighbours": 6,
+      "neighbourOrders": [
+        {
+          "axis": "yaw",
+          "dir": -1,
+          "order": "bank-back>plate-corner-e>bank-back",
+          "near": true
+        },
+        {
+          "axis": "elevation",
+          "dir": -1,
+          "order": "bank-back>plate-corner-e>bank-back",
+          "near": true
+        },
+        {
+          "axis": "charge",
+          "dir": -1,
+          "order": "bank-back>plate-corner-e>bank-back",
+          "near": true
+        }
+      ]
+    }
+  ],
+  "selectionProbe": {
+    "note": "In-range trio, before the broad grid. Yaw -18 to 18 step 3, elevation 10, 14, 18, 22, charge 0.45, 0.55, 0.68. 156 shots. Seed 20261110.",
+    "pocket": {
+      "orders": 28,
+      "multi": 38,
+      "edge": 86,
+      "rebound": 38,
+      "return": 30,
+      "loop": 10,
+      "chaotic": 0,
+      "histogram": {
+        "0": 46,
+        "1": 72,
+        "2": 22,
+        "3": 12,
+        "4": 2,
+        "5": 2
+      }
+    },
+    "wedge": {
+      "orders": 46,
+      "multi": 67,
+      "edge": 100,
+      "rebound": 67,
+      "return": 41,
+      "loop": 25,
+      "chaotic": 3,
+      "histogram": {
+        "0": 22,
+        "1": 67,
+        "2": 34,
+        "3": 14,
+        "4": 10,
+        "5": 5,
+        "6": 1,
+        "7": 2,
+        "8": 1
+      }
+    },
+    "lane": {
+      "orders": 34,
+      "multi": 41,
+      "edge": 90,
+      "rebound": 41,
+      "return": 32,
+      "loop": 13,
+      "chaotic": 0,
+      "histogram": {
+        "0": 40,
+        "1": 75,
+        "2": 23,
+        "3": 13,
+        "4": 4,
+        "5": 1
+      }
+    },
+    "openContacts": {
+      "orders": 10,
+      "multi": 14,
+      "edge": 50,
+      "rebound": 14,
+      "return": 12,
+      "loop": 6,
+      "chaotic": 0,
+      "histogram": {
+        "0": 64,
+        "1": 78,
+        "2": 8,
+        "3": 6
+      }
+    }
+  },
+  "halfDegreeBand": {
+    "note": "Yaw -12 to 12 step 0.5, elevation 12, 16, 20, 24, charge 0.5, 0.6, 0.7. 588 shots. Used to compare the pocket with its one revision.",
+    "pocket": {
+      "multi": 167,
+      "loop": 38,
+      "return": 142,
+      "edge": 294,
+      "chaotic": 1
+    },
+    "pocketRev": {
+      "multi": 185,
+      "loop": 58,
+      "return": 152,
+      "edge": 309,
+      "chaotic": 2,
+      "plateSideW": 0
+    }
+  },
+  "keptStarters": [
+    {
+      "id": "return",
+      "setup": {
+        "yaw": -1,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "order": "bank-back>plate-hook",
+      "exactNeighbours": 6,
+      "widths": {
+        "yaw": 12,
+        "elevation": 12,
+        "charge": 15
+      },
+      "walkCapSteps": 8
+    },
+    {
+      "id": "loop",
+      "setup": {
+        "yaw": 5.5,
+        "elevation": 16,
+        "charge": 0.57
+      },
+      "order": "bank-back>plate-corner-e>bank-back",
+      "exactNeighbours": 6,
+      "widths": {
+        "yaw": 5,
+        "elevation": 5,
+        "charge": 6
+      },
+      "walkCapSteps": 10
+    },
+    {
+      "id": "plates",
+      "setup": {
+        "yaw": 6,
+        "elevation": 14,
+        "charge": 0.55
+      },
+      "order": "plate-hook>plate-side-e>plate-corner-e",
+      "exactNeighbours": 6,
+      "widths": {
+        "yaw": 7,
+        "elevation": 3,
+        "charge": 4
+      },
+      "walkCapSteps": 8
+    },
+    {
+      "id": "flank",
+      "setup": {
+        "yaw": -22,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "order": "bank-flank>plate-side-w",
+      "exactNeighbours": 6,
+      "widths": {
+        "yaw": 6,
+        "elevation": 15,
+        "charge": 16
+      },
+      "walkCapSteps": 8
+    },
+    {
+      "id": "mouth",
+      "setup": {
+        "yaw": -12,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "order": "plate-mouth-w",
+      "exactNeighbours": 6,
+      "widths": {
+        "yaw": 17,
+        "elevation": 12,
+        "charge": 17
+      },
+      "walkCapSteps": 8
+    },
+    {
+      "id": "bank-turned",
+      "setup": {
+        "yaw": -4,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "layout": {
+        "id": "bank-back",
+        "x": 0,
+        "z": 34,
+        "yaw": -30
+      },
+      "order": "bank-back>plate-hook>bank-back",
+      "exactNeighbours": 6,
+      "widths": {
+        "yaw": 9,
+        "elevation": 6,
+        "charge": 8
+      },
+      "walkCapSteps": 8
+    }
+  ]
+}
