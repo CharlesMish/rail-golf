@@ -1,0 +1,254 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "ricochet-garden-field",
+  "name": "Ricochet Garden — Field",
+  "kind": "workshop",
+  "invitation": "A timber bank stands in a staggered field of metal and timber plates. A shot can leave the first surface toward a different later one. There is no target. The shot can change, and the bank can move.",
+  "physicalQuestion": "Which contact orders can ordinary aim reach when one surface sends the ball toward different later surfaces, and what changes when the timber bank is moved?",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": null,
+  "sourceBuild": "960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7",
+  "seed": 20261109,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 4,
+        "elevation": 16,
+        "charge": 0.5
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "position": [
+          -9.363179206848145,
+          0.43000003695487976,
+          29.528799057006836
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-bank-trunk"
+      ]
+    },
+    {
+      "id": "fork-short",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 14,
+        "charge": 0.65
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.5416666666666603,
+        "position": [
+          -19.192230224609375,
+          0.43000149726867676,
+          58.18266677856445
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-bank-trunk",
+        "worldcraft-object-plate-short"
+      ]
+    },
+    {
+      "id": "fork-left",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 7,
+        "elevation": 14,
+        "charge": 0.6
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4499999999999973,
+        "position": [
+          -11.868213653564453,
+          0.43000054359436035,
+          29.88656234741211
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-bank-trunk",
+        "worldcraft-object-plate-left"
+      ]
+    },
+    {
+      "id": "right-entry",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 20,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.9083333333333257,
+        "position": [
+          29.016685485839844,
+          0.4300019443035126,
+          55.86327362060547
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-right"
+      ]
+    },
+    {
+      "id": "deep-carry",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -7,
+        "elevation": 18,
+        "charge": 0.65
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8583333333333292,
+        "position": [
+          -12.844600677490234,
+          0.4300009608268738,
+          49.757381439208984
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-deep-l"
+      ]
+    },
+    {
+      "id": "direct-short",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -9,
+        "elevation": 8,
+        "charge": 0.6
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 0.9833333333333323,
+        "position": [
+          -6.670612335205078,
+          0.43000030517578125,
+          30.46839141845703
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-short"
+      ]
+    },
+    {
+      "id": "bank-shifted",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 4,
+        "elevation": 16,
+        "charge": 0.5
+      },
+      "launchPhase": null,
+      "layout": {
+        "objects": [
+          {
+            "id": "bank-trunk",
+            "x": 0,
+            "z": 26,
+            "yaw": 60
+          }
+        ]
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [
+          -9.035531044006348,
+          0.4299996793270111,
+          24.74447250366211
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-bank-trunk",
+        "worldcraft-object-plate-left"
+      ]
+    }
+  ],
+  "nearbySensitivity": "The aim sliders step yaw and elevation by 0.5° and charge by 0.01. At yaw 7°, elevation 14°, and charge 0.6 the ball touches the timber bank, then the left plate. Yaw 6.5° and 7.5°, elevation 13.5° and 14.5°, and charge 0.59 and 0.61 keep that order. This is the neighbourhood of that two-contact shot.",
+  "validationEvidence": "3240 headless Havok shots, seed 20261109, on a uniform aim grid at the preset pose, plus slider-step neighbours of the tested shots and a reduced grid on moved bank poses. The validator replays the tested shots. Grid counts are not human success rates. Enjoyment, a physical phone, and speaker playback were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A third contact that is still in the air after the second surface.",
+      "missing": "Pieces have no height offset, a plate is 4 m tall, and first ground ends the line. Most exits from the timber bank reach the ground after one later plate.",
+      "extension": "One height offset on the existing plate, keeping its friction and restitution. Do not change first-ground termination."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "A recorded note of which neighbouring slider steps stay in a contact order.",
+      "missing": "The validator replays the tested shots. It does not search neighbouring aims on its own.",
+      "extension": "Leave the replay as it is. A later check can append neighbour setups to testedShots when the launcher is free."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear the timber bank with the existing H voice, plates staying on their materials, and read the contact order.",
+      "missing": "This manifest opts in to the existing face-speed dynamics, the H timber-bank voice, and the note timeline. Listening on a real speaker is not checked here.",
+      "extension": "No new sound engine. A later pass can keep these fields and only retune the existing H voice."
+    },
+    {
+      "category": "presentation",
+      "concept": "The staggered field reads from the survey view on a phone.",
+      "missing": "Survey does not label the pieces, and a physical phone was not used for this check.",
+      "extension": "A one-line caption under Survey, with no new geometry."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "bankVoice": true,
+    "timeline": true
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "ricochet-garden-field",
+  "name": "Ricochet Garden — Field",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "bank-trunk",
+      "kind": "bank",
+      "x": 2,
+      "z": 26,
+      "yaw": 60,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "plate-short",
+      "kind": "plate",
+      "x": -5,
+      "z": 31,
+      "yaw": 50,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "plate-long",
+      "kind": "plate",
+      "x": -13,
+      "z": 37,
+      "yaw": 55,
+      "voice": {
+        "material": "timber",
+        "degree": 2
+      }
+    },
+    {
+      "id": "plate-high",
+      "kind": "plate",
+      "x": -9,
+      "z": 34,
+      "yaw": 70,
+      "voice": {
+        "material": "metal",
+        "degree": 3
+      }
+    },
+    {
+      "id": "plate-right",
+      "kind": "plate",
+      "x": 11,
+      "z": 30,
+      "yaw": -60,
+      "voice": {
+        "material": "metal",
+        "degree": 4
+      }
+    },
+    {
+      "id": "plate-right-2",
+      "kind": "plate",
+      "x": 15,
+      "z": 38,
+      "yaw": -50,
+      "voice": {
+        "material": "timber",
+        "degree": 4
+      }
+    },
+    {
+      "id": "plate-left",
+      "kind": "plate",
+      "x": -12,
+      "z": 28,
+      "yaw": 40,
+      "voice": {
+        "material": "timber",
+        "degree": 4
+      }
+    },
+    {
+      "id": "plate-deep",
+      "kind": "plate",
+      "x": 2,
+      "z": 48,
+      "yaw": 60,
+      "voice": {
+        "material": "timber",
+        "degree": 1
+      }
+    },
+    {
+      "id": "plate-deep-l",
+      "kind": "plate",
+      "x": -6,
+      "z": 50,
+      "yaw": 45,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    },
+    {
+      "id": "plate-return",
+      "kind": "plate",
+      "x": -16,
+      "z": 34,
+      "yaw": 20,
+      "voice": {
+        "material": "metal",
+        "degree": 3
+      }
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 4,
+      "elevation": 16,
+      "charge": 0.5
+    },
+    "fixed": [
+      "plate-short",
+      "plate-long",
+      "plate-high",
+      "plate-right",
+      "plate-right-2",
+      "plate-left",
+      "plate-deep",
+      "plate-deep-l",
+      "plate-return"
+    ],
+    "allowance": {
+      "bank": 1
+    },
+    "goal": {
+      "kind": "none"
+    }
+  }
+}
