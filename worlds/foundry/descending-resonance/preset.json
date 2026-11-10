@@ -1,0 +1,28 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "descending-resonance",
+  "name": "Descending Resonance",
+  "environment": { "preset": "forest-clearing-v1", "seed": 1 },
+  "launcher": { "x": 0 },
+  "objects": [
+    { "id": "ramp-w", "kind": "ramp", "x": -3.5, "z": 15.5, "yaw": 0, "voice": { "material": "timber", "degree": 0 } },
+    { "id": "ramp-e", "kind": "ramp", "x": 6.5, "z": 15.5, "yaw": 0, "voice": { "material": "timber", "degree": 1 } },
+    { "id": "wall-near-w", "kind": "bank", "x": -8, "z": 26, "yaw": 0, "voice": { "material": "timber", "degree": 1 } },
+    { "id": "wall-near-e", "kind": "bank", "x": 4, "z": 26, "yaw": 0, "voice": { "material": "timber", "degree": 2 } },
+    { "id": "wall-far-w", "kind": "bank", "x": -4, "z": 33, "yaw": 0, "voice": { "material": "metal", "degree": 0 } },
+    { "id": "wall-far-e", "kind": "bank", "x": 8, "z": 33, "yaw": 0, "voice": { "material": "metal", "degree": 1 } },
+    { "id": "high-w", "kind": "plate", "x": -4, "z": 32.5, "yaw": 0, "lift": 7, "tilt": -10, "voice": { "material": "timber", "degree": 2 } },
+    { "id": "high-c", "kind": "plate", "x": 0, "z": 32.5, "yaw": 0, "lift": 7, "tilt": -10, "voice": { "material": "timber", "degree": 3 } },
+    { "id": "high-e", "kind": "plate", "x": 4, "z": 32.5, "yaw": 0, "lift": 7, "tilt": -10, "voice": { "material": "timber", "degree": 4 } },
+    { "id": "top-w", "kind": "plate", "x": -4, "z": 31.5, "yaw": 0, "lift": 11, "tilt": -20, "voice": { "material": "metal", "degree": 3 } },
+    { "id": "top-c", "kind": "plate", "x": 0, "z": 31.5, "yaw": 0, "lift": 11, "tilt": -20, "voice": { "material": "metal", "degree": 4 } },
+    { "id": "top-e", "kind": "plate", "x": 4, "z": 31.5, "yaw": 0, "lift": 11, "tilt": -20, "voice": { "material": "metal", "degree": 2 } }
+  ],
+  "rules": {
+    "launcher": { "fixed": false, "yaw": 0, "elevation": 18, "charge": 0.55 },
+    "fixed": ["high-c", "high-e", "high-w", "ramp-e", "ramp-w", "top-c", "top-e", "top-w", "wall-far-e", "wall-far-w", "wall-near-e", "wall-near-w"],
+    "allowance": {},
+    "goal": { "kind": "none" }
+  }
+}

@@ -1,6 +1,7 @@
 export type WorldcraftKind='bank'|'ramp'|'block'|'plate';
 export type WorldcraftVoice={material:'metal'|'timber';degree:number};
-export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;voice?:WorldcraftVoice};
+/** lift and tilt appear together, on a plate only. Absent on every v1 piece. */
+export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;lift?:number;tilt?:number;voice?:WorldcraftVoice};
 export type WorldcraftStationaryTarget={id:string;x:number;z:number;yaw:number};
 export type WorldcraftShuttle={kind:'segment-shuttle';speed:number;phaseReference:'endpoint-0';endpoints:[{x:number;z:number},{x:number;z:number}];collider:{shape:'lathe-convex-hull';height:number;skirtRadius:number;centerY:number;friction:number;restitution:number};hit:'any-contact-before-ledger-close'};
 export type WorldcraftBellTarget={id:string;yaw:number;motion:WorldcraftShuttle};
@@ -38,6 +39,11 @@ export const WORLDCRAFT_GRID:Readonly<{coarse:1;fine:.5;rotation:15;fineRotation
 export const WORLDCRAFT_CATALOG:Readonly<Record<WorldcraftKind,Readonly<{label:string;width:number;height:number;depth:number;centerY:number;pitch:number;friction:number;restitution:number}>>>;
 export const WORLDCRAFT_ORC:Readonly<{width:number;height:number;depth:number;centerY:number;friction:number;restitution:number}>;
 export const WORLDCRAFT_BELL:Readonly<{height:number;skirtRadius:number;centerY:number;friction:number;restitution:number}>;
+export const WORLDCRAFT_ELEVATION:Readonly<{kinds:readonly WorldcraftKind[];liftStep:.5;maxLift:20;tiltStep:5;minTilt:-90;maxTilt:90}>;
+export function worldcraftElevated(object:{lift?:number;tilt?:number}|null|undefined):boolean;
+export function worldcraftPose(object:WorldcraftObject):{centerY:number;pitch:number};
+export type WorldcraftVector={x:number;y:number;z:number};
+export function worldcraftBox(object:WorldcraftObject):{center:WorldcraftVector;half:[number,number,number];axes:[WorldcraftVector,WorldcraftVector,WorldcraftVector];corners:WorldcraftVector[];minY:number;maxY:number};
 export function worldcraftTargetBody(id:string):string;
 export function worldcraftBellTarget(world:WorldcraftDocument|null|undefined):WorldcraftBellTarget|null;
 /** Launch phase plus flight seconds. endpoints[0] at t = 0. Constant speed, instant reversal. */
