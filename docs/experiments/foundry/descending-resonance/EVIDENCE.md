@@ -80,8 +80,8 @@ What that taught:
 - **Walls redirect. Only an up-facing surface adds time.** A ball's time in the air is set at launch. A vertical face turns it and leaves its fall alone. So a phrase has to fit in the fall that is left, and the gap between two walls has to be short enough to cross several times in that fall. Six to seven metres worked.
 - **A gap catches a band about 2.5 m tall.** A ball must clear the front row and still meet the back wall, and must then have fallen below the row's top by the time it comes back. Hanging plates straight above the back wall added sound (no silent setups) but not phrases: the ball met them and flew back out over the row.
 - **Raising the entry loses it.** Hanging the front row moved the band up to where few ordinary arcs are level.
-- **Kicking up is unstable.** A leaning lower tier threw low balls upward and produced seven- to nine-beat pile-ups (91 of 1,105 coarse setups at six or more) with few three-to-five phrases. Steep up-facing surfaces amplify a small change in aim.
-- **A second, taller wall behind the first makes a second band.** That is the one place lift earned its keep, and leaning its tier toward the tee widened the band further by turning high balls down.
+- **Kicking up is unstable.** A leaning lower tier threw low balls upward and produced pile-ups (91 of 1,105 coarse setups at six beats or more, up to eight) with few three-to-five phrases. Steep up-facing surfaces amplify a small change in aim.
+- **A second wall behind the first, carrying a tier, makes a second band.** That is the one place lift earned its keep, and leaning its tier toward the tee widened the band further by turning high balls down.
 - **Low shots never clear a 4 m plate.** The existing ramp catches them and lifts them into the upper tier. No new piece was needed for that.
 
 ## Kept layout
@@ -259,7 +259,7 @@ It reads as one structure: two ramps, a wall, and a second wall with a crown. Th
 
 Two things in the brief's premise did not hold up:
 
-- *A distant wall first, then a descent.* The far wall is the least-used surface. What starts most lines is the near wall or a ramp. The ball does descend through the pieces, and pitch falls with it on the widest lines, but it is not thrown in from far away.
+- *A distant wall first, then a descent.* Half right. The hung rows on the far wall do start the descent lines, and pitch falls with the ball on the widest of them. But most lines around the opening aim start on the near wall or a ramp, and the far wall itself is the least-used surface.
 - *Gravity as the engine.* Gravity is the clock that ends the line. It is not what makes it. What makes it is two facing walls close enough to cross several times before the clock runs out. Height matters because it puts a second pair of faces where the higher arcs are, and a lean matters because it sends a ball that would escape back down. Lift alone was not worth more than rearranging the flat pieces.
 
 **Recommendation.** Play the flat control and the elevated world side by side before deciding anything about the schema. If the flat control already feels like the improvement, keep it and leave the document format alone. If the crown is what makes it, the extension to keep is small: lift and tilt on plates only, as built here, plus the Build controls and camera work listed above. Either way, the parallel-gap idea is worth carrying back into Ricochet Garden.

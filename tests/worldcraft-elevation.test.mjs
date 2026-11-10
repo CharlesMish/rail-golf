@@ -8,13 +8,13 @@ import { RAIL_RULES } from '../lib/rail-golf-v02.js';
 import {
   WORLDCRAFT_CATALOG, WORLDCRAFT_CATALOG_VERSION, WORLDCRAFT_ELEVATION, WORLDCRAFT_PHYSICS_CONTRACT,
   captureWorldSnapshot, createEmptyWorld, createHouseShotWorld, createOrcStaticWorld, createStarterWorld,
-  exportWorldJSON, parseWorldJSON, validateWorld, validateWorldEdit, worldcraftBox, worldcraftElevated,
+  exportWorldJSON, lineMatchesWorld, packWorldcraftLine, parseWorldJSON, validateWorld, validateWorldEdit, worldcraftBox, worldcraftElevated,
   worldcraftFootprint, worldcraftIdentity, worldcraftPose,
 } from '../lib/worldcraft-model.js';
-import { adaptRangePreset, exportRangePreset, parseRangePreset } from '../lib/worldcraft-range.js';
+import { adaptRangePreset, exportRangePreset, importRangeDocument, parseRangePreset } from '../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
 import { WORLDCRAFT_CONTACTS, buildWorldcraftScene, createWorldcraftMaterials } from '../lib/worldcraft-scene.js';
-import { applyFoundryLayout, foundryPreset, foundryRecord } from '../lib/worldcraft-foundry.js';
+import { applyFoundryLayout, foundryPreset, foundryRecord, listFoundryWorlds } from '../lib/worldcraft-foundry.js';
 import { resultFraming } from '../lib/worldcraft-play-copy.js';
 
 Logger.LogLevels = 0;
@@ -53,7 +53,9 @@ test('a world without lift or tilt keeps its v1 bytes, identity, pose, and footp
   assert.equal(foot.halfX, 5);
   assert.ok(Math.abs(foot.halfZ - (Math.cos(20 * Math.PI / 180) * 10 + Math.sin(20 * Math.PI / 180) * 0.8) / 2) < 1e-12);
   // Every registered v1 foundry preset still exports the bytes it parses from.
-  for (const id of ['ricochet-garden-loop', 'open-contacts', 'bell-loft', 'soft-landing']) {
+  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance');
+  assert.ok(standingWorlds.includes('ricochet-garden-loop') && standingWorlds.includes('descending-resonance-flat') && standingWorlds.length >= 9);
+  for (const id of standingWorlds) {
     const preset = foundryPreset(id);
     assert.equal(exportRangePreset(parseRangePreset(exportRangePreset(preset))), exportRangePreset(preset));
     assert.equal(exportRangePreset(preset).includes('"lift"'), false);
@@ -178,6 +180,13 @@ test('a real shot rings an elevated plate at its modelled height and still ends 
   const snapshot = captureWorldSnapshot(descent.world, 'unknown');
   assert.equal(snapshot.worldIdentity, worldcraftIdentity(authored));
   assert.equal(snapshot.world.objects.filter(item => worldcraftElevated(item)).length, 6);
+  // A kept line and an imported preset both carry the pair, so a shot fired here restores here.
+  const line = packWorldcraftLine({ worldSnapshot: snapshot, setup: descent.setup, launch: descent.launch, contacts: descent.contacts, points: descent.samples, events: descent.evidence, terminal: descent.terminal });
+  assert.equal(lineMatchesWorld(line, authored), true);
+  assert.equal(line.worldSnapshot.world.objects.find(item => item.id === 'top-c').tilt, -20);
+  const imported = importRangeDocument(exportRangePreset(preset));
+  assert.equal(imported.kind, 'preset');
+  assert.deepEqual(imported.preset, preset);
   // Cleanup: bodies, meshes, guides, and runtime materials all leave with the runtime.
   const diagnostics = runtime.diagnostics();
   assert.equal(diagnostics.staticBodies, 2 + authored.objects.length);
