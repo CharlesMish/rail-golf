@@ -1,6 +1,8 @@
 # Ricochet Garden — Loop, for Charles
 
-Pinned preview: the hash-prefixed `*.workers.dev` URL for this commit, at `/lab/worldcraft`. It is filled in after Cloudflare Workers Builds publishes the commit. It is not the branch alias, and it is not `rail-golf.cmish.dev`.
+Pinned preview: https://721c721d-rail-golf.charlesmish.workers.dev/lab/worldcraft
+
+That address is the commit preview for `8111773`. It is not the branch alias, and it is not `rail-golf.cmish.dev`.
 
 ## Open it
 
