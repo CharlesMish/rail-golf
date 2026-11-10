@@ -971,7 +971,7 @@ export default function Worldcraft() {
   const restLine = ui.last ? restingPlace(ui.last.world, ui.last.terminal)?.sentence ?? null : null;
   const deckLine = ui.last ? deckExchangeSentence(ui.last.contacts) : null;
   const returnLine = ui.last ? returnReadout(ui.last.world, ui.last.contacts, ui.last.terminal, ui.last.setup)?.sentence ?? null : null;
-  const foundrySections: [FoundryCard['section'], string][] = [['featured', 'Featured'], ['construction', 'Construction lesson'], ['studies', 'Short studies']];
+  const foundrySections: [FoundryCard['section'], string][] = [['featured', 'Featured'], ['construction', 'Construction lesson'], ['studies', 'Short studies'], ['ricochet', 'Ricochet garden']];
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);

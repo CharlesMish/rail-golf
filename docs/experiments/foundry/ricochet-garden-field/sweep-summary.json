@@ -1,0 +1,107 @@
+{
+  "worldId": "ricochet-garden-field",
+  "seed": 20261109,
+  "measuredAgainst": "960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7",
+  "note": "Uniform grid counts are not human success probabilities. The seed is recorded provenance and is not applied to the solver.",
+  "definitions": {
+    "order": "Piece and tee bodies in ledger order. Ground is ignored. Repeats stay.",
+    "edge": "Contact within 0.55 m of a piece's width end (local x) or within 0.55 m of its top.",
+    "rebound": "Horizontal turn of at least 25 degrees between the chord into a contact and the chord out of it. This is a geometric proxy, not the qualified redirect tracker.",
+    "return": "A later piece contact at least 1 m closer to the tee than the previous piece contact, or a terminal at least 2 m closer than the last piece contact."
+  },
+  "grid": {
+    "originX": 0,
+    "yaw": [-22, 22, 1],
+    "elevation": [8, 24, 2],
+    "charge": [0.35, 0.7, 0.05],
+    "shots": 3240
+  },
+  "sketches": {
+    "a1": { "kept": true, "pieces": 10, "distinctOrders": 43, "histogram": { "0": 1606, "1": 1266, "2": 311, "3": 57 }, "multi": 368, "edge": 0.311, "rebound": 0.474, "returned": 0.15, "chaoticAtLeast6": 0 },
+    "a2": { "kept": false, "pieces": 10, "distinctOrders": 39, "histogram": { "0": 1680, "1": 1294, "2": 227, "3": 35, "4": 3, "5": 1 }, "multi": 266, "edge": 0.352, "rebound": 0.445, "returned": 0.236, "chaoticAtLeast6": 0 },
+    "a3": { "kept": false, "pieces": 10, "distinctOrders": 25, "histogram": { "0": 1878, "1": 1214, "2": 145, "3": 3 }, "multi": 148, "edge": 0.264, "rebound": 0.387, "returned": 0.156, "chaoticAtLeast6": 0 },
+    "r1": { "kept": false, "reason": "One revision. Fewer multi-contact shots and narrower second-contact runs than A1.", "pieces": 9, "distinctOrders": 18, "histogram": { "0": 1859, "1": 1107, "2": 259, "3": 15 }, "multi": 274, "edge": 0.227, "rebound": 0.416, "returned": 0.114, "chaoticAtLeast6": 0 }
+  },
+  "chosen": {
+    "id": "a1",
+    "distinctOrders": 43,
+    "ordersWithAtLeast8Shots": 16,
+    "dustOrdersUnder8": 27,
+    "histogram": { "0": 1606, "1": 1266, "2": 311, "3": 57 },
+    "edge": 0.311,
+    "rebound": 0.474,
+    "returned": 0.15,
+    "anyEdgeReboundOrReturn": 0.498,
+    "chaoticAtLeast6": 0,
+    "families": [
+      { "order": "bank-trunk", "count": 846, "coarseYawSliderSteps": 36, "coarseExact": 0.862, "coarseNear": 0.929, "edge": 0.459, "rebound": 0.988, "returned": 0.255 },
+      { "order": "bank-trunk>plate-short", "count": 97, "coarseYawSliderSteps": 6, "coarseExact": 0.608, "coarseNear": 0.796, "edge": 0.649, "rebound": 1, "returned": 0.216 },
+      { "order": "plate-short", "count": 90, "coarseYawSliderSteps": 8, "coarseExact": 0.548, "coarseNear": 0.736, "edge": 0.578, "rebound": 0.922, "returned": 0 },
+      { "order": "plate-right", "count": 86, "coarseYawSliderSteps": 4, "coarseExact": 0.682, "coarseNear": 0.747, "edge": 0.756, "rebound": 0.64, "returned": 0.442 },
+      { "order": "plate-left", "count": 64, "coarseYawSliderSteps": 2, "coarseExact": 0.755, "coarseNear": 0.773, "edge": 1, "rebound": 0.953, "returned": 0.625 },
+      { "order": "plate-high", "count": 50, "coarseYawSliderSteps": 4, "coarseExact": 0.369, "coarseNear": 0.564, "edge": 0.86, "rebound": 0.44, "returned": 0.2 },
+      { "order": "plate-long", "count": 48, "coarseYawSliderSteps": 4, "coarseExact": 0.566, "coarseNear": 0.662, "edge": 0.667, "rebound": 0.792, "returned": 0.292 },
+      { "order": "bank-trunk>plate-left", "count": 47, "coarseYawSliderSteps": 4, "coarseExact": 0.529, "coarseNear": 0.629, "edge": 0.766, "rebound": 1, "returned": 0.277 },
+      { "order": "plate-deep-l", "count": 39, "coarseYawSliderSteps": 6, "coarseExact": 0.579, "coarseNear": 0.624, "edge": 0.59, "rebound": 0.949, "returned": 0 },
+      { "order": "bank-trunk>plate-high", "count": 36, "coarseYawSliderSteps": 6, "coarseExact": 0.385, "coarseNear": 0.639, "edge": 0.861, "rebound": 1, "returned": 0.139 }
+    ]
+  },
+  "starterSliderSteps": [
+    { "id": "opening", "order": "bank-trunk", "yaw": 4, "elevation": 16, "charge": 0.5, "exactNeighbours": "6/6", "yawSteps": 17, "elevationSteps": 16, "chargeSteps": 20 },
+    { "id": "fork-short", "order": "bank-trunk>plate-short", "yaw": -1, "elevation": 14, "charge": 0.65, "exactNeighbours": "6/6", "yawSteps": 7, "elevationSteps": 9, "chargeSteps": 13 },
+    { "id": "fork-left", "order": "bank-trunk>plate-left", "yaw": 7, "elevation": 14, "charge": 0.6, "exactNeighbours": "6/6", "yawSteps": 5, "elevationSteps": 10, "chargeSteps": 10 },
+    { "id": "right-entry", "order": "plate-right", "yaw": 20, "elevation": 16, "charge": 0.55, "exactNeighbours": "6/6", "yawSteps": 5, "elevationSteps": 11, "chargeSteps": 14 },
+    { "id": "deep-carry", "order": "plate-deep-l", "yaw": -7, "elevation": 18, "charge": 0.65, "exactNeighbours": "6/6", "yawSteps": 6 },
+    { "id": "direct-short", "order": "plate-short", "yaw": -9, "elevation": 8, "charge": 0.6, "exactNeighbours": "6/6", "yawSteps": 8 },
+    { "id": "bank-shifted", "layout": { "bank-trunk": { "x": 0, "z": 26, "yaw": 60 } }, "order": "bank-trunk>plate-left", "yaw": 4, "elevation": 16, "charge": 0.5, "exactNeighbours": "6/6" }
+  ],
+  "openContactsSameGrid": {
+    "distinctOrders": 23,
+    "histogram": { "0": 1847, "1": 1125, "2": 204, "3": 56, "4": 8 },
+    "multi": 268,
+    "edge": 0.215,
+    "rebound": 0.411,
+    "returned": 0.363,
+    "anyEdgeReboundOrReturn": 0.43,
+    "chaoticAtLeast6": 0,
+    "families": [
+      { "order": "bank-timber", "count": 414, "coarseYawSliderSteps": 40, "coarseExact": 0.736 },
+      { "order": "plate-return-left", "count": 348, "coarseYawSliderSteps": 20, "coarseExact": 0.837 },
+      { "order": "plate-return-right", "count": 348, "coarseYawSliderSteps": 20, "coarseExact": 0.837 },
+      { "order": "bank-timber>plate-return-left", "count": 88, "coarseYawSliderSteps": 12, "coarseExact": 0.52 },
+      { "order": "bank-timber>plate-return-right", "count": 88, "coarseYawSliderSteps": 12, "coarseExact": 0.52 },
+      { "order": "bank-timber>plate-return-left>bank-timber", "count": 19, "coarseYawSliderSteps": 8, "coarseExact": 0.268 },
+      { "order": "bank-timber>plate-return-right>bank-timber", "count": 19, "coarseYawSliderSteps": 8, "coarseExact": 0.268 }
+    ]
+  },
+  "simplerFourPieces": {
+    "pieces": ["bank-trunk", "plate-short", "plate-left", "plate-right"],
+    "distinctOrders": 14,
+    "histogram": { "0": 1839, "1": 1192, "2": 185, "3": 24 },
+    "multi": 209,
+    "edge": 0.24,
+    "rebound": 0.415,
+    "returned": 0.118,
+    "chaoticAtLeast6": 0,
+    "families": [
+      { "order": "bank-trunk", "count": 908 },
+      { "order": "plate-short", "count": 132 },
+      { "order": "bank-trunk>plate-short", "count": 98 },
+      { "order": "plate-right", "count": 87 },
+      { "order": "bank-trunk>plate-left", "count": 53 }
+    ]
+  },
+  "movableReducedGrid": {
+    "aims": "yaw -4,0,4,8,14,20; elevation 12,16,20; charge 0.45,0.55,0.65; 54 shots per pose",
+    "poses": [
+      { "label": "yaw45", "top": "37 bank-trunk, 7 none, 6 plate-right" },
+      { "label": "yaw50", "top": "32 bank-trunk, 7 none, 6 plate-right" },
+      { "label": "yaw70", "top": "23 none, 18 bank-trunk, 6 plate-right" },
+      { "label": "yaw75", "top": "24 none, 24 bank-trunk, 6 plate-right" },
+      { "label": "x0", "top": "24 bank-trunk, 14 none, 6 plate-right, 5 bank-trunk>plate-left" },
+      { "label": "x4", "top": "25 bank-trunk, 22 none, 5 bank-trunk>plate-short" },
+      { "label": "z24", "top": "24 bank-trunk, 14 none, 6 plate-right, 4 bank-trunk>tee" },
+      { "label": "z28", "top": "18 bank-trunk, 16 none, 6 bank-trunk>plate-short, 6 plate-right" }
+    ]
+  }
+}

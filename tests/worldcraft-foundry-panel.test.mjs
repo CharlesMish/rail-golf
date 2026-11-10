@@ -21,6 +21,7 @@ const RULES = {
   'the-carry': 'The shot stays on the printed origin, yaw, elevation, and power. The ramp can move. The gold circle judges the first landing, and the landing is not a score.',
   'the-other-way': 'Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.',
   'soft-landing': 'Origin, yaw, elevation, and power can change inside the rail stops. The block and the bank can move. The gold circle judges the first landing, and the landing is not a score.',
+  'ricochet-garden-field': 'Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.',
 };
 
 function ended(world, reason, position, extra = {}) {
@@ -87,6 +88,8 @@ test('Open Contacts opts into the existing bank voice and timeline, and Musical 
   assert.equal(recordedDynamicsLabel('musical-workshop', 'tuned-even'), 'H · G, grazes lifted');
   assert.equal(recordedDynamicsLabel('soft-landing', 'tuned-even'), 'Total speed · original knock');
   assert.equal(foundryRecord('bell-loft').manifest.presentation, null);
+  assert.deepEqual(foundryRecord('ricochet-garden-field').manifest.presentation, { dynamics: 'normal-speed', bankVoice: true, timeline: true });
+  assert.equal(presetDynamics('ricochet-garden-field', foundryRecord('ricochet-garden-field').manifest.presentation), 'normal-speed');
   assert.equal(createMusicalWorkshopPreset().id, 'musical-workshop');
   const marks = [{ note: 'C4', time: 1 }];
   const shot = { worldIdentity: 'world-a', setup: { railIndex: 1, originX: 0, yaw: 0, elevation: 18, charge: 0.55 }, points: [{ x: 0, y: 1, z: 0, t: 0 }, { x: 1, y: 1, z: 2, t: 1 }] };

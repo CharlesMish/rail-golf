@@ -41,6 +41,7 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
     ['the-carry', 'construction'],
     ['the-other-way', 'studies'],
     ['soft-landing', 'studies'],
+    ['ricochet-garden-field', 'ricochet'],
   ]);
   const landing = cards.find(card => card.id === 'soft-landing');
   assert.equal(landing.kind, 'shot-study');
@@ -116,6 +117,7 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const contacts = await validateFoundryDirectory('worlds/foundry/open-contacts', havok);
   const carry = await validateFoundryDirectory('worlds/foundry/the-carry', havok);
   const other = await validateFoundryDirectory('worlds/foundry/the-other-way', havok);
+  const field = await validateFoundryDirectory('worlds/foundry/ricochet-garden-field', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
@@ -126,6 +128,9 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.deepEqual(contacts.shots, ['opening', 'two-note', 'rattle', 'lob']);
   assert.deepEqual(carry.shots, ['opening', 'ramp-down-the-clearing']);
   assert.deepEqual(other.shots, ['opening', 'left', 'right', 'carry']);
+  assert.equal(field.id, 'ricochet-garden-field');
+  assert.equal(field.sourceBuild, '960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7');
+  assert.deepEqual(field.shots, ['opening', 'fork-short', 'fork-left', 'right-entry', 'deep-carry', 'direct-short', 'bank-shifted']);
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);
