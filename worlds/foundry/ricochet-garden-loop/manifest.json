@@ -1,0 +1,134 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "ricochet-garden-loop",
+  "name": "Ricochet Garden — Loop",
+  "kind": "workshop",
+  "invitation": "Plates and two banks partly close a clearing, with an opening toward the tee. The shot can change, and the back bank can be turned. There is no target.",
+  "physicalQuestion": "Which contact orders come back into the other surfaces, and what changes when the back bank is turned?",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": null,
+  "sourceBuild": "960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7",
+  "seed": 20261110,
+  "testedShots": [
+    {
+      "id": "return",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -1, "elevation": 16, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.691666666666663,
+        "position": [-4.335673809051514, 0.4299999177455902, 28.920642852783203]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-back", "worldcraft-object-plate-hook"]
+    },
+    {
+      "id": "loop",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 5.5, "elevation": 16, "charge": 0.57 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8749999999999958,
+        "position": [0.2313067615032196, 0.430001825094223, 27.67697525024414]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-back", "worldcraft-object-plate-corner-e", "worldcraft-object-bank-back"]
+    },
+    {
+      "id": "plates",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 6, "elevation": 14, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4999999999999971,
+        "position": [8.167842864990234, 0.43000003695487976, 30.554611206054688]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-plate-hook", "worldcraft-object-plate-side-e", "worldcraft-object-plate-corner-e"]
+    },
+    {
+      "id": "flank",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -22, "elevation": 16, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.5666666666666635,
+        "position": [-14.600613594055176, 0.4299987256526947, 35.81715393066406]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-flank", "worldcraft-object-plate-side-w"]
+    },
+    {
+      "id": "mouth",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -12, "elevation": 12, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.2333333333333314,
+        "position": [-14.446335792541504, 0.429999977350235, 6.30501651763916]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-plate-mouth-w"]
+    },
+    {
+      "id": "bank-turned",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -4, "elevation": 16, "charge": 0.55 },
+      "launchPhase": null,
+      "layout": {
+        "objects": [{ "id": "bank-back", "x": 0, "z": 34, "yaw": -30 }]
+      },
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [-3.7892801761627197, 0.4300006628036499, 30.015609741210938]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-back", "worldcraft-object-plate-hook", "worldcraft-object-bank-back"]
+    }
+  ],
+  "nearbySensitivity": "At yaw -1°, elevation 16°, charge 0.55 the order is the timber back bank, then the hook plate. Yaw -1.5° and -0.5°, elevation 15.5° and 16.5°, and charge 0.54 and 0.56 keep that order. The opening aim, yaw 0° elevation 18° charge 0.55, adds the west side plate after those two. That third contact is gone at yaw -0.5°, at elevation 17.5°, and at charge 0.54.",
+  "validationEvidence": "875 headless Havok shots on one broad aim grid, seed 20261110, plus four back-bank poses, a 7-piece subset, and Open Contacts on the same grid. Neighbour walks use 0.5° and 0.01 charge steps. The seed is not applied to the solver. The validator replays six tested shots. Enjoyment, a physical phone, and speaker playback were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A return that meets a plate on the way back, after the outbound arc has cleared it.",
+      "missing": "A plate is 4 m tall and has no height offset. A medium arc clears the plates on the way out and can meet them only after a bank has turned the ball down.",
+      "extension": "One height offset on the existing plate, keeping its friction and restitution. Do not change first-ground termination."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "A short loop on the authored back-bank yaw, wide enough to sit on the aim sliders.",
+      "missing": "The three-contact loop is a few slider steps wide. A four-contact continuation of that loop is narrower. Pieces cannot be scaled or curved.",
+      "extension": "No new collider. Leave the short loop as the tested shot and keep the narrower continuation out of the starter list."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear the timber bank with the existing H voice, plates on metal or timber, and read the contact order.",
+      "missing": "This manifest opts in to the existing face-speed dynamics, the H timber-bank voice, and the note timeline. Listening on a real speaker is not checked here.",
+      "extension": "No new sound engine. A later pass can keep these fields and only retune the existing H voice."
+    },
+    {
+      "category": "presentation",
+      "concept": "The in-play panel should say which bank moves.",
+      "missing": "The derived sentence names the bank kind once. The flank bank stays fixed. A saved copy does not keep the invitation.",
+      "extension": "No new geometry. The invitation stays on the foundry card."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Record a contact order and a moved back bank, then replay them.",
+      "missing": "The validator replays the tested shots. It does not search neighbouring aims.",
+      "extension": "Leave the replay as it is. The neighbour walks stay in the experiment notes."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7",
+  "presentation": {
+    "dynamics": "normal-speed",
+    "bankVoice": true,
+    "timeline": true
+  }
+}

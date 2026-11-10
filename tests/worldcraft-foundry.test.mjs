@@ -38,6 +38,7 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
     ['return-address', 'featured'],
     ['right-angle', 'featured'],
     ['open-contacts', 'featured'],
+    ['ricochet-garden-loop', 'featured'],
     ['the-carry', 'construction'],
     ['the-other-way', 'studies'],
     ['soft-landing', 'studies'],
@@ -114,6 +115,7 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const address = await validateFoundryDirectory('worlds/foundry/return-address', havok);
   const angle = await validateFoundryDirectory('worlds/foundry/right-angle', havok);
   const contacts = await validateFoundryDirectory('worlds/foundry/open-contacts', havok);
+  const loop = await validateFoundryDirectory('worlds/foundry/ricochet-garden-loop', havok);
   const carry = await validateFoundryDirectory('worlds/foundry/the-carry', havok);
   const other = await validateFoundryDirectory('worlds/foundry/the-other-way', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
@@ -124,6 +126,9 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.deepEqual(address.shots, ['opening', 'serve', 'reply', 'edge-catch', 'yaw-neighbour', 'unturned-reply', 'short-lob', 'centre-seam']);
   assert.deepEqual(angle.shots, ['opening', 'both-faces']);
   assert.deepEqual(contacts.shots, ['opening', 'two-note', 'rattle', 'lob']);
+  assert.deepEqual(loop.shots, ['return', 'loop', 'plates', 'flank', 'mouth', 'bank-turned']);
+  assert.equal(loop.customCode, null);
+  assert.equal(loop.sourceBuild, '960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7');
   assert.deepEqual(carry.shots, ['opening', 'ramp-down-the-clearing']);
   assert.deepEqual(other.shots, ['opening', 'left', 'right', 'carry']);
   assert.equal(seed.id, 'soft-landing');

@@ -1,0 +1,311 @@
+[
+  {
+    "family": "return",
+    "label": "desktop",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/return-desktop-1280x800.png",
+    "order": [
+      "bank-back",
+      "plate-hook"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | C4 1.09s | 0.25 s | E4 1.34s",
+    "timelineTop": 401.390625,
+    "view": "survey"
+  },
+  {
+    "family": "loop",
+    "label": "desktop",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/loop-desktop-1280x800.png",
+    "order": [
+      "bank-back",
+      "plate-corner-e",
+      "bank-back"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | C4 1.11s | 0.14 s | A4 1.25s | 0.20 s | C4 1.45s |  | PREVIOUS SHOT |  | C4 1.09s | 0.25 s | E4 1.34s",
+    "timelineTop": 365.015625,
+    "view": "address"
+  },
+  {
+    "family": "flank",
+    "label": "desktop",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/flank-desktop-1280x800.png",
+    "order": [
+      "bank-flank",
+      "plate-side-w"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | D4 0.97s | 0.26 s | C4 1.22s |  | PREVIOUS SHOT |  | C4 1.11s | 0.14 s | A4 1.25s | 0.20 s | C4 1.45s",
+    "timelineTop": 365.390625,
+    "view": "survey"
+  },
+  {
+    "family": "opening",
+    "label": "desktop",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/opening-desktop-1280x800.png",
+    "pieces": [
+      {
+        "id": "bank-back",
+        "x": 464,
+        "y": 450
+      },
+      {
+        "id": "bank-flank",
+        "x": 344,
+        "y": 457
+      },
+      {
+        "id": "plate-corner-e",
+        "x": 504,
+        "y": 487
+      },
+      {
+        "id": "plate-east",
+        "x": 475,
+        "y": 518
+      },
+      {
+        "id": "plate-hook",
+        "x": 457,
+        "y": 497
+      },
+      {
+        "id": "plate-mouth-e",
+        "x": 425,
+        "y": 560
+      },
+      {
+        "id": "plate-mouth-w",
+        "x": 361,
+        "y": 532
+      },
+      {
+        "id": "plate-side-e",
+        "x": 522,
+        "y": 508
+      },
+      {
+        "id": "plate-side-w",
+        "x": 401,
+        "y": 448
+      },
+      {
+        "id": "plate-west",
+        "x": 390,
+        "y": 484
+      }
+    ],
+    "panel": {
+      "heading": "Ricochet Garden — Loop",
+      "invitation": "Plates and two banks partly close a clearing, with an opening toward the tee. The shot can change, and the back bank can be turned. There is no target.",
+      "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+      "bankSound": "tuned-even"
+    }
+  },
+  {
+    "family": "return",
+    "label": "portrait",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/return-portrait-390x844.png",
+    "order": [
+      "bank-back",
+      "plate-hook"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | C4 1.09s | 0.25 s | E4 1.34s",
+    "timelineTop": 615.109375,
+    "view": "survey"
+  },
+  {
+    "family": "loop",
+    "label": "portrait",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/loop-portrait-390x844.png",
+    "order": [
+      "bank-back",
+      "plate-corner-e",
+      "bank-back"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | C4 1.11s | 0.14 s | A4 1.25s | 0.20 s | C4 1.45s |  | PREVIOUS SHOT |  | C4 1.09s | 0.25 s | E4 1.34s",
+    "timelineTop": 592.109375,
+    "view": "address"
+  },
+  {
+    "family": "flank",
+    "label": "portrait",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/flank-portrait-390x844.png",
+    "order": [
+      "bank-flank",
+      "plate-side-w"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | D4 0.97s | 0.26 s | C4 1.22s |  | PREVIOUS SHOT |  | C4 1.11s | 0.14 s | A4 1.25s | 0.20 s | C4 1.45s",
+    "timelineTop": 592.109375,
+    "view": "survey"
+  },
+  {
+    "family": "opening",
+    "label": "portrait",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/opening-portrait-390x844.png",
+    "pieces": [
+      {
+        "id": "bank-back",
+        "x": 182,
+        "y": 334
+      },
+      {
+        "id": "bank-flank",
+        "x": 137,
+        "y": 337
+      },
+      {
+        "id": "plate-corner-e",
+        "x": 196,
+        "y": 348
+      },
+      {
+        "id": "plate-east",
+        "x": 186,
+        "y": 359
+      },
+      {
+        "id": "plate-hook",
+        "x": 179,
+        "y": 351
+      },
+      {
+        "id": "plate-mouth-e",
+        "x": 167,
+        "y": 375
+      },
+      {
+        "id": "plate-mouth-w",
+        "x": 144,
+        "y": 365
+      },
+      {
+        "id": "plate-side-e",
+        "x": 203,
+        "y": 356
+      },
+      {
+        "id": "plate-side-w",
+        "x": 158,
+        "y": 333
+      },
+      {
+        "id": "plate-west",
+        "x": 154,
+        "y": 347
+      }
+    ],
+    "panel": {
+      "heading": "Ricochet Garden — Loop",
+      "invitation": "Plates and two banks partly close a clearing, with an opening toward the tee. The shot can change, and the back bank can be turned. There is no target.",
+      "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+      "bankSound": "tuned-even"
+    }
+  },
+  {
+    "family": "return",
+    "label": "landscape",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/return-landscape-844x390.png",
+    "order": [
+      "bank-back",
+      "plate-hook"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | C4 1.09s | 0.25 s | E4 1.34s",
+    "timelineTop": 190.625,
+    "view": "survey"
+  },
+  {
+    "family": "loop",
+    "label": "landscape",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/loop-landscape-844x390.png",
+    "order": [
+      "bank-back",
+      "plate-corner-e",
+      "bank-back"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | C4 1.11s | 0.14 s | A4 1.25s | 0.20 s | C4 1.45s |  | PREVIOUS SHOT |  | C4 1.09s | 0.25 s | E4 1.34s",
+    "timelineTop": 155.875,
+    "view": "address"
+  },
+  {
+    "family": "flank",
+    "label": "landscape",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/flank-landscape-844x390.png",
+    "order": [
+      "bank-flank",
+      "plate-side-w"
+    ],
+    "reason": "first-ground-contact",
+    "timeline": "THIS SHOT |  | D4 0.97s | 0.26 s | C4 1.22s |  | PREVIOUS SHOT |  | C4 1.11s | 0.14 s | A4 1.25s | 0.20 s | C4 1.45s",
+    "timelineTop": 155.625,
+    "view": "survey"
+  },
+  {
+    "family": "opening",
+    "label": "landscape",
+    "file": "/agent/repos/rail-golf/docs/experiments/foundry/ricochet-garden-loop/screenshots/opening-landscape-844x390.png",
+    "pieces": [
+      {
+        "id": "bank-back",
+        "x": 296,
+        "y": 226
+      },
+      {
+        "id": "bank-flank",
+        "x": 243,
+        "y": 229
+      },
+      {
+        "id": "plate-corner-e",
+        "x": 314,
+        "y": 242
+      },
+      {
+        "id": "plate-east",
+        "x": 301,
+        "y": 256
+      },
+      {
+        "id": "plate-hook",
+        "x": 293,
+        "y": 246
+      },
+      {
+        "id": "plate-mouth-e",
+        "x": 279,
+        "y": 275
+      },
+      {
+        "id": "plate-mouth-w",
+        "x": 250,
+        "y": 262
+      },
+      {
+        "id": "plate-side-e",
+        "x": 322,
+        "y": 251
+      },
+      {
+        "id": "plate-side-w",
+        "x": 268,
+        "y": 225
+      },
+      {
+        "id": "plate-west",
+        "x": 264,
+        "y": 241
+      }
+    ],
+    "panel": {
+      "heading": "Ricochet Garden — Loop",
+      "invitation": "Plates and two banks partly close a clearing, with an opening toward the tee. The shot can change, and the back bank can be turned. There is no target.",
+      "rules": "Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+      "bankSound": "tuned-even"
+    }
+  }
+]

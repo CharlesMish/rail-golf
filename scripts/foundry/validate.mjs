@@ -18,6 +18,7 @@ const dirs = roots.length ? roots : [
   'worlds/foundry/return-address',
   'worlds/foundry/right-angle',
   'worlds/foundry/open-contacts',
+  'worlds/foundry/ricochet-garden-loop',
   'worlds/foundry/the-carry',
   'worlds/foundry/the-other-way',
   'worlds/foundry/soft-landing',

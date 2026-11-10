@@ -16,7 +16,7 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
-import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, presetDynamics, recordedDynamicsLabel, type ResonanceImpact } from '@/lib/worldcraft-resonance';
+import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, pieceDisplayLabels, presetDynamics, recordedDynamicsLabel, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
@@ -34,8 +34,8 @@ import {
   type FoundryCard,
 } from '@/lib/worldcraft-foundry';
 import {
-  deckExchangeSentence, foundryPlayCopy, foundryRulesSentence, foundryShotNotice,
-  musicalWorkshopPlayCard, restingPlace, resultFraming, returnReadout,
+  foundryPlayCopy, foundryReceiptParts, foundryRulesSentence, foundryShotNotice,
+  musicalWorkshopPlayCard, resultFraming,
 } from '@/lib/worldcraft-play-copy';
 import styles from './worldcraft.module.css';
 
@@ -89,7 +89,7 @@ function NoteTimeline({ kind, rows }: { kind: 'current' | 'previous'; rows: Note
     <p className={styles.timelineLabel}>{kind === 'previous' ? 'Previous shot' : 'This shot'}</p>
     {rows.map((row, index) => <span className={styles.timelineItem} key={`${kind}-${row.time}-${index}`}>
       {index > 0 && row.gap !== null && <span className={styles.timelineGap}>{row.gap.toFixed(2)} s</span>}
-      <span className={styles.timelineNote}>{row.note} {row.time.toFixed(2)}s</span>
+      <span className={styles.timelineNote}>{(row.label ?? row.note)} {row.time.toFixed(2)}s</span>
     </span>)}
   </div>;
 }
@@ -329,7 +329,7 @@ export default function Worldcraft() {
             if (event.kind === 'end' && event.last) {
               const last = event.last;
               drawTrail(last.samples);
-              const stepped = workshopTrailStep(trailMemory(), { kind: 'resolve', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples, marks: noteTimeline(last.resonance?.impacts) });
+              const stepped = workshopTrailStep(trailMemory(), { kind: 'resolve', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples, marks: noteTimeline(last.resonance?.impacts, last.world) });
               const history = stepped.history;
               const historyMarks = stepped.historyMarks;
               const token = {};
@@ -345,7 +345,7 @@ export default function Worldcraft() {
               }).catch(error => {
                 if (!disposed) publish({ notice: error instanceof Error ? error.message : String(error) });
               });
-              const frame = resultFraming(last.world, { terminal: last.terminal, contacts: last.contacts, setup: last.setup });
+              const frame = resultFraming(last.world, { terminal: last.terminal, contacts: last.contacts, setup: last.setup }, uiRef.current.foundryId);
               if (frame) { orbit.x = frame.x; orbit.z = frame.z; orbit.radius = frame.radius; orbit.elevation = frame.elevation; orbit.angle = frame.angle; }
               publish({ phase: 'result', view: frame ? 'survey' : uiRef.current.view, last, lastKept: false, history, historyMarks, shotRecord: null, notice: shotNotice(last, uiRef.current.foundryId) });
               trace('resolved', { worldIdentity: last.worldIdentity, setup: last.setup, terminal: last.terminal, contacts: last.contacts, evidence: last.evidence });
@@ -531,7 +531,7 @@ export default function Worldcraft() {
           adjust() {
             const last = uiRef.current.last;
             if (last) {
-              const stepped = workshopTrailStep(trailMemory(), { kind: 'adjust', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples, marks: noteTimeline(last.resonance?.impacts) });
+              const stepped = workshopTrailStep(trailMemory(), { kind: 'adjust', worldIdentity: last.worldIdentity, setup: last.setup, points: last.samples, marks: noteTimeline(last.resonance?.impacts, last.world) });
               restore(last.world, last.setup as WorldcraftSetup, 'Last line restored: its starting world, origin, aim and power. Fire when ready.');
               publish({ history: stepped.history, historyMarks: stepped.historyMarks, comparison: stepped.comparison, comparisonMarks: stepped.comparisonMarks });
               if (stepped.history) drawTrail(stepped.history.points);
@@ -957,7 +957,7 @@ export default function Worldcraft() {
   const impactReadout = ui.phase === 'result' && ui.last
     ? describeImpactSequence(ui.last.world, ui.last.contacts, ui.last.resonance)
     : ui.phase === 'flight'
-      ? { headline: ui.liveNotes.length ? ui.liveNotes.map(impactHeadline).join(' → ') : 'No resonant note yet', explanation: 'Still in flight. This is the sounds so far.' }
+      ? { headline: ui.liveNotes.length ? ui.liveNotes.map(impact => impactHeadline(impact, pieceDisplayLabels(ui.world.objects))).join(' → ') : 'No resonant note yet', explanation: 'Still in flight. This is the sounds so far.' }
       : null;
   const foundryLive = ui.foundryId ? foundryRecord(ui.foundryId) : null;
   const foundryCopy = foundryLive ? foundryPlayCopy(foundryLive.manifest, foundryLive.preset) : null;
@@ -965,12 +965,10 @@ export default function Worldcraft() {
   const workshopEar = ui.presetId === 'musical-workshop' || presentation?.bankVoice === true;
   const workshopMarks = ui.presetId === 'musical-workshop' || presentation?.timeline === true;
   const workshopCard = musicalWorkshopPlayCard();
-  const timelineCurrent = workshopMarks ? noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts) : [];
+  const timelineCurrent = workshopMarks ? noteTimeline(ui.phase === 'flight' ? ui.liveNotes : ui.last?.resonance?.impacts, ui.world) : [];
   const timelinePrevious = workshopMarks ? (ui.comparisonMarks ?? []) : [];
   const heardVoice = recordedDynamicsLabel(ui.presetId, ui.soundVariant, presentation);
-  const restLine = ui.last ? restingPlace(ui.last.world, ui.last.terminal)?.sentence ?? null : null;
-  const deckLine = ui.last ? deckExchangeSentence(ui.last.contacts) : null;
-  const returnLine = ui.last ? returnReadout(ui.last.world, ui.last.contacts, ui.last.terminal, ui.last.setup)?.sentence ?? null : null;
+  const receipt = ui.last ? foundryReceiptParts(ui.foundryId, ui.last.world, ui.last) : { rest: null, deck: null, back: null };
   const foundrySections: [FoundryCard['section'], string][] = [['featured', 'Featured'], ['construction', 'Construction lesson'], ['studies', 'Short studies']];
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
@@ -1158,9 +1156,9 @@ export default function Worldcraft() {
             {!bell && !phraseResult && ui.last.targetResult?.status === 'miss' && <p>Orc missed. The stand-in was not contacted.</p>}
             {!bell && !phraseResult && ui.last.targetResult?.status === 'unfinished' && <p>No orc contact recorded.</p>}
             {ui.preset && ui.last.goalResult?.kind === 'first-ground-zone' && <p>{`${ui.last.goalResult.status === 'clear' ? 'Inside the circle' : ui.last.goalResult.status === 'miss' ? 'Outside the circle' : 'No landing'}${ui.last.goalResult.distance === null ? '' : ` · ${ui.last.goalResult.distance.toFixed(1)} m from centre`}. Not a score.`}</p>}
-            {restLine && <p data-resting="">{restLine}</p>}
-            {deckLine && <p data-carriage="">{deckLine}</p>}
-            {returnLine && <p data-return="">{returnLine}</p>}
+            {receipt.rest && <p data-resting="">{receipt.rest}</p>}
+            {receipt.deck && <p data-carriage="">{receipt.deck}</p>}
+            {receipt.back && <p data-return="">{receipt.back}</p>}
             {ui.last.pinResult && !(ui.preset && ui.last.goalResult?.kind === 'first-ground-zone') && <p>{`${ui.last.pinResult.status === 'clear' ? 'Pin cleared' : ui.last.pinResult.status === 'miss' ? 'Pin missed' : 'No clear'}${ui.last.pinResult.distance === null ? '' : ` · ${ui.last.pinResult.distance.toFixed(1)} m from centre`}${ui.last.worldIdentity !== worldcraftIdentity(ui.world) ? ' · earlier world' : ''}`}</p>}
             <div className={styles.buttonRow}><button type="button" disabled={locked} onClick={() => actions.current?.adjust()}>Adjust last line</button><button type="button" disabled={locked || ui.last.reason === 'interrupted' || ui.lastKept} onClick={() => actions.current?.keep()}>{ui.lastKept ? 'Kept ✓' : 'Keep line'}</button></div>
           </div>}
