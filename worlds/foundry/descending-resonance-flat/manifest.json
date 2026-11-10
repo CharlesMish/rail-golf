@@ -1,0 +1,129 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "descending-resonance-flat",
+  "name": "Descending Resonance — Flat",
+  "kind": "shot-study",
+  "invitation": "Two ramps lie ahead of the tee. Behind them stand a row of four plates, a wall, and a second wall. Nothing is raised and nothing leans. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "physicalQuestion": "With standing pieces only, which contact orders does a ball make between the row and the walls, and does the next slider step keep that order?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "5301964e13561fe83b2af16733c5585b50a973d3",
+  "seed": 20261110,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 4.308333333333337,
+        "position": [
+          0,
+          0.7299999594688416,
+          1.8195627927780151
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-row-b",
+        "worldcraft-tee"
+      ]
+    },
+    {
+      "id": "wall-and-row",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 4,
+        "elevation": 17,
+        "charge": 0.52
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.8333333333333293,
+        "position": [
+          2.5037643909454346,
+          0.43000227212905884,
+          25.413822174072266
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-row-c",
+        "worldcraft-object-wall-near-e"
+      ]
+    },
+    {
+      "id": "four",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2,
+        "elevation": 14,
+        "charge": 0.63
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.7666666666666628,
+        "position": [
+          -1.309217095375061,
+          0.4300016462802887,
+          25.39522933959961
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-row-b",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-row-b"
+      ]
+    }
+  ],
+  "nearbySensitivity": "At yaw 4°, elevation 17°, charge 0.52 the order is the near wall, a row plate, then the near wall again. Yaw 3.5° and 4.5°, elevation 16.5° and 17.5°, and charge 0.51 and 0.53 keep that order. The opening aim, yaw 0° elevation 18° charge 0.55, rings the near wall and one row plate; three of its six neighbouring steps keep that order.",
+  "validationEvidence": "The control for Descending Resonance. Headless Havok on the same three aim sets: the 875-shot Loop broad grid, a 17,325-shot slider lattice around the opening aim, and a 2,275-shot wide set. It is the strongest of about ten flat layouts tried on a coarse version of the lattice, not a proven best. The seed is not applied to the solver. The validator replays three tested shots.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "Catch a ball that clears the 4 m row and meets the wall above the row's top.",
+      "missing": "Every piece stands on the ground at its catalog height. A ball that meets the 7 m wall more than about 2.5 m above the row's top flies back over the row. Nothing can be placed higher to turn it down.",
+      "extension": "This is what the lift and tilt pair in Descending Resonance is for. This world stays v1."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear timber walls and metal plates, and read the contact order.",
+      "missing": "This manifest opts in to the existing face-speed dynamics, the H timber-bank voice, and the note timeline. Listening on a real speaker is not checked here.",
+      "extension": "No new sound engine."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "5301964e13561fe83b2af16733c5585b50a973d3",
+  "presentation": {
+    "dynamics": "normal-speed",
+    "bankVoice": true,
+    "timeline": true
+  }
+}

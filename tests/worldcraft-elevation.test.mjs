@@ -14,7 +14,8 @@ import {
 import { adaptRangePreset, exportRangePreset, parseRangePreset } from '../lib/worldcraft-range.js';
 import { createWorldcraftRuntime } from '../lib/worldcraft-runtime.js';
 import { WORLDCRAFT_CONTACTS, buildWorldcraftScene, createWorldcraftMaterials } from '../lib/worldcraft-scene.js';
-import { applyFoundryLayout, foundryPreset } from '../lib/worldcraft-foundry.js';
+import { applyFoundryLayout, foundryPreset, foundryRecord } from '../lib/worldcraft-foundry.js';
+import { resultFraming } from '../lib/worldcraft-play-copy.js';
 
 Logger.LogLevels = 0;
 const havok = await Havok({ wasmBinary: await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
@@ -199,4 +200,20 @@ test('edits and foundry layouts carry lift and tilt through unchanged', () => {
   }));
   const merged = applyFoundryLayout(preset, { objects: [{ id: 'a', x: -4, z: 28, yaw: 0 }] }).preset;
   assert.deepEqual(merged.objects.find(object => object.id === 'a'), { id: 'a', kind: 'plate', x: -4, z: 28, yaw: 0, lift: 7.5, tilt: -20, voice });
+});
+
+test('the two walled worlds end on a side survey orbit; every other world keeps its camera', () => {
+  const record = foundryRecord('descending-resonance');
+  const contacts = [
+    { body: 'worldcraft-object-high-c', point: { x: -1, y: 9, z: 32 } },
+    { body: 'worldcraft-object-wall-near-e', point: { x: -1.4, y: 5, z: 26.5 } },
+    { body: 'worldcraft-ground', point: { x: -2, y: 0, z: 30 } },
+  ];
+  const frame = resultFraming(record.world, { contacts }, 'descending-resonance');
+  assert.deepEqual(frame, { view: 'survey', x: -1.2, z: 29.25, radius: 48, elevation: 0.32, angle: 0.95 });
+  // A shot that touched no piece is framed on the arrangement.
+  const empty = resultFraming(record.world, { contacts: [{ body: 'worldcraft-ground', point: { x: 20, y: 0, z: 60 } }] }, 'descending-resonance-flat');
+  assert.equal(empty.view, 'survey');
+  assert.ok(empty.z > 15 && empty.z < 33);
+  for (const id of ['ricochet-garden-loop', 'open-contacts', 'soft-landing', null]) assert.equal(resultFraming(record.world, { contacts }, id), null);
 });
