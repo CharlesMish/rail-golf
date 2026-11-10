@@ -8,9 +8,10 @@ import {
   applyFoundryLayout, foundryContactsMatch, foundryPreset, foundryRecord, listFoundryWorlds, validateFoundryManifest,
 } from '../lib/worldcraft-foundry.js';
 import {
-  deckExchangeSentence, foundryPlayCopy, foundryShotNotice, musicalWorkshopPlayCard,
+  deckExchangeSentence, foundryPlayCopy, foundryReceiptParts, foundryShotNotice, musicalWorkshopPlayCard,
   nearestCarriageStop, restingPlace, resultFraming, returnReadout,
 } from '../lib/worldcraft-play-copy.js';
+import { describeImpactSequence, noteTimeline } from '../lib/worldcraft-resonance.js';
 import { evaluateFoundryShot } from '../scripts/foundry/validate.mjs';
 
 const RULES = {
@@ -41,6 +42,9 @@ test('each gallery world and Musical Workshop get the panel sentence that matche
   assert.equal(workshop.heading, 'Musical Workshop');
   assert.equal(workshop.body, 'The ramp, bank, and plate can move and ring. Origin, yaw, elevation, and power can change, inside the rail stops. No score. The earlier trail is the one that was recorded.');
   assert.match(ui, /musicalWorkshopPlayCard\(\)/);
+  assert.match(ui, /foundryReceiptParts\(ui\.foundryId/);
+  assert.match(ui, /resultFraming\([\s\S]*?uiRef\.current\.foundryId\)/);
+  assert.match(ui, /row\.label \?\? row\.note/);
   assert.match(ui, /presetId === 'musical-workshop'/);
   assert.match(ui, /Revise a piece and fire the same shot/);
   for (const card of listFoundryWorlds()) {
@@ -141,11 +145,14 @@ test('layout and contacts pass and fail without a new goal or a neighbour search
   const rest = restingPlace(world, { reason: 'settled', position: [0, 4.429999828338623, 53.87986755371094] });
   assert.equal(rest?.kind, 'block');
   assert.match(rest.sentence, /came to rest up on the block, above the ground/);
-  const frame = resultFraming({ objects: loft.objects }, {
+  const loftRecord = {
     terminal: { reason: 'settled', position: [0, 4.429999828338623, 53.87986755371094] },
     contacts: [],
     setup: { originX: 0 },
-  });
+  };
+  const frame = resultFraming({ objects: loft.objects }, loftRecord, 'bell-loft');
+  assert.equal(resultFraming({ objects: loft.objects }, loftRecord, 'ricochet-garden-loop'), null);
+  assert.equal(resultFraming({ objects: loft.objects }, loftRecord, 'open-contacts'), null);
   assert.equal(frame.view, 'survey');
   assert.equal(frame.x, 0);
   assert.ok(frame.elevation > 1);
@@ -174,4 +181,81 @@ test('layout and contacts pass and fail without a new goal or a neighbour search
   });
   assert.equal(failed.terminal, false);
   assert.equal(failed.contacts, false);
+});
+
+test('Right Angle, Return Address, and Bell Loft receipts stay on those worlds', () => {
+  const angle = foundryRecord('right-angle');
+  const address = foundryRecord('return-address');
+  const loft = foundryRecord('bell-loft');
+  const loop = foundryRecord('ricochet-garden-loop');
+  const open = foundryRecord('open-contacts');
+  const outsiders = [loop, open];
+  const leak = /Both faces were touched|came back to|Deck contact|came to rest up on|A silent piece/;
+
+  const angleNotice = foundryShotNotice(ended(angle.world, 'first-ground-contact', [4.2935285568237305, 0.43, 4.310322284698486], {
+    setup: { originX: 0 },
+    contacts: [{ body: 'worldcraft-object-side-face' }, { body: 'worldcraft-object-back-face' }],
+  }), angle.preset);
+  assert.match(angleNotice, /Both faces were touched/);
+  assert.match(angleNotice, /came back to/);
+
+  const serve = [{ body: 'worldcraft-tee', point: { x: 10.24, y: 0.35, z: -1 }, count: 1 }];
+  const addressNotice = foundryShotNotice(ended(address.world, 'first-ground-contact', [10.24, 0.73, -1], {
+    setup: { originX: 0 },
+    contacts: serve,
+  }), address.preset);
+  assert.match(addressNotice, /Deck contact at x 10\.24/);
+  assert.match(foundryReceiptParts('return-address', address.world, ended(address.world, 'first-ground-contact', [10.24, 0.73, -1], { contacts: serve })).deck, /Deck contact/);
+
+  const restNotice = foundryShotNotice(ended(loft.world, 'settled', [0, 4.429999828338623, 53.87986755371094]), loft.preset);
+  assert.match(restNotice, /came to rest up on the block, above the ground/);
+  assert.match(foundryReceiptParts('bell-loft', loft.world, ended(loft.world, 'settled', [0, 4.429999828338623, 53.87986755371094])).rest, /came to rest up on the block/);
+
+  for (const record of outsiders) {
+    const pieces = record.world.objects.slice(0, 2);
+    const contacts = pieces.map(object => ({ body: `worldcraft-object-${object.id}`, count: 1 }));
+    const back = ended(record.world, 'first-ground-contact', [0, 0.43, 10], { setup: { originX: 0 }, contacts });
+    assert.ok(returnReadout(record.world, contacts, back.terminal, back.setup), `${record.manifest.id} would have matched the return pattern`);
+    assert.equal(leak.test(foundryShotNotice(back, record.preset)), false, record.manifest.id);
+    assert.equal(resultFraming(record.world, back, record.manifest.id), null);
+    assert.deepEqual(foundryReceiptParts(record.manifest.id, record.world, back), { rest: null, deck: null, back: null });
+
+    const deck = ended(record.world, 'first-ground-contact', [10.24, 0.73, -1], { setup: { originX: 0 }, contacts: serve });
+    assert.ok(deckExchangeSentence(serve));
+    assert.equal(leak.test(foundryShotNotice(deck, record.preset)), false, record.manifest.id);
+    assert.equal(foundryReceiptParts(record.manifest.id, record.world, deck).deck, null);
+    const described = describeImpactSequence(record.world, serve, { impacts: [] });
+    assert.equal(described.explanation.includes('silent piece'), false);
+    assert.equal(described.explanation.includes('Deck contact'), false);
+
+    const parked = ended(record.world, 'settled', [0, 7.43, 34], { setup: { originX: 0 } });
+    if (record.manifest.id === 'ricochet-garden-loop') assert.ok(restingPlace(record.world, parked.terminal));
+    assert.equal(leak.test(foundryShotNotice(parked, record.preset)), false, record.manifest.id);
+    assert.equal(resultFraming(record.world, parked, record.manifest.id), null);
+  }
+});
+
+test('shared note names stay distinct in the headline, timeline, and untouched list', () => {
+  const loop = foundryRecord('ricochet-garden-loop');
+  const impacts = [
+    { piece: 'bank-back', role: 'bank', body: 'worldcraft-object-bank-back', time: 0.4, material: 'timber', note: 'C4', callbacks: 1 },
+    { piece: 'plate-east', role: 'plate', body: 'worldcraft-object-plate-east', time: 0.8, material: 'metal', note: 'E4', callbacks: 1 },
+    { piece: 'plate-mouth-e', role: 'plate', body: 'worldcraft-object-plate-mouth-e', time: 1.1, material: 'metal', note: 'A4', callbacks: 1 },
+    { piece: 'plate-east', role: 'plate', body: 'worldcraft-object-plate-east', time: 1.4, material: 'metal', note: 'E4', callbacks: 1 },
+  ];
+  const contacts = impacts.map(impact => ({ body: impact.body, count: 1 }));
+  const described = describeImpactSequence(loop.world, contacts, { impacts });
+  assert.equal(described.headline, 'Bank C4 → Plate E4 · x 6 → Plate A4 · x 4.5 → Plate E4 · x 6');
+  assert.match(described.explanation, /Plate E4 · x 2\.5/);
+  assert.match(described.explanation, /not touched/);
+  assert.equal(/Plate E4(?! ·)/.test(described.headline), false);
+  assert.equal(/Plate E4(?! ·)/.test(described.explanation), false);
+  assert.equal(/Plate A4(?! ·)/.test(described.explanation), false);
+  assert.equal(/Plate G4(?! ·)/.test(described.explanation), false);
+  const rows = noteTimeline(impacts, loop.world);
+  assert.equal(rows[0].label, null);
+  assert.equal(rows[0].note, 'C4');
+  assert.equal(rows[1].label, 'Plate E4 · x 6');
+  assert.equal(rows[2].label, 'Plate A4 · x 4.5');
+  assert.equal(noteTimeline(impacts)[1].label, null);
 });
