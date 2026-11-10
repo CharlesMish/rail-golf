@@ -1,8 +1,8 @@
 # Descending Resonance, for Charles
 
-Pinned preview: PREVIEW_PENDING
+Pinned preview: https://2f4bdd6e-rail-golf.charlesmish.workers.dev/lab/worldcraft
 
-That address is the commit preview for the build named in the draft PR. It is not the branch alias, and it is not `rail-golf.cmish.dev`.
+That address is the commit preview for `917b9a2`. It is not the branch alias, and it is not `rail-golf.cmish.dev`. The page footer should read `BUILD 917b9a2`.
 
 This note has no aims and no contact orders in it. [EVIDENCE.md](EVIDENCE.md) has both. Leave it closed until you have played.
 
