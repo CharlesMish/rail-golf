@@ -1,0 +1,299 @@
+{
+  "url": "http://127.0.0.1:5174/lab/worldcraft?qa=1",
+  "started": "2026-11-10T20:01:12.145Z",
+  "worlds": {
+    "descending-resonance": {
+      "views": {
+        "survey-desktop": {
+          "pieces": 12,
+          "centresInsideCanvas": 12,
+          "outside": []
+        },
+        "address-desktop": {
+          "pieces": 12,
+          "centresInsideCanvas": 12,
+          "outside": []
+        },
+        "survey-portrait": {
+          "pieces": 12,
+          "centresInsideCanvas": 12,
+          "outside": []
+        },
+        "address-portrait": {
+          "pieces": 12,
+          "centresInsideCanvas": 12,
+          "outside": []
+        },
+        "survey-landscape": {
+          "pieces": 12,
+          "centresInsideCanvas": 12,
+          "outside": []
+        },
+        "address-landscape": {
+          "pieces": 12,
+          "centresInsideCanvas": 12,
+          "outside": []
+        }
+      },
+      "shots": [
+        {
+          "id": "opening",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "wall-near-e"
+          ],
+          "seconds": 1.6749999999999965,
+          "audioNodes": {
+            "started": 6,
+            "cleaned": 0,
+            "finished": 5,
+            "active": 1
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "descent",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "high-c",
+            "wall-near-e",
+            "wall-far-w"
+          ],
+          "seconds": 1.9666666666666621,
+          "audioNodes": {
+            "started": 21,
+            "cleaned": 0,
+            "finished": 15,
+            "active": 6
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "west-descent",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "high-w",
+            "wall-near-w",
+            "wall-far-w"
+          ],
+          "seconds": 1.908333333333329,
+          "audioNodes": {
+            "started": 36,
+            "cleaned": 0,
+            "finished": 29,
+            "active": 7
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "skip-to-crown",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "ramp-w",
+            "top-c",
+            "ramp-w"
+          ],
+          "seconds": 2.916666666666659,
+          "audioNodes": {
+            "started": 49,
+            "cleaned": 0,
+            "finished": 48,
+            "active": 1
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "west-crown",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "ramp-w",
+            "top-w",
+            "ramp-w"
+          ],
+          "seconds": 2.949999999999992,
+          "audioNodes": {
+            "started": 62,
+            "cleaned": 0,
+            "finished": 61,
+            "active": 1
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "wall-and-ramp",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "wall-near-e",
+            "ramp-w",
+            "wall-near-e"
+          ],
+          "seconds": 2.5249999999999937,
+          "audioNodes": {
+            "started": 78,
+            "cleaned": 0,
+            "finished": 76,
+            "active": 2
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "four",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "wall-near-e",
+            "ramp-w",
+            "wall-near-e",
+            "ramp-w"
+          ],
+          "seconds": 2.8416666666666592,
+          "audioNodes": {
+            "started": 98,
+            "cleaned": 0,
+            "finished": 96,
+            "active": 2
+          },
+          "audioState": "running"
+        }
+      ],
+      "build": "8877bfd2b2",
+      "cyclesStable": true,
+      "cycleCounts": {
+        "first": {
+          "staticBodies": 14,
+          "physicsBodies": 15,
+          "meshes": 14,
+          "materials": 20,
+          "textures": 1,
+          "audioActive": 5
+        },
+        "last": {
+          "staticBodies": 14,
+          "physicsBodies": 15,
+          "meshes": 14,
+          "materials": 20,
+          "textures": 1,
+          "audioActive": 6
+        }
+      }
+    },
+    "descending-resonance-flat": {
+      "views": {
+        "survey-desktop": {
+          "pieces": 10,
+          "centresInsideCanvas": 10,
+          "outside": []
+        },
+        "address-desktop": {
+          "pieces": 10,
+          "centresInsideCanvas": 10,
+          "outside": []
+        },
+        "survey-portrait": {
+          "pieces": 10,
+          "centresInsideCanvas": 10,
+          "outside": []
+        },
+        "address-portrait": {
+          "pieces": 10,
+          "centresInsideCanvas": 10,
+          "outside": []
+        },
+        "survey-landscape": {
+          "pieces": 10,
+          "centresInsideCanvas": 10,
+          "outside": []
+        },
+        "address-landscape": {
+          "pieces": 10,
+          "centresInsideCanvas": 10,
+          "outside": []
+        }
+      },
+      "shots": [
+        {
+          "id": "opening",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "wall-near-e",
+            "row-b"
+          ],
+          "seconds": 4.308333333333337,
+          "audioNodes": {
+            "started": 259,
+            "cleaned": 49,
+            "finished": 210,
+            "active": 0
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "wall-and-row",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "wall-near-e",
+            "row-c",
+            "wall-near-e"
+          ],
+          "seconds": 1.8333333333333293,
+          "audioNodes": {
+            "started": 276,
+            "cleaned": 49,
+            "finished": 219,
+            "active": 8
+          },
+          "audioState": "running"
+        },
+        {
+          "id": "four",
+          "contactsMatchManifest": true,
+          "terminalMatchesManifest": true,
+          "notes": [
+            "wall-near-e",
+            "row-b",
+            "wall-near-e",
+            "row-b"
+          ],
+          "seconds": 1.7666666666666628,
+          "audioNodes": {
+            "started": 298,
+            "cleaned": 49,
+            "finished": 239,
+            "active": 10
+          },
+          "audioState": "running"
+        }
+      ],
+      "build": "8877bfd2b2",
+      "cyclesStable": true,
+      "cycleCounts": {
+        "first": {
+          "staticBodies": 12,
+          "physicsBodies": 13,
+          "meshes": 12,
+          "materials": 14,
+          "textures": 1,
+          "audioActive": 8
+        },
+        "last": {
+          "staticBodies": 12,
+          "physicsBodies": 13,
+          "meshes": 12,
+          "materials": 14,
+          "textures": 1,
+          "audioActive": 7
+        }
+      }
+    }
+  },
+  "consoleErrors": [],
+  "finished": "2026-11-10T20:04:12.027Z"
+}
