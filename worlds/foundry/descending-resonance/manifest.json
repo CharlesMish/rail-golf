@@ -4,7 +4,7 @@
   "id": "descending-resonance",
   "name": "Descending Resonance",
   "kind": "shot-study",
-  "invitation": "Two ramps lie ahead of the tee. Behind them stands a wall, then a taller wall with six plates hung above it, leaning in. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "invitation": "Two ramps lie ahead of the tee. Behind them stands a wall, then a second wall with six plates hung above it in two leaning rows. The pieces stay where they are. Aim and power are yours. There is no target.",
   "physicalQuestion": "After a ball meets a hung plate or a ramp, which pieces does it meet on the way down, and does the next slider step keep that order?",
   "editable": {
     "launcher": true,
@@ -229,9 +229,9 @@
     },
     {
       "category": "physical-geometry",
-      "concept": "A ball can land on the 1 m top of a wall and bounce there.",
-      "missing": "The top of a bank is a level face 7 m up. A steep return from the hung plates can drop onto it and bounce in place for many notes before it leaves. On the lattice 33 of 17,325 setups made eight or more beats.",
-      "extension": "No new collider. A later pass could lean a plate over the wall top, or leave it as a rare long roll."
+      "concept": "Some lines run long.",
+      "missing": "On the lattice 33 of 17,325 setups made eight or more beats. In 31 a ramp sounded three or more times, as the ball went back and forth between it and a wall or the top tier. In 2 the ball landed on the level 1 m top of a wall and bounced there, for 14 beats and up to 16 seconds.",
+      "extension": "No new collider. A later pass could move the ramps back, or leave these as rare long lines."
     },
     {
       "category": "authoring-tooling",

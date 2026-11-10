@@ -210,7 +210,7 @@ test('the two walled worlds end on a side survey orbit; every other world keeps 
     { body: 'worldcraft-ground', point: { x: -2, y: 0, z: 30 } },
   ];
   const frame = resultFraming(record.world, { contacts }, 'descending-resonance');
-  assert.deepEqual(frame, { view: 'survey', x: -1.2, z: 29.25, radius: 48, elevation: 0.32, angle: 0.95 });
+  assert.deepEqual(frame, { view: 'survey', x: -1.2, z: 29.25, radius: 58, elevation: 0.32, angle: 0.95 });
   // A shot that touched no piece is framed on the arrangement.
   const empty = resultFraming(record.world, { contacts: [{ body: 'worldcraft-ground', point: { x: 20, y: 0, z: 60 } }] }, 'descending-resonance-flat');
   assert.equal(empty.view, 'survey');

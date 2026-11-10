@@ -8,6 +8,8 @@ The enforced numbers live in `lib/worldcraft-model.js` and `lib/worldcraft-range
 
 A world holds at most 12 pieces. Each piece is a catalog box. There is no scale, no height offset, and no second pitch. Friction and restitution are the catalog numbers. A document cannot change them.
 
+One experiment departs from that. On `lab/wc-exp-20261110-descending-resonance` a plate may carry `lift` and `tilt` together, and the world Descending Resonance uses the pair on six plates. It is opt-in per plate, it is not in the kit, and kit authors still may not add a height field. See [descending-resonance/EVIDENCE.md](descending-resonance/EVIDENCE.md).
+
 | Kind | Size (width × height × depth) | Centre height | Pitch | Friction | Restitution | Voice |
 | --- | --- | --- | --- | --- | --- | --- |
 | Bank | 12 × 7 × 1 m | 3.5 m | 0° | 0.18 | 0.86 | Optional. Metal or timber, scale degree 0–4. |

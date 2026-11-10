@@ -1,0 +1,283 @@
+{
+ "aimSets": {
+  "broad": 875,
+  "coarseLattice": 1105
+ },
+ "sketches": {
+  "flat-gap": {
+   "note": "A 4 m row in front of a 7 m wall. v1 pieces only.",
+   "pieces": 8,
+   "elevatedPieces": 0,
+   "broad": {
+    "shots": 875,
+    "silent": 438,
+    "one": 333,
+    "two": 71,
+    "threeToFive": 33,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 13
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 221,
+    "one": 593,
+    "two": 85,
+    "threeToFive": 204,
+    "sixPlus": 2,
+    "maxBeats": 7,
+    "distinctThreePlusPhrases": 21
+   }
+  },
+  "gap-with-hung-tier": {
+   "note": "flat-gap plus four plates hung upright above the wall.",
+   "pieces": 12,
+   "elevatedPieces": 4,
+   "broad": {
+    "shots": 875,
+    "silent": 333,
+    "one": 438,
+    "two": 68,
+    "threeToFive": 36,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 16
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 0,
+    "one": 807,
+    "two": 75,
+    "threeToFive": 221,
+    "sixPlus": 2,
+    "maxBeats": 7,
+    "distinctThreePlusPhrases": 29
+   }
+  },
+  "hung-row": {
+   "note": "The front row hung at 3.5 m, upright tier above the wall.",
+   "pieces": 12,
+   "elevatedPieces": 10,
+   "broad": {
+    "shots": 875,
+    "silent": 547,
+    "one": 292,
+    "two": 11,
+    "threeToFive": 25,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 17
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 238,
+    "one": 776,
+    "two": 29,
+    "threeToFive": 62,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 19
+   }
+  },
+  "kicker": {
+   "note": "Leaning lower tier (20°) as the back wall, upright tier above it, hung row in front.",
+   "pieces": 12,
+   "elevatedPieces": 12,
+   "broad": {
+    "shots": 875,
+    "silent": 673,
+    "one": 158,
+    "two": 11,
+    "threeToFive": 6,
+    "sixPlus": 27,
+    "maxBeats": 9,
+    "distinctThreePlusPhrases": 30
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 292,
+    "one": 631,
+    "two": 26,
+    "threeToFive": 65,
+    "sixPlus": 91,
+    "maxBeats": 8,
+    "distinctThreePlusPhrases": 74
+   }
+  },
+  "three-rows": {
+   "note": "A row hung at 3 m, 5 m in front of flat-gap with five plates.",
+   "pieces": 12,
+   "elevatedPieces": 5,
+   "broad": {
+    "shots": 875,
+    "silent": 513,
+    "one": 345,
+    "two": 6,
+    "threeToFive": 11,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 11
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 234,
+    "one": 778,
+    "two": 39,
+    "threeToFive": 48,
+    "sixPlus": 6,
+    "maxBeats": 7,
+    "distinctThreePlusPhrases": 25
+   }
+  },
+  "two-gaps": {
+   "note": "Row, 7 m wall, then a 7 m wall carrying an upright tier to 11 m.",
+   "pieces": 12,
+   "elevatedPieces": 4,
+   "broad": {
+    "shots": 875,
+    "silent": 315,
+    "one": 471,
+    "two": 39,
+    "threeToFive": 50,
+    "sixPlus": 0,
+    "maxBeats": 4,
+    "distinctThreePlusPhrases": 20
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 0,
+    "one": 703,
+    "two": 111,
+    "threeToFive": 291,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 52
+   }
+  },
+  "two-gaps-leaning": {
+   "note": "two-gaps with the tier leaning 10° toward the tee.",
+   "pieces": 12,
+   "elevatedPieces": 4,
+   "broad": {
+    "shots": 875,
+    "silent": 315,
+    "one": 423,
+    "two": 72,
+    "threeToFive": 65,
+    "sixPlus": 0,
+    "maxBeats": 4,
+    "distinctThreePlusPhrases": 28
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 0,
+    "one": 603,
+    "two": 124,
+    "threeToFive": 378,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 47
+   }
+  },
+  "ramps-one-tier": {
+   "note": "Two ramps, a three-plate row, two walls, one tier leaning 10°.",
+   "pieces": 12,
+   "elevatedPieces": 3,
+   "broad": {
+    "shots": 875,
+    "silent": 237,
+    "one": 405,
+    "two": 139,
+    "threeToFive": 92,
+    "sixPlus": 2,
+    "maxBeats": 6,
+    "distinctThreePlusPhrases": 45
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 0,
+    "one": 436,
+    "two": 205,
+    "threeToFive": 425,
+    "sixPlus": 39,
+    "maxBeats": 8,
+    "distinctThreePlusPhrases": 143
+   }
+  },
+  "kept-flat-control": {
+   "note": "worlds/foundry/descending-resonance-flat",
+   "pieces": 10,
+   "elevatedPieces": 0,
+   "broad": {
+    "shots": 875,
+    "silent": 295,
+    "one": 380,
+    "two": 157,
+    "threeToFive": 42,
+    "sixPlus": 1,
+    "maxBeats": 8,
+    "distinctThreePlusPhrases": 26
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 156,
+    "one": 461,
+    "two": 156,
+    "threeToFive": 314,
+    "sixPlus": 18,
+    "maxBeats": 8,
+    "distinctThreePlusPhrases": 97
+   }
+  },
+  "kept-elevated": {
+   "note": "worlds/foundry/descending-resonance",
+   "pieces": 12,
+   "elevatedPieces": 6,
+   "broad": {
+    "shots": 875,
+    "silent": 220,
+    "one": 332,
+    "two": 158,
+    "threeToFive": 163,
+    "sixPlus": 2,
+    "maxBeats": 7,
+    "distinctThreePlusPhrases": 72
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 0,
+    "one": 297,
+    "two": 186,
+    "threeToFive": 611,
+    "sixPlus": 11,
+    "maxBeats": 7,
+    "distinctThreePlusPhrases": 146
+   }
+  },
+  "ricochet-garden-loop": {
+   "note": "worlds/foundry/ricochet-garden-loop",
+   "pieces": 10,
+   "elevatedPieces": 0,
+   "broad": {
+    "shots": 875,
+    "silent": 480,
+    "one": 288,
+    "two": 83,
+    "threeToFive": 24,
+    "sixPlus": 0,
+    "maxBeats": 5,
+    "distinctThreePlusPhrases": 18
+   },
+   "coarseLattice": {
+    "shots": 1105,
+    "silent": 252,
+    "one": 373,
+    "two": 339,
+    "threeToFive": 139,
+    "sixPlus": 2,
+    "maxBeats": 7,
+    "distinctThreePlusPhrases": 45
+   }
+  }
+ }
+}
