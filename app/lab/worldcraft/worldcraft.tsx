@@ -1134,7 +1134,7 @@ export default function Worldcraft() {
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
         <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (bell ? 'Play yard. Fixed rail. The post marks the release phase. Space fires at the travelling bell.' : ui.world.rules?.goal?.kind === 'contact-phrase' ? 'Play yard. Fixed rail. Space fires. The phrase is judged from contacts, not scored.' : ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
-        <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
+        <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/{ui.world.capacity === 24 ? 24 : 12} pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
           <button type="button" aria-label="Zoom out" onClick={() => actions.current?.camera('out')}>−</button>
