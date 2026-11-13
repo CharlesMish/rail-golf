@@ -14,6 +14,8 @@ export type RangePreset = {
   environment: { preset: 'forest-clearing-v1'; seed: 1 };
   launcher: { x: number };
   objects: WorldcraftObject[];
+  /** Present only when this preset opts into the experimental 24-piece ceiling. */
+  capacity?: 24;
   rules: {
     launcher: {
       fixed: boolean;

@@ -1,0 +1,148 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "capacity-24-active",
+  "name": "Capacity 24 Active",
+  "kind": "shot-study",
+  "invitation": "A measurement fixture. The original twelve pieces stay where Descending Resonance put them. Twelve more legal pieces stand in the yard. There is no target.",
+  "physicalQuestion": "What does a shot cost when it can reach twelve added plates as well as the original twelve?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "a95de239f4c3347cddcd247ffcae205587c627a6",
+  "seed": 20261113,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6749999999999965,
+        "position": [
+          0,
+          0.4300045073032379,
+          6.440391540527344
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e"
+      ]
+    },
+    {
+      "id": "descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 24,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.9666666666666621,
+        "position": [
+          -0.7058256268501282,
+          0.43000108003616333,
+          28.29458236694336
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-high-c",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-wall-far-w"
+      ]
+    },
+    {
+      "id": "four",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2.5,
+        "elevation": 18.5,
+        "charge": 0.46
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.8416666666666592,
+        "position": [
+          -1.5521295070648193,
+          0.4300031363964081,
+          6.691521644592285
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w"
+      ]
+    },
+    {
+      "id": "east-rake",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 16,
+        "elevation": 20,
+        "charge": 0.9
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.274999999999991,
+        "position": [
+          25.69631576538086,
+          0.4300045967102051,
+          69.7406234741211
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-east-6",
+        "worldcraft-object-east-5",
+        "worldcraft-object-east-11",
+        "worldcraft-object-east-5",
+        "worldcraft-object-east-11",
+        "worldcraft-object-east-5",
+        "worldcraft-object-east-11"
+      ]
+    }
+  ],
+  "nearbySensitivity": "These shots are measurement points, not a tuned line. Neighbouring slider steps were not searched.",
+  "validationEvidence": "Headless Havok replayed opening, descent, and four on the added plates and matched the 12-piece terminals. east-rake is a separate aim that reaches the added plates. It is a measurement shot, not a designed line.",
+  "limitations": [
+    {
+      "category": "authoring-tooling",
+      "concept": "A benchmark fixture at the experimental 24-piece capacity.",
+      "missing": "This is not a level. The extra pieces are placed to be measured, not to be played as a composition.",
+      "extension": "Keep the capacity field opt-in. The production default remains 12."
+    }
+  ],
+  "customCode": null
+}

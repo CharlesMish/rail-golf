@@ -53,7 +53,8 @@ test('a world without lift or tilt keeps its v1 bytes, identity, pose, and footp
   assert.equal(foot.halfX, 5);
   assert.ok(Math.abs(foot.halfZ - (Math.cos(20 * Math.PI / 180) * 10 + Math.sin(20 * Math.PI / 180) * 0.8) / 2) < 1e-12);
   // Every registered v1 foundry preset still exports the bytes it parses from.
-  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance');
+  // The 24-piece fixtures keep Descending Resonance's elevated plates, so they are not standing-only documents.
+  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && !id.startsWith('capacity-24-'));
   assert.ok(standingWorlds.includes('ricochet-garden-loop') && standingWorlds.includes('descending-resonance-flat') && standingWorlds.length >= 9);
   for (const id of standingWorlds) {
     const preset = foundryPreset(id);

@@ -16,7 +16,7 @@ import { advanceFlightCamera, followHeading, followOffsets } from '@/lib/flight-
 import { createWorldcraftRuntime, type WorldcraftRecord } from '@/lib/worldcraft-runtime';
 import { createWorldcraftPresentation, WORLDCRAFT_PRESENTATION } from '@/lib/worldcraft-presentation';
 import { worldcraftTrailDashes } from '@/lib/worldcraft-trails';
-import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, pieceDisplayLabels, presetDynamics, recordedDynamicsLabel, type ResonanceImpact } from '@/lib/worldcraft-resonance';
+import { SOUND_VARIANTS, MUSICAL_WORKSHOP_SOUND, isSoundVariant, WORLDCRAFT_SCALE, MIX_LIMIT, createResonanceOutput, describeImpactSequence, formatResonanceImpact, impactHeadline, noteTimeline, performanceFromResonance, pieceDisplayLabels, presetDynamics, recordedDynamicsLabel, scheduleImpact, type ResonanceImpact } from '@/lib/worldcraft-resonance';
 import {
   createStarterWorld, createHouseShotWorld, createOrcStaticWorld, createWorldHistory, createWorldcraftStore, validateWorld,
   worldcraftFixedSetup, worldcraftSetupForWorld, worldcraftCanAdd, worldcraftBellTarget, worldcraftBellPose,
@@ -810,10 +810,20 @@ export default function Worldcraft() {
         const visibility = () => { if (document.hidden) blur(); }; document.addEventListener('visibilitychange', visibility);
         let resizeFrame = 0;
         const resize = new ResizeObserver(() => { cancelAnimationFrame(resizeFrame); resizeFrame = requestAnimationFrame(() => activeEngine.resize()); }); resize.observe(surface);
-        scene.onBeforePhysicsObservable.add(() => runtime.beforeStep());
-        scene.onAfterPhysicsObservable.add(() => runtime.afterStep());
+        const qaEnabled = new URLSearchParams(location.search).get('qa') === '1';
+        const drawCurrent = () => (activeEngine as Engine & { _drawCalls?: { current: number } })._drawCalls?.current ?? 0;
+        let physicsBegan = 0;
+        const lastSplit = { jsMs: 0, physicsMs: 0, renderMs: 0, draws: 0, activeMeshes: 0 };
+        scene.onBeforePhysicsObservable.add(() => {
+          if (qaEnabled) physicsBegan = performance.now();
+          runtime.beforeStep();
+        });
+        scene.onAfterPhysicsObservable.add(() => {
+          runtime.afterStep();
+          if (qaEnabled) lastSplit.physicsMs = performance.now() - physicsBegan;
+        });
         const qaWindow = window as unknown as { __worldcraftQA?: Record<string, unknown> };
-        if (new URLSearchParams(location.search).get('qa') === '1') {
+        if (qaEnabled) {
           qaWindow.__worldcraftQA = {
             snapshot() {
               const state = uiRef.current, rect = surface.getBoundingClientRect();
@@ -881,6 +891,118 @@ export default function Worldcraft() {
                 requestAnimationFrame(step);
               });
             },
+            // Read-only frame split. jsMs is the page loop before scene.render.
+            // physicsMs is the physics-observable span inside that render.
+            // renderMs is the rest of scene.render. Draws are the engine counter delta.
+            sampleDetail(count = 30) {
+              return new Promise<Array<{ dt: number; phase: string; jsMs: number; physicsMs: number; renderMs: number; draws: number; activeMeshes: number }>>(resolve => {
+                const samples: Array<{ dt: number; phase: string; jsMs: number; physicsMs: number; renderMs: number; draws: number; activeMeshes: number }> = [];
+                const step = () => {
+                  samples.push({ dt: activeEngine.getDeltaTime(), phase: uiRef.current.phase, ...lastSplit });
+                  if (samples.length >= count) resolve(samples);
+                  else requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+              });
+            },
+            sampleFlight(max = 240) {
+              return new Promise<Array<{ dt: number; phase: string; jsMs: number; physicsMs: number; renderMs: number; draws: number; activeMeshes: number }>>(resolve => {
+                const samples: Array<{ dt: number; phase: string; jsMs: number; physicsMs: number; renderMs: number; draws: number; activeMeshes: number }> = [];
+                let seen = false;
+                const step = () => {
+                  const phase = uiRef.current.phase;
+                  if (phase === 'flight') seen = true;
+                  samples.push({ dt: activeEngine.getDeltaTime(), phase, ...lastSplit });
+                  const ended = seen && phase !== 'flight' && phase !== 'charging';
+                  if (samples.length >= max || ended) resolve(samples);
+                  else requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+              });
+            },
+            gl() {
+              const info = activeEngine.getGlInfo?.() ?? { vendor: '', renderer: '', version: '' };
+              return {
+                vendor: info.vendor, renderer: info.renderer, version: info.version,
+                width: activeEngine.getRenderWidth(), height: activeEngine.getRenderHeight(),
+                innerWidth: window.innerWidth, innerHeight: window.innerHeight,
+              };
+            },
+            pieceList() {
+              const root = document.querySelector('[aria-label="Pieces"]');
+              const buttons = root ? [...root.querySelectorAll('button')] : [];
+              return {
+                count: buttons.length,
+                clientHeight: root instanceof HTMLElement ? root.clientHeight : 0,
+                scrollHeight: root instanceof HTMLElement ? root.scrollHeight : 0,
+                labels: buttons.map(button => button.textContent ?? ''),
+              };
+            },
+            timeSelect(id: string) {
+              const started = performance.now();
+              actions.current?.select(id);
+              return { ms: performance.now() - started, selected: uiRef.current.selected };
+            },
+            timeNudge(patch: { x?: number; z?: number; yaw?: number }) {
+              const before = runtime.diagnostics().rebuildCount;
+              const object = uiRef.current.world.objects.find(item => item.id === uiRef.current.selected);
+              const started = performance.now();
+              actions.current?.change(patch);
+              const ms = performance.now() - started;
+              const diagnostics = runtime.diagnostics();
+              const after = uiRef.current.world.objects.find(item => item.id === object?.id);
+              return {
+                ms, rebuilds: diagnostics.rebuildCount - before, rebuildMs: diagnostics.rebuildMs,
+                notice: uiRef.current.notice,
+                moved: Boolean(object && after && (after.x !== object.x || after.z !== object.z || after.yaw !== object.yaw)),
+              };
+            },
+            stressVoices(count: number) {
+              const impacts = Array.from({ length: count }, (_, index) => ({
+                material: 'metal' as const,
+                gain: 1,
+                hz: 261.63 * (1 + (index % 5) * 0.01),
+                time: 0,
+              }));
+              resonance.release();
+              const started = resonance.playRecorded(impacts);
+              return { started, counts: resonance.counts(), state: resonance.state() };
+            },
+            releaseVoices() {
+              const released = resonance.release();
+              return { released, counts: resonance.counts(), state: resonance.state() };
+            },
+            async renderMix(count: number) {
+              const seconds = 2.1;
+              const sampleRate = 44100;
+              const ctx = new OfflineAudioContext(1, Math.ceil(seconds * sampleRate), sampleRate);
+              const started = performance.now();
+              let nodes = 0;
+              for (let index = 0; index < count; index += 1) {
+                nodes += scheduleImpact(ctx, 0.02, {
+                  material: 'metal',
+                  gain: 1,
+                  hz: 261.63 * (1 + (index % 5) * 0.01),
+                }).length;
+              }
+              const scheduleMs = performance.now() - started;
+              const renderStarted = performance.now();
+              const buffer = await ctx.startRendering();
+              const renderMs = performance.now() - renderStarted;
+              const data = buffer.getChannelData(0);
+              const ceiling = 10 ** (MIX_LIMIT.ceilingDb / 20);
+              let peak = 0, aboveKnee = 0, atCeiling = 0;
+              for (let index = 0; index < data.length; index += 1) {
+                const magnitude = Math.abs(data[index]);
+                if (magnitude > peak) peak = magnitude;
+                if (magnitude > MIX_LIMIT.knee) aboveKnee += 1;
+                if (magnitude >= ceiling - 1e-4) atCeiling += 1;
+              }
+              return {
+                count, nodes, scheduleMs, renderMs, seconds, sampleRate, samples: data.length,
+                peak, aboveKnee, atCeiling, knee: MIX_LIMIT.knee, preGain: MIX_LIMIT.preGain, ceilingDb: MIX_LIMIT.ceilingDb,
+              };
+            },
             memory() {
               const heap = (performance as Performance & { memory?: { usedJSHeapSize: number; totalJSHeapSize: number } }).memory;
               return heap ? { usedJSHeapSize: heap.usedJSHeapSize, totalJSHeapSize: heap.totalJSHeapSize } : null;
@@ -899,6 +1021,7 @@ export default function Worldcraft() {
         selectedHighlight();
         activeEngine.runRenderLoop(() => {
           if (disposed) return;
+          const loopStart = qaEnabled ? performance.now() : 0;
           const state = uiRef.current, dt = Math.min(.05, activeEngine.getDeltaTime() / 1000), setup = state.setup;
           const radians = setup.yaw * Math.PI / 180, elevation = setup.elevation * Math.PI / 180;
           launcher.position.x = setup.originX; yaw.rotation.y = radians; loft.rotation.x = -elevation;
@@ -934,7 +1057,17 @@ export default function Worldcraft() {
             const ease = 1 - Math.exp(-dt * 10); Vector3.LerpToRef(camera.position, position, ease, camera.position); Vector3.LerpToRef(look, target, ease, look);
             camera.fov = horizontal ? .96 : .69;
           }
+          if (qaEnabled) lastSplit.physicsMs = 0;
+          const renderStart = qaEnabled ? performance.now() : 0;
+          const drawsBefore = qaEnabled ? drawCurrent() : 0;
           camera.setTarget(look); activeScene.render();
+          if (qaEnabled) {
+            const now = performance.now();
+            lastSplit.jsMs = renderStart - loopStart;
+            lastSplit.renderMs = Math.max(0, now - renderStart - lastSplit.physicsMs);
+            lastSplit.draws = drawCurrent() - drawsBefore;
+            lastSplit.activeMeshes = activeScene.getActiveMeshes().length;
+          }
         });
       } catch (e) { if (!disposed) publish({ phase: 'error', notice: e instanceof Error ? e.message : String(e) }); }
     };
@@ -1001,7 +1134,7 @@ export default function Worldcraft() {
     <div className={styles.main}>
       <section className={styles.viewport} aria-label="Physical yard">
         <canvas ref={canvas} className={styles.canvas} aria-label={ui.mode === 'build' ? 'Build yard. Drag a piece to move it; drag empty space to move the view.' : fixedRail ? (bell ? 'Play yard. Fixed rail. The post marks the release phase. Space fires at the travelling bell.' : ui.world.rules?.goal?.kind === 'contact-phrase' ? 'Play yard. Fixed rail. Space fires. The phrase is judged from contacts, not scored.' : ui.world.rules?.goal?.kind === 'none' ? 'Play yard. Fixed rail. Space fires. No pin or score.' : ui.world.rules?.target ? 'Play yard. Fixed rail. Space fires at the orc stand-in.' : 'Play yard. Fixed rail. Space fires the house shot.') : 'Play yard. Drag to aim. Use the fire control to launch.'} tabIndex={0} />
-        <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/12 pieces</small></span>
+        <span className={styles.badge}>{ui.world.name} <small>· {ui.world.objects.length}/{ui.world.capacity === 24 ? 24 : 12} pieces</small></span>
         {(ui.mode === 'build' || ui.view === 'survey') && <div className={styles.viewTools} aria-label="View controls">
           <button type="button" aria-label="Zoom in" onClick={() => actions.current?.camera('in')}>+</button>
           <button type="button" aria-label="Zoom out" onClick={() => actions.current?.camera('out')}>−</button>
