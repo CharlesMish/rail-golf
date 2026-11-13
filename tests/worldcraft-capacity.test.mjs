@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
+import Havok from '@babylonjs/havok';
+import { Logger } from '@babylonjs/core';
+import { validateFoundryDirectory } from '../scripts/foundry/validate.mjs';
 import {
   WORLDCRAFT_EXPERIMENT_CAPACITY, WORLDCRAFT_LIMITS,
   createEmptyWorld, createHouseShotWorld, createOrcStaticWorld, createStarterWorld,
@@ -79,4 +82,27 @@ test('Descending Resonance and Ricochet Loop files are still the 12-piece docume
   assert.equal(loop.objects.length <= 12, true);
   assert.equal(parseRangePreset(JSON.stringify(descending)).objects.length, 12);
   assert.equal(parseRangePreset(JSON.stringify(loop)).objects.length, loop.objects.length);
+});
+
+test('the 24-piece fixtures keep the original Descending Resonance shots', async () => {
+  Logger.LogLevels = 0;
+  const wasm = await readFile(new URL('../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url));
+  const havok = await Havok({ wasmBinary: wasm });
+  const passiveReport = await validateFoundryDirectory('worlds/foundry/capacity-24-passive', havok);
+  const activeReport = await validateFoundryDirectory('worlds/foundry/capacity-24-active', havok);
+  assert.equal(passiveReport.id, 'capacity-24-passive');
+  assert.equal(activeReport.id, 'capacity-24-active');
+  assert.equal(passiveReport.shots.includes('opening') && passiveReport.shots.includes('four'), true);
+  assert.equal(activeReport.shots.includes('east-rake'), true);
+  const passive = foundryPreset('capacity-24-passive');
+  const active = foundryPreset('capacity-24-active');
+  const original = foundryPreset('descending-resonance');
+  for (const object of original.objects) {
+    assert.deepEqual(passive.objects.find(item => item.id === object.id), object);
+    assert.deepEqual(active.objects.find(item => item.id === object.id), object);
+  }
+  assert.equal(passive.objects.length, 24);
+  assert.equal(active.objects.length, 24);
+  assert.equal(passive.capacity, 24);
+  assert.equal(active.capacity, 24);
 });

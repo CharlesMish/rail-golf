@@ -44,6 +44,8 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
     ['the-carry', 'construction'],
     ['the-other-way', 'studies'],
     ['soft-landing', 'studies'],
+    ['capacity-24-passive', 'studies'],
+    ['capacity-24-active', 'studies'],
   ]);
   const landing = cards.find(card => card.id === 'soft-landing');
   assert.equal(landing.kind, 'shot-study');

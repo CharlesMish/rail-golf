@@ -1,0 +1,232 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "capacity-24-passive",
+  "name": "Capacity 24 Passive",
+  "kind": "shot-study",
+  "invitation": "A measurement fixture. The original twelve pieces stay where Descending Resonance put them. Twelve more legal pieces stand in the yard. There is no target.",
+  "physicalQuestion": "Do the original seven Descending Resonance shots still end on the same bodies when twelve untouched plates stand behind them?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "a95de239f4c3347cddcd247ffcae205587c627a6",
+  "seed": 20261113,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6749999999999965,
+        "position": [
+          0,
+          0.4300045073032379,
+          6.440391540527344
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e"
+      ]
+    },
+    {
+      "id": "descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 24,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.9666666666666621,
+        "position": [
+          -0.7058256268501282,
+          0.43000108003616333,
+          28.29458236694336
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-high-c",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-wall-far-w"
+      ]
+    },
+    {
+      "id": "west-descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -5,
+        "elevation": 24,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.908333333333329,
+        "position": [
+          -3.644886016845703,
+          0.42999574542045593,
+          29.397785186767578
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-high-w",
+        "worldcraft-object-wall-near-w",
+        "worldcraft-object-wall-far-w"
+      ]
+    },
+    {
+      "id": "skip-to-crown",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 11.5,
+        "charge": 0.57
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.916666666666659,
+        "position": [
+          -1.1101750135421753,
+          0.5459094643592834,
+          3.3454933166503906
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-top-c",
+        "worldcraft-object-ramp-w",
+        "worldcraft-tee"
+      ]
+    },
+    {
+      "id": "west-crown",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -5,
+        "elevation": 12,
+        "charge": 0.56
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.949999999999992,
+        "position": [
+          -5.69379997253418,
+          0.43000149726867676,
+          3.965454578399658
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-top-w",
+        "worldcraft-object-ramp-w"
+      ]
+    },
+    {
+      "id": "wall-and-ramp",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2.5,
+        "elevation": 15,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.5249999999999937,
+        "position": [
+          -1.551015019416809,
+          0.4299974739551544,
+          7.237843990325928
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-wall-near-e"
+      ]
+    },
+    {
+      "id": "four",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -2.5,
+        "elevation": 18.5,
+        "charge": 0.46
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.8416666666666592,
+        "position": [
+          -1.5521295070648193,
+          0.4300031363964081,
+          6.691521644592285
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w",
+        "worldcraft-object-wall-near-e",
+        "worldcraft-object-ramp-w"
+      ]
+    }
+  ],
+  "nearbySensitivity": "These shots are measurement points, not a tuned line. Neighbouring slider steps were not searched.",
+  "validationEvidence": "Headless Havok replayed the seven Descending Resonance tested shots on this 24-piece document. Terminals and contact order matched the 12-piece record. None of those shots named a back plate.",
+  "limitations": [
+    {
+      "category": "authoring-tooling",
+      "concept": "A benchmark fixture at the experimental 24-piece capacity.",
+      "missing": "This is not a level. The extra pieces are placed to be measured, not to be played as a composition.",
+      "extension": "Keep the capacity field opt-in. The production default remains 12."
+    }
+  ],
+  "customCode": null
+}
