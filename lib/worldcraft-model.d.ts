@@ -13,7 +13,7 @@ export type WorldcraftAimWindow={yawMin:number;yawMax:number;elevationMin:number
 export type WorldcraftRules={pin:{x:number;z:number;r:number}|null;locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;target?:WorldcraftTarget;goal?:WorldcraftGoal;originFixed?:true;aimWindow?:WorldcraftAimWindow};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
 export type WorldcraftTargetResult={status:'hit'|'miss'|'unfinished';body:string;contact:WorldcraftContact|null};
-export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:WorldcraftRules|null};
+export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftObject[];launcher:{x:number};rules:WorldcraftRules|null;capacity?:24};
 export type WorldcraftSetup={railIndex:1;originX:number;yaw:number;elevation:number;charge:number};
 export type WorldcraftPoint={x:number;y:number;z:number;t?:number};
 export type WorldcraftJSON=null|boolean|number|string|WorldcraftJSON[]|{[key:string]:WorldcraftJSON};
@@ -33,6 +33,8 @@ export const WORLDCRAFT_CATALOG_VERSION:'worldcraft-prefabs-v2';
 export const WORLDCRAFT_PHYSICS_CONTRACT:'rail-golf-v02-worldcraft-v1';
 export const WORLDCRAFT_STORAGE_PREFIX:'rail-golf:worldcraft:v1:';
 export const WORLDCRAFT_LIMITS:Readonly<{objects:12;worldSlots:4;lineSlots:4;importBytes:32768;lineBytes:262144;points:2048;events:1024;history:100}>;
+/** Opt-in document ceiling. Production documents omit it and stay at 12. */
+export const WORLDCRAFT_EXPERIMENT_CAPACITY:24;
 export const WORLDCRAFT_BOUNDS:Readonly<{minX:-30;maxX:30;minZ:10;maxZ:96}>;
 export const WORLDCRAFT_LAUNCHER_CORRIDOR:Readonly<{minX:-12;maxX:12;minZ:-8;maxZ:10}>;
 export const WORLDCRAFT_GRID:Readonly<{coarse:1;fine:.5;rotation:15;fineRotation:5;launcher:.5}>;
