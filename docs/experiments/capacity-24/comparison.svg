@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420">
+  <title>Percent change against the original 12-piece world</title>
+  <rect width="760" height="420" fill="#f7f4ee"/>
+  <text x="24" y="32" font-family="Georgia, serif" font-size="18" fill="#1c1915">Percent versus the original 12-piece world</text>
+  <text x="24" y="52" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#5c564c">Median of three isolated runs. Frame time is SwiftShader, not a phone GPU.</text>
+  <g font-family="ui-sans-serif, sans-serif" font-size="11" fill="#3d3832">
+    <text x="168" y="84">expanded 12</text>
+    <text x="300" y="84">24 passive</text>
+    <text x="440" y="84">24 active</text>
+  </g>
+  <g font-family="ui-sans-serif, sans-serif" font-size="12" fill="#1c1915">
+    <text x="24" y="118">Warm rebuild</text>
+    <text x="24" y="162">Static bodies</text>
+    <text x="24" y="206">Survey draws</text>
+    <text x="24" y="250">Shadow casters</text>
+    <text x="24" y="294">Desktop survey frame</text>
+    <text x="24" y="338">Idle physics step</text>
+  </g>
+  <!-- scale: 1% = 1.6 px, origin x=168, cap the 85.7 bar inside the panel -->
+  <g>
+    <rect x="168" y="106" width="5" height="14" fill="#8a8175"/>
+    <rect x="300" y="106" width="104" height="14" fill="#c4552a"/>
+    <rect x="440" y="106" width="116" height="14" fill="#c4552a"/>
+    <rect x="168" y="150" width="2" height="14" fill="#8a8175"/>
+    <rect x="300" y="150" width="137" height="14" fill="#c4552a"/>
+    <rect x="440" y="150" width="137" height="14" fill="#c4552a"/>
+    <rect x="168" y="194" width="2" height="14" fill="#8a8175"/>
+    <rect x="300" y="194" width="77" height="14" fill="#c4552a"/>
+    <rect x="440" y="194" width="77" height="14" fill="#c4552a"/>
+    <rect x="168" y="238" width="2" height="14" fill="#8a8175"/>
+    <rect x="300" y="238" width="107" height="14" fill="#c4552a"/>
+    <rect x="440" y="238" width="107" height="14" fill="#c4552a"/>
+    <rect x="168" y="282" width="2" height="14" fill="#8a8175"/>
+    <rect x="300" y="282" width="3" height="14" fill="#2f6f4e"/>
+    <rect x="440" y="282" width="8" height="14" fill="#9a6b12"/>
+    <rect x="168" y="326" width="2" height="14" fill="#2f6f4e"/>
+    <rect x="300" y="326" width="8" height="14" fill="#2f6f4e"/>
+    <rect x="440" y="326" width="3" height="14" fill="#2f6f4e"/>
+  </g>
+  <g font-family="ui-sans-serif, sans-serif" font-size="11" fill="#3d3832">
+    <text x="176" y="117">+3%</text><text x="408" y="117">+65%</text><text x="560" y="117">+72%</text>
+    <text x="176" y="161">0</text><text x="442" y="161">+86%</text><text x="582" y="161">+86%</text>
+    <text x="176" y="205">0</text><text x="382" y="205">+48%</text><text x="522" y="205">+48%</text>
+    <text x="176" y="249">0</text><text x="412" y="249">+67%</text><text x="552" y="249">+67%</text>
+    <text x="176" y="293">0</text><text x="308" y="293">+1.8% noise</text><text x="454" y="293">+4.9%</text>
+    <text x="176" y="337">−3% noise</text><text x="314" y="337">+4.8% noise</text><text x="448" y="337">+1.6% noise</text>
+  </g>
+  <text x="24" y="390" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#5c564c">Green bars are inside run-to-run noise. The amber survey bar is the one frame-time increase outside that band: 22.4 ms to 23.5 ms.</text>
+</svg>
