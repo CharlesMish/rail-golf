@@ -27,6 +27,7 @@ const RULES = {
   'soft-landing': 'Origin, yaw, elevation, and power can change inside the rail stops. The block and the bank can move. The gold circle judges the first landing, and the landing is not a score.',
   'capacity-24-passive': 'Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.',
   'capacity-24-active': 'Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.',
+  'chime-fan': 'Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.',
 };
 
 function ended(world, reason, position, extra = {}) {

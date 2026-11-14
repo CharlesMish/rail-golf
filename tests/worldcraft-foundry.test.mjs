@@ -46,6 +46,7 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
     ['soft-landing', 'studies'],
     ['capacity-24-passive', 'studies'],
     ['capacity-24-active', 'studies'],
+    ['chime-fan', 'chime'],
   ]);
   const landing = cards.find(card => card.id === 'soft-landing');
   assert.equal(landing.kind, 'shot-study');
@@ -123,6 +124,7 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const carry = await validateFoundryDirectory('worlds/foundry/the-carry', havok);
   const other = await validateFoundryDirectory('worlds/foundry/the-other-way', havok);
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
+  const fan = await validateFoundryDirectory('worlds/foundry/chime-fan', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
   assert.deepEqual(bell.shots, ['opening', 'opening-charge-up', 'lob', 'slam', 'stock-aim', 'door-shut']);
@@ -138,6 +140,10 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.equal(seed.id, 'soft-landing');
   assert.equal(seed.customCode, null);
   assert.deepEqual(seed.shots, ['opening']);
+  assert.equal(fan.id, 'chime-fan');
+  assert.equal(fan.customCode, null);
+  assert.equal(fan.sourceBuild, '6d9da5dfd072f5294865f58ac8690e439924ba92');
+  assert.deepEqual(fan.shots, ['opening', 'west', 'west-long', 'centre', 'east', 'shoulder']);
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');

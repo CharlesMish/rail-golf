@@ -1,0 +1,1493 @@
+{
+  "definitions": {
+    "grid": {
+      "yaw": [
+        -24,
+        24,
+        2
+      ],
+      "elevation": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        30,
+        40
+      ],
+      "charge": [
+        0.35,
+        0.45,
+        0.55,
+        0.65,
+        0.8
+      ],
+      "shots": 875,
+      "railIndex": 1,
+      "originX": 0
+    },
+    "nudge": "One slider step: yaw ±0.5°, elevation ±0.5°, charge ±0.01. Both directions. Same definition as the Ricochet Loop neighbour walk.",
+    "contactOrder": "Piece contacts in ledger order. Ground and the tee are omitted. Silent pieces would be kept. Repeats are kept.",
+    "noteSequence": "Resonance impacts with gain above 0, in time order, written piece:note. Dynamics are normal-speed, the presentation value on all three worlds.",
+    "phraseFamily": "Collapse immediate repeats of the same piece, then take the first three distinct pieces in order of appearance. Fewer than three distinct pieces is a short family.",
+    "regions": "Left is yaw ≤ -8, centre is -8 < yaw < 8, right is yaw ≥ 8. Low elevation is 8, 12, and 16. High is 20, 24, 30, and 40.",
+    "seedAppliedToSolver": false
+  },
+  "gitSha": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "worlds": {
+    "chime-fan": {
+      "shots": 875,
+      "distinctContactOrders": 65,
+      "distinctNoteSequences": 64,
+      "phraseFamilies": 40,
+      "topFamilies": [
+        {
+          "name": "short:(none)",
+          "count": 241,
+          "share": 0.2754
+        },
+        {
+          "name": "short:bank-c",
+          "count": 234,
+          "share": 0.2674
+        },
+        {
+          "name": "short:bank-e",
+          "count": 107,
+          "share": 0.1223
+        },
+        {
+          "name": "short:bank-w",
+          "count": 107,
+          "share": 0.1223
+        },
+        {
+          "name": "short:plate-c-left",
+          "count": 15,
+          "share": 0.0171
+        },
+        {
+          "name": "short:plate-c-right",
+          "count": 13,
+          "share": 0.0149
+        },
+        {
+          "name": "short:plate-c-mid",
+          "count": 12,
+          "share": 0.0137
+        },
+        {
+          "name": "short:plate-e-inner",
+          "count": 11,
+          "share": 0.0126
+        },
+        {
+          "name": "short:plate-w-inner",
+          "count": 11,
+          "share": 0.0126
+        },
+        {
+          "name": "plate-c-left > bank-c > chime-c",
+          "count": 9,
+          "share": 0.0103
+        },
+        {
+          "name": "plate-c-mid > bank-c > chime-c",
+          "count": 9,
+          "share": 0.0103
+        },
+        {
+          "name": "plate-e-inner > bank-e > chime-e",
+          "count": 9,
+          "share": 0.0103
+        }
+      ],
+      "noteBuckets": {
+        "zero": 241,
+        "oneTwo": 555,
+        "threeFive": 60,
+        "sixPlus": 19,
+        "shares": {
+          "zero": 0.2754,
+          "oneTwo": 0.6343,
+          "threeFive": 0.0686,
+          "sixPlus": 0.0217
+        }
+      },
+      "phraseShots": 79,
+      "nudge": {
+        "base": "shots with 3 or more sounding notes",
+        "step": {
+          "yaw": 0.5,
+          "elevation": 0.5,
+          "charge": 0.01
+        },
+        "checks": 79,
+        "perAxis": {
+          "yaw": {
+            "bothDirectionsStill3Plus": 0.9747,
+            "bothDirectionsSameFamily": 0.6709
+          },
+          "elevation": {
+            "bothDirectionsStill3Plus": 0.9747,
+            "bothDirectionsSameFamily": 0.4304
+          },
+          "charge": {
+            "bothDirectionsStill3Plus": 0.8734,
+            "bothDirectionsSameFamily": 0.6456
+          }
+        },
+        "allSixStill3Plus": 0.8734,
+        "allSixSameFamily": 0.2785,
+        "allSixSameSequence": 0.1266,
+        "allSixSameFamilyDifferentSequence": 0.1519
+      },
+      "breadth": {
+        "medianDistinctPieces": 3,
+        "distinctPieces": {
+          "2": 2,
+          "3": 62,
+          "4": 15
+        },
+        "topTwoPiecesShareOfAllNotes": 0.4863,
+        "topPieces": [
+          {
+            "piece": "bank-c",
+            "notes": 304,
+            "share": 0.3193
+          },
+          {
+            "piece": "bank-e",
+            "notes": 159,
+            "share": 0.167
+          },
+          {
+            "piece": "bank-w",
+            "notes": 158,
+            "share": 0.166
+          },
+          {
+            "piece": "chime-c",
+            "notes": 60,
+            "share": 0.063
+          },
+          {
+            "piece": "chime-e",
+            "notes": 44,
+            "share": 0.0462
+          },
+          {
+            "piece": "chime-w",
+            "notes": 44,
+            "share": 0.0462
+          }
+        ],
+        "medianPingPong": 0.75,
+        "pureTwoPieceShare": 0.0253
+      },
+      "regions": {
+        "centre-high": {
+          "shots": 140,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 42,
+              "share": 0.3
+            },
+            {
+              "name": "short:bank-c",
+              "count": 42,
+              "share": 0.3
+            },
+            {
+              "name": "short:plate-c-mid",
+              "count": 12,
+              "share": 0.0857
+            },
+            {
+              "name": "plate-c-mid > bank-c > chime-c",
+              "count": 9,
+              "share": 0.0643
+            },
+            {
+              "name": "short:plate-c-left",
+              "count": 7,
+              "share": 0.05
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "topFamilies": [
+            {
+              "name": "short:bank-c",
+              "count": 84,
+              "share": 0.8
+            },
+            {
+              "name": "short:(none)",
+              "count": 21,
+              "share": 0.2
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 61,
+              "share": 0.3389
+            },
+            {
+              "name": "short:bank-w",
+              "count": 36,
+              "share": 0.2
+            },
+            {
+              "name": "short:bank-c",
+              "count": 18,
+              "share": 0.1
+            },
+            {
+              "name": "short:plate-w-inner",
+              "count": 11,
+              "share": 0.0611
+            },
+            {
+              "name": "plate-w-inner > bank-w > chime-w",
+              "count": 9,
+              "share": 0.05
+            }
+          ]
+        },
+        "left-low": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "name": "short:bank-w",
+              "count": 71,
+              "share": 0.5259
+            },
+            {
+              "name": "short:bank-c",
+              "count": 36,
+              "share": 0.2667
+            },
+            {
+              "name": "short:(none)",
+              "count": 28,
+              "share": 0.2074
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 61,
+              "share": 0.3389
+            },
+            {
+              "name": "short:bank-e",
+              "count": 36,
+              "share": 0.2
+            },
+            {
+              "name": "short:bank-c",
+              "count": 18,
+              "share": 0.1
+            },
+            {
+              "name": "short:plate-e-inner",
+              "count": 11,
+              "share": 0.0611
+            },
+            {
+              "name": "plate-e-inner > bank-e > chime-e",
+              "count": 9,
+              "share": 0.05
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "name": "short:bank-e",
+              "count": 71,
+              "share": 0.5259
+            },
+            {
+              "name": "short:bank-c",
+              "count": 36,
+              "share": 0.2667
+            },
+            {
+              "name": "short:(none)",
+              "count": 28,
+              "share": 0.2074
+            }
+          ]
+        }
+      },
+      "phraseRegions": {
+        "centre-high": {
+          "shots": 21,
+          "topFamilies": [
+            {
+              "name": "plate-c-mid > bank-c > chime-c",
+              "count": 9,
+              "share": 0.4286
+            },
+            {
+              "name": "plate-c-left > bank-c > chime-c",
+              "count": 6,
+              "share": 0.2857
+            },
+            {
+              "name": "plate-c-right > bank-c > chime-c",
+              "count": 3,
+              "share": 0.1429
+            },
+            {
+              "name": "plate-c-right > plate-c-mid > bank-c",
+              "count": 2,
+              "share": 0.0952
+            },
+            {
+              "name": "plate-c-mid > plate-c-right > bank-c",
+              "count": 1,
+              "share": 0.0476
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 29,
+          "topFamilies": [
+            {
+              "name": "plate-w-inner > bank-w > chime-w",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-w-mid > bank-w > chime-w",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-c-left > bank-c > chime-c",
+              "count": 3,
+              "share": 0.1034
+            },
+            {
+              "name": "plate-c-left > bank-c > chime-w",
+              "count": 3,
+              "share": 0.1034
+            },
+            {
+              "name": "plate-w-inner > plate-w-mid > bank-w",
+              "count": 3,
+              "share": 0.1034
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 29,
+          "topFamilies": [
+            {
+              "name": "plate-e-inner > bank-e > chime-e",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-e-mid > bank-e > chime-e",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-c-right > bank-c > chime-c",
+              "count": 3,
+              "share": 0.1034
+            },
+            {
+              "name": "plate-e-inner > plate-e-mid > bank-e",
+              "count": 3,
+              "share": 0.1034
+            },
+            {
+              "name": "plate-c-right > bank-c > chime-e",
+              "count": 2,
+              "share": 0.069
+            }
+          ]
+        }
+      },
+      "pieceCoverage": {
+        "soundingPieces": 13,
+        "reachedByPhraseShots": 13,
+        "reached": [
+          "bank-c",
+          "bank-e",
+          "bank-w",
+          "chime-c",
+          "chime-e",
+          "chime-w",
+          "plate-c-left",
+          "plate-c-mid",
+          "plate-c-right",
+          "plate-e-inner",
+          "plate-e-mid",
+          "plate-w-inner",
+          "plate-w-mid"
+        ]
+      },
+      "terminals": {
+        "first-ground-contact": 815,
+        "out-of-bounds": 60
+      },
+      "seconds": 3.756,
+      "seed": 20261114,
+      "pieces": 15,
+      "rowsSha256": "19adc6c4b100b0b0646a8b112fa0153013530136a9fba818f81d1b6ae685f0a2",
+      "rowsBytes": 85316
+    },
+    "descending-resonance": {
+      "shots": 875,
+      "distinctContactOrders": 114,
+      "distinctNoteSequences": 117,
+      "phraseFamilies": 84,
+      "topFamilies": [
+        {
+          "name": "short:(none)",
+          "count": 220,
+          "share": 0.2514
+        },
+        {
+          "name": "short:wall-near-e",
+          "count": 81,
+          "share": 0.0926
+        },
+        {
+          "name": "short:ramp-w",
+          "count": 77,
+          "share": 0.088
+        },
+        {
+          "name": "short:ramp-e",
+          "count": 74,
+          "share": 0.0846
+        },
+        {
+          "name": "short:wall-near-w",
+          "count": 70,
+          "share": 0.08
+        },
+        {
+          "name": "short:wall-near-e > ramp-e",
+          "count": 27,
+          "share": 0.0309
+        },
+        {
+          "name": "short:wall-near-w > ramp-w",
+          "count": 19,
+          "share": 0.0217
+        },
+        {
+          "name": "short:ramp-w > wall-far-w",
+          "count": 18,
+          "share": 0.0206
+        },
+        {
+          "name": "short:ramp-e > wall-far-e",
+          "count": 17,
+          "share": 0.0194
+        },
+        {
+          "name": "short:ramp-w > top-w",
+          "count": 17,
+          "share": 0.0194
+        },
+        {
+          "name": "short:wall-far-e",
+          "count": 13,
+          "share": 0.0149
+        },
+        {
+          "name": "short:ramp-e > top-e",
+          "count": 12,
+          "share": 0.0137
+        }
+      ],
+      "noteBuckets": {
+        "zero": 220,
+        "oneTwo": 487,
+        "threeFive": 165,
+        "sixPlus": 3,
+        "shares": {
+          "zero": 0.2514,
+          "oneTwo": 0.5566,
+          "threeFive": 0.1886,
+          "sixPlus": 0.0034
+        }
+      },
+      "phraseShots": 168,
+      "nudge": {
+        "base": "shots with 3 or more sounding notes",
+        "step": {
+          "yaw": 0.5,
+          "elevation": 0.5,
+          "charge": 0.01
+        },
+        "checks": 168,
+        "perAxis": {
+          "yaw": {
+            "bothDirectionsStill3Plus": 0.9226,
+            "bothDirectionsSameFamily": 0.7262
+          },
+          "elevation": {
+            "bothDirectionsStill3Plus": 0.5774,
+            "bothDirectionsSameFamily": 0.4405
+          },
+          "charge": {
+            "bothDirectionsStill3Plus": 0.7262,
+            "bothDirectionsSameFamily": 0.5655
+          }
+        },
+        "allSixStill3Plus": 0.494,
+        "allSixSameFamily": 0.3333,
+        "allSixSameSequence": 0.1607,
+        "allSixSameFamilyDifferentSequence": 0.1726
+      },
+      "breadth": {
+        "medianDistinctPieces": 3,
+        "distinctPieces": {
+          "2": 59,
+          "3": 92,
+          "4": 16,
+          "5": 1
+        },
+        "topTwoPiecesShareOfAllNotes": 0.4225,
+        "topPieces": [
+          {
+            "piece": "ramp-w",
+            "notes": 276,
+            "share": 0.2238
+          },
+          {
+            "piece": "wall-near-e",
+            "notes": 245,
+            "share": 0.1987
+          },
+          {
+            "piece": "ramp-e",
+            "notes": 200,
+            "share": 0.1622
+          },
+          {
+            "piece": "wall-near-w",
+            "notes": 168,
+            "share": 0.1363
+          },
+          {
+            "piece": "wall-far-e",
+            "notes": 55,
+            "share": 0.0446
+          },
+          {
+            "piece": "wall-far-w",
+            "notes": 53,
+            "share": 0.043
+          }
+        ],
+        "medianPingPong": 0.70835,
+        "pureTwoPieceShare": 0.3512
+      },
+      "regions": {
+        "centre-high": {
+          "shots": 140,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 21,
+              "share": 0.15
+            },
+            {
+              "name": "short:wall-near-e",
+              "count": 17,
+              "share": 0.1214
+            },
+            {
+              "name": "short:high-c > wall-near-e",
+              "count": 8,
+              "share": 0.0571
+            },
+            {
+              "name": "short:wall-near-e > ramp-w",
+              "count": 7,
+              "share": 0.05
+            },
+            {
+              "name": "short:high-e > wall-near-e",
+              "count": 6,
+              "share": 0.0429
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "topFamilies": [
+            {
+              "name": "short:wall-near-e",
+              "count": 18,
+              "share": 0.1714
+            },
+            {
+              "name": "short:ramp-w > wall-far-w",
+              "count": 10,
+              "share": 0.0952
+            },
+            {
+              "name": "short:ramp-w > top-w",
+              "count": 9,
+              "share": 0.0857
+            },
+            {
+              "name": "short:ramp-w > top-c",
+              "count": 8,
+              "share": 0.0762
+            },
+            {
+              "name": "short:ramp-w > high-c",
+              "count": 5,
+              "share": 0.0476
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 99,
+              "share": 0.55
+            },
+            {
+              "name": "short:wall-near-w",
+              "count": 33,
+              "share": 0.1833
+            },
+            {
+              "name": "short:wall-near-w > ramp-w",
+              "count": 12,
+              "share": 0.0667
+            },
+            {
+              "name": "short:ramp-w",
+              "count": 8,
+              "share": 0.0444
+            },
+            {
+              "name": "short:high-w > wall-near-w",
+              "count": 5,
+              "share": 0.0278
+            }
+          ]
+        },
+        "left-low": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "name": "short:ramp-w",
+              "count": 69,
+              "share": 0.5111
+            },
+            {
+              "name": "short:wall-near-w",
+              "count": 31,
+              "share": 0.2296
+            },
+            {
+              "name": "short:ramp-w > top-w",
+              "count": 8,
+              "share": 0.0593
+            },
+            {
+              "name": "short:ramp-w > wall-far-w",
+              "count": 8,
+              "share": 0.0593
+            },
+            {
+              "name": "short:ramp-w > wall-near-w",
+              "count": 7,
+              "share": 0.0519
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 96,
+              "share": 0.5333
+            },
+            {
+              "name": "short:wall-near-e",
+              "count": 21,
+              "share": 0.1167
+            },
+            {
+              "name": "short:wall-near-e > ramp-e",
+              "count": 17,
+              "share": 0.0944
+            },
+            {
+              "name": "short:wall-far-e",
+              "count": 13,
+              "share": 0.0722
+            },
+            {
+              "name": "short:high-e > wall-near-e",
+              "count": 5,
+              "share": 0.0278
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "name": "short:ramp-e",
+              "count": 69,
+              "share": 0.5111
+            },
+            {
+              "name": "short:wall-near-e",
+              "count": 25,
+              "share": 0.1852
+            },
+            {
+              "name": "short:ramp-e > wall-far-e",
+              "count": 13,
+              "share": 0.0963
+            },
+            {
+              "name": "short:ramp-e > top-e",
+              "count": 8,
+              "share": 0.0593
+            },
+            {
+              "name": "short:wall-near-e > ramp-e",
+              "count": 6,
+              "share": 0.0444
+            }
+          ]
+        }
+      },
+      "phraseRegions": {
+        "centre-high": {
+          "shots": 45,
+          "topFamilies": [
+            {
+              "name": "high-c > wall-near-e > wall-far-w",
+              "count": 4,
+              "share": 0.0889
+            },
+            {
+              "name": "high-e > wall-near-e > wall-far-e",
+              "count": 4,
+              "share": 0.0889
+            },
+            {
+              "name": "high-w > wall-near-w > wall-far-w",
+              "count": 4,
+              "share": 0.0889
+            },
+            {
+              "name": "ramp-w > high-c > wall-near-e",
+              "count": 3,
+              "share": 0.0667
+            },
+            {
+              "name": "short:wall-near-e > ramp-e",
+              "count": 3,
+              "share": 0.0667
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 55,
+          "topFamilies": [
+            {
+              "name": "short:ramp-w > top-w",
+              "count": 7,
+              "share": 0.1273
+            },
+            {
+              "name": "short:ramp-w > top-c",
+              "count": 5,
+              "share": 0.0909
+            },
+            {
+              "name": "ramp-w > top-c > wall-near-e",
+              "count": 4,
+              "share": 0.0727
+            },
+            {
+              "name": "ramp-w > top-e > ramp-e",
+              "count": 4,
+              "share": 0.0727
+            },
+            {
+              "name": "ramp-w > high-c > wall-near-e",
+              "count": 3,
+              "share": 0.0545
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 18,
+          "topFamilies": [
+            {
+              "name": "short:wall-near-w > ramp-w",
+              "count": 8,
+              "share": 0.4444
+            },
+            {
+              "name": "high-w > wall-near-w > wall-far-w",
+              "count": 4,
+              "share": 0.2222
+            },
+            {
+              "name": "top-w > ramp-w > wall-near-w",
+              "count": 2,
+              "share": 0.1111
+            },
+            {
+              "name": "ramp-w > high-w > wall-near-w",
+              "count": 1,
+              "share": 0.0556
+            },
+            {
+              "name": "top-w > wall-near-w > high-w",
+              "count": 1,
+              "share": 0.0556
+            }
+          ]
+        },
+        "left-low": {
+          "shots": 13,
+          "topFamilies": [
+            {
+              "name": "short:wall-near-w > ramp-w",
+              "count": 5,
+              "share": 0.3846
+            },
+            {
+              "name": "short:ramp-w > top-w",
+              "count": 3,
+              "share": 0.2308
+            },
+            {
+              "name": "ramp-w > top-w > wall-near-w",
+              "count": 2,
+              "share": 0.1538
+            },
+            {
+              "name": "ramp-w > high-w > wall-near-w",
+              "count": 1,
+              "share": 0.0769
+            },
+            {
+              "name": "ramp-w > wall-far-w > wall-near-w",
+              "count": 1,
+              "share": 0.0769
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 21,
+          "topFamilies": [
+            {
+              "name": "short:wall-near-e > ramp-e",
+              "count": 9,
+              "share": 0.4286
+            },
+            {
+              "name": "high-e > wall-near-e > wall-far-e",
+              "count": 4,
+              "share": 0.1905
+            },
+            {
+              "name": "top-e > ramp-e > wall-near-e",
+              "count": 2,
+              "share": 0.0952
+            },
+            {
+              "name": "wall-near-e > ramp-e > wall-far-e",
+              "count": 2,
+              "share": 0.0952
+            },
+            {
+              "name": "ramp-e > high-e > wall-near-e",
+              "count": 1,
+              "share": 0.0476
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 16,
+          "topFamilies": [
+            {
+              "name": "short:wall-near-e > ramp-e",
+              "count": 6,
+              "share": 0.375
+            },
+            {
+              "name": "short:ramp-e > top-e",
+              "count": 3,
+              "share": 0.1875
+            },
+            {
+              "name": "ramp-e > top-e > wall-near-e",
+              "count": 2,
+              "share": 0.125
+            },
+            {
+              "name": "ramp-e > wall-near-e > wall-far-e",
+              "count": 2,
+              "share": 0.125
+            },
+            {
+              "name": "ramp-e > high-e > wall-near-e",
+              "count": 1,
+              "share": 0.0625
+            }
+          ]
+        }
+      },
+      "pieceCoverage": {
+        "soundingPieces": 12,
+        "reachedByPhraseShots": 12,
+        "reached": [
+          "high-c",
+          "high-e",
+          "high-w",
+          "ramp-e",
+          "ramp-w",
+          "top-c",
+          "top-e",
+          "top-w",
+          "wall-far-e",
+          "wall-far-w",
+          "wall-near-e",
+          "wall-near-w"
+        ]
+      },
+      "terminals": {
+        "first-ground-contact": 777,
+        "out-of-bounds": 98
+      },
+      "seconds": 5.7472,
+      "seed": 20261110,
+      "pieces": 12,
+      "rowsSha256": "56a7a7b41ea473692fe78bf7a11964c714c3502b7c1f026e2b96acb966db06e1",
+      "rowsBytes": 95913
+    },
+    "ricochet-garden-loop": {
+      "shots": 875,
+      "distinctContactOrders": 47,
+      "distinctNoteSequences": 47,
+      "phraseFamilies": 38,
+      "topFamilies": [
+        {
+          "name": "short:(none)",
+          "count": 480,
+          "share": 0.5486
+        },
+        {
+          "name": "short:bank-back",
+          "count": 70,
+          "share": 0.08
+        },
+        {
+          "name": "short:plate-mouth-w",
+          "count": 67,
+          "share": 0.0766
+        },
+        {
+          "name": "short:plate-mouth-e",
+          "count": 62,
+          "share": 0.0709
+        },
+        {
+          "name": "short:bank-flank",
+          "count": 34,
+          "share": 0.0389
+        },
+        {
+          "name": "short:plate-hook",
+          "count": 22,
+          "share": 0.0251
+        },
+        {
+          "name": "short:bank-back > plate-hook",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "name": "short:bank-flank > plate-side-w",
+          "count": 16,
+          "share": 0.0183
+        },
+        {
+          "name": "short:plate-east",
+          "count": 11,
+          "share": 0.0126
+        },
+        {
+          "name": "short:plate-side-e",
+          "count": 8,
+          "share": 0.0091
+        },
+        {
+          "name": "short:plate-mouth-e > plate-mouth-w",
+          "count": 7,
+          "share": 0.008
+        },
+        {
+          "name": "bank-back > plate-east > plate-hook",
+          "count": 6,
+          "share": 0.0069
+        }
+      ],
+      "noteBuckets": {
+        "zero": 480,
+        "oneTwo": 370,
+        "threeFive": 25,
+        "sixPlus": 0,
+        "shares": {
+          "zero": 0.5486,
+          "oneTwo": 0.4229,
+          "threeFive": 0.0286,
+          "sixPlus": 0
+        }
+      },
+      "phraseShots": 25,
+      "nudge": {
+        "base": "shots with 3 or more sounding notes",
+        "step": {
+          "yaw": 0.5,
+          "elevation": 0.5,
+          "charge": 0.01
+        },
+        "checks": 25,
+        "perAxis": {
+          "yaw": {
+            "bothDirectionsStill3Plus": 0.56,
+            "bothDirectionsSameFamily": 0.32
+          },
+          "elevation": {
+            "bothDirectionsStill3Plus": 0.4,
+            "bothDirectionsSameFamily": 0.32
+          },
+          "charge": {
+            "bothDirectionsStill3Plus": 0.6,
+            "bothDirectionsSameFamily": 0.32
+          }
+        },
+        "allSixStill3Plus": 0.28,
+        "allSixSameFamily": 0.08,
+        "allSixSameSequence": 0.04,
+        "allSixSameFamilyDifferentSequence": 0.04
+      },
+      "breadth": {
+        "medianDistinctPieces": 3,
+        "distinctPieces": {
+          "2": 5,
+          "3": 14,
+          "4": 6
+        },
+        "topTwoPiecesShareOfAllNotes": 0.3876,
+        "topPieces": [
+          {
+            "piece": "bank-back",
+            "notes": 133,
+            "share": 0.2431
+          },
+          {
+            "piece": "plate-mouth-w",
+            "notes": 79,
+            "share": 0.1444
+          },
+          {
+            "piece": "plate-mouth-e",
+            "notes": 78,
+            "share": 0.1426
+          },
+          {
+            "piece": "plate-hook",
+            "notes": 68,
+            "share": 0.1243
+          },
+          {
+            "piece": "bank-flank",
+            "notes": 56,
+            "share": 0.1024
+          },
+          {
+            "piece": "plate-corner-e",
+            "notes": 34,
+            "share": 0.0622
+          }
+        ],
+        "medianPingPong": 0.75,
+        "pureTwoPieceShare": 0.2
+      },
+      "regions": {
+        "centre-high": {
+          "shots": 140,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 91,
+              "share": 0.65
+            },
+            {
+              "name": "short:bank-back",
+              "count": 23,
+              "share": 0.1643
+            },
+            {
+              "name": "short:bank-back > plate-hook",
+              "count": 10,
+              "share": 0.0714
+            },
+            {
+              "name": "short:plate-hook",
+              "count": 5,
+              "share": 0.0357
+            },
+            {
+              "name": "bank-back > plate-east > plate-hook",
+              "count": 3,
+              "share": 0.0214
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 28,
+              "share": 0.2667
+            },
+            {
+              "name": "short:bank-back",
+              "count": 21,
+              "share": 0.2
+            },
+            {
+              "name": "short:plate-hook",
+              "count": 15,
+              "share": 0.1429
+            },
+            {
+              "name": "short:bank-back > plate-hook",
+              "count": 11,
+              "share": 0.1048
+            },
+            {
+              "name": "short:plate-mouth-w",
+              "count": 7,
+              "share": 0.0667
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 138,
+              "share": 0.7667
+            },
+            {
+              "name": "short:bank-flank",
+              "count": 14,
+              "share": 0.0778
+            },
+            {
+              "name": "short:bank-back",
+              "count": 7,
+              "share": 0.0389
+            },
+            {
+              "name": "short:bank-flank > plate-side-w",
+              "count": 6,
+              "share": 0.0333
+            },
+            {
+              "name": "short:plate-west",
+              "count": 5,
+              "share": 0.0278
+            }
+          ]
+        },
+        "left-low": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "name": "short:plate-mouth-w",
+              "count": 60,
+              "share": 0.4444
+            },
+            {
+              "name": "short:(none)",
+              "count": 32,
+              "share": 0.237
+            },
+            {
+              "name": "short:bank-flank",
+              "count": 20,
+              "share": 0.1481
+            },
+            {
+              "name": "short:bank-flank > plate-side-w",
+              "count": 10,
+              "share": 0.0741
+            },
+            {
+              "name": "short:bank-back",
+              "count": 5,
+              "share": 0.037
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "name": "short:(none)",
+              "count": 144,
+              "share": 0.8
+            },
+            {
+              "name": "short:bank-back",
+              "count": 9,
+              "share": 0.05
+            },
+            {
+              "name": "short:plate-east",
+              "count": 8,
+              "share": 0.0444
+            },
+            {
+              "name": "short:plate-side-e",
+              "count": 6,
+              "share": 0.0333
+            },
+            {
+              "name": "short:plate-corner-e > plate-side-e",
+              "count": 4,
+              "share": 0.0222
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "name": "short:plate-mouth-e",
+              "count": 62,
+              "share": 0.4593
+            },
+            {
+              "name": "short:(none)",
+              "count": 47,
+              "share": 0.3481
+            },
+            {
+              "name": "short:plate-mouth-e > plate-mouth-w",
+              "count": 7,
+              "share": 0.0519
+            },
+            {
+              "name": "short:bank-back",
+              "count": 5,
+              "share": 0.037
+            },
+            {
+              "name": "short:plate-east",
+              "count": 3,
+              "share": 0.0222
+            }
+          ]
+        }
+      },
+      "phraseRegions": {
+        "centre-high": {
+          "shots": 5,
+          "topFamilies": [
+            {
+              "name": "bank-back > plate-east > plate-hook",
+              "count": 3,
+              "share": 0.6
+            },
+            {
+              "name": "bank-back > plate-east > plate-corner-e",
+              "count": 1,
+              "share": 0.2
+            },
+            {
+              "name": "short:bank-back > plate-corner-e",
+              "count": 1,
+              "share": 0.2
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 11,
+          "topFamilies": [
+            {
+              "name": "plate-hook > plate-side-e > plate-corner-e",
+              "count": 4,
+              "share": 0.3636
+            },
+            {
+              "name": "bank-back > plate-east > plate-hook",
+              "count": 3,
+              "share": 0.2727
+            },
+            {
+              "name": "bank-back > plate-east > plate-corner-e",
+              "count": 1,
+              "share": 0.0909
+            },
+            {
+              "name": "plate-hook > bank-back > plate-corner-e",
+              "count": 1,
+              "share": 0.0909
+            },
+            {
+              "name": "plate-hook > bank-back > plate-west",
+              "count": 1,
+              "share": 0.0909
+            }
+          ]
+        },
+        "left-low": {
+          "shots": 1,
+          "topFamilies": [
+            {
+              "name": "bank-back > plate-west > plate-mouth-w",
+              "count": 1,
+              "share": 1
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 4,
+          "topFamilies": [
+            {
+              "name": "short:plate-corner-e > plate-side-e",
+              "count": 2,
+              "share": 0.5
+            },
+            {
+              "name": "bank-back > plate-corner-e > plate-hook",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "plate-hook > bank-back > plate-corner-e",
+              "count": 1,
+              "share": 0.25
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 4,
+          "topFamilies": [
+            {
+              "name": "bank-back > plate-corner-e > plate-hook",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "plate-corner-e > plate-side-e > plate-east",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "plate-mouth-e > plate-mouth-w > bank-flank",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "short:plate-hook > plate-corner-e",
+              "count": 1,
+              "share": 0.25
+            }
+          ]
+        }
+      },
+      "pieceCoverage": {
+        "soundingPieces": 10,
+        "reachedByPhraseShots": 9,
+        "reached": [
+          "bank-back",
+          "bank-flank",
+          "plate-corner-e",
+          "plate-east",
+          "plate-hook",
+          "plate-mouth-e",
+          "plate-mouth-w",
+          "plate-side-e",
+          "plate-west"
+        ]
+      },
+      "terminals": {
+        "first-ground-contact": 818,
+        "out-of-bounds": 57
+      },
+      "seconds": 2.3605,
+      "seed": 20261110,
+      "pieces": 10,
+      "rowsSha256": "8617a715f50735451c737ac68a6c9453aa4bef94476cdfd1858e7da620c103d8",
+      "rowsBytes": 85258
+    }
+  },
+  "starterCandidates": {
+    "west": {
+      "y": -24,
+      "e": 24,
+      "c": 0.55,
+      "f": "plate-w-mid > bank-w > chime-w",
+      "s": "plate-w-mid:D4 > bank-w:G4 > chime-w:A4 > bank-w:G4",
+      "familyHits": 6,
+      "noteHits": 6
+    },
+    "centre": {
+      "y": -8,
+      "e": 20,
+      "c": 0.65,
+      "f": "plate-c-left > bank-c > chime-c",
+      "s": "plate-c-left:E4 > bank-c:C4 > chime-c:D4 > bank-c:C4 > chime-c:D4",
+      "familyHits": 5,
+      "noteHits": 6
+    },
+    "east": {
+      "y": 14,
+      "e": 20,
+      "c": 0.65,
+      "f": "plate-e-inner > bank-e > chime-e",
+      "s": "plate-e-inner:G4 > bank-e:D4 > chime-e:E4 > bank-e:D4 > chime-e:E4",
+      "familyHits": 6,
+      "noteHits": 6
+    }
+  }
+}

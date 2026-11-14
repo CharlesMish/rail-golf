@@ -1,0 +1,233 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-fan",
+  "name": "Chime Fan",
+  "kind": "shot-study",
+  "invitation": "Three banks stand across the clearing, and plates hang above the far side of each. Aim left, ahead, or right. The pieces stay where they are. There is no target.",
+  "physicalQuestion": "Does aiming to one side ring a different run of pieces from aiming to the other, and does the next slider step keep that run?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6749999999999965,
+        "position": [
+          0,
+          0.4300045073032379,
+          6.440391540527344
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-bank-c"
+      ]
+    },
+    {
+      "id": "west",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -16,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.0333333333333288,
+        "position": [
+          -10.969626426696777,
+          0.4299984574317932,
+          29.82801055908203
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-w-inner",
+        "worldcraft-object-bank-w",
+        "worldcraft-object-chime-w",
+        "worldcraft-object-bank-w",
+        "worldcraft-object-chime-w"
+      ]
+    },
+    {
+      "id": "west-long",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -16,
+        "elevation": 20,
+        "charge": 0.65
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.991666666666662,
+        "position": [
+          -10.964446067810059,
+          0.4300045073032379,
+          27.095821380615234
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-w-inner",
+        "worldcraft-object-bank-w",
+        "worldcraft-object-chime-w",
+        "worldcraft-object-bank-w",
+        "worldcraft-object-chime-w",
+        "worldcraft-object-bank-w"
+      ]
+    },
+    {
+      "id": "centre",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.0833333333333286,
+        "position": [
+          0,
+          0.4300006628036499,
+          28.366817474365234
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-c-mid",
+        "worldcraft-object-bank-c",
+        "worldcraft-object-chime-c",
+        "worldcraft-object-bank-c",
+        "worldcraft-object-chime-c"
+      ]
+    },
+    {
+      "id": "east",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 16,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.0333333333333288,
+        "position": [
+          10.969626426696777,
+          0.4300021231174469,
+          29.82801055908203
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-e-inner",
+        "worldcraft-object-bank-e",
+        "worldcraft-object-chime-e",
+        "worldcraft-object-bank-e",
+        "worldcraft-object-chime-e"
+      ]
+    },
+    {
+      "id": "shoulder",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -28,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.933333333333329,
+        "position": [
+          -20.162017822265625,
+          0.42999985814094543,
+          34.01717758178711
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-plate-w-outer",
+        "worldcraft-object-bank-w"
+      ]
+    }
+  ],
+  "nearbySensitivity": "The opening aim, yaw 0 elevation 18 charge 0.55, rings the centre bank. All six neighbour steps keep that contact. At yaw -16 elevation 24 charge 0.55 the order is the inner west plate, the west bank, the west chime, the west bank, then the west chime. Both yaw steps, elevation 23.5, and charge 0.56 keep it. Elevation 24.5 adds a bank. Charge 0.54 drops the last chime. Yaw 16 is the mirror. At yaw 0 elevation 24 charge 0.55 both yaw steps and elevation 23.5 keep the order. Elevation 24.5 and both charge steps change it.",
+  "validationEvidence": "875 headless Havok shots on the Ricochet Loop broad grid, seed 20261114, and the same grid on Descending Resonance and Ricochet Garden Loop. Neighbour steps are 0.5 degrees and 0.01 charge. The seed is not applied to the solver. The validator replays six tested shots. A physical phone, speakers, and enjoyment were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A run of three pieces only after the ball has cleared the 7 m bank.",
+      "missing": "A bank cannot be shortened. On the broad grid the low elevations ring one bank. The hung plates meet the ball only once it is above that bank.",
+      "extension": "No new collider. Leave the low aims as one note, and let the side of the aim choose which bank."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "The outermost hung plate on each side sits outside the broad yaw grid.",
+      "missing": "A plate is 4 m wide. Yaw from -24 to 24 meets the inner plates. A further aim can ring the outer plate and the bank, and it drops the far chime.",
+      "extension": "No new piece size. The outer plates stay, for aims past the broad grid."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear timber banks on the existing H voice, and metal plates and far banks as the long metal chime.",
+      "missing": "The note timeline names a plate by its note and its x. Two plates that share a note are told apart by x. Listening on a real speaker was not done.",
+      "extension": "No new sound engine. Keep the H voice on the timber banks."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Place a hung plate in Build.",
+      "missing": "Build has no lift or tilt control. It can move a hung plate on the plan and keeps the pair. The height is typed in the document. Every piece here is fixed.",
+      "extension": "Two number fields on the selected plate, and a side view. Not built here."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "presentation": {
+    "dynamics": "normal-speed",
+    "bankVoice": true,
+    "timeline": true
+  }
+}
