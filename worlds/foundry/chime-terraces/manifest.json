@@ -1,0 +1,263 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-terraces",
+  "name": "Chime Terraces",
+  "kind": "shot-study",
+  "invitation": "Three timber ramps sit in front of the tee. Behind them, three rows of metal plates rise and lean toward the tee. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "physicalQuestion": "When a shot climbs off a ramp into the plates, or comes down the rows, which pieces sound, and does a small aim change keep a run of three?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "out-of-bounds",
+        "elapsed": 2.2166666666666615,
+        "position": [
+          2.51025390625,
+          1.212567925453186,
+          -8.031074523925781
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-low-2",
+        "worldcraft-object-low-3",
+        "worldcraft-object-low-2",
+        "worldcraft-object-low-3"
+      ]
+    },
+    {
+      "id": "centre-climb",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 4.083333333333326,
+        "position": [
+          2.950101375579834,
+          0.4300002157688141,
+          6.393905162811279
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-c",
+        "worldcraft-object-high-2",
+        "worldcraft-object-high-3",
+        "worldcraft-object-high-2",
+        "worldcraft-object-high-3",
+        "worldcraft-object-mid-3"
+      ]
+    },
+    {
+      "id": "centre-drop",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.066666666666662,
+        "position": [
+          0.9349783062934875,
+          0.4300016462802887,
+          40.25810623168945
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-mid-2",
+        "worldcraft-object-mid-3",
+        "worldcraft-object-mid-2",
+        "worldcraft-object-mid-3",
+        "worldcraft-object-low-3"
+      ]
+    },
+    {
+      "id": "west-climb",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.799999999999989,
+        "position": [
+          -11.920914649963379,
+          0.43000367283821106,
+          40.3701057434082
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-c",
+        "worldcraft-object-high-0",
+        "worldcraft-object-mid-0",
+        "worldcraft-object-high-0",
+        "worldcraft-object-mid-0"
+      ]
+    },
+    {
+      "id": "east-climb",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 16,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.3666666666666574,
+        "position": [
+          6.896131992340088,
+          0.43000414967536926,
+          41.921627044677734
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-c",
+        "worldcraft-object-high-4",
+        "worldcraft-object-mid-4"
+      ]
+    },
+    {
+      "id": "east-walk",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 20,
+        "charge": 0.65
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.174999999999995,
+        "position": [
+          8.201863288879395,
+          0.4300024211406708,
+          45.956748962402344
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-mid-3",
+        "worldcraft-object-mid-4",
+        "worldcraft-object-mid-3",
+        "worldcraft-object-mid-4",
+        "worldcraft-object-low-4"
+      ]
+    },
+    {
+      "id": "near-miss",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 12,
+        "charge": 0.35
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.7333333333333263,
+        "position": [
+          -19.7455997467041,
+          0.43000197410583496,
+          33.3094367980957
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-ramp-w"
+      ]
+    }
+  ],
+  "nearbySensitivity": "On the 875-shot broad grid, 295 shots sounded three or more notes. Of those, 54 percent still sounded three or more after every one-step nudge of yaw, elevation, and power. About 9 percent kept the same first three pieces on all six nudges. A half-degree step often moves the run onto a neighbouring plate. The five multi-note recorded aims each keep three or more notes on at least four of the six nudges.",
+  "validationEvidence": "Headless Havok, 875 shots on the Ricochet Loop yaw, elevation, and power grid, then six one-step nudges for every shot with three or more notes. The same harness fired Descending Resonance and Ricochet Loop. Seed 20261114 is provenance only and is not applied to the solver. The validator replays seven tested shots. A phone, speakers, and whether the lines are enjoyable were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A shot that walks down three different rows, one new plate after another.",
+      "missing": "Most runs of three or more notes stay on two rows, or return to a plate already hit. A true three-row descent is uncommon. Adjacent plates often sound together, so the order is a chord plus a later note rather than three separated tones.",
+      "extension": "No new piece, restitution, or gravity. The rows stay 5 m apart and lean 15 degrees toward the tee."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "Several phrase families that a small aim change keeps.",
+      "missing": "189 families appear, and the largest is silent. A nudge keeps three or more notes more often than it keeps the same three pieces. Left, centre, and right favour different plates, but no region has one dominant phrase.",
+      "extension": "Do not add scoring or a new launcher. A later pass could space the plates so one bounce cannot strike two of them."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Place a hung plate in Build, and scan twenty-one pieces.",
+      "missing": "Build has no lift or tilt control. Height is typed in the document. All 21 pieces are fixed, so the piece list is a long column of notes.",
+      "extension": "Two number fields on a selected plate, and a side view. Not built here."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear a descending metal phrase, with the timber ramps as a shorter step.",
+      "missing": "Plates use the ordinary metal voice and ramps the ordinary timber voice. Face speed makes a hard ramp loud and a grazing plate quiet. The timber-bank voice does not retimbre either, so it is left off. Speaker playback was not checked.",
+      "extension": "No new voice. The note timeline is the existing one."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}

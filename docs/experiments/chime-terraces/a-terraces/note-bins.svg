@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" font-family="ui-sans-serif, sans-serif">
+  <title>Share of 875 shots by note count</title>
+  <rect width="640" height="280" fill="#f4f1ea"/>
+  <text x="24" y="28" font-size="16" fill="#1c1915">Share of 875 shots by how many notes sounded</text>
+  <g font-size="12" fill="#3d3832">
+    <text x="168" y="52" text-anchor="middle">Chime Terraces</text>
+    <text x="328" y="52" text-anchor="middle">Descending Resonance</text>
+    <text x="488" y="52" text-anchor="middle">Ricochet Loop</text>
+  </g>
+  <g font-size="11" fill="#5c564c">
+    <text x="20" y="78">0</text>
+    <text x="20" y="118">1–2</text>
+    <text x="20" y="158">3–5</text>
+    <text x="20" y="198">6+</text>
+  </g>
+  <!-- shares: chime 0.1817 0.4811 0.2914 0.0457; DR 0.2514 0.5589 0.1886 0.0011; loop 0.5463 0.424 0.0297 0. Bar width 180 * share. -->
+  <g>
+    <rect x="78" y="66" width="33" height="16" fill="#8a8175"/>
+    <rect x="238" y="66" width="45" height="16" fill="#8a8175"/>
+    <rect x="398" y="66" width="98" height="16" fill="#8a8175"/>
+    <rect x="78" y="106" width="87" height="16" fill="#c4a574"/>
+    <rect x="238" y="106" width="101" height="16" fill="#c4a574"/>
+    <rect x="398" y="106" width="76" height="16" fill="#c4a574"/>
+    <rect x="78" y="146" width="52" height="16" fill="#2f6f4e"/>
+    <rect x="238" y="146" width="34" height="16" fill="#2f6f4e"/>
+    <rect x="398" y="146" width="5" height="16" fill="#2f6f4e"/>
+    <rect x="78" y="186" width="8" height="16" fill="#1d4e38"/>
+    <rect x="238" y="186" width="2" height="16" fill="#1d4e38"/>
+  </g>
+  <g font-size="11" fill="#1c1915">
+    <text x="116" y="78">18%</text>
+    <text x="288" y="78">25%</text>
+    <text x="500" y="78">55%</text>
+    <text x="170" y="118">48%</text>
+    <text x="344" y="118">56%</text>
+    <text x="478" y="118">42%</text>
+    <text x="134" y="158">29%</text>
+    <text x="276" y="158">19%</text>
+    <text x="408" y="158">3%</text>
+    <text x="90" y="198">5%</text>
+    <text x="244" y="198">0.1%</text>
+    <text x="398" y="198">0</text>
+  </g>
+  <text x="24" y="248" font-size="12" fill="#5c564c">Green bars are shots with three or more notes. Same yaw, elevation, and power grid on all three worlds.</text>
+</svg>

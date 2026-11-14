@@ -1,0 +1,135 @@
+{
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "started": "2026-11-14T20:37:49.809Z",
+  "consoleErrors": [],
+  "foundryId": "chime-terraces",
+  "notice": "Three timber ramps sit in front of the tee. Behind them, three rows of metal plates rise and lean toward the tee. The pieces stay where they are. Aim and power are yours. There is no target. Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.",
+  "sectionTitles": [],
+  "views": {
+    "desktop": {
+      "pieces": 21,
+      "centresInsideCanvas": 21,
+      "outside": [],
+      "parts": null,
+      "view": "survey"
+    },
+    "desktop-survey": {
+      "pieces": 21,
+      "centresInsideCanvas": 21,
+      "outside": [],
+      "parts": null,
+      "view": "address"
+    },
+    "portrait": {
+      "pieces": 21,
+      "centresInsideCanvas": 21,
+      "outside": [],
+      "parts": null,
+      "view": "address"
+    },
+    "portrait-survey": {
+      "pieces": 21,
+      "centresInsideCanvas": 21,
+      "outside": [],
+      "parts": null,
+      "view": "survey"
+    },
+    "landscape": {
+      "pieces": 21,
+      "centresInsideCanvas": 21,
+      "outside": [],
+      "parts": null,
+      "view": "address"
+    },
+    "landscape-survey": {
+      "pieces": 21,
+      "centresInsideCanvas": 21,
+      "outside": [],
+      "parts": null,
+      "view": "survey"
+    }
+  },
+  "shots": [
+    {
+      "id": "opening",
+      "match": true,
+      "notes": [
+        "low-2:D4",
+        "low-3:C4"
+      ],
+      "reason": "out-of-bounds"
+    },
+    {
+      "id": "centre-climb",
+      "match": true,
+      "notes": [
+        "ramp-c:E4",
+        "high-2:A4",
+        "high-3:G4",
+        "mid-3:E4"
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "id": "centre-drop",
+      "match": true,
+      "notes": [
+        "mid-2:G4",
+        "mid-3:E4",
+        "low-3:C4"
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "id": "west-climb",
+      "match": true,
+      "notes": [
+        "ramp-c:E4",
+        "high-0:A4",
+        "mid-0:E4",
+        "high-0:A4",
+        "mid-0:E4"
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "id": "east-climb",
+      "match": true,
+      "notes": [
+        "ramp-c:E4",
+        "high-4:G4",
+        "mid-4:E4"
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "id": "east-walk",
+      "match": true,
+      "notes": [
+        "mid-3:E4",
+        "mid-4:E4",
+        "low-4:D4"
+      ],
+      "reason": "first-ground-contact"
+    },
+    {
+      "id": "near-miss",
+      "match": true,
+      "notes": [
+        "ramp-w:C4"
+      ],
+      "reason": "first-ground-contact"
+    }
+  ],
+  "buildLandscape": {
+    "scrollHeight": 1004,
+    "clientHeight": 96,
+    "buttons": 21
+  },
+  "buildDesktop": {
+    "scrollHeight": 1004,
+    "clientHeight": 165,
+    "buttons": 21
+  },
+  "finished": "2026-11-14T20:38:30.789Z"
+}

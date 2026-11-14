@@ -1,0 +1,402 @@
+[
+  {
+    "role": "centre-climb",
+    "family": "ramp-c>high-2>high-3",
+    "familyShots": 6,
+    "aim": {
+      "yaw": 0,
+      "elevation": 8,
+      "charge": 0.55
+    },
+    "notes": [
+      "ramp-c:E4",
+      "high-2:A4",
+      "high-3:G4",
+      "mid-3:E4"
+    ],
+    "nudgesStill3": 6,
+    "nudgesSameFamily": 4,
+    "impacts": [
+      {
+        "piece": "ramp-c",
+        "note": "E4",
+        "material": "timber",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 1,
+        "time": 0.39166666666666705,
+        "role": "ramp"
+      },
+      {
+        "piece": "high-2",
+        "note": "A4",
+        "material": "metal",
+        "degree": 4,
+        "hz": 440,
+        "gain": 0.06983400770120385,
+        "time": 1.4583333333333306,
+        "role": "plate"
+      },
+      {
+        "piece": "high-3",
+        "note": "G4",
+        "material": "metal",
+        "degree": 3,
+        "hz": 391.9954,
+        "gain": 0.06983400770120385,
+        "time": 1.4583333333333306,
+        "role": "plate"
+      },
+      {
+        "piece": "mid-3",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.6151161051991354,
+        "time": 1.7916666666666627,
+        "role": "plate"
+      }
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 4.083333333333326,
+      "position": [
+        2.950101375579834,
+        0.4300002157688141,
+        6.393905162811279
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-ramp-c",
+      "worldcraft-object-high-2",
+      "worldcraft-object-high-3",
+      "worldcraft-object-high-2",
+      "worldcraft-object-high-3",
+      "worldcraft-object-mid-3",
+      "worldcraft-ground"
+    ]
+  },
+  {
+    "role": "centre-drop",
+    "family": "mid-2>mid-3>low-3",
+    "familyShots": 7,
+    "aim": {
+      "yaw": 0,
+      "elevation": 20,
+      "charge": 0.55
+    },
+    "notes": [
+      "mid-2:G4",
+      "mid-3:E4",
+      "low-3:C4"
+    ],
+    "nudgesStill3": 4,
+    "nudgesSameFamily": 4,
+    "impacts": [
+      {
+        "piece": "mid-2",
+        "note": "G4",
+        "material": "metal",
+        "degree": 3,
+        "hz": 391.9954,
+        "gain": 0.3616264159162614,
+        "time": 0.9583333333333324,
+        "role": "plate"
+      },
+      {
+        "piece": "mid-3",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.3616264159162614,
+        "time": 0.9583333333333324,
+        "role": "plate"
+      },
+      {
+        "piece": "low-3",
+        "note": "C4",
+        "material": "metal",
+        "degree": 0,
+        "hz": 261.6256,
+        "gain": 0.3261945503119249,
+        "time": 1.1916666666666649,
+        "role": "plate"
+      }
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.066666666666662,
+      "position": [
+        0.9349783062934875,
+        0.4300016462802887,
+        40.25810623168945
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-mid-2",
+      "worldcraft-object-mid-3",
+      "worldcraft-object-mid-2",
+      "worldcraft-object-mid-3",
+      "worldcraft-object-low-3",
+      "worldcraft-ground"
+    ]
+  },
+  {
+    "role": "west-climb",
+    "family": "ramp-c>high-0>mid-0",
+    "familyShots": 5,
+    "aim": {
+      "yaw": -14,
+      "elevation": 8,
+      "charge": 0.55
+    },
+    "notes": [
+      "ramp-c:E4",
+      "high-0:A4",
+      "mid-0:E4",
+      "high-0:A4",
+      "mid-0:E4"
+    ],
+    "nudgesStill3": 6,
+    "nudgesSameFamily": 6,
+    "impacts": [
+      {
+        "piece": "ramp-c",
+        "note": "E4",
+        "material": "timber",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 1,
+        "time": 0.40833333333333377,
+        "role": "ramp"
+      },
+      {
+        "piece": "high-0",
+        "note": "A4",
+        "material": "metal",
+        "degree": 4,
+        "hz": 440,
+        "gain": 0.18897362000586196,
+        "time": 1.524999999999997,
+        "role": "plate"
+      },
+      {
+        "piece": "mid-0",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.06862602943011484,
+        "time": 1.8583333333333292,
+        "role": "plate"
+      },
+      {
+        "piece": "high-0",
+        "note": "A4",
+        "material": "metal",
+        "degree": 4,
+        "hz": 440,
+        "gain": 0.09356080518801457,
+        "time": 2.2499999999999947,
+        "role": "plate"
+      },
+      {
+        "piece": "mid-0",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.3558973047763546,
+        "time": 2.699999999999993,
+        "role": "plate"
+      }
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 3.799999999999989,
+      "position": [
+        -11.920914649963379,
+        0.43000367283821106,
+        40.3701057434082
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-ramp-c",
+      "worldcraft-object-high-0",
+      "worldcraft-object-mid-0",
+      "worldcraft-object-high-0",
+      "worldcraft-object-mid-0",
+      "worldcraft-ground"
+    ]
+  },
+  {
+    "role": "east-climb",
+    "family": "ramp-c>high-4>mid-4",
+    "familyShots": 8,
+    "aim": {
+      "yaw": 8,
+      "elevation": 16,
+      "charge": 0.45
+    },
+    "notes": [
+      "ramp-c:E4",
+      "high-4:G4",
+      "mid-4:E4"
+    ],
+    "nudgesStill3": 6,
+    "nudgesSameFamily": 5,
+    "impacts": [
+      {
+        "piece": "ramp-c",
+        "note": "E4",
+        "material": "timber",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.9720156560080784,
+        "time": 0.6916666666666667,
+        "role": "ramp"
+      },
+      {
+        "piece": "high-4",
+        "note": "G4",
+        "material": "metal",
+        "degree": 3,
+        "hz": 391.9954,
+        "gain": 0.08050574273545029,
+        "time": 1.7499999999999962,
+        "role": "plate"
+      },
+      {
+        "piece": "mid-4",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.15820340824359316,
+        "time": 2.1666666666666616,
+        "role": "plate"
+      }
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 3.3666666666666574,
+      "position": [
+        6.896131992340088,
+        0.43000414967536926,
+        41.921627044677734
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-ramp-c",
+      "worldcraft-object-high-4",
+      "worldcraft-object-mid-4",
+      "worldcraft-ground"
+    ]
+  },
+  {
+    "role": "east-walk",
+    "family": "mid-3>mid-4>low-4",
+    "familyShots": 7,
+    "aim": {
+      "yaw": 8,
+      "elevation": 20,
+      "charge": 0.65
+    },
+    "notes": [
+      "mid-3:E4",
+      "mid-4:E4",
+      "low-4:D4"
+    ],
+    "nudgesStill3": 5,
+    "nudgesSameFamily": 5,
+    "impacts": [
+      {
+        "piece": "mid-3",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.350361972840646,
+        "time": 0.8416666666666661,
+        "role": "plate"
+      },
+      {
+        "piece": "mid-4",
+        "note": "E4",
+        "material": "metal",
+        "degree": 2,
+        "hz": 329.6276,
+        "gain": 0.350361972840646,
+        "time": 0.8416666666666661,
+        "role": "plate"
+      },
+      {
+        "piece": "low-4",
+        "note": "D4",
+        "material": "metal",
+        "degree": 1,
+        "hz": 293.6648,
+        "gain": 1,
+        "time": 1.0416666666666654,
+        "role": "plate"
+      }
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.174999999999995,
+      "position": [
+        8.201863288879395,
+        0.4300024211406708,
+        45.956748962402344
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-mid-3",
+      "worldcraft-object-mid-4",
+      "worldcraft-object-mid-3",
+      "worldcraft-object-mid-4",
+      "worldcraft-object-low-4",
+      "worldcraft-ground"
+    ]
+  },
+  {
+    "role": "near-miss",
+    "family": "short:ramp-w",
+    "familyShots": 30,
+    "aim": {
+      "yaw": -24,
+      "elevation": 12,
+      "charge": 0.35
+    },
+    "notes": [
+      "ramp-w:C4"
+    ],
+    "impacts": [
+      {
+        "piece": "ramp-w",
+        "note": "C4",
+        "material": "timber",
+        "degree": 0,
+        "hz": 261.6256,
+        "gain": 0.8448755430380369,
+        "time": 0.6250000000000002,
+        "role": "ramp"
+      }
+    ],
+    "terminal": {
+      "reason": "first-ground-contact",
+      "elapsed": 2.7333333333333263,
+      "position": [
+        -19.7455997467041,
+        0.43000197410583496,
+        33.3094367980957
+      ]
+    },
+    "contacts": [
+      "worldcraft-object-ramp-w",
+      "worldcraft-ground"
+    ]
+  }
+]

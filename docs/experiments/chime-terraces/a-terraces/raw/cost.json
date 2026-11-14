@@ -1,0 +1,45 @@
+{
+  "world": "chime-terraces",
+  "pieces": 21,
+  "headless": {
+    "script": "scripts/capacity/measure-headless.mjs",
+    "runs": 1,
+    "note": "NullEngine timings. These are not browser frame times. One run, so this is not the three-run band from the capacity study.",
+    "coldConstructMs": 25.2607,
+    "rebuildColdMs": 10.351,
+    "rebuildWarmMedianMs": 8.2972,
+    "rebuildWarmP95Ms": 14.3005,
+    "idleStepMedianMs": 0.0068,
+    "idleStepP95Ms": 0.0102,
+    "nearMissStepMedianMs": 0.0136,
+    "nearMissStepP95Ms": 0.0351,
+    "centreClimbStepMedianMs": 0.0129,
+    "centreClimbStepP95Ms": 0.0228,
+    "testedShotsMatched": true,
+    "baselinesReplayed": ["ricochet-garden-loop", "descending-resonance"]
+  },
+  "browser": {
+    "script": "scripts/capacity/measure-browser.mjs",
+    "runs": 1,
+    "renderer": "Headless Chrome, SwiftShader software WebGL. Not a phone GPU.",
+    "desktop": {
+      "viewport": "1280x800",
+      "surveyMedianMs": 31,
+      "surveyP95Ms": 34.1,
+      "nearMissFlightMedianMs": 29.6,
+      "nearMissFlightP95Ms": 45.8,
+      "centreClimbFlightMedianMs": 30.6,
+      "centreClimbFlightP95Ms": 46.7
+    },
+    "portraitSurveyMedianMs": 16.7,
+    "landscapeSurveyMedianMs": 16.7
+  },
+  "editor": {
+    "pieceButtons": 21,
+    "desktopListClientHeightPx": 165,
+    "desktopListScrollHeightPx": 1004,
+    "landscapeListClientHeightPx": 96,
+    "landscapeListScrollHeightPx": 1004,
+    "landscapeViewport": "844x390"
+  }
+}
