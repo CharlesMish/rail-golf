@@ -49,7 +49,7 @@ export type FoundryManifest = {
   limitations: FoundryLimitation[];
   customCode: { module: string; reason: string } | null;
 };
-export type FoundrySection = 'featured' | 'construction' | 'studies';
+export type FoundrySection = 'featured' | 'chime-terraces' | 'construction' | 'studies';
 export type FoundryCard = {
   id: string;
   name: string;
