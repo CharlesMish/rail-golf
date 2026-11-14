@@ -1,0 +1,1196 @@
+{
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "grid": {
+    "yaw": [
+      -24,
+      -22,
+      -20,
+      -18,
+      -16,
+      -14,
+      -12,
+      -10,
+      -8,
+      -6,
+      -4,
+      -2,
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24
+    ],
+    "elevation": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      30,
+      40
+    ],
+    "charge": [
+      0.35,
+      0.45,
+      0.55,
+      0.65,
+      0.8
+    ]
+  },
+  "shots": 875,
+  "nudge": "0.5° yaw, 0.5° elevation, 0.01 charge, both directions. One step is a slider detent.",
+  "regionCuts": "left yaw <= -8°, centre -6° to 6°, right yaw >= 8°. low elevation <= 20°, high elevation >= 24°.",
+  "family": "First three distinct sounding pieces after collapsing immediate repeats. Shorter shots keep the whole collapsed order and are marked short.",
+  "seconds": 16.8,
+  "worlds": [
+    {
+      "shots": 875,
+      "distinctContactOrders": 257,
+      "distinctPieceOrders": 240,
+      "distinctNoteSequences": 235,
+      "phraseFamilies": 189,
+      "topFamilies": [
+        {
+          "family": "(silent)",
+          "count": 159,
+          "share": 0.1817
+        },
+        {
+          "family": "short:ramp-e",
+          "count": 30,
+          "share": 0.0343
+        },
+        {
+          "family": "short:ramp-w",
+          "count": 30,
+          "share": 0.0343
+        },
+        {
+          "family": "short:mid-2>low-2",
+          "count": 17,
+          "share": 0.0194
+        },
+        {
+          "family": "short:mid-3>low-3",
+          "count": 17,
+          "share": 0.0194
+        },
+        {
+          "family": "short:mid-1>low-1",
+          "count": 15,
+          "share": 0.0171
+        },
+        {
+          "family": "short:ramp-c",
+          "count": 15,
+          "share": 0.0171
+        },
+        {
+          "family": "short:mid-0",
+          "count": 14,
+          "share": 0.016
+        },
+        {
+          "family": "short:mid-0>low-0",
+          "count": 14,
+          "share": 0.016
+        },
+        {
+          "family": "short:mid-5",
+          "count": 14,
+          "share": 0.016
+        },
+        {
+          "family": "short:mid-5>low-5",
+          "count": 13,
+          "share": 0.0149
+        },
+        {
+          "family": "short:mid-4>low-4",
+          "count": 12,
+          "share": 0.0137
+        }
+      ],
+      "noteBins": {
+        "0": {
+          "count": 159,
+          "share": 0.1817
+        },
+        "1-2": {
+          "count": 421,
+          "share": 0.4811
+        },
+        "3-5": {
+          "count": 255,
+          "share": 0.2914
+        },
+        "6+": {
+          "count": 40,
+          "share": 0.0457
+        }
+      },
+      "nudge": {
+        "longShots": 295,
+        "perAxis": {
+          "yaw": {
+            "still3": 0.8034,
+            "sameFamily": 0.5203,
+            "nudges": 590
+          },
+          "elevation": {
+            "still3": 0.8593,
+            "sameFamily": 0.5814,
+            "nudges": 590
+          },
+          "power": {
+            "still3": 0.8763,
+            "sameFamily": 0.6271,
+            "nudges": 590
+          }
+        },
+        "allSixStill3": 0.5424,
+        "allSixSameFamily": 0.0915
+      },
+      "breadth": {
+        "medianDistinctPieces": 3,
+        "meanDistinctPieces": 2.776,
+        "distinctDistribution": {
+          "2": 89,
+          "3": 183,
+          "4": 23
+        },
+        "topTwoPiecesNoteShare": 0.2679,
+        "topPieces": [
+          {
+            "piece": "ramp-c",
+            "notes": 373,
+            "share": 0.1979
+          },
+          {
+            "piece": "ramp-e",
+            "notes": 132,
+            "share": 0.07
+          },
+          {
+            "piece": "ramp-w",
+            "notes": 130,
+            "share": 0.069
+          },
+          {
+            "piece": "low-3",
+            "notes": 112,
+            "share": 0.0594
+          },
+          {
+            "piece": "mid-3",
+            "notes": 104,
+            "share": 0.0552
+          },
+          {
+            "piece": "mid-2",
+            "notes": 93,
+            "share": 0.0493
+          }
+        ],
+        "medianPingPong": 0.6667,
+        "meanPingPong": 0.7732
+      },
+      "regions": {
+        "left-low": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "family": "ramp-c>high-0>mid-0",
+              "count": 5,
+              "shareOfRegion": 0.0278
+            },
+            {
+              "family": "ramp-c>high-1>mid-1",
+              "count": 5,
+              "shareOfRegion": 0.0278
+            },
+            {
+              "family": "short:low-0>ramp-w>low-0>ramp-w",
+              "count": 4,
+              "shareOfRegion": 0.0222
+            },
+            {
+              "family": "ramp-c>high-1>ramp-w",
+              "count": 4,
+              "shareOfRegion": 0.0222
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "family": "short:high-0>mid-0>high-0>mid-0",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "mid-1>low-0>low-1",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "short:mid-1>low-1>mid-1",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "high-1>mid-0>mid-1",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 140,
+          "topFamilies": [
+            {
+              "family": "ramp-c>high-2>high-3",
+              "count": 6,
+              "shareOfRegion": 0.0429
+            },
+            {
+              "family": "ramp-c>high-2>mid-2",
+              "count": 5,
+              "shareOfRegion": 0.0357
+            },
+            {
+              "family": "ramp-c>mid-2>low-2",
+              "count": 5,
+              "shareOfRegion": 0.0357
+            },
+            {
+              "family": "ramp-c>mid-2>mid-3",
+              "count": 5,
+              "shareOfRegion": 0.0357
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 105,
+          "topFamilies": [
+            {
+              "family": "mid-2>mid-3>low-3",
+              "count": 4,
+              "shareOfRegion": 0.0381
+            },
+            {
+              "family": "high-2>high-3>mid-3",
+              "count": 3,
+              "shareOfRegion": 0.0286
+            },
+            {
+              "family": "high-3>mid-3>mid-4",
+              "count": 3,
+              "shareOfRegion": 0.0286
+            },
+            {
+              "family": "high-2>mid-1>mid-2",
+              "count": 2,
+              "shareOfRegion": 0.019
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "family": "ramp-c>high-4>mid-4",
+              "count": 5,
+              "shareOfRegion": 0.0278
+            },
+            {
+              "family": "ramp-c>high-5>mid-5",
+              "count": 5,
+              "shareOfRegion": 0.0278
+            },
+            {
+              "family": "ramp-c>high-4>ramp-e",
+              "count": 4,
+              "shareOfRegion": 0.0222
+            },
+            {
+              "family": "ramp-c>mid-4>low-4",
+              "count": 4,
+              "shareOfRegion": 0.0222
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "family": "mid-3>mid-4>low-4",
+              "count": 4,
+              "shareOfRegion": 0.0296
+            },
+            {
+              "family": "high-4>mid-4>mid-5",
+              "count": 3,
+              "shareOfRegion": 0.0222
+            },
+            {
+              "family": "short:high-4>mid-4>high-4>mid-4",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "short:mid-4>low-4>mid-4",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            }
+          ]
+        }
+      },
+      "pieceCoverage": {
+        "reachedByLongShots": 21,
+        "reached": [
+          "high-0",
+          "high-1",
+          "high-2",
+          "high-3",
+          "high-4",
+          "high-5",
+          "low-0",
+          "low-1",
+          "low-2",
+          "low-3",
+          "low-4",
+          "low-5",
+          "mid-0",
+          "mid-1",
+          "mid-2",
+          "mid-3",
+          "mid-4",
+          "mid-5",
+          "ramp-c",
+          "ramp-e",
+          "ramp-w"
+        ]
+      },
+      "hearing": {
+        "sequentialFirstThree": 195,
+        "clusteredFirstThree": 100,
+        "sequentialShare": 0.661,
+        "medianConsecutiveGap": 0.2,
+        "consecutiveGapsUnder50ms": 114,
+        "consecutiveGaps": 901
+      },
+      "notesTotal": 1885,
+      "id": "chime-terraces",
+      "pieces": 21
+    },
+    {
+      "shots": 875,
+      "distinctContactOrders": 143,
+      "distinctPieceOrders": 113,
+      "distinctNoteSequences": 115,
+      "phraseFamilies": 94,
+      "topFamilies": [
+        {
+          "family": "(silent)",
+          "count": 220,
+          "share": 0.2514
+        },
+        {
+          "family": "short:wall-near-e",
+          "count": 78,
+          "share": 0.0891
+        },
+        {
+          "family": "short:ramp-w",
+          "count": 77,
+          "share": 0.088
+        },
+        {
+          "family": "short:ramp-e",
+          "count": 74,
+          "share": 0.0846
+        },
+        {
+          "family": "short:wall-near-w",
+          "count": 70,
+          "share": 0.08
+        },
+        {
+          "family": "short:ramp-w>wall-far-w",
+          "count": 18,
+          "share": 0.0206
+        },
+        {
+          "family": "short:ramp-e>wall-far-e",
+          "count": 17,
+          "share": 0.0194
+        },
+        {
+          "family": "short:wall-far-e",
+          "count": 13,
+          "share": 0.0149
+        },
+        {
+          "family": "short:high-e>wall-near-e",
+          "count": 11,
+          "share": 0.0126
+        },
+        {
+          "family": "short:high-w>wall-near-w",
+          "count": 11,
+          "share": 0.0126
+        },
+        {
+          "family": "short:wall-near-e>ramp-e",
+          "count": 11,
+          "share": 0.0126
+        },
+        {
+          "family": "short:ramp-w>top-w>ramp-w",
+          "count": 9,
+          "share": 0.0103
+        }
+      ],
+      "noteBins": {
+        "0": {
+          "count": 220,
+          "share": 0.2514
+        },
+        "1-2": {
+          "count": 489,
+          "share": 0.5589
+        },
+        "3-5": {
+          "count": 165,
+          "share": 0.1886
+        },
+        "6+": {
+          "count": 1,
+          "share": 0.0011
+        }
+      },
+      "nudge": {
+        "longShots": 166,
+        "perAxis": {
+          "yaw": {
+            "still3": 0.9488,
+            "sameFamily": 0.7922,
+            "nudges": 332
+          },
+          "elevation": {
+            "still3": 0.7651,
+            "sameFamily": 0.5542,
+            "nudges": 332
+          },
+          "power": {
+            "still3": 0.8042,
+            "sameFamily": 0.5723,
+            "nudges": 332
+          }
+        },
+        "allSixStill3": 0.5181,
+        "allSixSameFamily": 0.2229
+      },
+      "breadth": {
+        "medianDistinctPieces": 3,
+        "meanDistinctPieces": 2.753,
+        "distinctDistribution": {
+          "2": 59,
+          "3": 90,
+          "4": 16,
+          "5": 1
+        },
+        "topTwoPiecesNoteShare": 0.4232,
+        "topPieces": [
+          {
+            "piece": "ramp-w",
+            "notes": 279,
+            "share": 0.2266
+          },
+          {
+            "piece": "wall-near-e",
+            "notes": 242,
+            "share": 0.1966
+          },
+          {
+            "piece": "ramp-e",
+            "notes": 197,
+            "share": 0.16
+          },
+          {
+            "piece": "wall-near-w",
+            "notes": 171,
+            "share": 0.1389
+          },
+          {
+            "piece": "wall-far-e",
+            "notes": 55,
+            "share": 0.0447
+          },
+          {
+            "piece": "wall-far-w",
+            "notes": 51,
+            "share": 0.0414
+          }
+        ],
+        "medianPingPong": 0.75,
+        "meanPingPong": 0.785
+      },
+      "regions": {
+        "left-low": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "family": "short:wall-near-w>ramp-w>wall-near-w",
+              "count": 6,
+              "shareOfRegion": 0.0333
+            },
+            {
+              "family": "short:wall-near-w>ramp-w>wall-near-w>ramp-w",
+              "count": 4,
+              "shareOfRegion": 0.0222
+            },
+            {
+              "family": "short:ramp-w>top-w>ramp-w",
+              "count": 3,
+              "shareOfRegion": 0.0167
+            },
+            {
+              "family": "high-w>wall-near-w>wall-far-w",
+              "count": 2,
+              "shareOfRegion": 0.0111
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "family": "high-w>wall-near-w>wall-far-w",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "top-w>ramp-w>wall-near-w",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "short:wall-near-w>ramp-w>wall-near-w>ramp-w",
+              "count": 1,
+              "shareOfRegion": 0.0074
+            },
+            {
+              "family": "short:wall-near-w>ramp-w>wall-near-w>ramp-w>wall-near-w",
+              "count": 1,
+              "shareOfRegion": 0.0074
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 140,
+          "topFamilies": [
+            {
+              "family": "short:ramp-w>top-w>ramp-w",
+              "count": 6,
+              "shareOfRegion": 0.0429
+            },
+            {
+              "family": "ramp-w>high-c>wall-near-e",
+              "count": 6,
+              "shareOfRegion": 0.0429
+            },
+            {
+              "family": "ramp-w>high-w>wall-near-w",
+              "count": 5,
+              "shareOfRegion": 0.0357
+            },
+            {
+              "family": "short:ramp-w>top-c>ramp-w",
+              "count": 5,
+              "shareOfRegion": 0.0357
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 105,
+          "topFamilies": [
+            {
+              "family": "top-c>ramp-w>wall-near-e",
+              "count": 3,
+              "shareOfRegion": 0.0286
+            },
+            {
+              "family": "top-c>wall-near-e>ramp-w",
+              "count": 3,
+              "shareOfRegion": 0.0286
+            },
+            {
+              "family": "high-w>wall-near-w>wall-far-w",
+              "count": 2,
+              "shareOfRegion": 0.019
+            },
+            {
+              "family": "top-w>ramp-w>wall-near-w",
+              "count": 2,
+              "shareOfRegion": 0.019
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "family": "short:wall-near-e>ramp-e>wall-near-e",
+              "count": 6,
+              "shareOfRegion": 0.0333
+            },
+            {
+              "family": "short:wall-near-e>ramp-e>wall-near-e>ramp-e",
+              "count": 5,
+              "shareOfRegion": 0.0278
+            },
+            {
+              "family": "short:ramp-e>top-e>ramp-e",
+              "count": 3,
+              "shareOfRegion": 0.0167
+            },
+            {
+              "family": "wall-near-e>ramp-e>wall-far-e",
+              "count": 3,
+              "shareOfRegion": 0.0167
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "family": "short:wall-near-e>ramp-e>wall-near-e>ramp-e>wall-near-e",
+              "count": 3,
+              "shareOfRegion": 0.0222
+            },
+            {
+              "family": "high-e>wall-near-e>wall-far-e",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "top-e>ramp-e>wall-near-e",
+              "count": 2,
+              "shareOfRegion": 0.0148
+            },
+            {
+              "family": "short:wall-near-e>ramp-e",
+              "count": 1,
+              "shareOfRegion": 0.0074
+            }
+          ]
+        }
+      },
+      "pieceCoverage": {
+        "reachedByLongShots": 12,
+        "reached": [
+          "high-c",
+          "high-e",
+          "high-w",
+          "ramp-e",
+          "ramp-w",
+          "top-c",
+          "top-e",
+          "top-w",
+          "wall-far-e",
+          "wall-far-w",
+          "wall-near-e",
+          "wall-near-w"
+        ]
+      },
+      "hearing": {
+        "sequentialFirstThree": 107,
+        "clusteredFirstThree": 59,
+        "sequentialShare": 0.6446,
+        "medianConsecutiveGap": 0.5333,
+        "consecutiveGapsUnder50ms": 10,
+        "consecutiveGaps": 415
+      },
+      "notesTotal": 1231,
+      "id": "descending-resonance",
+      "pieces": 12
+    },
+    {
+      "shots": 875,
+      "distinctContactOrders": 56,
+      "distinctPieceOrders": 48,
+      "distinctNoteSequences": 48,
+      "phraseFamilies": 42,
+      "topFamilies": [
+        {
+          "family": "(silent)",
+          "count": 478,
+          "share": 0.5463
+        },
+        {
+          "family": "short:bank-back",
+          "count": 70,
+          "share": 0.08
+        },
+        {
+          "family": "short:plate-mouth-w",
+          "count": 67,
+          "share": 0.0766
+        },
+        {
+          "family": "short:plate-mouth-e",
+          "count": 62,
+          "share": 0.0709
+        },
+        {
+          "family": "short:bank-flank",
+          "count": 36,
+          "share": 0.0411
+        },
+        {
+          "family": "short:bank-back>plate-hook",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "family": "short:plate-hook",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "family": "short:bank-flank>plate-side-w",
+          "count": 16,
+          "share": 0.0183
+        },
+        {
+          "family": "short:plate-east",
+          "count": 10,
+          "share": 0.0114
+        },
+        {
+          "family": "short:plate-side-e",
+          "count": 8,
+          "share": 0.0091
+        },
+        {
+          "family": "short:plate-mouth-e>plate-mouth-w",
+          "count": 7,
+          "share": 0.008
+        },
+        {
+          "family": "bank-back>plate-east>plate-hook",
+          "count": 6,
+          "share": 0.0069
+        }
+      ],
+      "noteBins": {
+        "0": {
+          "count": 478,
+          "share": 0.5463
+        },
+        "1-2": {
+          "count": 371,
+          "share": 0.424
+        },
+        "3-5": {
+          "count": 26,
+          "share": 0.0297
+        },
+        "6+": {
+          "count": 0,
+          "share": 0
+        }
+      },
+      "nudge": {
+        "longShots": 26,
+        "perAxis": {
+          "yaw": {
+            "still3": 0.6731,
+            "sameFamily": 0.5,
+            "nudges": 52
+          },
+          "elevation": {
+            "still3": 0.5769,
+            "sameFamily": 0.4423,
+            "nudges": 52
+          },
+          "power": {
+            "still3": 0.7308,
+            "sameFamily": 0.5,
+            "nudges": 52
+          }
+        },
+        "allSixStill3": 0.2692,
+        "allSixSameFamily": 0.0769
+      },
+      "breadth": {
+        "medianDistinctPieces": 3,
+        "meanDistinctPieces": 3.038,
+        "distinctDistribution": {
+          "2": 5,
+          "3": 15,
+          "4": 6
+        },
+        "topTwoPiecesNoteShare": 0.3841,
+        "topPieces": [
+          {
+            "piece": "bank-back",
+            "notes": 133,
+            "share": 0.2409
+          },
+          {
+            "piece": "plate-mouth-w",
+            "notes": 79,
+            "share": 0.1431
+          },
+          {
+            "piece": "plate-mouth-e",
+            "notes": 79,
+            "share": 0.1431
+          },
+          {
+            "piece": "plate-hook",
+            "notes": 69,
+            "share": 0.125
+          },
+          {
+            "piece": "bank-flank",
+            "notes": 58,
+            "share": 0.1051
+          },
+          {
+            "piece": "plate-corner-e",
+            "notes": 34,
+            "share": 0.0616
+          }
+        ],
+        "medianPingPong": 0.75,
+        "meanPingPong": 0.7327
+      },
+      "regions": {
+        "left-low": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "family": "bank-back>plate-west>plate-mouth-w",
+              "count": 1,
+              "shareOfRegion": 0.0056
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 135,
+          "topFamilies": []
+        },
+        "centre-low": {
+          "shots": 140,
+          "topFamilies": [
+            {
+              "family": "bank-back>plate-east>plate-hook",
+              "count": 6,
+              "shareOfRegion": 0.0429
+            },
+            {
+              "family": "plate-hook>plate-side-e>plate-corner-e",
+              "count": 4,
+              "shareOfRegion": 0.0286
+            },
+            {
+              "family": "bank-back>plate-east>plate-corner-e",
+              "count": 2,
+              "shareOfRegion": 0.0143
+            },
+            {
+              "family": "bank-back>plate-mouth-e>plate-hook",
+              "count": 1,
+              "shareOfRegion": 0.0071
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 105,
+          "topFamilies": [
+            {
+              "family": "short:bank-back>plate-corner-e>bank-back",
+              "count": 1,
+              "shareOfRegion": 0.0095
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 180,
+          "topFamilies": [
+            {
+              "family": "short:plate-corner-e>plate-side-e>plate-corner-e",
+              "count": 2,
+              "shareOfRegion": 0.0111
+            },
+            {
+              "family": "plate-mouth-e>plate-mouth-w>bank-flank",
+              "count": 1,
+              "shareOfRegion": 0.0056
+            },
+            {
+              "family": "short:plate-hook>plate-corner-e>plate-hook>plate-corner-e",
+              "count": 1,
+              "shareOfRegion": 0.0056
+            },
+            {
+              "family": "bank-back>plate-corner-e>plate-hook",
+              "count": 1,
+              "shareOfRegion": 0.0056
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 135,
+          "topFamilies": [
+            {
+              "family": "bank-back>plate-corner-e>plate-hook",
+              "count": 1,
+              "shareOfRegion": 0.0074
+            }
+          ]
+        }
+      },
+      "pieceCoverage": {
+        "reachedByLongShots": 9,
+        "reached": [
+          "bank-back",
+          "bank-flank",
+          "plate-corner-e",
+          "plate-east",
+          "plate-hook",
+          "plate-mouth-e",
+          "plate-mouth-w",
+          "plate-side-e",
+          "plate-west"
+        ]
+      },
+      "hearing": {
+        "sequentialFirstThree": 21,
+        "clusteredFirstThree": 5,
+        "sequentialShare": 0.8077,
+        "medianConsecutiveGap": 0.225,
+        "consecutiveGapsUnder50ms": 0,
+        "consecutiveGaps": 72
+      },
+      "notesTotal": 552,
+      "id": "ricochet-garden-loop",
+      "pieces": 10
+    }
+  ],
+  "exemplars": [
+    {
+      "role": "centre-climb",
+      "family": "ramp-c>high-2>high-3",
+      "familyShots": 6,
+      "aim": {
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "notes": [
+        "ramp-c:E4",
+        "high-2:A4",
+        "high-3:G4",
+        "mid-3:E4"
+      ],
+      "nudgesStill3": 6,
+      "nudgesSameFamily": 4,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 4.083333333333326,
+        "position": [
+          2.950101375579834,
+          0.4300002157688141,
+          6.393905162811279
+        ]
+      },
+      "contacts": [
+        "worldcraft-object-ramp-c",
+        "worldcraft-object-high-2",
+        "worldcraft-object-high-3",
+        "worldcraft-object-high-2",
+        "worldcraft-object-high-3",
+        "worldcraft-object-mid-3",
+        "worldcraft-ground"
+      ]
+    },
+    {
+      "role": "centre-drop",
+      "family": "mid-2>mid-3>low-3",
+      "familyShots": 7,
+      "aim": {
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.55
+      },
+      "notes": [
+        "mid-2:G4",
+        "mid-3:E4",
+        "low-3:C4"
+      ],
+      "nudgesStill3": 4,
+      "nudgesSameFamily": 4,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.066666666666662,
+        "position": [
+          0.9349783062934875,
+          0.4300016462802887,
+          40.25810623168945
+        ]
+      },
+      "contacts": [
+        "worldcraft-object-mid-2",
+        "worldcraft-object-mid-3",
+        "worldcraft-object-mid-2",
+        "worldcraft-object-mid-3",
+        "worldcraft-object-low-3",
+        "worldcraft-ground"
+      ]
+    },
+    {
+      "role": "west-climb",
+      "family": "ramp-c>high-0>mid-0",
+      "familyShots": 5,
+      "aim": {
+        "yaw": -14,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "notes": [
+        "ramp-c:E4",
+        "high-0:A4",
+        "mid-0:E4",
+        "high-0:A4",
+        "mid-0:E4"
+      ],
+      "nudgesStill3": 6,
+      "nudgesSameFamily": 6,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.799999999999989,
+        "position": [
+          -11.920914649963379,
+          0.43000367283821106,
+          40.3701057434082
+        ]
+      },
+      "contacts": [
+        "worldcraft-object-ramp-c",
+        "worldcraft-object-high-0",
+        "worldcraft-object-mid-0",
+        "worldcraft-object-high-0",
+        "worldcraft-object-mid-0",
+        "worldcraft-ground"
+      ]
+    },
+    {
+      "role": "east-climb",
+      "family": "ramp-c>high-4>mid-4",
+      "familyShots": 8,
+      "aim": {
+        "yaw": 8,
+        "elevation": 16,
+        "charge": 0.45
+      },
+      "notes": [
+        "ramp-c:E4",
+        "high-4:G4",
+        "mid-4:E4"
+      ],
+      "nudgesStill3": 6,
+      "nudgesSameFamily": 5,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.3666666666666574,
+        "position": [
+          6.896131992340088,
+          0.43000414967536926,
+          41.921627044677734
+        ]
+      },
+      "contacts": [
+        "worldcraft-object-ramp-c",
+        "worldcraft-object-high-4",
+        "worldcraft-object-mid-4",
+        "worldcraft-ground"
+      ]
+    },
+    {
+      "role": "east-walk",
+      "family": "mid-3>mid-4>low-4",
+      "familyShots": 7,
+      "aim": {
+        "yaw": 8,
+        "elevation": 20,
+        "charge": 0.65
+      },
+      "notes": [
+        "mid-3:E4",
+        "mid-4:E4",
+        "low-4:D4"
+      ],
+      "nudgesStill3": 5,
+      "nudgesSameFamily": 5,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.174999999999995,
+        "position": [
+          8.201863288879395,
+          0.4300024211406708,
+          45.956748962402344
+        ]
+      },
+      "contacts": [
+        "worldcraft-object-mid-3",
+        "worldcraft-object-mid-4",
+        "worldcraft-object-mid-3",
+        "worldcraft-object-mid-4",
+        "worldcraft-object-low-4",
+        "worldcraft-ground"
+      ]
+    },
+    {
+      "role": "near-miss",
+      "family": "short:ramp-w",
+      "familyShots": 30,
+      "aim": {
+        "yaw": -24,
+        "elevation": 12,
+        "charge": 0.35
+      },
+      "notes": [
+        "ramp-w:C4"
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.7333333333333263,
+        "position": [
+          -19.7455997467041,
+          0.43000197410583496,
+          33.3094367980957
+        ]
+      },
+      "contacts": [
+        "worldcraft-object-ramp-w",
+        "worldcraft-ground"
+      ]
+    }
+  ]
+}
