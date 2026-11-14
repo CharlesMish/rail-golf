@@ -1,0 +1,227 @@
+{
+  "world": "chime-terraces",
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "dynamics": "normal-speed",
+  "voices": "Ordinary metal on every plate. Ordinary timber on every ramp. No bank-voice variant: that voice applies to timber banks only, and this world has none.",
+  "synthesis": "lib/worldcraft-resonance.js renderResonanceWav, OfflineAudioContext, then Opus at 48 kbit/s. Level match was not applied.",
+  "files": [
+    {
+      "file": "chime-terraces-centre-climb.ogg",
+      "role": "centre-climb",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "seedAppliedToSolver": false,
+      "dynamics": "normal-speed",
+      "notes": [
+        {
+          "piece": "ramp-c",
+          "note": "E4",
+          "material": "timber",
+          "gain": 0.22814590094106735,
+          "time": 0.39166666666666705
+        },
+        {
+          "piece": "high-2",
+          "note": "A4",
+          "material": "metal",
+          "gain": 0.5331870227016833,
+          "time": 1.4583333333333306
+        },
+        {
+          "piece": "high-3",
+          "note": "G4",
+          "material": "metal",
+          "gain": 0.5331870227016833,
+          "time": 1.4583333333333306
+        },
+        {
+          "piece": "mid-3",
+          "note": "E4",
+          "material": "metal",
+          "gain": 0.20403068774117503,
+          "time": 1.7916666666666627
+        }
+      ],
+      "sha256": "1f7a12f5d80c57b4668e05ecedeeb0a2c2e770469d5668fdcc2bef3de077c0ea",
+      "bytes": 17970,
+      "durationSeconds": 3.8416780045351473,
+      "peak": 0.51617431640625,
+      "rms": 0.027168131207195394
+    },
+    {
+      "file": "chime-terraces-centre-drop.ogg",
+      "role": "centre-drop",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 20,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "seedAppliedToSolver": false,
+      "dynamics": "normal-speed",
+      "notes": [
+        {
+          "piece": "mid-2",
+          "note": "G4",
+          "material": "metal",
+          "gain": 0.8187369807043691,
+          "time": 0.9583333333333324
+        },
+        {
+          "piece": "mid-3",
+          "note": "E4",
+          "material": "metal",
+          "gain": 0.8187369807043691,
+          "time": 0.9583333333333324
+        },
+        {
+          "piece": "low-3",
+          "note": "C4",
+          "material": "metal",
+          "gain": 0.7138795491911987,
+          "time": 1.1916666666666649
+        }
+      ],
+      "sha256": "9ce7909daa9a7f6e999ccf6dd1d02254781cb339ed03e24c8412166b6f6c9ed1",
+      "bytes": 14332,
+      "durationSeconds": 3.241678004535147,
+      "peak": 0.792236328125,
+      "rms": 0.048841018107811045
+    },
+    {
+      "file": "chime-terraces-west-climb.ogg",
+      "role": "west-climb",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "seedAppliedToSolver": false,
+      "dynamics": "normal-speed",
+      "notes": [
+        {
+          "piece": "ramp-c",
+          "note": "E4",
+          "material": "timber",
+          "gain": 0.22503989877130073,
+          "time": 0.40833333333333377
+        },
+        {
+          "piece": "high-0",
+          "note": "A4",
+          "material": "metal",
+          "gain": 0.49651359366833664,
+          "time": 1.524999999999997
+        },
+        {
+          "piece": "mid-0",
+          "note": "E4",
+          "material": "metal",
+          "gain": 0.4518356877457151,
+          "time": 1.8583333333333292
+        },
+        {
+          "piece": "high-0",
+          "note": "A4",
+          "material": "metal",
+          "gain": 0.289239038157036,
+          "time": 2.2499999999999947
+        },
+        {
+          "piece": "mid-0",
+          "note": "E4",
+          "material": "metal",
+          "gain": 0.27478886010306636,
+          "time": 2.699999999999993
+        }
+      ],
+      "sha256": "74ebd574700aa2d3893f7a932579a389c6a7f28bc6493ba3ed04fcba98106557",
+      "bytes": 26457,
+      "durationSeconds": 4.75,
+      "peak": 0.2403564453125,
+      "rms": 0.024504627491585267
+    },
+    {
+      "file": "chime-terraces-east-climb.ogg",
+      "role": "east-climb",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 16,
+        "charge": 0.45
+      },
+      "seed": 20261114,
+      "seedAppliedToSolver": false,
+      "dynamics": "normal-speed",
+      "notes": [
+        {
+          "piece": "ramp-c",
+          "note": "E4",
+          "material": "timber",
+          "gain": 0.204676904498749,
+          "time": 0.6916666666666667
+        },
+        {
+          "piece": "high-4",
+          "note": "G4",
+          "material": "metal",
+          "gain": 0.3357804607976402,
+          "time": 1.7499999999999962
+        },
+        {
+          "piece": "mid-4",
+          "note": "E4",
+          "material": "metal",
+          "gain": 0.31017424537353433,
+          "time": 2.1666666666666616
+        }
+      ],
+      "sha256": "df9c23a2f45fa3e5ede5df8e859bd9a2a0d32515d9f1ce9eba3f5d8b8a41d591",
+      "bytes": 18692,
+      "durationSeconds": 4.216666666666667,
+      "peak": 0.15911865234375,
+      "rms": 0.015509090817783214
+    },
+    {
+      "file": "chime-terraces-near-miss.ogg",
+      "role": "near-miss",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 12,
+        "charge": 0.35
+      },
+      "seed": 20261114,
+      "seedAppliedToSolver": false,
+      "dynamics": "normal-speed",
+      "notes": [
+        {
+          "piece": "ramp-w",
+          "note": "C4",
+          "material": "timber",
+          "gain": 0.19818040404159984,
+          "time": 0.6250000000000002
+        }
+      ],
+      "sha256": "1468cfa5122a7cd816182162fca3cf259b1e8e956c9b2a20919f3d5434131d5d",
+      "bytes": 6894,
+      "durationSeconds": 2.6750113378684808,
+      "peak": 0.107940673828125,
+      "rms": 0.00358304093310635
+    }
+  ]
+}

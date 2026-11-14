@@ -1,0 +1,118 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-garden",
+  "name": "Chime Garden",
+  "kind": "authored-world",
+  "invitation": "Four timber banks and eight metal plates stand in a loose garden. Aim into different parts of the clearing and the ball can glance from one surface into another. There is no target.",
+  "physicalQuestion": "When several return pockets share one clearing, which aim regions keep a three-note line, and which small aim changes leave that line?",
+  "editable": { "launcher": true, "geometry": false },
+  "challenge": null,
+  "sourceBuild": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "centre",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 0, "elevation": 12, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.4749999999999972,
+        "position": [0.3915470838546753, 0.429997056722641, 23.09775733947754]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-c", "worldcraft-object-c1", "worldcraft-object-c2"]
+    },
+    {
+      "id": "left",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -14, "elevation": 12, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3499999999999976,
+        "position": [-8.398859977722168, 0.4299997091293335, 19.099525451660156]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-l", "worldcraft-object-l1", "worldcraft-object-l2"]
+    },
+    {
+      "id": "right",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 18, "elevation": 12, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3666666666666643,
+        "position": [11.42817211151123, 0.43000152707099915, 27.21973419189453]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-r", "worldcraft-object-r1", "worldcraft-object-r2"]
+    },
+    {
+      "id": "near-miss",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 0, "elevation": 16, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.116666666666662,
+        "position": [-11.736988067626953, 0.7300000190734863, 0.7203940749168396]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-c", "worldcraft-object-c1", "worldcraft-tee"]
+    },
+    {
+      "id": "left-reverse",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -22, "elevation": 8, "charge": 0.65 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.1499999999999984,
+        "position": [-6.737469673156738, 0.43000128865242004, 21.73931884765625]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-l2", "worldcraft-object-l1", "worldcraft-object-bank-l", "worldcraft-object-l2"]
+    },
+    {
+      "id": "right-leak",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 16, "elevation": 8, "charge": 0.8 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.2916666666666645,
+        "position": [12.549286842346191, 0.43000102043151855, 19.62111473083496]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-bank-r", "worldcraft-object-r2", "worldcraft-object-c2"]
+    }
+  ],
+  "nearbySensitivity": "Centre starter, yaw 0, elevation 12, charge 0.55: bank-c, then c1, then c2. Yaw plus or minus 0.5, elevation plus or minus 0.5, and charge plus or minus 0.01 all keep that order. Left starter, yaw -14, elevation 12, charge 0.55: bank-l, l1, l2, and the same six steps keep it. Right starter, yaw 18, elevation 12, charge 0.55: bank-r, r1, r2. Elevation plus 0.5 and charge plus 0.01 add a later bank-r and stay in that family. Yaw 0, elevation 16, charge 0.55 stops after bank-c and c1. One step more elevation or charge there drops c1.",
+  "validationEvidence": "875 headless Havok shots on the Ricochet Loop grid: yaw from -24 to 24 in steps of 2, elevations 8, 12, 16, 20, 24, 30 and 40, charges 0.35, 0.45, 0.55, 0.65 and 0.8. Seed 20261114 is provenance only and is not applied to the solver. Every shot with three or more notes was nudged by 0.5 degrees and 0.01 charge. The same harness measured Descending Resonance and Ricochet Loop. The validator replays six tested shots. A physical phone, speakers, and a listener's judgement were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A return that is still above a standing plate.",
+      "missing": "A plate is 4 m tall and this world leaves lift and tilt unset, so every plate stands on the ground. A medium arc clears the plates on the way out and can meet them only after a bank has turned the ball down.",
+      "extension": "The existing plate lift and tilt, already used by Descending Resonance. Do not add a collider, and do not change first-ground termination."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "Pockets that share a clearing without borrowing each other's notes.",
+      "missing": "Banks are 12 m wide. The left bank and the centre bank share shots, and one right-bank return reaches the centre plate c2. Pieces cannot be narrowed.",
+      "extension": "No new collider. Keep the cross-family as a tested shot and do not treat it as a separate pocket."
+    },
+    {
+      "category": "presentation",
+      "concept": "Hear the timber banks on the existing tuned-even voice and the plates as metal bars.",
+      "missing": "bankVoice applies the tuned-wood voice to timber banks only. A metal plate stays the ordinary bar. This world does not retimbre plates.",
+      "extension": "No new sound engine. A later pass can keep these presentation fields and only retune the existing bank voice."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Record the six tested shots and replay them.",
+      "missing": "The validator replays the tested shots. It does not search neighbouring aims or count phrase families.",
+      "extension": "Leave the replay as it is. The neighbour walks and the 875-shot grid stay in the experiment notes."
+    }
+  ],
+  "customCode": null,
+  "sourceSha": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+  "presentation": { "dynamics": "normal-speed", "bankVoice": true, "timeline": true }
+}

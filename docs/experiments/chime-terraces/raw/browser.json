@@ -1,0 +1,432 @@
+{
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "worlds": {
+    "chime-terraces": {
+      "desktop": "/opt/cursor/artifacts/chime-compare/chime-terraces-desktop-1280x800.png",
+      "portrait": "/opt/cursor/artifacts/chime-compare/chime-terraces-portrait-390x844.png",
+      "list": null,
+      "view": "survey",
+      "played": [
+        {
+          "id": "opening",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "low-2:D4>low-3:C4",
+          "contacts": [
+            "worldcraft-object-low-2",
+            "worldcraft-object-low-3",
+            "worldcraft-object-low-2",
+            "worldcraft-object-low-3"
+          ]
+        },
+        {
+          "id": "centre-climb",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+          "contacts": [
+            "worldcraft-object-ramp-c",
+            "worldcraft-object-high-2",
+            "worldcraft-object-high-3",
+            "worldcraft-object-high-2",
+            "worldcraft-object-high-3",
+            "worldcraft-object-mid-3"
+          ]
+        },
+        {
+          "id": "centre-drop",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "mid-2:G4>mid-3:E4>low-3:C4",
+          "contacts": [
+            "worldcraft-object-mid-2",
+            "worldcraft-object-mid-3",
+            "worldcraft-object-mid-2",
+            "worldcraft-object-mid-3",
+            "worldcraft-object-low-3"
+          ]
+        },
+        {
+          "id": "west-climb",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "contacts": [
+            "worldcraft-object-ramp-c",
+            "worldcraft-object-high-0",
+            "worldcraft-object-mid-0",
+            "worldcraft-object-high-0",
+            "worldcraft-object-mid-0"
+          ]
+        },
+        {
+          "id": "east-climb",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "ramp-c:E4>high-4:G4>mid-4:E4",
+          "contacts": [
+            "worldcraft-object-ramp-c",
+            "worldcraft-object-high-4",
+            "worldcraft-object-mid-4"
+          ]
+        },
+        {
+          "id": "east-walk",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "mid-3:E4>mid-4:E4>low-4:D4",
+          "contacts": [
+            "worldcraft-object-mid-3",
+            "worldcraft-object-mid-4",
+            "worldcraft-object-mid-3",
+            "worldcraft-object-mid-4",
+            "worldcraft-object-low-4"
+          ]
+        },
+        {
+          "id": "near-miss",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "ramp-w:C4",
+          "contacts": [
+            "worldcraft-object-ramp-w"
+          ]
+        }
+      ]
+    },
+    "chime-fan": {
+      "desktop": "/opt/cursor/artifacts/chime-compare/chime-fan-desktop-1280x800.png",
+      "portrait": "/opt/cursor/artifacts/chime-compare/chime-fan-portrait-390x844.png",
+      "list": null,
+      "view": "survey",
+      "played": [
+        {
+          "id": "opening",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-c:C4",
+          "contacts": [
+            "worldcraft-object-bank-c"
+          ]
+        },
+        {
+          "id": "west",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+          "contacts": [
+            "worldcraft-object-plate-w-inner",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w"
+          ]
+        },
+        {
+          "id": "west-long",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4>bank-w:G4",
+          "contacts": [
+            "worldcraft-object-plate-w-inner",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w",
+            "worldcraft-object-bank-w"
+          ]
+        },
+        {
+          "id": "centre",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-c-mid:G4>bank-c:C4>chime-c:D4>bank-c:C4>chime-c:D4",
+          "contacts": [
+            "worldcraft-object-plate-c-mid",
+            "worldcraft-object-bank-c",
+            "worldcraft-object-chime-c",
+            "worldcraft-object-bank-c",
+            "worldcraft-object-chime-c"
+          ]
+        },
+        {
+          "id": "east",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-e-inner:G4>bank-e:D4>chime-e:E4>bank-e:D4>chime-e:E4",
+          "contacts": [
+            "worldcraft-object-plate-e-inner",
+            "worldcraft-object-bank-e",
+            "worldcraft-object-chime-e",
+            "worldcraft-object-bank-e",
+            "worldcraft-object-chime-e"
+          ]
+        },
+        {
+          "id": "shoulder",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-w-outer:C4>bank-w:G4",
+          "contacts": [
+            "worldcraft-object-plate-w-outer",
+            "worldcraft-object-bank-w"
+          ]
+        }
+      ]
+    },
+    "chime-garden": {
+      "desktop": "/opt/cursor/artifacts/chime-compare/chime-garden-desktop-1280x800.png",
+      "portrait": "/opt/cursor/artifacts/chime-compare/chime-garden-portrait-390x844.png",
+      "list": null,
+      "view": "survey",
+      "played": [
+        {
+          "id": "centre",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-c:C4>c1:E4>c2:A4",
+          "contacts": [
+            "worldcraft-object-bank-c",
+            "worldcraft-object-c1",
+            "worldcraft-object-c2"
+          ]
+        },
+        {
+          "id": "left",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-l:D4>l1:C4>l2:G4",
+          "contacts": [
+            "worldcraft-object-bank-l",
+            "worldcraft-object-l1",
+            "worldcraft-object-l2"
+          ]
+        },
+        {
+          "id": "right",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-r:A4>r1:D4>r2:E4",
+          "contacts": [
+            "worldcraft-object-bank-r",
+            "worldcraft-object-r1",
+            "worldcraft-object-r2"
+          ]
+        },
+        {
+          "id": "near-miss",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-c:C4>c1:E4",
+          "contacts": [
+            "worldcraft-object-bank-c",
+            "worldcraft-object-c1",
+            "worldcraft-tee"
+          ]
+        },
+        {
+          "id": "left-reverse",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "l2:G4>l1:C4>bank-l:D4>l2:G4",
+          "contacts": [
+            "worldcraft-object-l2",
+            "worldcraft-object-l1",
+            "worldcraft-object-bank-l",
+            "worldcraft-object-l2"
+          ]
+        },
+        {
+          "id": "right-leak",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-r:A4>r2:E4>c2:A4",
+          "contacts": [
+            "worldcraft-object-bank-r",
+            "worldcraft-object-r2",
+            "worldcraft-object-c2"
+          ]
+        }
+      ]
+    },
+    "descending-resonance": {
+      "desktop": "/opt/cursor/artifacts/chime-compare/descending-resonance-desktop-1280x800.png",
+      "portrait": "/opt/cursor/artifacts/chime-compare/descending-resonance-portrait-390x844.png",
+      "list": null,
+      "view": "survey",
+      "played": [
+        {
+          "id": "opening",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "wall-near-e:E4",
+          "contacts": [
+            "worldcraft-object-wall-near-e"
+          ]
+        },
+        {
+          "id": "descent",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "high-c:G4>wall-near-e:E4>wall-far-w:C4",
+          "contacts": [
+            "worldcraft-object-high-c",
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-wall-far-w"
+          ]
+        },
+        {
+          "id": "west-descent",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "high-w:E4>wall-near-w:D4>wall-far-w:C4",
+          "contacts": [
+            "worldcraft-object-high-w",
+            "worldcraft-object-wall-near-w",
+            "worldcraft-object-wall-far-w"
+          ]
+        },
+        {
+          "id": "skip-to-crown",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "ramp-w:C4>top-c:A4>ramp-w:C4",
+          "contacts": [
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-top-c",
+            "worldcraft-object-ramp-w",
+            "worldcraft-tee"
+          ]
+        },
+        {
+          "id": "west-crown",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "ramp-w:C4>top-w:G4>ramp-w:C4",
+          "contacts": [
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-top-w",
+            "worldcraft-object-ramp-w"
+          ]
+        },
+        {
+          "id": "wall-and-ramp",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "wall-near-e:E4>ramp-w:C4>wall-near-e:E4",
+          "contacts": [
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-wall-near-e"
+          ]
+        },
+        {
+          "id": "four",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "wall-near-e:E4>ramp-w:C4>wall-near-e:E4>ramp-w:C4",
+          "contacts": [
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-ramp-w"
+          ]
+        }
+      ]
+    },
+    "ricochet-garden-loop": {
+      "desktop": "/opt/cursor/artifacts/chime-compare/ricochet-garden-loop-desktop-1280x800.png",
+      "portrait": "/opt/cursor/artifacts/chime-compare/ricochet-garden-loop-portrait-390x844.png",
+      "list": null,
+      "view": "survey",
+      "played": [
+        {
+          "id": "return",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-back:C4>plate-hook:E4",
+          "contacts": [
+            "worldcraft-object-bank-back",
+            "worldcraft-object-plate-hook"
+          ]
+        },
+        {
+          "id": "loop",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-back:C4>plate-corner-e:A4>bank-back:C4",
+          "contacts": [
+            "worldcraft-object-bank-back",
+            "worldcraft-object-plate-corner-e",
+            "worldcraft-object-bank-back"
+          ]
+        },
+        {
+          "id": "plates",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-hook:E4>plate-side-e:D4>plate-corner-e:A4",
+          "contacts": [
+            "worldcraft-object-plate-hook",
+            "worldcraft-object-plate-side-e",
+            "worldcraft-object-plate-corner-e"
+          ]
+        },
+        {
+          "id": "flank",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "bank-flank:D4>plate-side-w:C4",
+          "contacts": [
+            "worldcraft-object-bank-flank",
+            "worldcraft-object-plate-side-w"
+          ]
+        },
+        {
+          "id": "mouth",
+          "terminalMatch": true,
+          "notesMatch": true,
+          "contactsMatch": true,
+          "notes": "plate-mouth-w:G4",
+          "contacts": [
+            "worldcraft-object-plate-mouth-w"
+          ]
+        },
+        {
+          "id": "bank-turned",
+          "skipped": "layout shot, checked headless with its layout applied"
+        }
+      ]
+    }
+  }
+}

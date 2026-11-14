@@ -1,0 +1,5013 @@
+{
+  "definitions": {
+    "seed": 20261114,
+    "seedAppliedToSolver": false,
+    "dynamics": "normal-speed",
+    "dynamicsReason": "Every measured manifest sets presentation.dynamics to normal-speed. The live ear uses that. The harness default is total-speed, so this run sets face speed explicitly.",
+    "grid": {
+      "yaw": {
+        "from": -24,
+        "to": 24,
+        "step": 2,
+        "values": [
+          -24,
+          -22,
+          -20,
+          -18,
+          -16,
+          -14,
+          -12,
+          -10,
+          -8,
+          -6,
+          -4,
+          -2,
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24
+        ]
+      },
+      "elevation": [
+        8,
+        12,
+        16,
+        20,
+        24,
+        30,
+        40
+      ],
+      "charge": [
+        0.35,
+        0.45,
+        0.55,
+        0.65,
+        0.8
+      ],
+      "shots": 875,
+      "railIndex": 1,
+      "originX": 0,
+      "source": "docs/experiments/foundry/ricochet-garden-loop/sweep.json broadGrid. That file records seed 20261110, also not applied to the solver."
+    },
+    "noteSequence": "Ordered sounding notes. A sounding note is a resonance impact with gain > 0. Written piece:pitch in onset order, joined by >.",
+    "audibleEvent": "Sounding notes in onset order. A note joins the current event when its onset is at most 150 ms after the previous note. Otherwise it starts a new event. A chord is one event.",
+    "phraseLength": "Raw length is the sounding-note count. Audible length is the event count. Bins are 0, 1-2, 3-5, and 6+ for both.",
+    "phraseFamily": "Collapse immediate repeats of the same sounding piece, then take the first three distinct pieces in order of appearance. Fewer than three distinct pieces is a short family, written short: then those pieces joined by >. No sounding notes is (silent).",
+    "nudge": "One slider step: yaw ±0.5°, elevation ±0.5°, charge ±0.01. Both directions. Reported for shots that already have 3+ raw notes, and again for shots that already have 3+ audible events. Per direction is the share of those individual steps. Both directions means the shot only counts when each way meets the condition. All six means every step meets it. Same family but different sequence means the phrase family matches and the note sequence does not.",
+    "breadth": "Distinct sounding pieces on a 3+ shot. The two-piece share and the busiest-piece share are of every sounding note on the grid. Ping-pong is, per 3+ shot, the share of that shot’s notes from its own two most-hit pieces.",
+    "regions": "Left is yaw ≤ -8, centre is -6 through 6, right is yaw ≥ 8. Low elevation is 8, 12, and 16. High is 20, 24, 30, and 40. Six regions.",
+    "contactOrder": "Every contact in ledger order. The worldcraft-object- prefix is stripped. Ground stays as ground and the tee stays as tee. Silent pieces stay. Repeats stay.",
+    "pitchSequence": "After the 150 ms merge, each event is its pitches in onset order joined by +. Events are joined by >."
+  },
+  "gitSha": "3fb804d7d875e6cddb3624a355af255289c2a867",
+  "physics": "rail-golf-v02-worldcraft-v1",
+  "node": "v22.23.4",
+  "worlds": {
+    "chime-terraces": {
+      "shots": 875,
+      "distinctContactOrders": 257,
+      "distinctNoteSequences": 235,
+      "distinctPitchSequences": 160,
+      "phraseFamilies": 158,
+      "longFamilies": 83,
+      "topFamilies": [
+        {
+          "name": "(silent)",
+          "count": 159,
+          "share": 0.1817
+        },
+        {
+          "name": "short:ramp-e",
+          "count": 30,
+          "share": 0.0343
+        },
+        {
+          "name": "short:ramp-w",
+          "count": 30,
+          "share": 0.0343
+        },
+        {
+          "name": "short:mid-2>low-2",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "name": "short:mid-3>low-3",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "name": "short:mid-1>low-1",
+          "count": 18,
+          "share": 0.0206
+        },
+        {
+          "name": "short:low-2>ramp-c",
+          "count": 16,
+          "share": 0.0183
+        },
+        {
+          "name": "short:low-3>ramp-c",
+          "count": 16,
+          "share": 0.0183
+        }
+      ],
+      "noteBins": {
+        "raw": {
+          "0": {
+            "count": 159,
+            "share": 0.1817
+          },
+          "1-2": {
+            "count": 421,
+            "share": 0.4811
+          },
+          "3-5": {
+            "count": 255,
+            "share": 0.2914
+          },
+          "6+": {
+            "count": 40,
+            "share": 0.0457
+          }
+        },
+        "audible": {
+          "0": {
+            "count": 159,
+            "share": 0.1817
+          },
+          "1-2": {
+            "count": 505,
+            "share": 0.5771
+          },
+          "3-5": {
+            "count": 211,
+            "share": 0.2411
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "raw3": 295,
+      "audible3": 211,
+      "breadth": {
+        "raw3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 89,
+            "3": 183,
+            "4": 23
+          },
+          "medianPingPong": 0.6667
+        },
+        "audible3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 77,
+            "3": 112,
+            "4": 22
+          },
+          "medianPingPong": 0.75
+        },
+        "topTwoNoteShare": 0.2679,
+        "busiestPieceShare": 0.1979,
+        "topPieces": [
+          {
+            "piece": "ramp-c",
+            "notes": 373,
+            "share": 0.1979
+          },
+          {
+            "piece": "ramp-e",
+            "notes": 132,
+            "share": 0.07
+          },
+          {
+            "piece": "ramp-w",
+            "notes": 130,
+            "share": 0.069
+          },
+          {
+            "piece": "low-3",
+            "notes": 112,
+            "share": 0.0594
+          },
+          {
+            "piece": "mid-3",
+            "notes": 104,
+            "share": 0.0552
+          },
+          {
+            "piece": "mid-2",
+            "notes": 93,
+            "share": 0.0493
+          }
+        ]
+      },
+      "regions": {
+        "left-low": {
+          "shots": 135,
+          "families": 46,
+          "topFamily": "short:ramp-w",
+          "topFamilyShare": 0.2,
+          "topFamilies": [
+            {
+              "name": "short:ramp-w",
+              "count": 27,
+              "share": 0.2
+            },
+            {
+              "name": "short:ramp-c>mid-1",
+              "count": 7,
+              "share": 0.0519
+            },
+            {
+              "name": "short:low-0>ramp-w",
+              "count": 6,
+              "share": 0.0444
+            },
+            {
+              "name": "short:ramp-c>mid-0",
+              "count": 6,
+              "share": 0.0444
+            }
+          ],
+          "raw3Shots": 58,
+          "raw3Families": 27,
+          "raw3TopFamily": "short:low-0>ramp-w",
+          "raw3TopFamilyShare": 0.1034,
+          "raw3TopFamilies": [
+            {
+              "name": "short:low-0>ramp-w",
+              "count": 6,
+              "share": 0.1034
+            },
+            {
+              "name": "ramp-c>high-0>mid-0",
+              "count": 5,
+              "share": 0.0862
+            },
+            {
+              "name": "ramp-c>high-1>mid-1",
+              "count": 5,
+              "share": 0.0862
+            },
+            {
+              "name": "ramp-c>high-1>ramp-w",
+              "count": 4,
+              "share": 0.069
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "families": 36,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.3389,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 61,
+              "share": 0.3389
+            },
+            {
+              "name": "short:mid-1>low-1",
+              "count": 15,
+              "share": 0.0833
+            },
+            {
+              "name": "short:mid-0",
+              "count": 13,
+              "share": 0.0722
+            },
+            {
+              "name": "short:mid-0>low-0",
+              "count": 12,
+              "share": 0.0667
+            }
+          ],
+          "raw3Shots": 31,
+          "raw3Families": 20,
+          "raw3TopFamily": "short:low-0>ramp-w",
+          "raw3TopFamilyShare": 0.0968,
+          "raw3TopFamilies": [
+            {
+              "name": "short:low-0>ramp-w",
+              "count": 3,
+              "share": 0.0968
+            },
+            {
+              "name": "short:mid-1>low-1",
+              "count": 3,
+              "share": 0.0968
+            },
+            {
+              "name": "high-1>mid-0>mid-1",
+              "count": 2,
+              "share": 0.0645
+            },
+            {
+              "name": "mid-1>low-0>low-1",
+              "count": 2,
+              "share": 0.0645
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "families": 28,
+          "topFamily": "short:ramp-c>mid-2",
+          "topFamilyShare": 0.0667,
+          "topFamilies": [
+            {
+              "name": "short:ramp-c>mid-2",
+              "count": 7,
+              "share": 0.0667
+            },
+            {
+              "name": "short:ramp-c>mid-3",
+              "count": 7,
+              "share": 0.0667
+            },
+            {
+              "name": "ramp-c>high-2>high-3",
+              "count": 6,
+              "share": 0.0571
+            },
+            {
+              "name": "short:low-2>ramp-c",
+              "count": 6,
+              "share": 0.0571
+            }
+          ],
+          "raw3Shots": 72,
+          "raw3Families": 21,
+          "raw3TopFamily": "ramp-c>high-2>high-3",
+          "raw3TopFamilyShare": 0.0833,
+          "raw3TopFamilies": [
+            {
+              "name": "ramp-c>high-2>high-3",
+              "count": 6,
+              "share": 0.0833
+            },
+            {
+              "name": "short:low-2>ramp-c",
+              "count": 6,
+              "share": 0.0833
+            },
+            {
+              "name": "short:low-3>ramp-c",
+              "count": 6,
+              "share": 0.0833
+            },
+            {
+              "name": "ramp-c>high-2>mid-2",
+              "count": 5,
+              "share": 0.0694
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 140,
+          "families": 20,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.25,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 35,
+              "share": 0.25
+            },
+            {
+              "name": "short:mid-2>low-2",
+              "count": 18,
+              "share": 0.1286
+            },
+            {
+              "name": "short:mid-3>low-3",
+              "count": 18,
+              "share": 0.1286
+            },
+            {
+              "name": "short:ramp-c",
+              "count": 7,
+              "share": 0.05
+            }
+          ],
+          "raw3Shots": 38,
+          "raw3Families": 14,
+          "raw3TopFamily": "mid-2>mid-3>low-3",
+          "raw3TopFamilyShare": 0.1579,
+          "raw3TopFamilies": [
+            {
+              "name": "mid-2>mid-3>low-3",
+              "count": 6,
+              "share": 0.1579
+            },
+            {
+              "name": "short:mid-2>low-2",
+              "count": 4,
+              "share": 0.1053
+            },
+            {
+              "name": "short:mid-3>low-3",
+              "count": 4,
+              "share": 0.1053
+            },
+            {
+              "name": "high-2>high-3>mid-3",
+              "count": 3,
+              "share": 0.0789
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "families": 48,
+          "topFamily": "short:ramp-e",
+          "topFamilyShare": 0.2,
+          "topFamilies": [
+            {
+              "name": "short:ramp-e",
+              "count": 27,
+              "share": 0.2
+            },
+            {
+              "name": "short:ramp-c>mid-4",
+              "count": 7,
+              "share": 0.0519
+            },
+            {
+              "name": "short:low-5>ramp-e",
+              "count": 6,
+              "share": 0.0444
+            },
+            {
+              "name": "short:ramp-c>mid-5",
+              "count": 6,
+              "share": 0.0444
+            }
+          ],
+          "raw3Shots": 60,
+          "raw3Families": 29,
+          "raw3TopFamily": "short:low-5>ramp-e",
+          "raw3TopFamilyShare": 0.1,
+          "raw3TopFamilies": [
+            {
+              "name": "short:low-5>ramp-e",
+              "count": 6,
+              "share": 0.1
+            },
+            {
+              "name": "ramp-c>high-4>mid-4",
+              "count": 5,
+              "share": 0.0833
+            },
+            {
+              "name": "ramp-c>high-5>mid-5",
+              "count": 5,
+              "share": 0.0833
+            },
+            {
+              "name": "ramp-c>high-4>ramp-e",
+              "count": 4,
+              "share": 0.0667
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "families": 36,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.3389,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 61,
+              "share": 0.3389
+            },
+            {
+              "name": "short:mid-5",
+              "count": 13,
+              "share": 0.0722
+            },
+            {
+              "name": "short:mid-4>low-4",
+              "count": 12,
+              "share": 0.0667
+            },
+            {
+              "name": "short:mid-5>low-5",
+              "count": 11,
+              "share": 0.0611
+            }
+          ],
+          "raw3Shots": 36,
+          "raw3Families": 19,
+          "raw3TopFamily": "mid-3>mid-4>low-4",
+          "raw3TopFamilyShare": 0.1667,
+          "raw3TopFamilies": [
+            {
+              "name": "mid-3>mid-4>low-4",
+              "count": 6,
+              "share": 0.1667
+            },
+            {
+              "name": "high-4>mid-4>mid-5",
+              "count": 3,
+              "share": 0.0833
+            },
+            {
+              "name": "mid-4>low-4>low-5",
+              "count": 3,
+              "share": 0.0833
+            },
+            {
+              "name": "short:low-5>ramp-e",
+              "count": 3,
+              "share": 0.0833
+            }
+          ]
+        }
+      },
+      "coverage": {
+        "reachedByRaw3": 21,
+        "reachedByAudible3": 21,
+        "reachedRaw": [
+          "high-0",
+          "high-1",
+          "high-2",
+          "high-3",
+          "high-4",
+          "high-5",
+          "low-0",
+          "low-1",
+          "low-2",
+          "low-3",
+          "low-4",
+          "low-5",
+          "mid-0",
+          "mid-1",
+          "mid-2",
+          "mid-3",
+          "mid-4",
+          "mid-5",
+          "ramp-c",
+          "ramp-e",
+          "ramp-w"
+        ],
+        "reachedAudible": [
+          "high-0",
+          "high-1",
+          "high-2",
+          "high-3",
+          "high-4",
+          "high-5",
+          "low-0",
+          "low-1",
+          "low-2",
+          "low-3",
+          "low-4",
+          "low-5",
+          "mid-0",
+          "mid-1",
+          "mid-2",
+          "mid-3",
+          "mid-4",
+          "mid-5",
+          "ramp-c",
+          "ramp-e",
+          "ramp-w"
+        ],
+        "soundingPieces": 21,
+        "missedByRaw3": []
+      },
+      "inflation": {
+        "raw3Shots": 295,
+        "raw3WithAChord": 166,
+        "raw3WithAChordShare": 0.5627,
+        "raw3OpeningIsAChord": 163,
+        "raw3OpeningIsAChordShare": 0.5525,
+        "raw3FirstThreeNoteEvents": {
+          "1": 67,
+          "2": 96,
+          "3": 132
+        },
+        "raw3DistinctOnsetsInside150ms": 11,
+        "raw3DistinctOnsetsInside150msShare": 0.0373,
+        "raw3ByAudibleBin": {
+          "0": {
+            "count": 0,
+            "share": 0
+          },
+          "1-2": {
+            "count": 84,
+            "share": 0.2847
+          },
+          "3-5": {
+            "count": 211,
+            "share": 0.7153
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "notesTotal": 1885,
+      "silentImpacts": 0,
+      "nudge": {
+        "raw3": {
+          "shots": 295,
+          "perDirection": {
+            "yaw": {
+              "steps": 590,
+              "stays3": 0.8034,
+              "sameFamily": 0.5559,
+              "sameFamilyDifferentSequence": 0.1034
+            },
+            "elevation": {
+              "steps": 590,
+              "stays3": 0.8593,
+              "sameFamily": 0.7475,
+              "sameFamilyDifferentSequence": 0.3169
+            },
+            "power": {
+              "steps": 590,
+              "stays3": 0.8763,
+              "sameFamily": 0.761,
+              "sameFamilyDifferentSequence": 0.2797
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 295,
+              "stays3": 0.739,
+              "sameFamily": 0.4237,
+              "sameFamilyDifferentSequence": 0.078
+            },
+            "elevation": {
+              "steps": 295,
+              "stays3": 0.7627,
+              "sameFamily": 0.6237,
+              "sameFamilyDifferentSequence": 0.3797
+            },
+            "power": {
+              "steps": 295,
+              "stays3": 0.7831,
+              "sameFamily": 0.6475,
+              "sameFamilyDifferentSequence": 0.3559
+            }
+          },
+          "allSix": {
+            "stays3": 0.5424,
+            "sameFamily": 0.261,
+            "sameFamilyDifferentSequence": 0.2136,
+            "rejectedSteps": 0
+          }
+        },
+        "raw3LongFamily": {
+          "shots": 206,
+          "perDirection": {
+            "yaw": {
+              "steps": 412,
+              "stays3": 0.7306,
+              "sameFamily": 0.4078,
+              "sameFamilyDifferentSequence": 0.0971
+            },
+            "elevation": {
+              "steps": 412,
+              "stays3": 0.8738,
+              "sameFamily": 0.6917,
+              "sameFamilyDifferentSequence": 0.216
+            },
+            "power": {
+              "steps": 412,
+              "stays3": 0.8592,
+              "sameFamily": 0.6796,
+              "sameFamilyDifferentSequence": 0.2087
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 206,
+              "stays3": 0.6505,
+              "sameFamily": 0.2621,
+              "sameFamilyDifferentSequence": 0.0437
+            },
+            "elevation": {
+              "steps": 206,
+              "stays3": 0.8107,
+              "sameFamily": 0.568,
+              "sameFamilyDifferentSequence": 0.2379
+            },
+            "power": {
+              "steps": 206,
+              "stays3": 0.7621,
+              "sameFamily": 0.5388,
+              "sameFamilyDifferentSequence": 0.233
+            }
+          },
+          "allSix": {
+            "stays3": 0.5049,
+            "sameFamily": 0.1214,
+            "sameFamilyDifferentSequence": 0.0631,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3": {
+          "shots": 211,
+          "perDirection": {
+            "yaw": {
+              "steps": 422,
+              "stays3": 0.9265,
+              "sameFamily": 0.6848,
+              "sameFamilyDifferentSequence": 0.109
+            },
+            "elevation": {
+              "steps": 422,
+              "stays3": 0.737,
+              "sameFamily": 0.7725,
+              "sameFamilyDifferentSequence": 0.3507
+            },
+            "power": {
+              "steps": 422,
+              "stays3": 0.827,
+              "sameFamily": 0.782,
+              "sameFamilyDifferentSequence": 0.2986
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 211,
+              "stays3": 0.891,
+              "sameFamily": 0.545,
+              "sameFamilyDifferentSequence": 0.09
+            },
+            "elevation": {
+              "steps": 211,
+              "stays3": 0.5213,
+              "sameFamily": 0.6493,
+              "sameFamilyDifferentSequence": 0.4265
+            },
+            "power": {
+              "steps": 211,
+              "stays3": 0.6635,
+              "sameFamily": 0.6635,
+              "sameFamilyDifferentSequence": 0.3697
+            }
+          },
+          "allSix": {
+            "stays3": 0.4028,
+            "sameFamily": 0.3175,
+            "sameFamilyDifferentSequence": 0.2512,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3LongFamily": {
+          "shots": 134,
+          "perDirection": {
+            "yaw": {
+              "steps": 268,
+              "stays3": 0.9067,
+              "sameFamily": 0.5634,
+              "sameFamilyDifferentSequence": 0.1157
+            },
+            "elevation": {
+              "steps": 268,
+              "stays3": 0.8134,
+              "sameFamily": 0.7164,
+              "sameFamilyDifferentSequence": 0.2463
+            },
+            "power": {
+              "steps": 268,
+              "stays3": 0.8507,
+              "sameFamily": 0.6903,
+              "sameFamilyDifferentSequence": 0.2351
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 134,
+              "stays3": 0.8657,
+              "sameFamily": 0.403,
+              "sameFamilyDifferentSequence": 0.0672
+            },
+            "elevation": {
+              "steps": 134,
+              "stays3": 0.6866,
+              "sameFamily": 0.597,
+              "sameFamilyDifferentSequence": 0.2761
+            },
+            "power": {
+              "steps": 134,
+              "stays3": 0.7164,
+              "sameFamily": 0.5373,
+              "sameFamilyDifferentSequence": 0.2463
+            }
+          },
+          "allSix": {
+            "stays3": 0.5149,
+            "sameFamily": 0.1866,
+            "sameFamilyDifferentSequence": 0.097,
+            "rejectedSteps": 0
+          }
+        }
+      },
+      "id": "chime-terraces",
+      "pieces": 21,
+      "capacity": 24,
+      "soundingPieces": 21,
+      "lifted": 18,
+      "tilted": 18,
+      "voices": {
+        "timber": 3,
+        "metal": 18,
+        "bankVoice": false
+      },
+      "starters": [
+        {
+          "id": "opening",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 18,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 2,
+          "audible": 1,
+          "family": "short:low-2>low-3",
+          "sequence": "low-2:D4>low-3:C4",
+          "pitches": "D4+C4",
+          "order": "low-2>low-3>low-2>low-3",
+          "contactBodies": [
+            "worldcraft-object-low-2",
+            "worldcraft-object-low-3",
+            "worldcraft-object-low-2",
+            "worldcraft-object-low-3"
+          ],
+          "layout": false
+        },
+        {
+          "id": "centre-climb",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 8,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 4,
+          "audible": 3,
+          "family": "ramp-c>high-2>high-3",
+          "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+          "pitches": "E4>A4+G4>E4",
+          "order": "ramp-c>high-2>high-3>high-2>high-3>mid-3>ground",
+          "contactBodies": [
+            "worldcraft-object-ramp-c",
+            "worldcraft-object-high-2",
+            "worldcraft-object-high-3",
+            "worldcraft-object-high-2",
+            "worldcraft-object-high-3",
+            "worldcraft-object-mid-3"
+          ],
+          "layout": false
+        },
+        {
+          "id": "centre-drop",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 20,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 2,
+          "family": "mid-2>mid-3>low-3",
+          "sequence": "mid-2:G4>mid-3:E4>low-3:C4",
+          "pitches": "G4+E4>C4",
+          "order": "mid-2>mid-3>mid-2>mid-3>low-3>ground",
+          "contactBodies": [
+            "worldcraft-object-mid-2",
+            "worldcraft-object-mid-3",
+            "worldcraft-object-mid-2",
+            "worldcraft-object-mid-3",
+            "worldcraft-object-low-3"
+          ],
+          "layout": false
+        },
+        {
+          "id": "west-climb",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -14,
+            "elevation": 8,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 5,
+          "audible": 5,
+          "family": "ramp-c>high-0>mid-0",
+          "sequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "pitches": "E4>A4>E4>A4>E4",
+          "order": "ramp-c>high-0>mid-0>high-0>mid-0>ground",
+          "contactBodies": [
+            "worldcraft-object-ramp-c",
+            "worldcraft-object-high-0",
+            "worldcraft-object-mid-0",
+            "worldcraft-object-high-0",
+            "worldcraft-object-mid-0"
+          ],
+          "layout": false
+        },
+        {
+          "id": "east-climb",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 8,
+            "elevation": 16,
+            "charge": 0.45
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "ramp-c>high-4>mid-4",
+          "sequence": "ramp-c:E4>high-4:G4>mid-4:E4",
+          "pitches": "E4>G4>E4",
+          "order": "ramp-c>high-4>mid-4>ground",
+          "contactBodies": [
+            "worldcraft-object-ramp-c",
+            "worldcraft-object-high-4",
+            "worldcraft-object-mid-4"
+          ],
+          "layout": false
+        },
+        {
+          "id": "east-walk",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 8,
+            "elevation": 20,
+            "charge": 0.65
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 2,
+          "family": "mid-3>mid-4>low-4",
+          "sequence": "mid-3:E4>mid-4:E4>low-4:D4",
+          "pitches": "E4+E4>D4",
+          "order": "mid-3>mid-4>mid-3>mid-4>low-4>ground",
+          "contactBodies": [
+            "worldcraft-object-mid-3",
+            "worldcraft-object-mid-4",
+            "worldcraft-object-mid-3",
+            "worldcraft-object-mid-4",
+            "worldcraft-object-low-4"
+          ],
+          "layout": false
+        },
+        {
+          "id": "near-miss",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -24,
+            "elevation": 12,
+            "charge": 0.35
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 1,
+          "audible": 1,
+          "family": "short:ramp-w",
+          "sequence": "ramp-w:C4",
+          "pitches": "C4",
+          "order": "ramp-w>ground",
+          "contactBodies": [
+            "worldcraft-object-ramp-w"
+          ],
+          "layout": false
+        }
+      ],
+      "busiestStarter": {
+        "id": "west-climb",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -14,
+          "elevation": 8,
+          "charge": 0.55
+        },
+        "raw": 5,
+        "audible": 5,
+        "contacts": 5
+      },
+      "relatedCandidates": [
+        {
+          "score": 6,
+          "starter": "centre-climb",
+          "axis": "elevation",
+          "baseSequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+          "basePitches": "E4>A4+G4>E4",
+          "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4>ramp-c:E4",
+          "pitches": "E4>A4+G4>E4>E4"
+        },
+        {
+          "score": 6,
+          "starter": "centre-climb",
+          "axis": "elevation",
+          "baseSequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+          "basePitches": "E4>A4+G4>E4",
+          "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4>ramp-c:E4",
+          "pitches": "E4>A4+G4>E4>E4"
+        },
+        {
+          "score": 6,
+          "starter": "centre-climb",
+          "axis": "charge",
+          "baseSequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+          "basePitches": "E4>A4+G4>E4",
+          "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4>high-3:G4>mid-3:E4>ramp-c:E4",
+          "pitches": "E4>A4+G4>E4>G4>E4>E4"
+        },
+        {
+          "score": 6,
+          "starter": "west-climb",
+          "axis": "yaw",
+          "baseSequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "basePitches": "E4>A4>E4>A4>E4",
+          "sequence": "ramp-c:E4>high-0:A4>mid-0:E4",
+          "pitches": "E4>A4>E4"
+        },
+        {
+          "score": 6,
+          "starter": "west-climb",
+          "axis": "yaw",
+          "baseSequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "basePitches": "E4>A4>E4>A4>E4",
+          "sequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4",
+          "pitches": "E4>A4>E4>A4"
+        },
+        {
+          "score": 6,
+          "starter": "west-climb",
+          "axis": "elevation",
+          "baseSequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "basePitches": "E4>A4>E4>A4>E4",
+          "sequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4",
+          "pitches": "E4>A4>E4>A4"
+        },
+        {
+          "score": 6,
+          "starter": "west-climb",
+          "axis": "elevation",
+          "baseSequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "basePitches": "E4>A4>E4>A4>E4",
+          "sequence": "ramp-c:E4>high-0:A4>mid-0:E4",
+          "pitches": "E4>A4>E4"
+        },
+        {
+          "score": 6,
+          "starter": "west-climb",
+          "axis": "charge",
+          "baseSequence": "ramp-c:E4>high-0:A4>mid-0:E4>high-0:A4>mid-0:E4",
+          "basePitches": "E4>A4>E4>A4>E4",
+          "sequence": "ramp-c:E4>high-0:A4>mid-0:E4",
+          "pitches": "E4>A4>E4"
+        }
+      ],
+      "relatedPair": {
+        "score": 6,
+        "starter": {
+          "id": "centre-climb",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 8,
+            "charge": 0.55
+          },
+          "family": "ramp-c>high-2>high-3",
+          "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+          "pitches": "E4>A4+G4>E4",
+          "raw": 4,
+          "audible": 3
+        },
+        "neighbour": {
+          "axis": "elevation",
+          "setup": {
+            "yaw": 0,
+            "elevation": 7.5,
+            "charge": 0.55
+          },
+          "family": "ramp-c>high-2>high-3",
+          "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4>ramp-c:E4",
+          "pitches": "E4>A4+G4>E4>E4",
+          "raw": 5,
+          "audible": 4
+        }
+      },
+      "cost": {
+        "coldConstructMs": 9.226,
+        "warmRebuildMedianMs": 4.543,
+        "idleStepMedianMs": 0.0046,
+        "idleStepP95Ms": 0.0059,
+        "flightStepMedianMs": 0.0076,
+        "flightStepP95Ms": 0.0153,
+        "flightSteps": 456,
+        "staticBodies": 23,
+        "meshes": 23,
+        "materials": 25,
+        "note": "NullEngine. No shadows. These are not browser frame times."
+      },
+      "seconds": 9.32
+    },
+    "chime-fan": {
+      "shots": 875,
+      "distinctContactOrders": 76,
+      "distinctNoteSequences": 64,
+      "distinctPitchSequences": 61,
+      "phraseFamilies": 40,
+      "longFamilies": 16,
+      "topFamilies": [
+        {
+          "name": "(silent)",
+          "count": 241,
+          "share": 0.2754
+        },
+        {
+          "name": "short:bank-c",
+          "count": 234,
+          "share": 0.2674
+        },
+        {
+          "name": "short:bank-e",
+          "count": 107,
+          "share": 0.1223
+        },
+        {
+          "name": "short:bank-w",
+          "count": 107,
+          "share": 0.1223
+        },
+        {
+          "name": "short:plate-c-left",
+          "count": 15,
+          "share": 0.0171
+        },
+        {
+          "name": "short:plate-c-right",
+          "count": 13,
+          "share": 0.0149
+        },
+        {
+          "name": "short:plate-c-mid",
+          "count": 12,
+          "share": 0.0137
+        },
+        {
+          "name": "short:plate-e-inner",
+          "count": 11,
+          "share": 0.0126
+        }
+      ],
+      "noteBins": {
+        "raw": {
+          "0": {
+            "count": 241,
+            "share": 0.2754
+          },
+          "1-2": {
+            "count": 555,
+            "share": 0.6343
+          },
+          "3-5": {
+            "count": 60,
+            "share": 0.0686
+          },
+          "6+": {
+            "count": 19,
+            "share": 0.0217
+          }
+        },
+        "audible": {
+          "0": {
+            "count": 241,
+            "share": 0.2754
+          },
+          "1-2": {
+            "count": 555,
+            "share": 0.6343
+          },
+          "3-5": {
+            "count": 79,
+            "share": 0.0903
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "raw3": 79,
+      "audible3": 79,
+      "breadth": {
+        "raw3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 2,
+            "3": 62,
+            "4": 15
+          },
+          "medianPingPong": 0.75
+        },
+        "audible3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 2,
+            "3": 62,
+            "4": 15
+          },
+          "medianPingPong": 0.75
+        },
+        "topTwoNoteShare": 0.4863,
+        "busiestPieceShare": 0.3193,
+        "topPieces": [
+          {
+            "piece": "bank-c",
+            "notes": 304,
+            "share": 0.3193
+          },
+          {
+            "piece": "bank-e",
+            "notes": 159,
+            "share": 0.167
+          },
+          {
+            "piece": "bank-w",
+            "notes": 158,
+            "share": 0.166
+          },
+          {
+            "piece": "chime-c",
+            "notes": 60,
+            "share": 0.063
+          },
+          {
+            "piece": "chime-e",
+            "notes": 44,
+            "share": 0.0462
+          },
+          {
+            "piece": "chime-w",
+            "notes": 44,
+            "share": 0.0462
+          }
+        ]
+      },
+      "regions": {
+        "left-low": {
+          "shots": 135,
+          "families": 3,
+          "topFamily": "short:bank-w",
+          "topFamilyShare": 0.5259,
+          "topFamilies": [
+            {
+              "name": "short:bank-w",
+              "count": 71,
+              "share": 0.5259
+            },
+            {
+              "name": "short:bank-c",
+              "count": 36,
+              "share": 0.2667
+            },
+            {
+              "name": "(silent)",
+              "count": 28,
+              "share": 0.2074
+            }
+          ],
+          "raw3Shots": 0,
+          "raw3Families": 0,
+          "raw3TopFamily": null,
+          "raw3TopFamilyShare": 0,
+          "raw3TopFamilies": []
+        },
+        "left-high": {
+          "shots": 180,
+          "families": 15,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.3389,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 61,
+              "share": 0.3389
+            },
+            {
+              "name": "short:bank-w",
+              "count": 36,
+              "share": 0.2
+            },
+            {
+              "name": "short:bank-c",
+              "count": 18,
+              "share": 0.1
+            },
+            {
+              "name": "short:plate-w-inner",
+              "count": 11,
+              "share": 0.0611
+            }
+          ],
+          "raw3Shots": 29,
+          "raw3Families": 7,
+          "raw3TopFamily": "plate-w-inner>bank-w>chime-w",
+          "raw3TopFamilyShare": 0.3103,
+          "raw3TopFamilies": [
+            {
+              "name": "plate-w-inner>bank-w>chime-w",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-w-mid>bank-w>chime-w",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-c-left>bank-c>chime-c",
+              "count": 3,
+              "share": 0.1034
+            },
+            {
+              "name": "plate-c-left>bank-c>chime-w",
+              "count": 3,
+              "share": 0.1034
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "families": 2,
+          "topFamily": "short:bank-c",
+          "topFamilyShare": 0.8,
+          "topFamilies": [
+            {
+              "name": "short:bank-c",
+              "count": 84,
+              "share": 0.8
+            },
+            {
+              "name": "(silent)",
+              "count": 21,
+              "share": 0.2
+            }
+          ],
+          "raw3Shots": 0,
+          "raw3Families": 0,
+          "raw3TopFamily": null,
+          "raw3TopFamilyShare": 0,
+          "raw3TopFamilies": []
+        },
+        "centre-high": {
+          "shots": 140,
+          "families": 18,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.3,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 42,
+              "share": 0.3
+            },
+            {
+              "name": "short:bank-c",
+              "count": 42,
+              "share": 0.3
+            },
+            {
+              "name": "short:plate-c-mid",
+              "count": 12,
+              "share": 0.0857
+            },
+            {
+              "name": "plate-c-mid>bank-c>chime-c",
+              "count": 9,
+              "share": 0.0643
+            }
+          ],
+          "raw3Shots": 21,
+          "raw3Families": 5,
+          "raw3TopFamily": "plate-c-mid>bank-c>chime-c",
+          "raw3TopFamilyShare": 0.4286,
+          "raw3TopFamilies": [
+            {
+              "name": "plate-c-mid>bank-c>chime-c",
+              "count": 9,
+              "share": 0.4286
+            },
+            {
+              "name": "plate-c-left>bank-c>chime-c",
+              "count": 6,
+              "share": 0.2857
+            },
+            {
+              "name": "plate-c-right>bank-c>chime-c",
+              "count": 3,
+              "share": 0.1429
+            },
+            {
+              "name": "plate-c-right>plate-c-mid>bank-c",
+              "count": 2,
+              "share": 0.0952
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "families": 3,
+          "topFamily": "short:bank-e",
+          "topFamilyShare": 0.5259,
+          "topFamilies": [
+            {
+              "name": "short:bank-e",
+              "count": 71,
+              "share": 0.5259
+            },
+            {
+              "name": "short:bank-c",
+              "count": 36,
+              "share": 0.2667
+            },
+            {
+              "name": "(silent)",
+              "count": 28,
+              "share": 0.2074
+            }
+          ],
+          "raw3Shots": 0,
+          "raw3Families": 0,
+          "raw3TopFamily": null,
+          "raw3TopFamilyShare": 0,
+          "raw3TopFamilies": []
+        },
+        "right-high": {
+          "shots": 180,
+          "families": 16,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.3389,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 61,
+              "share": 0.3389
+            },
+            {
+              "name": "short:bank-e",
+              "count": 36,
+              "share": 0.2
+            },
+            {
+              "name": "short:bank-c",
+              "count": 18,
+              "share": 0.1
+            },
+            {
+              "name": "short:plate-e-inner",
+              "count": 11,
+              "share": 0.0611
+            }
+          ],
+          "raw3Shots": 29,
+          "raw3Families": 8,
+          "raw3TopFamily": "plate-e-inner>bank-e>chime-e",
+          "raw3TopFamilyShare": 0.3103,
+          "raw3TopFamilies": [
+            {
+              "name": "plate-e-inner>bank-e>chime-e",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-e-mid>bank-e>chime-e",
+              "count": 9,
+              "share": 0.3103
+            },
+            {
+              "name": "plate-c-right>bank-c>chime-c",
+              "count": 3,
+              "share": 0.1034
+            },
+            {
+              "name": "plate-e-inner>plate-e-mid>bank-e",
+              "count": 3,
+              "share": 0.1034
+            }
+          ]
+        }
+      },
+      "coverage": {
+        "reachedByRaw3": 13,
+        "reachedByAudible3": 13,
+        "reachedRaw": [
+          "bank-c",
+          "bank-e",
+          "bank-w",
+          "chime-c",
+          "chime-e",
+          "chime-w",
+          "plate-c-left",
+          "plate-c-mid",
+          "plate-c-right",
+          "plate-e-inner",
+          "plate-e-mid",
+          "plate-w-inner",
+          "plate-w-mid"
+        ],
+        "reachedAudible": [
+          "bank-c",
+          "bank-e",
+          "bank-w",
+          "chime-c",
+          "chime-e",
+          "chime-w",
+          "plate-c-left",
+          "plate-c-mid",
+          "plate-c-right",
+          "plate-e-inner",
+          "plate-e-mid",
+          "plate-w-inner",
+          "plate-w-mid"
+        ],
+        "soundingPieces": 15,
+        "missedByRaw3": [
+          "plate-w-outer",
+          "plate-e-outer"
+        ]
+      },
+      "inflation": {
+        "raw3Shots": 79,
+        "raw3WithAChord": 25,
+        "raw3WithAChordShare": 0.3165,
+        "raw3OpeningIsAChord": 23,
+        "raw3OpeningIsAChordShare": 0.2911,
+        "raw3FirstThreeNoteEvents": {
+          "1": 4,
+          "2": 19,
+          "3": 56
+        },
+        "raw3DistinctOnsetsInside150ms": 3,
+        "raw3DistinctOnsetsInside150msShare": 0.038,
+        "raw3ByAudibleBin": {
+          "0": {
+            "count": 0,
+            "share": 0
+          },
+          "1-2": {
+            "count": 0,
+            "share": 0
+          },
+          "3-5": {
+            "count": 79,
+            "share": 1
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "notesTotal": 952,
+      "silentImpacts": 0,
+      "nudge": {
+        "raw3": {
+          "shots": 79,
+          "perDirection": {
+            "yaw": {
+              "steps": 158,
+              "stays3": 0.9873,
+              "sameFamily": 0.7405,
+              "sameFamilyDifferentSequence": 0.0696
+            },
+            "elevation": {
+              "steps": 158,
+              "stays3": 0.9873,
+              "sameFamily": 0.6582,
+              "sameFamilyDifferentSequence": 0.1772
+            },
+            "power": {
+              "steps": 158,
+              "stays3": 0.9367,
+              "sameFamily": 0.7658,
+              "sameFamilyDifferentSequence": 0.3228
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 79,
+              "stays3": 0.9747,
+              "sameFamily": 0.6709,
+              "sameFamilyDifferentSequence": 0.1013
+            },
+            "elevation": {
+              "steps": 79,
+              "stays3": 0.9747,
+              "sameFamily": 0.4304,
+              "sameFamilyDifferentSequence": 0.1772
+            },
+            "power": {
+              "steps": 79,
+              "stays3": 0.8734,
+              "sameFamily": 0.6456,
+              "sameFamilyDifferentSequence": 0.3924
+            }
+          },
+          "allSix": {
+            "stays3": 0.8734,
+            "sameFamily": 0.2785,
+            "sameFamilyDifferentSequence": 0.1519,
+            "rejectedSteps": 0
+          }
+        },
+        "raw3LongFamily": {
+          "shots": 77,
+          "perDirection": {
+            "yaw": {
+              "steps": 154,
+              "stays3": 1,
+              "sameFamily": 0.7338,
+              "sameFamilyDifferentSequence": 0.0584
+            },
+            "elevation": {
+              "steps": 154,
+              "stays3": 0.987,
+              "sameFamily": 0.6494,
+              "sameFamilyDifferentSequence": 0.1818
+            },
+            "power": {
+              "steps": 154,
+              "stays3": 0.9481,
+              "sameFamily": 0.7727,
+              "sameFamilyDifferentSequence": 0.3182
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 77,
+              "stays3": 1,
+              "sameFamily": 0.6623,
+              "sameFamilyDifferentSequence": 0.0779
+            },
+            "elevation": {
+              "steps": 77,
+              "stays3": 0.974,
+              "sameFamily": 0.4156,
+              "sameFamilyDifferentSequence": 0.1818
+            },
+            "power": {
+              "steps": 77,
+              "stays3": 0.8961,
+              "sameFamily": 0.6623,
+              "sameFamilyDifferentSequence": 0.4026
+            }
+          },
+          "allSix": {
+            "stays3": 0.8961,
+            "sameFamily": 0.2857,
+            "sameFamilyDifferentSequence": 0.1558,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3": {
+          "shots": 79,
+          "perDirection": {
+            "yaw": {
+              "steps": 158,
+              "stays3": 0.9873,
+              "sameFamily": 0.7405,
+              "sameFamilyDifferentSequence": 0.0696
+            },
+            "elevation": {
+              "steps": 158,
+              "stays3": 0.9747,
+              "sameFamily": 0.6582,
+              "sameFamilyDifferentSequence": 0.1772
+            },
+            "power": {
+              "steps": 158,
+              "stays3": 0.9241,
+              "sameFamily": 0.7658,
+              "sameFamilyDifferentSequence": 0.3228
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 79,
+              "stays3": 0.9747,
+              "sameFamily": 0.6709,
+              "sameFamilyDifferentSequence": 0.1013
+            },
+            "elevation": {
+              "steps": 79,
+              "stays3": 0.9494,
+              "sameFamily": 0.4304,
+              "sameFamilyDifferentSequence": 0.1772
+            },
+            "power": {
+              "steps": 79,
+              "stays3": 0.8734,
+              "sameFamily": 0.6456,
+              "sameFamilyDifferentSequence": 0.3924
+            }
+          },
+          "allSix": {
+            "stays3": 0.8481,
+            "sameFamily": 0.2785,
+            "sameFamilyDifferentSequence": 0.1519,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3LongFamily": {
+          "shots": 77,
+          "perDirection": {
+            "yaw": {
+              "steps": 154,
+              "stays3": 1,
+              "sameFamily": 0.7338,
+              "sameFamilyDifferentSequence": 0.0584
+            },
+            "elevation": {
+              "steps": 154,
+              "stays3": 0.974,
+              "sameFamily": 0.6494,
+              "sameFamilyDifferentSequence": 0.1818
+            },
+            "power": {
+              "steps": 154,
+              "stays3": 0.9351,
+              "sameFamily": 0.7727,
+              "sameFamilyDifferentSequence": 0.3182
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 77,
+              "stays3": 1,
+              "sameFamily": 0.6623,
+              "sameFamilyDifferentSequence": 0.0779
+            },
+            "elevation": {
+              "steps": 77,
+              "stays3": 0.9481,
+              "sameFamily": 0.4156,
+              "sameFamilyDifferentSequence": 0.1818
+            },
+            "power": {
+              "steps": 77,
+              "stays3": 0.8961,
+              "sameFamily": 0.6623,
+              "sameFamilyDifferentSequence": 0.4026
+            }
+          },
+          "allSix": {
+            "stays3": 0.8701,
+            "sameFamily": 0.2857,
+            "sameFamilyDifferentSequence": 0.1558,
+            "rejectedSteps": 0
+          }
+        }
+      },
+      "id": "chime-fan",
+      "pieces": 15,
+      "capacity": 24,
+      "soundingPieces": 15,
+      "lifted": 9,
+      "tilted": 9,
+      "voices": {
+        "timber": 3,
+        "metal": 12,
+        "bankVoice": true
+      },
+      "starters": [
+        {
+          "id": "opening",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 18,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 1,
+          "audible": 1,
+          "family": "short:bank-c",
+          "sequence": "bank-c:C4",
+          "pitches": "C4",
+          "order": "bank-c>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-c"
+          ],
+          "layout": false
+        },
+        {
+          "id": "west",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -16,
+            "elevation": 24,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 5,
+          "audible": 5,
+          "family": "plate-w-inner>bank-w>chime-w",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+          "pitches": "E4>G4>A4>G4>A4",
+          "order": "plate-w-inner>bank-w>chime-w>bank-w>chime-w>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-w-inner",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "west-long",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -16,
+            "elevation": 20,
+            "charge": 0.65
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 6,
+          "audible": 5,
+          "family": "plate-w-inner>bank-w>chime-w",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4>bank-w:G4",
+          "pitches": "E4+G4>A4>G4>A4>G4",
+          "order": "plate-w-inner>bank-w>chime-w>bank-w>chime-w>bank-w>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-w-inner",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w",
+            "worldcraft-object-bank-w",
+            "worldcraft-object-chime-w",
+            "worldcraft-object-bank-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "centre",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 24,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 5,
+          "audible": 5,
+          "family": "plate-c-mid>bank-c>chime-c",
+          "sequence": "plate-c-mid:G4>bank-c:C4>chime-c:D4>bank-c:C4>chime-c:D4",
+          "pitches": "G4>C4>D4>C4>D4",
+          "order": "plate-c-mid>bank-c>chime-c>bank-c>chime-c>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-c-mid",
+            "worldcraft-object-bank-c",
+            "worldcraft-object-chime-c",
+            "worldcraft-object-bank-c",
+            "worldcraft-object-chime-c"
+          ],
+          "layout": false
+        },
+        {
+          "id": "east",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 16,
+            "elevation": 24,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 5,
+          "audible": 5,
+          "family": "plate-e-inner>bank-e>chime-e",
+          "sequence": "plate-e-inner:G4>bank-e:D4>chime-e:E4>bank-e:D4>chime-e:E4",
+          "pitches": "G4>D4>E4>D4>E4",
+          "order": "plate-e-inner>bank-e>chime-e>bank-e>chime-e>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-e-inner",
+            "worldcraft-object-bank-e",
+            "worldcraft-object-chime-e",
+            "worldcraft-object-bank-e",
+            "worldcraft-object-chime-e"
+          ],
+          "layout": false
+        },
+        {
+          "id": "shoulder",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -28,
+            "elevation": 24,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 2,
+          "audible": 2,
+          "family": "short:plate-w-outer>bank-w",
+          "sequence": "plate-w-outer:C4>bank-w:G4",
+          "pitches": "C4>G4",
+          "order": "plate-w-outer>bank-w>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-w-outer",
+            "worldcraft-object-bank-w"
+          ],
+          "layout": false
+        }
+      ],
+      "busiestStarter": {
+        "id": "west-long",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -16,
+          "elevation": 20,
+          "charge": 0.65
+        },
+        "raw": 6,
+        "audible": 5,
+        "contacts": 6
+      },
+      "relatedCandidates": [
+        {
+          "score": 6,
+          "starter": "west",
+          "axis": "elevation",
+          "baseSequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+          "basePitches": "E4>G4>A4>G4>A4",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4>bank-w:G4",
+          "pitches": "E4>G4>A4>G4>A4>G4"
+        },
+        {
+          "score": 6,
+          "starter": "west",
+          "axis": "charge",
+          "baseSequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+          "basePitches": "E4>G4>A4>G4>A4",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4",
+          "pitches": "E4>G4>A4>G4"
+        },
+        {
+          "score": 6,
+          "starter": "west-long",
+          "axis": "charge",
+          "baseSequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4>bank-w:G4",
+          "basePitches": "E4+G4>A4>G4>A4>G4",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+          "pitches": "E4+G4>A4>G4>A4"
+        },
+        {
+          "score": 6,
+          "starter": "centre",
+          "axis": "charge",
+          "baseSequence": "plate-c-mid:G4>bank-c:C4>chime-c:D4>bank-c:C4>chime-c:D4",
+          "basePitches": "G4>C4>D4>C4>D4",
+          "sequence": "plate-c-mid:G4>bank-c:C4>chime-c:D4>bank-c:C4",
+          "pitches": "G4>C4>D4>C4"
+        },
+        {
+          "score": 6,
+          "starter": "east",
+          "axis": "elevation",
+          "baseSequence": "plate-e-inner:G4>bank-e:D4>chime-e:E4>bank-e:D4>chime-e:E4",
+          "basePitches": "G4>D4>E4>D4>E4",
+          "sequence": "plate-e-inner:G4>bank-e:D4>chime-e:E4>bank-e:D4>chime-e:E4>bank-e:D4",
+          "pitches": "G4>D4>E4>D4>E4>D4"
+        },
+        {
+          "score": 6,
+          "starter": "east",
+          "axis": "charge",
+          "baseSequence": "plate-e-inner:G4>bank-e:D4>chime-e:E4>bank-e:D4>chime-e:E4",
+          "basePitches": "G4>D4>E4>D4>E4",
+          "sequence": "plate-e-inner:G4>bank-e:D4>chime-e:E4>bank-e:D4",
+          "pitches": "G4>D4>E4>D4"
+        }
+      ],
+      "relatedPair": {
+        "score": 6,
+        "starter": {
+          "id": "west",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -16,
+            "elevation": 24,
+            "charge": 0.55
+          },
+          "family": "plate-w-inner>bank-w>chime-w",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+          "pitches": "E4>G4>A4>G4>A4",
+          "raw": 5,
+          "audible": 5
+        },
+        "neighbour": {
+          "axis": "elevation",
+          "setup": {
+            "yaw": -16,
+            "elevation": 24.5,
+            "charge": 0.55
+          },
+          "family": "plate-w-inner>bank-w>chime-w",
+          "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4>bank-w:G4",
+          "pitches": "E4>G4>A4>G4>A4>G4",
+          "raw": 6,
+          "audible": 6
+        }
+      },
+      "cost": {
+        "coldConstructMs": 2.735,
+        "warmRebuildMedianMs": 1.886,
+        "idleStepMedianMs": 0.0026,
+        "idleStepP95Ms": 0.004,
+        "flightStepMedianMs": 0.0053,
+        "flightStepP95Ms": 0.0107,
+        "flightSteps": 239,
+        "staticBodies": 17,
+        "meshes": 17,
+        "materials": 16,
+        "note": "NullEngine. No shadows. These are not browser frame times."
+      },
+      "seconds": 3.36
+    },
+    "chime-garden": {
+      "shots": 875,
+      "distinctContactOrders": 106,
+      "distinctNoteSequences": 87,
+      "distinctPitchSequences": 84,
+      "phraseFamilies": 60,
+      "longFamilies": 21,
+      "topFamilies": [
+        {
+          "name": "(silent)",
+          "count": 351,
+          "share": 0.4011
+        },
+        {
+          "name": "short:bank-c",
+          "count": 94,
+          "share": 0.1074
+        },
+        {
+          "name": "short:bank-l",
+          "count": 74,
+          "share": 0.0846
+        },
+        {
+          "name": "short:bank-r",
+          "count": 47,
+          "share": 0.0537
+        },
+        {
+          "name": "short:c2",
+          "count": 24,
+          "share": 0.0274
+        },
+        {
+          "name": "short:bank-c>c1",
+          "count": 23,
+          "share": 0.0263
+        },
+        {
+          "name": "short:bank-d",
+          "count": 18,
+          "share": 0.0206
+        },
+        {
+          "name": "bank-c>c1>c2",
+          "count": 16,
+          "share": 0.0183
+        }
+      ],
+      "noteBins": {
+        "raw": {
+          "0": {
+            "count": 351,
+            "share": 0.4011
+          },
+          "1-2": {
+            "count": 410,
+            "share": 0.4686
+          },
+          "3-5": {
+            "count": 111,
+            "share": 0.1269
+          },
+          "6+": {
+            "count": 3,
+            "share": 0.0034
+          }
+        },
+        "audible": {
+          "0": {
+            "count": 351,
+            "share": 0.4011
+          },
+          "1-2": {
+            "count": 454,
+            "share": 0.5189
+          },
+          "3-5": {
+            "count": 70,
+            "share": 0.08
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "raw3": 114,
+      "audible3": 70,
+      "breadth": {
+        "raw3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 29,
+            "3": 79,
+            "4": 6
+          },
+          "medianPingPong": 0.75
+        },
+        "audible3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 8,
+            "3": 57,
+            "4": 5
+          },
+          "medianPingPong": 0.6667
+        },
+        "topTwoNoteShare": 0.4631,
+        "busiestPieceShare": 0.256,
+        "topPieces": [
+          {
+            "piece": "bank-c",
+            "notes": 236,
+            "share": 0.256
+          },
+          {
+            "piece": "bank-l",
+            "notes": 191,
+            "share": 0.2072
+          },
+          {
+            "piece": "c1",
+            "notes": 93,
+            "share": 0.1009
+          },
+          {
+            "piece": "bank-r",
+            "notes": 92,
+            "share": 0.0998
+          },
+          {
+            "piece": "c2",
+            "notes": 90,
+            "share": 0.0976
+          },
+          {
+            "piece": "r2",
+            "notes": 62,
+            "share": 0.0672
+          }
+        ]
+      },
+      "regions": {
+        "left-low": {
+          "shots": 135,
+          "families": 24,
+          "topFamily": "short:bank-l",
+          "topFamilyShare": 0.3037,
+          "topFamilies": [
+            {
+              "name": "short:bank-l",
+              "count": 41,
+              "share": 0.3037
+            },
+            {
+              "name": "(silent)",
+              "count": 19,
+              "share": 0.1407
+            },
+            {
+              "name": "short:l2",
+              "count": 12,
+              "share": 0.0889
+            },
+            {
+              "name": "short:bank-l>bank-c",
+              "count": 11,
+              "share": 0.0815
+            }
+          ],
+          "raw3Shots": 37,
+          "raw3Families": 11,
+          "raw3TopFamily": "bank-l>l1>l2",
+          "raw3TopFamilyShare": 0.2703,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-l>l1>l2",
+              "count": 10,
+              "share": 0.2703
+            },
+            {
+              "name": "short:bank-l>bank-c",
+              "count": 10,
+              "share": 0.2703
+            },
+            {
+              "name": "l2>l1>bank-l",
+              "count": 4,
+              "share": 0.1081
+            },
+            {
+              "name": "bank-l>c1>bank-c",
+              "count": 2,
+              "share": 0.0541
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "families": 13,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.6778,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 122,
+              "share": 0.6778
+            },
+            {
+              "name": "short:bank-l",
+              "count": 33,
+              "share": 0.1833
+            },
+            {
+              "name": "bank-l>l1>l2",
+              "count": 4,
+              "share": 0.0222
+            },
+            {
+              "name": "short:bank-c>bank-l",
+              "count": 4,
+              "share": 0.0222
+            }
+          ],
+          "raw3Shots": 14,
+          "raw3Families": 7,
+          "raw3TopFamily": "bank-l>l1>l2",
+          "raw3TopFamilyShare": 0.2857,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-l>l1>l2",
+              "count": 4,
+              "share": 0.2857
+            },
+            {
+              "name": "short:bank-l>bank-c",
+              "count": 4,
+              "share": 0.2857
+            },
+            {
+              "name": "bank-l>bank-c>c2",
+              "count": 2,
+              "share": 0.1429
+            },
+            {
+              "name": "bank-c>bank-l>c1",
+              "count": 1,
+              "share": 0.0714
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "families": 12,
+          "topFamily": "short:bank-c",
+          "topFamilyShare": 0.3333,
+          "topFamilies": [
+            {
+              "name": "short:bank-c",
+              "count": 35,
+              "share": 0.3333
+            },
+            {
+              "name": "bank-c>c1>c2",
+              "count": 15,
+              "share": 0.1429
+            },
+            {
+              "name": "short:c1",
+              "count": 13,
+              "share": 0.1238
+            },
+            {
+              "name": "short:bank-c>c1",
+              "count": 12,
+              "share": 0.1143
+            }
+          ],
+          "raw3Shots": 25,
+          "raw3Families": 6,
+          "raw3TopFamily": "bank-c>c1>c2",
+          "raw3TopFamilyShare": 0.6,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-c>c1>c2",
+              "count": 15,
+              "share": 0.6
+            },
+            {
+              "name": "c1>bank-l>bank-c",
+              "count": 3,
+              "share": 0.12
+            },
+            {
+              "name": "short:c1>bank-l",
+              "count": 3,
+              "share": 0.12
+            },
+            {
+              "name": "c1>bank-c>bank-l",
+              "count": 2,
+              "share": 0.08
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 140,
+          "families": 15,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.4429,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 62,
+              "share": 0.4429
+            },
+            {
+              "name": "short:bank-c",
+              "count": 26,
+              "share": 0.1857
+            },
+            {
+              "name": "short:bank-d",
+              "count": 18,
+              "share": 0.1286
+            },
+            {
+              "name": "short:bank-c>c1",
+              "count": 11,
+              "share": 0.0786
+            }
+          ],
+          "raw3Shots": 9,
+          "raw3Families": 6,
+          "raw3TopFamily": "short:bank-d>d1",
+          "raw3TopFamilyShare": 0.3333,
+          "raw3TopFamilies": [
+            {
+              "name": "short:bank-d>d1",
+              "count": 3,
+              "share": 0.3333
+            },
+            {
+              "name": "short:bank-d>d2",
+              "count": 2,
+              "share": 0.2222
+            },
+            {
+              "name": "bank-c>c1>c2",
+              "count": 1,
+              "share": 0.1111
+            },
+            {
+              "name": "bank-d>d2>bank-c",
+              "count": 1,
+              "share": 0.1111
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "families": 22,
+          "topFamily": "short:bank-r",
+          "topFamilyShare": 0.1778,
+          "topFamilies": [
+            {
+              "name": "short:bank-r",
+              "count": 24,
+              "share": 0.1778
+            },
+            {
+              "name": "short:c2",
+              "count": 22,
+              "share": 0.163
+            },
+            {
+              "name": "short:bank-c",
+              "count": 17,
+              "share": 0.1259
+            },
+            {
+              "name": "(silent)",
+              "count": 16,
+              "share": 0.1185
+            }
+          ],
+          "raw3Shots": 24,
+          "raw3Families": 9,
+          "raw3TopFamily": "bank-r>r1>r2",
+          "raw3TopFamilyShare": 0.25,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-r>r1>r2",
+              "count": 6,
+              "share": 0.25
+            },
+            {
+              "name": "bank-r>r2>c2",
+              "count": 5,
+              "share": 0.2083
+            },
+            {
+              "name": "bank-c>r2>bank-r",
+              "count": 4,
+              "share": 0.1667
+            },
+            {
+              "name": "c2>r2>bank-r",
+              "count": 3,
+              "share": 0.125
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "families": 14,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.6722,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 121,
+              "share": 0.6722
+            },
+            {
+              "name": "short:bank-r",
+              "count": 23,
+              "share": 0.1278
+            },
+            {
+              "name": "short:bank-c",
+              "count": 16,
+              "share": 0.0889
+            },
+            {
+              "name": "short:bank-c>c2",
+              "count": 4,
+              "share": 0.0222
+            }
+          ],
+          "raw3Shots": 5,
+          "raw3Families": 3,
+          "raw3TopFamily": "bank-r>r1>r2",
+          "raw3TopFamilyShare": 0.4,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-r>r1>r2",
+              "count": 2,
+              "share": 0.4
+            },
+            {
+              "name": "bank-r>r2>c2",
+              "count": 2,
+              "share": 0.4
+            },
+            {
+              "name": "short:c2>bank-c",
+              "count": 1,
+              "share": 0.2
+            }
+          ]
+        }
+      },
+      "coverage": {
+        "reachedByRaw3": 12,
+        "reachedByAudible3": 12,
+        "reachedRaw": [
+          "bank-c",
+          "bank-d",
+          "bank-l",
+          "bank-r",
+          "c1",
+          "c2",
+          "d1",
+          "d2",
+          "l1",
+          "l2",
+          "r1",
+          "r2"
+        ],
+        "reachedAudible": [
+          "bank-c",
+          "bank-d",
+          "bank-l",
+          "bank-r",
+          "c1",
+          "c2",
+          "d1",
+          "d2",
+          "l1",
+          "l2",
+          "r1",
+          "r2"
+        ],
+        "soundingPieces": 12,
+        "missedByRaw3": []
+      },
+      "inflation": {
+        "raw3Shots": 114,
+        "raw3WithAChord": 69,
+        "raw3WithAChordShare": 0.6053,
+        "raw3OpeningIsAChord": 68,
+        "raw3OpeningIsAChordShare": 0.5965,
+        "raw3FirstThreeNoteEvents": {
+          "1": 22,
+          "2": 46,
+          "3": 46
+        },
+        "raw3DistinctOnsetsInside150ms": 0,
+        "raw3DistinctOnsetsInside150msShare": 0,
+        "raw3ByAudibleBin": {
+          "0": {
+            "count": 0,
+            "share": 0
+          },
+          "1-2": {
+            "count": 44,
+            "share": 0.386
+          },
+          "3-5": {
+            "count": 70,
+            "share": 0.614
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "notesTotal": 922,
+      "silentImpacts": 0,
+      "nudge": {
+        "raw3": {
+          "shots": 114,
+          "perDirection": {
+            "yaw": {
+              "steps": 228,
+              "stays3": 0.6886,
+              "sameFamily": 0.5351,
+              "sameFamilyDifferentSequence": 0.2061
+            },
+            "elevation": {
+              "steps": 228,
+              "stays3": 0.7588,
+              "sameFamily": 0.6974,
+              "sameFamilyDifferentSequence": 0.1842
+            },
+            "power": {
+              "steps": 228,
+              "stays3": 0.7675,
+              "sameFamily": 0.7193,
+              "sameFamilyDifferentSequence": 0.1842
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 114,
+              "stays3": 0.5175,
+              "sameFamily": 0.3772,
+              "sameFamilyDifferentSequence": 0.1667
+            },
+            "elevation": {
+              "steps": 114,
+              "stays3": 0.6228,
+              "sameFamily": 0.5702,
+              "sameFamilyDifferentSequence": 0.2368
+            },
+            "power": {
+              "steps": 114,
+              "stays3": 0.6491,
+              "sameFamily": 0.5614,
+              "sameFamilyDifferentSequence": 0.2018
+            }
+          },
+          "allSix": {
+            "stays3": 0.3947,
+            "sameFamily": 0.2719,
+            "sameFamilyDifferentSequence": 0.1667,
+            "rejectedSteps": 0
+          }
+        },
+        "raw3LongFamily": {
+          "shots": 85,
+          "perDirection": {
+            "yaw": {
+              "steps": 170,
+              "stays3": 0.7353,
+              "sameFamily": 0.5294,
+              "sameFamilyDifferentSequence": 0.1647
+            },
+            "elevation": {
+              "steps": 170,
+              "stays3": 0.7588,
+              "sameFamily": 0.6471,
+              "sameFamilyDifferentSequence": 0.1529
+            },
+            "power": {
+              "steps": 170,
+              "stays3": 0.7706,
+              "sameFamily": 0.6882,
+              "sameFamilyDifferentSequence": 0.1529
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 85,
+              "stays3": 0.6118,
+              "sameFamily": 0.4118,
+              "sameFamilyDifferentSequence": 0.1765
+            },
+            "elevation": {
+              "steps": 85,
+              "stays3": 0.6235,
+              "sameFamily": 0.5294,
+              "sameFamilyDifferentSequence": 0.1882
+            },
+            "power": {
+              "steps": 85,
+              "stays3": 0.6471,
+              "sameFamily": 0.5412,
+              "sameFamilyDifferentSequence": 0.1647
+            }
+          },
+          "allSix": {
+            "stays3": 0.4824,
+            "sameFamily": 0.3412,
+            "sameFamilyDifferentSequence": 0.2,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3": {
+          "shots": 70,
+          "perDirection": {
+            "yaw": {
+              "steps": 140,
+              "stays3": 0.5714,
+              "sameFamily": 0.5929,
+              "sameFamilyDifferentSequence": 0.1929
+            },
+            "elevation": {
+              "steps": 140,
+              "stays3": 0.6714,
+              "sameFamily": 0.6857,
+              "sameFamilyDifferentSequence": 0.1929
+            },
+            "power": {
+              "steps": 140,
+              "stays3": 0.6786,
+              "sameFamily": 0.7286,
+              "sameFamilyDifferentSequence": 0.2071
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 70,
+              "stays3": 0.4,
+              "sameFamily": 0.5,
+              "sameFamilyDifferentSequence": 0.2143
+            },
+            "elevation": {
+              "steps": 70,
+              "stays3": 0.5143,
+              "sameFamily": 0.5429,
+              "sameFamilyDifferentSequence": 0.2286
+            },
+            "power": {
+              "steps": 70,
+              "stays3": 0.5143,
+              "sameFamily": 0.5714,
+              "sameFamilyDifferentSequence": 0.2
+            }
+          },
+          "allSix": {
+            "stays3": 0.2571,
+            "sameFamily": 0.3571,
+            "sameFamilyDifferentSequence": 0.2143,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3LongFamily": {
+          "shots": 62,
+          "perDirection": {
+            "yaw": {
+              "steps": 124,
+              "stays3": 0.5726,
+              "sameFamily": 0.5645,
+              "sameFamilyDifferentSequence": 0.1774
+            },
+            "elevation": {
+              "steps": 124,
+              "stays3": 0.7016,
+              "sameFamily": 0.6855,
+              "sameFamilyDifferentSequence": 0.1613
+            },
+            "power": {
+              "steps": 124,
+              "stays3": 0.7177,
+              "sameFamily": 0.7258,
+              "sameFamilyDifferentSequence": 0.1694
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 62,
+              "stays3": 0.4032,
+              "sameFamily": 0.4677,
+              "sameFamilyDifferentSequence": 0.1935
+            },
+            "elevation": {
+              "steps": 62,
+              "stays3": 0.5484,
+              "sameFamily": 0.5645,
+              "sameFamilyDifferentSequence": 0.2097
+            },
+            "power": {
+              "steps": 62,
+              "stays3": 0.5645,
+              "sameFamily": 0.5806,
+              "sameFamilyDifferentSequence": 0.1774
+            }
+          },
+          "allSix": {
+            "stays3": 0.2742,
+            "sameFamily": 0.371,
+            "sameFamilyDifferentSequence": 0.2097,
+            "rejectedSteps": 0
+          }
+        }
+      },
+      "id": "chime-garden",
+      "pieces": 12,
+      "capacity": null,
+      "soundingPieces": 12,
+      "lifted": 0,
+      "tilted": 0,
+      "voices": {
+        "timber": 4,
+        "metal": 8,
+        "bankVoice": true
+      },
+      "starters": [
+        {
+          "id": "centre",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 12,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "bank-c>c1>c2",
+          "sequence": "bank-c:C4>c1:E4>c2:A4",
+          "pitches": "C4>E4>A4",
+          "order": "bank-c>c1>c2>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-c",
+            "worldcraft-object-c1",
+            "worldcraft-object-c2"
+          ],
+          "layout": false
+        },
+        {
+          "id": "left",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -14,
+            "elevation": 12,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "bank-l>l1>l2",
+          "sequence": "bank-l:D4>l1:C4>l2:G4",
+          "pitches": "D4>C4>G4",
+          "order": "bank-l>l1>l2>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-l",
+            "worldcraft-object-l1",
+            "worldcraft-object-l2"
+          ],
+          "layout": false
+        },
+        {
+          "id": "right",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 18,
+            "elevation": 12,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 2,
+          "family": "bank-r>r1>r2",
+          "sequence": "bank-r:A4>r1:D4>r2:E4",
+          "pitches": "A4>D4+E4",
+          "order": "bank-r>r1>r2>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-r",
+            "worldcraft-object-r1",
+            "worldcraft-object-r2"
+          ],
+          "layout": false
+        },
+        {
+          "id": "near-miss",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 16,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 2,
+          "audible": 2,
+          "family": "short:bank-c>c1",
+          "sequence": "bank-c:C4>c1:E4",
+          "pitches": "C4>E4",
+          "order": "bank-c>c1>tee",
+          "contactBodies": [
+            "worldcraft-object-bank-c",
+            "worldcraft-object-c1",
+            "worldcraft-tee"
+          ],
+          "layout": false
+        },
+        {
+          "id": "left-reverse",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -22,
+            "elevation": 8,
+            "charge": 0.65
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 4,
+          "audible": 4,
+          "family": "l2>l1>bank-l",
+          "sequence": "l2:G4>l1:C4>bank-l:D4>l2:G4",
+          "pitches": "G4>C4>D4>G4",
+          "order": "l2>l1>bank-l>l2>ground",
+          "contactBodies": [
+            "worldcraft-object-l2",
+            "worldcraft-object-l1",
+            "worldcraft-object-bank-l",
+            "worldcraft-object-l2"
+          ],
+          "layout": false
+        },
+        {
+          "id": "right-leak",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 16,
+            "elevation": 8,
+            "charge": 0.8
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 2,
+          "family": "bank-r>r2>c2",
+          "sequence": "bank-r:A4>r2:E4>c2:A4",
+          "pitches": "A4+E4>A4",
+          "order": "bank-r>r2>c2>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-r",
+            "worldcraft-object-r2",
+            "worldcraft-object-c2"
+          ],
+          "layout": false
+        }
+      ],
+      "busiestStarter": {
+        "id": "left-reverse",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -22,
+          "elevation": 8,
+          "charge": 0.65
+        },
+        "raw": 4,
+        "audible": 4,
+        "contacts": 4
+      },
+      "relatedCandidates": [
+        {
+          "score": 6,
+          "starter": "right",
+          "axis": "elevation",
+          "baseSequence": "bank-r:A4>r1:D4>r2:E4",
+          "basePitches": "A4>D4+E4",
+          "sequence": "bank-r:A4>r1:D4>r2:E4>bank-r:A4",
+          "pitches": "A4>D4+E4>A4"
+        },
+        {
+          "score": 6,
+          "starter": "right",
+          "axis": "charge",
+          "baseSequence": "bank-r:A4>r1:D4>r2:E4",
+          "basePitches": "A4>D4+E4",
+          "sequence": "bank-r:A4>r1:D4>r2:E4>bank-r:A4",
+          "pitches": "A4>D4+E4>A4"
+        },
+        {
+          "score": 6,
+          "starter": "left-reverse",
+          "axis": "yaw",
+          "baseSequence": "l2:G4>l1:C4>bank-l:D4>l2:G4",
+          "basePitches": "G4>C4>D4>G4",
+          "sequence": "l2:G4>l1:C4>bank-l:D4",
+          "pitches": "G4>C4>D4"
+        },
+        {
+          "score": 4,
+          "starter": "right-leak",
+          "axis": "elevation",
+          "baseSequence": "bank-r:A4>r2:E4>c2:A4",
+          "basePitches": "A4+E4>A4",
+          "sequence": "bank-r:A4>r2:E4>c2:A4>bank-c:C4",
+          "pitches": "A4+E4>A4+C4"
+        },
+        {
+          "score": 4,
+          "starter": "right-leak",
+          "axis": "charge",
+          "baseSequence": "bank-r:A4>r2:E4>c2:A4",
+          "basePitches": "A4+E4>A4",
+          "sequence": "bank-r:A4>r2:E4>c2:A4>bank-c:C4",
+          "pitches": "A4+E4>A4+C4"
+        }
+      ],
+      "relatedPair": {
+        "score": 6,
+        "starter": {
+          "id": "right",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 18,
+            "elevation": 12,
+            "charge": 0.55
+          },
+          "family": "bank-r>r1>r2",
+          "sequence": "bank-r:A4>r1:D4>r2:E4",
+          "pitches": "A4>D4+E4",
+          "raw": 3,
+          "audible": 2
+        },
+        "neighbour": {
+          "axis": "elevation",
+          "setup": {
+            "yaw": 18,
+            "elevation": 12.5,
+            "charge": 0.55
+          },
+          "family": "bank-r>r1>r2",
+          "sequence": "bank-r:A4>r1:D4>r2:E4>bank-r:A4",
+          "pitches": "A4>D4+E4>A4",
+          "raw": 4,
+          "audible": 3
+        }
+      },
+      "cost": {
+        "coldConstructMs": 1.412,
+        "warmRebuildMedianMs": 1.181,
+        "idleStepMedianMs": 0.0024,
+        "idleStepP95Ms": 0.0026,
+        "flightStepMedianMs": 0.0055,
+        "flightStepP95Ms": 0.0116,
+        "flightSteps": 138,
+        "staticBodies": 14,
+        "meshes": 14,
+        "materials": 7,
+        "note": "NullEngine. No shadows. These are not browser frame times."
+      },
+      "seconds": 3.26
+    },
+    "descending-resonance": {
+      "shots": 875,
+      "distinctContactOrders": 143,
+      "distinctNoteSequences": 115,
+      "distinctPitchSequences": 88,
+      "phraseFamilies": 83,
+      "longFamilies": 41,
+      "topFamilies": [
+        {
+          "name": "(silent)",
+          "count": 220,
+          "share": 0.2514
+        },
+        {
+          "name": "short:wall-near-e",
+          "count": 79,
+          "share": 0.0903
+        },
+        {
+          "name": "short:ramp-w",
+          "count": 77,
+          "share": 0.088
+        },
+        {
+          "name": "short:ramp-e",
+          "count": 74,
+          "share": 0.0846
+        },
+        {
+          "name": "short:wall-near-w",
+          "count": 70,
+          "share": 0.08
+        },
+        {
+          "name": "short:wall-near-e>ramp-e",
+          "count": 27,
+          "share": 0.0309
+        },
+        {
+          "name": "short:wall-near-w>ramp-w",
+          "count": 19,
+          "share": 0.0217
+        },
+        {
+          "name": "short:ramp-w>wall-far-w",
+          "count": 18,
+          "share": 0.0206
+        }
+      ],
+      "noteBins": {
+        "raw": {
+          "0": {
+            "count": 220,
+            "share": 0.2514
+          },
+          "1-2": {
+            "count": 489,
+            "share": 0.5589
+          },
+          "3-5": {
+            "count": 165,
+            "share": 0.1886
+          },
+          "6+": {
+            "count": 1,
+            "share": 0.0011
+          }
+        },
+        "audible": {
+          "0": {
+            "count": 220,
+            "share": 0.2514
+          },
+          "1-2": {
+            "count": 491,
+            "share": 0.5611
+          },
+          "3-5": {
+            "count": 163,
+            "share": 0.1863
+          },
+          "6+": {
+            "count": 1,
+            "share": 0.0011
+          }
+        }
+      },
+      "raw3": 166,
+      "audible3": 164,
+      "breadth": {
+        "raw3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 59,
+            "3": 91,
+            "4": 15,
+            "5": 1
+          },
+          "medianPingPong": 0.75
+        },
+        "audible3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 59,
+            "3": 90,
+            "4": 14,
+            "5": 1
+          },
+          "medianPingPong": 0.75
+        },
+        "topTwoNoteShare": 0.4239,
+        "busiestPieceShare": 0.227,
+        "topPieces": [
+          {
+            "piece": "ramp-w",
+            "notes": 279,
+            "share": 0.227
+          },
+          {
+            "piece": "wall-near-e",
+            "notes": 242,
+            "share": 0.1969
+          },
+          {
+            "piece": "ramp-e",
+            "notes": 197,
+            "share": 0.1603
+          },
+          {
+            "piece": "wall-near-w",
+            "notes": 169,
+            "share": 0.1375
+          },
+          {
+            "piece": "wall-far-e",
+            "notes": 55,
+            "share": 0.0448
+          },
+          {
+            "piece": "wall-far-w",
+            "notes": 51,
+            "share": 0.0415
+          }
+        ]
+      },
+      "regions": {
+        "left-low": {
+          "shots": 135,
+          "families": 11,
+          "topFamily": "short:ramp-w",
+          "topFamilyShare": 0.5111,
+          "topFamilies": [
+            {
+              "name": "short:ramp-w",
+              "count": 69,
+              "share": 0.5111
+            },
+            {
+              "name": "short:wall-near-w",
+              "count": 31,
+              "share": 0.2296
+            },
+            {
+              "name": "short:ramp-w>top-w",
+              "count": 8,
+              "share": 0.0593
+            },
+            {
+              "name": "short:ramp-w>wall-far-w",
+              "count": 8,
+              "share": 0.0593
+            }
+          ],
+          "raw3Shots": 13,
+          "raw3Families": 6,
+          "raw3TopFamily": "short:wall-near-w>ramp-w",
+          "raw3TopFamilyShare": 0.3846,
+          "raw3TopFamilies": [
+            {
+              "name": "short:wall-near-w>ramp-w",
+              "count": 5,
+              "share": 0.3846
+            },
+            {
+              "name": "short:ramp-w>top-w",
+              "count": 3,
+              "share": 0.2308
+            },
+            {
+              "name": "ramp-w>top-w>wall-near-w",
+              "count": 2,
+              "share": 0.1538
+            },
+            {
+              "name": "ramp-w>high-w>wall-near-w",
+              "count": 1,
+              "share": 0.0769
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "families": 17,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.55,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 99,
+              "share": 0.55
+            },
+            {
+              "name": "short:wall-near-w",
+              "count": 33,
+              "share": 0.1833
+            },
+            {
+              "name": "short:wall-near-w>ramp-w",
+              "count": 12,
+              "share": 0.0667
+            },
+            {
+              "name": "short:ramp-w",
+              "count": 8,
+              "share": 0.0444
+            }
+          ],
+          "raw3Shots": 18,
+          "raw3Families": 7,
+          "raw3TopFamily": "short:wall-near-w>ramp-w",
+          "raw3TopFamilyShare": 0.4444,
+          "raw3TopFamilies": [
+            {
+              "name": "short:wall-near-w>ramp-w",
+              "count": 8,
+              "share": 0.4444
+            },
+            {
+              "name": "high-w>wall-near-w>wall-far-w",
+              "count": 4,
+              "share": 0.2222
+            },
+            {
+              "name": "top-w>ramp-w>wall-near-w",
+              "count": 2,
+              "share": 0.1111
+            },
+            {
+              "name": "ramp-w>high-w>wall-near-w",
+              "count": 1,
+              "share": 0.0556
+            }
+          ]
+        },
+        "centre-low": {
+          "shots": 105,
+          "families": 34,
+          "topFamily": "short:wall-near-e",
+          "topFamilyShare": 0.1524,
+          "topFamilies": [
+            {
+              "name": "short:wall-near-e",
+              "count": 16,
+              "share": 0.1524
+            },
+            {
+              "name": "short:ramp-w>wall-far-w",
+              "count": 10,
+              "share": 0.0952
+            },
+            {
+              "name": "short:ramp-w>top-w",
+              "count": 9,
+              "share": 0.0857
+            },
+            {
+              "name": "short:ramp-w>top-c",
+              "count": 8,
+              "share": 0.0762
+            }
+          ],
+          "raw3Shots": 55,
+          "raw3Families": 24,
+          "raw3TopFamily": "short:ramp-w>top-w",
+          "raw3TopFamilyShare": 0.1273,
+          "raw3TopFamilies": [
+            {
+              "name": "short:ramp-w>top-w",
+              "count": 7,
+              "share": 0.1273
+            },
+            {
+              "name": "short:ramp-w>top-c",
+              "count": 5,
+              "share": 0.0909
+            },
+            {
+              "name": "ramp-w>top-c>wall-near-e",
+              "count": 4,
+              "share": 0.0727
+            },
+            {
+              "name": "ramp-w>top-e>ramp-e",
+              "count": 4,
+              "share": 0.0727
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 140,
+          "families": 40,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.15,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 21,
+              "share": 0.15
+            },
+            {
+              "name": "short:wall-near-e",
+              "count": 17,
+              "share": 0.1214
+            },
+            {
+              "name": "short:high-c>wall-near-e",
+              "count": 8,
+              "share": 0.0571
+            },
+            {
+              "name": "short:wall-near-e>ramp-w",
+              "count": 7,
+              "share": 0.05
+            }
+          ],
+          "raw3Shots": 43,
+          "raw3Families": 20,
+          "raw3TopFamily": "high-c>wall-near-e>wall-far-w",
+          "raw3TopFamilyShare": 0.093,
+          "raw3TopFamilies": [
+            {
+              "name": "high-c>wall-near-e>wall-far-w",
+              "count": 4,
+              "share": 0.093
+            },
+            {
+              "name": "high-e>wall-near-e>wall-far-e",
+              "count": 4,
+              "share": 0.093
+            },
+            {
+              "name": "high-w>wall-near-w>wall-far-w",
+              "count": 4,
+              "share": 0.093
+            },
+            {
+              "name": "ramp-w>high-c>wall-near-e",
+              "count": 3,
+              "share": 0.0698
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "families": 13,
+          "topFamily": "short:ramp-e",
+          "topFamilyShare": 0.5111,
+          "topFamilies": [
+            {
+              "name": "short:ramp-e",
+              "count": 69,
+              "share": 0.5111
+            },
+            {
+              "name": "short:wall-near-e",
+              "count": 25,
+              "share": 0.1852
+            },
+            {
+              "name": "short:ramp-e>wall-far-e",
+              "count": 13,
+              "share": 0.0963
+            },
+            {
+              "name": "short:ramp-e>top-e",
+              "count": 8,
+              "share": 0.0593
+            }
+          ],
+          "raw3Shots": 16,
+          "raw3Families": 7,
+          "raw3TopFamily": "short:wall-near-e>ramp-e",
+          "raw3TopFamilyShare": 0.375,
+          "raw3TopFamilies": [
+            {
+              "name": "short:wall-near-e>ramp-e",
+              "count": 6,
+              "share": 0.375
+            },
+            {
+              "name": "short:ramp-e>top-e",
+              "count": 3,
+              "share": 0.1875
+            },
+            {
+              "name": "ramp-e>top-e>wall-near-e",
+              "count": 2,
+              "share": 0.125
+            },
+            {
+              "name": "ramp-e>wall-near-e>wall-far-e",
+              "count": 2,
+              "share": 0.125
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "families": 19,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.5333,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 96,
+              "share": 0.5333
+            },
+            {
+              "name": "short:wall-near-e",
+              "count": 21,
+              "share": 0.1167
+            },
+            {
+              "name": "short:wall-near-e>ramp-e",
+              "count": 17,
+              "share": 0.0944
+            },
+            {
+              "name": "short:wall-far-e",
+              "count": 13,
+              "share": 0.0722
+            }
+          ],
+          "raw3Shots": 21,
+          "raw3Families": 8,
+          "raw3TopFamily": "short:wall-near-e>ramp-e",
+          "raw3TopFamilyShare": 0.4286,
+          "raw3TopFamilies": [
+            {
+              "name": "short:wall-near-e>ramp-e",
+              "count": 9,
+              "share": 0.4286
+            },
+            {
+              "name": "high-e>wall-near-e>wall-far-e",
+              "count": 4,
+              "share": 0.1905
+            },
+            {
+              "name": "top-e>ramp-e>wall-near-e",
+              "count": 2,
+              "share": 0.0952
+            },
+            {
+              "name": "wall-near-e>ramp-e>wall-far-e",
+              "count": 2,
+              "share": 0.0952
+            }
+          ]
+        }
+      },
+      "coverage": {
+        "reachedByRaw3": 12,
+        "reachedByAudible3": 12,
+        "reachedRaw": [
+          "high-c",
+          "high-e",
+          "high-w",
+          "ramp-e",
+          "ramp-w",
+          "top-c",
+          "top-e",
+          "top-w",
+          "wall-far-e",
+          "wall-far-w",
+          "wall-near-e",
+          "wall-near-w"
+        ],
+        "reachedAudible": [
+          "high-c",
+          "high-e",
+          "high-w",
+          "ramp-e",
+          "ramp-w",
+          "top-c",
+          "top-e",
+          "top-w",
+          "wall-far-e",
+          "wall-far-w",
+          "wall-near-e",
+          "wall-near-w"
+        ],
+        "soundingPieces": 12,
+        "missedByRaw3": []
+      },
+      "inflation": {
+        "raw3Shots": 166,
+        "raw3WithAChord": 8,
+        "raw3WithAChordShare": 0.0482,
+        "raw3OpeningIsAChord": 7,
+        "raw3OpeningIsAChordShare": 0.0422,
+        "raw3FirstThreeNoteEvents": {
+          "1": 0,
+          "2": 7,
+          "3": 159
+        },
+        "raw3DistinctOnsetsInside150ms": 0,
+        "raw3DistinctOnsetsInside150msShare": 0,
+        "raw3ByAudibleBin": {
+          "0": {
+            "count": 0,
+            "share": 0
+          },
+          "1-2": {
+            "count": 2,
+            "share": 0.012
+          },
+          "3-5": {
+            "count": 163,
+            "share": 0.9819
+          },
+          "6+": {
+            "count": 1,
+            "share": 0.006
+          }
+        }
+      },
+      "notesTotal": 1229,
+      "silentImpacts": 2,
+      "nudge": {
+        "raw3": {
+          "shots": 166,
+          "perDirection": {
+            "yaw": {
+              "steps": 332,
+              "stays3": 0.9488,
+              "sameFamily": 0.8133,
+              "sameFamilyDifferentSequence": 0.1235
+            },
+            "elevation": {
+              "steps": 332,
+              "stays3": 0.762,
+              "sameFamily": 0.6024,
+              "sameFamilyDifferentSequence": 0.1536
+            },
+            "power": {
+              "steps": 332,
+              "stays3": 0.8042,
+              "sameFamily": 0.6506,
+              "sameFamilyDifferentSequence": 0.2199
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 166,
+              "stays3": 0.9337,
+              "sameFamily": 0.7169,
+              "sameFamilyDifferentSequence": 0.1627
+            },
+            "elevation": {
+              "steps": 166,
+              "stays3": 0.5904,
+              "sameFamily": 0.4518,
+              "sameFamilyDifferentSequence": 0.1627
+            },
+            "power": {
+              "steps": 166,
+              "stays3": 0.7289,
+              "sameFamily": 0.5602,
+              "sameFamilyDifferentSequence": 0.2831
+            }
+          },
+          "allSix": {
+            "stays3": 0.512,
+            "sameFamily": 0.3253,
+            "sameFamilyDifferentSequence": 0.1687,
+            "rejectedSteps": 0
+          }
+        },
+        "raw3LongFamily": {
+          "shots": 107,
+          "perDirection": {
+            "yaw": {
+              "steps": 214,
+              "stays3": 0.9299,
+              "sameFamily": 0.7196,
+              "sameFamilyDifferentSequence": 0.1449
+            },
+            "elevation": {
+              "steps": 214,
+              "stays3": 0.6963,
+              "sameFamily": 0.4673,
+              "sameFamilyDifferentSequence": 0.1308
+            },
+            "power": {
+              "steps": 214,
+              "stays3": 0.7664,
+              "sameFamily": 0.5374,
+              "sameFamilyDifferentSequence": 0.1963
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 107,
+              "stays3": 0.9159,
+              "sameFamily": 0.5794,
+              "sameFamilyDifferentSequence": 0.1776
+            },
+            "elevation": {
+              "steps": 107,
+              "stays3": 0.4953,
+              "sameFamily": 0.3084,
+              "sameFamilyDifferentSequence": 0.1121
+            },
+            "power": {
+              "steps": 107,
+              "stays3": 0.6916,
+              "sameFamily": 0.4486,
+              "sameFamilyDifferentSequence": 0.2336
+            }
+          },
+          "allSix": {
+            "stays3": 0.4579,
+            "sameFamily": 0.1589,
+            "sameFamilyDifferentSequence": 0.0748,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3": {
+          "shots": 164,
+          "perDirection": {
+            "yaw": {
+              "steps": 328,
+              "stays3": 0.9512,
+              "sameFamily": 0.8232,
+              "sameFamilyDifferentSequence": 0.125
+            },
+            "elevation": {
+              "steps": 328,
+              "stays3": 0.7287,
+              "sameFamily": 0.6037,
+              "sameFamilyDifferentSequence": 0.1555
+            },
+            "power": {
+              "steps": 328,
+              "stays3": 0.7896,
+              "sameFamily": 0.6555,
+              "sameFamilyDifferentSequence": 0.2226
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 164,
+              "stays3": 0.939,
+              "sameFamily": 0.7256,
+              "sameFamilyDifferentSequence": 0.1646
+            },
+            "elevation": {
+              "steps": 164,
+              "stays3": 0.5793,
+              "sameFamily": 0.4512,
+              "sameFamilyDifferentSequence": 0.1646
+            },
+            "power": {
+              "steps": 164,
+              "stays3": 0.7317,
+              "sameFamily": 0.5671,
+              "sameFamilyDifferentSequence": 0.2866
+            }
+          },
+          "allSix": {
+            "stays3": 0.5061,
+            "sameFamily": 0.3293,
+            "sameFamilyDifferentSequence": 0.1707,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3LongFamily": {
+          "shots": 105,
+          "perDirection": {
+            "yaw": {
+              "steps": 210,
+              "stays3": 0.9333,
+              "sameFamily": 0.7333,
+              "sameFamilyDifferentSequence": 0.1476
+            },
+            "elevation": {
+              "steps": 210,
+              "stays3": 0.6429,
+              "sameFamily": 0.4667,
+              "sameFamilyDifferentSequence": 0.1333
+            },
+            "power": {
+              "steps": 210,
+              "stays3": 0.7429,
+              "sameFamily": 0.5429,
+              "sameFamilyDifferentSequence": 0.2
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 105,
+              "stays3": 0.9238,
+              "sameFamily": 0.5905,
+              "sameFamilyDifferentSequence": 0.181
+            },
+            "elevation": {
+              "steps": 105,
+              "stays3": 0.4762,
+              "sameFamily": 0.3048,
+              "sameFamilyDifferentSequence": 0.1143
+            },
+            "power": {
+              "steps": 105,
+              "stays3": 0.6952,
+              "sameFamily": 0.4571,
+              "sameFamilyDifferentSequence": 0.2381
+            }
+          },
+          "allSix": {
+            "stays3": 0.4476,
+            "sameFamily": 0.1619,
+            "sameFamilyDifferentSequence": 0.0762,
+            "rejectedSteps": 0
+          }
+        }
+      },
+      "id": "descending-resonance",
+      "pieces": 12,
+      "capacity": null,
+      "soundingPieces": 12,
+      "lifted": 6,
+      "tilted": 6,
+      "voices": {
+        "timber": 7,
+        "metal": 5,
+        "bankVoice": true
+      },
+      "starters": [
+        {
+          "id": "opening",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 0,
+            "elevation": 18,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 1,
+          "audible": 1,
+          "family": "short:wall-near-e",
+          "sequence": "wall-near-e:E4",
+          "pitches": "E4",
+          "order": "wall-near-e>ground",
+          "contactBodies": [
+            "worldcraft-object-wall-near-e"
+          ],
+          "layout": false
+        },
+        {
+          "id": "descent",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -1,
+            "elevation": 24,
+            "charge": 0.56
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "high-c>wall-near-e>wall-far-w",
+          "sequence": "high-c:G4>wall-near-e:E4>wall-far-w:C4",
+          "pitches": "G4>E4>C4",
+          "order": "high-c>wall-near-e>wall-far-w>ground",
+          "contactBodies": [
+            "worldcraft-object-high-c",
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-wall-far-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "west-descent",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -5,
+            "elevation": 24,
+            "charge": 0.56
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "high-w>wall-near-w>wall-far-w",
+          "sequence": "high-w:E4>wall-near-w:D4>wall-far-w:C4",
+          "pitches": "E4>D4>C4",
+          "order": "high-w>wall-near-w>wall-far-w>ground",
+          "contactBodies": [
+            "worldcraft-object-high-w",
+            "worldcraft-object-wall-near-w",
+            "worldcraft-object-wall-far-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "skip-to-crown",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -1,
+            "elevation": 11.5,
+            "charge": 0.57
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "short:ramp-w>top-c",
+          "sequence": "ramp-w:C4>top-c:A4>ramp-w:C4",
+          "pitches": "C4>A4>C4",
+          "order": "ramp-w>top-c>ramp-w>tee",
+          "contactBodies": [
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-top-c",
+            "worldcraft-object-ramp-w",
+            "worldcraft-tee"
+          ],
+          "layout": false
+        },
+        {
+          "id": "west-crown",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -5,
+            "elevation": 12,
+            "charge": 0.56
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "short:ramp-w>top-w",
+          "sequence": "ramp-w:C4>top-w:G4>ramp-w:C4",
+          "pitches": "C4>G4>C4",
+          "order": "ramp-w>top-w>ramp-w>ground",
+          "contactBodies": [
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-top-w",
+            "worldcraft-object-ramp-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "wall-and-ramp",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -2.5,
+            "elevation": 15,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "short:wall-near-e>ramp-w",
+          "sequence": "wall-near-e:E4>ramp-w:C4>wall-near-e:E4",
+          "pitches": "E4>C4>E4",
+          "order": "wall-near-e>ramp-w>wall-near-e>ground",
+          "contactBodies": [
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-wall-near-e"
+          ],
+          "layout": false
+        },
+        {
+          "id": "four",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -2.5,
+            "elevation": 18.5,
+            "charge": 0.46
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 4,
+          "audible": 4,
+          "family": "short:wall-near-e>ramp-w",
+          "sequence": "wall-near-e:E4>ramp-w:C4>wall-near-e:E4>ramp-w:C4",
+          "pitches": "E4>C4>E4>C4",
+          "order": "wall-near-e>ramp-w>wall-near-e>ramp-w>ground",
+          "contactBodies": [
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-ramp-w",
+            "worldcraft-object-wall-near-e",
+            "worldcraft-object-ramp-w"
+          ],
+          "layout": false
+        }
+      ],
+      "busiestStarter": {
+        "id": "four",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -2.5,
+          "elevation": 18.5,
+          "charge": 0.46
+        },
+        "raw": 4,
+        "audible": 4,
+        "contacts": 4
+      },
+      "relatedCandidates": [],
+      "relatedPair": null,
+      "cost": {
+        "coldConstructMs": 1.805,
+        "warmRebuildMedianMs": 1.552,
+        "idleStepMedianMs": 0.0024,
+        "idleStepP95Ms": 0.0025,
+        "flightStepMedianMs": 0.005,
+        "flightStepP95Ms": 0.0076,
+        "flightSteps": 341,
+        "staticBodies": 14,
+        "meshes": 14,
+        "materials": 13,
+        "note": "NullEngine. No shadows. These are not browser frame times."
+      },
+      "seconds": 5.54
+    },
+    "ricochet-garden-loop": {
+      "shots": 875,
+      "distinctContactOrders": 56,
+      "distinctNoteSequences": 48,
+      "distinctPitchSequences": 42,
+      "phraseFamilies": 39,
+      "longFamilies": 10,
+      "topFamilies": [
+        {
+          "name": "(silent)",
+          "count": 478,
+          "share": 0.5463
+        },
+        {
+          "name": "short:bank-back",
+          "count": 70,
+          "share": 0.08
+        },
+        {
+          "name": "short:plate-mouth-w",
+          "count": 67,
+          "share": 0.0766
+        },
+        {
+          "name": "short:plate-mouth-e",
+          "count": 62,
+          "share": 0.0709
+        },
+        {
+          "name": "short:bank-flank",
+          "count": 36,
+          "share": 0.0411
+        },
+        {
+          "name": "short:bank-back>plate-hook",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "name": "short:plate-hook",
+          "count": 21,
+          "share": 0.024
+        },
+        {
+          "name": "short:bank-flank>plate-side-w",
+          "count": 16,
+          "share": 0.0183
+        }
+      ],
+      "noteBins": {
+        "raw": {
+          "0": {
+            "count": 478,
+            "share": 0.5463
+          },
+          "1-2": {
+            "count": 371,
+            "share": 0.424
+          },
+          "3-5": {
+            "count": 26,
+            "share": 0.0297
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        },
+        "audible": {
+          "0": {
+            "count": 478,
+            "share": 0.5463
+          },
+          "1-2": {
+            "count": 375,
+            "share": 0.4286
+          },
+          "3-5": {
+            "count": 22,
+            "share": 0.0251
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "raw3": 26,
+      "audible3": 22,
+      "breadth": {
+        "raw3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 5,
+            "3": 15,
+            "4": 6
+          },
+          "medianPingPong": 0.75
+        },
+        "audible3": {
+          "medianDistinctPieces": 3,
+          "distribution": {
+            "2": 4,
+            "3": 12,
+            "4": 6
+          },
+          "medianPingPong": 0.75
+        },
+        "topTwoNoteShare": 0.3841,
+        "busiestPieceShare": 0.2409,
+        "topPieces": [
+          {
+            "piece": "bank-back",
+            "notes": 133,
+            "share": 0.2409
+          },
+          {
+            "piece": "plate-mouth-e",
+            "notes": 79,
+            "share": 0.1431
+          },
+          {
+            "piece": "plate-mouth-w",
+            "notes": 79,
+            "share": 0.1431
+          },
+          {
+            "piece": "plate-hook",
+            "notes": 69,
+            "share": 0.125
+          },
+          {
+            "piece": "bank-flank",
+            "notes": 58,
+            "share": 0.1051
+          },
+          {
+            "piece": "plate-corner-e",
+            "notes": 34,
+            "share": 0.0616
+          }
+        ]
+      },
+      "regions": {
+        "left-low": {
+          "shots": 135,
+          "families": 10,
+          "topFamily": "short:plate-mouth-w",
+          "topFamilyShare": 0.4444,
+          "topFamilies": [
+            {
+              "name": "short:plate-mouth-w",
+              "count": 60,
+              "share": 0.4444
+            },
+            {
+              "name": "(silent)",
+              "count": 30,
+              "share": 0.2222
+            },
+            {
+              "name": "short:bank-flank",
+              "count": 22,
+              "share": 0.163
+            },
+            {
+              "name": "short:bank-flank>plate-side-w",
+              "count": 10,
+              "share": 0.0741
+            }
+          ],
+          "raw3Shots": 1,
+          "raw3Families": 1,
+          "raw3TopFamily": "bank-back>plate-west>plate-mouth-w",
+          "raw3TopFamilyShare": 1,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-back>plate-west>plate-mouth-w",
+              "count": 1,
+              "share": 1
+            }
+          ]
+        },
+        "left-high": {
+          "shots": 180,
+          "families": 9,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.7667,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 138,
+              "share": 0.7667
+            },
+            {
+              "name": "short:bank-flank",
+              "count": 14,
+              "share": 0.0778
+            },
+            {
+              "name": "short:bank-back",
+              "count": 7,
+              "share": 0.0389
+            },
+            {
+              "name": "short:bank-flank>plate-side-w",
+              "count": 6,
+              "share": 0.0333
+            }
+          ],
+          "raw3Shots": 0,
+          "raw3Families": 0,
+          "raw3TopFamily": null,
+          "raw3TopFamilyShare": 0,
+          "raw3TopFamilies": []
+        },
+        "centre-low": {
+          "shots": 105,
+          "families": 18,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.2667,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 28,
+              "share": 0.2667
+            },
+            {
+              "name": "short:bank-back",
+              "count": 21,
+              "share": 0.2
+            },
+            {
+              "name": "short:plate-hook",
+              "count": 14,
+              "share": 0.1333
+            },
+            {
+              "name": "short:bank-back>plate-hook",
+              "count": 11,
+              "share": 0.1048
+            }
+          ],
+          "raw3Shots": 12,
+          "raw3Families": 7,
+          "raw3TopFamily": "plate-hook>plate-side-e>plate-corner-e",
+          "raw3TopFamilyShare": 0.3333,
+          "raw3TopFamilies": [
+            {
+              "name": "plate-hook>plate-side-e>plate-corner-e",
+              "count": 4,
+              "share": 0.3333
+            },
+            {
+              "name": "bank-back>plate-east>plate-hook",
+              "count": 3,
+              "share": 0.25
+            },
+            {
+              "name": "bank-back>plate-east>plate-corner-e",
+              "count": 1,
+              "share": 0.0833
+            },
+            {
+              "name": "bank-back>plate-mouth-e>plate-hook",
+              "count": 1,
+              "share": 0.0833
+            }
+          ]
+        },
+        "centre-high": {
+          "shots": 140,
+          "families": 11,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.65,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 91,
+              "share": 0.65
+            },
+            {
+              "name": "short:bank-back",
+              "count": 23,
+              "share": 0.1643
+            },
+            {
+              "name": "short:bank-back>plate-hook",
+              "count": 10,
+              "share": 0.0714
+            },
+            {
+              "name": "short:plate-hook",
+              "count": 5,
+              "share": 0.0357
+            }
+          ],
+          "raw3Shots": 5,
+          "raw3Families": 3,
+          "raw3TopFamily": "bank-back>plate-east>plate-hook",
+          "raw3TopFamilyShare": 0.6,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-back>plate-east>plate-hook",
+              "count": 3,
+              "share": 0.6
+            },
+            {
+              "name": "bank-back>plate-east>plate-corner-e",
+              "count": 1,
+              "share": 0.2
+            },
+            {
+              "name": "short:bank-back>plate-corner-e",
+              "count": 1,
+              "share": 0.2
+            }
+          ]
+        },
+        "right-low": {
+          "shots": 135,
+          "families": 14,
+          "topFamily": "short:plate-mouth-e",
+          "topFamilyShare": 0.4593,
+          "topFamilies": [
+            {
+              "name": "short:plate-mouth-e",
+              "count": 62,
+              "share": 0.4593
+            },
+            {
+              "name": "(silent)",
+              "count": 47,
+              "share": 0.3481
+            },
+            {
+              "name": "short:plate-mouth-e>plate-mouth-w",
+              "count": 7,
+              "share": 0.0519
+            },
+            {
+              "name": "short:bank-back",
+              "count": 5,
+              "share": 0.037
+            }
+          ],
+          "raw3Shots": 4,
+          "raw3Families": 4,
+          "raw3TopFamily": "bank-back>plate-corner-e>plate-hook",
+          "raw3TopFamilyShare": 0.25,
+          "raw3TopFamilies": [
+            {
+              "name": "bank-back>plate-corner-e>plate-hook",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "plate-corner-e>plate-side-e>plate-east",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "plate-mouth-e>plate-mouth-w>bank-flank",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "short:plate-hook>plate-corner-e",
+              "count": 1,
+              "share": 0.25
+            }
+          ]
+        },
+        "right-high": {
+          "shots": 180,
+          "families": 12,
+          "topFamily": "(silent)",
+          "topFamilyShare": 0.8,
+          "topFamilies": [
+            {
+              "name": "(silent)",
+              "count": 144,
+              "share": 0.8
+            },
+            {
+              "name": "short:bank-back",
+              "count": 9,
+              "share": 0.05
+            },
+            {
+              "name": "short:plate-east",
+              "count": 7,
+              "share": 0.0389
+            },
+            {
+              "name": "short:plate-side-e",
+              "count": 6,
+              "share": 0.0333
+            }
+          ],
+          "raw3Shots": 4,
+          "raw3Families": 3,
+          "raw3TopFamily": "short:plate-corner-e>plate-side-e",
+          "raw3TopFamilyShare": 0.5,
+          "raw3TopFamilies": [
+            {
+              "name": "short:plate-corner-e>plate-side-e",
+              "count": 2,
+              "share": 0.5
+            },
+            {
+              "name": "bank-back>plate-corner-e>plate-hook",
+              "count": 1,
+              "share": 0.25
+            },
+            {
+              "name": "plate-hook>bank-back>plate-corner-e",
+              "count": 1,
+              "share": 0.25
+            }
+          ]
+        }
+      },
+      "coverage": {
+        "reachedByRaw3": 9,
+        "reachedByAudible3": 9,
+        "reachedRaw": [
+          "bank-back",
+          "bank-flank",
+          "plate-corner-e",
+          "plate-east",
+          "plate-hook",
+          "plate-mouth-e",
+          "plate-mouth-w",
+          "plate-side-e",
+          "plate-west"
+        ],
+        "reachedAudible": [
+          "bank-back",
+          "bank-flank",
+          "plate-corner-e",
+          "plate-east",
+          "plate-hook",
+          "plate-mouth-e",
+          "plate-mouth-w",
+          "plate-side-e",
+          "plate-west"
+        ],
+        "soundingPieces": 10,
+        "missedByRaw3": [
+          "plate-side-w"
+        ]
+      },
+      "inflation": {
+        "raw3Shots": 26,
+        "raw3WithAChord": 12,
+        "raw3WithAChordShare": 0.4615,
+        "raw3OpeningIsAChord": 11,
+        "raw3OpeningIsAChordShare": 0.4231,
+        "raw3FirstThreeNoteEvents": {
+          "1": 2,
+          "2": 9,
+          "3": 15
+        },
+        "raw3DistinctOnsetsInside150ms": 0,
+        "raw3DistinctOnsetsInside150msShare": 0,
+        "raw3ByAudibleBin": {
+          "0": {
+            "count": 0,
+            "share": 0
+          },
+          "1-2": {
+            "count": 4,
+            "share": 0.1538
+          },
+          "3-5": {
+            "count": 22,
+            "share": 0.8462
+          },
+          "6+": {
+            "count": 0,
+            "share": 0
+          }
+        }
+      },
+      "notesTotal": 552,
+      "silentImpacts": 0,
+      "nudge": {
+        "raw3": {
+          "shots": 26,
+          "perDirection": {
+            "yaw": {
+              "steps": 52,
+              "stays3": 0.6731,
+              "sameFamily": 0.5,
+              "sameFamilyDifferentSequence": 0.1923
+            },
+            "elevation": {
+              "steps": 52,
+              "stays3": 0.5769,
+              "sameFamily": 0.5192,
+              "sameFamilyDifferentSequence": 0.1538
+            },
+            "power": {
+              "steps": 52,
+              "stays3": 0.7308,
+              "sameFamily": 0.5769,
+              "sameFamilyDifferentSequence": 0.2308
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 26,
+              "stays3": 0.5385,
+              "sameFamily": 0.3077,
+              "sameFamilyDifferentSequence": 0.1538
+            },
+            "elevation": {
+              "steps": 26,
+              "stays3": 0.3846,
+              "sameFamily": 0.3077,
+              "sameFamilyDifferentSequence": 0.1538
+            },
+            "power": {
+              "steps": 26,
+              "stays3": 0.5769,
+              "sameFamily": 0.3077,
+              "sameFamilyDifferentSequence": 0.1154
+            }
+          },
+          "allSix": {
+            "stays3": 0.2692,
+            "sameFamily": 0.0769,
+            "sameFamilyDifferentSequence": 0.0385,
+            "rejectedSteps": 0
+          }
+        },
+        "raw3LongFamily": {
+          "shots": 21,
+          "perDirection": {
+            "yaw": {
+              "steps": 42,
+              "stays3": 0.6429,
+              "sameFamily": 0.4762,
+              "sameFamilyDifferentSequence": 0.2381
+            },
+            "elevation": {
+              "steps": 42,
+              "stays3": 0.5952,
+              "sameFamily": 0.4286,
+              "sameFamilyDifferentSequence": 0.0952
+            },
+            "power": {
+              "steps": 42,
+              "stays3": 0.7857,
+              "sameFamily": 0.5476,
+              "sameFamilyDifferentSequence": 0.1905
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 21,
+              "stays3": 0.4762,
+              "sameFamily": 0.2857,
+              "sameFamilyDifferentSequence": 0.1905
+            },
+            "elevation": {
+              "steps": 21,
+              "stays3": 0.381,
+              "sameFamily": 0.1905,
+              "sameFamilyDifferentSequence": 0.0952
+            },
+            "power": {
+              "steps": 21,
+              "stays3": 0.619,
+              "sameFamily": 0.2857,
+              "sameFamilyDifferentSequence": 0.0952
+            }
+          },
+          "allSix": {
+            "stays3": 0.2381,
+            "sameFamily": 0.0476,
+            "sameFamilyDifferentSequence": 0.0476,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3": {
+          "shots": 22,
+          "perDirection": {
+            "yaw": {
+              "steps": 44,
+              "stays3": 0.5455,
+              "sameFamily": 0.5,
+              "sameFamilyDifferentSequence": 0.1818
+            },
+            "elevation": {
+              "steps": 44,
+              "stays3": 0.4773,
+              "sameFamily": 0.5,
+              "sameFamilyDifferentSequence": 0.1591
+            },
+            "power": {
+              "steps": 44,
+              "stays3": 0.6136,
+              "sameFamily": 0.5227,
+              "sameFamilyDifferentSequence": 0.2273
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 22,
+              "stays3": 0.3636,
+              "sameFamily": 0.2727,
+              "sameFamilyDifferentSequence": 0.0909
+            },
+            "elevation": {
+              "steps": 22,
+              "stays3": 0.2727,
+              "sameFamily": 0.3182,
+              "sameFamilyDifferentSequence": 0.1818
+            },
+            "power": {
+              "steps": 22,
+              "stays3": 0.4091,
+              "sameFamily": 0.2273,
+              "sameFamilyDifferentSequence": 0.0909
+            }
+          },
+          "allSix": {
+            "stays3": 0.1818,
+            "sameFamily": 0.0455,
+            "sameFamilyDifferentSequence": 0,
+            "rejectedSteps": 0
+          }
+        },
+        "audible3LongFamily": {
+          "shots": 18,
+          "perDirection": {
+            "yaw": {
+              "steps": 36,
+              "stays3": 0.5,
+              "sameFamily": 0.4444,
+              "sameFamilyDifferentSequence": 0.2222
+            },
+            "elevation": {
+              "steps": 36,
+              "stays3": 0.4444,
+              "sameFamily": 0.3889,
+              "sameFamilyDifferentSequence": 0.1111
+            },
+            "power": {
+              "steps": 36,
+              "stays3": 0.6111,
+              "sameFamily": 0.5,
+              "sameFamilyDifferentSequence": 0.2222
+            }
+          },
+          "bothDirections": {
+            "yaw": {
+              "steps": 18,
+              "stays3": 0.3333,
+              "sameFamily": 0.2222,
+              "sameFamilyDifferentSequence": 0.1111
+            },
+            "elevation": {
+              "steps": 18,
+              "stays3": 0.2222,
+              "sameFamily": 0.1667,
+              "sameFamilyDifferentSequence": 0.1111
+            },
+            "power": {
+              "steps": 18,
+              "stays3": 0.3889,
+              "sameFamily": 0.2222,
+              "sameFamilyDifferentSequence": 0.1111
+            }
+          },
+          "allSix": {
+            "stays3": 0.1667,
+            "sameFamily": 0,
+            "sameFamilyDifferentSequence": 0,
+            "rejectedSteps": 0
+          }
+        }
+      },
+      "id": "ricochet-garden-loop",
+      "pieces": 10,
+      "capacity": null,
+      "soundingPieces": 10,
+      "lifted": 0,
+      "tilted": 0,
+      "voices": {
+        "timber": 4,
+        "metal": 6,
+        "bankVoice": true
+      },
+      "starters": [
+        {
+          "id": "return",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -1,
+            "elevation": 16,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 2,
+          "audible": 2,
+          "family": "short:bank-back>plate-hook",
+          "sequence": "bank-back:C4>plate-hook:E4",
+          "pitches": "C4>E4",
+          "order": "bank-back>plate-hook>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-back",
+            "worldcraft-object-plate-hook"
+          ],
+          "layout": false
+        },
+        {
+          "id": "loop",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 5.5,
+            "elevation": 16,
+            "charge": 0.57
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 2,
+          "family": "short:bank-back>plate-corner-e",
+          "sequence": "bank-back:C4>plate-corner-e:A4>bank-back:C4",
+          "pitches": "C4+A4>C4",
+          "order": "bank-back>plate-corner-e>bank-back>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-back",
+            "worldcraft-object-plate-corner-e",
+            "worldcraft-object-bank-back"
+          ],
+          "layout": false
+        },
+        {
+          "id": "plates",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": 6,
+            "elevation": 14,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 2,
+          "family": "plate-hook>plate-side-e>plate-corner-e",
+          "sequence": "plate-hook:E4>plate-side-e:D4>plate-corner-e:A4",
+          "pitches": "E4>D4+A4",
+          "order": "plate-hook>plate-side-e>plate-corner-e>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-hook",
+            "worldcraft-object-plate-side-e",
+            "worldcraft-object-plate-corner-e"
+          ],
+          "layout": false
+        },
+        {
+          "id": "flank",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -22,
+            "elevation": 16,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 2,
+          "audible": 2,
+          "family": "short:bank-flank>plate-side-w",
+          "sequence": "bank-flank:D4>plate-side-w:C4",
+          "pitches": "D4>C4",
+          "order": "bank-flank>plate-side-w>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-flank",
+            "worldcraft-object-plate-side-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "mouth",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -12,
+            "elevation": 12,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 1,
+          "audible": 1,
+          "family": "short:plate-mouth-w",
+          "sequence": "plate-mouth-w:G4",
+          "pitches": "G4",
+          "order": "plate-mouth-w>ground",
+          "contactBodies": [
+            "worldcraft-object-plate-mouth-w"
+          ],
+          "layout": false
+        },
+        {
+          "id": "bank-turned",
+          "setup": {
+            "railIndex": 1,
+            "originX": 0,
+            "yaw": -4,
+            "elevation": 16,
+            "charge": 0.55
+          },
+          "terminal": true,
+          "contacts": true,
+          "raw": 3,
+          "audible": 3,
+          "family": "short:bank-back>plate-hook",
+          "sequence": "bank-back:C4>plate-hook:E4>bank-back:C4",
+          "pitches": "C4>E4>C4",
+          "order": "bank-back>plate-hook>bank-back>ground",
+          "contactBodies": [
+            "worldcraft-object-bank-back",
+            "worldcraft-object-plate-hook",
+            "worldcraft-object-bank-back"
+          ],
+          "layout": true
+        }
+      ],
+      "busiestStarter": {
+        "id": "loop",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 5.5,
+          "elevation": 16,
+          "charge": 0.57
+        },
+        "raw": 3,
+        "audible": 2,
+        "contacts": 3
+      },
+      "relatedCandidates": [],
+      "relatedPair": null,
+      "cost": {
+        "coldConstructMs": 1.608,
+        "warmRebuildMedianMs": 1.123,
+        "idleStepMedianMs": 0.0024,
+        "idleStepP95Ms": 0.0028,
+        "flightStepMedianMs": 0.0056,
+        "flightStepP95Ms": 0.0093,
+        "flightSteps": 225,
+        "staticBodies": 12,
+        "meshes": 12,
+        "materials": 7,
+        "note": "NullEngine. No shadows. These are not browser frame times."
+      },
+      "seconds": 2.24
+    }
+  },
+  "shotFiles": {
+    "shots-chime-terraces.json": {
+      "bytes": 117924,
+      "sha256": "f40a565df7402cec920537b50e55e5d209b4d6315cbc1665759d6d49334ce7f0"
+    },
+    "shots-chime-fan.json": {
+      "bytes": 102947,
+      "sha256": "7fe66b72246d2647a233620f0d413bc7383942df8733a71c690d7d1c05c6b7d8"
+    },
+    "shots-chime-garden.json": {
+      "bytes": 96527,
+      "sha256": "ec533ead3051d9df3e4dbe7e3a8d040af1580bb63d2dc71a6c5da7c03892a55c"
+    },
+    "shots-descending-resonance.json": {
+      "bytes": 112357,
+      "sha256": "c6161940a42c8e1721095f44b6586e241d1d862eca3db013347db425d7cca55a"
+    },
+    "shots-ricochet-garden-loop.json": {
+      "bytes": 102749,
+      "sha256": "9a9ddb11e2def4a00d60c026e25aaeba1e801c5c91e33f207c833af225867f68"
+    }
+  },
+  "audioPairs": {
+    "chime-terraces": {
+      "score": 6,
+      "starter": {
+        "id": "centre-climb",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 0,
+          "elevation": 8,
+          "charge": 0.55
+        },
+        "family": "ramp-c>high-2>high-3",
+        "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4",
+        "pitches": "E4>A4+G4>E4",
+        "raw": 4,
+        "audible": 3
+      },
+      "neighbour": {
+        "axis": "elevation",
+        "setup": {
+          "yaw": 0,
+          "elevation": 7.5,
+          "charge": 0.55
+        },
+        "family": "ramp-c>high-2>high-3",
+        "sequence": "ramp-c:E4>high-2:A4>high-3:G4>mid-3:E4>ramp-c:E4",
+        "pitches": "E4>A4+G4>E4>E4",
+        "raw": 5,
+        "audible": 4
+      }
+    },
+    "chime-fan": {
+      "score": 6,
+      "starter": {
+        "id": "west",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": -16,
+          "elevation": 24,
+          "charge": 0.55
+        },
+        "family": "plate-w-inner>bank-w>chime-w",
+        "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4",
+        "pitches": "E4>G4>A4>G4>A4",
+        "raw": 5,
+        "audible": 5
+      },
+      "neighbour": {
+        "axis": "elevation",
+        "setup": {
+          "yaw": -16,
+          "elevation": 24.5,
+          "charge": 0.55
+        },
+        "family": "plate-w-inner>bank-w>chime-w",
+        "sequence": "plate-w-inner:E4>bank-w:G4>chime-w:A4>bank-w:G4>chime-w:A4>bank-w:G4",
+        "pitches": "E4>G4>A4>G4>A4>G4",
+        "raw": 6,
+        "audible": 6
+      }
+    },
+    "chime-garden": {
+      "score": 6,
+      "starter": {
+        "id": "right",
+        "setup": {
+          "railIndex": 1,
+          "originX": 0,
+          "yaw": 18,
+          "elevation": 12,
+          "charge": 0.55
+        },
+        "family": "bank-r>r1>r2",
+        "sequence": "bank-r:A4>r1:D4>r2:E4",
+        "pitches": "A4>D4+E4",
+        "raw": 3,
+        "audible": 2
+      },
+      "neighbour": {
+        "axis": "elevation",
+        "setup": {
+          "yaw": 18,
+          "elevation": 12.5,
+          "charge": 0.55
+        },
+        "family": "bank-r>r1>r2",
+        "sequence": "bank-r:A4>r1:D4>r2:E4>bank-r:A4",
+        "pitches": "A4>D4+E4>A4",
+        "raw": 4,
+        "audible": 3
+      }
+    }
+  }
+}

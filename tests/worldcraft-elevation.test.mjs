@@ -53,14 +53,17 @@ test('a world without lift or tilt keeps its v1 bytes, identity, pose, and footp
   assert.equal(foot.halfX, 5);
   assert.ok(Math.abs(foot.halfZ - (Math.cos(20 * Math.PI / 180) * 10 + Math.sin(20 * Math.PI / 180) * 0.8) / 2) < 1e-12);
   // Every registered v1 foundry preset still exports the bytes it parses from.
-  // The 24-piece fixtures keep Descending Resonance's elevated plates, so they are not standing-only documents.
-  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && !id.startsWith('capacity-24-'));
+  // Descending Resonance, its 24-piece fixtures, Chime Terraces, and Chime Fan keep elevated plates.
+  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && id !== 'chime-terraces' && id !== 'chime-fan' && !id.startsWith('capacity-24-'));
   assert.ok(standingWorlds.includes('ricochet-garden-loop') && standingWorlds.includes('descending-resonance-flat') && standingWorlds.length >= 9);
   for (const id of standingWorlds) {
     const preset = foundryPreset(id);
     assert.equal(exportRangePreset(parseRangePreset(exportRangePreset(preset))), exportRangePreset(preset));
     assert.equal(exportRangePreset(preset).includes('"lift"'), false);
   }
+  const chime = foundryPreset('chime-terraces');
+  assert.equal(exportRangePreset(parseRangePreset(exportRangePreset(chime))), exportRangePreset(chime));
+  assert.equal(exportRangePreset(chime).includes('"lift"'), true);
 });
 
 test('lift and tilt are an explicit pair on a plate, on their grids, with one spelling per pose', () => {
@@ -212,7 +215,7 @@ test('edits and foundry layouts carry lift and tilt through unchanged', () => {
   assert.deepEqual(merged.objects.find(object => object.id === 'a'), { id: 'a', kind: 'plate', x: -4, z: 28, yaw: 0, lift: 7.5, tilt: -20, voice });
 });
 
-test('the two walled worlds end on a side survey orbit; every other world keeps its camera', () => {
+test('the hung-plate worlds end on a side survey orbit; every other world keeps its camera', () => {
   const record = foundryRecord('descending-resonance');
   const contacts = [
     { body: 'worldcraft-object-high-c', point: { x: -1, y: 9, z: 32 } },
@@ -225,5 +228,11 @@ test('the two walled worlds end on a side survey orbit; every other world keeps 
   const empty = resultFraming(record.world, { contacts: [{ body: 'worldcraft-ground', point: { x: 20, y: 0, z: 60 } }] }, 'descending-resonance-flat');
   assert.equal(empty.view, 'survey');
   assert.ok(empty.z > 15 && empty.z < 33);
+  const chime = resultFraming(foundryRecord('chime-terraces').world, { contacts: [{ body: 'worldcraft-ground', point: { x: 0, y: 0, z: 30 } }] }, 'chime-terraces');
+  assert.equal(chime.view, 'survey');
+  assert.ok(chime.z > 15 && chime.z < 40);
+  const fan = resultFraming(foundryRecord('chime-fan').world, { contacts: [] }, 'chime-fan');
+  assert.equal(fan.view, 'survey');
+  assert.equal(fan.radius, 58);
   for (const id of ['ricochet-garden-loop', 'open-contacts', 'soft-landing', null]) assert.equal(resultFraming(record.world, { contacts }, id), null);
 });

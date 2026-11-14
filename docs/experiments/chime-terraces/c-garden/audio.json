@@ -1,0 +1,196 @@
+{
+  "seed": 20261114,
+  "variant": "tuned-even",
+  "shots": [
+    {
+      "id": "centre",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "variant": "tuned-even",
+      "sequence": "bank-c:C4 > c1:E4 > c2:A4",
+      "file": "chime-garden-centre.ogg",
+      "sha256": "c4d955bd23a2e5b9b93397b53a397f51759f31fcee178e2219f72ee84c194165",
+      "seconds": 3.267,
+      "peak": 0.3881,
+      "rms": 0.0386,
+      "notes": [
+        {
+          "piece": "bank-c",
+          "note": "C4",
+          "hz": 261.6256,
+          "time": 0.767
+        },
+        {
+          "piece": "c1",
+          "note": "E4",
+          "hz": 329.6276,
+          "time": 0.942
+        },
+        {
+          "piece": "c2",
+          "note": "A4",
+          "hz": 440,
+          "time": 1.217
+        }
+      ]
+    },
+    {
+      "id": "left",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "variant": "tuned-even",
+      "sequence": "bank-l:D4 > l1:C4 > l2:G4",
+      "file": "chime-garden-left.ogg",
+      "sha256": "e32b29ceccdea8b9033892dd1dcb09987748a6bc0d1d29d561856f5241af0cb2",
+      "seconds": 3.275,
+      "peak": 0.3198,
+      "rms": 0.0324,
+      "notes": [
+        {
+          "piece": "bank-l",
+          "note": "D4",
+          "hz": 293.6648,
+          "time": 0.758
+        },
+        {
+          "piece": "l1",
+          "note": "C4",
+          "hz": 261.6256,
+          "time": 1.033
+        },
+        {
+          "piece": "l2",
+          "note": "G4",
+          "hz": 391.9954,
+          "time": 1.225
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 18,
+        "elevation": 12,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "variant": "tuned-even",
+      "sequence": "bank-r:A4 > r1:D4 > r2:E4",
+      "file": "chime-garden-right.ogg",
+      "sha256": "b8068bd48fdbd8bd876d552ed85283236aadc32aa43408c5e3067db52b94062b",
+      "seconds": 3.267,
+      "peak": 0.3343,
+      "rms": 0.0369,
+      "notes": [
+        {
+          "piece": "bank-r",
+          "note": "A4",
+          "hz": 440,
+          "time": 0.875
+        },
+        {
+          "piece": "r1",
+          "note": "D4",
+          "hz": 293.6648,
+          "time": 1.1
+        },
+        {
+          "piece": "r2",
+          "note": "E4",
+          "hz": 329.6276,
+          "time": 1.217
+        }
+      ]
+    },
+    {
+      "id": "near-miss",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 16,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "variant": "tuned-even",
+      "sequence": "bank-c:C4 > c1:E4",
+      "file": "chime-garden-near-miss.ogg",
+      "sha256": "258beb66f8a49f290eb04a4147d0ce09a2a8e08d86cc44521b33d3249f949b4b",
+      "seconds": 3.05,
+      "peak": 0.369,
+      "rms": 0.0284,
+      "notes": [
+        {
+          "piece": "bank-c",
+          "note": "C4",
+          "hz": 261.6256,
+          "time": 0.783
+        },
+        {
+          "piece": "c1",
+          "note": "E4",
+          "hz": 329.6276,
+          "time": 1
+        }
+      ]
+    },
+    {
+      "id": "left-reverse",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -22,
+        "elevation": 8,
+        "charge": 0.65
+      },
+      "seed": 20261114,
+      "variant": "tuned-even",
+      "sequence": "l2:G4 > l1:C4 > bank-l:D4 > l2:G4",
+      "file": "chime-garden-left-reverse.ogg",
+      "sha256": "794eb3afeb9a8cdd9320eb8daf1eb36799f916be7d52e2a167e33c76d73b61ba",
+      "seconds": 3.092,
+      "peak": 0.3663,
+      "rms": 0.0384,
+      "notes": [
+        {
+          "piece": "l2",
+          "note": "G4",
+          "hz": 391.9954,
+          "time": 0.542
+        },
+        {
+          "piece": "l1",
+          "note": "C4",
+          "hz": 261.6256,
+          "time": 0.725
+        },
+        {
+          "piece": "bank-l",
+          "note": "D4",
+          "hz": 293.6648,
+          "time": 0.883
+        },
+        {
+          "piece": "l2",
+          "note": "G4",
+          "hz": 391.9954,
+          "time": 1.042
+        }
+      ]
+    }
+  ]
+}
