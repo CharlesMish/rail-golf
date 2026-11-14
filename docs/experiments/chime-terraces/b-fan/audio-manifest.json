@@ -1,0 +1,128 @@
+{
+  "world": "chime-fan",
+  "seed": 20261114,
+  "dynamics": "normal-speed",
+  "variant": "tuned-even",
+  "renderer": "lib/worldcraft-resonance.js renderResonanceWav, Chrome OfflineAudioContext",
+  "note": "Peak and RMS are of the wav before the opus encode. The sha256 is of the ogg.",
+  "shots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "notes": [
+        "bank-c:C4"
+      ],
+      "file": "chime-fan-opening.ogg",
+      "sha256": "099ea3fde2e2b11bc83f82f9ca9fe6e3851eadb1fa75b5aab3f5455450b8fe99",
+      "wavSha256": "a2bc9f5d6d677eebc775a6fcfa59f21d0d7b554cf6b0bdbb3ffb3caf07137b0b",
+      "seconds": 2.85,
+      "peak": 0.4312,
+      "rms": 0.029,
+      "codec": "opus in ogg, 96 kbps, from the wav"
+    },
+    {
+      "id": "west",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -16,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "notes": [
+        "plate-w-inner:E4",
+        "bank-w:G4",
+        "chime-w:A4",
+        "bank-w:G4",
+        "chime-w:A4"
+      ],
+      "file": "chime-fan-west.ogg",
+      "sha256": "293af08f2c528e8a10674cdae6881ae408c2150d53068b37d8bb434a0648e138",
+      "wavSha256": "ba0f53fd0698b434882571c49bf002d4cf4fa7c3f4e794998b7d4b9a3ee99368",
+      "seconds": 4.05,
+      "peak": 0.3586,
+      "rms": 0.0405,
+      "codec": "opus in ogg, 96 kbps, from the wav"
+    },
+    {
+      "id": "centre",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "notes": [
+        "plate-c-mid:G4",
+        "bank-c:C4",
+        "chime-c:D4",
+        "bank-c:C4",
+        "chime-c:D4"
+      ],
+      "file": "chime-fan-centre.ogg",
+      "sha256": "b9cb943842fb98779b5ec4d0ae4a09abe8a9b7a6e5fbe8f057db103be40dc685",
+      "wavSha256": "59b66d81fbeafaf964700834d12e3e1252961afd56e3b2fbecfc6c7388b426b7",
+      "seconds": 3.958,
+      "peak": 0.3726,
+      "rms": 0.0424,
+      "codec": "opus in ogg, 96 kbps, from the wav"
+    },
+    {
+      "id": "east",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 16,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "notes": [
+        "plate-e-inner:G4",
+        "bank-e:D4",
+        "chime-e:E4",
+        "bank-e:D4",
+        "chime-e:E4"
+      ],
+      "file": "chime-fan-east.ogg",
+      "sha256": "559f5dcafcc74a91900fd98975484284f64eaaa337a6d33419fbe8bda131e6fe",
+      "wavSha256": "cb3429bd16a4193bdc0d2d866e625e1a11a8e4ab67a5686e90bc3ed3c1e67ee5",
+      "seconds": 4.05,
+      "peak": 0.351,
+      "rms": 0.0421,
+      "codec": "opus in ogg, 96 kbps, from the wav"
+    },
+    {
+      "id": "shoulder",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -28,
+        "elevation": 24,
+        "charge": 0.55
+      },
+      "seed": 20261114,
+      "notes": [
+        "plate-w-outer:C4",
+        "bank-w:G4"
+      ],
+      "file": "chime-fan-shoulder.ogg",
+      "sha256": "7a2d1356d33ff886c836a532d48ee0450b7ffbdbb8029febea3cb31195332c1e",
+      "wavSha256": "66ba2c6b1123de004caad827fbdf1785a2794714eae2dfbb52415e3b3bfa6b57",
+      "seconds": 3.467,
+      "peak": 0.3488,
+      "rms": 0.031,
+      "codec": "opus in ogg, 96 kbps, from the wav"
+    }
+  ]
+}

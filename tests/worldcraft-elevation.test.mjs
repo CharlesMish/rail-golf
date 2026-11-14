@@ -53,8 +53,8 @@ test('a world without lift or tilt keeps its v1 bytes, identity, pose, and footp
   assert.equal(foot.halfX, 5);
   assert.ok(Math.abs(foot.halfZ - (Math.cos(20 * Math.PI / 180) * 10 + Math.sin(20 * Math.PI / 180) * 0.8) / 2) < 1e-12);
   // Every registered v1 foundry preset still exports the bytes it parses from.
-  // Descending Resonance, its 24-piece fixtures, and Chime Terraces keep elevated plates.
-  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && id !== 'chime-terraces' && !id.startsWith('capacity-24-'));
+  // Descending Resonance, its 24-piece fixtures, Chime Terraces, and Chime Fan keep elevated plates.
+  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && id !== 'chime-terraces' && id !== 'chime-fan' && !id.startsWith('capacity-24-'));
   assert.ok(standingWorlds.includes('ricochet-garden-loop') && standingWorlds.includes('descending-resonance-flat') && standingWorlds.length >= 9);
   for (const id of standingWorlds) {
     const preset = foundryPreset(id);
@@ -231,5 +231,8 @@ test('the hung-plate worlds end on a side survey orbit; every other world keeps 
   const chime = resultFraming(foundryRecord('chime-terraces').world, { contacts: [{ body: 'worldcraft-ground', point: { x: 0, y: 0, z: 30 } }] }, 'chime-terraces');
   assert.equal(chime.view, 'survey');
   assert.ok(chime.z > 15 && chime.z < 40);
+  const fan = resultFraming(foundryRecord('chime-fan').world, { contacts: [] }, 'chime-fan');
+  assert.equal(fan.view, 'survey');
+  assert.equal(fan.radius, 58);
   for (const id of ['ricochet-garden-loop', 'open-contacts', 'soft-landing', null]) assert.equal(resultFraming(record.world, { contacts }, id), null);
 });
