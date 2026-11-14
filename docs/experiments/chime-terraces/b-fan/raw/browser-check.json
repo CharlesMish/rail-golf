@@ -1,0 +1,145 @@
+{
+  "url": "http://127.0.0.1:5174/lab/worldcraft?qa=1",
+  "started": "2026-11-14T20:24:43.640Z",
+  "views": {
+    "desktop": {
+      "pieces": 15,
+      "centresInsideCanvas": 15,
+      "outside": [],
+      "view": "survey",
+      "canvas": {
+        "left": 0,
+        "top": 73,
+        "right": 1000,
+        "bottom": 776,
+        "width": 1000,
+        "height": 703
+      }
+    },
+    "portrait": {
+      "pieces": 15,
+      "centresInsideCanvas": 15,
+      "outside": [],
+      "view": "survey",
+      "canvas": {
+        "left": 0,
+        "top": 194.6875,
+        "right": 390,
+        "bottom": 454.6875,
+        "width": 390,
+        "height": 260
+      }
+    },
+    "landscape": {
+      "pieces": 15,
+      "centresInsideCanvas": 15,
+      "outside": [],
+      "view": "survey",
+      "canvas": {
+        "left": 0,
+        "top": 59,
+        "right": 624,
+        "bottom": 370,
+        "width": 624,
+        "height": 311
+      }
+    }
+  },
+  "shots": [
+    {
+      "id": "opening",
+      "contactsMatchManifest": true,
+      "terminalMatchesManifest": true,
+      "notes": [
+        "bank-c:C4"
+      ],
+      "view": "survey"
+    },
+    {
+      "id": "west",
+      "contactsMatchManifest": true,
+      "terminalMatchesManifest": true,
+      "notes": [
+        "plate-w-inner:E4",
+        "bank-w:G4",
+        "chime-w:A4",
+        "bank-w:G4",
+        "chime-w:A4"
+      ],
+      "view": "survey"
+    },
+    {
+      "id": "west-long",
+      "contactsMatchManifest": true,
+      "terminalMatchesManifest": true,
+      "notes": [
+        "plate-w-inner:E4",
+        "bank-w:G4",
+        "chime-w:A4",
+        "bank-w:G4",
+        "chime-w:A4",
+        "bank-w:G4"
+      ],
+      "view": "survey"
+    },
+    {
+      "id": "centre",
+      "contactsMatchManifest": true,
+      "terminalMatchesManifest": true,
+      "notes": [
+        "plate-c-mid:G4",
+        "bank-c:C4",
+        "chime-c:D4",
+        "bank-c:C4",
+        "chime-c:D4"
+      ],
+      "view": "survey"
+    },
+    {
+      "id": "east",
+      "contactsMatchManifest": true,
+      "terminalMatchesManifest": true,
+      "notes": [
+        "plate-e-inner:G4",
+        "bank-e:D4",
+        "chime-e:E4",
+        "bank-e:D4",
+        "chime-e:E4"
+      ],
+      "view": "survey"
+    },
+    {
+      "id": "shoulder",
+      "contactsMatchManifest": true,
+      "terminalMatchesManifest": true,
+      "notes": [
+        "plate-w-outer:C4",
+        "bank-w:G4"
+      ],
+      "view": "survey"
+    }
+  ],
+  "pieceList": {
+    "desktop": {
+      "count": 0,
+      "clientHeight": 0,
+      "scrollHeight": 0,
+      "labels": []
+    },
+    "portrait": {
+      "count": 0,
+      "clientHeight": 0,
+      "scrollHeight": 0,
+      "labels": []
+    },
+    "landscape": {
+      "count": 0,
+      "clientHeight": 0,
+      "scrollHeight": 0,
+      "labels": []
+    }
+  },
+  "consoleErrors": [],
+  "build": "6d9da5dfd0-dirty",
+  "finished": "2026-11-14T20:25:13.167Z"
+}
