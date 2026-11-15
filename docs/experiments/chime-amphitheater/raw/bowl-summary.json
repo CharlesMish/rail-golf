@@ -1,0 +1,795 @@
+{
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "dynamics": "normal-speed",
+  "gitSha": "af02005834beba609d8aeb44803daad15380a7fd",
+  "physics": "rail-golf-v02-worldcraft-v1",
+  "grid": {
+    "shots": 875,
+    "fullGrid": 875,
+    "yaw": [
+      -24,
+      24,
+      2
+    ],
+    "elevation": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      30,
+      40
+    ],
+    "charge": [
+      0.35,
+      0.45,
+      0.55,
+      0.65,
+      0.8
+    ],
+    "originX": 0,
+    "railIndex": 1
+  },
+  "chordGapSeconds": 0.15,
+  "harness": "fresh Havok runtime per world",
+  "worlds": {
+    "chime-terraces": {
+      "id": "chime-terraces",
+      "kind": "control",
+      "pieces": 21,
+      "shots": 875,
+      "audibleSplit": {
+        "0": 159,
+        "1": 170,
+        "2": 335,
+        "3-5": 211,
+        "6+": 0
+      },
+      "rawSplit": {
+        "0": 159,
+        "1": 153,
+        "2": 268,
+        "3-5": 255,
+        "6+": 40
+      },
+      "raw3": 295,
+      "audible3": 211,
+      "longFamilies": 83,
+      "descending": 0,
+      "ascending": 0,
+      "oneNoteThenStop": 153,
+      "teeEndings": 39,
+      "groundEndings": 779,
+      "gaps": {
+        "n": 1169,
+        "median": 0.2333,
+        "p90": 1.0583
+      },
+      "dead": [],
+      "pieceShots": {
+        "ramp-c": 290,
+        "ramp-e": 102,
+        "ramp-w": 100,
+        "mid-3": 94,
+        "mid-2": 84,
+        "mid-4": 81,
+        "mid-1": 79,
+        "mid-5": 73,
+        "mid-0": 72,
+        "low-3": 67,
+        "low-4": 61,
+        "low-1": 58,
+        "low-2": 54,
+        "low-0": 46,
+        "low-5": 46,
+        "high-3": 36,
+        "high-2": 34,
+        "high-5": 34,
+        "high-0": 33,
+        "high-4": 33,
+        "high-1": 31
+      },
+      "nudge": {
+        "shots": 295,
+        "allSixStayRaw3": 0.5424,
+        "allSixSameFamily": 0.261
+      },
+      "defaultShot": {
+        "raw": 2,
+        "audible": 1,
+        "sequence": "low-2:D4>low-3:C4",
+        "terminal": "out-of-bounds",
+        "gaps": [
+          0
+        ]
+      },
+      "richest": [
+        {
+          "yaw": 10,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 10,
+          "audible": 4,
+          "sequence": "low-3:C4>low-4:D4>ramp-c:E4>low-4:D4>ramp-c:E4>low-4:D4>ramp-c:E4>low-4:D4>ramp-c:E4>low-4:D4",
+          "gaps": [
+            0,
+            0.0833,
+            0.0917,
+            0.1083,
+            0.125,
+            0.15,
+            0.175,
+            0.2,
+            0.2333
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -2,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 5,
+          "sequence": "low-2:D4>ramp-c:E4>low-2:D4>ramp-c:E4>low-2:D4>ramp-c:E4>low-2:D4>ramp-c:E4>low-2:D4",
+          "gaps": [
+            0.075,
+            0.1083,
+            0.1167,
+            0.1333,
+            0.1583,
+            0.1833,
+            0.2083,
+            0.3083
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": 2,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 5,
+          "sequence": "low-3:C4>ramp-c:E4>low-3:C4>ramp-c:E4>low-3:C4>ramp-c:E4>low-3:C4>ramp-c:E4>low-3:C4",
+          "gaps": [
+            0.075,
+            0.1083,
+            0.1167,
+            0.1333,
+            0.1583,
+            0.1833,
+            0.2083,
+            0.3083
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -22,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 4,
+          "sequence": "low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4",
+          "gaps": [
+            0.0833,
+            0.1,
+            0.1083,
+            0.1333,
+            0.15,
+            0.175,
+            0.2,
+            0.275
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -20,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 4,
+          "sequence": "low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4",
+          "gaps": [
+            0.0833,
+            0.1,
+            0.1083,
+            0.1333,
+            0.15,
+            0.175,
+            0.2,
+            0.2333
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -18,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 4,
+          "sequence": "low-1:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4>ramp-w:C4>low-0:C4",
+          "gaps": [
+            0.0833,
+            0.0917,
+            0.1083,
+            0.1333,
+            0.15,
+            0.175,
+            0.2,
+            0.2333
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -16,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 4,
+          "sequence": "low-1:C4>ramp-w:C4>low-1:C4>ramp-w:C4>low-1:C4>ramp-w:C4>low-1:C4>ramp-w:C4>low-1:C4",
+          "gaps": [
+            0.0833,
+            0.0917,
+            0.1083,
+            0.125,
+            0.15,
+            0.175,
+            0.2,
+            0.2333
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -14,
+          "elevation": 12,
+          "charge": 0.8,
+          "raw": 9,
+          "audible": 4,
+          "sequence": "low-1:C4>ramp-w:C4>low-1:C4>ramp-w:C4>low-1:C4>ramp-w:C4>low-1:C4>ramp-w:C4>low-1:C4",
+          "gaps": [
+            0.0833,
+            0.0917,
+            0.1083,
+            0.125,
+            0.15,
+            0.175,
+            0.2,
+            0.225
+          ],
+          "terminal": "first-ground-contact"
+        }
+      ],
+      "bodies": {
+        "staticBodies": 23,
+        "meshes": 23,
+        "physicsBodies": 23,
+        "rebuildMs": 22.4
+      },
+      "seconds": 11.1
+    },
+    "descending-resonance": {
+      "id": "descending-resonance",
+      "kind": "control",
+      "pieces": 12,
+      "shots": 875,
+      "audibleSplit": {
+        "0": 220,
+        "1": 332,
+        "2": 158,
+        "3-5": 163,
+        "6+": 2
+      },
+      "rawSplit": {
+        "0": 220,
+        "1": 331,
+        "2": 156,
+        "3-5": 165,
+        "6+": 3
+      },
+      "raw3": 168,
+      "audible3": 165,
+      "longFamilies": 42,
+      "descending": 0,
+      "ascending": 0,
+      "oneNoteThenStop": 331,
+      "teeEndings": 86,
+      "groundEndings": 691,
+      "gaps": {
+        "n": 578,
+        "median": 0.5667,
+        "p90": 1.5083
+      },
+      "dead": [],
+      "pieceShots": {
+        "ramp-w": 237,
+        "wall-near-e": 213,
+        "ramp-e": 179,
+        "wall-near-w": 149,
+        "wall-far-e": 54,
+        "wall-far-w": 53,
+        "top-w": 42,
+        "top-e": 42,
+        "high-w": 36,
+        "high-e": 35,
+        "high-c": 33,
+        "top-c": 33
+      },
+      "nudge": {
+        "shots": 168,
+        "allSixStayRaw3": 0.494,
+        "allSixSameFamily": 0.3333
+      },
+      "defaultShot": {
+        "raw": 1,
+        "audible": 1,
+        "sequence": "wall-near-e:E4",
+        "terminal": "first-ground-contact",
+        "gaps": []
+      },
+      "richest": [
+        {
+          "yaw": -6,
+          "elevation": 8,
+          "charge": 0.55,
+          "raw": 7,
+          "audible": 7,
+          "sequence": "ramp-w:C4>top-w:G4>ramp-w:C4>wall-near-w:D4>top-w:G4>wall-near-w:D4>wall-far-w:C4",
+          "gaps": [
+            0.975,
+            0.8,
+            0.3583,
+            0.7667,
+            0.7,
+            0.5417
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": 6,
+          "elevation": 8,
+          "charge": 0.55,
+          "raw": 7,
+          "audible": 7,
+          "sequence": "ramp-e:D4>top-e:E4>ramp-e:D4>wall-near-e:E4>top-e:E4>wall-near-e:E4>wall-far-e:D4",
+          "gaps": [
+            0.975,
+            0.8,
+            0.3583,
+            0.7667,
+            0.7,
+            0.5917
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -4,
+          "elevation": 20,
+          "charge": 0.45,
+          "raw": 6,
+          "audible": 4,
+          "sequence": "wall-near-e:E4>wall-near-w:D4>ramp-w:C4>wall-near-e:E4>wall-near-w:D4>ramp-w:C4",
+          "gaps": [
+            0.0083,
+            0.2417,
+            0.3083,
+            0.0083,
+            1
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -14,
+          "elevation": 30,
+          "charge": 0.35,
+          "raw": 5,
+          "audible": 5,
+          "sequence": "wall-near-w:D4>ramp-w:C4>wall-near-w:D4>ramp-w:C4>wall-near-w:D4",
+          "gaps": [
+            0.3417,
+            0.3583,
+            0.4,
+            0.45
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -4,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 5,
+          "audible": 5,
+          "sequence": "ramp-w:C4>high-w:E4>wall-near-w:D4>high-w:E4>wall-near-w:D4",
+          "gaps": [
+            1.2833,
+            0.4583,
+            0.4833,
+            0.625
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -2,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 5,
+          "audible": 5,
+          "sequence": "ramp-w:C4>high-c:G4>wall-near-e:E4>high-c:G4>wall-near-e:E4",
+          "gaps": [
+            1.275,
+            0.4583,
+            0.5333,
+            0.6333
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -2,
+          "elevation": 20,
+          "charge": 0.35,
+          "raw": 5,
+          "audible": 5,
+          "sequence": "ramp-w:C4>high-c:G4>wall-near-e:E4>wall-far-w:C4>wall-near-e:E4",
+          "gaps": [
+            1.15,
+            0.5917,
+            0.525,
+            0.6167
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": 0,
+          "elevation": 12,
+          "charge": 0.55,
+          "raw": 5,
+          "audible": 5,
+          "sequence": "ramp-w:C4>top-c:A4>ramp-w:C4>top-c:A4>wall-near-e:E4",
+          "gaps": [
+            0.7917,
+            0.7667,
+            1.3417,
+            0.7833
+          ],
+          "terminal": "first-ground-contact"
+        }
+      ],
+      "bodies": {
+        "staticBodies": 14,
+        "meshes": 14,
+        "physicsBodies": 14,
+        "rebuildMs": 3.3
+      },
+      "seconds": 6
+    },
+    "chime-bowl-aisle": {
+      "id": "chime-bowl-aisle",
+      "kind": "bowl",
+      "pieces": 6,
+      "shots": 875,
+      "audibleSplit": {
+        "0": 603,
+        "1": 252,
+        "2": 16,
+        "3-5": 4,
+        "6+": 0
+      },
+      "rawSplit": {
+        "0": 603,
+        "1": 232,
+        "2": 30,
+        "3-5": 10,
+        "6+": 0
+      },
+      "raw3": 10,
+      "audible3": 4,
+      "longFamilies": 3,
+      "descending": 16,
+      "ascending": 18,
+      "oneNoteThenStop": 232,
+      "teeEndings": 24,
+      "groundEndings": 792,
+      "gaps": {
+        "n": 50,
+        "median": 0.1,
+        "p90": 0.9
+      },
+      "dead": [],
+      "pieceShots": {
+        "step-5": 130,
+        "step-2": 52,
+        "step-1": 42,
+        "step-3": 42,
+        "step-0": 32,
+        "step-4": 20
+      },
+      "nudge": {
+        "shots": 10,
+        "allSixStayRaw3": 0.2,
+        "allSixSameFamily": 0
+      },
+      "defaultShot": {
+        "raw": 0,
+        "audible": 0,
+        "sequence": "(silent)",
+        "terminal": "first-ground-contact",
+        "gaps": []
+      },
+      "richest": [
+        {
+          "yaw": -24,
+          "elevation": 12,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 3,
+          "sequence": "step-5:C4>step-3:G4>step-4:A4",
+          "gaps": [
+            0.325,
+            0.6833
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -8,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 3,
+          "sequence": "step-5:C4>step-2:E4>step-1:D4",
+          "gaps": [
+            0.3917,
+            0.1667
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": 8,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 3,
+          "sequence": "step-5:C4>step-2:E4>step-1:D4",
+          "gaps": [
+            0.3917,
+            0.1667
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": 24,
+          "elevation": 12,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 3,
+          "sequence": "step-5:C4>step-3:G4>step-4:A4",
+          "gaps": [
+            0.325,
+            0.6833
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -24,
+          "elevation": 16,
+          "charge": 0.35,
+          "raw": 3,
+          "audible": 2,
+          "sequence": "step-3:G4>step-3:G4>step-4:A4",
+          "gaps": [
+            0.9,
+            0.0417
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -20,
+          "elevation": 12,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 2,
+          "sequence": "step-2:E4>step-2:E4>step-3:G4",
+          "gaps": [
+            0.5583,
+            0.1
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -6,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 2,
+          "sequence": "step-5:C4>step-4:A4>step-0:C4",
+          "gaps": [
+            0.0083,
+            0.4917
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": 6,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 3,
+          "audible": 2,
+          "sequence": "step-5:C4>step-4:A4>step-0:C4",
+          "gaps": [
+            0.0083,
+            0.4917
+          ],
+          "terminal": "first-ground-contact"
+        }
+      ],
+      "bodies": {
+        "staticBodies": 110,
+        "meshes": 110,
+        "physicsBodies": 110,
+        "rebuildMs": 131.5
+      },
+      "seconds": 138.2
+    },
+    "chime-bowl-stage": {
+      "id": "chime-bowl-stage",
+      "kind": "bowl",
+      "pieces": 6,
+      "shots": 875,
+      "audibleSplit": {
+        "0": 715,
+        "1": 160,
+        "2": 0,
+        "3-5": 0,
+        "6+": 0
+      },
+      "rawSplit": {
+        "0": 715,
+        "1": 122,
+        "2": 38,
+        "3-5": 0,
+        "6+": 0
+      },
+      "raw3": 0,
+      "audible3": 0,
+      "longFamilies": 0,
+      "descending": 34,
+      "ascending": 4,
+      "oneNoteThenStop": 122,
+      "teeEndings": 165,
+      "groundEndings": 175,
+      "gaps": {
+        "n": 38,
+        "median": 0.0083,
+        "p90": 0.05
+      },
+      "dead": [
+        "step-0",
+        "step-1",
+        "step-2"
+      ],
+      "pieceShots": {
+        "step-5": 80,
+        "step-4": 78,
+        "step-3": 40,
+        "step-0": 0,
+        "step-1": 0,
+        "step-2": 0
+      },
+      "nudge": {
+        "shots": 0,
+        "allSixStayRaw3": 0,
+        "allSixSameFamily": 0
+      },
+      "defaultShot": {
+        "raw": 0,
+        "audible": 0,
+        "sequence": "(silent)",
+        "terminal": "out-of-bounds",
+        "gaps": []
+      },
+      "richest": [
+        {
+          "yaw": -24,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-3:G4>step-4:A4",
+          "gaps": [
+            0
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -24,
+          "elevation": 8,
+          "charge": 0.65,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-5:C4>step-4:A4",
+          "gaps": [
+            0.05
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -22,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-4:A4>step-3:G4",
+          "gaps": [
+            0.0083
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -22,
+          "elevation": 8,
+          "charge": 0.65,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-5:C4>step-4:A4",
+          "gaps": [
+            0.05
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -20,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-4:A4>step-3:G4",
+          "gaps": [
+            0.0083
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -20,
+          "elevation": 8,
+          "charge": 0.65,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-5:C4>step-4:A4",
+          "gaps": [
+            0.05
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -18,
+          "elevation": 8,
+          "charge": 0.45,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-4:A4>step-3:G4",
+          "gaps": [
+            0.0083
+          ],
+          "terminal": "first-ground-contact"
+        },
+        {
+          "yaw": -18,
+          "elevation": 8,
+          "charge": 0.65,
+          "raw": 2,
+          "audible": 1,
+          "sequence": "step-5:C4>step-4:A4",
+          "gaps": [
+            0.0417
+          ],
+          "terminal": "first-ground-contact"
+        }
+      ],
+      "bodies": {
+        "staticBodies": 110,
+        "meshes": 110,
+        "physicsBodies": 110,
+        "rebuildMs": 56.4
+      },
+      "seconds": 126.3
+    }
+  }
+}

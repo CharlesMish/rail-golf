@@ -1,0 +1,110 @@
+{
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": [],
+  "build": "0b151c5c94-dirty",
+  "gallery": {
+    "section": "Amphitheater sketches",
+    "cards": [
+      "chime-tiers",
+      "chime-bowl-aisle",
+      "chime-bowl-stage"
+    ],
+    "tiers": {
+      "name": "Two Tiers",
+      "invitation": "Two arcs of metal plates face the tee. The nearer arc stands on the ground. The farther arc is raised and leans inward. The pieces stay where they are. Aim and power are yours. There is no target."
+    },
+    "terraces": {
+      "name": "Chime Terraces",
+      "invitation": "Three timber ramps sit in front of the tee. Behind them, three rows of metal plates rise and lean toward the tee. The pieces stay where they are. Aim and power are yours. There is no target."
+    },
+    "aisle": {
+      "name": "Down the Aisle",
+      "invitation": "Six timber steps curve around an open stage, with a straight aisle through the middle. You stand at the top of that aisle. The pieces stay where they are. There is no target."
+    },
+    "stage": {
+      "name": "From the Stage",
+      "invitation": "The same six timber steps, seen from the open stage. The aisle is behind the ball and the steps rise ahead. The pieces stay where they are. There is no target."
+    }
+  },
+  "aisle": {
+    "objects": 6,
+    "launcher": {
+      "x": 0
+    },
+    "frame": {
+      "samples": 24,
+      "medianDtMs": 22.15,
+      "maxDtMs": 28.2,
+      "medianDraws": 236,
+      "staticBodies": 110,
+      "meshes": 110,
+      "rebuildMs": 144.70000000018626
+    },
+    "shots": [
+      {
+        "id": "descent",
+        "terminal": true,
+        "reason": "first-ground-contact",
+        "notes": [
+          "step-5:C4",
+          "step-2:E4",
+          "step-1:D4"
+        ],
+        "view": "survey"
+      },
+      {
+        "id": "outer-lip",
+        "terminal": true,
+        "reason": "first-ground-contact",
+        "notes": [
+          "step-5:C4"
+        ],
+        "view": "survey"
+      }
+    ]
+  },
+  "stage": {
+    "objects": 6,
+    "launcher": {
+      "x": 0,
+      "z": 32,
+      "yaw": -180
+    },
+    "frame": {
+      "samples": 24,
+      "medianDtMs": 23.95,
+      "maxDtMs": 40.9,
+      "medianDraws": 236,
+      "staticBodies": 110,
+      "meshes": 110,
+      "rebuildMs": 117.70000000018626
+    },
+    "shots": [
+      {
+        "id": "outer-lip",
+        "terminal": true,
+        "reason": "first-ground-contact",
+        "notes": [
+          "step-5:C4"
+        ],
+        "view": "survey"
+      },
+      {
+        "id": "graze",
+        "terminal": true,
+        "reason": "first-ground-contact",
+        "notes": [
+          "step-5:C4",
+          "step-4:A4"
+        ],
+        "view": "survey"
+      }
+    ]
+  },
+  "reset": {
+    "foundryId": "chime-tiers",
+    "objects": 10,
+    "elevation": 18
+  },
+  "ok": true
+}

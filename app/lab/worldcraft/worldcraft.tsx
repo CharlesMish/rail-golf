@@ -755,6 +755,7 @@ export default function Worldcraft() {
           if (drag.type === 'object' && drag.object && drag.ground && drag.moved) {
             const point = groundPoint(e); if (!point) return;
             if (!drag.preview) {
+              if (drag.object.kind === 'terrace') return;
               const prefab = WORLDCRAFT_CATALOG[drag.object.kind];
               drag.preview = MeshBuilder.CreateBox('worldcraft-drag-preview', { width: prefab.width, height: prefab.height, depth: prefab.depth }, activeScene);
               drag.preview.position.copyFrom(drag.original!.position); drag.preview.rotation.copyFrom(drag.original!.rotation);
@@ -864,7 +865,8 @@ export default function Worldcraft() {
             },
             exportText() {
               const state = uiRef.current;
-              return state.preset ? exportRangePreset(retargetRangeOpening(state.preset, state.setup)) : exportWorldJSON({ ...state.world, launcher: { x: state.setup.originX } });
+              const station = state.world.launcher;
+              return state.preset ? exportRangePreset(retargetRangeOpening(state.preset, state.setup)) : exportWorldJSON({ ...state.world, launcher: { x: state.setup.originX, ...(station.z ? { z: station.z } : {}), ...(station.yaw ? { yaw: station.yaw } : {}) } });
             },
             importText(text: string) { actions.current?.import(text); },
             saveReload() {
@@ -872,7 +874,8 @@ export default function Worldcraft() {
               if (!state.preset) return { ok: false, error: 'no preset' };
               if (state.mode !== 'build') actions.current?.mode('build');
               try {
-                const saved = store.saveWorld({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } }, perfSlot ? { replaceId: perfSlot } : {});
+                const station = uiRef.current.world.launcher;
+                const saved = store.saveWorld({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX, ...(station.z ? { z: station.z } : {}), ...(station.yaw ? { yaw: station.yaw } : {}) } }, perfSlot ? { replaceId: perfSlot } : {});
                 perfSlot = saved.entry.id;
               } catch (error) { return { ok: false, error: error instanceof Error ? error.message : String(error) }; }
               const before = runtime.diagnostics().rebuildCount;

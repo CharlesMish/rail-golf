@@ -1,4 +1,4 @@
-import type { WorldcraftDocument, WorldcraftGoal, WorldcraftGoalResult, WorldcraftObject, WorldcraftKind, WorldcraftSetup, WorldcraftSnapshot, WorldcraftContact, WorldcraftTerminal, WorldcraftLaunch, WorldcraftPoint } from './worldcraft-model';
+import type { WorldcraftDocument, WorldcraftGoal, WorldcraftGoalResult, WorldcraftPiece, WorldcraftKind, WorldcraftSetup, WorldcraftSnapshot, WorldcraftContact, WorldcraftTerminal, WorldcraftLaunch, WorldcraftPoint } from './worldcraft-model';
 
 export const RANGE_PRESET_FORMAT: 'rail-golf-worldcraft-range-preset';
 export const RANGE_PRESET_VERSION: 1;
@@ -12,8 +12,8 @@ export type RangePreset = {
   id: string;
   name: string;
   environment: { preset: 'forest-clearing-v1'; seed: 1 };
-  launcher: { x: number };
-  objects: WorldcraftObject[];
+  launcher: { x: number; z?: number; yaw?: number };
+  objects: WorldcraftPiece[];
   /** Present only when this preset opts into the experimental 24-piece ceiling. */
   capacity?: 24;
   rules: {

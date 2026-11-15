@@ -1,0 +1,125 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-bowl-aisle",
+  "name": "Down the Aisle",
+  "kind": "shot-study",
+  "invitation": "Six timber steps curve around an open stage, with a straight aisle through the middle. You stand at the top of that aisle. The pieces stay where they are. There is no target.",
+  "physicalQuestion": "Does a ball sent down the aisle meet the step lips and continue, or does the first lip end the line?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "af02005834beba609d8aeb44803daad15380a7fd",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.6416666666666633,
+        "position": [
+          0,
+          0.43000003695487976,
+          46.14754867553711
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 0.9499999999999991,
+        "position": [
+          -0.15088894963264465,
+          0.43000227212905884,
+          22.720308303833008
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-5",
+        "worldcraft-object-step-2",
+        "worldcraft-object-step-1"
+      ]
+    },
+    {
+      "id": "outer-lip",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 0.9249999999999992,
+        "position": [
+          -11.655466079711914,
+          0.4299998879432678,
+          5.072073459625244
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-5"
+      ]
+    }
+  ],
+  "nearbySensitivity": "The opening aim touches no step and ends on the stage ground. Yaw 8, elevation 8, charge 0.45 rings the outer lip, then step 2, then step 1. Yaw 8.5 at the same elevation and charge rings only the outer lip. Two of the ten three-contact shots keep three contacts through all six nudges, at yaw 24 and yaw -24, elevation 16, charge 0.35. Those repeat step 3 and then touch step 4.",
+  "validationEvidence": "875-shot Havok grid on a fresh runtime: yaw -24 to 24 by 2 degrees, elevations 8, 12, 16, 20, 24, 30, 40, charges 0.35, 0.45, 0.55, 0.65, 0.8, origin 0, rail 1. Face speed. Audible events merge onsets within 150 ms. Seed 20261114 is recorded and not applied. Terraces and Descending Resonance were measured again on the same harness.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A landing on the tread, then a roll across the step.",
+      "missing": "The contacts that registered are the vertical lips. Each lip is one facet. A slide that crosses several facets of one tread did not occur.",
+      "extension": "Keep the 12 degree facets. Do not change restitution to make the ball stay down."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "A curved step a person can place from the palette.",
+      "missing": "The terrace is not a catalog piece. A world that is not locked rejects it.",
+      "extension": "Leave it lab-only until a later decision. No general solid modeller."
+    },
+    {
+      "category": "presentation",
+      "concept": "The bowl reads as one place from the tee and after the shot.",
+      "missing": "The result view is the existing side orbit. A phone was not checked.",
+      "extension": "No new camera."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-bowl-stage",
+  "name": "From the Stage",
+  "kind": "shot-study",
+  "invitation": "The same six timber steps, seen from the open stage. The aisle is behind the ball and the steps rise ahead. The pieces stay where they are. There is no target.",
+  "physicalQuestion": "Does a ball sent from the stage climb the steps, or does it leave over the rim and through the aisle?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "af02005834beba609d8aeb44803daad15380a7fd",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "out-of-bounds",
+        "elapsed": 1.3999999999999975,
+        "position": [
+          -4.90832003066286e-15,
+          2.7951860427856445,
+          -8.079474449157715
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "outer-lip",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 16,
+        "charge": 0.35
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.824999999999996,
+        "position": [
+          14.999046325683594,
+          0.4300018548965454,
+          -1.6884150505065918
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-5"
+      ]
+    },
+    {
+      "id": "graze",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.65
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.0499999999999987,
+        "position": [
+          0.5317808389663696,
+          0.43000054359436035,
+          30.806577682495117
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-5",
+        "worldcraft-object-step-4"
+      ]
+    }
+  ],
+  "nearbySensitivity": "The opening aim leaves over the back of the yard and touches nothing. No shot on the grid makes two audible notes. The longest ledger is two outer steps inside 50 ms, and the second gain is negligible. The inner three steps are never touched. Yaw -24, elevation 16, charge 0.35 rings only the outer lip, then the ground.",
+  "validationEvidence": "Same 875-shot grid, fresh runtime, face speed, 150 ms audible merge, as Down the Aisle. The pieces are the same. Only the station moves, to the stage centre, facing back up the aisle. Seed 20261114 is recorded and not applied.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A climb from the stage onto the inner treads.",
+      "missing": "On this grid the inner three steps receive no contact. Shots that hit meet the outer three lips.",
+      "extension": "The launch mapping was not changed. A different station would be a different experiment."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "The apron at the top of the aisle.",
+      "missing": "A shot that goes back through the aisle can meet the existing tee, and that tee still ends the line.",
+      "extension": "The tee was not moved. It is the same apron every world already has."
+    },
+    {
+      "category": "presentation",
+      "concept": "The stage station should read as standing inside the bowl.",
+      "missing": "The opening camera is the shared orbit. The result view is the existing side orbit. A phone was not checked.",
+      "extension": "No new camera."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}
