@@ -1,0 +1,449 @@
+[
+  {
+    "id": "chime-arc",
+    "ok": true,
+    "why": "Five plates, 20° apart, radius 13 m, one height. A shallow arc facing the tee.",
+    "pieces": 5,
+    "objects": [
+      {
+        "id": "arc-0",
+        "x": -8.5,
+        "z": 24,
+        "yaw": -40,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "arc-1",
+        "x": -4.5,
+        "z": 26,
+        "yaw": -20,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "arc-2",
+        "x": 0,
+        "z": 27,
+        "yaw": 0,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "arc-3",
+        "x": 4.5,
+        "z": 26,
+        "yaw": 20,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "arc-4",
+        "x": 8.5,
+        "z": 24,
+        "yaw": 40,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      }
+    ],
+    "closestPairs": [
+      {
+        "a": "arc-0",
+        "b": "arc-1",
+        "gap": 0.329
+      },
+      {
+        "a": "arc-3",
+        "b": "arc-4",
+        "gap": 0.329
+      },
+      {
+        "a": "arc-1",
+        "b": "arc-2",
+        "gap": 0.456
+      },
+      {
+        "a": "arc-2",
+        "b": "arc-3",
+        "gap": 0.456
+      },
+      {
+        "a": "arc-1",
+        "b": "arc-3",
+        "gap": 4.491
+      },
+      {
+        "a": "arc-0",
+        "b": "arc-2",
+        "gap": 4.53
+      }
+    ],
+    "widestAdjacentHint": {
+      "a": "arc-0",
+      "b": "arc-4",
+      "gap": 10.22
+    },
+    "vacuumHits": {
+      "ground": 14,
+      "arc-0": 4,
+      "arc-1": 2,
+      "arc-2": 2,
+      "arc-3": 2,
+      "arc-4": 4
+    },
+    "vacuumCentre": {
+      "hit": "arc-2",
+      "at": {
+        "t": 0.85,
+        "x": 0,
+        "y": 5.74,
+        "z": 26.23
+      }
+    }
+  },
+  {
+    "id": "chime-tiers",
+    "ok": true,
+    "why": "Inner standing arc at radius 9 m. Outer arc at radius 13 m, lifted, so a higher shot can clear the inner tier.",
+    "pieces": 10,
+    "objects": [
+      {
+        "id": "in-0",
+        "x": -8,
+        "z": 20.5,
+        "yaw": -60,
+        "y": [
+          0,
+          4
+        ]
+      },
+      {
+        "id": "in-1",
+        "x": -4.5,
+        "z": 24,
+        "yaw": -30,
+        "y": [
+          0,
+          4
+        ]
+      },
+      {
+        "id": "in-2",
+        "x": 0,
+        "z": 25,
+        "yaw": 0,
+        "y": [
+          0,
+          4
+        ]
+      },
+      {
+        "id": "in-3",
+        "x": 4.5,
+        "z": 24,
+        "yaw": 30,
+        "y": [
+          0,
+          4
+        ]
+      },
+      {
+        "id": "in-4",
+        "x": 8,
+        "z": 20.5,
+        "yaw": 60,
+        "y": [
+          0,
+          4
+        ]
+      },
+      {
+        "id": "out-0",
+        "x": -8.5,
+        "z": 26,
+        "yaw": -40,
+        "lift": 4,
+        "tilt": -15,
+        "y": [
+          4,
+          7.95
+        ]
+      },
+      {
+        "id": "out-1",
+        "x": -4.5,
+        "z": 28,
+        "yaw": -20,
+        "lift": 4,
+        "tilt": -15,
+        "y": [
+          4,
+          7.95
+        ]
+      },
+      {
+        "id": "out-2",
+        "x": 0,
+        "z": 29,
+        "yaw": 0,
+        "lift": 4,
+        "tilt": -15,
+        "y": [
+          4,
+          7.95
+        ]
+      },
+      {
+        "id": "out-3",
+        "x": 4.5,
+        "z": 28,
+        "yaw": 20,
+        "lift": 4,
+        "tilt": -15,
+        "y": [
+          4,
+          7.95
+        ]
+      },
+      {
+        "id": "out-4",
+        "x": 8.5,
+        "z": 26,
+        "yaw": 40,
+        "lift": 4,
+        "tilt": -15,
+        "y": [
+          4,
+          7.95
+        ]
+      }
+    ],
+    "closestPairs": [
+      {
+        "a": "out-0",
+        "b": "out-1",
+        "gap": 0.329
+      },
+      {
+        "a": "out-3",
+        "b": "out-4",
+        "gap": 0.329
+      },
+      {
+        "a": "out-1",
+        "b": "out-2",
+        "gap": 0.456
+      },
+      {
+        "a": "out-2",
+        "b": "out-3",
+        "gap": 0.456
+      },
+      {
+        "a": "in-1",
+        "b": "in-2",
+        "gap": 0.68
+      },
+      {
+        "a": "in-2",
+        "b": "in-3",
+        "gap": 0.68
+      }
+    ],
+    "widestAdjacentHint": {
+      "a": "in-4",
+      "b": "out-0",
+      "gap": 12.719
+    },
+    "vacuumHits": {
+      "in-0": 4,
+      "ground": 4,
+      "out-0": 2,
+      "in-1": 2,
+      "out-1": 2,
+      "in-2": 2,
+      "out-2": 2,
+      "in-3": 2,
+      "out-3": 2,
+      "in-4": 4,
+      "out-4": 2
+    },
+    "vacuumCentre": {
+      "hit": "out-2",
+      "at": {
+        "t": 0.942,
+        "x": 0,
+        "y": 5.5,
+        "z": 28.52
+      }
+    }
+  },
+  {
+    "id": "chime-horseshoe",
+    "ok": true,
+    "why": "Seven plates, 20° apart, from -60° to 60°, radius 13 m. Open toward the tee. A full 180° mouth put the side walls outside the yaw cone.",
+    "pieces": 7,
+    "objects": [
+      {
+        "id": "shoe-0",
+        "x": -11.5,
+        "z": 22.5,
+        "yaw": -60,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "shoe-1",
+        "x": -8.5,
+        "z": 26,
+        "yaw": -40,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "shoe-2",
+        "x": -4.5,
+        "z": 28,
+        "yaw": -20,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "shoe-3",
+        "x": 0,
+        "z": 29,
+        "yaw": 0,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "shoe-4",
+        "x": 4.5,
+        "z": 28,
+        "yaw": 20,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "shoe-5",
+        "x": 8.5,
+        "z": 26,
+        "yaw": 40,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      },
+      {
+        "id": "shoe-6",
+        "x": 11.5,
+        "z": 22.5,
+        "yaw": 60,
+        "lift": 3,
+        "tilt": -15,
+        "y": [
+          3,
+          6.95
+        ]
+      }
+    ],
+    "closestPairs": [
+      {
+        "a": "shoe-1",
+        "b": "shoe-2",
+        "gap": 0.329
+      },
+      {
+        "a": "shoe-4",
+        "b": "shoe-5",
+        "gap": 0.329
+      },
+      {
+        "a": "shoe-0",
+        "b": "shoe-1",
+        "gap": 0.434
+      },
+      {
+        "a": "shoe-5",
+        "b": "shoe-6",
+        "gap": 0.434
+      },
+      {
+        "a": "shoe-2",
+        "b": "shoe-3",
+        "gap": 0.456
+      },
+      {
+        "a": "shoe-3",
+        "b": "shoe-4",
+        "gap": 0.456
+      }
+    ],
+    "widestAdjacentHint": {
+      "a": "shoe-0",
+      "b": "shoe-6",
+      "gap": 17.005
+    },
+    "vacuumHits": {
+      "ground": 14,
+      "shoe-0": 2,
+      "shoe-1": 2,
+      "shoe-2": 2,
+      "shoe-3": 2,
+      "shoe-4": 2,
+      "shoe-5": 2,
+      "shoe-6": 2
+    },
+    "vacuumCentre": {
+      "hit": "shoe-3",
+      "at": {
+        "t": 0.933,
+        "x": 0,
+        "y": 5.52,
+        "z": 28.32
+      }
+    }
+  }
+]

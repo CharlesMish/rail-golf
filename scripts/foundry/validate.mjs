@@ -27,6 +27,7 @@ const dirs = roots.length ? roots : [
   'worlds/foundry/chime-terraces',
   'worlds/foundry/chime-fan',
   'worlds/foundry/chime-garden',
+  'worlds/foundry/chime-tiers',
 ];
 
 function sameTerminal(actual, expected) {

@@ -1102,7 +1102,7 @@ export default function Worldcraft() {
   const timelinePrevious = workshopMarks ? (ui.comparisonMarks ?? []) : [];
   const heardVoice = recordedDynamicsLabel(ui.presetId, ui.soundVariant, presentation);
   const receipt = ui.last ? foundryReceiptParts(ui.foundryId, ui.last.world, ui.last) : { rest: null, deck: null, back: null };
-  const foundrySections: [FoundryCard['section'], string][] = [['featured', 'Featured'], ['construction', 'Construction lesson'], ['studies', 'Short studies'], ['chime', 'Chime Terraces']];
+  const foundrySections: [FoundryCard['section'], string][] = [['featured', 'Featured'], ['construction', 'Construction lesson'], ['studies', 'Short studies'], ['chime', 'Chime Terraces'], ['amphitheater', 'Amphitheater sketches']];
   const commitNumber = (key: 'x' | 'z' | 'yaw', input: HTMLInputElement) => {
     if (input.value !== '') actions.current?.change({ [key]: Number(input.value) });
     const actual = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected);

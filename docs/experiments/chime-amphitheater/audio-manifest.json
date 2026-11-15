@@ -1,0 +1,64 @@
+{
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "gitSha": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+  "dynamics": "normal-speed",
+  "mix": 1,
+  "note": "renderResonanceWav at the stored face-speed gain. No bank-voice variant. WAV files are artifacts, not committed.",
+  "files": [
+    {
+      "file": "chime-tiers-opening.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "why": "The aim the world opens on. Raised centre, then standing centre.",
+      "sequence": "out-2:A4>in-2:E4",
+      "sha256": "a4b61e458fe9ad7402c3a652f070fbcfe874d956773d14a8c0672f24c61ef76a",
+      "bytes": 277874,
+      "durationSeconds": 3.15,
+      "peak": 0.4043,
+      "rms": 0.0368,
+      "sampleRate": 44100
+    },
+    {
+      "file": "chime-tiers-opening-yaw.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0.5,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "why": "One yaw step from the opening. Same two plates.",
+      "sequence": "out-2:A4>in-2:E4",
+      "sha256": "9e8ae0fd153acf9c07d77b393df10da5e211a3260f7674b5c4021e1ff7db507b",
+      "bytes": 277874,
+      "durationSeconds": 3.15,
+      "peak": 0.4043,
+      "rms": 0.0368,
+      "sampleRate": 44100
+    },
+    {
+      "file": "chime-tiers-walk.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -4,
+        "elevation": 24,
+        "charge": 0.45
+      },
+      "why": "Four contacts, each on its own plate, gaps above 150 ms.",
+      "sequence": "out-2:A4>in-2:E4>out-1:G4>in-1:D4",
+      "sha256": "d24a2da9f2091b3613810e24e741849989774ae2361543d3e2ea5136740d92dc",
+      "bytes": 353580,
+      "durationSeconds": 4.008,
+      "peak": 0.31,
+      "rms": 0.0283,
+      "sampleRate": 44100
+    }
+  ]
+}

@@ -1,0 +1,1952 @@
+{
+  "kit": {
+    "positionStepM": 0.5,
+    "positionX": [
+      -30,
+      30
+    ],
+    "positionZ": [
+      10,
+      96
+    ],
+    "yawStepDeg": 5,
+    "yawRange": [
+      -180,
+      175
+    ],
+    "liftStepM": 0.5,
+    "liftRange": [
+      0,
+      20
+    ],
+    "tiltStepDeg": 5,
+    "tiltRange": [
+      -90,
+      90
+    ],
+    "elevatedKinds": [
+      "plate"
+    ],
+    "defaultPieces": 12,
+    "optInPieces": 24,
+    "plate": {
+      "label": "Plate",
+      "width": 4,
+      "height": 4,
+      "depth": 0.35,
+      "centerY": 2,
+      "pitch": 0,
+      "friction": 0.18,
+      "restitution": 0.86
+    },
+    "ballRadiusM": 0.43,
+    "note": "Tilt pitches about the plate width axis after yaw. Negative tilt leans the top toward -local Z, which is inward when yaw equals the radial bearing."
+  },
+  "failures": [
+    {
+      "label": "yaw 1°",
+      "rejected": true,
+      "error": "Piece 1 yaw: use 5 increments",
+      "matches": true
+    },
+    {
+      "label": "x 0.25 m",
+      "rejected": true,
+      "error": "Piece 1 x: use 0.5 increments",
+      "matches": true
+    },
+    {
+      "label": "lift 0.25 m",
+      "rejected": true,
+      "error": "Piece 1 lift: use 0.5 increments",
+      "matches": true
+    },
+    {
+      "label": "tilt -12°",
+      "rejected": true,
+      "error": "Piece 1 tilt: use 5 increments",
+      "matches": true
+    },
+    {
+      "label": "lift without tilt",
+      "rejected": true,
+      "error": "Piece 1: an elevated plate needs both lift and tilt",
+      "matches": true
+    },
+    {
+      "label": "bank lift",
+      "rejected": true,
+      "error": "Piece 1: unsupported or missing fields",
+      "matches": true
+    },
+    {
+      "label": "13 pieces without capacity",
+      "rejected": true,
+      "error": "A world can contain at most 12 pieces",
+      "matches": true
+    },
+    {
+      "label": "25 pieces at capacity 24",
+      "rejected": true,
+      "error": "A world can contain at most 24 pieces",
+      "matches": true
+    },
+    {
+      "label": "footprint past x=30",
+      "rejected": true,
+      "error": "Piece 1: its whole footprint must fit inside the yard",
+      "matches": true
+    },
+    {
+      "label": "corridor",
+      "rejected": true,
+      "error": "Piece 1: overlaps the protected launcher corridor",
+      "matches": true
+    }
+  ],
+  "stack": {
+    "standingPlusLift4Tilt0": "accepted (edge touch)",
+    "standingPlusLift3_5Tilt0": "Piece 2: overlaps another piece"
+  },
+  "sweep": {
+    "rows": 192,
+    "legal": 96,
+    "rejected": 96,
+    "overlapRejected": 96,
+    "legalWithSeamUnderBallDiameter": 24,
+    "legalWithSeamOverBallDiameter": 72,
+    "tightestLegal": {
+      "id": "sweep-120-15-r18-z14",
+      "count": 9,
+      "from": -60,
+      "to": 60,
+      "radius": 18,
+      "cz": 14,
+      "lift": 2,
+      "tilt": -15,
+      "pieces": 9,
+      "ok": true,
+      "error": null,
+      "yawStep": 15,
+      "seamMin": 0.3904,
+      "seamMax": 0.7875,
+      "seamMedian": 0.4866,
+      "ballClearsSeam": false,
+      "minY": 2,
+      "maxY": 5.954,
+      "xMin": -15.5,
+      "xMax": 15.5,
+      "zMin": 23,
+      "zMax": 32
+    },
+    "leakiestExample": {
+      "id": "sweep-120-30-r26-z14",
+      "count": 5,
+      "from": -60,
+      "to": 60,
+      "radius": 26,
+      "cz": 14,
+      "lift": 2,
+      "tilt": -15,
+      "pieces": 5,
+      "ok": true,
+      "error": null,
+      "yawStep": 30,
+      "seamMin": 8.9069,
+      "seamMax": 8.9374,
+      "seamMedian": 8.9222,
+      "ballClearsSeam": true,
+      "minY": 2,
+      "maxY": 5.954,
+      "xMin": -22.5,
+      "xMax": 22.5,
+      "zMin": 27,
+      "zMax": 40
+    }
+  },
+  "closedSemicircle": [
+    {
+      "step": 10,
+      "pieces": 19,
+      "analyticMinRadius": 23.04,
+      "needsCapacity24": true,
+      "exceeds24": false,
+      "firstLegal": {
+        "id": "closed-10-r25",
+        "count": 19,
+        "from": -90,
+        "to": 90,
+        "radius": 25,
+        "cz": 18,
+        "lift": 2,
+        "tilt": -15,
+        "pieces": 19,
+        "ok": true,
+        "error": null,
+        "yawStep": 10,
+        "seamMin": 0.024,
+        "seamMax": 0.4296,
+        "seamMedian": 0.1993,
+        "ballClearsSeam": false,
+        "minY": 2,
+        "maxY": 5.954,
+        "xMin": -25,
+        "xMax": 25,
+        "zMin": 18,
+        "zMax": 43
+      }
+    },
+    {
+      "step": 15,
+      "pieces": 13,
+      "analyticMinRadius": 15.37,
+      "needsCapacity24": true,
+      "exceeds24": false,
+      "firstLegal": {
+        "id": "closed-15-r17",
+        "count": 13,
+        "from": -90,
+        "to": 90,
+        "radius": 17,
+        "cz": 18,
+        "lift": 2,
+        "tilt": -15,
+        "pieces": 13,
+        "ok": true,
+        "error": null,
+        "yawStep": 15,
+        "seamMin": 0.1715,
+        "seamMax": 0.3904,
+        "seamMedian": 0.3545,
+        "ballClearsSeam": false,
+        "minY": 2,
+        "maxY": 5.954,
+        "xMin": -17,
+        "xMax": 17,
+        "zMin": 18,
+        "zMax": 35
+      }
+    },
+    {
+      "step": 20,
+      "pieces": 10,
+      "analyticMinRadius": 11.52,
+      "needsCapacity24": false,
+      "exceeds24": false,
+      "firstLegal": {
+        "id": "closed-20-r13",
+        "count": 10,
+        "from": -90,
+        "to": 90,
+        "radius": 13,
+        "cz": 18,
+        "lift": 2,
+        "tilt": -15,
+        "pieces": 10,
+        "ok": true,
+        "error": null,
+        "yawStep": 20,
+        "seamMin": 0.0999,
+        "seamMax": 0.8099,
+        "seamMedian": 0.4336,
+        "ballClearsSeam": false,
+        "minY": 2,
+        "maxY": 5.954,
+        "xMin": -13,
+        "xMax": 13,
+        "zMin": 18,
+        "zMax": 31
+      }
+    },
+    {
+      "step": 30,
+      "pieces": 7,
+      "analyticMinRadius": 7.64,
+      "needsCapacity24": false,
+      "exceeds24": false,
+      "firstLegal": {
+        "id": "closed-30-r9",
+        "count": 7,
+        "from": -90,
+        "to": 90,
+        "radius": 9,
+        "cz": 18,
+        "lift": 2,
+        "tilt": -15,
+        "pieces": 7,
+        "ok": true,
+        "error": null,
+        "yawStep": 30,
+        "seamMin": 0.4246,
+        "seamMax": 0.7061,
+        "seamMedian": 0.4246,
+        "ballClearsSeam": false,
+        "minY": 2,
+        "maxY": 5.954,
+        "xMin": -9,
+        "xMax": 9,
+        "zMin": 18,
+        "zMax": 27
+      }
+    }
+  ],
+  "fiveDegreeSemicirclePieces": 37,
+  "flights": [
+    {
+      "yaw": 0,
+      "elevation": 8,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 2.27,
+        "z": 5.13
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.579,
+          "y": 1.79,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.792,
+          "y": 0.59,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.006,
+          "y": -1.14,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 28,
+          "t": 1.219,
+          "y": -3.43,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 32,
+          "t": 1.432,
+          "y": -6.25,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 36,
+          "t": 1.645,
+          "y": -9.63,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 1.858,
+          "y": -13.55,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.178,
+          "y": -20.45,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 8,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 2.27,
+        "z": 5.13
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.417,
+          "y": 2.76,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.57,
+          "y": 2.41,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.723,
+          "y": 1.79,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.876,
+          "y": 0.88,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.03,
+          "y": -0.32,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 36,
+          "t": 1.183,
+          "y": -1.79,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 1.336,
+          "y": -3.54,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 1.566,
+          "y": -6.7,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 8,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 2.27,
+        "z": 5.13
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.308,
+          "y": 3.23,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.422,
+          "y": 3.29,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.535,
+          "y": 3.2,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.649,
+          "y": 2.96,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.762,
+          "y": 2.56,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 0.876,
+          "y": 2.01,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 0.989,
+          "y": 1.3,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.159,
+          "y": -0.05,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 12,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 2.63,
+        "z": 5.07
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.59,
+          "y": 2.86,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.806,
+          "y": 1.91,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.021,
+          "y": 0.39,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 28,
+          "t": 1.237,
+          "y": -1.68,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 32,
+          "t": 1.453,
+          "y": -4.32,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 36,
+          "t": 1.669,
+          "y": -7.51,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 1.885,
+          "y": -11.26,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.208,
+          "y": -17.93,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 12,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 2.63,
+        "z": 5.07
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.424,
+          "y": 3.87,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.579,
+          "y": 3.79,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.735,
+          "y": 3.41,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.89,
+          "y": 2.75,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.045,
+          "y": 1.8,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.2,
+          "y": 0.56,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.355,
+          "y": -0.97,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 1.588,
+          "y": -3.81,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 12,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 2.63,
+        "z": 5.07
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.314,
+          "y": 4.36,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.429,
+          "y": 4.7,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.544,
+          "y": 4.88,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.659,
+          "y": 4.9,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.773,
+          "y": 4.76,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 0.888,
+          "y": 4.47,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.003,
+          "y": 4.01,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.175,
+          "y": 3.04,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 16,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 2.98,
+        "z": 4.98
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.605,
+          "y": 3.94,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.825,
+          "y": 3.21,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.044,
+          "y": 1.89,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.264,
+          "y": 0,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 32,
+          "t": 1.483,
+          "y": -2.48,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 36,
+          "t": 1.703,
+          "y": -5.53,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 1.923,
+          "y": -9.16,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.252,
+          "y": -15.69,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 16,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 2.98,
+        "z": 4.98
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.435,
+          "y": 5,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.593,
+          "y": 5.17,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.751,
+          "y": 5.05,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.909,
+          "y": 4.62,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.067,
+          "y": 3.9,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.225,
+          "y": 2.87,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.383,
+          "y": 1.55,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.619,
+          "y": -1,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 16,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 2.98,
+        "z": 4.98
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.322,
+          "y": 5.52,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.439,
+          "y": 6.13,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.556,
+          "y": 6.58,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.673,
+          "y": 6.86,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.79,
+          "y": 6.99,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 0.906,
+          "y": 6.94,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.023,
+          "y": 6.74,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.199,
+          "y": 6.12,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 3.15,
+        "z": 4.93
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.614,
+          "y": 4.48,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.836,
+          "y": 3.85,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.058,
+          "y": 2.63,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.28,
+          "y": 0.81,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.502,
+          "y": -1.59,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 36,
+          "t": 1.724,
+          "y": -4.59,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 1.946,
+          "y": -8.18,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.279,
+          "y": -14.67,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 3.15,
+        "z": 4.93
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.442,
+          "y": 5.58,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.601,
+          "y": 5.88,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.761,
+          "y": 5.87,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.921,
+          "y": 5.56,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.08,
+          "y": 4.94,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.24,
+          "y": 4.02,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.4,
+          "y": 2.79,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.639,
+          "y": 0.38,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 3.15,
+        "z": 4.93
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.327,
+          "y": 6.11,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.445,
+          "y": 6.86,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.563,
+          "y": 7.44,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.681,
+          "y": 7.86,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.8,
+          "y": 8.11,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 0.918,
+          "y": 8.19,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.036,
+          "y": 8.11,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.213,
+          "y": 7.67,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 20,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 3.32,
+        "z": 4.87
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.625,
+          "y": 5.03,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.85,
+          "y": 4.5,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.074,
+          "y": 3.36,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.299,
+          "y": 1.62,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.524,
+          "y": -0.73,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 36,
+          "t": 1.748,
+          "y": -3.69,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 1.973,
+          "y": -7.25,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.31,
+          "y": -13.72,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 20,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 3.32,
+        "z": 4.87
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.45,
+          "y": 6.16,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.611,
+          "y": 6.59,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.773,
+          "y": 6.7,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.934,
+          "y": 6.5,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.096,
+          "y": 5.99,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.257,
+          "y": 5.17,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.419,
+          "y": 4.03,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.661,
+          "y": 1.74,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 20,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 3.32,
+        "z": 4.87
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.333,
+          "y": 6.71,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.452,
+          "y": 7.6,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.572,
+          "y": 8.32,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.691,
+          "y": 8.87,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.811,
+          "y": 9.25,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 0.931,
+          "y": 9.46,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.05,
+          "y": 9.49,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.23,
+          "y": 9.22,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 24,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 3.66,
+        "z": 4.73
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.651,
+          "y": 6.13,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.882,
+          "y": 5.79,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.113,
+          "y": 4.8,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.344,
+          "y": 3.18,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.575,
+          "y": 0.91,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.806,
+          "y": -2,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 2.037,
+          "y": -5.54,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.384,
+          "y": -12.06,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 24,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 3.66,
+        "z": 4.73
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.468,
+          "y": 7.36,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.634,
+          "y": 8.04,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.8,
+          "y": 8.39,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.967,
+          "y": 8.41,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.133,
+          "y": 8.1,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.299,
+          "y": 7.45,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.465,
+          "y": 6.48,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.714,
+          "y": 4.4,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 24,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 3.66,
+        "z": 4.73
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.346,
+          "y": 7.95,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.469,
+          "y": 9.13,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.592,
+          "y": 10.13,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.715,
+          "y": 10.95,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.838,
+          "y": 11.58,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 0.961,
+          "y": 12.03,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.084,
+          "y": 12.3,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.269,
+          "y": 12.37,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 30,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 4.14,
+        "z": 4.49
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.702,
+          "y": 7.83,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.945,
+          "y": 7.74,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.189,
+          "y": 6.92,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.433,
+          "y": 5.4,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.677,
+          "y": 3.16,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.92,
+          "y": 0.21,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 40,
+          "t": 2.164,
+          "y": -3.45,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.53,
+          "y": -10.29,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 30,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 4.14,
+        "z": 4.49
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.505,
+          "y": 9.26,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.68,
+          "y": 10.32,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.855,
+          "y": 11.02,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.03,
+          "y": 11.35,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.206,
+          "y": 11.3,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.381,
+          "y": 10.89,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.556,
+          "y": 10.11,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.819,
+          "y": 8.25,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 30,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 4.14,
+        "z": 4.49
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.373,
+          "y": 9.95,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.503,
+          "y": 11.58,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.633,
+          "y": 13,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.763,
+          "y": 14.23,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 0.892,
+          "y": 15.25,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.022,
+          "y": 16.07,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.152,
+          "y": 16.68,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.347,
+          "y": 17.23,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 40,
+      "charge": 0.35,
+      "speed": 18.95,
+      "muzzle": {
+        "x": 0,
+        "y": 4.88,
+        "z": 3.97
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.829,
+          "y": 10.85,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 1.104,
+          "y": 11.01,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 1.38,
+          "y": 10.26,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.655,
+          "y": 8.6,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.931,
+          "y": 6.03,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 2.207,
+          "y": 2.54,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 2.482,
+          "y": -1.85,
+          "x": 0,
+          "airborne": false
+        },
+        {
+          "z": 46,
+          "t": 2.895,
+          "y": -10.15,
+          "x": 0,
+          "airborne": false
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 40,
+      "charge": 0.55,
+      "speed": 26.35,
+      "muzzle": {
+        "x": 0,
+        "y": 4.88,
+        "z": 3.97
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.596,
+          "y": 12.84,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.794,
+          "y": 14.55,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.992,
+          "y": 15.78,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 1.191,
+          "y": 16.54,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.389,
+          "y": 16.83,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.587,
+          "y": 16.65,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.785,
+          "y": 16,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 2.082,
+          "y": 14.13,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    },
+    {
+      "yaw": 0,
+      "elevation": 40,
+      "charge": 0.8,
+      "speed": 35.6,
+      "muzzle": {
+        "x": 0,
+        "y": 4.88,
+        "z": 3.97
+      },
+      "samples": [
+        {
+          "z": 16,
+          "t": 0.441,
+          "y": 13.81,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 20,
+          "t": 0.588,
+          "y": 16.26,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 24,
+          "t": 0.735,
+          "y": 18.45,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 28,
+          "t": 0.881,
+          "y": 20.39,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 32,
+          "t": 1.028,
+          "y": 22.06,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 36,
+          "t": 1.175,
+          "y": 23.48,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 40,
+          "t": 1.321,
+          "y": 24.64,
+          "x": 0,
+          "airborne": true
+        },
+        {
+          "z": 46,
+          "t": 1.541,
+          "y": 25.9,
+          "x": 0,
+          "airborne": true
+        }
+      ]
+    }
+  ]
+}

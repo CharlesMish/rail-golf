@@ -1,0 +1,104 @@
+{
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": [
+    {
+      "id": "opening",
+      "terminal": true,
+      "reason": "first-ground-contact",
+      "elapsed": 1.3833333333333309,
+      "notes": [
+        "out-2:A4",
+        "in-2:E4"
+      ]
+    },
+    {
+      "id": "low",
+      "terminal": true,
+      "reason": "first-ground-contact",
+      "elapsed": 0.9916666666666656,
+      "notes": [
+        "in-2:E4"
+      ]
+    },
+    {
+      "id": "walk",
+      "terminal": true,
+      "reason": "first-ground-contact",
+      "elapsed": 2.0583333333333287,
+      "notes": [
+        "out-2:A4",
+        "in-2:E4",
+        "out-1:G4",
+        "in-1:D4"
+      ]
+    }
+  ],
+  "build": "0b151c5c94-dirty",
+  "gallery": {
+    "sections": [
+      {
+        "section": "featured",
+        "title": "Featured",
+        "cards": [
+          "bell-loft",
+          "return-address",
+          "right-angle",
+          "open-contacts",
+          "ricochet-garden-loop",
+          "descending-resonance",
+          "descending-resonance-flat"
+        ]
+      },
+      {
+        "section": "construction",
+        "title": "Construction lesson",
+        "cards": [
+          "the-carry"
+        ]
+      },
+      {
+        "section": "studies",
+        "title": "Short studies",
+        "cards": [
+          "the-other-way",
+          "soft-landing",
+          "capacity-24-passive",
+          "capacity-24-active"
+        ]
+      },
+      {
+        "section": "chime",
+        "title": "Chime Terraces",
+        "cards": [
+          "chime-terraces",
+          "chime-fan",
+          "chime-garden"
+        ]
+      },
+      {
+        "section": "amphitheater",
+        "title": "Amphitheater sketches",
+        "cards": [
+          "chime-tiers"
+        ]
+      }
+    ],
+    "tiersName": "Two Tiers",
+    "tiersInvitation": "Two arcs of metal plates face the tee. The nearer arc stands on the ground. The farther arc is raised and leans inward. The pieces stay where they are. Aim and power are yours. There is no target.",
+    "terracesName": "Chime Terraces"
+  },
+  "opened": {
+    "foundryId": "chime-tiers",
+    "mode": "play",
+    "view": "survey",
+    "objects": 10
+  },
+  "reset": {
+    "foundryId": "chime-tiers",
+    "yaw": 0,
+    "elevation": 18,
+    "charge": 0.55,
+    "objects": 10
+  },
+  "ok": true
+}

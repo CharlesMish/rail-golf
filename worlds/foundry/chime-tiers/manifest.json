@@ -1,0 +1,81 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-tiers",
+  "name": "Two Tiers",
+  "kind": "shot-study",
+  "invitation": "Two arcs of metal plates face the tee. The nearer arc stands on the ground. The farther arc is raised and leans inward. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "physicalQuestion": "When a shot meets the raised arc, does it come down onto the standing arc, and does one slider step keep that pair?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 0, "elevation": 18, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.3833333333333309,
+        "position": [0, 0.4300001263618469, 29.795150756835938]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-out-2", "worldcraft-object-in-2"]
+    },
+    {
+      "id": "low",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": 0, "elevation": 8, "charge": 0.55 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 0.9916666666666656,
+        "position": [0, 0.4300003945827484, 18.778278350830078]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-in-2"]
+    },
+    {
+      "id": "walk",
+      "setup": { "railIndex": 1, "originX": 0, "yaw": -4, "elevation": 24, "charge": 0.45 },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.0583333333333287,
+        "position": [-6.141595840454102, 0.4300019145011902, 24.446287155151367]
+      },
+      "outcome": { "kind": "none", "status": "none" },
+      "contacts": ["worldcraft-object-out-2", "worldcraft-object-in-2", "worldcraft-object-out-1", "worldcraft-object-in-1"]
+    }
+  ],
+  "nearbySensitivity": "Around the opening aim, yaw ±0.5°, elevation ±0.5°, and charge ±0.01 each still touch the centre raised plate and then the centre standing plate. The two onsets stay apart. Elevation 8 at the same yaw and charge meets only the centre standing plate.",
+  "validationEvidence": "875-shot Havok grid on a fresh runtime: yaw −24° to 24° by 2°, elevations 8, 12, 16, 20, 24, 30, 40, charges 0.35, 0.45, 0.55, 0.65, 0.8, origin 0, rail 1. Face speed. Seed 20261114 is recorded and not applied. Browser frame timing and phone playback were not run.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "Two faceted arcs, one standing and one raised, instead of a curved wall.",
+      "missing": "There is no curved terrace. These are ordinary plates. Yaw is 5° and position is 0.5 m, so neighbouring seams are not one width.",
+      "extension": "No new collider. A fused curve would be one body and one note."
+    },
+    {
+      "category": "physical-geometry",
+      "concept": "A shot that touches a left plate and a right plate.",
+      "missing": "On this grid that pair is only the standing arc's two ends, at elevation 8 and charge 0.8.",
+      "extension": "Move those ends closer and measure again. No new piece type."
+    },
+    {
+      "category": "presentation",
+      "concept": "The two arcs should read as one place from the tee and after the shot.",
+      "missing": "Survey does not name the arcs. The result view is the existing side orbit. A phone was not checked.",
+      "extension": "No new camera."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}
