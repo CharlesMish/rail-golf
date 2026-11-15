@@ -1,0 +1,127 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "chime-horseshoe",
+  "name": "Horseshoe",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "shoe-0",
+      "kind": "plate",
+      "x": -11.5,
+      "z": 22.5,
+      "yaw": -60,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 0
+      }
+    },
+    {
+      "id": "shoe-1",
+      "kind": "plate",
+      "x": -8.5,
+      "z": 26,
+      "yaw": -40,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "shoe-2",
+      "kind": "plate",
+      "x": -4.5,
+      "z": 28,
+      "yaw": -20,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    },
+    {
+      "id": "shoe-3",
+      "kind": "plate",
+      "x": 0,
+      "z": 29,
+      "yaw": 0,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 3
+      }
+    },
+    {
+      "id": "shoe-4",
+      "kind": "plate",
+      "x": 4.5,
+      "z": 28,
+      "yaw": 20,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 4
+      }
+    },
+    {
+      "id": "shoe-5",
+      "kind": "plate",
+      "x": 8.5,
+      "z": 26,
+      "yaw": 40,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 0
+      }
+    },
+    {
+      "id": "shoe-6",
+      "kind": "plate",
+      "x": 11.5,
+      "z": 22.5,
+      "yaw": 60,
+      "lift": 3,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "fixed": [
+      "shoe-0",
+      "shoe-1",
+      "shoe-2",
+      "shoe-3",
+      "shoe-4",
+      "shoe-5",
+      "shoe-6"
+    ],
+    "allowance": {},
+    "goal": {
+      "kind": "none"
+    }
+  }
+}

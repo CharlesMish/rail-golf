@@ -1,0 +1,131 @@
+{
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "gitSha": "454d1cf8a4fa43dc67e84641515c96fddb4474ac",
+  "dynamics": "normal-speed",
+  "mix": 1,
+  "ceiling": 0.8913,
+  "note": "renderResonanceWav at the stored face-speed gain. Timber voices, no bank-voice variant. WAV files are artifacts, not committed. gitSha is the commit that added the bowl and these shot bytes. This file's SHA field was written in the following commit.",
+  "files": [
+    {
+      "world": "chime-bowl-aisle",
+      "file": "chime-bowl-aisle-descent.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "why": "Three audible timber lips: outer, then step 2, then step 1.",
+      "sequence": "step-5:C4>step-2:E4>step-1:D4",
+      "sha256": "f3716ce0837b64f245e6925f9b35b2a0ca316c835311681f50398efa03c7ca55",
+      "bytes": 257294,
+      "durationSeconds": 2.917,
+      "peak": 0.1464,
+      "rms": 0.006,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-aisle",
+      "file": "chime-bowl-aisle-descent-yaw.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8.5,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "why": "Half a degree off the three-note line. Only the outer lip remains.",
+      "sequence": "step-5:C4>step-5:C4",
+      "sha256": "c67c140dd34189cff74334186935e29ffc0995dbc4e29a1d5302e915f18100a1",
+      "bytes": 224956,
+      "durationSeconds": 2.55,
+      "peak": 0.2986,
+      "rms": 0.0128,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-aisle",
+      "file": "chime-bowl-aisle-outer-lip.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "why": "The common aisle contact: one outer lip, then the ground.",
+      "sequence": "step-5:C4",
+      "sha256": "451ba0986d97f8be4f2d312347b751bb7690ede7d0d512185b4b6360ee5e9f1d",
+      "bytes": 213930,
+      "durationSeconds": 2.425,
+      "peak": 0.3245,
+      "rms": 0.0105,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-stage",
+      "file": "chime-bowl-stage-outer-lip.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 16,
+        "charge": 0.35
+      },
+      "why": "From the stage, one outer lip, then the ground.",
+      "sequence": "step-5:C4",
+      "sha256": "0a22556a960a4ba9ffe31e679bbbf584a1870e84013eaf8f47056a317a85cdfc",
+      "bytes": 248474,
+      "durationSeconds": 2.817,
+      "peak": 0.0235,
+      "rms": 0.0008,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-stage",
+      "file": "chime-bowl-stage-step-four.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.55
+      },
+      "why": "From the stage, one contact on the next step in.",
+      "sequence": "step-4:A4",
+      "sha256": "e0de465542326f0f745f2403e5b7c44d6b291c253661e36706e5fe17f30df3b8",
+      "bytes": 215400,
+      "durationSeconds": 2.442,
+      "peak": 0.3219,
+      "rms": 0.0112,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-stage",
+      "file": "chime-bowl-stage-step-three.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.35
+      },
+      "why": "From the stage, one contact on the third step out.",
+      "sequence": "step-3:G4",
+      "sha256": "b8f50b78fb5db0501ad2e53d345202c9942f54ffd58a35a4e9ae7ed31a622ed0",
+      "bytes": 219810,
+      "durationSeconds": 2.492,
+      "peak": 0.281,
+      "rms": 0.009,
+      "sampleRate": 44100,
+      "clipped": false
+    }
+  ]
+}

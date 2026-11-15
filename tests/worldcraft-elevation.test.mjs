@@ -53,8 +53,8 @@ test('a world without lift or tilt keeps its v1 bytes, identity, pose, and footp
   assert.equal(foot.halfX, 5);
   assert.ok(Math.abs(foot.halfZ - (Math.cos(20 * Math.PI / 180) * 10 + Math.sin(20 * Math.PI / 180) * 0.8) / 2) < 1e-12);
   // Every registered v1 foundry preset still exports the bytes it parses from.
-  // Descending Resonance, its 24-piece fixtures, Chime Terraces, and Chime Fan keep elevated plates.
-  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && id !== 'chime-terraces' && id !== 'chime-fan' && !id.startsWith('capacity-24-'));
+  // Descending Resonance, its 24-piece fixtures, Chime Terraces, Chime Fan, and Two Tiers keep elevated plates.
+  const standingWorlds = listFoundryWorlds().map(card => card.id).filter(id => id !== 'descending-resonance' && id !== 'chime-terraces' && id !== 'chime-fan' && id !== 'chime-tiers' && !id.startsWith('capacity-24-'));
   assert.ok(standingWorlds.includes('ricochet-garden-loop') && standingWorlds.includes('descending-resonance-flat') && standingWorlds.length >= 9);
   for (const id of standingWorlds) {
     const preset = foundryPreset(id);
@@ -234,5 +234,15 @@ test('the hung-plate worlds end on a side survey orbit; every other world keeps 
   const fan = resultFraming(foundryRecord('chime-fan').world, { contacts: [] }, 'chime-fan');
   assert.equal(fan.view, 'survey');
   assert.equal(fan.radius, 58);
+  const tiers = resultFraming(foundryRecord('chime-tiers').world, { contacts: [] }, 'chime-tiers');
+  assert.equal(tiers.view, 'survey');
+  assert.equal(tiers.radius, 58);
+  const aisle = resultFraming(foundryRecord('chime-bowl-aisle').world, { contacts: [] }, 'chime-bowl-aisle');
+  assert.equal(aisle.view, 'survey');
+  assert.equal(aisle.radius, 58);
+  assert.equal(aisle.z, 32);
+  const stage = resultFraming(foundryRecord('chime-bowl-stage').world, { contacts: [] }, 'chime-bowl-stage');
+  assert.equal(stage.view, 'survey');
+  assert.equal(stage.z, 32);
   for (const id of ['ricochet-garden-loop', 'open-contacts', 'soft-landing', null]) assert.equal(resultFraming(record.world, { contacts }, id), null);
 });

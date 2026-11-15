@@ -49,6 +49,9 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
     ['chime-terraces', 'chime'],
     ['chime-fan', 'chime'],
     ['chime-garden', 'chime'],
+    ['chime-tiers', 'amphitheater'],
+    ['chime-bowl-aisle', 'amphitheater'],
+    ['chime-bowl-stage', 'amphitheater'],
   ]);
   const landing = cards.find(card => card.id === 'soft-landing');
   assert.equal(landing.kind, 'shot-study');
@@ -129,6 +132,9 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const seed = await validateFoundryDirectory('worlds/foundry/soft-landing', havok);
   const chime = await validateFoundryDirectory('worlds/foundry/chime-terraces', havok);
   const fan = await validateFoundryDirectory('worlds/foundry/chime-fan', havok);
+  const tiers = await validateFoundryDirectory('worlds/foundry/chime-tiers', havok);
+  const aisle = await validateFoundryDirectory('worlds/foundry/chime-bowl-aisle', havok);
+  const stage = await validateFoundryDirectory('worlds/foundry/chime-bowl-stage', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
   assert.deepEqual(bell.shots, ['opening', 'opening-charge-up', 'lob', 'slam', 'stock-aim', 'door-shut']);
@@ -154,6 +160,18 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.equal(fan.customCode, null);
   assert.equal(fan.sourceBuild, '6d9da5dfd072f5294865f58ac8690e439924ba92');
   assert.deepEqual(fan.shots, ['opening', 'west', 'west-long', 'centre', 'east', 'shoulder']);
+  assert.equal(tiers.id, 'chime-tiers');
+  assert.equal(tiers.customCode, null);
+  assert.equal(tiers.sourceBuild, '0b151c5c94849b78ccda6c41a1755b66471e3fa2');
+  assert.deepEqual(tiers.shots, ['opening', 'low', 'walk']);
+  assert.equal(aisle.id, 'chime-bowl-aisle');
+  assert.equal(aisle.customCode, null);
+  assert.equal(aisle.sourceBuild, 'af02005834beba609d8aeb44803daad15380a7fd');
+  assert.deepEqual(aisle.shots, ['opening', 'descent', 'outer-lip']);
+  assert.equal(stage.id, 'chime-bowl-stage');
+  assert.equal(stage.customCode, null);
+  assert.equal(stage.sourceBuild, 'af02005834beba609d8aeb44803daad15380a7fd');
+  assert.deepEqual(stage.shots, ['opening', 'outer-lip', 'graze']);
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');

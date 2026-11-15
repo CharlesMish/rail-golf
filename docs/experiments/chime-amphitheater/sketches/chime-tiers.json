@@ -1,0 +1,159 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "chime-tiers",
+  "name": "Two Tiers",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0
+  },
+  "objects": [
+    {
+      "id": "in-0",
+      "kind": "plate",
+      "x": -8,
+      "z": 20.5,
+      "yaw": -60,
+      "voice": {
+        "material": "metal",
+        "degree": 0
+      }
+    },
+    {
+      "id": "in-1",
+      "kind": "plate",
+      "x": -4.5,
+      "z": 24,
+      "yaw": -30,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    },
+    {
+      "id": "in-2",
+      "kind": "plate",
+      "x": 0,
+      "z": 25,
+      "yaw": 0,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    },
+    {
+      "id": "in-3",
+      "kind": "plate",
+      "x": 4.5,
+      "z": 24,
+      "yaw": 30,
+      "voice": {
+        "material": "metal",
+        "degree": 3
+      }
+    },
+    {
+      "id": "in-4",
+      "kind": "plate",
+      "x": 8,
+      "z": 20.5,
+      "yaw": 60,
+      "voice": {
+        "material": "metal",
+        "degree": 4
+      }
+    },
+    {
+      "id": "out-0",
+      "kind": "plate",
+      "x": -8.5,
+      "z": 26,
+      "yaw": -40,
+      "lift": 4,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 2
+      }
+    },
+    {
+      "id": "out-1",
+      "kind": "plate",
+      "x": -4.5,
+      "z": 28,
+      "yaw": -20,
+      "lift": 4,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 3
+      }
+    },
+    {
+      "id": "out-2",
+      "kind": "plate",
+      "x": 0,
+      "z": 29,
+      "yaw": 0,
+      "lift": 4,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 4
+      }
+    },
+    {
+      "id": "out-3",
+      "kind": "plate",
+      "x": 4.5,
+      "z": 28,
+      "yaw": 20,
+      "lift": 4,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 0
+      }
+    },
+    {
+      "id": "out-4",
+      "kind": "plate",
+      "x": 8.5,
+      "z": 26,
+      "yaw": 40,
+      "lift": 4,
+      "tilt": -15,
+      "voice": {
+        "material": "metal",
+        "degree": 1
+      }
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 18,
+      "charge": 0.55
+    },
+    "fixed": [
+      "in-0",
+      "in-1",
+      "in-2",
+      "in-3",
+      "in-4",
+      "out-0",
+      "out-1",
+      "out-2",
+      "out-3",
+      "out-4"
+    ],
+    "allowance": {},
+    "goal": {
+      "kind": "none"
+    }
+  }
+}
