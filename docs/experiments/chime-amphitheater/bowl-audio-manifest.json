@@ -1,11 +1,11 @@
 {
   "seed": 20261114,
   "seedAppliedToSolver": false,
-  "gitSha": "af02005834beba609d8aeb44803daad15380a7fd",
+  "gitSha": "454d1cf8a4fa43dc67e84641515c96fddb4474ac",
   "dynamics": "normal-speed",
   "mix": 1,
   "ceiling": 0.8913,
-  "note": "renderResonanceWav at the stored face-speed gain. Timber voices, no bank-voice variant. WAV files are artifacts, not committed. gitSha is HEAD at render time.",
+  "note": "renderResonanceWav at the stored face-speed gain. Timber voices, no bank-voice variant. WAV files are artifacts, not committed. gitSha is the commit that added the bowl and these shot bytes. This file's SHA field was written in the following commit.",
   "files": [
     {
       "world": "chime-bowl-aisle",

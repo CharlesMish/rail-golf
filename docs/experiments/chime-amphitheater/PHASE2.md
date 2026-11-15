@@ -1,6 +1,6 @@
 # Chime Amphitheater — phase 2, curved terrace
 
-Lab experiment, continued on `lab/wc-exp-20261114-chime-amphitheater`. Phase 1 (Two Tiers and the other plate sketches) is unchanged. Physics, restitution, friction, gravity, the projectile, charge-to-speed, elevation mapping, first-ground termination, and the synthesis engine were not changed. Chime Terraces, Descending Resonance, Railyard, Timber Courtyard, and Free Play were not edited. The v1 export hash stays `127a033284941a110bd174e59e51700f5bdce4ca3b74a6f6c381786586141389`.
+Lab experiment, continued on `lab/wc-exp-20261114-chime-amphitheater`. The bowl and this measurement are commit `454d1cf8a4fa43dc67e84641515c96fddb4474ac`. Phase 1 (Two Tiers and the other plate sketches) is unchanged. Physics, restitution, friction, gravity, the projectile, charge-to-speed, elevation mapping, first-ground termination, and the synthesis engine were not changed. Chime Terraces, Descending Resonance, Railyard, Timber Courtyard, and Free Play were not edited. The v1 export hash stays `127a033284941a110bd174e59e51700f5bdce4ca3b74a6f6c381786586141389`.
 
 Seed `20261114` is recorded and not applied. Dynamics are face speed. The grid is the same 875 shots: yaw −24° to 24° step 2°, elevation 8, 12, 16, 20, 24, 30, 40, charge 0.35, 0.45, 0.55, 0.65, 0.8, origin x 0, rail 1. An audible event merges onsets within 150 ms. A family is the first three distinct sounding pieces after immediate repeats collapse. A nudge is yaw ±0.5°, elevation ±0.5°, charge ±0.01. Each world used a fresh Havok runtime.
 
