@@ -1,10 +1,10 @@
 {
   "seed": 20261114,
   "seedAppliedToSolver": false,
-  "gitSha": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+  "gitSha": "53d909437a9e4354932ec21d172389214dcfef7b",
   "dynamics": "normal-speed",
   "mix": 1,
-  "note": "renderResonanceWav at the stored face-speed gain. No bank-voice variant. WAV files are artifacts, not committed.",
+  "note": "renderResonanceWav at the stored face-speed gain. No bank-voice variant. WAV files are artifacts, not committed. gitSha is the commit that added the world and these shot bytes. This file's SHA field was written in the following commit.",
   "files": [
     {
       "file": "chime-tiers-opening.wav",
