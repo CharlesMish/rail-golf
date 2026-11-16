@@ -56,6 +56,10 @@ test('a curved terrace is a fixed lab piece and stays off the placeable catalog'
   assert.throws(() => validateWorld(unlocked), /fixed lab piece/);
   assert.throws(() => validateWorld(shell([{ id: 'a', kind: 'bank', x: 0, z: 40, yaw: 0, innerRadius: 8 }])), /unsupported or missing fields/);
   assert.throws(() => validateWorld(shell([step(0, { span: 200 })])), /12 increments/);
+  const shallow = validateWorld(shell([step(0, { riser: 0.25, elevation: 0.25 })]));
+  assert.equal(shallow.objects[0].riser, 0.25);
+  assert.equal(shallow.objects[0].elevation, 0.25);
+  assert.throws(() => validateWorld(shell([step(0, { riser: 0.1, elevation: 0.5 })])), /riser/);
   const stage = validateWorld(shell([0, 1, 2, 3, 4, 5].map(index => step(index)), { x: 0, z: 32, yaw: -180 }));
   assert.deepEqual(stage.launcher, { x: 0, z: 32, yaw: -180 });
   assert.equal(exportWorldJSON(validateWorld(shell([]))).includes('"yaw"'), false);

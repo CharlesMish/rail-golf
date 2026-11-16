@@ -52,6 +52,7 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
     ['chime-tiers', 'amphitheater'],
     ['chime-bowl-aisle', 'amphitheater'],
     ['chime-bowl-stage', 'amphitheater'],
+    ['chime-bowl-centre', 'amphitheater'],
   ]);
   const landing = cards.find(card => card.id === 'soft-landing');
   assert.equal(landing.kind, 'shot-study');
@@ -135,6 +136,7 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   const tiers = await validateFoundryDirectory('worlds/foundry/chime-tiers', havok);
   const aisle = await validateFoundryDirectory('worlds/foundry/chime-bowl-aisle', havok);
   const stage = await validateFoundryDirectory('worlds/foundry/chime-bowl-stage', havok);
+  const centre = await validateFoundryDirectory('worlds/foundry/chime-bowl-centre', havok);
   assert.equal(template.id, 'foundry-template');
   assert.deepEqual(template.shots, ['opening']);
   assert.deepEqual(bell.shots, ['opening', 'opening-charge-up', 'lob', 'slam', 'stock-aim', 'door-shut']);
@@ -172,6 +174,12 @@ test('tested shots reproduce their terminals, and repeated load reset remix does
   assert.equal(stage.customCode, null);
   assert.equal(stage.sourceBuild, 'af02005834beba609d8aeb44803daad15380a7fd');
   assert.deepEqual(stage.shots, ['opening', 'outer-lip', 'graze']);
+  assert.equal(centre.id, 'chime-bowl-centre');
+  assert.equal(centre.customCode, null);
+  assert.equal(centre.sourceBuild, '2a9d09640c9443d75ec419521a529a3f0214903e');
+  assert.deepEqual(centre.shots, ['opening', 'outer-pair', 'one-lip']);
+  assert.equal(foundryRecord('chime-bowl-centre').world.launcher.z, 32);
+  assert.equal(foundryRecord('chime-bowl-centre').world.launcher.yaw, -120);
 
   const house = createHouseShotWorld();
   const foundry = foundryRecord('soft-landing');

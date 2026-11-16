@@ -244,5 +244,8 @@ test('the hung-plate worlds end on a side survey orbit; every other world keeps 
   const stage = resultFraming(foundryRecord('chime-bowl-stage').world, { contacts: [] }, 'chime-bowl-stage');
   assert.equal(stage.view, 'survey');
   assert.equal(stage.z, 32);
+  const centre = resultFraming(foundryRecord('chime-bowl-centre').world, { contacts: [] }, 'chime-bowl-centre');
+  assert.equal(centre.view, 'survey');
+  assert.equal(centre.z, 32);
   for (const id of ['ricochet-garden-loop', 'open-contacts', 'soft-landing', null]) assert.equal(resultFraming(record.world, { contacts }, id), null);
 });

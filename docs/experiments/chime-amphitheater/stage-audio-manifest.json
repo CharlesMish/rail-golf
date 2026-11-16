@@ -1,0 +1,111 @@
+{
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "gitSha": "2a9d09640c9443d75ec419521a529a3f0214903e",
+  "dynamics": "normal-speed",
+  "mix": 1,
+  "ceiling": 0.8913,
+  "note": "renderResonanceWav at the stored face-speed gain. Timber voices, no bank-voice variant. WAV files are artifacts, not committed. gitSha is HEAD at render time. Ceiling is 10^(-1/20).",
+  "files": [
+    {
+      "world": "chime-bowl-centre",
+      "file": "chime-bowl-centre-one-lip.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.35
+      },
+      "why": "One outer step, then the ground.",
+      "sequence": "step-4:A4@0.5750000000000004",
+      "sha256": "256e5668fd81a682ce8a3d21059c191735acc355574198e2ea51a0b87b887215",
+      "bytes": 231570,
+      "durationSeconds": 2.625,
+      "peak": 0.0597,
+      "rms": 0.0021,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-centre",
+      "file": "chime-bowl-centre-same-instant.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "why": "Two outer steps in one onset, then the ground.",
+      "sequence": "step-3:G4@0.4583333333333339>step-4:A4@0.4583333333333339",
+      "sha256": "3663833fa5873c379fea497b69781ef92189efc7852692a4d0337fe43bb78fef",
+      "bytes": 221280,
+      "durationSeconds": 2.508,
+      "peak": 0.4095,
+      "rms": 0.0131,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-centre",
+      "file": "chime-bowl-centre-closer.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.35
+      },
+      "why": "One step, then the ball moves closer to the stage centre.",
+      "sequence": "step-3:G4@0.4416666666666672",
+      "sha256": "4ada677f52dff6eb8f6ae92499f74c05067bf935caf5390c330c18bd58baab75",
+      "bytes": 219810,
+      "durationSeconds": 2.492,
+      "peak": 0.281,
+      "rms": 0.009,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-centre",
+      "file": "chime-bowl-centre-outer-tread.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.8
+      },
+      "why": "One outer tread, then the ball leaves the yard.",
+      "sequence": "step-5:C4@0.35000000000000026",
+      "sha256": "39f33c3a675ac366de2d431ffc9a920f8318f99b9c6152243679a1d2ef6acd71",
+      "bytes": 211724,
+      "durationSeconds": 2.4,
+      "peak": 0.4715,
+      "rms": 0.0152,
+      "sampleRate": 44100,
+      "clipped": false
+    },
+    {
+      "world": "chime-bowl-centre",
+      "file": "chime-bowl-centre-two-lips.wav",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -24,
+        "elevation": 8,
+        "charge": 0.65
+      },
+      "why": "Outer lip and the next lip in, one onset.",
+      "sequence": "step-5:C4@0.40833333333333377>step-4:A4@0.4583333333333339",
+      "sha256": "836cadcd3f333bb0c7b448c7af270bbc9e48e77404e51426b1339b9a2cfbfd79",
+      "bytes": 221280,
+      "durationSeconds": 2.508,
+      "peak": 0.5298,
+      "rms": 0.0165,
+      "sampleRate": 44100,
+      "clipped": false
+    }
+  ]
+}

@@ -37,6 +37,7 @@ import {
   foundryPlayCopy, foundryReceiptParts, foundryRulesSentence, foundryShotNotice,
   musicalWorkshopPlayCard, resultFraming,
 } from '@/lib/worldcraft-play-copy';
+import { worldcraftStationPose, worldcraftStoredLauncher, worldcraftSurveyHome } from '@/lib/worldcraft-station';
 import styles from './worldcraft.module.css';
 
 type Kind = 'bank' | 'ramp' | 'block' | 'plate';
@@ -353,9 +354,9 @@ export default function Worldcraft() {
           },
         });
         const { launcher, yaw, loft } = buildRangeLauncher(scene, presentation.materials, shadows);
-        const orbitHome = { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 };
-        const orbit = { ...orbitHome };
-        const resetOrbit = () => { orbit.angle = orbitHome.angle; orbit.elevation = orbitHome.elevation; orbit.radius = orbitHome.radius; orbit.x = orbitHome.x; orbit.z = orbitHome.z; };
+        const yardOrbit = { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 };
+        const orbit = { ...yardOrbit };
+        const resetOrbit = () => { Object.assign(orbit, worldcraftSurveyHome(uiRef.current.world, uiRef.current.setup) ?? yardOrbit); };
         let drag: null | {
           id: number; x: number; y: number; startX: number; startY: number;
           type: 'object' | 'view' | 'aim'; ground?: Vector3; object?: WorldcraftWorld['objects'][number];
@@ -440,7 +441,7 @@ export default function Worldcraft() {
           if (!runtime.launch(setup)) { publish({ phase: 'ready', notice: runtime.error }); return; }
           projectile?.dispose(); projectile = buildRangeProjectile(activeScene, runtime.flight!.mesh, presentation.materials, shadows);
           projectile.sync(runtime.flight!.aggregate.body.getLinearVelocity());
-          previous = null; heading = { x: Math.sin(setup.yaw * Math.PI / 180), y: 0, z: Math.cos(setup.yaw * Math.PI / 180) };
+          previous = null; heading = worldcraftStationPose(uiRef.current.world, setup).heading;
           flightPoints = []; trailTick = 0; trail?.dispose(); trail = null;
           const stepped = workshopTrailStep(trailMemory(), { kind: 'fire' });
           publish({ phase: 'flight', setup, charge, comparison: stepped.comparison, comparisonMarks: stepped.comparisonMarks, notice: 'Committed line · edits are locked.' });
@@ -469,7 +470,6 @@ export default function Worldcraft() {
           catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); return; }
           const card = listFoundryWorlds().find(item => item.id === id);
           const notice = card ? foundryPlayCopy(foundryRecord(id).manifest, loaded.preset).playNotice : loaded.preset.name;
-          resetOrbit();
           clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
           if (!commit(loaded.world, notice, 'commit', true)) return;
           publish({
@@ -477,6 +477,7 @@ export default function Worldcraft() {
             foundryOpen: false, memoryOpen: false, history: null, comparison: null, comparisonMarks: null, historyMarks: null,
             last: null, lastKept: false, shotRecord: null, setup: rangeOpeningSetup(loaded.preset), launchPhase: 0, notice,
           });
+          resetOrbit();
           drawTrail([]); drawComparison();
           if (play) { switchMode('play'); publish({ view: 'survey', notice }); }
         };
@@ -574,7 +575,7 @@ export default function Worldcraft() {
           memory(open) { if (open && busy()) return; publish({ memoryOpen: open, foundryOpen: open ? false : uiRef.current.foundryOpen, ...memoryState() }); },
           save() {
             try {
-              const world = { ...uiRef.current.world, id: `world-${crypto.randomUUID().slice(0, 8)}`, launcher: { x: uiRef.current.setup.originX } };
+              const world = { ...uiRef.current.world, id: `world-${crypto.randomUUID().slice(0, 8)}`, launcher: worldcraftStoredLauncher(uiRef.current.world.launcher, uiRef.current.setup.originX) };
               const result = store.saveWorld(world); publish({ ...memoryState(), notice: result.persisted ? 'New world copy saved locally.' : 'World saved only in memory. Export it before leaving.' }); trace('save-world', { id: world.id, persisted: result.persisted });
             } catch (e) { publish({ notice: e instanceof Error ? e.message : String(e) }); }
           },
@@ -595,7 +596,7 @@ export default function Worldcraft() {
           export() {
             const preset = uiRef.current.preset;
             if (preset) download('rail-golf-range-preset.json', exportRangePreset(retargetRangeOpening(preset, uiRef.current.setup)));
-            else download('rail-golf-world.json', exportWorldJSON({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } }));
+            else download('rail-golf-world.json', exportWorldJSON({ ...uiRef.current.world, launcher: worldcraftStoredLauncher(uiRef.current.world.launcher, uiRef.current.setup.originX) }));
             trace('export-world');
           },
           exportMemory() { download('rail-golf-worldcraft-memory.json', store.exportLocal()); trace('export-memory'); },
@@ -694,7 +695,7 @@ export default function Worldcraft() {
               const card = listFoundryWorlds().find(item => item.id === id);
               if (!card) throw new Error('Unknown foundry world');
               const authored = adaptRangePreset(foundryPreset(id)).world;
-              const live = uiRef.current.foundryId === id ? { ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX } } : authored;
+              const live = uiRef.current.foundryId === id ? { ...uiRef.current.world, launcher: worldcraftStoredLauncher(uiRef.current.world.launcher, uiRef.current.setup.originX) } : authored;
               const copy = foundryRemixWorld(live, { name: foundryCopyName(card.name), challengeId: card.challengeId });
               const result = store.saveWorld(copy);
               publish({ ...memoryState(), notice: result.persisted ? `Copy of ${card.name} saved as its own world. The foundry arrangement is unchanged.` : 'Copy kept only in memory. Export it before leaving. The foundry arrangement is unchanged.' });
@@ -722,7 +723,7 @@ export default function Worldcraft() {
           },
           camera(action) {
             if (uiRef.current.mode !== 'build' && uiRef.current.view !== 'survey') return;
-            if (action === 'home') Object.assign(orbit, { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 });
+            if (action === 'home') resetOrbit();
             if (action === 'focus') { const part = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected); if (part) Object.assign(orbit, { x: part.x, z: part.z, radius: 45, elevation: .78 }); }
             if (action === 'left') orbit.angle -= .2; if (action === 'right') orbit.angle += .2;
             if (action === 'in') orbit.radius = Math.max(40, orbit.radius * .85); if (action === 'out') orbit.radius = Math.min(180, orbit.radius / .85);
@@ -830,6 +831,10 @@ export default function Worldcraft() {
               const state = uiRef.current, rect = surface.getBoundingClientRect();
               return { build: BUILD_ID, mode: state.mode, phase: state.phase, view: state.view, world: state.world,
                 worldIdentity: worldcraftIdentity(state.world), selectedObjectId: state.selected, setup: state.setup,
+                stationPose: worldcraftStationPose(state.world, state.setup),
+                launcherMesh: { x: launcher.position.x, y: launcher.position.y, z: launcher.position.z, yaw: yaw.rotation.y },
+                camera: { x: camera.position.x, y: camera.position.y, z: camera.position.z, tx: look.x, ty: look.y, tz: look.z, fov: camera.fov },
+                ball: runtime.flight ? { x: runtime.flight.mesh.position.x, y: runtime.flight.mesh.position.y, z: runtime.flight.mesh.position.z, ended: Boolean(runtime.flight.ended) } : null,
                 ...history.status(), editLock: busy(), diagnostics: runtime.diagnostics(), memory: store.status(),
                 lastShot: state.last ? { ...state.last, currentWorldChanged: worldcraftIdentity(state.world) !== state.last.worldIdentity, thisShotChangedWorld: false } : null,
                 comparison: state.comparison, trail: state.history, liveNotes: state.liveNotes, comparisonMarks: state.comparisonMarks, historyMarks: state.historyMarks, visibleTrailMeshes: activeScene.meshes.filter(m => ['worldcraft-actual-line','worldcraft-before-line'].includes(m.name)).map(m => m.name),
@@ -865,8 +870,7 @@ export default function Worldcraft() {
             },
             exportText() {
               const state = uiRef.current;
-              const station = state.world.launcher;
-              return state.preset ? exportRangePreset(retargetRangeOpening(state.preset, state.setup)) : exportWorldJSON({ ...state.world, launcher: { x: state.setup.originX, ...(station.z ? { z: station.z } : {}), ...(station.yaw ? { yaw: station.yaw } : {}) } });
+              return state.preset ? exportRangePreset(retargetRangeOpening(state.preset, state.setup)) : exportWorldJSON({ ...state.world, launcher: worldcraftStoredLauncher(state.world.launcher, state.setup.originX) });
             },
             importText(text: string) { actions.current?.import(text); },
             saveReload() {
@@ -874,8 +878,7 @@ export default function Worldcraft() {
               if (!state.preset) return { ok: false, error: 'no preset' };
               if (state.mode !== 'build') actions.current?.mode('build');
               try {
-                const station = uiRef.current.world.launcher;
-                const saved = store.saveWorld({ ...uiRef.current.world, launcher: { x: uiRef.current.setup.originX, ...(station.z ? { z: station.z } : {}), ...(station.yaw ? { yaw: station.yaw } : {}) } }, perfSlot ? { replaceId: perfSlot } : {});
+                const saved = store.saveWorld({ ...uiRef.current.world, launcher: worldcraftStoredLauncher(uiRef.current.world.launcher, uiRef.current.setup.originX) }, perfSlot ? { replaceId: perfSlot } : {});
                 perfSlot = saved.entry.id;
               } catch (error) { return { ok: false, error: error instanceof Error ? error.message : String(error) }; }
               const before = runtime.diagnostics().rebuildCount;
@@ -1026,10 +1029,12 @@ export default function Worldcraft() {
           if (disposed) return;
           const loopStart = qaEnabled ? performance.now() : 0;
           const state = uiRef.current, dt = Math.min(.05, activeEngine.getDeltaTime() / 1000), setup = state.setup;
-          const radians = setup.yaw * Math.PI / 180, elevation = setup.elevation * Math.PI / 180;
-          launcher.position.x = setup.originX; yaw.rotation.y = radians; loft.rotation.x = -elevation;
-          const aim = new Vector3(Math.sin(radians) * Math.cos(elevation), Math.sin(elevation), Math.cos(radians) * Math.cos(elevation));
-          const muzzle = new Vector3(setup.originX, 1.55, 0).add(aim.scale(RAIL_RULES.muzzleLength));
+          const pose = worldcraftStationPose(state.world, setup);
+          const elevation = setup.elevation * Math.PI / 180;
+          launcher.position.set(pose.launcher.x, pose.launcher.y, pose.launcher.z);
+          yaw.rotation.y = pose.yawRadians; loft.rotation.x = -elevation;
+          const aim = new Vector3(pose.aim.x, pose.aim.y, pose.aim.z);
+          const muzzle = new Vector3(pose.muzzle.x, pose.muzzle.y, pose.muzzle.z);
           spine = MeshBuilder.CreateLines('worldcraft-muzzle-spine', { points: [muzzle, muzzle.add(aim.scale(4))], instance: spine ?? undefined, updatable: true }, activeScene);
           spine.color = new Color3(.12, .85, .89); spine.isPickable = false;
           spine.setEnabled(state.mode === 'play' && state.view === 'address' && ['ready', 'charging'].includes(state.phase));
@@ -1055,8 +1060,8 @@ export default function Worldcraft() {
             camera.position.set(orbit.x + Math.sin(orbit.angle) * radius * Math.cos(orbit.elevation), radius * Math.sin(orbit.elevation), orbit.z - Math.cos(orbit.angle) * radius * Math.cos(orbit.elevation));
             look.set(orbit.x, 1, orbit.z); camera.fov = horizontal ? 1.02 : .78;
           } else if (state.phase !== 'result') {
-            const position = new Vector3(setup.originX - Math.sin(radians) * 15, 7.8, -Math.cos(radians) * 15);
-            const target = new Vector3(setup.originX + Math.sin(radians) * 34, 3.6, Math.cos(radians) * 34);
+            const position = new Vector3(pose.address.position.x, pose.address.position.y, pose.address.position.z);
+            const target = new Vector3(pose.address.target.x, pose.address.target.y, pose.address.target.z);
             const ease = 1 - Math.exp(-dt * 10); Vector3.LerpToRef(camera.position, position, ease, camera.position); Vector3.LerpToRef(look, target, ease, look);
             camera.fov = horizontal ? .96 : .69;
           }
@@ -1244,6 +1249,7 @@ export default function Worldcraft() {
           {numberControl('Origin', ui.setup.originX, originX => actions.current?.setup({ originX }), .5, -10, 10)}
           <div className={styles.buttonRow}><button type="button" aria-label="Origin left half metre" disabled={locked} onClick={() => actions.current?.setup({ originX: ui.setup.originX - .5 })}>← .5 m</button><button type="button" aria-label="Origin right half metre" disabled={locked} onClick={() => actions.current?.setup({ originX: ui.setup.originX + .5 })}>.5 m →</button></div>
           </>}
+          {(ui.world.launcher.z || ui.world.launcher.yaw) && <p>Station at {ui.setup.originX} m across, {ui.world.launcher.z ?? 0} m downrange, facing {ui.world.launcher.yaw ?? 0}°. Yaw turns from that facing. Zero is straight ahead.</p>}
           {numberControl('Yaw', ui.setup.yaw, yaw => actions.current?.setup({ yaw }), .5, ui.world.rules?.aimWindow?.yawMin ?? -70, ui.world.rules?.aimWindow?.yawMax ?? 70)}
           {numberControl('Elevation', ui.setup.elevation, elevation => actions.current?.setup({ elevation }), .5, ui.world.rules?.aimWindow?.elevationMin ?? 5, ui.world.rules?.aimWindow?.elevationMax ?? 85)}
           <div className={styles.controlRow}><label className={styles.field}>Power<select aria-label="Power control" disabled={locked} value={ui.powerMode} onChange={e => actions.current?.powerMode(e.target.value as UI['powerMode'])}><option value="set">Set power</option><option value="hold">Hold to charge</option></select></label><strong>{Math.round((ui.phase === 'charging' ? ui.charge : ui.setup.charge) * 100)}%</strong></div>
@@ -1318,7 +1324,7 @@ export default function Worldcraft() {
         <div className={styles.buttonRow}><button type="button" className={styles.primary} onClick={() => actions.current?.save()}>Save new world copy</button><button type="button" onClick={() => actions.current?.export()}>Export world JSON</button><button type="button" onClick={() => upload.current?.click()}>Import world JSON</button></div>
         <input ref={upload} className={styles.visuallyHidden} type="file" accept=".json,application/json" aria-label="Import world file" onChange={async e => { const file = e.target.files?.[0]; if (file) { if (file.size > 65536) actions.current?.import('oversized-file'); else actions.current?.import(await file.text()); } e.target.value = ''; }} />
         <div className={styles.memoryGrid}><section><h3>Worlds · {ui.worlds.length}/4</h3>{ui.worlds.length === 0 && <p className={styles.empty}>Save an arrangement worth revisiting.</p>}{ui.worlds.map(entry => <div className={styles.slot} key={entry.id}><strong>{entry.world.name}</strong><span>{entry.world.objects.length} pieces</span><div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.load(entry.id)}>Open world</button><button type="button" className={styles.danger} onClick={() => actions.current?.forgetWorld(entry.id)}>Remove saved world</button></div></div>)}</section>
-          <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span>{entry.performance ? <span>{entry.performance.impacts.length ? entry.performance.impacts.map(impact => impact.material === 'thunk' ? 'thunk' : impact.note).join(' → ') : 'No resonant note'}</span> : null}{entry.performance?.impacts.length ? <span>Hears with {heardVoice}. A kept line stores the contacts, not a voice.</span> : null}<div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button>{entry.performance?.impacts.length ? <button type="button" onClick={() => actions.current?.hear(entry.id)}>Hear recorded sounds</button> : null}<button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
+          <section><h3>Kept lines · {ui.lines.length}/4</h3>{ui.lines.length === 0 && <p className={styles.empty}>Fire a line, then Keep it. A miss is welcome.</p>}{ui.lines.map((entry, index) => <div className={styles.slot} key={entry.id}><strong>Line {index + 1} · {entry.worldSnapshot.world.name}</strong><span>{entry.setup.originX.toFixed(1)} m · {entry.setup.yaw.toFixed(1)}° · {Math.round(entry.setup.charge * 100)}%</span>{entry.worldSnapshot.world.launcher.z != null || entry.worldSnapshot.world.launcher.yaw != null ? <span>Station {entry.worldSnapshot.world.launcher.z ?? 0} m downrange, facing {entry.worldSnapshot.world.launcher.yaw ?? 0}°.</span> : null}{entry.performance ? <span>{entry.performance.impacts.length ? entry.performance.impacts.map(impact => impact.material === 'thunk' ? 'thunk' : impact.note).join(' → ') : 'No resonant note'}</span> : null}{entry.performance?.impacts.length ? <span>Hears with {heardVoice}. A kept line stores the contacts, not a voice.</span> : null}<div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.restoreLine(entry.id)}>Restore world &amp; line</button>{entry.performance?.impacts.length ? <button type="button" onClick={() => actions.current?.hear(entry.id)}>Hear recorded sounds</button> : null}<button type="button" className={styles.danger} onClick={() => actions.current?.forgetLine(entry.id)}>Remove kept line</button></div></div>)}</section></div>
         <div className={styles.buttonRow}><button type="button" onClick={() => actions.current?.house()}>House Shot</button><button type="button" onClick={() => actions.current?.orc()}>Orc Stand-in</button><button type="button" onClick={() => actions.current?.starter()}>Open starter</button><button type="button" onClick={() => actions.current?.starter(true)}>Empty clearing</button></div>
         <button type="button" onClick={() => actions.current?.exportMemory()}>Export local memory</button><p className={styles.muted}>Memory export includes kept paths for safekeeping; world JSON is the playable import format.</p>
         <p className={styles.notice} role="status">{ui.notice}</p>{ui.memoryWarning && <p className={styles.status}>{ui.memoryWarning}</p>}
