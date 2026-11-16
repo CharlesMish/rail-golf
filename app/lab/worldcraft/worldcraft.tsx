@@ -224,6 +224,11 @@ export default function Worldcraft() {
         shadows.usePercentageCloserFiltering = true; shadows.filteringQuality = ShadowGenerator.QUALITY_LOW;
         shadows.bias = .001; shadows.normalBias = .03;
         const presentation = createWorldcraftPresentation(scene);
+        const updateApron = (world: WorldcraftWorld) => {
+          const track = presentation.meshes.find(mesh => mesh.name === 'worldcraft-scenery-track');
+          track?.setEnabled(world.environment.preset !== 'amphitheater-place-v1');
+        };
+        updateApron(uiRef.current.world);
         let projectile: ReturnType<typeof buildRangeProjectile> | null = null;
         let comparisonTrail: LinesMesh | null = null;
         let trail: LinesMesh | null = null, spine: LinesMesh | null = null;
@@ -385,6 +390,7 @@ export default function Worldcraft() {
             const nextPreset = editingPreset && uiRef.current.preset ? projectRangePreset(uiRef.current.preset, candidate) : uiRef.current.preset;
             const result = runtime.replaceWorld(candidate, { intent: load || historyAction !== 'commit' ? 'load' : 'edit' });
             if (!result.ok) throw new Error(result.error);
+            updateApron(candidate);
             resonance.release();
             if (historyAction === 'commit') history.commit(candidate);
             const selected = candidate.objects.some(o => o.id === uiRef.current.selected) ? uiRef.current.selected : candidate.objects[0]?.id ?? null;
