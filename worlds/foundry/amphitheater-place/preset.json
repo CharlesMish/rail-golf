@@ -1,0 +1,88 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "amphitheater-place",
+  "name": "Stone Circle",
+  "environment": {
+    "preset": "amphitheater-place-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": 0,
+    "z": 32,
+    "yaw": -120
+  },
+  "objects": [
+    {
+      "id": "step-0",
+      "kind": "terrace",
+      "x": 0,
+      "z": 32,
+      "yaw": -180,
+      "innerRadius": 8,
+      "depth": 4,
+      "riser": 0.75,
+      "span": 216,
+      "elevation": 0.75,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      },
+      "gap": 24,
+      "facetDegrees": 24
+    },
+    {
+      "id": "step-1",
+      "kind": "terrace",
+      "x": 0,
+      "z": 32,
+      "yaw": -180,
+      "innerRadius": 12,
+      "depth": 4,
+      "riser": 1.5,
+      "span": 216,
+      "elevation": 1.5,
+      "voice": {
+        "material": "timber",
+        "degree": 1
+      },
+      "gap": 24,
+      "facetDegrees": 24
+    },
+    {
+      "id": "step-2",
+      "kind": "terrace",
+      "x": 0,
+      "z": 32,
+      "yaw": -180,
+      "innerRadius": 16,
+      "depth": 4,
+      "riser": 2.25,
+      "span": 216,
+      "elevation": 2.25,
+      "voice": {
+        "material": "timber",
+        "degree": 2
+      },
+      "gap": 24,
+      "facetDegrees": 24
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 8,
+      "charge": 0.45
+    },
+    "fixed": [
+      "step-0",
+      "step-1",
+      "step-2"
+    ],
+    "allowance": {},
+    "goal": {
+      "kind": "none"
+    }
+  }
+}

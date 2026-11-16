@@ -11,7 +11,7 @@ export type RangePreset = {
   version: 1;
   id: string;
   name: string;
-  environment: { preset: 'forest-clearing-v1'; seed: 1 };
+  environment: { preset: 'forest-clearing-v1' | 'amphitheater-place-v1'; seed: 1 };
   launcher: { x: number; z?: number; yaw?: number };
   objects: WorldcraftPiece[];
   /** Present only when this preset opts into the experimental 24-piece ceiling. */

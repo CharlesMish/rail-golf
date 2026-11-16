@@ -3,7 +3,7 @@ export type WorldcraftVoice={material:'metal'|'timber';degree:number};
 /** lift and tilt appear together, on a plate only. Absent on every v1 piece. */
 export type WorldcraftObject={id:string;kind:WorldcraftKind;x:number;z:number;yaw:number;lift?:number;tilt?:number;voice?:WorldcraftVoice};
 /** Lab-only annular step. Not a catalog kind, so the palette cannot place one. */
-export type WorldcraftTerrace={id:string;kind:'terrace';x:number;z:number;yaw:number;innerRadius:number;depth:number;riser:number;span:number;elevation:number;gap?:number;voice?:WorldcraftVoice};
+export type WorldcraftTerrace={id:string;kind:'terrace';x:number;z:number;yaw:number;innerRadius:number;depth:number;riser:number;span:number;elevation:number;gap?:number;facetDegrees?:24;voice?:WorldcraftVoice};
 export type WorldcraftPiece=WorldcraftObject|WorldcraftTerrace;
 export type WorldcraftStationaryTarget={id:string;x:number;z:number;yaw:number};
 export type WorldcraftShuttle={kind:'segment-shuttle';speed:number;phaseReference:'endpoint-0';endpoints:[{x:number;z:number},{x:number;z:number}];collider:{shape:'lathe-convex-hull';height:number;skirtRadius:number;centerY:number;friction:number;restitution:number};hit:'any-contact-before-ledger-close'};
@@ -16,7 +16,7 @@ export type WorldcraftAimWindow={yawMin:number;yawMax:number;elevationMin:number
 export type WorldcraftRules={pin:{x:number;z:number;r:number}|null;locked:string[];allowance:Partial<Record<WorldcraftKind,number>>;rail:{yaw:number;elevation:number;charge:number}|null;target?:WorldcraftTarget;goal?:WorldcraftGoal;originFixed?:true;aimWindow?:WorldcraftAimWindow};
 export type WorldcraftPinResult={status:'clear'|'miss'|'unfinished';distance:number|null};
 export type WorldcraftTargetResult={status:'hit'|'miss'|'unfinished';body:string;contact:WorldcraftContact|null};
-export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1';seed:1};objects:WorldcraftPiece[];launcher:{x:number;z?:number;yaw?:number};rules:WorldcraftRules|null;capacity?:24};
+export type WorldcraftDocument={format:'rail-golf-worldcraft';version:1;id:string;name:string;environment:{preset:'forest-clearing-v1'|'amphitheater-place-v1';seed:1};objects:WorldcraftPiece[];launcher:{x:number;z?:number;yaw?:number};rules:WorldcraftRules|null;capacity?:24};
 export type WorldcraftSetup={railIndex:1;originX:number;yaw:number;elevation:number;charge:number};
 export type WorldcraftPoint={x:number;y:number;z:number;t?:number};
 export type WorldcraftJSON=null|boolean|number|string|WorldcraftJSON[]|{[key:string]:WorldcraftJSON};

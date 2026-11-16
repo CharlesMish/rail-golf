@@ -1,0 +1,60 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "amphitheater-place",
+  "name": "Stone Circle",
+  "kind": "shot-study",
+  "invitation": "Stand on the central stage and explore the broad stone courses. The pieces stay where they are; there is no target.",
+  "physicalQuestion": "What happens when a committed shot meets the curved seating and comes back toward the stage?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "262323c1b694f2b4e15e9328f4d6d7320e1e8d37",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.966666666666659,
+        "position": [
+          10.47552490234375,
+          0.4300014078617096,
+          38.89009475708008
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-2"
+      ]
+    }
+  ],
+  "nearbySensitivity": "Further ordinary control nudges are being evaluated. A return to the stage is not a promise of multiple distinct notes.",
+  "validationEvidence": "Havok 120 Hz on the experimental candidate working tree based on the source build. Opening reaches the outer course and returns toward the central stage. See the technical appendix for scope and limitations.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A stone amphitheater with a central stage.",
+      "missing": "The faceted collision geometry is an approximation of a circular arc.",
+      "extension": "The visible stone surface follows the physical facets."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}
