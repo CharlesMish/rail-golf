@@ -1,0 +1,119 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "chime-bowl-centre",
+  "name": "Centre Stage",
+  "kind": "shot-study",
+  "invitation": "You stand on the open stage, in the middle of the timber steps. Straight ahead is the curved seating. The pieces stay where they are. There is no target.",
+  "physicalQuestion": "From the centre of the stage, does a shot into the seating meet more than one step, or come back toward the stage?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "2a9d09640c9443d75ec419521a529a3f0214903e",
+  "seed": 20261114,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "out-of-bounds",
+        "elapsed": 1.2833333333333312,
+        "position": [
+          -32.17288589477539,
+          3.7231414318084717,
+          13.424972534179688
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "outer-pair",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.1083333333333318,
+        "position": [
+          -2.8942465782165527,
+          0.43000274896621704,
+          30.329017639160156
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-3",
+        "worldcraft-object-step-4",
+        "worldcraft-object-step-3"
+      ]
+    },
+    {
+      "id": "one-lip",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 12,
+        "charge": 0.35
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.741666666666663,
+        "position": [
+          -29.48424530029297,
+          0.4300000071525574,
+          14.977263450622559
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-step-4"
+      ]
+    }
+  ],
+  "nearbySensitivity": "The opening aim leaves the yard and touches nothing. Yaw 0, elevation 8, charge 0.45 meets step 3 and step 4 at the same instant, then the ground, so the ear hears one knock. Yaw 0, elevation 12, charge 0.35 rings only step 4, then the ground. On the full grid no shot makes two separate notes. A copy with the risers half as tall made no two-step contact and no return.",
+  "validationEvidence": "Same 875-shot Havok grid as Down the Aisle: yaw -24 to 24 by 2 degrees, elevations 8, 12, 16, 20, 24, 30, 40, charges 0.35, 0.45, 0.55, 0.65, 0.8, origin 0, rail 1. Face speed. Audible events merge onsets within 150 ms. Fresh runtime. Seed 20261114 is recorded and not applied. The pieces match From the Stage. The station stays at the stage centre and faces the seating.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A second separate note from the seating, or a return down the steps.",
+      "missing": "The 875-shot grid has no shot with two audible notes. The inner three steps are never touched. Fifty shots touch two steps at one instant and merge into one knock. Seventy-five later move closer to the stage centre.",
+      "extension": "One copy with risers half as tall was measured on the same grid. It had no two-step contact and no return, so tread pitch was not added. Restitution stays 0.86."
+    },
+    {
+      "category": "presentation",
+      "concept": "The launcher, the aim mark, and the camera stand on the stage.",
+      "missing": "The earlier From the Stage world kept its station in the file and drew the rail on the apron.",
+      "extension": "The drawn rail now uses the same station as the launch. No predicted trajectory was added."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}

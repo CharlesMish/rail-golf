@@ -1,0 +1,155 @@
+{
+  "seed": 20261114,
+  "seedAppliedToSolver": false,
+  "dynamics": "normal-speed",
+  "gitSha": "2a9d09640c9443d75ec419521a529a3f0214903e",
+  "physics": "rail-golf-v02-worldcraft-v1",
+  "grid": {
+    "shots": 875,
+    "fullGrid": 875,
+    "yaw": [
+      -24,
+      24,
+      2
+    ],
+    "elevation": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      30,
+      40
+    ],
+    "charge": [
+      0.35,
+      0.45,
+      0.55,
+      0.65,
+      0.8
+    ],
+    "originX": 0,
+    "railIndex": 1
+  },
+  "chordGapSeconds": 0.15,
+  "return": {
+    "centre": {
+      "x": 0,
+      "z": 32
+    },
+    "inward": "after the first tier contact, a later sample is at least 0.25 m closer to the terrace centre",
+    "lower": "a later contact is on a smaller step index",
+    "stage": "a later ground or tee contact is inside the 8 m inner radius"
+  },
+  "face": {
+    "tread": "|normal y| >= 0.7",
+    "riser": "|normal y| <= 0.35",
+    "oblique": "between those"
+  },
+  "harness": "fresh Havok runtime per world",
+  "worlds": {
+    "chime-bowl-shallow": {
+      "id": "chime-bowl-shallow",
+      "kind": "variant",
+      "launcher": {
+        "x": 0,
+        "z": 32,
+        "yaw": -120
+      },
+      "pieces": 6,
+      "facets": 108,
+      "shots": 875,
+      "audibleSplit": {
+        "0": 800,
+        "1": 75,
+        "2": 0,
+        "3-5": 0,
+        "6+": 0
+      },
+      "rawSplit": {
+        "0": 800,
+        "1": 75,
+        "2": 0,
+        "3-5": 0,
+        "6+": 0
+      },
+      "audible3": 0,
+      "raw3": 0,
+      "tiers2": 0,
+      "inward": 0,
+      "lower": 0,
+      "stageLandings": 0,
+      "returns": 0,
+      "yard": 577,
+      "tee": 0,
+      "ground": 298,
+      "faceShots": {
+        "tread": 75,
+        "riser": 0,
+        "oblique": 0,
+        "mixed": 0,
+        "none": 800
+      },
+      "faceStrikes": {
+        "tread": 208,
+        "riser": 0,
+        "oblique": 0,
+        "unknown": 0
+      },
+      "families": 2,
+      "loneFamilies": 0,
+      "topFamilies": [
+        {
+          "name": "short:step-5",
+          "count": 50
+        },
+        {
+          "name": "short:step-4",
+          "count": 25
+        }
+      ],
+      "dead": [
+        "step-0",
+        "step-1",
+        "step-2",
+        "step-3"
+      ],
+      "pieceShots": {
+        "step-5": 50,
+        "step-4": 25,
+        "step-0": 0,
+        "step-1": 0,
+        "step-2": 0,
+        "step-3": 0
+      },
+      "nudge": null,
+      "opening": {
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55,
+        "audible": 0,
+        "raw": 0,
+        "tiers": 0,
+        "sequence": "(silent)",
+        "terminal": "out-of-bounds",
+        "inward": false,
+        "face": "none",
+        "station": {
+          "x": 0,
+          "z": 32,
+          "yaw": -120
+        }
+      },
+      "richest": [],
+      "bodies": {
+        "staticBodies": 110,
+        "meshes": 110,
+        "physicsBodies": 110,
+        "rebuildMs": 90.1,
+        "disposeBefore": 110,
+        "disposeAfterRuntime": 0
+      },
+      "seconds": 127.7
+    }
+  }
+}

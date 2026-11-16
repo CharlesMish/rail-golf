@@ -37,7 +37,7 @@ export function createRangeHarness(havok, world, build) {
   const runtime = createWorldcraftRuntime(scene, { world, build });
   return {
     runtime,
-    shoot(next, setup) {
+    shoot(next, setup, observe) {
       if (runtime.mode !== 'build') runtime.setMode('build');
       if (worldcraftIdentity(runtime.world) !== worldcraftIdentity(next)) {
         const replaced = runtime.replaceWorld(next, { intent: 'load' });
@@ -45,17 +45,41 @@ export function createRangeHarness(havok, world, build) {
       }
       runtime.setMode('play');
       if (!runtime.launch(setup)) throw new Error(runtime.error || 'launch failed');
+      // Optional contact copy for a measurement. Absent, the shot return is unchanged.
+      const strikes = observe ? [] : null;
+      const token = strikes ? runtime.flight.aggregate.body.getCollisionObservable().add(event => {
+        const body = runtime.flight?.aggregate?.body;
+        const other = event.collider === body ? event.collidedAgainst : event.collider;
+        const normal = event.normal;
+        const point = event.point;
+        strikes.push({
+          body: other?.transformNode?.name ?? '',
+          nx: Number.isFinite(normal?.x) ? normal.x : null,
+          ny: Number.isFinite(normal?.y) ? normal.y : null,
+          nz: Number.isFinite(normal?.z) ? normal.z : null,
+          y: Number.isFinite(point?.y) ? point.y : null,
+        });
+      }) : null;
       for (let i = 0; i < 7300 && !runtime.flight.ended; i++) {
         runtime.beforeStep();
         physics._step(1 / 120);
         runtime.afterStep();
       }
+      if (token) runtime.flight?.aggregate?.body?.getCollisionObservable()?.remove(token);
       const last = runtime.last;
       if (!last) throw new Error('shot did not resolve');
       runtime.setMode('build');
-      return last;
+      return strikes ? { ...last, strikes } : last;
     },
-    dispose() { runtime.dispose(); scene.dispose(); engine.dispose(); },
+    physicsBodies() { return scene.getPhysicsEngine()?.getBodies().length ?? 0; },
+    dispose() {
+      const before = scene.getPhysicsEngine()?.getBodies().length ?? null;
+      runtime.dispose();
+      const afterRuntime = scene.getPhysicsEngine()?.getBodies().length ?? null;
+      scene.dispose();
+      engine.dispose();
+      return { before, afterRuntime };
+    },
   };
 }
 

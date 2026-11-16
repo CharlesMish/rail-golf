@@ -1,0 +1,168 @@
+{
+  "url": "http://127.0.0.1:5173/lab/worldcraft?qa=1",
+  "shots": [
+    {
+      "id": "one-lip",
+      "samples": 6,
+      "inFrame": 6,
+      "share": 1,
+      "maxAbs": 0.95,
+      "minDepth": 13.88,
+      "notes": [
+        "step-4:A4@0.5750000000000004"
+      ]
+    },
+    {
+      "id": "opening",
+      "samples": 3,
+      "inFrame": 3,
+      "share": 1,
+      "maxAbs": 0.912,
+      "minDepth": 15.02,
+      "notes": []
+    }
+  ],
+  "build": "2a9d09640c-dirty",
+  "gl": {
+    "vendor": "Google Inc. (Google)",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "width": 1000,
+    "height": 560,
+    "innerWidth": 1280,
+    "innerHeight": 657
+  },
+  "gallery": {
+    "cards": [
+      "chime-tiers",
+      "chime-bowl-aisle",
+      "chime-bowl-stage",
+      "chime-bowl-centre"
+    ],
+    "centre": {
+      "name": "Centre Stage",
+      "invitation": "You stand on the open stage, in the middle of the timber steps. Straight ahead is the curved seating. The pieces stay where they are. There is no target."
+    },
+    "aisle": {
+      "name": "Down the Aisle",
+      "invitation": "Six timber steps curve around an open stage, with a straight aisle through the middle. You stand at the top of that aisle. The pieces stay where they are. There is no target."
+    },
+    "stage": {
+      "name": "From the Stage",
+      "invitation": "The same six timber steps, seen from the open stage. The aisle is behind the ball and the steps rise ahead. The pieces stay where they are. There is no target."
+    }
+  },
+  "centre": {
+    "station": {
+      "id": "worldcraft",
+      "label": "Worldcraft apron",
+      "x": 0,
+      "z": 32,
+      "yaw": -120
+    },
+    "launcherMesh": {
+      "x": 0,
+      "y": 0,
+      "z": 32,
+      "yaw": -2.0943951023931953
+    },
+    "fromAisleDegrees": 60,
+    "yawRange": {
+      "min": -70,
+      "max": 70
+    },
+    "exportLauncher": {
+      "x": 0,
+      "z": 32,
+      "yaw": -120
+    },
+    "frame": {
+      "medianDtMs": 31.4,
+      "maxDtMs": 35.9,
+      "medianDraws": 236,
+      "staticBodies": 110,
+      "meshes": 110,
+      "rebuildMs": 140.30000000004657
+    }
+  },
+  "savedLauncher": {
+    "x": 0,
+    "z": 32,
+    "yaw": -120
+  },
+  "copyLauncher": {
+    "x": 0,
+    "z": 32,
+    "yaw": -120
+  },
+  "aisle": {
+    "station": {
+      "id": "worldcraft",
+      "label": "Worldcraft apron",
+      "x": 0,
+      "z": 0,
+      "yaw": 0
+    },
+    "launcherMesh": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "yaw": 0
+    },
+    "frame": {
+      "medianDtMs": 24.1,
+      "maxDtMs": 34.3,
+      "medianDraws": 236,
+      "staticBodies": 110,
+      "meshes": 110,
+      "rebuildMs": 111.69999999995343
+    }
+  },
+  "stage": {
+    "station": {
+      "id": "worldcraft",
+      "label": "Worldcraft apron",
+      "x": 0,
+      "z": 32,
+      "yaw": -180
+    },
+    "launcherMesh": {
+      "x": 0,
+      "y": 0,
+      "z": 32,
+      "yaw": -3.141592653589793
+    },
+    "frame": {
+      "medianDtMs": 30.4,
+      "maxDtMs": 48.6,
+      "medianDraws": 236,
+      "staticBodies": 110,
+      "meshes": 110,
+      "rebuildMs": 112.30000000004657
+    }
+  },
+  "shallow": {
+    "launcher": {
+      "x": 0,
+      "z": 32,
+      "yaw": -120
+    },
+    "riser": [
+      0.25,
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5
+    ],
+    "frame": {
+      "medianDtMs": 28.85,
+      "maxDtMs": 31.9,
+      "medianDraws": 238,
+      "staticBodies": 110,
+      "meshes": 110,
+      "rebuildMs": 107.5
+    }
+  },
+  "ok": true
+}
