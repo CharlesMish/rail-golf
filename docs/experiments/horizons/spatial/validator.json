@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "reports": [
+    {
+      "id": "overpass",
+      "kind": "shot-study",
+      "sourceBuild": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"deck-0-0\",\"kind\":\"plate\",\"x\":-6,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-0-1\",\"kind\":\"plate\",\"x\":-6,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-1-0\",\"kind\":\"plate\",\"x\":-2,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-1-1\",\"kind\":\"plate\",\"x\":-2,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-2-0\",\"kind\":\"plate\",\"x\":2,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-2-1\",\"kind\":\"plate\",\"x\":2,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-3-0\",\"kind\":\"plate\",\"x\":6,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-3-1\",\"kind\":\"plate\",\"x\":6,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"pier-east\",\"kind\":\"bank\",\"x\":8.5,\"z\":36,\"yaw\":90},{\"id\":\"pier-west\",\"kind\":\"bank\",\"x\":-8.5,\"z\":36,\"yaw\":90},{\"id\":\"return-wall\",\"kind\":\"bank\",\"x\":0,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":-2},\"rules\":{\"pin\":null,\"locked\":[\"deck-0-0\",\"deck-0-1\",\"deck-1-0\",\"deck-1-1\",\"deck-2-0\",\"deck-2-1\",\"deck-3-0\",\"deck-3-1\",\"pier-east\",\"pier-west\",\"return-wall\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "upper-carry",
+        "lower-return",
+        "beyond-deck",
+        "short",
+        "ceiling",
+        "ceiling-lip",
+        "high-bypass"
+      ]
+    }
+  ]
+}
