@@ -15,16 +15,17 @@ import {ChevronLeft,ChevronRight,ChevronUp,ChevronDown,Crosshair} from 'lucide-r
 import styles from './mechanism-range/range.module.css';
 import refinement from './spatial-lab.module.css';
 import {buildSpatialLabMaterials} from '@/lib/spatial-lab-materials';
+import {createGateShelf,createBrowserGateShelf,type GateEntry} from '@/lib/horizons-gate-shelf';
 
 type Phase='loading'|'ready'|'charging'|'flight'|'result'|'error';
-type Actions={begin():void;release():void;cancel():void;retry():void;reset():void;recall():void};
+type Actions={begin():void;release():void;cancel():void;retry():void;reset():void;recall():void;keep():void;restoreKept(id:string):void;removeKept(id:string):void;downloadKept(id:string):void};
 export default function SpatialLab({config}:{config:SpatialConfig}){
   const canvas=useRef<HTMLCanvasElement>(null),actions=useRef<Actions|null>(null);
   const [phase,setPhase]=useState<Phase>('loading'),phaseRef=useRef<Phase>('loading');
   const [setup,setSetup]=useState<RangeSetup>({...config.defaultSetup}),setupRef=useRef<RangeSetup>({...config.defaultSetup});
   const [max,setMax]=useState(false),maxRef=useRef(false);
   const [view]=useState(createRangeView),viewMode=useSyncExternalStore(view.subscribe,view.getSnapshot,view.getServerSnapshot);
-  const [powerMode,setPowerMode]=useState<'hold'|'set'>('hold'),powerModeRef=useRef<'hold'|'set'>('hold');
+  const [powerMode,setPowerMode]=useState<'hold'|'set'>(config.defaultPowerMode??'hold'),powerModeRef=useRef<'hold'|'set'>(config.defaultPowerMode??'hold');
   const [visualMode,setVisualMode]=useState<'round'|'ball'>('round'),visualModeRef=useRef<'round'|'ball'>('round');
   const [environment,setEnvironment]=useState<Record<string,string>>({});
   const [diagnostics,setDiagnostics]=useState<Record<string,unknown>>({});
@@ -35,6 +36,7 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
   const [discovered,setDiscovered]=useState(false);
   const [floor,setFloor]=useState('A'),[power,setPower]=useState(0),[caption,setCaption]=useState(''),[error,setError]=useState('');
   const [last,setLast]=useState<RangeRecord|null>(null);
+  const [kept,setKept]=useState<GateEntry[]>([]),[shelfWarning,setShelfWarning]=useState(''),[keptLast,setKeptLast]=useState(false);
   const update=(patch:Partial<RangeSetup>)=>{originClock.current?.sync(performance.now(),phaseRef.current,view.getSnapshot()==='survey'||document.hidden);const next=spatialControlSetup(config,setupRef.current,patch,phaseRef.current);setupRef.current=next;setSetup(next);originClock.current?.reset(performance.now());};
   const toggleMax=()=>{if(!['ready','result'].includes(phaseRef.current))return;maxRef.current=maxLatchAfter(maxRef.current,'toggle');setMax(maxRef.current);};
   const toggleSurvey=()=>{originClock.current?.sync(performance.now(),phaseRef.current,view.getSnapshot()==='survey'||document.hidden);view.toggle(phaseRef.current);originClock.current?.reset(performance.now());};
@@ -61,6 +63,10 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
         const shadows=new ShadowGenerator(1024,sun);shadows.useBlurExponentialShadowMap=true;shadows.blurKernel=12;
         const {world:materials,equipment:presentationMaterials}=buildSpatialLabMaterials(scene);
         const root=new TransformNode('mr-world',scene),world=config.buildWorld(scene,root,materials,shadows);
+        const shelf:ReturnType<typeof createGateShelf>|null=createBrowserGateShelf(config.shelf?.id);
+        if(shelf){setKept(shelf.entries());setShelfWarning(shelf.warning());}
+        let actualPath:number[][]=[],savedPath:number[][]=[],physicsSamples=0,alreadyKept=false;
+        const publishShelf=()=>{if(shelf){setKept(shelf.entries());setShelfWarning(shelf.warning());}};
         setEnvironment(world.environment?.snapshot()??{});
         environmentAction.current=(id,value)=>{if(phaseRef.current!=='ready')return;if(world.environment?.setControl)world.environment.setControl(id,value);else world.environment?.restore({...world.environment.snapshot(),[id]:value});setEnvironment(world.environment?.snapshot()??{});setDiagnostics(world.diagnostics?.()??{});};
         let captionUntil=0,chargeStart=0,lastCharge=-1;
@@ -80,9 +86,10 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
             setCaption(event.kind==='switch'?transferFeedback(true,event.state==='B'?'B':'A')!:event.label??'REBOUND');captionUntil=performance.now()+RANGE_EVENT_HOLD_MS;
             departureMarkers.add(event,performance.now());
           }
-          if(event.kind==='end'){setLast(event.last!);view.set('impact');phaseTo('result');setCaption('');captionUntil=0;}
+          if(event.kind==='end'){if(shelf){savedPath=[...actualPath,[event.last!.elapsed,...event.last!.position]];}setLast(event.last!);view.set('impact');phaseTo('result');setCaption('');captionUntil=0;}
         });
         scene.onBeforePhysicsObservable.add(()=>session.beforeStep());scene.onAfterPhysicsObservable.add(()=>session.afterStep());
+        if(shelf)scene.onAfterPhysicsObservable.add(()=>{const f=session.flight;if(f&&!f.ended&&++physicsSamples%12===0)actualPath.push([f.elapsed,...f.mesh.position.asArray()]);});
         const {launcher,yaw,loft}=buildRangeLauncher(scene,presentationMaterials,shadows);
         let projectile:ReturnType<typeof buildRangeProjectile>|null=null;
         let trail:LinesMesh|null=null,spine:LinesMesh|null=null,points:Vector3[]=[],trailFrame=0;
@@ -93,6 +100,7 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
           originClock.current?.sync(performance.now(),phaseRef.current,view.getSnapshot()==='survey'||document.hidden);
           const launchSetup={...setupRef.current,charge};
           if(session.fire(launchSetup)){
+            if(shelf){actualPath=[[0,...session.flight!.mesh.position.asArray()]];savedPath=[];physicsSamples=0;alreadyKept=false;setKeptLast(false);}
             setupRef.current=launchSetup;setSetup(launchSetup);setEnvironment(world.environment?.snapshot()??{});setDiagnostics(world.diagnostics?.()??{});
             phaseTo('flight');setPower(charge);setCaption('');setRecoveryNotice('');departureMarkers.clear();view.set('flight');
             const direction=spatialLaunch(config,setupRef.current).aim;heading={x:direction.x,y:0,z:direction.z};previous=null;
@@ -115,6 +123,10 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
           begin(){if(phaseRef.current!=='ready')return;if(maxRef.current){shoot(1);return;}chargeStart=performance.now();phaseTo('charging');},
           release(){if(phaseRef.current==='charging')shoot(launchCharge(powerModeRef.current,setupRef.current.charge,performance.now()-chargeStart,maxRef.current));},cancel,
           retry(){restore('retry');},reset(){restore('reset');},recall(){restore('recall');},
+          keep(){if(!shelf||phaseRef.current!=='result'||!session.last||alreadyKept)return;try{const entry=shelf.keep(session.last,savedPath,BUILD_ID);if(entry){alreadyKept=true;setKeptLast(true);}publishShelf();}catch(e){setShelfWarning(String(e));}},
+          restoreKept(id){if(!shelf||!['ready','result'].includes(phaseRef.current))return;const entry=shelf.get(id);if(!entry)return;restore('retry');trail?.dispose();trail=null;points=[];world.environment!.restore(entry.record.environment);const next={...entry.record.setup};setupRef.current=next;setSetup(next);powerModeRef.current='set';setPowerMode('set');maxRef.current=false;setMax(false);setEnvironment(world.environment!.snapshot());setDiagnostics(world.diagnostics?.()??{});placeRangeCamera(camera,target,cameraFrame('launch'));setRecoveryNotice(`Kept setup and release phase restored · fire when ready. Recorded build ${entry.build}${entry.build===BUILD_ID?'':'; current build differs'}.`);},
+          removeKept(id){shelf?.remove(id);publishShelf();},
+          downloadKept(id){const entry=shelf?.get(id);if(!entry)return;const url=URL.createObjectURL(new Blob([JSON.stringify(entry,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`swing-gate-${entry.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},
         };
         const down=(e:PointerEvent)=>{if(!['ready','charging'].includes(phaseRef.current)||view.getSnapshot()==='survey'||drag||(e.pointerType==='mouse'&&e.button!==0))return;e.preventDefault();drag={id:e.pointerId,x:e.clientX,y:e.clientY};surface.setPointerCapture(e.pointerId);};
         const move=(e:PointerEvent)=>{if(!drag||drag.id!==e.pointerId||!['ready','charging'].includes(phaseRef.current))return;e.preventDefault();
@@ -188,6 +200,7 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
       <div className={styles.resultActions} aria-label="Continue playing">
         <button type="button" onClick={e=>{e.stopPropagation();actions.current?.retry();}}>Retry Shot <kbd>R</kbd></button>
         <button type="button" onClick={e=>{e.stopPropagation();actions.current?.reset();}}>Reset Card</button>
+        {config.shelf&&<button type="button" disabled={keptLast||kept.length>=config.shelf.limit||last?.reason==='interrupted'} onClick={e=>{e.stopPropagation();actions.current?.keep();}}>{keptLast?'Kept':'Keep this line'}</button>}
       </div>
       {receipt.events.length>0&&<ol aria-label="Qualified line events">{receipt.events.map((event,index)=><li key={index}>{event.label}</li>)}</ol>}
       <p>{receipt.terminal}</p>
@@ -197,7 +210,8 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
     <section className={`${styles.console} ${refinement.console}`} aria-label="Rail shot controls">
       <div className={refinement.scroll}>
       {recoveryNotice&&ready&&<p className={styles.recoveryNotice} role="status">{recoveryNotice}</p>}
-      {config.controls?.some(c=>c.placement==='primary')&&<><div className={refinement.primary} aria-label="Mechanism controls">{config.controls.filter(c=>c.placement==='primary').map(control=><fieldset key={control.id}><legend>{control.label}</legend>{control.options.map(option=><button type="button" key={option} disabled={!ready} aria-pressed={environment[control.id]===option} onClick={()=>environmentAction.current?.(control.id,option)}>{option}</button>)}<strong className={refinement.state}>{control.label.toUpperCase()} {environment[control.id]??'…'}</strong></fieldset>)}</div>{config.controlHint&&<p className={refinement.hint}>{config.controlHint}</p>}{Boolean(diagnostics.recallHeld)&&<p className={refinement.state}>RECALLED PHASE HELD · choose LIVE to resume motion</p>}</>}
+      {config.controls?.some(c=>c.placement==='primary')&&<><div className={refinement.primary} aria-label="Mechanism controls">{config.controls.filter(c=>c.placement==='primary').map(control=><fieldset key={control.id}><legend>{control.label}</legend>{control.options.map(option=><button type="button" key={option} disabled={!ready} aria-pressed={environment[control.id]===option} onClick={()=>environmentAction.current?.(control.id,option)}>{option}</button>)}<strong className={refinement.state}>{control.label.toUpperCase()} {environment[control.id]??'…'}</strong></fieldset>)}</div>{config.controlHint&&<p className={refinement.hint}>{config.controlHint}</p>}{Boolean(diagnostics.recallHeld)&&<p className={refinement.state}>{config.shelf?'PHASE HELD':'RECALLED PHASE HELD'} · choose LIVE to resume motion</p>}</>}
+      {config.shelf&&<details className={styles.tools}><summary>Kept lines · {kept.length}/{config.shelf.limit}</summary><p>Restore places the launcher and holds the recorded release phase. Fire manually to run Havok again. Download includes sampled actual history; it is not a predicted trajectory.</p>{shelfWarning&&<p role="status">{shelfWarning}</p>}{kept.map((entry,index)=><div key={entry.id} className={styles.options} style={{flexWrap:'wrap'}}><span>Line {index+1} · {entry.record.elapsed.toFixed(2)} s · {entry.record.reason.replaceAll('-',' ')}</span><button disabled={!['ready','result'].includes(phase)} onClick={()=>actions.current?.restoreKept(entry.id)}>Restore</button><button onClick={()=>actions.current?.downloadKept(entry.id)}>Download</button><button onClick={()=>actions.current?.removeKept(entry.id)}>Remove</button></div>)}</details>}
       {config.originControl&&<div className={styles.options} style={{flexWrap:'wrap',marginBottom:8}} aria-label="Launch origin">
         <label>Origin <select aria-label="Origin mode" disabled={!ready} value={setup.carriageMode} onChange={e=>update({carriageMode:e.target.value})}>{config.originControl.modes.map(mode=><option key={mode.id} value={mode.id}>{mode.label}</option>)}</select></label>
         {config.originControl.stops(setup.carriageMode??'rails')?.map((x,index)=><button key={x} disabled={!ready} aria-pressed={setup.originX===x} onClick={()=>update(setup.carriageMode==='rails'?{railIndex:index}:{originX:x})}>{x>0?'+':''}{x} m</button>)}
@@ -216,7 +230,7 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
           <label>Projectile visual <select aria-label="Projectile visual" value={visualMode} onChange={e=>{const mode=e.target.value as 'round'|'ball';visualModeRef.current=mode;setVisualMode(mode);}}><option value="round">RAIL ROUND</option><option value="ball">BALL</option></select></label>
         </div>
         <p>Gentle start · 80% in 2 seconds · full power in 3. Aim ±70°; loft 5–85°. Q/E {config.originControl?'origins':'rails'} · arrows/WASD aim · Space fire · X MAX · R Retry · L Recall · V Survey.</p>
-        <p>Recall selects the last exact power for the orange fire control. This sketch keeps only the last attempt in memory. Origin and environment are saved with it.</p>
+        <p>Recall selects the last exact power for the orange fire control. {config.shelf?'Keep saves up to four chosen lines on this device.':'This sketch keeps only the last attempt in memory.'} Origin and environment are saved with it.</p>
         {discovered&&<p>Retry keeps the transfer state. Reset restores the authored default. Recall restores the recorded starting state.</p>}
         {config.controls&&<p>Current environment: {JSON.stringify(environment)} · {JSON.stringify(diagnostics)}</p>}
         {config.originControl&&<p>TOUR moves at 2 m/s before release, pauses during flight, and transfers no velocity. Retry/Recall hold the exact origin; Resume TOUR starts moving again. Survey and window blur pause travel.</p>}
