@@ -14,6 +14,7 @@ import { runRange } from '../range/run.mjs';
 const roots = process.argv.slice(2).filter(arg => !arg.startsWith('--'));
 const dirs = roots.length ? roots : [
   'worlds/foundry/_template',
+  'worlds/foundry/crossing-house',
   'worlds/foundry/bell-loft',
   'worlds/foundry/return-address',
   'worlds/foundry/right-angle',

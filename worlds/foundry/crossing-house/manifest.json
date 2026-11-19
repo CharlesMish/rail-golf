@@ -1,0 +1,173 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "crossing-house",
+  "name": "Crossing House",
+  "kind": "authored-world",
+  "invitation": "An open court, a low ramp, and a screen you can move. Try sending a line above the screen, around it, or back across the court. Keep a route you would like to change.",
+  "physicalQuestion": "Can one small arrangement invite different routes: a ramp-assisted carry, a cross-court return, and an optional second use of the same ramp? What does one turn or slide of the screen change?",
+  "editable": {
+    "launcher": true,
+    "geometry": true
+  },
+  "challenge": null,
+  "sourceBuild": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+  "seed": 20261119,
+  "testedShots": [
+    {
+      "id": "opening",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 13,
+        "charge": 0.45
+      },
+      "launchPhase": null,
+      "contacts": [
+        "worldcraft-object-jump"
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.5666666666666567,
+        "position": [
+          0,
+          0.4299983084201813,
+          51.40220642089844
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "over-screen",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 13,
+        "charge": 0.6
+      },
+      "launchPhase": null,
+      "contacts": [
+        "worldcraft-object-jump",
+        "worldcraft-object-far"
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.958333333333322,
+        "position": [
+          0,
+          0.43000054359436035,
+          71.01628875732422
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "across-court",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 4,
+        "elevation": 18,
+        "charge": 0.75
+      },
+      "launchPhase": null,
+      "contacts": [
+        "worldcraft-object-screen",
+        "worldcraft-object-west",
+        "worldcraft-object-east"
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.2749999999999946,
+        "position": [
+          2.751441240310669,
+          0.4300001561641693,
+          46.00944137573242
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "second-visit-sensitive",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 7.5,
+        "elevation": 18,
+        "charge": 0.75
+      },
+      "launchPhase": null,
+      "contacts": [
+        "worldcraft-object-east",
+        "worldcraft-object-jump",
+        "worldcraft-object-west",
+        "worldcraft-object-jump"
+      ],
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.2833333333333243,
+        "position": [
+          -6.03652286529541,
+          0.4300008714199066,
+          23.092531204223633
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "short-miss",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.3
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 0.7916666666666663,
+        "position": [
+          0,
+          0.43000003695487976,
+          18.561525344848633
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "At the over-screen example all 8 adjacent yaw, elevation, charge and origin probes retain ramp then far face. At across-court all 8 retain screen then west; 4 also retain east. The longer second-visit line retains all 4 contacts for 3 of 8 immediate neighbours; its elevation and charge neighbours shorten or bypass the later contacts. A 5-degree screen turn can shorten a cross-court line, whereas either 0.5 m lateral slide retains its three contacts. Numerical setups and raw evidence stay in the appendix.",
+  "validationEvidence": "Actual Havok at 120 Hz through the unchanged Worldcraft runtime; tested terminals replay through scripts/foundry/validate.mjs. The reproduction script records contacts, callback normals and pre-step and post-step velocities, sampled actual paths, neighbours, geometry-ablation controls and 20 load-fire-reset-switch cycles. The wing contacts are their inner end faces; the long route uses the rear and side of the ramp. NullEngine does not establish visual readability, frame timing or enjoyment.",
+  "limitations": [
+    {
+      "category": "presentation",
+      "concept": "A compact open court whose ramp, screen and wings invite distinct route choices.",
+      "missing": "The browser in this session cannot create WebGL; visibility and control comfort at desktop and phone size remain unverified.",
+      "extension": "Rendered owner review before changing cameras or adding more pieces."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "The repeated use of the same ramp remains an optional discovery.",
+      "missing": "The longer return has narrow elevation and power tolerance despite adjacent yaw solutions; its later ramp contacts are rear and side contacts, not top landings.",
+      "extension": "Do not turn it into a required challenge; evaluate whether its surprise is worth retaining during free play."
+    }
+  ],
+  "customCode": null
+}
