@@ -34,6 +34,8 @@ test('foundry files stay declarative and the gallery lists the prepared worlds',
   assert.equal(JSON.stringify(pair.preset).includes(pair.manifest.challenge.id), false);
   const cards = listFoundryWorlds();
   assert.deepEqual(cards.map(card => [card.id, card.section]), [
+    ['overpass', 'studies'],
+    ['crossing-house', 'studies'],
     ['bell-loft', 'featured'],
     ['return-address', 'featured'],
     ['right-angle', 'featured'],

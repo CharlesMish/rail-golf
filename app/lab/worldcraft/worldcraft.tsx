@@ -354,6 +354,10 @@ export default function Worldcraft() {
         });
         const { launcher, yaw, loft } = buildRangeLauncher(scene, presentation.materials, shadows);
         const orbitHome = { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 };
+        // Overpass needs the lower opening and launcher in the same initial view.
+        // This is presentation only; the survey remains freely adjustable.
+        const foundryOrbit = (id: string | null) => id === 'overpass'
+          ? { angle: .6, elevation: .38, radius: 78, x: 0, z: 35 } : orbitHome;
         const orbit = { ...orbitHome };
         const resetOrbit = () => { orbit.angle = orbitHome.angle; orbit.elevation = orbitHome.elevation; orbit.radius = orbitHome.radius; orbit.x = orbitHome.x; orbit.z = orbitHome.z; };
         let drag: null | {
@@ -470,6 +474,7 @@ export default function Worldcraft() {
           const card = listFoundryWorlds().find(item => item.id === id);
           const notice = card ? foundryPlayCopy(foundryRecord(id).manifest, loaded.preset).playNotice : loaded.preset.name;
           resetOrbit();
+          Object.assign(orbit, foundryOrbit(id));
           clearRound(); runtime.setMode('build'); publish({ mode: 'build', phase: 'ready', view: 'survey' });
           if (!commit(loaded.world, notice, 'commit', true)) return;
           publish({
@@ -722,7 +727,7 @@ export default function Worldcraft() {
           },
           camera(action) {
             if (uiRef.current.mode !== 'build' && uiRef.current.view !== 'survey') return;
-            if (action === 'home') Object.assign(orbit, { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 });
+            if (action === 'home') Object.assign(orbit, foundryOrbit(uiRef.current.foundryId));
             if (action === 'focus') { const part = uiRef.current.world.objects.find(o => o.id === uiRef.current.selected); if (part) Object.assign(orbit, { x: part.x, z: part.z, radius: 45, elevation: .78 }); }
             if (action === 'left') orbit.angle -= .2; if (action === 'right') orbit.angle += .2;
             if (action === 'in') orbit.radius = Math.max(40, orbit.radius * .85); if (action === 'out') orbit.radius = Math.min(180, orbit.radius / .85);
@@ -1019,6 +1024,12 @@ export default function Worldcraft() {
         };
         publish({ phase: 'ready', notice: 'House Shot: fire once, then turn the ramp. The rail and gold pin stay fixed.', ...memoryState() });
         selectedHighlight();
+        // Links select only a bundled, validated Foundry world. They never import
+        // geometry, execute data, overwrite memory, or fire a shot.
+        const linkedFoundry = new URLSearchParams(location.search).get('foundry');
+        if (linkedFoundry && listFoundryWorlds().some(card => card.id === linkedFoundry)) {
+          openFoundry(linkedFoundry, true);
+        }
         activeEngine.runRenderLoop(() => {
           if (disposed) return;
           const loopStart = qaEnabled ? performance.now() : 0;

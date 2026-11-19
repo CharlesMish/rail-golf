@@ -15,6 +15,8 @@ import { describeImpactSequence, noteTimeline } from '../lib/worldcraft-resonanc
 import { evaluateFoundryShot } from '../scripts/foundry/validate.mjs';
 
 const RULES = {
+  'overpass': 'Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.',
+  'crossing-house': 'Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.',
   'bell-loft': 'Origin, yaw, elevation, and power can change inside the rail stops. The bank and the ramp can move. There is no circle and no score. The line ends on first ground, or when the ball settles.',
   'return-address': 'Origin, yaw, elevation, and power can change inside the rail stops. The bank can move. There is no circle and no score. The line ends on first ground, or when the ball settles.',
   'right-angle': 'Origin, yaw, elevation, and power can change inside the rail stops. The pieces stay where they are. There is no circle and no score. The line ends on first ground, or when the ball settles.',
