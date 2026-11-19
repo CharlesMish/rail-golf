@@ -1,0 +1,165 @@
+{
+  "format": "rail-golf-worldcraft-range-preset",
+  "version": 1,
+  "id": "overpass",
+  "name": "Overpass",
+  "environment": {
+    "preset": "forest-clearing-v1",
+    "seed": 1
+  },
+  "launcher": {
+    "x": -2
+  },
+  "objects": [
+    {
+      "id": "deck-0-0",
+      "kind": "plate",
+      "x": -6,
+      "z": 34,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-0-1",
+      "kind": "plate",
+      "x": -6,
+      "z": 38,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-1-0",
+      "kind": "plate",
+      "x": -2,
+      "z": 34,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-1-1",
+      "kind": "plate",
+      "x": -2,
+      "z": 38,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-2-0",
+      "kind": "plate",
+      "x": 2,
+      "z": 34,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-2-1",
+      "kind": "plate",
+      "x": 2,
+      "z": 38,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-3-0",
+      "kind": "plate",
+      "x": 6,
+      "z": 34,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "deck-3-1",
+      "kind": "plate",
+      "x": 6,
+      "z": 38,
+      "yaw": 0,
+      "lift": 7,
+      "tilt": 90,
+      "voice": {
+        "material": "timber",
+        "degree": 0
+      }
+    },
+    {
+      "id": "pier-west",
+      "kind": "bank",
+      "x": -8.5,
+      "z": 36,
+      "yaw": 90
+    },
+    {
+      "id": "pier-east",
+      "kind": "bank",
+      "x": 8.5,
+      "z": 36,
+      "yaw": 90
+    },
+    {
+      "id": "return-wall",
+      "kind": "bank",
+      "x": 0,
+      "z": 46,
+      "yaw": 0
+    }
+  ],
+  "rules": {
+    "launcher": {
+      "fixed": false,
+      "yaw": 0,
+      "elevation": 35,
+      "charge": 0.44
+    },
+    "fixed": [
+      "deck-0-0",
+      "deck-0-1",
+      "deck-1-0",
+      "deck-1-1",
+      "deck-2-0",
+      "deck-2-1",
+      "deck-3-0",
+      "deck-3-1",
+      "pier-east",
+      "pier-west",
+      "return-wall"
+    ],
+    "allowance": {},
+    "goal": {
+      "kind": "none"
+    }
+  }
+}

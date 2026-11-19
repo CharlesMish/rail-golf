@@ -1,0 +1,229 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "overpass",
+  "name": "Overpass",
+  "kind": "shot-study",
+  "invitation": "A low passage runs under a broad roof, with a wall beyond. Decide which side of the roof your line belongs on, then try to bring it somewhere else. The structure stays fixed; origin, aim and power are yours.",
+  "physicalQuestion": "Can one piece of architecture support a lower return and an upper carry, with understandable changes between them?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+  "seed": 20261119,
+  "testedShots": [
+    {
+      "id": "upper-carry",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 35,
+        "charge": 0.44
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.799999999999989,
+        "position": [
+          -2,
+          0.4300014078617096,
+          70.44758605957031
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-deck-1-1"
+      ]
+    },
+    {
+      "id": "lower-return",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 14,
+        "charge": 0.83
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.7916666666666627,
+        "position": [
+          -2,
+          0.43000146746635437,
+          24.696557998657227
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-return-wall"
+      ]
+    },
+    {
+      "id": "beyond-deck",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 35,
+        "charge": 0.47
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.6083333333333267,
+        "position": [
+          -2,
+          0.4300018846988678,
+          37.26863479614258
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-return-wall"
+      ]
+    },
+    {
+      "id": "short",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 14,
+        "charge": 0.4
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.1749999999999983,
+        "position": [
+          -2,
+          0.43000009655952454,
+          28.78647804260254
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    },
+    {
+      "id": "ceiling",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 13,
+        "charge": 1
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 1.716666666666663,
+        "position": [
+          -2,
+          0.4299982488155365,
+          17.967281341552734
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-deck-1-0",
+        "worldcraft-object-return-wall"
+      ]
+    },
+    {
+      "id": "ceiling-lip",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 13.5,
+        "charge": 1
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 0.866666666666666,
+        "position": [
+          -2,
+          0.42999908328056335,
+          34.0736198425293
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-deck-1-0"
+      ]
+    },
+    {
+      "id": "high-bypass",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 0,
+        "elevation": 40,
+        "charge": 0.65
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.441666666666657,
+        "position": [
+          -2,
+          0.43000006675720215,
+          83.3487777709961
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "All eight immediate neighbours (yaw and elevation plus or minus 0.5 degrees, power plus or minus 0.01, and origin plus or minus 0.5 m) preserve each of the upper-carry and lower-return families. Three power detents above upper-carry miss the roof and meet the wall. The underside contact is physically real but fragile: one elevation detent makes a front-edge strike.",
+  "validationEvidence": "Actual Havok through the shared Worldcraft runtime at 120 Hz, seven manifest shots and sixteen immediate neighbours; a no-deck control, exact repeats and Scene-observable stepping; eight repeated load-fire-reset-switch cycles. NullEngine scene resource counts include height guides. No rendered WebGL, phone frame timing, or enjoyment claim.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "A roof with a playable top and a usable lower passage.",
+      "missing": "A 16 by 8 m roof needs eight plates, each with a contact seam and required voice. The same scene is not a general terrain system.",
+      "extension": "Consider a bounded slab only if independently authored worlds repeatedly need a contiguous deck; no new prefab is necessary for this study."
+    },
+    {
+      "category": "presentation",
+      "concept": "The player should distinguish top carry, lower passage and front-edge strike.",
+      "missing": "WebGL was unavailable in this session, so a clear side result frame is implemented but visual legibility on desktop and phone is not established.",
+      "extension": "Owner test the survey orbit, first contact and return path before promoting this as a general authoring capability."
+    },
+    {
+      "category": "authoring-tooling",
+      "concept": "Height is already expressible in validated data.",
+      "missing": "Lift and tilt are data fields rather than ordinary Build controls. Raising every editor variable would add burden.",
+      "extension": "Prefer a height-aware author preview and validation over unrestricted scaling or terrain sculpting."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "timeline": false,
+    "bankVoice": false
+  }
+}
