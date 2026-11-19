@@ -1,0 +1,402 @@
+{
+  "intervention": "Stone Circle station yaw -120 degrees omitted; all terrace geometry and physics unchanged. Radial Return station/muzzle/global ray are now matched.",
+  "rows": [
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 30,
+        "charge": 0.25
+      },
+      "launch": {
+        "station": {
+          "id": "worldcraft",
+          "label": "Worldcraft apron",
+          "x": 0,
+          "z": 32,
+          "yaw": 0
+        },
+        "muzzle": {
+          "x": 0,
+          "y": 4.14,
+          "z": 36.48601159160339
+        },
+        "rail": {
+          "x": 0,
+          "y": 0,
+          "z": 32
+        },
+        "aim": {
+          "x": 0,
+          "y": 0.49999999999999994,
+          "z": 0.8660254037844387
+        },
+        "direction": {
+          "x": 0,
+          "y": 0.49999999999999994,
+          "z": 0.8660254037844387
+        },
+        "speed": 15.25,
+        "mass": 1.5,
+        "radius": 0.43
+      },
+      "identicalGlobalLaunch": true,
+      "radial": {
+        "episodes": [
+          {
+            "step": 132,
+            "time": 1.0999999999999985,
+            "body": "worldcraft-object-wall",
+            "point": [
+              0,
+              5.270170211791992,
+              51.471649169921875
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "incoming": [
+              0,
+              -5.560055732727051,
+              13.232681274414062
+            ],
+            "outgoing": [
+              0,
+              -3.370769500732422,
+              -11.298194885253906
+            ],
+            "lastStep": 133,
+            "lastTime": 1.1083333333333318,
+            "callbacks": 2,
+            "freeFlightSincePrior": 1.0999999999999985
+          },
+          {
+            "step": 167,
+            "time": 1.3916666666666642,
+            "body": "worldcraft-object-middle",
+            "point": [
+              0,
+              3.374235153198242,
+              47.86882781982422
+            ],
+            "normal": [
+              0,
+              -1.0000001192092896,
+              8.940696716308594e-8
+            ],
+            "incoming": [
+              0,
+              -6.670734405517578,
+              -11.298194885253906
+            ],
+            "outgoing": [
+              0,
+              5.659887313842773,
+              -10.074739456176758
+            ],
+            "lastStep": 168,
+            "lastTime": 1.3999999999999975,
+            "callbacks": 2,
+            "freeFlightSincePrior": 0.2833333333333323
+          },
+          {
+            "step": 331,
+            "time": 2.758333333333326,
+            "body": "worldcraft-ground",
+            "point": [
+              0,
+              0.08648931980133057,
+              35.48721694946289
+            ],
+            "normal": [
+              0,
+              -1.0000001192092896,
+              0
+            ],
+            "incoming": [
+              0,
+              -10.540018081665039,
+              -9.034404754638672
+            ],
+            "outgoing": [
+              0,
+              -9.593093872070312,
+              -9.034404754638672
+            ],
+            "lastStep": 331,
+            "lastTime": 2.758333333333326,
+            "callbacks": 1,
+            "freeFlightSincePrior": 1.3583333333333287
+          }
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 2.7666666666666595,
+          "position": [
+            0,
+            0.43000102043151855,
+            35.411930084228516
+          ]
+        }
+      },
+      "matchedStone": {
+        "episodes": [
+          {
+            "step": 197,
+            "time": 1.6416666666666633,
+            "body": "worldcraft-ground",
+            "point": [
+              0,
+              0.061637163162231445,
+              58.20966720581055
+            ],
+            "normal": [
+              0,
+              -0.9999999403953552,
+              0
+            ],
+            "incoming": [
+              0,
+              -12.059980392456055,
+              13.232681274414062
+            ],
+            "outgoing": [
+              0,
+              -0.0000019073486328125,
+              13.232681274414062
+            ],
+            "lastStep": 197,
+            "lastTime": 1.6416666666666633,
+            "callbacks": 1,
+            "freeFlightSincePrior": 1.6416666666666633
+          }
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.6499999999999966,
+          "position": [
+            0,
+            0.43000003695487976,
+            58.31993865966797
+          ]
+        }
+      }
+    },
+    {
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 32,
+        "charge": 0.22
+      },
+      "launch": {
+        "station": {
+          "id": "worldcraft",
+          "label": "Worldcraft apron",
+          "x": 0,
+          "z": 32,
+          "yaw": 0
+        },
+        "muzzle": {
+          "x": 0,
+          "y": 4.294981788728001,
+          "z": 36.39288913809028
+        },
+        "rail": {
+          "x": 0,
+          "y": 0,
+          "z": 32
+        },
+        "aim": {
+          "x": 0,
+          "y": 0.5299192642332049,
+          "z": 0.848048096156426
+        },
+        "direction": {
+          "x": 0,
+          "y": 0.5299192642332049,
+          "z": 0.848048096156426
+        },
+        "speed": 14.14,
+        "mass": 1.5,
+        "radius": 0.43
+      },
+      "identicalGlobalLaunch": true,
+      "radial": {
+        "episodes": [
+          {
+            "step": 146,
+            "time": 1.2166666666666648,
+            "body": "worldcraft-object-wall",
+            "point": [
+              0,
+              4.532519340515137,
+              51.44061279296875
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "incoming": [
+              0,
+              -7.092226028442383,
+              12.014820098876953
+            ],
+            "outgoing": [
+              0,
+              -5.121650695800781,
+              -10.273046493530273
+            ],
+            "lastStep": 147,
+            "lastTime": 1.224999999999998,
+            "callbacks": 2,
+            "freeFlightSincePrior": 1.2166666666666648
+          },
+          {
+            "step": 161,
+            "time": 1.3416666666666643,
+            "body": "worldcraft-object-middle",
+            "point": [
+              0,
+              3.3674497604370117,
+              49.87147903442383
+            ],
+            "normal": [
+              0,
+              -1,
+              5.960464477539063e-8
+            ],
+            "incoming": [
+              0,
+              -6.421630859375,
+              -10.273048400878906
+            ],
+            "outgoing": [
+              0,
+              5.444068908691406,
+              -9.094938278198242
+            ],
+            "lastStep": 162,
+            "lastTime": 1.3499999999999976,
+            "callbacks": 2,
+            "freeFlightSincePrior": 0.11666666666666625
+          },
+          {
+            "step": 305,
+            "time": 2.5416666666666603,
+            "body": "worldcraft-object-inner",
+            "point": [
+              0,
+              1.4213945865631104,
+              40.12665557861328
+            ],
+            "normal": [
+              0,
+              -1,
+              8.940696716308594e-8
+            ],
+            "incoming": [
+              0,
+              -8.755865097045898,
+              -8.092899322509766
+            ],
+            "outgoing": [
+              0,
+              7.459997177124023,
+              -7.891782760620117
+            ],
+            "lastStep": 306,
+            "lastTime": 2.5499999999999936,
+            "callbacks": 2,
+            "freeFlightSincePrior": 1.1916666666666627
+          },
+          {
+            "step": 476,
+            "time": 3.9666666666666552,
+            "body": "worldcraft-ground",
+            "point": [
+              0,
+              0.0006835758686065674,
+              28.87855339050293
+            ],
+            "normal": [
+              0,
+              -1.0000001192092896,
+              -5.960464477539063e-8
+            ],
+            "incoming": [
+              0,
+              -9.439897537231445,
+              -7.891781806945801
+            ],
+            "outgoing": [
+              0,
+              9.685754776000977e-8,
+              -7.891781806945801
+            ],
+            "lastStep": 476,
+            "lastTime": 3.9666666666666552,
+            "callbacks": 1,
+            "freeFlightSincePrior": 1.4166666666666616
+          }
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 3.9749999999999885,
+          "position": [
+            0,
+            0.43000543117523193,
+            28.81278419494629
+          ]
+        }
+      },
+      "matchedStone": {
+        "episodes": [
+          {
+            "step": 196,
+            "time": 1.63333333333333,
+            "body": "worldcraft-ground",
+            "point": [
+              0,
+              0.10089027881622314,
+              56.0171012878418
+            ],
+            "normal": [
+              0,
+              -0.9999999403953552,
+              0
+            ],
+            "incoming": [
+              0,
+              -12.09217643737793,
+              12.014820098876953
+            ],
+            "outgoing": [
+              0,
+              -11.843912124633789,
+              12.014820098876953
+            ],
+            "lastStep": 196,
+            "lastTime": 1.63333333333333,
+            "callbacks": 1,
+            "freeFlightSincePrior": 1.63333333333333
+          }
+        ],
+        "terminal": {
+          "reason": "first-ground-contact",
+          "elapsed": 1.6416666666666633,
+          "position": [
+            0,
+            0.43000003695487976,
+            56.117225646972656
+          ]
+        }
+      }
+    }
+  ]
+}

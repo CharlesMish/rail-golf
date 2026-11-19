@@ -361,7 +361,14 @@ export default function Worldcraft() {
         const { launcher, yaw, loft } = buildRangeLauncher(scene, presentation.materials, shadows);
         const yardOrbit = { angle: .5, elevation: .70, radius: 112, x: 0, z: 43 };
         const orbit = { ...yardOrbit };
-        const resetOrbit = () => { Object.assign(orbit, worldcraftSurveyHome(uiRef.current.world, uiRef.current.setup) ?? yardOrbit); };
+        const resetOrbit = () => {
+          // This study's overview centres the return relationship below the
+          // phone Survey controls. Other stations retain their existing home.
+          const home = uiRef.current.foundryId === 'radial-return'
+            ? { angle: .55, elevation: .38, radius: 46, x: 0, z: 46 }
+            : worldcraftSurveyHome(uiRef.current.world, uiRef.current.setup) ?? yardOrbit;
+          Object.assign(orbit, home);
+        };
         let drag: null | {
           id: number; x: number; y: number; startX: number; startY: number;
           type: 'object' | 'view' | 'aim'; ground?: Vector3; object?: WorldcraftWorld['objects'][number];
@@ -1031,6 +1038,12 @@ export default function Worldcraft() {
         };
         publish({ phase: 'ready', notice: 'House Shot: fire once, then turn the ramp. The rail and gold pin stay fixed.', ...memoryState() });
         selectedHighlight();
+        // Links select only a bundled, validated Foundry world. They never import
+        // geometry, execute data, overwrite memory, or fire a shot.
+        const linkedFoundry = new URLSearchParams(location.search).get('foundry');
+        if (linkedFoundry && listFoundryWorlds().some(card => card.id === linkedFoundry)) {
+          openFoundry(linkedFoundry, true);
+        }
         activeEngine.runRenderLoop(() => {
           if (disposed) return;
           const loopStart = qaEnabled ? performance.now() : 0;

@@ -1,0 +1,149 @@
+{
+  "format": "rail-golf-worldcraft-foundry-manifest",
+  "version": 1,
+  "id": "radial-return",
+  "name": "Radial Return",
+  "kind": "shot-study",
+  "invitation": "A wall stands beyond two descending shelves. Send a line outward, then watch which surfaces it chooses on the way back.",
+  "physicalQuestion": "Can a simple upper reflection produce an understandable inward journey across lower top surfaces, with a real choice to catch or skip a shelf?",
+  "editable": {
+    "launcher": true,
+    "geometry": false
+  },
+  "challenge": null,
+  "sourceBuild": "6ebb2f2b370656c7e70b108ad04d0369b78cf89c",
+  "seed": 20261119,
+  "testedShots": [
+    {
+      "id": "proposed-skip",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 30,
+        "charge": 0.25
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.7666666666666595,
+        "position": [
+          0,
+          0.43000102043151855,
+          35.411930084228516
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall",
+        "worldcraft-object-middle"
+      ]
+    },
+    {
+      "id": "top-descent",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 32,
+        "charge": 0.22
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 3.9749999999999885,
+        "position": [
+          0,
+          0.43000543117523193,
+          28.81278419494629
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall",
+        "worldcraft-object-middle",
+        "worldcraft-object-inner"
+      ]
+    },
+    {
+      "id": "edge-detour",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 34,
+        "charge": 0.21
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 6.2500000000001,
+        "position": [
+          0,
+          0.43000391125679016,
+          36.51612854003906
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      },
+      "contacts": [
+        "worldcraft-object-wall",
+        "worldcraft-object-middle",
+        "worldcraft-object-inner"
+      ]
+    },
+    {
+      "id": "overflight",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 30,
+        "charge": 0.39
+      },
+      "launchPhase": null,
+      "terminal": {
+        "reason": "first-ground-contact",
+        "elapsed": 2.016666666666662,
+        "position": [
+          0,
+          0.43000003695487976,
+          72.23638153076172
+        ]
+      },
+      "outcome": {
+        "kind": "none",
+        "status": "none"
+      }
+    }
+  ],
+  "nearbySensitivity": "The proposed skip is tested at yaw and elevation plus or minus 0.5 degrees, power plus or minus one percentage point, and origin plus or minus 0.5 m. The all-three top descent has a narrower power neighborhood. The evidence appendix separates top contacts from edge contacts and repeated bounces.",
+  "validationEvidence": "Actual Havok through the unchanged Worldcraft runtime at 120 Hz. Contact callbacks, normals, incoming and outgoing velocities, free-flight intervals, first-ground terminals, control detents, no-wall and wall-only ablations, Stone Circle, repeated loads, exact replay and disposal are reproduced in docs/experiments/horizons/return/reproduce.mjs. NullEngine does not establish rendered usability or enjoyment.",
+  "limitations": [
+    {
+      "category": "physical-geometry",
+      "concept": "An upper reflection and separated lower receiving tops",
+      "missing": "This is a three-piece physical study, not amphitheater architecture. The two shelves are existing plates with visible height guides.",
+      "extension": "No physical extension is needed for this relationship. A future architectural arrangement should retain comparable separation and genuine top contacts."
+    },
+    {
+      "category": "presentation",
+      "concept": "The player can follow a return and choose whether to catch a shelf",
+      "missing": "Rendered desktop and phone camera evidence and owner play are separate from these headless physical results.",
+      "extension": "Review actual full-flight visibility before treating this as an owner-ready spatial experience."
+    }
+  ],
+  "customCode": null,
+  "presentation": {
+    "dynamics": "normal-speed",
+    "timeline": true
+  }
+}
