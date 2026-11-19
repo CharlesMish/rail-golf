@@ -275,7 +275,7 @@ published/deployed SHA is recorded in the integration draft PR and owner handoff
 Lane snapshots were published through repository Git-object operations, which
 assign new commit metadata; tree hashes were verified equal rather than claiming
 those new SHAs were the local authored commits. The integrated published graph
-retains the three published lane commits as parents. No force push is used.
+retains the three published lane commits in its ancestry. No force push is used.
 
 The neutral untouched baseline passed 555 tests, TypeScript, lint, production
 build and all 16 Foundry directories. The final integrated source passed
@@ -300,8 +300,10 @@ required.
 
 Unmerged dependencies: neutral Foundry gallery/pose/capacity history for general
 experiments; the existing station/amphitheater history for Radial Return only.
-Main, old labs, foundation branches and PR #78 remain unchanged. No production
-merge or deployment is part of this commission.
+Production and foundation branch refs and PR #78 remain unchanged. Historical
+lab behavior is preserved and regression-tested; the experimental branch shares
+a small reflector helper and adds opt-in shell support for Swing Gate. No
+production merge or deployment is part of this commission.
 
 ## G. Recommendation: at most two capabilities
 
