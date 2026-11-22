@@ -4,8 +4,9 @@
 
 The final runtime source is present at local commit
 `38fec06` on `research/next-playgrounds-20261121`. Subsequent packet changes are
-reports and whitespace compaction of JSON evidence. Compaction was checked for
-identical parsed values. No historical test was weakened.
+reports, whitespace compaction of JSON evidence, and entry-page copy/guide links.
+Compaction was checked for identical parsed values. The final entry copy passed
+TypeScript, focused lint and another production build. No historical test was weakened.
 
 | Command | Result |
 |---|---|
