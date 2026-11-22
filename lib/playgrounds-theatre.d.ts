@@ -1,0 +1,21 @@
+import type {Scene,TransformNode,NullEngine} from '@babylonjs/core';
+import type {SpatialRecord,SpatialSetup,SpatialStation} from './spatial-lab-session';
+export type TheatrePoint=[number,number,number,number];
+export type TheatreImpact={body:string;ground:boolean;time:number;point:number[];normal:number[]|null;incoming:number[];outgoing:number[]};
+export type TheatreRecord=SpatialRecord&{path:TheatrePoint[];impacts:TheatreImpact[]};
+export type TheatrePart={id:string;label:string;center:number[];size:number[];pitch:number;material:string};
+export const THEATRE_LAYOUT:string;
+export const THEATRE_HZ:number;
+export const THEATRE_STATION:SpatialStation;
+export const THEATRE_BOUNDS:Record<string,number>;
+export const THEATRE_VIEWS:Record<string,{horizontal:number[];vertical:number[];axis:string}>;
+export const THEATRE_PARTS:TheatrePart[];
+export const THEATRE_CONFIG:{id:string;defaultSetup:SpatialSetup};
+export function theatreCorners(part:TheatrePart):number[][];
+export function theatreProject(point:number[],view:string):number[];
+export function theatreHull(points:number[][]):number[][];
+export function theatreSampleAt(path:TheatrePoint[],time:number):TheatrePoint|null;
+export function createTheatreRuntime(havok:unknown,options?:{control?:string;onEnd?:(record:TheatreRecord)=>void;onContact?:(impact:TheatreImpact)=>void}):{
+ scene:Scene;engine:NullEngine;root:TransformNode;buildMs:number;readonly samples:TheatrePoint[];readonly record:TheatreRecord|null;readonly active:boolean;
+ fire(setup:SpatialSetup):boolean;step():boolean;clear():boolean;metrics():Record<string,number>;dispose():void;
+};
