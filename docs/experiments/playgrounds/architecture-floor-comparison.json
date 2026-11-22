@@ -1,0 +1,1314 @@
+{
+  "authority": "Actual Havok 120Hz coarse grid, unchanged physics. Reproduce with node scripts/playgrounds/architecture-floor-compare.mjs. Geometry variants are computed in that script from RINGWELL_SOLIDS.",
+  "sourceGeometrySha": "137cea268fcbded104b7e2d21eadcd6756b44abf",
+  "variants": [
+    {
+      "roll": null,
+      "summary": {
+        "settled": 3,
+        "over15": 14,
+        "over25": 6,
+        "max": 40.62499999999834,
+        "earReached": 36
+      },
+      "reference": {
+        "setup": {
+          "railIndex": 1,
+          "yaw": -45,
+          "elevation": 15,
+          "charge": 0.4
+        },
+        "order": [
+          "rw-ear-floor",
+          "rw-ear-far",
+          "rw-ear-near",
+          "rw-ear-end",
+          "rw-ear-floor",
+          "rw-west-gallery",
+          "rw-ground"
+        ],
+        "regions": [
+          "ear",
+          "west"
+        ],
+        "topFaces": [
+          "rw-ear-floor",
+          "rw-west-gallery",
+          "rw-ground"
+        ],
+        "reason": "first-ground-contact",
+        "elapsed": 8.691666666666814,
+        "position": [
+          4.567302227020264,
+          0.4300050735473633,
+          47.70416259765625
+        ]
+      },
+      "neighbours": [
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45.5,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 8.758333333333477,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -44.5,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 8.675000000000148,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 14.5,
+            "charge": 0.4
+          },
+          "time": 8.808333333333474,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15.5,
+            "charge": 0.4
+          },
+          "time": 8.991666666666797,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.39
+          },
+          "time": 8.866666666666804,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.41
+          },
+          "time": 8.82500000000014,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 0,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 39.22499999999842,
+          "order": [
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-end",
+            "rw-ear-near",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-west-far-wall",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 2,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 8.575000000000154,
+          "order": [
+            "rw-ear-floor",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-west-far-wall",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        }
+      ],
+      "long": [
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 5,
+            "charge": 0.3
+          },
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-ground"
+          ],
+          "regions": [
+            "west",
+            "ear",
+            "low"
+          ],
+          "topFaces": [
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-low-landing",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 27.891666666665724,
+          "position": [
+            14.626005172729492,
+            0.42999958992004395,
+            64.90743255615234
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 45,
+            "charge": 0.2
+          },
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery"
+          ],
+          "regions": [
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-west-gallery",
+            "rw-ear-floor"
+          ],
+          "reason": "settled",
+          "elapsed": 40.62499999999834,
+          "position": [
+            -17.167205810546875,
+            10.430000305175781,
+            39.75849151611328
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -15,
+            "elevation": 45,
+            "charge": 0.3
+          },
+          "order": [
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-near-wall",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-end",
+            "rw-ear-floor"
+          ],
+          "regions": [
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-floor"
+          ],
+          "reason": "settled",
+          "elapsed": 30.991666666665548,
+          "position": [
+            -42.65913009643555,
+            10.430000305175781,
+            45.34130096435547
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 30,
+            "elevation": 5,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-floor"
+          ],
+          "reason": "settled",
+          "elapsed": 30.90833333333222,
+          "position": [
+            -40.69225311279297,
+            10.430000305175781,
+            37.49111557006836
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-gallery",
+            "rw-east-wall",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-ear-far",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 29.866666666665612,
+          "position": [
+            -10.87064266204834,
+            0.4300003945827484,
+            46.77111053466797
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 45,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-wall",
+            "rw-east-gallery",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-ear-near",
+            "rw-ear-floor",
+            "rw-ear-end",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-floor",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 37.29166666666519,
+          "position": [
+            -11.08532428741455,
+            0.4300006031990051,
+            37.35066604614258
+          ]
+        }
+      ]
+    },
+    {
+      "roll": 0,
+      "summary": {
+        "settled": 3,
+        "over15": 14,
+        "over25": 6,
+        "max": 40.80833333333166,
+        "earReached": 36
+      },
+      "reference": {
+        "setup": {
+          "railIndex": 1,
+          "yaw": -45,
+          "elevation": 15,
+          "charge": 0.4
+        },
+        "order": [
+          "rw-west-gallery",
+          "rw-ear-far",
+          "rw-ear-near",
+          "rw-ear-end",
+          "rw-west-gallery",
+          "rw-ground"
+        ],
+        "regions": [
+          "west",
+          "ear"
+        ],
+        "topFaces": [
+          "rw-west-gallery",
+          "rw-ground"
+        ],
+        "reason": "first-ground-contact",
+        "elapsed": 8.691666666666814,
+        "position": [
+          4.567264556884766,
+          0.4300043284893036,
+          47.70416259765625
+        ]
+      },
+      "neighbours": [
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45.5,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 8.758333333333477,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -44.5,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 8.675000000000148,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 14.5,
+            "charge": 0.4
+          },
+          "time": 8.808333333333474,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15.5,
+            "charge": 0.4
+          },
+          "time": 8.991666666666797,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.39
+          },
+          "time": 8.866666666666804,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.41
+          },
+          "time": 8.82500000000014,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 0,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 30.808333333332225,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-end",
+            "rw-ear-near",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-west-far-wall",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-west-gallery"
+          ],
+          "reason": "settled"
+        },
+        {
+          "setup": {
+            "railIndex": 2,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 8.575000000000154,
+          "order": [
+            "rw-west-gallery",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-west-far-wall",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        }
+      ],
+      "long": [
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 5,
+            "charge": 0.3
+          },
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-ground"
+          ],
+          "regions": [
+            "west",
+            "ear",
+            "low"
+          ],
+          "topFaces": [
+            "rw-west-gallery",
+            "rw-low-landing",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 27.891666666665724,
+          "position": [
+            14.626398086547852,
+            0.43000462651252747,
+            64.90845489501953
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 45,
+            "charge": 0.2
+          },
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery"
+          ],
+          "regions": [
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-west-gallery"
+          ],
+          "reason": "settled",
+          "elapsed": 40.80833333333166,
+          "position": [
+            -17.014251708984375,
+            10.430000305175781,
+            39.76738357543945
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -15,
+            "elevation": 45,
+            "charge": 0.3
+          },
+          "order": [
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-west-near-wall",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery"
+          ],
+          "regions": [
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-low-landing",
+            "rw-west-gallery"
+          ],
+          "reason": "settled",
+          "elapsed": 30.991666666665548,
+          "position": [
+            -42.64923858642578,
+            10.430000305175781,
+            45.341739654541016
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 30,
+            "elevation": 5,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-low-landing",
+            "rw-west-gallery"
+          ],
+          "reason": "settled",
+          "elapsed": 30.90833333333222,
+          "position": [
+            -40.691444396972656,
+            10.430000305175781,
+            37.49102783203125
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-gallery",
+            "rw-east-wall",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 29.85833333333228,
+          "position": [
+            -10.845488548278809,
+            0.4300001263618469,
+            46.773353576660156
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 45,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-wall",
+            "rw-east-gallery",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 37.25833333333186,
+          "position": [
+            -11.091827392578125,
+            0.4300045967102051,
+            37.35227584838867
+          ]
+        }
+      ]
+    },
+    {
+      "roll": -3,
+      "summary": {
+        "settled": 0,
+        "over15": 21,
+        "over25": 4,
+        "max": 29.04166666666566,
+        "earReached": 24
+      },
+      "reference": {
+        "setup": {
+          "railIndex": 1,
+          "yaw": -45,
+          "elevation": 15,
+          "charge": 0.4
+        },
+        "order": [
+          "rw-west-gallery",
+          "rw-ear-far",
+          "rw-ear-near",
+          "rw-ear-end",
+          "rw-west-gallery",
+          "rw-ear-far",
+          "rw-west-gallery",
+          "rw-ground"
+        ],
+        "regions": [
+          "west",
+          "ear"
+        ],
+        "topFaces": [
+          "rw-west-gallery",
+          "rw-ground"
+        ],
+        "reason": "first-ground-contact",
+        "elapsed": 11.316666666666665,
+        "position": [
+          -2.1102688312530518,
+          0.43000298738479614,
+          36.37987518310547
+        ]
+      },
+      "neighbours": [
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45.5,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 10.625000000000037,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -44.5,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 11.316666666666665,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 14.5,
+            "charge": 0.4
+          },
+          "time": 11.349999999999996,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15.5,
+            "charge": 0.4
+          },
+          "time": 11.458333333333323,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.39
+          },
+          "time": 11.349999999999996,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.41
+          },
+          "time": 10.308333333333389,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 0,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 5.250000000000051,
+          "order": [
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-ear-end",
+            "rw-ear-near",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        },
+        {
+          "setup": {
+            "railIndex": 2,
+            "yaw": -45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "time": 12.999999999999902,
+          "order": [
+            "rw-west-gallery",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact"
+        }
+      ],
+      "long": [
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 15,
+            "charge": 0.3
+          },
+          "order": [
+            "rw-east-gallery",
+            "rw-east-wall",
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 26.033333333332497,
+          "position": [
+            -8.722821235656738,
+            0.43000468611717224,
+            39.37195587158203
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 15,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-gallery",
+            "rw-east-wall",
+            "rw-low-landing",
+            "rw-far-wall",
+            "rw-west-gallery",
+            "rw-west-near-wall",
+            "rw-ear-near",
+            "rw-west-near-wall",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 26.30833333333248,
+          "position": [
+            -7.884914398193359,
+            0.43000608682632446,
+            50.739810943603516
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 25,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-wall",
+            "rw-east-gallery",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-far",
+            "rw-west-gallery",
+            "rw-ear-end",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 29.04166666666566,
+          "position": [
+            -7.174839019775391,
+            0.4300044775009155,
+            38.918983459472656
+          ]
+        },
+        {
+          "setup": {
+            "railIndex": 1,
+            "yaw": 45,
+            "elevation": 45,
+            "charge": 0.4
+          },
+          "order": [
+            "rw-east-wall",
+            "rw-east-gallery",
+            "rw-far-wall",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ear-near",
+            "rw-west-gallery",
+            "rw-west-far-wall",
+            "rw-ear-far",
+            "rw-west-far-wall",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "regions": [
+            "east",
+            "low",
+            "west",
+            "ear"
+          ],
+          "topFaces": [
+            "rw-east-gallery",
+            "rw-low-landing",
+            "rw-west-gallery",
+            "rw-ground"
+          ],
+          "reason": "first-ground-contact",
+          "elapsed": 27.666666666665737,
+          "position": [
+            -8.221512794494629,
+            0.4299999177455902,
+            46.07960891723633
+          ]
+        }
+      ]
+    }
+  ]
+}
