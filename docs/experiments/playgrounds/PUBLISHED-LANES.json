@@ -1,0 +1,41 @@
+{
+  "base": "4dab6e187720ea45f02dfdec74dd1aaa12ea7fdb",
+  "method": "GitHub Git-object API; publication commit metadata differs. Each published Git tree exactly equals its reviewed local source tree.",
+  "lanes": [
+    {
+      "lane": "theatre",
+      "branch": "research/playgrounds-theatre-20261121",
+      "source": "8044bd22f15843ed88949fcf5a0a707bef28e895",
+      "published": "bf6271530d7bfb40a7753f0d247ea3dd1b63d5a7",
+      "tree": "beb7c27c9a7c360d15a193d3360ddd8ea1040599"
+    },
+    {
+      "lane": "architecture",
+      "branch": "research/playgrounds-architecture-20261121",
+      "source": "e20fc60c4b2f27ef07fbb42e9924335a3b947427",
+      "published": "891ee9d052339740fe8fc6675003ef7115dc7f0c",
+      "tree": "434e908b2f667656d3369c0ad076008a36b50452"
+    },
+    {
+      "lane": "persistence",
+      "branch": "research/playgrounds-persistence-20261121",
+      "source": "93fbe3ae0f4fe68bbfceaac8169c935a539b8604",
+      "published": "c034c7471a7b1a65466c3a8e480a20e28ea76fb0",
+      "tree": "3e06a1c9f1774beecdf3963ebd39370581077cc3"
+    },
+    {
+      "lane": "wildcard",
+      "branch": "research/playgrounds-wildcard-20261121",
+      "source": "e2d5e50a140a77c686065b5474f614b55d8ef228",
+      "published": "10dd23693f08bc5cab2a0da89d4cbdbf2c532aa7",
+      "tree": "695cc55448e14bab18fd53f90452354d4dd881c7"
+    },
+    {
+      "lane": "atlas",
+      "branch": "research/playgrounds-atlas-20261121",
+      "source": "65e20159d1ebdd9ec8222b666d0bf78562b40b82",
+      "published": "9ddf816f7130eac967344607f4595af16142fb26",
+      "tree": "819e86304c273f3b71ee9c87638146462ec51377"
+    }
+  ]
+}

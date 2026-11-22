@@ -1,0 +1,12 @@
+import type {Scene,TransformNode,StandardMaterial,ShadowGenerator,Mesh,PhysicsAggregate} from '@babylonjs/core';
+import type {SpatialSetup,SpatialRecord,SpatialFlight,SpatialWorld,SpatialConfig} from './spatial-lab-session';
+export type GuestEnvironment={layout:string;pose:string};
+export type GuestRecord=SpatialRecord&{path:number[][];stonePath:number[][];impacts:{body:string;time:number;point:number[];normal:number[];incoming:number[];outgoing:number[]}[];settledEnvironment:GuestEnvironment;settleElapsed:number};
+export type GuestWorld=SpatialWorld&{readonly status:string;readonly propAggregate:PhysicsAggregate|null;prop:Mesh;environment:{snapshot():GuestEnvironment;restore(state:GuestEnvironment):void;reset():void};afterPhysics():void;diagnostics():Record<string,unknown>};
+export const GUEST_STONE:{id:string;mass:number;diameter:number;height:number;friction:number;restitution:number;linearDamping:number;angularDamping:number;quietTicks:number;settleLimitTicks:number;linearQuiet:number;angularQuiet:number;home:number[]};
+export function guestPose(state:unknown):number[];
+export function validGuestSetup(state:unknown):boolean;
+export function guestEnvironment(pose:number[]):GuestEnvironment;
+export function buildGuestStone(scene:Scene,root:TransformNode,materials:Record<string,StandardMaterial>,shadows:ShadowGenerator,options?:{context?:boolean;stone?:boolean}):GuestWorld;
+export const PLAYGROUNDS_GUEST_STONE:SpatialConfig;
+export function createGuestSession(scene:Scene,world:GuestWorld,emit?:(event:{kind:string;record?:GuestRecord;[key:string]:unknown})=>void):{readonly flight:SpatialFlight|null;readonly last:GuestRecord|null;readonly path:number[][];readonly status:string;fire(setup:SpatialSetup):boolean;beforeStep():void;afterStep():void;next():SpatialSetup|null;undo():SpatialSetup|null;reset():void;restore(record:Pick<GuestRecord,'setup'|'environment'>):SpatialSetup;dispose():void};
