@@ -1,0 +1,55 @@
+{
+  "engine": "Babylon NullEngine + Havok",
+  "cadenceHz": 120,
+  "setup": {
+    "railIndex": 1,
+    "yaw": 0,
+    "elevation": 8,
+    "charge": 0.55
+  },
+  "settledPose": [
+    0,
+    3.5000011920928955,
+    26.744863510131836,
+    0.2895481586456299,
+    0,
+    0,
+    0.9571634531021118
+  ],
+  "travel": 2.744863510131836,
+  "netRotationRadians": 0.5875094384720126,
+  "distanceOverRadius": 0.7842467171805245,
+  "ballEnd": 0.7749999999999997,
+  "ready": 4.75,
+  "postBallWait": 3.9750000000000005,
+  "interpretation": "Rotating plus sliding; net rotation does not equal pure no-slip rolling arc",
+  "contacts": [
+    {
+      "body": "rolling-prop",
+      "point": {
+        "x": 0,
+        "y": 2.516308546066284,
+        "z": 20.590848922729492
+      },
+      "count": 2,
+      "first": 0.5750000000000004,
+      "last": 0.5833333333333337
+    },
+    {
+      "body": "rolling-pavement",
+      "point": {
+        "x": 0,
+        "y": 0.06604468822479248,
+        "z": 19.71380043029785
+      },
+      "count": 1,
+      "first": 0.7666666666666664,
+      "last": 0.7666666666666664
+    }
+  ],
+  "sourceHashes": {
+    "lib/playability-rolling.js": "e2cd795941e7a601a81e19307cb106f4a0547089422fc5fc55aeaecaf9dcefd8",
+    "scripts/playability/rolling-harness.mjs": "481e3730d2bc24cfedb023eb5a41e8e7e659111e48af5f03ca3fc2f9667f1e66",
+    "lib/mechanism-range-session.js": "eb28f4e6d8aab2b9b48f7affeb549dbd9b4a597605eb385f191f91cb378f20ee"
+  }
+}
