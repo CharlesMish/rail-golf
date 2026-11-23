@@ -1,0 +1,42 @@
+{
+  "format": "rail-golf-playability-lanes-v1",
+  "base": "a90785ac2a03f3f0f00a4dbd758b05f6f49a3054",
+  "note": "Native Git publication preserves each exact source tree with new commit metadata. Local author and published SHAs differ; verified Git trees match. All lanes share exact PR81 base; none modifies its foundation.",
+  "lanes": [
+    {
+      "branch": "research/playability-cistern-20261122",
+      "base": "a90785ac2a03f3f0f00a4dbd758b05f6f49a3054",
+      "localSource": "53821ff6a7f570e32dc34392ea819741b7272900",
+      "published": "ded30e15b79976306c51f53f1116852daa2202be",
+      "tree": "2773bbe757f4ebbc4e535ebc0283f20202d74700"
+    },
+    {
+      "branch": "research/playability-rolling-20261122",
+      "base": "a90785ac2a03f3f0f00a4dbd758b05f6f49a3054",
+      "localSource": "004a53d114dbabbeba79981bc7110f7545d65ac5",
+      "published": "08c5d37e7249fc2348c3f61dd71aa674aae189eb",
+      "tree": "2f9578dae2cb26854eb5be422149453b36d49db2"
+    },
+    {
+      "branch": "research/playability-repeater-20261122",
+      "base": "a90785ac2a03f3f0f00a4dbd758b05f6f49a3054",
+      "localSource": "89819889e887be64f01bfc9b2aaff17161e8400c",
+      "published": "92ae8bdaec2aa125a41f16e8dfc64e7c6c6db8ee",
+      "tree": "bc473cfd8547f5844a70c1d011b2b96d43b57707"
+    },
+    {
+      "branch": "research/playability-loops-20261122",
+      "base": "a90785ac2a03f3f0f00a4dbd758b05f6f49a3054",
+      "localSource": "cf88d50ce0f5fc5215d5491a8a347159a7f0c841",
+      "published": "3bb10fa3efb56dbe79aa094b6dbd4ae5f758c5fb",
+      "tree": "ebb01eaba7f5c63d642c26da9f33a4de5056caa4"
+    },
+    {
+      "branch": "research/playability-review-20261122",
+      "base": "a90785ac2a03f3f0f00a4dbd758b05f6f49a3054",
+      "localSource": "19d9dd7e8752bfb34b09c5e4466e1824c556dcaa",
+      "published": "ea29facfbf0da2a5638139890a340ad9ebacf28d",
+      "tree": "77a2217ce9606c1661e53a85e883259a1a8b85f2"
+    }
+  ]
+}
