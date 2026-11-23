@@ -1,0 +1,15 @@
+import type {Scene,TransformNode,StandardMaterial,ShadowGenerator,Mesh,PhysicsAggregate} from '@babylonjs/core';
+import type {SpatialSetup,SpatialRecord,SpatialFlight,SpatialWorld,SpatialConfig} from './spatial-lab-session';
+export type RollingEnvironment={layout:string;pose:string};
+export type RollingRecord=SpatialRecord&{path:number[][];stonePath:number[][];impacts:{body:string;time:number;point:number[];normal:number[];incoming:number[];outgoing:number[]}[];settledEnvironment:RollingEnvironment;settleElapsed:number};
+export type RollingWorld=SpatialWorld&{config:SpatialConfig;shape:RollingShape;readonly status:string;readonly propAggregate:PhysicsAggregate|null;prop:Mesh;environment:{snapshot():RollingEnvironment;restore(state:RollingEnvironment):void;reset():void};afterPhysics():void;diagnostics():Record<string,unknown>};
+export type RollingShape='sphere'|'stone';
+export const ROLLING_PROPS:Record<RollingShape,{id:string;mass:number;diameter:number;height:number;friction:number;restitution:number;linearDamping:number;angularDamping:number;quietTicks:number;settleLimitTicks:number;linearQuiet:number;angularQuiet:number;home:number[]}>;
+export function rollingConfig(shape?:RollingShape):SpatialConfig;
+export function rollingPose(state:unknown):number[];
+export function rollingInstantPose(state:unknown):number[];
+export function validRollingSetup(state:unknown):boolean;
+export function rollingEnvironment(pose:number[],shape?:RollingShape):RollingEnvironment;
+export function buildRollingWorld(scene:Scene,root:TransformNode,materials:Record<string,StandardMaterial>,shadows:ShadowGenerator,options?:{shape?:RollingShape;context?:boolean;stone?:boolean}):RollingWorld;
+export const PLAYABILITY_ROLLING:SpatialConfig;
+export function createRollingSession(scene:Scene,world:RollingWorld,emit?:(event:{kind:string;record?:RollingRecord;[key:string]:unknown})=>void):{readonly flight:SpatialFlight|null;readonly last:RollingRecord|null;readonly path:number[][];readonly status:string;fire(setup:SpatialSetup):boolean;beforeStep():void;afterStep():void;next():SpatialSetup|null;undo():SpatialSetup|null;reset():void;restore(record:Pick<RollingRecord,'setup'|'environment'>):SpatialSetup;dispose():void};

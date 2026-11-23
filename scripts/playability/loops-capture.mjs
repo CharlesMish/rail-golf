@@ -1,0 +1,43 @@
+// Re-measure two existing Musical Workshop arrangements. No new physics rules.
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import Havok from '@babylonjs/havok';
+import { Logger } from '@babylonjs/core';
+import { MUSIC3_SHOTS } from '../range/music3-capture.mjs';
+import { createRangeHarness } from '../range/run.mjs';
+import { adaptRangePreset, createMusicalWorkshopPreset, validateRangePreset } from '../../lib/worldcraft-range.js';
+import { captureWorldSnapshot, packWorldcraftLine } from '../../lib/worldcraft-model.js';
+import { performanceFromResonance } from '../../lib/worldcraft-resonance.js';
+Logger.LogLevels = 0;
+const sha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const havok = await Havok({ wasmBinary: await readFile(new URL('../../node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm', import.meta.url)) });
+const chosen = ['phrase-early-plate', 'phrase-late-catch'];
+const lines = [], measures = [];
+for (const [index, id] of chosen.entries()) {
+ const definition = MUSIC3_SHOTS.find(s => s.id === id);
+ const world = adaptRangePreset(validateRangePreset({ ...createMusicalWorkshopPreset(), objects: definition.objects })).world;
+ const start = performance.now();
+ const harness = createRangeHarness(havok, world, sha);
+ const buildMs = performance.now() - start;
+ harness.runtime.setDynamics('normal-speed');
+ const fire = setup => harness.shoot(world, setup);
+ const baseline = fire(definition.setup);
+ const packed = packWorldcraftLine({id:`loops-example-${index+1}`,createdAt:'2026-11-23T00:00:00.000Z',worldSnapshot:captureWorldSnapshot(world,sha),setup:baseline.setup,launch:baseline.launch,points:baseline.samples,events:baseline.evidence,contacts:baseline.contacts,terminal:baseline.terminal,performance:performanceFromResonance(baseline.resonance)});
+ lines.push(packed);
+ const compact = result => ({setup:result.setup,terminal:result.terminal,contacts:result.contacts,resonance:result.resonance});
+ const neighbors = [];
+ for (const [key, step] of [['yaw',.5],['elevation',.5],['charge',.01]]) for (const sign of [-1,1]) neighbors.push(compact(fire({...definition.setup,[key]:Math.round((definition.setup[key]+sign*step)*1000)/1000})));
+ const repeat = fire(definition.setup);
+ const repeated = JSON.stringify(compact(baseline)) === JSON.stringify(compact(repeat));
+ const removedWorld = {...world,objects:[]};
+ const negative = harness.shoot(removedWorld,definition.setup);
+ measures.push({id,label:definition.label,buildMs,source:compact(baseline),neighbors,repeatIdentical:repeated,absentGeometry:compact(negative)});
+ harness.dispose();
+}
+const files=['lib/worldcraft-runtime.js','lib/worldcraft-model.js','lib/worldcraft-scene.js','lib/worldcraft-resonance.js','lib/spatial-lab-session.js','lib/mechanism-range-session.js'];
+const sourceHashes={};for(const path of files)sourceHashes[path]=createHash('sha256').update(await readFile(new URL('../../'+path,import.meta.url))).digest('hex');
+const dir=new URL('../../docs/experiments/playability/',import.meta.url);await mkdir(dir,{recursive:true});
+await writeFile(new URL('../../public/playability/loops-examples.json',import.meta.url),JSON.stringify({format:'rail-golf-worldcraft-local-export',version:1,worlds:[],lines})+'\n');
+await writeFile(new URL('loops-evidence.json',dir),JSON.stringify({sourceSha:sha,sourceHashes,cadence:120,engine:'Babylon NullEngine + Havok',measures})+'\n');
+console.log(JSON.stringify(measures.map(m=>({id:m.id,buildMs:m.buildMs,elapsed:m.source.terminal.elapsed,notes:m.source.resonance.impacts.map(i=>({note:i.note,time:i.time})),neighbors:m.neighbors.map(n=>n.resonance.impacts.map(i=>i.note)),repeatIdentical:m.repeatIdentical,negativeSounds:m.absentGeometry.resonance.sounds})),null,2));
