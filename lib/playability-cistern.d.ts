@@ -1,0 +1,10 @@
+import type {SpatialConfig,SpatialRecord} from './spatial-lab-session';
+import type {VectorLike} from './rail-golf-v02';
+import type {ArchitectureSolid} from './playgrounds-architecture';
+export type CisternCameraFrame={position:VectorLike;target:VectorLike;fov:number;raised?:boolean;blend?:number};
+export function cisternBoxSegment(start:VectorLike,end:VectorLike,solid:ArchitectureSolid,padding?:number):number|null;
+export function cisternClearFraction(ball:VectorLike,camera:VectorLike,padding?:number):number;
+export function cisternFollowOffsets(ball:VectorLike):{position:VectorLike;target:VectorLike};
+export function cisternFlightFrame(frame:CisternCameraFrame,ball:VectorLike):CisternCameraFrame;
+export function cisternTerminalLabel(record:SpatialRecord|null):string;
+export const PLAYABILITY_CISTERN:SpatialConfig;
