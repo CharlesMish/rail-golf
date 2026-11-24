@@ -29,3 +29,8 @@
 .inhabited [aria-label="Line result"] p{font-size:13px;line-height:1.45}
 .inhabited [aria-label="Line result"]{top:26%;max-height:27vh}
 @media(max-width:580px){.inhabited [aria-label="Line result"]{top:30%;max-height:28vh}.watchBar{gap:6px}.watchBar span{flex:1 0 100%;font-size:13px}}
+
+/* The full console must remain reachable when its firing block is taller than
+   the available viewport. A nonshrinking core inside overflow:hidden clipped it. */
+.console.console{display:block;overflow:auto;overscroll-behavior:contain;scroll-padding-block:8px}
+.scroll{min-height:auto;overflow:visible}

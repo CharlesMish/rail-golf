@@ -1,0 +1,30 @@
+{
+  "source": "Counterline runtime checkpoint 2101aa9c35ec821139c89137f65eaf77cb6f87ce; integrated local 77e6b3d",
+  "browser": "Cloud Chrome; WebGL unavailable; recorded-notification probe is NOT live Havok",
+  "offline": {
+    "sampleRate": 44100,
+    "commonDelay": 0.1,
+    "gain": 0.45,
+    "duration": 9.033356009070294,
+    "measurements": [
+      {"layers":[0],"attacks":3,"nodes":14,"floatPeak":0.1147877424955368,"rms":0.007360597880778093,"renderMs":30.59999999962747},
+      {"layers":[1],"attacks":3,"nodes":14,"floatPeak":0.13134784996509552,"rms":0.005986093263829171,"renderMs":25.199999999254942},
+      {"layers":[0,1],"attacks":6,"nodes":28,"floatPeak":0.16581469774246216,"rms":0.01124178639027088,"renderMs":38.90000000037253}
+    ]
+  },
+  "clock": {
+    "renderer":"Actual browser AudioContext and requestAnimationFrame; recorded notifications, NOT live Havok",
+    "frames":544,"maxFrameMs":33.400000000001455,"maxDueTicks":3,"physicalNotifications":3,"status":"finished",
+    "origin":0.020317460317460317,"audioOrigin":0.12031746031746032,"delay":0.1,
+    "scheduled":[
+      {"layer":0,"time":0.22499999999999998,"target":0.3453174603174603,"scheduled":0.3453174603174603,"observedAt":0.2815419501133787,"sources":4},
+      {"layer":1,"time":1.416666666666664,"target":1.5369841269841245,"scheduled":1.5369841269841245,"observedAt":1.4512471655328798,"sources":5},
+      {"layer":0,"time":1.4333333333333307,"target":1.553650793650791,"scheduled":1.553650793650791,"observedAt":1.4802721088435373,"sources":5},
+      {"layer":1,"time":4.141666666666662,"target":4.261984126984123,"scheduled":4.261984126984123,"observedAt":4.18249433106576,"sources":4},
+      {"layer":0,"time":4.241666666666667,"target":4.361984126984128,"scheduled":4.361984126984128,"observedAt":4.3014965986394555,"sources":5},
+      {"layer":1,"time":6.800000000000128,"target":6.920317460317588,"scheduled":6.920317460317588,"observedAt":6.832471655328798,"sources":5}
+    ],
+    "late":[],
+    "sources":[{"started":14,"cleaned":0,"finished":14,"active":0},{"started":14,"cleaned":0,"finished":14,"active":0}]
+  }
+}

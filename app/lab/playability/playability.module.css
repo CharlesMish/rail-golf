@@ -4,3 +4,6 @@
 @media(max-width:850px){.places{grid-template-columns:1fr}.card{padding:24px}.header{margin-bottom:32px}.page{padding:28px 20px}.header h1{font-size:2.75rem}.intro{font-size:1.05rem}.visit{margin-top:32px}}
 .places{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1200px}.card[data-place="0"]{border-top-color:#7ed2c8}.card[data-place="1"]{border-top-color:#edb780}.card[data-place="2"]{border-top-color:#a9c4f2}.card[data-place="3"]{border-top:3px solid #baabed}
 @media(max-width:850px){.places{grid-template-columns:1fr}}
+
+/* This document-style lab owns scrolling; the production body remains locked. */
+.page{height:100dvh;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scroll-padding-block:16px}

@@ -3,3 +3,12 @@
 .comparison{display:grid;gap:8px;color:#c4d4d0;font-size:.9rem}.comparison select{background:#1d363c;color:inherit;padding:10px;font-size:1rem;border:1px solid #536d71;border-radius:4px}.footer a{color:#9ce0d4}
 
 .controlJump{display:none}@media(max-width:760px){.controlJump{display:block}}
+
+/* A bounded desktop grid and a route-local mobile scroller prevent clipped controls. */
+.shell{height:100dvh;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;grid-template-rows:minmax(0,1fr);scroll-padding-block:12px}
+.stage{min-height:0}
+.console{min-height:0;max-height:100%;scroll-padding-block:16px}
+.shell summary:focus-visible,.shell a:focus-visible{outline:3px solid #d4b777;outline-offset:3px}
+.footer a{color:#9ce0d4}
+@media(max-width:760px){.stage{height:54dvh;min-height:330px}.console{max-height:none;overflow:visible}}
+@media(max-height:440px) and (min-width:761px){.header{top:12px;left:18px}.header h1{font-size:1.8rem}.header p{font-size:.85rem}}
