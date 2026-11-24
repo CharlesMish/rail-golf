@@ -64,6 +64,13 @@ export function measureCases(){
    const ablation=architectureHarness({...yard.PLACES_ARCHITECTURE,buildWorld:(...args)=>yard.buildExchangeYard(...args,{solids:yard.EXCHANGE_SOLIDS.filter(predicate)})});
    try{ablations[id]={purpose:'Non-playable causal comparison: remove named physical architecture; all projectile/material rules unchanged.',cases:Object.fromEntries(examples.map(name=>{const r=ablation.shoot(EXCHANGE_CASES[name]);return [name,{record:r.record,path10Hz:r.path,identicalPhysicalOutcome:JSON.stringify([r.record.reason,r.record.elapsed,r.record.position,r.record.contacts,r.path])===JSON.stringify([cases[name].record.reason,cases[name].record.elapsed,cases[name].record.position,cases[name].record.contacts,cases[name].path10Hz])}];}))};}finally{ablation.dispose();}
   }
+  // Rebuild the rejected one-metre eave as a causal control. Its former
+  // long-tail and fragile roof-transfer inputs stay named for their history;
+  // `retains` deliberately becomes false when the flush roof removes them.
+  const overhung=architectureHarness({...yard.PLACES_ARCHITECTURE,buildWorld:(...args)=>yard.buildExchangeYard(...args,{solids:yard.EXCHANGE_SOLIDS.map(s=>s.id==='west-store-roof'?{...s,w:12}:s)})});
+  try{ablations['original-store-overhang']={purpose:'Restore only the rejected12m west-store roof (current10m). Same projectile/material rules; exact same original inputs.',cases:Object.fromEntries(['slow-gallery','roof-to-gallery'].map(name=>{const r=overhung.shoot(EXCHANGE_CASES[name]);return [name,{record:r.record,path10Hz:r.path,identicalPhysicalOutcome:JSON.stringify([r.record.reason,r.record.elapsed,r.record.position,r.record.contacts,r.path])===JSON.stringify([cases[name].record.reason,cases[name].record.elapsed,cases[name].record.position,cases[name].record.contacts,cases[name].path10Hz])}];}))};}finally{overhung.dispose();}
+  cases['slow-gallery'].historicalMeaning='Originally24.4s settling between gallery and roof overhang. Same input now falls to street; retaining the old slow-tail predicate is intentionally false.';
+  cases['roof-to-gallery'].historicalMeaning='Originally fragile roof-to-gallery transfer2/6neighbors. The flush roof intentionally removes that old relationship; same input is retained as a negative and tradeoff.';
   return {cases,ablations};
  }finally{h.dispose();}
 }

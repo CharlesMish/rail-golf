@@ -37,10 +37,11 @@ test('one ordinary power supports a real underpass, front interception and top l
 test('roof return and cross-yard receiving families survive nearby legal controls, with honest negative cases',()=>{
  const h=architectureHarness(PLACES_ARCHITECTURE);try{
   for(const id of ['underpass-delivery','viaduct-top','roof-return','service-hall','service-gallery','service-roof']){assert.equal(retainsRelationship(id,h.shoot(EXCHANGE_CASES[id])),true,id);for(const n of exchangeNeighbours(EXCHANGE_CASES[id]))assert.equal(retainsRelationship(id,h.shoot(n.setup)),true,`${id} ${n.change}`);}
-  const fragile=exchangeNeighbours(EXCHANGE_CASES['roof-to-gallery']).map(n=>retainsRelationship('roof-to-gallery',h.shoot(n.setup)));assert.equal(fragile.filter(Boolean).length,2);
+  const fragile=exchangeNeighbours(EXCHANGE_CASES['roof-to-gallery']).map(n=>retainsRelationship('roof-to-gallery',h.shoot(n.setup)));assert.equal(fragile.filter(Boolean).length,0); // The removed eave also removes this formerly fragile transfer.
   assert.equal(h.shoot(EXCHANGE_CASES['short-ground']).record.contacts.length,1);
   assert.equal(h.shoot(EXCHANGE_CASES['open-sky-exit']).record.reason,'out-of-bounds');
-  assert.ok(h.shoot(EXCHANGE_CASES['slow-gallery']).record.elapsed>20);
+  const formerPocket=h.shoot(EXCHANGE_CASES['slow-gallery']);assert.equal(formerPocket.record.reason,'first-ground-contact');assert.ok(formerPocket.record.elapsed<15);
+  const overhung=architectureHarness({...PLACES_ARCHITECTURE,buildWorld:(...args)=>buildExchangeYard(...args,{solids:EXCHANGE_SOLIDS.map(s=>s.id==='west-store-roof'?{...s,w:12}:s)})});try{const trapped=overhung.shoot(EXCHANGE_CASES['slow-gallery']);assert.equal(trapped.record.reason,'settled');assert.ok(trapped.record.elapsed>20);assert.ok(trapped.impacts.some(c=>c.body==='exchange-west-store-roof'&&c.incoming[1]>2&&Math.abs(c.normal[1])>.95));assert.equal(formerPocket.impacts.some(c=>c.body==='exchange-west-store-roof'),false);}finally{overhung.dispose();}
   const roofless=architectureHarness({...PLACES_ARCHITECTURE,buildWorld:(...args)=>buildExchangeYard(...args,{solids:EXCHANGE_SOLIDS.filter(s=>s.id!=='station-roof')})});try{assert.equal(roofless.shoot(EXCHANGE_CASES['roof-return']).record.reason,'out-of-bounds');assert.equal(roofless.shoot(EXCHANGE_CASES['service-roof']).record.reason,'out-of-bounds');}finally{roofless.dispose();}
  }finally{h.dispose();}
 });
@@ -51,7 +52,7 @@ test('both freely selected stations keep and restore exact independent launch pr
   assert.equal(EXCHANGE_STATIONS.length,2);assert.throws(()=>spatialLaunch(PLACES_ARCHITECTURE,{...PLACES_ARCHITECTURE.defaultSetup,carriageMode:'unknown'}));
   for(const id of ['roof-return','service-gallery']){const first=h.shoot(EXCHANGE_CASES[id]);const kept=shelf.keep(first.record,pathFor(first),'60f3e07');assert.ok(kept);assert.equal(kept.layout,EXCHANGE_LAYOUT);assert.equal(kept.record.station.id,kept.record.setup.carriageMode);assert.equal(validPlaygroundEntry(kept,contract),true);
    const rejected=first.record.evidence.find(e=>e.kind==='rejected');assert.ok(rejected);assert.ok(Object.hasOwn(rejected,'outgoing'));assert.equal(rejected.outgoing,undefined);assert.deepEqual(kept.record,JSON.parse(JSON.stringify(first.record)));
-   const malformed=structuredClone(kept);malformed.record.evidence[0].unapprovedUndefined=undefined;assert.equal(validPlaygroundEntry(malformed,contract),false);assert.throws(()=>shelf.keep(malformed.record,malformed.path,'60f3e07'));
+   for(const corrupt of [entry=>{entry.record.evidence[0].unapprovedUndefined=undefined;},entry=>{entry.record.evidence[0].members.push(undefined);},entry=>{entry.record.evidence[0].incoming.x=NaN;}]){const malformed=structuredClone(kept);corrupt(malformed);assert.equal(validPlaygroundEntry(malformed,contract),false);assert.throws(()=>shelf.keep(malformed.record,malformed.path,'60f3e07'));}
    const restored=createPlaygroundShelf(contract,storage).get(kept.id);other.world.environment.restore(restored.record.environment);assert.deepEqual(other.shoot(restored.record.setup),first);
    const forged=structuredClone(kept);forged.record.setup.carriageMode=id==='roof-return'?'service':'forecourt';assert.equal(validPlaygroundEntry(forged,contract),false);
    const foreign=structuredClone(kept);foreign.layout='playgrounds-ringwell-v1';assert.equal(validPlaygroundEntry(foreign,contract),false);
