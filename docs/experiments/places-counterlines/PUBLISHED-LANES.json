@@ -1,0 +1,57 @@
+{
+  "base": "ddeed5b688ae8c15166c42a0302bf768bb11be70",
+  "lanes": [
+    {
+      "branch": "research/places-architecture-20261123",
+      "localEnd": "c4df0bd0dcb45ea23c0151872256a338e8709c2b",
+      "publishedEnd": "43ae24c1ce5b64ec98d8dd65e8d1f26e8c7f8713",
+      "tree": "755df144ca87177c15d28a36f76fe3074213f170",
+      "checkpoints": [
+        {
+          "local": "808208169a2e2fa3dab395123e78c9cca654ae78",
+          "published": "7430cad416f7085f4d88b1ec6a3738913ba0106d",
+          "tree": "d9693a772d98b589fe8e388d1edb275be18cb477"
+        },
+        {
+          "local": "60f3e072cb2aa2871b53f718d45db15547fe7183",
+          "published": "d6cfc9147f22996c92b8e3a24aa93b566b5b2b9b",
+          "tree": "a8611dad777e3841ccf8710440674a18b78bb846"
+        },
+        {
+          "local": "c621cfc33f399343cb7bdfacf59bccbc45a5c09c",
+          "published": "7e6c0dab8b4147582f49a11c4566f0a150cb4a8a",
+          "tree": "7fb0c3853b354758f038a22797eb0cf289b48d6a"
+        },
+        {
+          "local": "319ef3e60701cecc394d1275024730c9f555bf73",
+          "published": "7f824a3ea24c7217e40ce456021af96c9997aa8a",
+          "tree": "f222ed049423a1a63fbe2f36ae2881cf73b18949"
+        },
+        {
+          "local": "c4df0bd0dcb45ea23c0151872256a338e8709c2b",
+          "published": "43ae24c1ce5b64ec98d8dd65e8d1f26e8c7f8713",
+          "tree": "755df144ca87177c15d28a36f76fe3074213f170"
+        }
+      ]
+    },
+    {
+      "branch": "research/places-counterline-20261123",
+      "localEnd": "92eaf935d356e10bf1d55d84fad59e43ba7de67d",
+      "publishedEnd": "35e9c2d5b8edcdf504e969d86a70f570504f919f",
+      "tree": "27654d94a59dfd337314434e6eaaff80badf82fa",
+      "draftPR": 83
+    },
+    {
+      "branch": "research/places-usability-20261123",
+      "localEnd": "f04caf6131bf570a4289d00266e5670a68f1594a",
+      "publishedEnd": "19fa56ce2520d5dd324dad7f8b8a70272b48ec84",
+      "tree": "b82f4e67d83fbe5a9c6f819f6bba6103b6295eb2"
+    },
+    {
+      "branch": "research/places-review-20261123",
+      "localEnd": "aad5e9fac85f78c073e357318b56977416d24875",
+      "publishedEnd": "7ab367e1ea97973e5c6fcd634130140dcbeba718",
+      "tree": "efcb591cd0c5e6c4e28f2e061de9fe6a71bd5554"
+    }
+  ]
+}

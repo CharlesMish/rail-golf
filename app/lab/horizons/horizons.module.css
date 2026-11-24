@@ -22,3 +22,6 @@
 .footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid #365055; padding-top: 1.5rem; font-size: .875rem; color: #91aaa9; }
 .footer a { color: #74dddd; }
 @media (max-width: 850px) { .worlds { grid-template-columns: 1fr; } .header { padding-top: .5rem; } .world { padding: 1.4rem; } }
+
+/* This document-style lab owns scrolling; the production body remains locked. */
+.page{height:100dvh;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scroll-padding-block:16px}

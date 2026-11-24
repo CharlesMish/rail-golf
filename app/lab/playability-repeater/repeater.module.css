@@ -2,3 +2,12 @@
 .repeatControls{display:grid;gap:12px;margin:18px 0}.repeatControls label{display:flex;align-items:center;gap:12px;font-size:.95rem}.repeatControls select{font-size:1rem;padding:8px;background:#1d363c;color:inherit;border:1px solid #536d71;border-radius:4px}.shell .stop{background:#713c36;border-color:#c18d7a;min-width:100%;font-weight:700}.sequenceBadge{position:absolute;bottom:70px;left:24px;max-width:calc(100% - 48px);background:#102125e8;padding:12px;color:#f5dfaa;border:1px solid #627873;border-radius:4px;pointer-events:auto}.footer{font-size:.875rem}.header a{font-size:.875rem}@media(max-width:760px){.sequenceBadge{left:15px;bottom:60px;max-width:calc(100% - 30px);font-size:.875rem}.header a{font-size:.75rem}}
 
 .sequenceBadge p{margin:0 0 8px;line-height:1.4}.sequenceBadge button{background:#713c36;border-color:#c18d7a;min-height:44px;font-weight:700}
+
+/* A bounded desktop grid and a route-local mobile scroller prevent clipped controls. */
+.shell{height:100dvh;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;grid-template-rows:minmax(0,1fr);scroll-padding-block:12px}
+.stage{min-height:0}
+.console{min-height:0;max-height:100%;scroll-padding-block:16px}
+.shell summary:focus-visible,.shell a:focus-visible{outline:3px solid #d4b777;outline-offset:3px}
+.footer a{color:#9ce0d4}
+@media(max-width:760px){.stage{height:54dvh;min-height:330px}.console{max-height:none;overflow:visible}}
+@media(max-height:440px) and (min-width:761px){.header{top:12px;left:18px}.header h1{font-size:1.8rem}.header p{font-size:.85rem}.sequenceBadge{bottom:64px}}
