@@ -7,7 +7,7 @@ import {createRangeHarness} from '../scripts/range/run.mjs';
 import {createWorldcraftRuntime} from '../lib/worldcraft-runtime.js';
 import {RAIL_RULES} from '../lib/rail-golf-v02.js';
 import {performanceFromResonance} from '../lib/worldcraft-resonance.js';
-import {createCounterlineAudio,createCounterlinePair,validateCounterlinePair,loadCounterlinePair,counterlineStepBudget,COUNTERLINE_DELAY,COUNTERLINE_GAIN,assertCounterlineSourceIds} from '../lib/counterline.js';
+import {createCounterlineAudio,createCounterlinePair,validateCounterlinePair,loadCounterlinePair,counterlineStepBudget,COUNTERLINE_DELAY,COUNTERLINE_GAIN,assertCounterlineSourceIds,measureCounterlineClock} from '../lib/counterline.js';
 Logger.LogLevels=0;
 const lines=JSON.parse(await readFile(new URL('../public/playability/loops-examples.json',import.meta.url))).lines;
 const copy=structuredClone;
@@ -66,3 +66,10 @@ test('actual Havok live records equal Solo under 15/30/60/144Hz and mixed render
 });
 
 test('conflicting source identifiers are rejected while byte-identical history stays deduplicable',()=>{assert.equal(assertCounterlineSourceIds([lines[0],copy(lines[0])]),true);const different=copy(lines[1]);different.id=lines[0].id;assert.throws(()=>assertCounterlineSourceIds([lines[0],different]),/different recorded line/);});
+
+test('QA cancellation resolves even when a hidden browser delivers no further animation frame',async()=>{
+ const previous={AudioContext:globalThis.AudioContext,requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame};const contexts=[];let cancelled=0;
+ globalThis.AudioContext=class{constructor(){this.currentTime=0;this.state='running';this.closed=0;contexts.push(this);}close(){this.closed++;this.state='closed';return Promise.resolve();}};
+ globalThis.requestAnimationFrame=()=>1;globalThis.cancelAnimationFrame=()=>cancelled++;
+ try{const controller=new AbortController(),pending=measureCounterlineClock(createCounterlinePair(...lines),{signal:controller.signal});await Promise.resolve();await Promise.resolve();controller.abort();const result=await Promise.race([pending,new Promise((_,reject)=>setTimeout(()=>reject(Error('hung awaiting hidden rAF')),100))]);assert.equal(result.frames,0);assert.equal(contexts[0].closed,1);assert.ok(cancelled>0);}finally{Object.assign(globalThis,previous);}
+});
