@@ -1,4 +1,4 @@
-import type {SpatialConfig,SpatialSetup,SpatialStation,SpatialRecord} from './spatial-lab-session';
+import type {SpatialConfig,SpatialSetup,SpatialStation,SpatialRecord,SpatialCameraFrame} from './spatial-lab-session';
 import type {VectorLike} from './rail-golf-v02';
 export type ExchangeSolid={id:string;region:string;x:number;y:number;z:number;w:number;h:number;d:number;shape:'box'|'gable';ground?:boolean};
 export const EXCHANGE_LAYOUT:string;
@@ -15,3 +15,11 @@ export function exchangeFlightFrame(frame:{position:VectorLike;target:VectorLike
 export function exchangeTerminalLabel(record:SpatialRecord|null):string;
 export const PLACES_ARCHITECTURE:SpatialConfig;
 export function stationConfig(id:string):SpatialConfig;
+export const EXCHANGE_REFINED_LAYOUT:string;
+export const EXCHANGE_REFINED_STATIONS:readonly SpatialStation[];
+export function exchangeRefinedStation(setup:SpatialSetup):SpatialStation;
+export function exchangeRefinedEnvironmentValid(state:unknown):boolean;
+export const PLACES_ARCHITECTURE_REFINED:SpatialConfig;
+
+export function exchangeRefinedFollowOffsets(ball:VectorLike,velocity:VectorLike|null,heading:VectorLike|null,setup?:SpatialSetup):{position:VectorLike;target:VectorLike};
+export function exchangeRefinedLaunchFrame(frame:SpatialCameraFrame,setup:SpatialSetup):SpatialCameraFrame;
