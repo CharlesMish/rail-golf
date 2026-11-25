@@ -13,3 +13,6 @@ export function counterlineRecordedImpacts(line:WorldcraftLine,acoustics?:Counte
 export function assertCounterlineRecordingIds(recordings:CounterlineRecording[]):boolean;
 export function loadCounterlineRecordings(storage:Pick<Storage,'getItem'>|null):{recordings:CounterlineRecording[];warning:string;writable:boolean};
 export function counterlineRecordingLabel(acoustics:CounterlineAcoustics|null):string;
+
+export function validateCounterlinePhysicalLine(value:unknown):WorldcraftLine;
+export function importCounterlineCaptures(value:unknown):{recordings:CounterlineRecording[];lines:WorldcraftLine[]};

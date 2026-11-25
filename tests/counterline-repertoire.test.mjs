@@ -5,13 +5,14 @@ import Havok from '@babylonjs/havok';
 import {Logger,NullEngine,Scene,HavokPlugin,Vector3} from '@babylonjs/core';
 import {foundryRecord} from '../lib/worldcraft-foundry.js';
 import {rangeOpeningSetup} from '../lib/worldcraft-range.js';
-import {packWorldcraftLine,captureWorldSnapshot,worldcraftIdentity} from '../lib/worldcraft-model.js';
+import {packWorldcraftLine,captureWorldSnapshot,worldcraftIdentity,worldcraftBox} from '../lib/worldcraft-model.js';
 import {voiceImpact,performanceFromResonance} from '../lib/worldcraft-resonance.js';
-import {counterlineWorlds,counterlineControls,counterlineSetup} from '../lib/counterline-worlds.js';
-import {captureCounterlineRecording,validateCounterlineRecording,counterlineRecordedImpacts,counterlineVoicedImpact,assertCounterlineRecordingIds,loadCounterlineRecordings} from '../lib/counterline-recording.js';
+import {counterlineWorlds,counterlineControls,counterlineSetup,counterlineCameraFrame} from '../lib/counterline-worlds.js';
+import {captureCounterlineRecording,validateCounterlineRecording,counterlineRecordedImpacts,counterlineVoicedImpact,assertCounterlineRecordingIds,loadCounterlineRecordings,importCounterlineCaptures} from '../lib/counterline-recording.js';
 import {createCounterlineAudio,createCounterlinePair,validateCounterlinePair,counterlineStepBudget} from '../lib/counterline.js';
 import {createRangeHarness} from '../scripts/range/run.mjs';
 import {createWorldcraftRuntime} from '../lib/worldcraft-runtime.js';
+import {projectileScreen} from '../lib/flight-framing.js';
 import {RAIL_RULES} from '../lib/rail-golf-v02.js';
 Logger.LogLevels=0;
 const old=JSON.parse(await readFile(new URL('../public/playability/loops-examples.json',import.meta.url))).lines;
@@ -52,7 +53,7 @@ test('unknown historical gain is never inferred as face speed; v1 pair bytes and
 test('silent physical captures remain valid independent records even though they cannot be musical companions',()=>{
  const entry=worlds[0],h=createRangeHarness(havok,entry.world,'unknown');h.runtime.setDynamics(entry.profile.dynamics);const shot=h.shoot(entry.world,{...entry.originalOpening,yaw:70,elevation:5,charge:.1});
  assert.equal(shot.resonance.impacts.length,0);const line=packWorldcraftLine({worldSnapshot:captureWorldSnapshot(shot.world,'unknown'),setup:shot.setup,launch:shot.launch,points:shot.samples,events:shot.evidence,contacts:shot.contacts,terminal:shot.terminal,performance:performanceFromResonance(shot.resonance)});
- const capture=captureCounterlineRecording(line,shot.resonance,entry.profile);assert.deepEqual(validateCounterlineRecording(JSON.parse(JSON.stringify(capture))),capture);assert.throws(()=>createCounterlinePair(capture.line,old[0]),/no recorded/);h.dispose();
+ const capture=captureCounterlineRecording(line,shot.resonance,entry.profile);assert.deepEqual(validateCounterlineRecording(JSON.parse(JSON.stringify(capture))),capture);assert.throws(()=>createCounterlinePair(capture.line,old[0]),/no recorded/);const bundle={format:'rail-golf-counterline-recordings',version:1,recordings:[capture,captures[0]],legacyLines:[]};const imported=importCounterlineCaptures(JSON.parse(JSON.stringify(bundle)));assert.deepEqual(imported.lines,[capture.line,captures[0].line]);assert.deepEqual(imported.recordings,[capture,captures[0]]);const conflicting=structuredClone(bundle);conflicting.recordings[0].line.id=conflicting.recordings[1].line.id;assert.throws(()=>importCounterlineCaptures(conflicting),/different captured/);h.dispose();
 });
 test('actual rich-world Havok lines equal their solo controls at 30/144Hz and mixed frames; captured live and historical notes remain separate',async()=>{
  for(const entry of worlds.slice(0,2)){
@@ -77,3 +78,10 @@ test('richer simultaneous captured pair retains original timings, bounded budget
  }
 });
 test('captured voice failure cancels instead of reinterpreting missing normal speed',async()=>{const f=audioFixture();await f.audio.prepare({voice:'captured-resonance-v1'},worlds[0].profile);f.audio.commit();f.audio.live(old[0].performance.impacts[0]);assert.equal(f.interrupts.length,1);assert.equal(f.audio.state().active,false);assert.deepEqual(counterlineVoicedImpact(old[0].performance.impacts[0],worlds[1].profile,null),old[0].performance.impacts[0]);});
+
+test('rich-world launch and authored side survey keep every solid corner inside sampled viewport frusta',()=>{
+ for(const entry of worlds.slice(0,2))for(const [width,height]of [[780,585],[366,397],[820,290],[566,330]])for(const view of ['launch','overview']){
+  const frame=counterlineCameraFrame(entry.world,entry.opening,view,width,height,entry.foundryId);
+  for(const object of entry.world.objects)for(const corner of worldcraftBox(object).corners){const p=projectileScreen(frame,corner,width/height,frame.horizontal);assert.ok(p.depth>.1&&Math.abs(p.x)<=1&&Math.abs(p.y)<=1,`${entry.id} ${view} ${width}x${height} ${object.id}`);}
+ }
+});
