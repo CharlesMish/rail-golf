@@ -50,8 +50,9 @@ Only the new ball is physical; the remembered phrase plays once alongside it.
 Use the separate mute controls to hear each contribution. Stop, Retry and world
 changes cancel obsolete playback. Restore and imports stay silent. Download
 recordings or a pairing to retain both physical lines and their captured sound
-settings. The separate physical-only export works with older Worldcraft and
-Contact Loops, but cannot carry the new acoustic information.
+settings. The separate physical-only export uses the original Worldcraft v1 memory
+format and can be imported into Contact Loops. It cannot carry the new acoustic
+information; the ordinary Worldcraft page does not import memory bundles.
 
 Older Keeps retain their stored gains with canonical voices; their original
 timbre may be unknown. Both contributions use the established common sound

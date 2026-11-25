@@ -11,15 +11,19 @@ hosted build status and pinned preview. Keeping the final SHA there avoids a
 self-referential documentation commit. Owner entry is `/lab/refinement`.
 
 The separately reviewable musical lane is [draft PR85](https://github.com/CharlesMish/rail-golf/pull/85).
-Its final source is `8e6c9a643338c53501f2e0edd635c4db15625926`, published as
+Its reviewed implementation source is `8e6c9a643338c53501f2e0edd635c4db15625926`, published as
 `5551d21e2522b17ef9c08eaeb1b70fe759bce67c`, with identical tree
 `ddd54b59a08b7c4e7900a0a8663086637f932b1e`.
-Pinned standalone preview:
+Pinned implementation preview:
 [Counterline repertoire](https://f94b029e-rail-golf.charlesmish.workers.dev/lab/places-counterline).
 Cloudflare version `f94b029e-fa8c-42ab-b988-ae80a63679b3`, preview build
 `312ab129-c21c-4030-8378-2813e30eb284`, and
 [GitHub CI45696133362](https://github.com/CharlesMish/rail-golf/actions/runs/45696133362)
-all succeeded on that exact published candidate.
+all succeeded on that exact published candidate. A subsequent documentation-only
+correction clarifies that physical memory exports import into Contact Loops,
+while the ordinary Worldcraft page imports world documents rather than memory
+bundles. The latest branch endpoint is in `PUBLISHED-LANES.json`; draft PR85
+records its final exact SHA and preview.
 
 The first independent Counterline implementation is also durable in that branch:
 local `2144bc84b45602e1e720dadbde13c1389c2e47fb` maps to published

@@ -86,3 +86,8 @@ The additional frustum test covers every solid corner in both curated starting s
 Reviewed final musical endpoint `8e6c9a643338c53501f2e0edd635c4db15625926`. This bounded change extracts the existing captured-import validation and makes acoustic policy an explicit property of each selectable source. The selected source now supplies its own captured policy or explicit legacy `null`; selecting a historical source no longer looks up an unrelated acoustic annotation by line identity. Pair-v1 loading still explicitly selects canonical legacy playback, and pair-v2 null policies remain null.
 
 The three relevant focused tests were independently repeated and passed: captured-voice/provenance validation, unknown legacy gain and null-policy compatibility, and mixed silent/sounding capture import. The mixed bundle preserves both unchanged physical records and captured metadata; conflicting physical source identifiers are rejected. Silent records remain restorable and are excluded from the musical companion list. The change does not modify Havok, world documents, launch timing, camera behavior or audio scheduling. No new blocker was found.
+
+Final publication review found no source blocker. The export guide was clarified:
+physical-only export preserves Worldcraft v1 memory format and imports into
+Contact Loops; the ordinary Worldcraft page does not re-import memory bundles.
+Director handoff and verification claims remain consistent with the evidence.
