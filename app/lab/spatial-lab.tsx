@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useRef,useState,useSyncExternalStore} from 'react';
+import {useEffect,useRef,useState,useSyncExternalStore,type ReactNode} from 'react';
 import {Engine,Scene,Vector3,Color3,Color4,Camera,FreeCamera,HemisphericLight,DirectionalLight,ShadowGenerator,TransformNode,MeshBuilder,HavokPlugin,LinesMesh} from '@babylonjs/core';
 import HavokPhysics from '@babylonjs/havok';
 import {BUILD_ID} from '@/lib/build-identity';
@@ -19,10 +19,12 @@ import {createGateShelf,createBrowserGateShelf,type GateEntry} from '@/lib/horiz
 import {createBrowserPlaygroundShelf} from '@/lib/playgrounds-shelf';
 import {createPlaygroundAudio} from '@/lib/playgrounds-audio';
 import {contactStrike} from '@/lib/worldcraft-resonance';
+import {YardControls} from './places-architecture/yard-controls';
+import yard from './places-architecture/yard-play.module.css';
 
 type Phase='loading'|'ready'|'charging'|'flight'|'result'|'error';
-type Actions={begin():void;release():void;cancel():void;retry():void;stop():void;changeView():void;reset():void;recall():void;keep():void;restoreKept(id:string):void;removeKept(id:string):void;downloadKept(id:string):void;selectStation(id:string):void};
-export default function SpatialLab({config}:{config:SpatialConfig}){
+type Actions={begin():void;release():void;cancel():void;retry():void;stop():void;changeView():void;selectView(mode:'launch'|'survey'|'flight'):void;reset():void;recall():void;keep():void;restoreKept(id:string):void;removeKept(id:string):void;downloadKept(id:string):void;selectStation(id:string):void};
+export default function SpatialLab({config,playPresentation,yardVersion}:{config:SpatialConfig;playPresentation?:'yard';yardVersion?:ReactNode}){
   const hasShelf=Boolean(config.shelf||config.playground),shelfLimit=config.shelf?.limit??4;
   const aimStep=config.playground ? 0.5 : 0.7;
   const canvas=useRef<HTMLCanvasElement>(null),actions=useRef<Actions|null>(null);
@@ -133,10 +135,17 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
           showReadyView();phaseTo('ready');
           setRecoveryNotice(action==='reset'?'Ready · experiment reset.':action==='recall'?'Ready · last line restored.':'Ready · take another shot.');}finally{recovering=false;}
         };
+        const selectView=(mode:'launch'|'survey'|'flight')=>{
+          if(!config.flightPresentation||!['ready','result','flight'].includes(phaseRef.current))return;
+          if(mode==='flight'&&phaseRef.current!=='flight'||mode==='launch'&&phaseRef.current==='flight')return;
+          previous=null;view.set(mode);
+          if(mode==='flight'){const f=session.flight;if(f){const p=f.mesh.position,v=f.aggregate.body.getLinearVelocity(),desired=config.flightPresentation.desired?.(p,v,heading,setupRef.current)??followOffsets(p,v,heading),frame=config.flightPresentation.constrain({...desired,fov:camera.fov},p);camera.position.copyFromFloats(frame.position.x,frame.position.y,frame.position.z);target.copyFromFloats(frame.target.x,frame.target.y,frame.target.z);}}
+          else placeRangeCamera(camera,target,cameraFrame(mode));
+        };
         actions.current={
           begin(){if(phaseRef.current!=='ready')return;void sound?.unlock();if(maxRef.current){shoot(1);return;}chargeStart=performance.now();sound?.chargeStart();phaseTo('charging');},
           release(){if(phaseRef.current==='charging')shoot(launchCharge(powerModeRef.current,setupRef.current.charge,performance.now()-chargeStart,maxRef.current));},cancel,
-          changeView(){if(!config.flightPresentation||!['ready','result','flight'].includes(phaseRef.current))return;previous=null;if(phaseRef.current==='flight'&&view.getSnapshot()==='survey'){view.set('flight');const f=session.flight;if(f){const p=f.mesh.position,v=f.aggregate.body.getLinearVelocity(),desired=config.flightPresentation?.desired?.(p,v,heading)??followOffsets(p,v,heading),frame=config.flightPresentation.constrain({...desired,fov:camera.fov},p);camera.position.copyFromFloats(frame.position.x,frame.position.y,frame.position.z);target.copyFromFloats(frame.target.x,frame.target.y,frame.target.z);}}else{const mode=view.getSnapshot()==='survey'?'launch':'survey';view.set(mode);placeRangeCamera(camera,target,cameraFrame(mode));}},
+          selectView,changeView(){selectView(view.getSnapshot()==='survey'?(phaseRef.current==='flight'?'flight':'launch'):'survey');},
           retry(){restore('retry');},stop(){if(!config.flightPresentation||phaseRef.current!=='flight')return;sound?.chargeStop();releaseInputs();session.action('stop');projectile?.dispose();projectile=null;previous=null;},reset(){restore('reset');},recall(){restore('recall');},
           keep(){if(!shelf||phaseRef.current!=='result'||!session.last||alreadyKept)return;try{const entry=shelf.keep(session.last,savedPath,BUILD_ID);if(entry){alreadyKept=true;setKeptLast(true);}publishShelf();}catch(e){setShelfWarning(String(e));}},
           restoreKept(id){if(!shelf||!['ready','result'].includes(phaseRef.current))return;const entry=shelf.get(id);if(!entry)return;restore('retry');trail?.dispose();trail=null;points=[];world.environment!.restore(entry.record.environment);const next={...entry.record.setup};setupRef.current=next;setSetup(next);powerModeRef.current='set';setPowerMode('set');maxRef.current=false;setMax(false);setEnvironment(world.environment!.snapshot());setDiagnostics(world.diagnostics?.()??{});showReadyView();setRecoveryNotice(`${config.playground?'Kept starting setup restored':'Kept setup and release phase restored'} · fire when ready. Recorded build ${entry.build}${entry.build===BUILD_ID?'':'; current build differs'}.`);},
@@ -174,7 +183,8 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
         window.addEventListener('keydown',keydown);window.addEventListener('keyup',keyup);window.addEventListener('blur',blur);
         const visibility=()=>{if(document.hidden)blur();else originClock.current?.reset(performance.now());};document.addEventListener('visibilitychange',visibility);
         const resize=()=>{activeEngine.resize();const frame=cameraFrame();camera.fovMode=frame.horizontal?Camera.FOVMODE_HORIZONTAL_FIXED:Camera.FOVMODE_VERTICAL_FIXED;camera.fov=frame.fov;};resize();placeRangeCamera(camera,target,cameraFrame('launch'));window.addEventListener('resize',resize);
-        cleanup=()=>{soundControl.current=null;actions.current=null;environmentAction.current=null;originClock.current=null;document.removeEventListener('visibilitychange',visibility);window.removeEventListener('resize',resize);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('blur',blur);surface.removeEventListener('pointerdown',down);surface.removeEventListener('pointermove',move);surface.removeEventListener('pointerup',up);surface.removeEventListener('pointercancel',up);sound?.dispose();projectile?.dispose();departureMarkers.dispose();session.dispose();world.dispose();};
+        const resizeObserver=playPresentation==='yard'?new ResizeObserver(resize):null;resizeObserver?.observe(surface);
+        cleanup=()=>{resizeObserver?.disconnect();soundControl.current=null;actions.current=null;environmentAction.current=null;originClock.current=null;document.removeEventListener('visibilitychange',visibility);window.removeEventListener('resize',resize);window.removeEventListener('keydown',keydown);window.removeEventListener('keyup',keyup);window.removeEventListener('blur',blur);surface.removeEventListener('pointerdown',down);surface.removeEventListener('pointermove',move);surface.removeEventListener('pointerup',up);surface.removeEventListener('pointercancel',up);sound?.dispose();projectile?.dispose();departureMarkers.dispose();session.dispose();world.dispose();};
         if(config.openInSurvey)showReadyView();
         phaseTo('ready');
         activeEngine.runRenderLoop(()=>{
@@ -193,7 +203,7 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
           if(f&&view.getSnapshot()==='flight'&&!config.overviewFlight){
             const p=f.mesh.position,v=f.aggregate.body.getLinearVelocity();heading=followHeading(heading,v,dt);
             const horizontal=camera.fovMode===Camera.FOVMODE_HORIZONTAL_FIXED;
-            const desired=config.flightPresentation?.desired?.(p,v,heading)??followOffsets(p,v,heading),ordinaryFrame=advanceFlightCamera({position:camera.position,target,fov:camera.fov},p,previous,desired,dt,activeEngine.getAspectRatio(camera),horizontal,horizontal?.92:.69);
+            const desired=config.flightPresentation?.desired?.(p,v,heading,s)??followOffsets(p,v,heading),ordinaryFrame=advanceFlightCamera({position:camera.position,target,fov:camera.fov},p,previous,desired,dt,activeEngine.getAspectRatio(camera),horizontal,horizontal?.92:.69);
             const frame=config.flightPresentation?.constrain(ordinaryFrame,p)??ordinaryFrame;
             camera.position.copyFromFloats(frame.position.x,frame.position.y,frame.position.z);target.copyFromFloats(frame.target.x,frame.target.y,frame.target.z);camera.fov=frame.fov;previous=p.clone();
           }else if(view.getSnapshot()==='launch'||view.getSnapshot()==='survey'||config.overviewFlight&&view.getSnapshot()==='flight'){advanceRangeCamera(camera,target,cameraFrame(config.overviewFlight&&view.getSnapshot()==='flight'?'survey':view.getSnapshot()),dt);}
@@ -203,12 +213,39 @@ export default function SpatialLab({config}:{config:SpatialConfig}){
       }catch(e){if(disposed)return;setError(e instanceof Error?e.message:String(e));phaseTo('error');}
     };
     void boot();return()=>{disposed=true;cleanup();scene?.dispose();engine?.dispose();};
-  },[view,config,aimStep]);
+  },[view,config,aimStep,playPresentation]);
   const ready=phase==='ready',canAim=ready||phase==='charging',live=phase==='flight',available=!['loading','error'].includes(phase);
-  const shownPower=ready?(max?1:powerMode==='set'?setup.charge:power):power;
+  const shownPower=ready||playPresentation==='yard'&&['loading','error'].includes(phase)?(max?1:powerMode==='set'?setup.charge:power):power;
   const feedback=transferFeedback(discovered,floor);
   const receipt=rangeLineReceipt(last);
   const returnOrigin=()=>{if(phaseRef.current!=='ready'||!last||!config.originControl?.returnTo)return;const next=config.originControl.returnTo(setupRef.current,last.setup);setupRef.current=next;setSetup(next);originClock.current?.reset(performance.now());};
+  if(playPresentation==='yard')return <main className={yard.shell} data-camera-mode={viewMode} data-phase={phase}>
+    <section className={yard.stage} aria-label="Exchange Yard scene">
+      <canvas ref={canvas} className={yard.canvas} aria-label={`${config.title}. Drag to aim; Survey to inspect the space.`}/>
+      <header className={yard.header}><div><h1>{config.title}</h1><p>{config.subtitle??config.station(setup).label}</p></div><span>BUILD {BUILD_ID}</span></header>
+      {caption&&<div className={yard.caption} role="status">{caption}</div>}
+      {phase==='loading'&&<div className={yard.message}>Opening Exchange Yard…</div>}
+      {phase==='error'&&<div className={yard.message} role="alert">{error}</div>}
+    </section>
+    <YardControls phase={phase} setup={setup} stations={config.stationChoices??[]} view={viewMode} powerMode={powerMode} shownPower={shownPower} max={max} notice={recoveryNotice}
+      onSetup={update} onStation={id=>actions.current?.selectStation(id)} onView={mode=>actions.current?.selectView(mode)}
+      onPowerMode={mode=>{powerModeRef.current=mode;setPowerMode(mode);maxRef.current=false;setMax(false);}}
+      onPower={charge=>{maxRef.current=false;setMax(false);update({charge});}} onMax={toggleMax}
+      onRetry={()=>actions.current?.retry()} onStop={()=>actions.current?.stop()}
+      fireProps={{type:'button',
+        onPointerDown:e=>{if(e.button!==0)return;e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);chargePointer.current={element:e.currentTarget,id:e.pointerId};actions.current?.begin();},
+        onPointerUp:()=>{chargePointer.current=null;actions.current?.release();},onPointerCancel:()=>actions.current?.cancel(),onLostPointerCapture:()=>actions.current?.cancel(),onBlur:()=>actions.current?.cancel(),
+        onKeyDown:e=>{if((e.code==='Space'||e.code==='Enter')&&!e.repeat){e.preventDefault();e.stopPropagation();actions.current?.begin();}},
+        onKeyUp:e=>{if(e.code==='Space'||e.code==='Enter'){e.preventDefault();e.stopPropagation();actions.current?.release();}},
+      }}
+      result={phase==='result'&&<section className={yard.result} aria-label="Line result"><p role="status">{config.flightPresentation?.terminalLabel(last)??receipt.terminal}</p><button disabled={keptLast||kept.length>=shelfLimit||last?.reason==='interrupted'} onClick={()=>actions.current?.keep()}>{keptLast?'Kept':'Keep this line'}</button>{kept.length>=shelfLimit&&!keptLast&&<p>The shelf is full. Remove a kept line below to make room.</p>}{receipt.events.length>0&&<details><summary>Rebounds · {receipt.events.length}</summary><ol aria-label="Qualified line events">{receipt.events.map((event,index)=><li key={index}>{event.label}</li>)}</ol></details>}</section>}
+    >
+      <details><summary>Kept lines · {kept.length}/{shelfLimit}</summary><p>Restore returns the recorded station, setup and starting world. Fire remains your choice.</p>{shelfWarning&&<p role="status">{shelfWarning}</p>}{kept.map((entry,index)=><div key={entry.id} className={yard.entry}><strong>Line {index+1} · {entry.record.station.label}</strong><p>{entry.record.elapsed.toFixed(2)} s · {entry.record.reason.replaceAll('-',' ')}</p><div className={yard.actions}><button disabled={!['ready','result'].includes(phase)} onClick={()=>actions.current?.restoreKept(entry.id)}>Restore line {index+1}</button><button onClick={()=>actions.current?.downloadKept(entry.id)}>Download</button><button onClick={()=>actions.current?.removeKept(entry.id)}>Remove line {index+1}</button></div></div>)}</details>
+      <details><summary>About the yard &amp; controls</summary><p>{config.brief}</p><p>Glowing rings mark qualified physical redirects. They are feedback, with no scoring or collection requirement.</p><p>Arrows or WASD aim · Q/E move along the launch rail · Space fires · R retries · L recalls · V changes view. Timed hold reaches 80% in two seconds and full power in three.</p><p>Drag the scene to aim. The short muzzle line shows direction; it does not predict the landing.</p>{yardVersion}</details>
+      <details><summary>Precision &amp; physical evidence</summary><label>Exact yaw <input className={yard.numberInput} aria-label="Exact yaw" type="number" min={RAIL_RULES.minYaw} max={RAIL_RULES.maxYaw} step={.5} disabled={!canAim} value={Number(setup.yaw.toFixed(1))} onChange={e=>update({yaw:Number(e.target.value)})}/></label><label>Exact elevation <input className={yard.numberInput} aria-label="Exact elevation" type="number" min={RAIL_RULES.minElevation} max={RAIL_RULES.maxElevation} step={.5} disabled={!canAim} value={Number(setup.elevation.toFixed(1))} onChange={e=>update({elevation:Number(e.target.value)})}/></label><div className={yard.actions}><button disabled={!['ready','result'].includes(phase)||!last} onClick={()=>actions.current?.recall()}>Recall last line</button><button disabled={!available} onClick={()=>actions.current?.reset()}>Reset yard</button></div><label>Projectile <select aria-label="Projectile visual" value={visualMode} onChange={e=>{const mode=e.target.value as 'round'|'ball';visualModeRef.current=mode;setVisualMode(mode);}}><option value="round">Rail round</option><option value="ball">Ball</option></select></label>{last&&<details><summary>Physical record</summary><pre>{JSON.stringify({setup:last.setup,station:last.station,environment:last.environment,qualified:last.evidence.filter(e=>e.kind==='redirect'),diagnostics:last.evidence.filter(e=>e.kind!=='redirect'),rawContacts:last.contacts},null,2)}</pre></details>}</details>
+      <footer><button aria-pressed={soundEnabled} onClick={()=>{const enabled=!soundEnabledRef.current;soundEnabledRef.current=enabled;setSoundEnabled(enabled);soundControl.current?.(enabled);}}>{soundEnabled?'Sound on':'Sound off'}</button><a href="/lab/refinement">Other experiments</a><a href="https://a44866f1-rail-golf.charlesmish.workers.dev/lab/places-architecture">Original preview</a><span>Build {BUILD_ID}</span></footer>
+    </YardControls>
+  </main>;
   return <main className={`${styles.shell} ${config.flightPresentation?refinement.inhabited:''}`} data-camera-mode={viewMode} data-phase={phase}>
     <canvas ref={canvas} className={styles.canvas} aria-label={`${config.title}. Drag to aim; survey to inspect the space.`} />
     <header className={styles.header}><div><span>RAIL GOLF / SPATIAL LAB</span><h1>{config.title}</h1><p>{config.subtitle??config.station(setup).label}</p></div><div className={styles.identity}>SPATIAL STUDY<br/>BUILD {BUILD_ID}</div></header>

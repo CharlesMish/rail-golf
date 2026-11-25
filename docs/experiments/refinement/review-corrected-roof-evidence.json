@@ -1,0 +1,484 @@
+{
+  "sourceSha": "e4c41c832975eb9362e5311e4485897b93d7c16a",
+  "sourceModified": false,
+  "sourceHashes": {
+    "lib/places-architecture.js": "3e6b549e25a186a7dc6f64023a7e37ab6307e842322e5a7c76366526b212e133",
+    "lib/spatial-lab-session.js": "9313157c6207967fe9cdfa2c08ac1faf5974a09e39355b0c53fcfd53f27649c6"
+  },
+  "authority": "Babylon normals against interior centroid plus actual Havok replay. No WebGL, light or shadow observation is claimed.",
+  "roofFaces": [
+    {
+      "roof": "west-store-roof",
+      "triangle": 0,
+      "centroid": [
+        0,
+        1,
+        -7
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "outwardDot": 7
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 1,
+      "centroid": [
+        0,
+        1,
+        7
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "outwardDot": 7
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 2,
+      "centroid": [
+        1.6666666666666667,
+        0,
+        -2.3333333333333335
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "outwardDot": 1
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 3,
+      "centroid": [
+        -1.6666666666666667,
+        0,
+        2.3333333333333335
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "outwardDot": 1
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 4,
+      "centroid": [
+        1.6666666666666667,
+        2,
+        -2.3333333333333335
+      ],
+      "normal": [
+        0.5144957304000854,
+        0.8574929237365723,
+        0
+      ],
+      "outwardDot": 1.7149858077367148
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 5,
+      "centroid": [
+        3.3333333333333335,
+        1,
+        2.3333333333333335
+      ],
+      "normal": [
+        0.5144957304000854,
+        0.8574929237365723,
+        0
+      ],
+      "outwardDot": 1.714985768000285
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 6,
+      "centroid": [
+        -3.3333333333333335,
+        1,
+        -2.3333333333333335
+      ],
+      "normal": [
+        -0.5144957304000854,
+        0.8574929237365723,
+        0
+      ],
+      "outwardDot": 1.714985768000285
+    },
+    {
+      "roof": "west-store-roof",
+      "triangle": 7,
+      "centroid": [
+        -1.6666666666666667,
+        2,
+        2.3333333333333335
+      ],
+      "normal": [
+        -0.5144957304000854,
+        0.8574929237365723,
+        0
+      ],
+      "outwardDot": 1.7149858077367148
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 0,
+      "centroid": [
+        0,
+        2,
+        -18.5
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "outwardDot": 18.5
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 1,
+      "centroid": [
+        0,
+        2,
+        18.5
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "outwardDot": 18.5
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 2,
+      "centroid": [
+        3.8333333333333335,
+        0,
+        -6.166666666666667
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "outwardDot": 2
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 3,
+      "centroid": [
+        -3.8333333333333335,
+        0,
+        6.166666666666667
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "outwardDot": 2
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 4,
+      "centroid": [
+        3.8333333333333335,
+        4,
+        -6.166666666666667
+      ],
+      "normal": [
+        0.4625660181045532,
+        0.8865848183631897,
+        0
+      ],
+      "outwardDot": 3.5463393727938337
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 5,
+      "centroid": [
+        7.666666666666667,
+        2,
+        6.166666666666667
+      ],
+      "normal": [
+        0.4625660181045532,
+        0.8865848183631897,
+        0
+      ],
+      "outwardDot": 3.546339472134908
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 6,
+      "centroid": [
+        -7.666666666666667,
+        2,
+        -6.166666666666667
+      ],
+      "normal": [
+        -0.4625660181045532,
+        0.8865848183631897,
+        0
+      ],
+      "outwardDot": 3.546339472134908
+    },
+    {
+      "roof": "station-roof",
+      "triangle": 7,
+      "centroid": [
+        -3.8333333333333335,
+        4,
+        6.166666666666667
+      ],
+      "normal": [
+        -0.4625660181045532,
+        0.8865848183631897,
+        0
+      ],
+      "outwardDot": 3.5463393727938337
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 0,
+      "centroid": [
+        0,
+        1.1666666666666667,
+        -6
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "outwardDot": 6
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 1,
+      "centroid": [
+        0,
+        1.1666666666666667,
+        6
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "outwardDot": 6
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 2,
+      "centroid": [
+        2,
+        0,
+        -2
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "outwardDot": 1.1666666666666667
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 3,
+      "centroid": [
+        -2,
+        0,
+        2
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "outwardDot": 1.1666666666666667
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 4,
+      "centroid": [
+        2,
+        2.3333333333333335,
+        -2
+      ],
+      "normal": [
+        0.5038710236549377,
+        0.8637788891792297,
+        0
+      ],
+      "outwardDot": 2.0154840846856437
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 5,
+      "centroid": [
+        4,
+        1.1666666666666667,
+        2
+      ],
+      "normal": [
+        0.5038710236549377,
+        0.8637788891792297,
+        0
+      ],
+      "outwardDot": 2.015484094619751
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 6,
+      "centroid": [
+        -4,
+        1.1666666666666667,
+        -2
+      ],
+      "normal": [
+        -0.5038710236549377,
+        0.8637788891792297,
+        0
+      ],
+      "outwardDot": 2.015484094619751
+    },
+    {
+      "roof": "signal-roof",
+      "triangle": 7,
+      "centroid": [
+        -2,
+        2.3333333333333335,
+        2
+      ],
+      "normal": [
+        -0.5038710236549377,
+        0.8637788891792297,
+        0
+      ],
+      "outwardDot": 2.0154840846856437
+    }
+  ],
+  "outward": true,
+  "replays": [
+    {
+      "name": "underpass",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 1.883333333333329,
+      "contacts": [
+        "exchange-freight-dock",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "bridgeReturn",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 2.3583333333333276,
+      "contacts": [
+        "exchange-viaduct-deck",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "upperBridge",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 3.8666666666666556,
+      "contacts": [
+        "exchange-viaduct-deck",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "roofWall",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 6.241666666666767,
+      "contacts": [
+        "exchange-station-roof",
+        "exchange-far-retaining-wall",
+        "exchange-station-roof",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "roofBridge",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 8.991666666666797,
+      "contacts": [
+        "exchange-station-roof",
+        "exchange-viaduct-deck",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "sideCourt",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 1.6416666666666633,
+      "contacts": [
+        "exchange-station-platform",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "serviceGallery",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 7.241666666666816,
+      "contacts": [
+        "exchange-west-loading-gallery",
+        "exchange-freight-dock",
+        "exchange-station-hall",
+        "exchange-freight-dock",
+        "exchange-loading-crate",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "slowGallery",
+      "exactHistoricalRecord": true,
+      "reason": "first-ground-contact",
+      "elapsed": 13.333333333333217,
+      "contacts": [
+        "exchange-viaduct-deck",
+        "exchange-west-loading-gallery",
+        "exchange-street"
+      ]
+    },
+    {
+      "name": "openExit",
+      "exactHistoricalRecord": true,
+      "reason": "out-of-bounds",
+      "elapsed": 5.98333333333342,
+      "contacts": [
+        "exchange-station-roof"
+      ]
+    }
+  ],
+  "cleanup": {
+    "staticBodies": 0,
+    "dynamicBodies": 0,
+    "animatedBodies": 0,
+    "meshes": 0,
+    "materials": 0,
+    "textures": 0,
+    "geometries": 0,
+    "casters": 0,
+    "vertices": 0,
+    "triangles": 0,
+    "subMeshes": 0
+  }
+}
