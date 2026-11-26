@@ -1,0 +1,26 @@
+{
+  "authority": "Actual cloud Chrome OfflineAudioContext at 44100 Hz; recorded actual-Havok source fixtures. Actual AudioContext/rAF clock probes deliver recorded notifications, not live browser Havok.",
+  "source": "Ensemble implementation 588a65a4a36eaf22131a30399270d7318534e308; root runtime 0e8f319. Subsequent import/selection lifecycle corrections do not change these offline functions.",
+  "delay": 0.1,
+  "offlineColumns": ["case", "attacks", "nodes", "duration", "combinedPeak", "combinedRms", "renderMs"],
+  "offline": [
+    ["dense Terraces 30%",30,138,4.775011337868481,0.8684933185577393,0.05114590137614634,80.1999999997206],
+    ["dense Terraces 45%",30,138,4.775011337868481,0.8912509083747864,0.07408002856686106,74.3000000002794],
+    ["Descending/Terraces/Descending",10,49,6.583333333333333,0.1611110270023346,0.011382434852520482,36.10000000009313],
+    ["archived Terraces trio",11,53,6.583333333333333,0.2803945541381836,0.021505542882323606,41.60000000009313],
+    ["legacy/captured/live contrast",10,48,8.066689342403627,0.1966288536787033,0.010526688542956127,56.5]
+  ],
+  "individualLayerPeaks": [
+    [0.28996971249580383,0.28996971249580383,0.28996971249580383],
+    [0.4347361922264099,0.4347361922264099,0.4347361922264099],
+    [0.13216613233089447,0.13229773938655853,0.13441304862499237],
+    [0.13229773938655853,0.2719676196575165,0.13229773938655853],
+    [0.07656712830066681,0.13216613233089447,0.13229773938655853]
+  ],
+  "clockProbes": [
+    {"case":"dense Terraces 30%","frames":287,"maxFrameMs":33.40000000000873,"maxDueTicks":5,"origin":0.020317460317460317,"audioOrigin":0.12031746031746032,"attacks":30,"targetEqualsScheduled":30,"late":[],"status":"finished","sourceCounts":[{"started":46,"cleaned":0,"finished":46,"active":0},{"started":46,"cleaned":0,"finished":46,"active":0},{"started":46,"cleaned":0,"finished":46,"active":0}]},
+    {"case":"Descending/Terraces/Descending","frames":267,"maxFrameMs":16.80000000000291,"maxDueTicks":3,"origin":0.03192743764172336,"audioOrigin":0.13192743764172338,"attacks":10,"targetEqualsScheduled":10,"late":[],"status":"finished","sourceCounts":[{"started":15,"cleaned":0,"finished":15,"active":0},{"started":19,"cleaned":0,"finished":19,"active":0},{"started":15,"cleaned":0,"finished":15,"active":0}]}
+  ],
+  "stopProbe": "Explicit Stop timing probe reports Recorded timing probe stopped.",
+  "limits": "Reduced browser result packet. Peaks do not establish pleasing balance, output-device loudness or live rendered physics synchronization. The existing output limiter acts in the dense 45% case. No WebGL or physical-phone frame rate measurement was available."
+}

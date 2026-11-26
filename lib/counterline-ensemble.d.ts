@@ -1,0 +1,16 @@
+import type {WorldcraftLine,WorldcraftPerformanceImpact} from './worldcraft-model';
+import type {CounterlineAcoustics,CounterlineProfile} from './counterline-recording';
+import type {CounterlineAudit} from './counterline';
+export const ENSEMBLE_KEY:string,ENSEMBLE_LIMIT:number,ENSEMBLE_TAIL:number,ENSEMBLE_DELAY:number;
+export type EnsembleLayer={gain:number;muted:boolean};
+export type EnsembleSettings={delay:number;layers:[EnsembleLayer,EnsembleLayer,EnsembleLayer]};
+export type CounterlineEnsemble={format:'rail-golf-counterline-ensemble';version:1;sources:[WorldcraftLine|null,WorldcraftLine|null,WorldcraftLine];acoustics:[CounterlineAcoustics|null,CounterlineAcoustics|null,CounterlineAcoustics|null];settings:EnsembleSettings};
+export function ensembleSettings(input?:Partial<EnsembleSettings>):EnsembleSettings;
+export function createCounterlineEnsemble(sources:CounterlineEnsemble['sources'],acoustics:CounterlineEnsemble['acoustics'],settings?:Partial<EnsembleSettings>):CounterlineEnsemble;
+export function validateCounterlineEnsemble(input:unknown):CounterlineEnsemble;
+export function loadEnsembles(storage:Pick<Storage,'getItem'>|null):{records:CounterlineEnsemble[];raw:string|null;writable:boolean;warning:string};
+export function saveEnsembles(storage:Pick<Storage,'getItem'|'setItem'>|null,records:CounterlineEnsemble[],expectedRaw:string|null):string;
+export function ensembleAttackOverlap(times:number[]):number;
+export function createEnsembleAudio(options?:{onState?:(s:{status:string;detail:string})=>void;onInterrupt?:(detail:string)=>void}):{prepare(settings?:Partial<EnsembleSettings>,profile?:CounterlineProfile|null):Promise<boolean>;commit(sources?:({line:WorldcraftLine;acoustics:CounterlineAcoustics|null}|null)[]):boolean;audition(recording:CounterlineEnsemble):boolean;elapsed():number|null;live(impact:WorldcraftPerformanceImpact&{normalSpeed?:number|null;sound?:string;strike?:number}):void;finish(elapsed:number):void;setLayer(layer:number,patch:Partial<EnsembleLayer>):void;stop():void;interrupt(detail?:string):void;state():{active:boolean;context:string;pending:number;sources:{active:number;started:number;cleaned:number;finished:number}[];settings:EnsembleSettings;firedSettings:EnsembleSettings|null;audit:CounterlineAudit};dispose():void;};
+export function measureEnsembleAudio(recording:CounterlineEnsemble,Context?:typeof OfflineAudioContext):Promise<unknown>;
+export function measureEnsembleClock(recording:CounterlineEnsemble,options?:{signal?:AbortSignal}):Promise<unknown>;

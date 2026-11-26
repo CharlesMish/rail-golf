@@ -1,0 +1,47 @@
+{
+  "source": "6ed13509afb6179aa65317c342a8b6d4f317c73e",
+  "npm_test": {
+    "exit": 0,
+    "includes_production_build": true,
+    "tests": 709,
+    "pass": 709,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "test_duration_ms": 54862.150943
+  },
+  "typecheck": {
+    "exit": 0
+  },
+  "lint": {
+    "exit": 0,
+    "errors": 0,
+    "inherited_warnings": 5
+  },
+  "foundry": {
+    "exit": 0,
+    "entries": 16,
+    "shots": 75
+  },
+  "capacity": {
+    "exit": 0,
+    "entries": 2,
+    "shots": 11
+  },
+  "preview": "stopped",
+  "qa_html_removed": true,
+  "logs": [
+    "/tmp/forms-final-test.log",
+    "/tmp/forms-final-typecheck.log",
+    "/tmp/forms-final-lint.log",
+    "/tmp/forms-final-foundry.log",
+    "/tmp/forms-final-capacity.log"
+  ],
+  "warnings": [
+    "npm unknown http-proxy environment config",
+    "Cloudflare proxy environment detection",
+    "Vite plugin timing notice",
+    "Vite minified chunks above500kB",
+    "five inherited ESLint warnings"
+  ]
+}
