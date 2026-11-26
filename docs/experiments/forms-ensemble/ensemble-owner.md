@@ -16,7 +16,8 @@ Unmuting plays only subsequent notes. Stop or Retry cancels the whole pairing.
 Nothing resumes after navigating, reloading or returning from lost focus.
 
 Keep preserves the new physical line. Save ensemble preserves the independent
-source recordings and the fixed playback settings. Changing mute during a
+source recordings and the fixed playback settings after all parts and tails finish.
+Stopping an unfinished live combination prevents saving that incomplete performance. Changing mute during a
 performance leaves the physical line intact but prevents saving a falsely fixed
 ensemble. There are four Keep slots and four separate ensemble slots. An
 ensemble retains its own source copies even if you later remove their Keeps.

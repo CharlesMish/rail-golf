@@ -50,7 +50,10 @@ Recorded-only audition uses the same scheduler and clearly labels every part as
 historical. Loading remains silent; only an explicit Audition or Fire opens
 playback. Stop, Retry, source/world change, blur, pagehide, suspension, stale
 asynchronous unlock and component disposal cancel obsolete voices. A natural
-physical ending lets later companion events and full tails finish.
+physical ending lets later companion events and full tails finish. Saving or
+downloading a new combination waits for natural audio completion; Stop or an
+audio failure while its music is pending invalidates that candidate. Stopping
+a recorded-only audition does not erase its already recorded arrangement.
 
 The four registered musical world files, geometry, pitches, capacities, authored
 profiles and opening options are unchanged. Their measured material spans
