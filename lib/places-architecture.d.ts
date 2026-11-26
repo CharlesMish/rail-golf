@@ -28,3 +28,5 @@ export const EXCHANGE_FORMS_LAYOUT:string;
 export const EXCHANGE_FORMS_ADDITION:readonly ExchangeSolid[];
 export const EXCHANGE_FORMS_SOLIDS:readonly ExchangeSolid[];
 export const PLACES_ARCHITECTURE_FORMS:SpatialConfig;
+
+export function exchangeFormsFollowOffsets(ball:VectorLike,velocity:VectorLike|null,heading:VectorLike|null,setup?:SpatialSetup):{position:VectorLike;target:VectorLike};
