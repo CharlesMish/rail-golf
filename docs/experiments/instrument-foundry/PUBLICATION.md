@@ -35,7 +35,7 @@ data/instructions package, not a second engine or offline game.
 
 ## Independent playable studies
 
-| Lane | Branch / draft | Published ending SHA | Pinned non-production preview |
+| Lane | Branch / draft | Published measured checkpoint | Pinned non-production preview |
 | --- | --- | --- | --- |
 | Gable draw repair | `research/gable-repair-20261127`, [PR90](https://github.com/CharlesMish/rail-golf/pull/90) | `bf471fab52b4584362dd03d2816d6433e878236b` | [Exchange Yard](https://8f825108-rail-golf.charlesmish.workers.dev/lab/places-architecture), [comparator](https://8f825108-rail-golf.charlesmish.workers.dev/lab/roof-comparison) |
 | Across the crown | `research/expressive-geometry-20261127`, [PR91](https://github.com/CharlesMish/rail-golf/pull/91) | `c98e9cd5ca768e63b4cb24ad9895adc666b85bda` | [Crown](https://98855570-rail-golf.charlesmish.workers.dev/lab/expressive-crown), [flat control](https://98855570-rail-golf.charlesmish.workers.dev/lab/expressive-crown?shape=flat) |
@@ -44,8 +44,15 @@ Roof local endpoint `47ddb81a24e32b1cae10a60e7d5f2eeb3d26f2f8` matches published
 tree `3d68e30c014e3faad90cf440c1ef13d57dfcdd10`. Geometry local endpoint
 `4f00e6d08892707d78d17c3f735b92a23deefddc` matches tree
 `1fef32be0eeacbf8301bf2d5b4a06938cad1165a`. Both hosted verify and Cloudflare
-preview checks pass. Their complete reports and evidence live on those independent
-branches. The primary branch does not contain either implementation; integration
+preview checks pass at those measured checkpoints. A later geometry presentation-only
+update fixes its link to the independent Foundry handoff and hides an empty Station
+selector: local `04190c3799c5b9e18a5d8e479093893fca0bc3a1`, published
+`3d76c099899032f35335bbc7dc44266f96493daa`, exact tree
+`7b977e0b01ce2a8d64138ecd573543a59de14373`. TypeScript, targeted lint and
+three physical tests pass again; no physics, config or identity changes. PR91's
+external receipt supplies the final preview/checks for this corrected interface.
+The old checkpoint remains an accurate measured physical control. Their complete
+reports and evidence live on those independent branches. The primary branch does not contain either implementation; integration
 would be a separate decision, not an unstated dependency for authors.
 
 Native repository publication preserves exact trees but produces different commit
@@ -67,7 +74,7 @@ in reports identify what was measured, not an additional hosted preview.
 | `research/instrument-evidence-20261127` | `9f55003bf33af73c92c20706183ba36e5d600911` | PR92 evidence and probes |
 | `research/instrument-review-20261127` | `aa74967c201e86a70ca854df1223d6d58c9e8ab4` | PR92 independent report and probes |
 | `research/gable-repair-20261127` | `47ddb81a24e32b1cae10a60e7d5f2eeb3d26f2f8` | PR90 |
-| `research/expressive-geometry-20261127` | `4f00e6d08892707d78d17c3f735b92a23deefddc` | PR91 |
+| `research/expressive-geometry-20261127` | `04190c3799c5b9e18a5d8e479093893fca0bc3a1` | PR91 |
 
 ## Preservation
 
