@@ -1,0 +1,5 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> rail-golf@0.3.1 typecheck
+> tsc --noEmit --pretty false
+

@@ -1,0 +1,21 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> rail-golf@0.3.1 lint
+> bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next
+
+
+/workspace/scratch/cad60143adc4/expressive-geometry/app/manners-game.tsx
+   613:6  warning  React Hook useEffect has missing dependencies: 'lineLab', 'linecraftLab', and 'perform'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+  2877:6  warning  React Hook useEffect has missing dependencies: 'HOLES', 'RANGE_TARGETS', 'STATIONS', 'STORAGE_KEY', 'activeHoleIndex', 'checkVisibleSelection', 'courtyard', 'courtyardDiverter', 'diverterLab', 'holeUnlocked', 'intentLab', 'labSelection', 'libraryKey', 'lineLab', 'lineRoute', 'linecraftLab', 'publicYard', 'publishHoleIndex', 'readControlState', 'setGamePhase', and 'timberReceiver'. Either include them or remove the dependency array. If 'setShareNotice' needs the current value of 'lineLab', you can also switch to useReducer instead of useState and read 'lineLab' in the reducer  react-hooks/exhaustive-deps
+
+/workspace/scratch/cad60143adc4/expressive-geometry/docs/experiments/chime-terraces/a-terraces/measure.mjs
+  321:42  warning  'impacts' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspace/scratch/cad60143adc4/expressive-geometry/docs/experiments/foundry/gallery/browse.mjs
+  224:74  warning  'id' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspace/scratch/cad60143adc4/expressive-geometry/scripts/sweep-orc-static.mjs
+  308:56  warning  'details' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 5 problems (0 errors, 5 warnings)
+

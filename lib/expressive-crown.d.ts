@@ -1,0 +1,10 @@
+import type {SpatialConfig} from './spatial-lab-session';
+import type {VectorLike} from './rail-golf-v02';
+export const CROWN_LAYOUT:string;
+export const CROWN_FLAT_LAYOUT:string;
+export const CROWN_SOLID:Readonly<{id:string;w:number;h:number;d:number;x:number;y:number;z:number;segments:number}>;
+export const buildCrownStudy:SpatialConfig['buildWorld'];
+export const EXPRESSIVE_CROWN:SpatialConfig;
+export const EXPRESSIVE_CROWN_FLAT:SpatialConfig;
+export function crownViewClear(ball:VectorLike,camera:VectorLike,flat?:boolean):boolean;
+export function crownFlightFrame(frame:{position:VectorLike;target:VectorLike;fov:number},ball:VectorLike,flat?:boolean):{position:VectorLike;target:VectorLike;fov:number};
