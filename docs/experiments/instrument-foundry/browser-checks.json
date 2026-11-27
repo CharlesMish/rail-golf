@@ -1,0 +1,63 @@
+{
+  "source": "33e9383eaf316c876d291c66b89a1cc1329a3375",
+  "browser": "Cloud Chromium via CUA, local managed Vite preview",
+  "webgl": "Error: WebGL not supported",
+  "observations": [
+    "Two reference instruments present; previous repertoire preserved on its original route",
+    "Unsupported format rejected before replacing selection",
+    "Valid data admitted silently with explicit no-physical-shot fallback status",
+    "Identical reimport preserves one slot",
+    "Changed data under same preset id rejected",
+    "Two selected companions remained selected across a second valid instrument import",
+    "Reload clears session instrument list; saved ensemble shelf remains available; no automatic performance",
+    "Keyboard focus scrolls to bottom controls"
+  ],
+  "viewport_method": "Same-origin iframe layout harness at ordinary CSS pixel sizes; no device or GPU emulation claim. Temporary harness removed before build.",
+  "layouts": [
+    {
+      "width": 1280,
+      "height": 720,
+      "clientWidth": 1265,
+      "scrollWidth": 1265,
+      "scrollHeight": 3134
+    },
+    {
+      "width": 1024,
+      "height": 600,
+      "clientWidth": 1009,
+      "scrollWidth": 1009,
+      "scrollHeight": 3669
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "clientWidth": 375,
+      "scrollWidth": 375,
+      "scrollHeight": 5108
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "clientWidth": 829,
+      "scrollWidth": 829,
+      "scrollHeight": 3209
+    }
+  ],
+  "all_layouts": {
+    "overflowY": "auto",
+    "horizontalControlOverflow": 0,
+    "savedEnsembles": 4
+  },
+  "phone_keyboard": {
+    "scrollTop": 4264,
+    "bottomStopTop": 613.90625,
+    "nextFocused": "Previous Counterline repertoire"
+  },
+  "not_established": [
+    "Rendered world/camera visibility",
+    "Live browser Havok fire",
+    "Listening",
+    "Rendered draw calls/FPS",
+    "GPU or physical-phone memory/performance"
+  ]
+}

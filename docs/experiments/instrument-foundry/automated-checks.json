@@ -1,0 +1,97 @@
+{
+  "source": "33e9383eaf316c876d291c66b89a1cc1329a3375",
+  "checks": {
+    "test": {
+      "exit": 0,
+      "production_build": true,
+      "tests": 720,
+      "passed": 720,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "test_duration_ms": 35163.849536
+    },
+    "typecheck": {
+      "exit": 0
+    },
+    "lint": {
+      "exit": 0,
+      "errors": 0,
+      "inherited_warnings": 5
+    },
+    "foundry": {
+      "exit": 0,
+      "entries": 16,
+      "shots": 75
+    },
+    "capacity": {
+      "exit": 0,
+      "entries": 2,
+      "shots": 11
+    },
+    "descending": {
+      "exit": 0,
+      "id": "descending-resonance",
+      "cases": 7,
+      "valid_neighbor_runs": 51,
+      "rejected_neighbors": 5,
+      "zero_bodies_after_runtime": true,
+      "zero_meshes_after_scene": true,
+      "evidence": "/tmp/instrument-primary-descending-evidence.json"
+    },
+    "terraces": {
+      "exit": 0,
+      "id": "chime-terraces",
+      "cases": 7,
+      "valid_neighbor_runs": 52,
+      "rejected_neighbors": 4,
+      "zero_bodies_after_runtime": true,
+      "zero_meshes_after_scene": true,
+      "evidence": "/tmp/instrument-primary-terraces-evidence.json"
+    },
+    "author-cli": {
+      "exit": 0,
+      "id": "review-author-six-surfaces-v1",
+      "cases": 3,
+      "valid_neighbor_runs": 23,
+      "rejected_neighbors": 1,
+      "zero_bodies_after_runtime": true,
+      "zero_meshes_after_scene": true,
+      "evidence": "/tmp/instrument-primary-author-fixture.json"
+    },
+    "review-author": {
+      "exit": 0,
+      "runs": 3,
+      "checks": {
+        "idempotentImport": true,
+        "conflictingIdRejected": true,
+        "offDetentRejected": true,
+        "scriptRejected": true,
+        "sourceSnapshotsIndependent": true,
+        "ensembleRoundTrip": true,
+        "sessionCatalogIndependentOfKeptSources": true
+      },
+      "evidence": "/tmp/instrument-primary-review-author.json"
+    }
+  },
+  "git_status": "",
+  "preview": "Sites preview stopped",
+  "logs": "/tmp/instrument-primary-*.log",
+  "warnings": [
+    "five inherited ESLint warnings",
+    "npm http-proxy environment setting",
+    "Vite large chunks and plugin-timing/static-route-classification notices"
+  ],
+  "evidence_notes": "Final source check; following changes are documentation and deterministic starter ZIP only. Raw reference trajectories are already committed in reference-validator files; measurements are reproducible.",
+  "log_fingerprints": {
+    "instrument-primary-author-cli.log": "2acac754dbeb78140da2058ac156579dbd08b2e5b2f0d08b738d389d08c86a66",
+    "instrument-primary-capacity.log": "42634b33f57813c3379746ba65a58c971b0537c889bd34666539eb2c8d1dac64",
+    "instrument-primary-descending.log": "0b5d1bcd1be01f0aa2ab574780b7bbdcb0d64db9b057bed0747bf95ea9fa23da",
+    "instrument-primary-foundry.log": "f8d9b8a035986e77d422397de3846f9871530edb20e975a181ccc475d66351e0",
+    "instrument-primary-lint.log": "ec2fa3720c129a19f95c9f0fda3565d24af6658deda3041e535592d0694c0590",
+    "instrument-primary-review-author.log": "46b0cf06e73073c9728fc469eba6833280c59a5d2af33fe936120a146d475e7e",
+    "instrument-primary-terraces.log": "eeb3441184a993926ec50fcbaa05514b6d1ed486619e2d7be41de2dd68300efd",
+    "instrument-primary-test.log": "2acd26fdd4ba5cb9515b00f697f1fac89f891f66dd96d31c6866171f4828a4c4",
+    "instrument-primary-typecheck.log": "15b38b87289ac7cc9537a3da4cafdd5d2f08288d4ca4440b266a0e742004d8b5"
+  }
+}

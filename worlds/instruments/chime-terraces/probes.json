@@ -1,0 +1,90 @@
+{
+  "format": "rail-golf-instrument-probes",
+  "version": 1,
+  "cases": [
+    {
+      "id": "central-rise-and-cluster",
+      "family": "A ramp reaches the upper row, with a clustered contact and later receiving strike.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.55
+      }
+    },
+    {
+      "id": "east-cluster-and-release",
+      "family": "A close pair opens into a later receiving note.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 8,
+        "elevation": 20,
+        "charge": 0.65
+      }
+    },
+    {
+      "id": "low-drive-across-terraces",
+      "family": "A displaced low launch crosses between a ramp, raised plate and lower receivers.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -10,
+        "yaw": 7.5,
+        "elevation": 5,
+        "charge": 0.44
+      }
+    },
+    {
+      "id": "compact-chord-or-single",
+      "family": "A short simultaneous pair can split into a single strike.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      }
+    },
+    {
+      "id": "west-ramp-upper-middle",
+      "family": "A western ramp approach reaches an upper plate and its middle receiver.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -14,
+        "elevation": 8,
+        "charge": 0.55
+      }
+    },
+    {
+      "id": "low-edge-miss",
+      "family": "A low outward miss reaches ground without sound.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 70,
+        "elevation": 5,
+        "charge": 0.1
+      }
+    },
+    {
+      "id": "high-carry",
+      "family": "A high carry misses the voiced geometry.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 70,
+        "charge": 0.9
+      }
+    }
+  ]
+}

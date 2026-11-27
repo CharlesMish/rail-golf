@@ -1,0 +1,55 @@
+COMMAND test
+BJS - [11:17:13]: Babylon.js v9.23.0 - Null engine
+✔ tread paint uses only existing upward polygons and keeps side faces and geometry unchanged (16.412346ms)
+✔ production presentation preserves every courtyard vertex, collider, recognition tag and physical material (255.460849ms)
+✔ production bank strike paint follows actual bank requirements; historical default is unchanged (155.339436ms)
+ℹ tests 720
+ℹ suites 0
+ℹ pass 720
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35163.849536
+
+COMMAND typecheck
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> rail-golf@0.3.1 typecheck
+> tsc --noEmit --pretty false
+
+
+COMMAND lint
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> rail-golf@0.3.1 lint
+> bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next
+
+
+/workspace/scratch/cad60143adc4/rail-golf/app/manners-game.tsx
+   613:6  warning  React Hook useEffect has missing dependencies: 'lineLab', 'linecraftLab', and 'perform'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+  2877:6  warning  React Hook useEffect has missing dependencies: 'HOLES', 'RANGE_TARGETS', 'STATIONS', 'STORAGE_KEY', 'activeHoleIndex', 'checkVisibleSelection', 'courtyard', 'courtyardDiverter', 'diverterLab', 'holeUnlocked', 'intentLab', 'labSelection', 'libraryKey', 'lineLab', 'lineRoute', 'linecraftLab', 'publicYard', 'publishHoleIndex', 'readControlState', 'setGamePhase', and 'timberReceiver'. Either include them or remove the dependency array. If 'setShareNotice' needs the current value of 'lineLab', you can also switch to useReducer instead of useState and read 'lineLab' in the reducer  react-hooks/exhaustive-deps
+
+/workspace/scratch/cad60143adc4/rail-golf/docs/experiments/chime-terraces/a-terraces/measure.mjs
+  321:42  warning  'impacts' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspace/scratch/cad60143adc4/rail-golf/docs/experiments/foundry/gallery/browse.mjs
+  224:74  warning  'id' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspace/scratch/cad60143adc4/rail-golf/scripts/sweep-orc-static.mjs
+  308:56  warning  'details' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 5 problems (0 errors, 5 warnings)
+
+
+COMMAND descending
+{"ok":true,"instrument":"descending-resonance","cases":7,"fired":58,"report":"/tmp/instrument-primary-descending-evidence.json","authority":"Actual Havok; not a quality score"}
+
+COMMAND terraces
+{"ok":true,"instrument":"chime-terraces","cases":7,"fired":59,"report":"/tmp/instrument-primary-terraces-evidence.json","authority":"Actual Havok; not a quality score"}
+
+COMMAND author-cli
+{"ok":true,"instrument":"review-author-six-surfaces-v1","cases":3,"fired":26,"report":"/tmp/instrument-primary-author-fixture.json","authority":"Actual Havok; not a quality score"}
+
+COMMAND review-author
+{"ok":true,"runs":3,"output":"/tmp/instrument-primary-review-author.json"}
