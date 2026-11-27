@@ -1,0 +1,14 @@
+{
+  "kitCommit": "3c67ceb9de1739c23092f6fdd8680b9047536a9f",
+  "files": 12,
+  "checksumEntries": 11,
+  "bytes": 18022,
+  "sha256": "f1def07de53ec2a7053bb07e07461c448981bbb0d52b0a19843601644c839288",
+  "byteIdenticalRebuild": true,
+  "allFileChecksumsVerified": true,
+  "templateProbeValidation": true,
+  "templateId": "your-instrument-scaffold-v1",
+  "note": "Extracted template uses original Descending geometry with new scaffold identity and explicit overview camera; it is not a new authored instrument.",
+  "centralCases": 7,
+  "totalHavokShots": 58
+}

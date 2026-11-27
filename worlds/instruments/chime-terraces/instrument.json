@@ -1,0 +1,337 @@
+{
+  "format": "rail-golf-counterline-instrument",
+  "version": 1,
+  "preset": {
+    "format": "rail-golf-worldcraft-range-preset",
+    "version": 1,
+    "id": "chime-terraces",
+    "name": "Chime Terraces",
+    "environment": {
+      "preset": "forest-clearing-v1",
+      "seed": 1
+    },
+    "launcher": {
+      "x": 0
+    },
+    "objects": [
+      {
+        "id": "ramp-w",
+        "kind": "ramp",
+        "x": -11,
+        "z": 16,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "ramp-c",
+        "kind": "ramp",
+        "x": 0,
+        "z": 16,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 2
+        }
+      },
+      {
+        "id": "ramp-e",
+        "kind": "ramp",
+        "x": 11,
+        "z": 16,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 1
+        }
+      },
+      {
+        "id": "low-0",
+        "kind": "plate",
+        "x": -10,
+        "z": 24,
+        "yaw": 0,
+        "lift": 2,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "low-1",
+        "kind": "plate",
+        "x": -6,
+        "z": 24,
+        "yaw": 0,
+        "lift": 2,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "low-2",
+        "kind": "plate",
+        "x": -2,
+        "z": 24,
+        "yaw": 0,
+        "lift": 2,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "low-3",
+        "kind": "plate",
+        "x": 2,
+        "z": 24,
+        "yaw": 0,
+        "lift": 2,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "low-4",
+        "kind": "plate",
+        "x": 6,
+        "z": 24,
+        "yaw": 0,
+        "lift": 2,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "low-5",
+        "kind": "plate",
+        "x": 10,
+        "z": 24,
+        "yaw": 0,
+        "lift": 2,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "mid-0",
+        "kind": "plate",
+        "x": -10,
+        "z": 29,
+        "yaw": 0,
+        "lift": 6,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      },
+      {
+        "id": "mid-1",
+        "kind": "plate",
+        "x": -6,
+        "z": 29,
+        "yaw": 0,
+        "lift": 6,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "mid-2",
+        "kind": "plate",
+        "x": -2,
+        "z": 29,
+        "yaw": 0,
+        "lift": 6,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "mid-3",
+        "kind": "plate",
+        "x": 2,
+        "z": 29,
+        "yaw": 0,
+        "lift": 6,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      },
+      {
+        "id": "mid-4",
+        "kind": "plate",
+        "x": 6,
+        "z": 29,
+        "yaw": 0,
+        "lift": 6,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      },
+      {
+        "id": "mid-5",
+        "kind": "plate",
+        "x": 10,
+        "z": 29,
+        "yaw": 0,
+        "lift": 6,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "high-0",
+        "kind": "plate",
+        "x": -10,
+        "z": 34,
+        "yaw": 0,
+        "lift": 10,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 4
+        }
+      },
+      {
+        "id": "high-1",
+        "kind": "plate",
+        "x": -6,
+        "z": 34,
+        "yaw": 0,
+        "lift": 10,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "high-2",
+        "kind": "plate",
+        "x": -2,
+        "z": 34,
+        "yaw": 0,
+        "lift": 10,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 4
+        }
+      },
+      {
+        "id": "high-3",
+        "kind": "plate",
+        "x": 2,
+        "z": 34,
+        "yaw": 0,
+        "lift": 10,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "high-4",
+        "kind": "plate",
+        "x": 6,
+        "z": 34,
+        "yaw": 0,
+        "lift": 10,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "high-5",
+        "kind": "plate",
+        "x": 10,
+        "z": 34,
+        "yaw": 0,
+        "lift": 10,
+        "tilt": -15,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      }
+    ],
+    "rules": {
+      "launcher": {
+        "fixed": false,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "fixed": [
+        "high-0",
+        "high-1",
+        "high-2",
+        "high-3",
+        "high-4",
+        "high-5",
+        "low-0",
+        "low-1",
+        "low-2",
+        "low-3",
+        "low-4",
+        "low-5",
+        "mid-0",
+        "mid-1",
+        "mid-2",
+        "mid-3",
+        "mid-4",
+        "mid-5",
+        "ramp-c",
+        "ramp-e",
+        "ramp-w"
+      ],
+      "allowance": {},
+      "goal": {
+        "kind": "none"
+      }
+    },
+    "capacity": 24
+  },
+  "profile": {
+    "version": 1,
+    "dynamics": "normal-speed",
+    "bankVoice": null
+  },
+  "invitation": "Three timber ramps sit in front of the tee. Behind them, three rows of metal plates rise and lean toward the tee. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "sourceBuild": "10b09baafc9d85eef0d87a630b55600d623dcde0",
+  "opening": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 8,
+    "charge": 0.55
+  },
+  "camera": null
+}

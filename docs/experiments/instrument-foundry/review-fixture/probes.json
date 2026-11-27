@@ -1,0 +1,42 @@
+{
+  "format": "rail-golf-instrument-probes",
+  "version": 1,
+  "cases": [
+    {
+      "id": "left",
+      "family": "Direct left-side exploration",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -10,
+        "elevation": 18,
+        "charge": 0.55
+      }
+    },
+    {
+      "id": "right",
+      "family": "Direct right-side exploration",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 10,
+        "elevation": 18,
+        "charge": 0.55
+      }
+    },
+    {
+      "id": "miss",
+      "family": "Outward control",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 70,
+        "elevation": 18,
+        "charge": 0.55
+      }
+    }
+  ]
+}

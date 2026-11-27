@@ -1,0 +1,90 @@
+{
+  "format": "rail-golf-instrument-probes",
+  "version": 1,
+  "cases": [
+    {
+      "id": "central-descent",
+      "family": "An elevated strike descends through two facing timber walls.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -1,
+        "elevation": 24,
+        "charge": 0.56
+      }
+    },
+    {
+      "id": "west-descent",
+      "family": "A neighboring spatial route changes pitch and receiving wall.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -5,
+        "elevation": 24,
+        "charge": 0.56
+      }
+    },
+    {
+      "id": "low-drive-crown-return",
+      "family": "A low ramp strike reaches the crown and returns through the lower space.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 2.5,
+        "yaw": -3.5,
+        "elevation": 5,
+        "charge": 0.56
+      }
+    },
+    {
+      "id": "repeated-plate-wall-answer",
+      "family": "A raised plate and wall answer each other after the first ramp.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -10,
+        "yaw": 12.5,
+        "elevation": 5,
+        "charge": 0.48
+      }
+    },
+    {
+      "id": "sparse-opening",
+      "family": "One direct strike is a valid accompaniment gesture.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      }
+    },
+    {
+      "id": "low-edge-miss",
+      "family": "A low outward miss reaches ground without sound.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 70,
+        "elevation": 5,
+        "charge": 0.1
+      }
+    },
+    {
+      "id": "high-carry",
+      "family": "A high carry misses the voiced geometry.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 70,
+        "charge": 0.9
+      }
+    }
+  ]
+}
