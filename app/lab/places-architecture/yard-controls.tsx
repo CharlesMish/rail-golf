@@ -28,7 +28,7 @@ export function YardControls(p:YardControlProps){
     {p.phase==='result'&&p.result}
     {live?<section className={styles.watching} aria-label="Watch this shot"><strong>{p.view==='survey'?'Surveying the yard':'Following the ball'}</strong><p>One committed shot. Watch its line, or stop when you are ready to move on.</p><div className={styles.actions}><button onClick={p.onStop}>Stop shot</button><button onClick={p.onRetry}>Retry <kbd>R</kbd></button></div></section>:<>
       <div className={styles.stationRow}>
-        <label>Station<select aria-label="Launch station" value={p.setup.carriageMode} disabled={!['ready','result'].includes(p.phase)} onChange={e=>p.onStation(e.target.value)}>{p.stations.map(s=><option key={s.id} value={s.id}>{s.label}</option>)}</select></label>
+        {p.stations.length>0&&<label>Station<select aria-label="Launch station" value={p.setup.carriageMode} disabled={!['ready','result'].includes(p.phase)} onChange={e=>p.onStation(e.target.value)}>{p.stations.map(s=><option key={s.id} value={s.id}>{s.label}</option>)}</select></label>}
         <label>Position<select aria-label="Launch position" value={p.setup.railIndex} disabled={!aim} onChange={e=>p.onSetup({railIndex:Number(e.target.value)})}>{RAIL_RULES.railPositions.map((x,i)=><option key={i} value={i}>{x===0?'Centre':`${x<0?'Left':'Right'} · ${Math.abs(x)} m`}</option>)}</select></label>
       </div>
       <div className={styles.aimControls}>

@@ -157,6 +157,19 @@ while other director lanes ran checks and are not gameplay performance evidence.
 Browser results remain a separate director verification. No rendered image or
 listening result is claimed by this lane.
 
+A subsequent hosted browser audit found two presentation defects: the isolated
+branch linked to an unavailable local Instrument Foundry route, and the shared
+Yard controls displayed an empty Station selector when no station choices were
+configured. The link now leads to the durable [Instrument Foundry authoring
+handoff](https://github.com/CharlesMish/rail-golf/pull/92), and the Station label
+and selector render only when the choices array is nonempty. Existing populated
+station selectors retain their behavior. These are two JSX-only changes; the
+geometry, physical configuration, world identities and history paths are
+unchanged. TypeScript, targeted lint on both changed components, and all three
+focused crown tests pass after the corrections. The full suite was not rerun
+locally for these presentation-only corrections; the complete checkpoint above
+and the hosted publication checks remain separately identifiable.
+
 ## Authoring decision
 
 Preserve this one optional geometry study, but do not put a curve into every
