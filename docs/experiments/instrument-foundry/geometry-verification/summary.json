@@ -1,0 +1,55 @@
+{
+  "testedSource": "95f9ebeaede6e98281fe3cfcc6796815916dc904",
+  "dateUTC": "2026-11-27",
+  "node": "v24.22.3",
+  "npm": "11.19.1",
+  "build": "all five vinext stages passed; expressive-crown route emitted",
+  "tests": {
+    "passed": 712,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 36510.882426
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 5,
+    "newGeometryWarnings": 0
+  },
+  "foundry": {
+    "ok": true,
+    "worlds": 16,
+    "shots": 75
+  },
+  "checks": [
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "log": "npm-test.txt",
+      "bytes": 75377,
+      "sha256": "1c1aea52ad619cd29d958ec2340def6de9969e188b763424a35c88c73ee482cf"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck.txt",
+      "bytes": 210,
+      "sha256": "15b38b87289ac7cc9537a3da4cafdd5d2f08288d4ca4440b266a0e742004d8b5"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "log": "lint.txt",
+      "bytes": 2186,
+      "sha256": "fea071196a23130fde83156797fdea54d15a147280e7727adb5d6c37405cf3e9"
+    },
+    {
+      "command": "node scripts/foundry/validate.mjs",
+      "exitCode": 0,
+      "log": "foundry.txt",
+      "bytes": 25469,
+      "sha256": "f8d9b8a035986e77d422397de3846f9871530edb20e975a181ccc475d66351e0"
+    }
+  ]
+}

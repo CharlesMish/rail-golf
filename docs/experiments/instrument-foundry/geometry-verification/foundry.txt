@@ -1,0 +1,224 @@
+{
+  "ok": true,
+  "reports": [
+    {
+      "id": "foundry-template",
+      "kind": "workshop",
+      "sourceBuild": "46e59a781722081546457086e1d87a7d2e8f7453",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-yours\",\"kind\":\"bank\",\"x\":0,\"z\":36,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[],\"allowance\":{\"bank\":1},\"rail\":{\"yaw\":0,\"elevation\":18,\"charge\":0.55},\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening"
+      ]
+    },
+    {
+      "id": "overpass",
+      "kind": "shot-study",
+      "sourceBuild": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"deck-0-0\",\"kind\":\"plate\",\"x\":-6,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-0-1\",\"kind\":\"plate\",\"x\":-6,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-1-0\",\"kind\":\"plate\",\"x\":-2,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-1-1\",\"kind\":\"plate\",\"x\":-2,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-2-0\",\"kind\":\"plate\",\"x\":2,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-2-1\",\"kind\":\"plate\",\"x\":2,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-3-0\",\"kind\":\"plate\",\"x\":6,\"z\":34,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"deck-3-1\",\"kind\":\"plate\",\"x\":6,\"z\":38,\"yaw\":0,\"lift\":7,\"tilt\":90,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"pier-east\",\"kind\":\"bank\",\"x\":8.5,\"z\":36,\"yaw\":90},{\"id\":\"pier-west\",\"kind\":\"bank\",\"x\":-8.5,\"z\":36,\"yaw\":90},{\"id\":\"return-wall\",\"kind\":\"bank\",\"x\":0,\"z\":46,\"yaw\":0}],\"launcher\":{\"x\":-2},\"rules\":{\"pin\":null,\"locked\":[\"deck-0-0\",\"deck-0-1\",\"deck-1-0\",\"deck-1-1\",\"deck-2-0\",\"deck-2-1\",\"deck-3-0\",\"deck-3-1\",\"pier-east\",\"pier-west\",\"return-wall\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "upper-carry",
+        "lower-return",
+        "beyond-deck",
+        "short",
+        "ceiling",
+        "ceiling-lip",
+        "high-bypass"
+      ]
+    },
+    {
+      "id": "crossing-house",
+      "kind": "authored-world",
+      "sourceBuild": "0b151c5c94849b78ccda6c41a1755b66471e3fa2",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"east\",\"kind\":\"bank\",\"x\":10,\"z\":43,\"yaw\":20},{\"id\":\"far\",\"kind\":\"bank\",\"x\":0,\"z\":74,\"yaw\":0},{\"id\":\"jump\",\"kind\":\"ramp\",\"x\":0,\"z\":26,\"yaw\":0},{\"id\":\"screen\",\"kind\":\"bank\",\"x\":0,\"z\":55,\"yaw\":30},{\"id\":\"west\",\"kind\":\"bank\",\"x\":-10,\"z\":43,\"yaw\":-20}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"east\",\"far\",\"jump\",\"west\"],\"allowance\":{\"bank\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "over-screen",
+        "across-court",
+        "second-visit-sensitive",
+        "short-miss"
+      ]
+    },
+    {
+      "id": "bell-loft",
+      "kind": "authored-world",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bell-back\",\"kind\":\"bank\",\"x\":-4,\"z\":55,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"bell-east\",\"kind\":\"bank\",\"x\":2.5,\"z\":52,\"yaw\":90,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"bell-west\",\"kind\":\"bank\",\"x\":-10.5,\"z\":52,\"yaw\":90,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"door\",\"kind\":\"bank\",\"x\":9,\"z\":49,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"floor-east\",\"kind\":\"block\",\"x\":-1,\"z\":52,\"yaw\":0},{\"id\":\"floor-west\",\"kind\":\"block\",\"x\":-7,\"z\":52,\"yaw\":0},{\"id\":\"stair\",\"kind\":\"ramp\",\"x\":0,\"z\":28,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"bell-back\",\"bell-east\",\"bell-west\",\"floor-east\",\"floor-west\"],\"allowance\":{\"bank\":1,\"ramp\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "opening-charge-up",
+        "lob",
+        "slam",
+        "stock-aim",
+        "door-shut"
+      ]
+    },
+    {
+      "id": "return-address",
+      "kind": "authored-world",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"east\",\"kind\":\"bank\",\"x\":5,\"z\":16,\"yaw\":45,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"west\",\"kind\":\"bank\",\"x\":-5,\"z\":16,\"yaw\":-45,\"voice\":{\"material\":\"timber\",\"degree\":0}}],\"launcher\":{\"x\":-4},\"rules\":{\"pin\":null,\"locked\":[\"west\"],\"allowance\":{\"bank\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "serve",
+        "reply",
+        "edge-catch",
+        "yaw-neighbour",
+        "unturned-reply",
+        "short-lob",
+        "centre-seam"
+      ]
+    },
+    {
+      "id": "right-angle",
+      "kind": "shot-study",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"back-face\",\"kind\":\"bank\",\"x\":16,\"z\":28.5,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"side-face\",\"kind\":\"bank\",\"x\":22.5,\"z\":22,\"yaw\":90,\"voice\":{\"material\":\"metal\",\"degree\":2}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"back-face\",\"side-face\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "both-faces"
+      ]
+    },
+    {
+      "id": "open-contacts",
+      "kind": "workshop",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-timber\",\"kind\":\"bank\",\"x\":0,\"z\":34,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"plate-aim-left\",\"kind\":\"plate\",\"x\":-12,\"z\":20,\"yaw\":20,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"plate-aim-right\",\"kind\":\"plate\",\"x\":12,\"z\":20,\"yaw\":-20,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"plate-deep\",\"kind\":\"plate\",\"x\":0,\"z\":52,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"plate-return-left\",\"kind\":\"plate\",\"x\":-5,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"plate-return-right\",\"kind\":\"plate\",\"x\":5,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"plate-aim-left\",\"plate-aim-right\",\"plate-deep\",\"plate-return-left\",\"plate-return-right\"],\"allowance\":{\"bank\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "two-note",
+        "rattle",
+        "lob"
+      ]
+    },
+    {
+      "id": "ricochet-garden-loop",
+      "kind": "workshop",
+      "sourceBuild": "960b9e933a9e1d084a94ebdccb8c8a7c8f0b33d7",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-back\",\"kind\":\"bank\",\"x\":0,\"z\":34,\"yaw\":-15,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"bank-flank\",\"kind\":\"bank\",\"x\":-12,\"z\":26,\"yaw\":90,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"plate-corner-e\",\"kind\":\"plate\",\"x\":6.5,\"z\":32,\"yaw\":-40,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"plate-east\",\"kind\":\"plate\",\"x\":6,\"z\":26,\"yaw\":-30,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"plate-hook\",\"kind\":\"plate\",\"x\":2.5,\"z\":28,\"yaw\":-55,\"voice\":{\"material\":\"timber\",\"degree\":2}},{\"id\":\"plate-mouth-e\",\"kind\":\"plate\",\"x\":4.5,\"z\":18,\"yaw\":-20,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"plate-mouth-w\",\"kind\":\"plate\",\"x\":-4,\"z\":18,\"yaw\":20,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"plate-side-e\",\"kind\":\"plate\",\"x\":10,\"z\":30,\"yaw\":-80,\"voice\":{\"material\":\"timber\",\"degree\":1}},{\"id\":\"plate-side-w\",\"kind\":\"plate\",\"x\":-8,\"z\":32,\"yaw\":70,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"plate-west\",\"kind\":\"plate\",\"x\":-5.5,\"z\":26,\"yaw\":35,\"voice\":{\"material\":\"timber\",\"degree\":3}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"bank-flank\",\"plate-corner-e\",\"plate-east\",\"plate-hook\",\"plate-mouth-e\",\"plate-mouth-w\",\"plate-side-e\",\"plate-side-w\",\"plate-west\"],\"allowance\":{\"bank\":1},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "return",
+        "loop",
+        "plates",
+        "flank",
+        "mouth",
+        "bank-turned"
+      ]
+    },
+    {
+      "id": "descending-resonance",
+      "kind": "shot-study",
+      "sourceBuild": "5301964e13561fe83b2af16733c5585b50a973d3",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"high-c\",\"kind\":\"plate\",\"x\":0,\"z\":32.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"timber\",\"degree\":3}},{\"id\":\"high-e\",\"kind\":\"plate\",\"x\":4,\"z\":32.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"timber\",\"degree\":4}},{\"id\":\"high-w\",\"kind\":\"plate\",\"x\":-4,\"z\":32.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"timber\",\"degree\":2}},{\"id\":\"ramp-e\",\"kind\":\"ramp\",\"x\":6.5,\"z\":15.5,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}},{\"id\":\"ramp-w\",\"kind\":\"ramp\",\"x\":-3.5,\"z\":15.5,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"top-c\",\"kind\":\"plate\",\"x\":0,\"z\":31.5,\"yaw\":0,\"lift\":11,\"tilt\":-20,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"top-e\",\"kind\":\"plate\",\"x\":4,\"z\":31.5,\"yaw\":0,\"lift\":11,\"tilt\":-20,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"top-w\",\"kind\":\"plate\",\"x\":-4,\"z\":31.5,\"yaw\":0,\"lift\":11,\"tilt\":-20,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"wall-far-e\",\"kind\":\"bank\",\"x\":8,\"z\":33,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"wall-far-w\",\"kind\":\"bank\",\"x\":-4,\"z\":33,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"wall-near-e\",\"kind\":\"bank\",\"x\":4,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":2}},{\"id\":\"wall-near-w\",\"kind\":\"bank\",\"x\":-8,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"high-c\",\"high-e\",\"high-w\",\"ramp-e\",\"ramp-w\",\"top-c\",\"top-e\",\"top-w\",\"wall-far-e\",\"wall-far-w\",\"wall-near-e\",\"wall-near-w\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "descent",
+        "west-descent",
+        "skip-to-crown",
+        "west-crown",
+        "wall-and-ramp",
+        "four"
+      ]
+    },
+    {
+      "id": "descending-resonance-flat",
+      "kind": "shot-study",
+      "sourceBuild": "5301964e13561fe83b2af16733c5585b50a973d3",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"ramp-e\",\"kind\":\"ramp\",\"x\":6.5,\"z\":15.5,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}},{\"id\":\"ramp-w\",\"kind\":\"ramp\",\"x\":-3.5,\"z\":15.5,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"row-a\",\"kind\":\"plate\",\"x\":-5,\"z\":23,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"row-b\",\"kind\":\"plate\",\"x\":-1,\"z\":23,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"row-c\",\"kind\":\"plate\",\"x\":3,\"z\":23,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"row-d\",\"kind\":\"plate\",\"x\":7,\"z\":23,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"wall-far-e\",\"kind\":\"bank\",\"x\":8,\"z\":38,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"wall-far-w\",\"kind\":\"bank\",\"x\":-4,\"z\":38,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"wall-near-e\",\"kind\":\"bank\",\"x\":4,\"z\":30,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":2}},{\"id\":\"wall-near-w\",\"kind\":\"bank\",\"x\":-8,\"z\":30,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"ramp-e\",\"ramp-w\",\"row-a\",\"row-b\",\"row-c\",\"row-d\",\"wall-far-e\",\"wall-far-w\",\"wall-near-e\",\"wall-near-w\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "wall-and-row",
+        "four"
+      ]
+    },
+    {
+      "id": "the-carry",
+      "kind": "workshop",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"ramp-yours\",\"kind\":\"ramp\",\"x\":0,\"z\":18,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":0,\"z\":53,\"r\":2.5},\"locked\":[],\"allowance\":{\"ramp\":1},\"rail\":{\"yaw\":0,\"elevation\":18,\"charge\":0.45},\"goal\":{\"kind\":\"first-ground-zone\",\"x\":0,\"z\":53,\"r\":2.5}}}",
+      "shots": [
+        "opening",
+        "ramp-down-the-clearing"
+      ]
+    },
+    {
+      "id": "the-other-way",
+      "kind": "shot-study",
+      "sourceBuild": "1ad3166d0839ea042379f5a861ed7523cb46d47e",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"left-stop\",\"kind\":\"block\",\"x\":-14,\"z\":36,\"yaw\":0},{\"id\":\"middle-stop\",\"kind\":\"block\",\"x\":0,\"z\":36,\"yaw\":0},{\"id\":\"right-stop\",\"kind\":\"block\",\"x\":14,\"z\":36,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"left-stop\",\"middle-stop\",\"right-stop\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "opening",
+        "left",
+        "right",
+        "carry"
+      ]
+    },
+    {
+      "id": "soft-landing",
+      "kind": "shot-study",
+      "sourceBuild": "46e59a781722081546457086e1d87a7d2e8f7453",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"backstop\",\"kind\":\"block\",\"x\":18,\"z\":86,\"yaw\":0},{\"id\":\"redirect\",\"kind\":\"bank\",\"x\":-18,\"z\":28,\"yaw\":0}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":{\"x\":0,\"z\":64,\"r\":2.5},\"locked\":[],\"allowance\":{\"bank\":1,\"block\":1},\"rail\":null,\"goal\":{\"kind\":\"first-ground-zone\",\"x\":0,\"z\":64,\"r\":2.5}}}",
+      "shots": [
+        "opening"
+      ]
+    },
+    {
+      "id": "chime-terraces",
+      "kind": "shot-study",
+      "sourceBuild": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"high-0\",\"kind\":\"plate\",\"x\":-10,\"z\":34,\"yaw\":0,\"lift\":10,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"high-1\",\"kind\":\"plate\",\"x\":-6,\"z\":34,\"yaw\":0,\"lift\":10,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"high-2\",\"kind\":\"plate\",\"x\":-2,\"z\":34,\"yaw\":0,\"lift\":10,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"high-3\",\"kind\":\"plate\",\"x\":2,\"z\":34,\"yaw\":0,\"lift\":10,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"high-4\",\"kind\":\"plate\",\"x\":6,\"z\":34,\"yaw\":0,\"lift\":10,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"high-5\",\"kind\":\"plate\",\"x\":10,\"z\":34,\"yaw\":0,\"lift\":10,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"low-0\",\"kind\":\"plate\",\"x\":-10,\"z\":24,\"yaw\":0,\"lift\":2,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"low-1\",\"kind\":\"plate\",\"x\":-6,\"z\":24,\"yaw\":0,\"lift\":2,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"low-2\",\"kind\":\"plate\",\"x\":-2,\"z\":24,\"yaw\":0,\"lift\":2,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"low-3\",\"kind\":\"plate\",\"x\":2,\"z\":24,\"yaw\":0,\"lift\":2,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"low-4\",\"kind\":\"plate\",\"x\":6,\"z\":24,\"yaw\":0,\"lift\":2,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"low-5\",\"kind\":\"plate\",\"x\":10,\"z\":24,\"yaw\":0,\"lift\":2,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"mid-0\",\"kind\":\"plate\",\"x\":-10,\"z\":29,\"yaw\":0,\"lift\":6,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"mid-1\",\"kind\":\"plate\",\"x\":-6,\"z\":29,\"yaw\":0,\"lift\":6,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"mid-2\",\"kind\":\"plate\",\"x\":-2,\"z\":29,\"yaw\":0,\"lift\":6,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"mid-3\",\"kind\":\"plate\",\"x\":2,\"z\":29,\"yaw\":0,\"lift\":6,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"mid-4\",\"kind\":\"plate\",\"x\":6,\"z\":29,\"yaw\":0,\"lift\":6,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"mid-5\",\"kind\":\"plate\",\"x\":10,\"z\":29,\"yaw\":0,\"lift\":6,\"tilt\":-15,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"ramp-c\",\"kind\":\"ramp\",\"x\":0,\"z\":16,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":2}},{\"id\":\"ramp-e\",\"kind\":\"ramp\",\"x\":11,\"z\":16,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}},{\"id\":\"ramp-w\",\"kind\":\"ramp\",\"x\":-11,\"z\":16,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"high-0\",\"high-1\",\"high-2\",\"high-3\",\"high-4\",\"high-5\",\"low-0\",\"low-1\",\"low-2\",\"low-3\",\"low-4\",\"low-5\",\"mid-0\",\"mid-1\",\"mid-2\",\"mid-3\",\"mid-4\",\"mid-5\",\"ramp-c\",\"ramp-e\",\"ramp-w\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}},\"capacity\":24}",
+      "shots": [
+        "opening",
+        "centre-climb",
+        "centre-drop",
+        "west-climb",
+        "east-climb",
+        "east-walk",
+        "near-miss"
+      ]
+    },
+    {
+      "id": "chime-fan",
+      "kind": "shot-study",
+      "sourceBuild": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-c\",\"kind\":\"bank\",\"x\":0,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"bank-e\",\"kind\":\"bank\",\"x\":12,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":1}},{\"id\":\"bank-w\",\"kind\":\"bank\",\"x\":-12,\"z\":26,\"yaw\":0,\"voice\":{\"material\":\"timber\",\"degree\":3}},{\"id\":\"chime-c\",\"kind\":\"bank\",\"x\":0,\"z\":31,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"chime-e\",\"kind\":\"bank\",\"x\":12,\"z\":31,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"chime-w\",\"kind\":\"bank\",\"x\":-12,\"z\":31,\"yaw\":0,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"plate-c-left\",\"kind\":\"plate\",\"x\":-4,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"plate-c-mid\",\"kind\":\"plate\",\"x\":0,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"plate-c-right\",\"kind\":\"plate\",\"x\":4,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"plate-e-inner\",\"kind\":\"plate\",\"x\":8,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"plate-e-mid\",\"kind\":\"plate\",\"x\":12,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"plate-e-outer\",\"kind\":\"plate\",\"x\":16,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"plate-w-inner\",\"kind\":\"plate\",\"x\":-8,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"plate-w-mid\",\"kind\":\"plate\",\"x\":-12,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"plate-w-outer\",\"kind\":\"plate\",\"x\":-16,\"z\":30.5,\"yaw\":0,\"lift\":7,\"tilt\":-10,\"voice\":{\"material\":\"metal\",\"degree\":0}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"bank-c\",\"bank-e\",\"bank-w\",\"chime-c\",\"chime-e\",\"chime-w\",\"plate-c-left\",\"plate-c-mid\",\"plate-c-right\",\"plate-e-inner\",\"plate-e-mid\",\"plate-e-outer\",\"plate-w-inner\",\"plate-w-mid\",\"plate-w-outer\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}},\"capacity\":24}",
+      "shots": [
+        "opening",
+        "west",
+        "west-long",
+        "centre",
+        "east",
+        "shoulder"
+      ]
+    },
+    {
+      "id": "chime-garden",
+      "kind": "authored-world",
+      "sourceBuild": "6d9da5dfd072f5294865f58ac8690e439924ba92",
+      "customCode": null,
+      "worldIdentity": "{\"catalog\":\"worldcraft-prefabs-v2\",\"physics\":\"rail-golf-v02-worldcraft-v1\",\"environment\":{\"preset\":\"forest-clearing-v1\",\"seed\":1},\"objects\":[{\"id\":\"bank-c\",\"kind\":\"bank\",\"x\":0,\"z\":26,\"yaw\":15,\"voice\":{\"material\":\"timber\",\"degree\":0}},{\"id\":\"bank-d\",\"kind\":\"bank\",\"x\":0,\"z\":52,\"yaw\":5,\"voice\":{\"material\":\"timber\",\"degree\":3}},{\"id\":\"bank-l\",\"kind\":\"bank\",\"x\":-10,\"z\":28,\"yaw\":35,\"voice\":{\"material\":\"timber\",\"degree\":1}},{\"id\":\"bank-r\",\"kind\":\"bank\",\"x\":12,\"z\":30,\"yaw\":-35,\"voice\":{\"material\":\"timber\",\"degree\":4}},{\"id\":\"c1\",\"kind\":\"plate\",\"x\":-2,\"z\":21,\"yaw\":70,\"voice\":{\"material\":\"metal\",\"degree\":2}},{\"id\":\"c2\",\"kind\":\"plate\",\"x\":3.5,\"z\":20,\"yaw\":120,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"d1\",\"kind\":\"plate\",\"x\":-4,\"z\":46,\"yaw\":30,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"d2\",\"kind\":\"plate\",\"x\":4,\"z\":46,\"yaw\":-30,\"voice\":{\"material\":\"metal\",\"degree\":4}},{\"id\":\"l1\",\"kind\":\"plate\",\"x\":-12,\"z\":23,\"yaw\":-80,\"voice\":{\"material\":\"metal\",\"degree\":0}},{\"id\":\"l2\",\"kind\":\"plate\",\"x\":-8,\"z\":21,\"yaw\":-120,\"voice\":{\"material\":\"metal\",\"degree\":3}},{\"id\":\"r1\",\"kind\":\"plate\",\"x\":14,\"z\":25,\"yaw\":80,\"voice\":{\"material\":\"metal\",\"degree\":1}},{\"id\":\"r2\",\"kind\":\"plate\",\"x\":10,\"z\":23,\"yaw\":120,\"voice\":{\"material\":\"metal\",\"degree\":2}}],\"launcher\":{\"x\":0},\"rules\":{\"pin\":null,\"locked\":[\"bank-c\",\"bank-d\",\"bank-l\",\"bank-r\",\"c1\",\"c2\",\"d1\",\"d2\",\"l1\",\"l2\",\"r1\",\"r2\"],\"allowance\":{},\"rail\":null,\"goal\":{\"kind\":\"none\"}}}",
+      "shots": [
+        "centre",
+        "left",
+        "right",
+        "near-miss",
+        "left-reverse",
+        "right-leak"
+      ]
+    }
+  ]
+}
