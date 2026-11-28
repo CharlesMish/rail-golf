@@ -55,6 +55,15 @@ not a passed download check or an established application defect. Export format
 and import/recording compatibility pass the repository and ensemble checks.
 Owner play should include downloading and re-importing a small recording.
 
+The pinned hosted version was subsequently opened at
+`https://dfd18621-rail-golf.charlesmish.workers.dev/lab/instrument-exhibition`.
+It shows build `e5a984d25d`, all five catalog choices and the same WebGL-unavailable
+message. A direct-page attempt to import an independently measured trio through
+the ordinary file chooser lost the remote CDP tab before completion. That does
+not establish an application rejection or a successful import; hosted browser
+file delivery remains unverified. Reopening the pinned page succeeded. No stored
+performance was overwritten to recover the test.
+
 ![Portrait companion controls; UI-only inspection, no rendered physics](portrait-controls.jpg)
 
 The temporary viewport page, audio page and public fixture copy were removed

@@ -12,7 +12,7 @@ try them, not a decision about the permanent repertoire.
    answer is worth Keeping; a longer phrase is not automatically better.
 3. Keep something you like and choose **Companion 1**. Switch the live instrument
    and answer it. The recorded source stays selected; only your new shot enters
-   physics. Choose a second retained source for a trio, or None for solo play.
+   physics. Choose a second retained source for a trio, or None in both companion slots for solo play.
 4. Adjust levels before Fire. Mute is available during playback; Stop cancels it.
    Let a pairing finish naturally before saving a fixed ensemble. Changing the
    mix during a performance prevents saving that performance as a fixed mix.

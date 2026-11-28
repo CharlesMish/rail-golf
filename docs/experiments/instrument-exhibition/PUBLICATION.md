@@ -10,12 +10,38 @@ main remains `4a2be20984da4e50d7f87f37e59d7d61ff384e2c`.
 The route is `/lab/instrument-exhibition`. It contains the unchanged two
 references plus the original Exchange, Hairpin and Antiphonal Arc submissions.
 The ordinary Foundry route and registry remain unchanged. Roof/crown studies
-PR90/91 are independent dependencies that were not added to this exhibition.
+PR90/91 are parallel studies that were not added to this exhibition.
 
 The draft PR's external receipt records the exact published ending SHA, matching
 local tree, final hosted checks and immutable preview URL. Keeping that final
 receipt outside the commit lets it name its own exact ending source truthfully.
-The publication checkpoint and preview will also be recorded below once issued.
+The playable publication checkpoint and pinned preview are recorded below.
+
+## Published playable checkpoint
+
+- Draft [PR93](https://github.com/CharlesMish/rail-golf/pull/93).
+- **Pinned exhibition:** <https://dfd18621-rail-golf.charlesmish.workers.dev/lab/instrument-exhibition>.
+- Exact playable source: `e5a984d25de70057536342c30041a4114da91eda`.
+- Matching local checkpoint: `3b24b0f8802f9fe0c9e35745976395ba3b084f7b`.
+- Matching complete Git tree: `0a1d32fe85068f48390f6605bf1d2662093c5cd0`.
+- Hosted `verify` and `Workers Builds: rail-golf` checks both **passed**.
+- Cloudflare version: `dfd18621-7e40-4ed8-9707-d800c792cbef`.
+
+The hosted page was opened and shows the five original instrument choices and
+build `e5a984d25d`. It reports unavailable WebGL in the research browser, matching
+the local renderer boundary. A hosted file-import attempt lost its remote browser
+tab before completion; no successful browser import/export claim is made. The
+preview was reopened successfully and retained as the owner entry.
+
+A subsequent documentation-only receipt commit records these links and clarifies
+the owner guide; it does not change the playable source. PR93 names that exact
+ending commit separately. Continue using this pinned version for the audition,
+so a later branch build cannot silently replace the compared instruments.
+
+The independent [preservation audit](preservation-review.md) found 17/17 earlier
+branch tips unchanged and PR78–92 all open drafts/unmerged. The Cloudflare check's
+dashboard path contains the service label `production`; its output above is an
+experimental **version preview**, and no production promotion command was run.
 
 ## Tested source and evidence
 
