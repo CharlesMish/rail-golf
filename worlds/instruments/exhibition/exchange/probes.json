@@ -1,0 +1,114 @@
+{
+  "format": "rail-golf-instrument-probes",
+  "version": 1,
+  "cases": [
+    {
+      "id": "west-bank-to-east-ramp",
+      "family": "The west metal bank throws the ball across onto the east timber ramp.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -8,
+        "yaw": -4,
+        "elevation": 17.5,
+        "charge": 0.65
+      }
+    },
+    {
+      "id": "east-bank-to-west-ramp",
+      "family": "The east metal bank throws the ball across onto the west timber ramp.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -4,
+        "yaw": 20,
+        "elevation": 16,
+        "charge": 0.7
+      }
+    },
+    {
+      "id": "continued-exchange",
+      "family": "The east bank, the west ramp, and then the west bank answer in one flight.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -2,
+        "yaw": 12,
+        "elevation": 14,
+        "charge": 0.78
+      }
+    },
+    {
+      "id": "ramp-then-middle",
+      "family": "A near ramp sends the ball on to the far middle bank after a pause.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -7.5,
+        "yaw": 2.5,
+        "elevation": 8,
+        "charge": 0.45
+      }
+    },
+    {
+      "id": "middle-alone",
+      "family": "A straight shot reaches only the far middle bank.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.6
+      }
+    },
+    {
+      "id": "near-ramp-alone",
+      "family": "A low shot stops on one near ramp.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -8,
+        "yaw": -16,
+        "elevation": 8,
+        "charge": 0.45
+      }
+    },
+    {
+      "id": "bank-without-reply",
+      "family": "The east bank rings and the ball grounds before either ramp answers.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -6,
+        "yaw": 16,
+        "elevation": 14,
+        "charge": 0.7
+      }
+    },
+    {
+      "id": "wide-low-miss",
+      "family": "A low outward shot reaches ground without a voiced piece.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 70,
+        "elevation": 5,
+        "charge": 0.1
+      }
+    },
+    {
+      "id": "high-carry",
+      "family": "A high carry passes over the voiced geometry.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 70,
+        "charge": 0.9
+      }
+    }
+  ]
+}

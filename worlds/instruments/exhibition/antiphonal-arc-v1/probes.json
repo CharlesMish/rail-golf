@@ -1,0 +1,114 @@
+{
+  "format": "rail-golf-instrument-probes",
+  "version": 1,
+  "cases": [
+    {
+      "id": "antiphonal-west-to-east",
+      "family": "West timber wing reflects across the open courtyard into the deep east metal wing.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -22,
+        "elevation": 16,
+        "charge": 0.64
+      }
+    },
+    {
+      "id": "antiphonal-east-to-west",
+      "family": "Mirrored east metal strike answers across the clearing on the deep west timber wing.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 22,
+        "elevation": 16,
+        "charge": 0.64
+      }
+    },
+    {
+      "id": "wide-origin-triple",
+      "family": "Displaced western origin crosses to the east metal wing and returns as a close double-knock on the west timber wing.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -9,
+        "yaw": 34,
+        "elevation": 14,
+        "charge": 0.72
+      }
+    },
+    {
+      "id": "west-ramp-arc-reply",
+      "family": "Displaced low launch off the west timber ramp rises to the west metal canopy and arcs back across the courtyard.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": -7,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.56
+      }
+    },
+    {
+      "id": "east-ramp-arc-reply",
+      "family": "Displaced low launch off the east timber ramp rises to the east timber canopy for an all-timber arch.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 7,
+        "yaw": 0,
+        "elevation": 8,
+        "charge": 0.56
+      }
+    },
+    {
+      "id": "canopy-drop-reply",
+      "family": "Direct elevated strike into the west metal canopy deflects downward onto the west timber ramp.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -20,
+        "elevation": 26,
+        "charge": 0.64
+      }
+    },
+    {
+      "id": "throat-solo-bell",
+      "family": "Straight central shot threads between the ramps for one resonant metal C4 strike as sparse accompaniment.",
+      "kind": "family",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 14,
+        "charge": 0.6
+      }
+    },
+    {
+      "id": "miss-high-carry",
+      "family": "A high carry clears the overhead canopy and reaches ground silently.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": 0,
+        "elevation": 68,
+        "charge": 0.85
+      }
+    },
+    {
+      "id": "miss-wide-outside",
+      "family": "A wide low outward shot passes outside the west wing without sound.",
+      "kind": "negative",
+      "setup": {
+        "railIndex": 1,
+        "originX": 0,
+        "yaw": -65,
+        "elevation": 8,
+        "charge": 0.25
+      }
+    }
+  ]
+}
