@@ -1,0 +1,223 @@
+{
+  "format": "rail-golf-exhibition-final-verification",
+  "version": 1,
+  "source": {
+    "testedRootCommit": "3361e5e4ace14688179831cf2157a83fb2802e6b",
+    "testedRootTree": "c116009f33eb36db284813cf87e8a0938604298d",
+    "baseline": "8278fee69fb1bd0c196c2d6fa258faaaaec452e6",
+    "rootAtSnapshot": "3361e5e4ace14688179831cf2157a83fb2802e6b",
+    "modifiedPreexistingPaths": [
+      "app/lab/places-counterline/counterline.tsx"
+    ],
+    "preservedExistingLibWorldTestCount": 306,
+    "allExistingLibWorldTestsUnchanged": true,
+    "changedExistingLibWorldTests": [],
+    "testedSourceWorktreeMismatches": [],
+    "originalIntakeSHA256": "991c18bb23d195db28517a54098bc759bed6ba6b01dabd8e07a36aadcacd3323"
+  },
+  "automated": {
+    "productionBuild": true,
+    "tests": 723,
+    "passed": 723,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "typecheck": true,
+    "lintErrors": 0,
+    "lintInheritedWarnings": 5,
+    "foundry": {
+      "entries": 16,
+      "shots": 75,
+      "allPassed": true
+    },
+    "capacity": {
+      "entries": 2,
+      "shots": 11,
+      "allPassed": true
+    }
+  },
+  "instrumentValidatorComparisons": [
+    {
+      "id": "exchange",
+      "rawFiles": {
+        "instrument.json": {
+          "originalArchive": "originals/rail-golf-exchange(1).zip",
+          "originalMember": "rail-golf-exchange/instrument.json",
+          "sha256": "dde55e0db19af9844664b6b3b8f29e2e1da7743ee882a635f7eb6c9e158cc4fb",
+          "byteExact": true
+        },
+        "probes.json": {
+          "originalArchive": "originals/rail-golf-exchange(1).zip",
+          "originalMember": "rail-golf-exchange/probes.json",
+          "sha256": "eaea9cf4efd7975ab0e7b8302179ee74dd55bd686f0a1e4cd47247f5f86f6863",
+          "byteExact": true
+        }
+      },
+      "freshReportSHA256": "68f7f121124a28eda98a4ebaccff22e23349fe4ba11a1f2ef35f9f767453b466",
+      "laneEvidenceFile": "exchange-validator.json",
+      "laneEvidenceSHA256": "a92493f31912d368d06d5acd90461f16e58feb66c40a20303193f1dc4aaec0bf",
+      "cases": 9,
+      "fired": 79,
+      "rejectedBoundaryNeighbors": 2,
+      "fullPhysicalAndPathAndTerminalExact": 79,
+      "voicedArraysExact": 79,
+      "mismatches": [],
+      "sourceSha": "3361e5e4ace14688179831cf2157a83fb2802e6b",
+      "engineHashesMatchPR92": true,
+      "sourceHashes": {
+        "lib/instrument-foundry.js": "54e46195d84d82e37435b80419847c9e5331cf1a133816bd19100dc9345913ea",
+        "lib/worldcraft-model.js": "49adfdd7511abfbbeba78323d113e12c47c9209ad72c6b33d8216ac337bc103d",
+        "lib/worldcraft-runtime.js": "de7fcc629b648a3b9df1ab7ebece4f437eab424dab5f524af0a884b54acd98f2",
+        "lib/worldcraft-scene.js": "4eee65c5fcffb5ae110c855be1870f5c8d40b092325a68999997fb60fe3d93a5",
+        "lib/worldcraft-resonance.js": "08374ccbf333ab69fdd1b9f609a6c7163324614a7a78353bf34eac2228c637e0",
+        "lib/counterline-recording.js": "2c435e0004ac76b78f2aacde6b867acae8035ff2733d62774b4749df53bd535f",
+        "scripts/instrument-foundry/validate.mjs": "f17f70a75356058cf4e4f6cb3668edb50e88c41d22bdc1fbcbd6f76c22adbae4"
+      }
+    },
+    {
+      "id": "hairpin-fable-v1",
+      "rawFiles": {
+        "instrument.json": {
+          "originalArchive": "originals/hairpin-fable-v1(1).zip",
+          "originalMember": "hairpin-fable-v1/instrument.json",
+          "sha256": "de676687df6375a0dac8de413ec34180a27ef230b91cbfdb20d71317702b4355",
+          "byteExact": true
+        },
+        "probes.json": {
+          "originalArchive": "originals/hairpin-fable-v1(1).zip",
+          "originalMember": "hairpin-fable-v1/probes.json",
+          "sha256": "f8896921b622238464156ae0d8b11777df66f1d3fc64c815b5afbaed21565f14",
+          "byteExact": true
+        }
+      },
+      "freshReportSHA256": "0d0ac3f7d7b390f97a96d77a8281633434f6c0f479930bd612212b1c2b3b85d1",
+      "laneEvidenceFile": "hairpin-evidence.json",
+      "laneEvidenceSHA256": "459e6d91d3b9e0247bf15b37b6bf08a899f2b0ddd561de91e1e8a6c42e3e36cf",
+      "cases": 19,
+      "fired": 158,
+      "rejectedBoundaryNeighbors": 13,
+      "fullPhysicalAndPathAndTerminalExact": 158,
+      "voicedArraysExact": 158,
+      "mismatches": [],
+      "sourceSha": "3361e5e4ace14688179831cf2157a83fb2802e6b",
+      "engineHashesMatchPR92": true,
+      "sourceHashes": {
+        "lib/instrument-foundry.js": "54e46195d84d82e37435b80419847c9e5331cf1a133816bd19100dc9345913ea",
+        "lib/worldcraft-model.js": "49adfdd7511abfbbeba78323d113e12c47c9209ad72c6b33d8216ac337bc103d",
+        "lib/worldcraft-runtime.js": "de7fcc629b648a3b9df1ab7ebece4f437eab424dab5f524af0a884b54acd98f2",
+        "lib/worldcraft-scene.js": "4eee65c5fcffb5ae110c855be1870f5c8d40b092325a68999997fb60fe3d93a5",
+        "lib/worldcraft-resonance.js": "08374ccbf333ab69fdd1b9f609a6c7163324614a7a78353bf34eac2228c637e0",
+        "lib/counterline-recording.js": "2c435e0004ac76b78f2aacde6b867acae8035ff2733d62774b4749df53bd535f",
+        "scripts/instrument-foundry/validate.mjs": "f17f70a75356058cf4e4f6cb3668edb50e88c41d22bdc1fbcbd6f76c22adbae4"
+      }
+    },
+    {
+      "id": "antiphonal-arc-v1",
+      "rawFiles": {
+        "instrument.json": {
+          "originalArchive": "originals/antiphonal-arc-v1-submission(1).zip",
+          "originalMember": "worlds/instruments/antiphonal-arc-v1/instrument.json",
+          "sha256": "65b5a447711b72ef995c97bb05bc78155f1398027c8744661cb576982a6b0e4b",
+          "byteExact": true
+        },
+        "probes.json": {
+          "originalArchive": "originals/antiphonal-arc-v1-submission(1).zip",
+          "originalMember": "worlds/instruments/antiphonal-arc-v1/probes.json",
+          "sha256": "8c9b5a7a4c5164b31522b07d716f63f6ac70333efd223572f11afe95e06e4812",
+          "byteExact": true
+        }
+      },
+      "freshReportSHA256": "cb1bc3760eeaf3fb4b15b9e7fb965c08059f581244c95bb20ef172eff2188597",
+      "laneEvidenceFile": "arc-authoritative-validator.json",
+      "laneEvidenceSHA256": "31eec81dc19087991cc41078604161bee6b4114d036e16452a2c997e45726dd7",
+      "cases": 9,
+      "fired": 81,
+      "rejectedBoundaryNeighbors": 0,
+      "fullPhysicalAndPathAndTerminalExact": 81,
+      "voicedArraysExact": 81,
+      "mismatches": [],
+      "sourceSha": "3361e5e4ace14688179831cf2157a83fb2802e6b",
+      "engineHashesMatchPR92": true,
+      "sourceHashes": {
+        "lib/instrument-foundry.js": "54e46195d84d82e37435b80419847c9e5331cf1a133816bd19100dc9345913ea",
+        "lib/worldcraft-model.js": "49adfdd7511abfbbeba78323d113e12c47c9209ad72c6b33d8216ac337bc103d",
+        "lib/worldcraft-runtime.js": "de7fcc629b648a3b9df1ab7ebece4f437eab424dab5f524af0a884b54acd98f2",
+        "lib/worldcraft-scene.js": "4eee65c5fcffb5ae110c855be1870f5c8d40b092325a68999997fb60fe3d93a5",
+        "lib/worldcraft-resonance.js": "08374ccbf333ab69fdd1b9f609a6c7163324614a7a78353bf34eac2228c637e0",
+        "lib/counterline-recording.js": "2c435e0004ac76b78f2aacde6b867acae8035ff2733d62774b4749df53bd535f",
+        "scripts/instrument-foundry/validate.mjs": "f17f70a75356058cf4e4f6cb3668edb50e88c41d22bdc1fbcbd6f76c22adbae4"
+      }
+    }
+  ],
+  "logs": {
+    "test": {
+      "file": "exhibition-final-test.log",
+      "sha256": "71c4fa86ecadfb675f775774cb38f0a24be2d2427fe39b9f8a62fa1ad74907b5",
+      "exitCode": 0
+    },
+    "typecheck": {
+      "file": "exhibition-final-typecheck.log",
+      "sha256": "15b38b87289ac7cc9537a3da4cafdd5d2f08288d4ca4440b266a0e742004d8b5",
+      "exitCode": 0
+    },
+    "lint": {
+      "file": "exhibition-final-lint.log",
+      "sha256": "dc00e76cc7d64aa35c4a19deb6d85ce821b466a72dc951b0ade1ec6df7e88836",
+      "exitCode": 0
+    },
+    "foundry": {
+      "file": "exhibition-final-foundry.log",
+      "sha256": "f8d9b8a035986e77d422397de3846f9871530edb20e975a181ccc475d66351e0",
+      "exitCode": 0
+    },
+    "capacity": {
+      "file": "exhibition-final-capacity.log",
+      "sha256": "42634b33f57813c3379746ba65a58c971b0537c889bd34666539eb2c8d1dac64",
+      "exitCode": 0
+    },
+    "exchange": {
+      "file": "exhibition-final-exchange.log",
+      "sha256": "6cc1f9a8339c9aa9ea5b7b0bc5ccfae9019b46266eed9442cf04dac216bc7dda",
+      "exitCode": 0
+    },
+    "hairpin": {
+      "file": "exhibition-final-hairpin.log",
+      "sha256": "0d5491973cd24cf704c799671d5897478eb20c583140ae41da89d0933fcb2374",
+      "exitCode": 0
+    },
+    "arc": {
+      "file": "exhibition-final-arc.log",
+      "sha256": "8fcaa72771ba83ea20964d7fcb6b23c52b8bcca2c8abc0b365b852a8968c89fc",
+      "exitCode": 0
+    }
+  },
+  "limits": [
+    "Tests and source hashes cover the exact tested root commit/tree; later documentation or publication commits require a source-delta check.",
+    "Fresh validators reproduce all submitted settings and rejected boundaries; they do not rerun every review grid or invalidate the separately measured Arc canopy-gap history limitation.",
+    "NullEngine and automated checks do not establish rendered WebGL behavior, listening, physical-phone performance or general musical quality.",
+    "Complete raw validator reports are reproducible with the documented commands; compact final verification retains fingerprints and comparison counts rather than duplicating existing large reports."
+  ],
+  "postCheckDelta": {
+    "rootCommit": "b2809cc3262ab1951e035126200a39dd7a475bf7",
+    "fromTestedCommit": "3361e5e4ace14688179831cf2157a83fb2802e6b",
+    "changedPaths": [
+      "docs/experiments/instrument-exhibition/arc-authoritative-validator.json",
+      "docs/experiments/instrument-exhibition/arc-independent-evidence.json",
+      "docs/experiments/instrument-exhibition/arc-report.md",
+      "docs/experiments/instrument-exhibition/arc-solutions.md",
+      "docs/experiments/instrument-exhibition/ensemble-browser-audio.json",
+      "docs/experiments/instrument-exhibition/ensemble-browser-audio.md",
+      "scripts/exhibition/measure-arc.mjs"
+    ],
+    "allChangesAreReportsOrIndependentArcMeasurement": true,
+    "appLibraryWorldTestDependencyDelta": [],
+    "newArcScriptSHA256": "1194ec54897765c34d9823bd2860949e4d607e28805bd059d86f280dce911212",
+    "matchesMeasuredArcScript": true,
+    "arcScriptTargetedLint": {
+      "errors": 0,
+      "warnings": 0,
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

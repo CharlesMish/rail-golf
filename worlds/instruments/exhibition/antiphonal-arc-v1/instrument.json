@@ -1,0 +1,213 @@
+{
+  "format": "rail-golf-counterline-instrument",
+  "version": 1,
+  "preset": {
+    "format": "rail-golf-worldcraft-range-preset",
+    "version": 1,
+    "id": "antiphonal-arc-v1",
+    "name": "Antiphonal Arc",
+    "environment": {
+      "preset": "forest-clearing-v1",
+      "seed": 1
+    },
+    "launcher": {
+      "x": 0
+    },
+    "objects": [
+      {
+        "id": "ramp-w",
+        "kind": "ramp",
+        "x": -7.0,
+        "z": 16.5,
+        "yaw": 15,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "ramp-e",
+        "kind": "ramp",
+        "x": 7.0,
+        "z": 16.5,
+        "yaw": -15,
+        "voice": {
+          "material": "timber",
+          "degree": 1
+        }
+      },
+      {
+        "id": "west-near",
+        "kind": "bank",
+        "x": -12.5,
+        "z": 25.5,
+        "yaw": -65,
+        "voice": {
+          "material": "timber",
+          "degree": 1
+        }
+      },
+      {
+        "id": "west-far",
+        "kind": "bank",
+        "x": -8.0,
+        "z": 35.5,
+        "yaw": -35,
+        "voice": {
+          "material": "timber",
+          "degree": 2
+        }
+      },
+      {
+        "id": "east-near",
+        "kind": "bank",
+        "x": 12.5,
+        "z": 25.5,
+        "yaw": 65,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "east-far",
+        "kind": "bank",
+        "x": 8.0,
+        "z": 35.5,
+        "yaw": 35,
+        "voice": {
+          "material": "metal",
+          "degree": 4
+        }
+      },
+      {
+        "id": "throat-bell",
+        "kind": "plate",
+        "x": 0.0,
+        "z": 41.0,
+        "yaw": 0,
+        "lift": 2.0,
+        "tilt": -10,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "canopy-w2",
+        "kind": "plate",
+        "x": -9.0,
+        "z": 30.0,
+        "yaw": -25,
+        "lift": 9.0,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      },
+      {
+        "id": "canopy-w1",
+        "kind": "plate",
+        "x": -4.5,
+        "z": 32.5,
+        "yaw": -10,
+        "lift": 10.0,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "canopy-c",
+        "kind": "plate",
+        "x": 0.0,
+        "z": 33.5,
+        "yaw": 0,
+        "lift": 10.5,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 4
+        }
+      },
+      {
+        "id": "canopy-e1",
+        "kind": "plate",
+        "x": 4.5,
+        "z": 32.5,
+        "yaw": 10,
+        "lift": 10.0,
+        "tilt": -20,
+        "voice": {
+          "material": "timber",
+          "degree": 3
+        }
+      },
+      {
+        "id": "canopy-e2",
+        "kind": "plate",
+        "x": 9.0,
+        "z": 30.0,
+        "yaw": 25,
+        "lift": 9.0,
+        "tilt": -20,
+        "voice": {
+          "material": "timber",
+          "degree": 2
+        }
+      }
+    ],
+    "rules": {
+      "launcher": {
+        "fixed": false,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "fixed": [
+        "canopy-c",
+        "canopy-e1",
+        "canopy-e2",
+        "canopy-w1",
+        "canopy-w2",
+        "east-far",
+        "east-near",
+        "ramp-e",
+        "ramp-w",
+        "throat-bell",
+        "west-far",
+        "west-near"
+      ],
+      "allowance": {},
+      "goal": {
+        "kind": "none"
+      }
+    }
+  },
+  "profile": {
+    "version": 1,
+    "dynamics": "normal-speed",
+    "bankVoice": "tuned-even"
+  },
+  "invitation": "Two inward-angled timber ramps open a narrow lane toward a lone metal plate at the back. To the left, a curved timber wing faces a mirrored metal wing on the right; above them, five leaning plates form a shallow overhead arc. Slide along the rail, aim into either wing, loft off a ramp, or thread the center. Every piece stays fixed. There is no target.",
+  "sourceBuild": "3c67ceb9de1739c23092f6fdd8680b9047536a9f",
+  "opening": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": -22,
+    "elevation": 16,
+    "charge": 0.64
+  },
+  "camera": {
+    "target": {
+      "x": 0,
+      "y": 4,
+      "z": 26
+    },
+    "radius": 68,
+    "yaw": 35,
+    "elevation": 32
+  }
+}

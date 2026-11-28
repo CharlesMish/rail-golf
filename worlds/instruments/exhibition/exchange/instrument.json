@@ -1,0 +1,117 @@
+{
+  "format": "rail-golf-counterline-instrument",
+  "version": 1,
+  "preset": {
+    "format": "rail-golf-worldcraft-range-preset",
+    "version": 1,
+    "id": "exchange",
+    "name": "Exchange",
+    "environment": {
+      "preset": "forest-clearing-v1",
+      "seed": 1
+    },
+    "launcher": {
+      "x": 0
+    },
+    "objects": [
+      {
+        "id": "near-w",
+        "kind": "ramp",
+        "x": -8,
+        "z": 18,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "near-e",
+        "kind": "ramp",
+        "x": 8,
+        "z": 18,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 2
+        }
+      },
+      {
+        "id": "far-w",
+        "kind": "bank",
+        "x": -8,
+        "z": 32,
+        "yaw": -30,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "far-e",
+        "kind": "bank",
+        "x": 8,
+        "z": 32,
+        "yaw": 30,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "far-c",
+        "kind": "bank",
+        "x": 0,
+        "z": 46,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 4
+        }
+      }
+    ],
+    "rules": {
+      "launcher": {
+        "fixed": false,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.6
+      },
+      "fixed": [
+        "far-c",
+        "far-e",
+        "far-w",
+        "near-e",
+        "near-w"
+      ],
+      "allowance": {},
+      "goal": {
+        "kind": "none"
+      }
+    }
+  },
+  "profile": {
+    "version": 1,
+    "dynamics": "normal-speed",
+    "bankVoice": "tuned-even"
+  },
+  "invitation": "A timber ramp sits to either side ahead of the tee. Behind them, two metal banks are turned inward, and a timber bank stands farther up the middle. The pieces stay where they are. Aim and power are yours. There is no target.",
+  "sourceBuild": "3c67ceb9de1739c23092f6fdd8680b9047536a9f",
+  "opening": {
+    "railIndex": 1,
+    "originX": -8,
+    "yaw": -4,
+    "elevation": 17.5,
+    "charge": 0.65
+  },
+  "camera": {
+    "target": {
+      "x": 0,
+      "y": 4,
+      "z": 26
+    },
+    "radius": 68,
+    "yaw": 42,
+    "elevation": 26
+  }
+}

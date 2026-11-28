@@ -1,0 +1,14 @@
+{
+  "kitSource": "3c67ceb9de1739c23092f6fdd8680b9047536a9f",
+  "publishedFoundry": "8278fee69fb1bd0c196c2d6fa258faaaaec452e6",
+  "notes": "All files in originals/ and audition/ are byte-for-byte copies; file hashes are raw SHA-256, not canonical validator hashes. This is an intake packet, not a runtime validation or integration.",
+  "files": {
+    "originals/rail-golf-exchange(1).zip": "4bbbdfeb9ed5098dbce3e7b36b59ea0ad2c1ed5c5b53e1a5b50a57a63edf18e6",
+    "audition/exchange.instrument.json": "dde55e0db19af9844664b6b3b8f29e2e1da7743ee882a635f7eb6c9e158cc4fb",
+    "originals/hairpin-fable-v1(1).zip": "9f7da8ffb38e58b879ec6657fc1f850fc745de838aca330eff8bdf4e8871e400",
+    "audition/hairpin-fable-v1.instrument.json": "de676687df6375a0dac8de413ec34180a27ef230b91cbfdb20d71317702b4355",
+    "originals/antiphonal-arc-v1-submission(1).zip": "767955ce10791143a5a03e89f380cd0deaf1835b6b77fb326934e780edba9be9",
+    "audition/antiphonal-arc-v1.instrument.json": "65b5a447711b72ef995c97bb05bc78155f1398027c8744661cb576982a6b0e4b",
+    "originals/hairpin-fable-v1.instrument(1).json": "de676687df6375a0dac8de413ec34180a27ef230b91cbfdb20d71317702b4355"
+  }
+}

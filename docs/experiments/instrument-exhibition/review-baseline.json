@@ -1,0 +1,107 @@
+{
+  "baseline": "8278fee69fb1bd0c196c2d6fa258faaaaec452e6",
+  "kit": "3c67ceb9de1739c23092f6fdd8680b9047536a9f",
+  "allDeclaredIntakeHashesMatch": true,
+  "rawFiles": {
+    "originals/rail-golf-exchange(1).zip": "4bbbdfeb9ed5098dbce3e7b36b59ea0ad2c1ed5c5b53e1a5b50a57a63edf18e6",
+    "audition/exchange.instrument.json": "dde55e0db19af9844664b6b3b8f29e2e1da7743ee882a635f7eb6c9e158cc4fb",
+    "originals/hairpin-fable-v1(1).zip": "9f7da8ffb38e58b879ec6657fc1f850fc745de838aca330eff8bdf4e8871e400",
+    "audition/hairpin-fable-v1.instrument.json": "de676687df6375a0dac8de413ec34180a27ef230b91cbfdb20d71317702b4355",
+    "originals/antiphonal-arc-v1-submission(1).zip": "767955ce10791143a5a03e89f380cd0deaf1835b6b77fb326934e780edba9be9",
+    "audition/antiphonal-arc-v1.instrument.json": "65b5a447711b72ef995c97bb05bc78155f1398027c8744661cb576982a6b0e4b",
+    "originals/hairpin-fable-v1.instrument(1).json": "de676687df6375a0dac8de413ec34180a27ef230b91cbfdb20d71317702b4355"
+  },
+  "runtimeSHA256": {
+    "lib/instrument-foundry.js": "54e46195d84d82e37435b80419847c9e5331cf1a133816bd19100dc9345913ea",
+    "lib/worldcraft-model.js": "49adfdd7511abfbbeba78323d113e12c47c9209ad72c6b33d8216ac337bc103d",
+    "lib/worldcraft-runtime.js": "de7fcc629b648a3b9df1ab7ebece4f437eab424dab5f524af0a884b54acd98f2",
+    "lib/worldcraft-scene.js": "4eee65c5fcffb5ae110c855be1870f5c8d40b092325a68999997fb60fe3d93a5",
+    "lib/worldcraft-resonance.js": "08374ccbf333ab69fdd1b9f609a6c7163324614a7a78353bf34eac2228c637e0",
+    "lib/counterline-recording.js": "2c435e0004ac76b78f2aacde6b867acae8035ff2733d62774b4749df53bd535f",
+    "lib/counterline-ensemble.js": "fd5855a4eb6165d680df89fb7b1b3c746510ccf3d2cbb7c7c62ed676a85d19be",
+    "lib/counterline.js": "4505b879dc39731f36764305f3a04e486c893521619b6448b3f406a3b0008d9b",
+    "lib/playability-loops.js": "3773247a83eda8341d63f94b784c761b6dbdca7e39aed8bfcd71f6be32d0feef",
+    "scripts/instrument-foundry/validate.mjs": "f17f70a75356058cf4e4f6cb3668edb50e88c41d22bdc1fbcbd6f76c22adbae4"
+  },
+  "baselineChecks": {
+    "productionBuild": true,
+    "tests": 720,
+    "pass": 720,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "typecheck": true,
+    "lintErrors": 0,
+    "lintInheritedWarnings": 5
+  },
+  "baselineLogSHA256": {
+    "exhibition-baseline-lint.log": "78c7f68326a13ffab30179babf8c9f06e3d632d290b9993702373b390544c5d3",
+    "exhibition-baseline-test.log": "6f05849b9340bf75f06fea2a9486937a418ae85e83f5c56b0b42d05cd251fcc6",
+    "exhibition-baseline-typecheck.log": "15b38b87289ac7cc9537a3da4cafdd5d2f08288d4ca4440b266a0e742004d8b5"
+  },
+  "kitToPublishedChangedFiles": [
+    "docs/experiments/instrument-foundry/PUBLICATION.md",
+    "docs/experiments/instrument-foundry/preserved-authorities.json",
+    "docs/experiments/instrument-foundry/starter-verification.json",
+    "public/instrument-foundry/starter.zip"
+  ],
+  "limits": [
+    "Baseline checks are independent from this session\u2019s final integration checks.",
+    "Intake fingerprint consistency is not independent author execution evidence.",
+    "Author-provided renders were inspected but are not new rendered WebGL evidence."
+  ],
+  "reviewedPlayerAuthorCommit": "db8b846a6c7a2f530100960fb0e3f8dc9cd9b8fe",
+  "reviewedPlayerLocalCommit": "c7df8134f914632940053dafdd84d83e4448fe2d",
+  "focusedSuites": {
+    "tests": 49,
+    "passed": 49,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "logSHA256": "e14587101696666cfaf38403103b2a68ed05edaedbb04bc2e303db2de082a7ef"
+  },
+  "runtimeUnchangedAfterPlayerIntegration": true,
+  "playerChangedPaths": [
+    "app/lab/instrument-exhibition/page.tsx",
+    "app/lab/places-counterline/counterline.tsx",
+    "lib/instrument-exhibition.d.ts",
+    "lib/instrument-exhibition.js",
+    "tests/instrument-exhibition.test.mjs",
+    "worlds/instruments/exhibition/antiphonal-arc-v1/instrument.json",
+    "worlds/instruments/exhibition/antiphonal-arc-v1/probes.json",
+    "worlds/instruments/exhibition/exchange/instrument.json",
+    "worlds/instruments/exhibition/exchange/probes.json",
+    "worlds/instruments/exhibition/hairpin-fable-v1/instrument.json",
+    "worlds/instruments/exhibition/hairpin-fable-v1/probes.json"
+  ],
+  "reviewedLaneReports": {
+    "exchange": {
+      "path": "exchange-review.md",
+      "worktreeHead": "8d214ecaa2ef16a8341f93be144986a261725678",
+      "sha256": "2bc57b9fbf47dc7105de88d1d0a19f4ff460c603a7b7a7ca65ed9e1561a55b29"
+    },
+    "hairpin": {
+      "path": "hairpin-report.md",
+      "worktreeHead": "8e5bab5a0e35720066e6dab40edb93fa99352658",
+      "sha256": "afe8f13ac763bd107b97b45eb84e63b4780e5e2fab4cff297da5bb2d4ee5a651"
+    },
+    "ensemble": {
+      "path": "ensemble-report.md",
+      "worktreeHead": "dbb4877092541b1590786929cd71d0bf6b56c6d6",
+      "sha256": "32d2b30034af277898d44f410862294150a572378403beb11e21a961d52af7ce"
+    },
+    "arcMeasuredEvidence": {
+      "path": "arc-independent-evidence.json",
+      "worktreeHead": "7242d04798321d7e6779e6a8d8f7855edf98b7ea",
+      "sha256": "e0c839c0afcd2181e23fabdff891b722eb4e2247d641b73445ed5000e4e18e6a"
+    }
+  },
+  "arcTargetedHistoryReadback": {
+    "measuredSource": "7242d04798321d7e6779e6a8d8f7855edf98b7ea",
+    "rows": 20,
+    "differentPhysical": 4,
+    "allDifferentRowsHaveExactPiecesNotesTimesGains": true,
+    "ordinaryHistoryExact": 35,
+    "ordinaryHistoryCompared": 35
+  }
+}

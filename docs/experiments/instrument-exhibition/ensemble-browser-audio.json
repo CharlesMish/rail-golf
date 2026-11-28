@@ -1,0 +1,829 @@
+[
+  {
+    "case": "space-between",
+    "level": 0.3,
+    "measurement": {
+      "renderer": "Actual OfflineAudioContext; three recorded histories, not live physics",
+      "settings": {
+        "delay": 0.1,
+        "layers": [
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "layers": [
+            0
+          ],
+          "attacks": 2,
+          "nodes": 10,
+          "duration": 5.5,
+          "sampleRate": 44100,
+          "floatPeak": 0.0774063840508461,
+          "rms": 0.004632163310489218,
+          "renderMs": 14.099999994039536
+        },
+        {
+          "layers": [
+            1
+          ],
+          "attacks": 1,
+          "nodes": 5,
+          "duration": 5.5,
+          "sampleRate": 44100,
+          "floatPeak": 0.1334993988275528,
+          "rms": 0.008166629032487107,
+          "renderMs": 13.399999998509884
+        },
+        {
+          "layers": [
+            2
+          ],
+          "attacks": 2,
+          "nodes": 9,
+          "duration": 5.5,
+          "sampleRate": 44100,
+          "floatPeak": 0.12839137017726898,
+          "rms": 0.008168650546556945,
+          "renderMs": 10.899999998509884
+        },
+        {
+          "layers": [
+            0,
+            1,
+            2
+          ],
+          "attacks": 5,
+          "nodes": 24,
+          "duration": 5.5,
+          "sampleRate": 44100,
+          "floatPeak": 0.1334993988275528,
+          "rms": 0.012411691942721306,
+          "renderMs": 16.600000001490116
+        }
+      ]
+    }
+  },
+  {
+    "case": "three-independent",
+    "level": 0.3,
+    "measurement": {
+      "renderer": "Actual OfflineAudioContext; three recorded histories, not live physics",
+      "settings": {
+        "delay": 0.1,
+        "layers": [
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "layers": [
+            0
+          ],
+          "attacks": 3,
+          "nodes": 14,
+          "duration": 5.358344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.14728805422782898,
+          "rms": 0.011454204582836828,
+          "renderMs": 17.19999999552965
+        },
+        {
+          "layers": [
+            1
+          ],
+          "attacks": 9,
+          "nodes": 40,
+          "duration": 5.358344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.1143127977848053,
+          "rms": 0.009352972555657804,
+          "renderMs": 16.299999997019768
+        },
+        {
+          "layers": [
+            2
+          ],
+          "attacks": 2,
+          "nodes": 11,
+          "duration": 5.358344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.12809953093528748,
+          "rms": 0.01003017913450948,
+          "renderMs": 7.700000002980232
+        },
+        {
+          "layers": [
+            0,
+            1,
+            2
+          ],
+          "attacks": 14,
+          "nodes": 65,
+          "duration": 5.358344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.21966078877449036,
+          "rms": 0.017640839005258126,
+          "renderMs": 25.600000001490116
+        }
+      ]
+    }
+  },
+  {
+    "case": "dense-hairpin",
+    "level": 0.3,
+    "measurement": {
+      "renderer": "Actual OfflineAudioContext; three recorded histories, not live physics",
+      "settings": {
+        "delay": 0.1,
+        "layers": [
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "layers": [
+            0
+          ],
+          "attacks": 10,
+          "nodes": 44,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.11431089043617249,
+          "rms": 0.009293623706598995,
+          "renderMs": 37.400000005960464
+        },
+        {
+          "layers": [
+            1
+          ],
+          "attacks": 10,
+          "nodes": 44,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.11431089043617249,
+          "rms": 0.009293623687800467,
+          "renderMs": 19.5
+        },
+        {
+          "layers": [
+            2
+          ],
+          "attacks": 10,
+          "nodes": 44,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.11431089043617249,
+          "rms": 0.009293623646056544,
+          "renderMs": 19.299999997019768
+        },
+        {
+          "layers": [
+            0,
+            1,
+            2
+          ],
+          "attacks": 30,
+          "nodes": 132,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.34293460845947266,
+          "rms": 0.027880786818370303,
+          "renderMs": 50.80000000447035
+        }
+      ]
+    }
+  },
+  {
+    "case": "dense-hairpin",
+    "level": 0.45,
+    "measurement": {
+      "renderer": "Actual OfflineAudioContext; three recorded histories, not live physics",
+      "settings": {
+        "delay": 0.1,
+        "layers": [
+          {
+            "gain": 0.45,
+            "muted": false
+          },
+          {
+            "gain": 0.45,
+            "muted": false
+          },
+          {
+            "gain": 0.45,
+            "muted": false
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "layers": [
+            0
+          ],
+          "attacks": 10,
+          "nodes": 44,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.16992133855819702,
+          "rms": 0.013401898340764164,
+          "renderMs": 20.399999998509884
+        },
+        {
+          "layers": [
+            1
+          ],
+          "attacks": 10,
+          "nodes": 44,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.16992133855819702,
+          "rms": 0.013401898516887355,
+          "renderMs": 24.899999998509884
+        },
+        {
+          "layers": [
+            2
+          ],
+          "attacks": 10,
+          "nodes": 44,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.16992133855819702,
+          "rms": 0.01340189850033461,
+          "renderMs": 16.899999998509884
+        },
+        {
+          "layers": [
+            0,
+            1,
+            2
+          ],
+          "attacks": 30,
+          "nodes": 132,
+          "duration": 5.608344671201814,
+          "sampleRate": 44100,
+          "floatPeak": 0.5097659230232239,
+          "rms": 0.040205651608462754,
+          "renderMs": 46.29999999701977
+        }
+      ]
+    }
+  },
+  {
+    "case": "reference-answer",
+    "level": 0.3,
+    "measurement": {
+      "renderer": "Actual OfflineAudioContext; three recorded histories, not live physics",
+      "settings": {
+        "delay": 0.1,
+        "layers": [
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          },
+          {
+            "gain": 0.3,
+            "muted": false
+          }
+        ]
+      },
+      "measurements": [
+        {
+          "layers": [
+            0
+          ],
+          "attacks": 3,
+          "nodes": 15,
+          "duration": 6.583333333333333,
+          "sampleRate": 44100,
+          "floatPeak": 0.13216613233089447,
+          "rms": 0.007538271294673796,
+          "renderMs": 13.100000001490116
+        },
+        {
+          "layers": [
+            1
+          ],
+          "attacks": 4,
+          "nodes": 19,
+          "duration": 6.583333333333333,
+          "sampleRate": 44100,
+          "floatPeak": 0.13229773938655853,
+          "rms": 0.006729055594865817,
+          "renderMs": 15
+        },
+        {
+          "layers": [
+            2
+          ],
+          "attacks": 5,
+          "nodes": 22,
+          "duration": 6.583333333333333,
+          "sampleRate": 44100,
+          "floatPeak": 0.09599597007036209,
+          "rms": 0.005880972182953767,
+          "renderMs": 13.800000004470348
+        },
+        {
+          "layers": [
+            0,
+            1,
+            2
+          ],
+          "attacks": 12,
+          "nodes": 56,
+          "duration": 6.583333333333333,
+          "sampleRate": 44100,
+          "floatPeak": 0.16967718303203583,
+          "rms": 0.01123561026710371,
+          "renderMs": 25.5
+        }
+      ]
+    }
+  },
+  {
+    "case": "three-independent",
+    "level": 0.3,
+    "measurement": {
+      "renderer": "Actual browser AudioContext/rAF; recorded notifications, NOT live Havok",
+      "frames": 256,
+      "maxFrameMs": 16.80000000000291,
+      "maxDueTicks": 3,
+      "physicalNotifications": 2,
+      "status": {
+        "status": "finished",
+        "detail": "Ensemble finished."
+      },
+      "audit": {
+        "origin": 0.020317460317460317,
+        "audioOrigin": 0.12031746031746032,
+        "delay": 0.1,
+        "scheduled": [
+          {
+            "layer": 1,
+            "time": 0.24999999999999997,
+            "target": 0.37031746031746027,
+            "scheduled": 0.37031746031746027,
+            "observedAt": 0.301859410430839,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.41666666666666713,
+            "target": 0.5369841269841275,
+            "scheduled": 0.5369841269841275,
+            "observedAt": 0.4614965986394558,
+            "sources": 5
+          },
+          {
+            "layer": 2,
+            "time": 0.508333333333334,
+            "target": 0.6286507936507943,
+            "scheduled": 0.6286507936507943,
+            "observedAt": 0.5427664399092971,
+            "sources": 6
+          },
+          {
+            "layer": 1,
+            "time": 0.508333333333334,
+            "target": 0.6286507936507943,
+            "scheduled": 0.6286507936507943,
+            "observedAt": 0.5601814058956917,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.5750000000000004,
+            "target": 0.6953174603174608,
+            "scheduled": 0.6953174603174608,
+            "observedAt": 0.6211337868480725,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 0.6500000000000001,
+            "target": 0.7703174603174605,
+            "scheduled": 0.7703174603174605,
+            "observedAt": 0.7024036281179138,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.7499999999999998,
+            "target": 0.8703174603174602,
+            "scheduled": 0.8703174603174602,
+            "observedAt": 0.8010884353741496,
+            "sources": 5
+          },
+          {
+            "layer": 0,
+            "time": 0.8333333333333328,
+            "target": 0.9536507936507932,
+            "scheduled": 0.9536507936507932,
+            "observedAt": 0.8823582766439909,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 0.8999999999999992,
+            "target": 1.0203174603174596,
+            "scheduled": 1.0203174603174596,
+            "observedAt": 0.9404081632653061,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 1.1833333333333316,
+            "target": 1.303650793650792,
+            "scheduled": 1.303650793650792,
+            "observedAt": 1.242267573696145,
+            "sources": 5
+          },
+          {
+            "layer": 0,
+            "time": 1.3083333333333311,
+            "target": 1.4286507936507915,
+            "scheduled": 1.4286507936507915,
+            "observedAt": 1.3612698412698412,
+            "sources": 4
+          },
+          {
+            "layer": 2,
+            "time": 1.4749999999999972,
+            "target": 1.5953174603174576,
+            "scheduled": 1.5953174603174576,
+            "observedAt": 1.5121995464852607,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 1.6166666666666634,
+            "target": 1.7369841269841237,
+            "scheduled": 1.7369841269841237,
+            "observedAt": 1.6602267573696146,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 1.7083333333333297,
+            "target": 1.82865079365079,
+            "scheduled": 1.82865079365079,
+            "observedAt": 1.761814058956916,
+            "sources": 5
+          }
+        ],
+        "late": [],
+        "status": "finished"
+      },
+      "sources": [
+        {
+          "started": 14,
+          "cleaned": 0,
+          "finished": 14,
+          "active": 0
+        },
+        {
+          "started": 40,
+          "cleaned": 0,
+          "finished": 40,
+          "active": 0
+        },
+        {
+          "started": 11,
+          "cleaned": 0,
+          "finished": 11,
+          "active": 0
+        }
+      ]
+    }
+  },
+  {
+    "case": "dense-hairpin",
+    "level": 0.3,
+    "measurement": {
+      "renderer": "Actual browser AudioContext/rAF; recorded notifications, NOT live Havok",
+      "frames": 338,
+      "maxFrameMs": 16.80000000000291,
+      "maxDueTicks": 4,
+      "physicalNotifications": 10,
+      "status": {
+        "status": "finished",
+        "detail": "Ensemble finished."
+      },
+      "audit": {
+        "origin": 0.020317460317460317,
+        "audioOrigin": 0.12031746031746032,
+        "delay": 0.1,
+        "scheduled": [
+          {
+            "layer": 2,
+            "time": 0.24999999999999997,
+            "target": 0.37031746031746027,
+            "scheduled": 0.37031746031746027,
+            "observedAt": 0.2815419501133787,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 0.24999999999999997,
+            "target": 0.37031746031746027,
+            "scheduled": 0.37031746031746027,
+            "observedAt": 0.301859410430839,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.24999999999999997,
+            "target": 0.37031746031746027,
+            "scheduled": 0.37031746031746027,
+            "observedAt": 0.301859410430839,
+            "sources": 4
+          },
+          {
+            "layer": 2,
+            "time": 0.41666666666666713,
+            "target": 0.5369841269841275,
+            "scheduled": 0.5369841269841275,
+            "observedAt": 0.4527891156462585,
+            "sources": 5
+          },
+          {
+            "layer": 0,
+            "time": 0.41666666666666713,
+            "target": 0.5369841269841275,
+            "scheduled": 0.5369841269841275,
+            "observedAt": 0.4614965986394558,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 0.41666666666666713,
+            "target": 0.5369841269841275,
+            "scheduled": 0.5369841269841275,
+            "observedAt": 0.4614965986394558,
+            "sources": 5
+          },
+          {
+            "layer": 2,
+            "time": 0.508333333333334,
+            "target": 0.6286507936507943,
+            "scheduled": 0.6286507936507943,
+            "observedAt": 0.5514739229024943,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 0.508333333333334,
+            "target": 0.6286507936507943,
+            "scheduled": 0.6286507936507943,
+            "observedAt": 0.5804988662131519,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.508333333333334,
+            "target": 0.6286507936507943,
+            "scheduled": 0.6286507936507943,
+            "observedAt": 0.5804988662131519,
+            "sources": 4
+          },
+          {
+            "layer": 2,
+            "time": 0.5750000000000004,
+            "target": 0.6953174603174608,
+            "scheduled": 0.6953174603174608,
+            "observedAt": 0.6124263038548753,
+            "sources": 5
+          },
+          {
+            "layer": 0,
+            "time": 0.5750000000000004,
+            "target": 0.6953174603174608,
+            "scheduled": 0.6953174603174608,
+            "observedAt": 0.6211337868480725,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 0.5750000000000004,
+            "target": 0.6953174603174608,
+            "scheduled": 0.6953174603174608,
+            "observedAt": 0.6211337868480725,
+            "sources": 5
+          },
+          {
+            "layer": 2,
+            "time": 0.6500000000000001,
+            "target": 0.7703174603174605,
+            "scheduled": 0.7703174603174605,
+            "observedAt": 0.6820861678004535,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 0.6500000000000001,
+            "target": 0.7703174603174605,
+            "scheduled": 0.7703174603174605,
+            "observedAt": 0.7024036281179138,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.6500000000000001,
+            "target": 0.7703174603174605,
+            "scheduled": 0.7703174603174605,
+            "observedAt": 0.7024036281179138,
+            "sources": 4
+          },
+          {
+            "layer": 2,
+            "time": 0.7499999999999998,
+            "target": 0.8703174603174602,
+            "scheduled": 0.8703174603174602,
+            "observedAt": 0.7807709750566894,
+            "sources": 5
+          },
+          {
+            "layer": 0,
+            "time": 0.7499999999999998,
+            "target": 0.8703174603174602,
+            "scheduled": 0.8703174603174602,
+            "observedAt": 0.8010884353741496,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 0.7499999999999998,
+            "target": 0.8703174603174602,
+            "scheduled": 0.8703174603174602,
+            "observedAt": 0.8010884353741496,
+            "sources": 5
+          },
+          {
+            "layer": 2,
+            "time": 0.8833333333333326,
+            "target": 1.003650793650793,
+            "scheduled": 1.003650793650793,
+            "observedAt": 0.9317006802721088,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 0.8833333333333326,
+            "target": 1.003650793650793,
+            "scheduled": 1.003650793650793,
+            "observedAt": 0.9404081632653061,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 0.8833333333333326,
+            "target": 1.003650793650793,
+            "scheduled": 1.003650793650793,
+            "observedAt": 0.9404081632653061,
+            "sources": 4
+          },
+          {
+            "layer": 2,
+            "time": 1.1083333333333318,
+            "target": 1.2286507936507922,
+            "scheduled": 1.2286507936507922,
+            "observedAt": 1.1522902494331067,
+            "sources": 5
+          },
+          {
+            "layer": 0,
+            "time": 1.1083333333333318,
+            "target": 1.2286507936507922,
+            "scheduled": 1.2286507936507922,
+            "observedAt": 1.1609977324263039,
+            "sources": 5
+          },
+          {
+            "layer": 1,
+            "time": 1.1083333333333318,
+            "target": 1.2286507936507922,
+            "scheduled": 1.2286507936507922,
+            "observedAt": 1.1609977324263039,
+            "sources": 5
+          },
+          {
+            "layer": 2,
+            "time": 1.4333333333333307,
+            "target": 1.553650793650791,
+            "scheduled": 1.553650793650791,
+            "observedAt": 1.4628571428571429,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 1.4333333333333307,
+            "target": 1.553650793650791,
+            "scheduled": 1.553650793650791,
+            "observedAt": 1.4802721088435373,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 1.4333333333333307,
+            "target": 1.553650793650791,
+            "scheduled": 1.553650793650791,
+            "observedAt": 1.4802721088435373,
+            "sources": 4
+          },
+          {
+            "layer": 2,
+            "time": 2.3749999999999942,
+            "target": 2.4953174603174544,
+            "scheduled": 2.4953174603174544,
+            "observedAt": 2.411972789115646,
+            "sources": 4
+          },
+          {
+            "layer": 0,
+            "time": 2.3749999999999942,
+            "target": 2.4953174603174544,
+            "scheduled": 2.4953174603174544,
+            "observedAt": 2.4206802721088434,
+            "sources": 4
+          },
+          {
+            "layer": 1,
+            "time": 2.3749999999999942,
+            "target": 2.4953174603174544,
+            "scheduled": 2.4953174603174544,
+            "observedAt": 2.4206802721088434,
+            "sources": 4
+          }
+        ],
+        "late": [],
+        "status": "finished"
+      },
+      "sources": [
+        {
+          "started": 44,
+          "cleaned": 0,
+          "finished": 44,
+          "active": 0
+        },
+        {
+          "started": 44,
+          "cleaned": 0,
+          "finished": 44,
+          "active": 0
+        },
+        {
+          "started": 44,
+          "cleaned": 0,
+          "finished": 44,
+          "active": 0
+        }
+      ]
+    }
+  },
+  {
+    "case": "dense-hairpin",
+    "action": "explicit-stop",
+    "result": {
+      "status": "Stopped explicitly."
+    }
+  }
+]

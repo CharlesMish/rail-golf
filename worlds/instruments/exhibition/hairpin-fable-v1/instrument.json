@@ -1,0 +1,221 @@
+{
+  "format": "rail-golf-counterline-instrument",
+  "version": 1,
+  "preset": {
+    "format": "rail-golf-worldcraft-range-preset",
+    "version": 1,
+    "id": "hairpin-fable-v1",
+    "name": "Hairpin",
+    "environment": {
+      "preset": "forest-clearing-v1",
+      "seed": 1
+    },
+    "launcher": {
+      "x": 0
+    },
+    "objects": [
+      {
+        "id": "floor-west",
+        "kind": "ramp",
+        "x": -3.5,
+        "z": 15,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 3
+        }
+      },
+      {
+        "id": "floor-east",
+        "kind": "ramp",
+        "x": 6.5,
+        "z": 15,
+        "yaw": 0,
+        "voice": {
+          "material": "timber",
+          "degree": 0
+        }
+      },
+      {
+        "id": "lid-1",
+        "kind": "plate",
+        "x": -8,
+        "z": 17.5,
+        "yaw": 0,
+        "lift": 5.5,
+        "tilt": 85,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "lid-2",
+        "kind": "plate",
+        "x": -4,
+        "z": 17.5,
+        "yaw": 0,
+        "lift": 5.5,
+        "tilt": -85,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "lid-3",
+        "kind": "plate",
+        "x": 0,
+        "z": 17.5,
+        "yaw": 0,
+        "lift": 5.5,
+        "tilt": -80,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      },
+      {
+        "id": "lid-4",
+        "kind": "plate",
+        "x": 4,
+        "z": 17.5,
+        "yaw": 0,
+        "lift": 5.5,
+        "tilt": -70,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      },
+      {
+        "id": "lid-5",
+        "kind": "plate",
+        "x": 8,
+        "z": 18,
+        "yaw": 0,
+        "lift": 5.5,
+        "tilt": -60,
+        "voice": {
+          "material": "metal",
+          "degree": 4
+        }
+      },
+      {
+        "id": "bell-1",
+        "kind": "plate",
+        "x": -8,
+        "z": 22.5,
+        "yaw": 0,
+        "lift": 7.5,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 4
+        }
+      },
+      {
+        "id": "bell-2",
+        "kind": "plate",
+        "x": -4,
+        "z": 23,
+        "yaw": 0,
+        "lift": 7.5,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 0
+        }
+      },
+      {
+        "id": "bell-3",
+        "kind": "plate",
+        "x": 0,
+        "z": 22.5,
+        "yaw": 0,
+        "lift": 7.5,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 1
+        }
+      },
+      {
+        "id": "bell-4",
+        "kind": "plate",
+        "x": 4,
+        "z": 23,
+        "yaw": 0,
+        "lift": 7.5,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 2
+        }
+      },
+      {
+        "id": "bell-5",
+        "kind": "plate",
+        "x": 8,
+        "z": 22.5,
+        "yaw": 0,
+        "lift": 7.5,
+        "tilt": -20,
+        "voice": {
+          "material": "metal",
+          "degree": 3
+        }
+      }
+    ],
+    "rules": {
+      "launcher": {
+        "fixed": false,
+        "yaw": 0,
+        "elevation": 18,
+        "charge": 0.55
+      },
+      "fixed": [
+        "bell-1",
+        "bell-2",
+        "bell-3",
+        "bell-4",
+        "bell-5",
+        "floor-east",
+        "floor-west",
+        "lid-1",
+        "lid-2",
+        "lid-3",
+        "lid-4",
+        "lid-5"
+      ],
+      "allowance": {},
+      "goal": {
+        "kind": "none"
+      }
+    }
+  },
+  "profile": {
+    "version": 1,
+    "dynamics": "normal-speed",
+    "bankVoice": "tuned-even"
+  },
+  "invitation": "Two timber ramps lie side by side ahead of the tee. Five metal plates hang over their far end as a lid: nearly shut against the ramp on the left, propped wide open on the right. Behind the lid, a little higher, hangs a row of five more plates. The pieces stay where they are. Aim, power and where you stand are yours. There is no target.",
+  "sourceBuild": "3c67ceb9de1739c23092f6fdd8680b9047536a9f",
+  "opening": {
+    "railIndex": 1,
+    "originX": 0,
+    "yaw": 0,
+    "elevation": 5,
+    "charge": 0.5
+  },
+  "camera": {
+    "target": {
+      "x": 0,
+      "y": 3,
+      "z": 12.5
+    },
+    "radius": 33,
+    "yaw": -66,
+    "elevation": 12
+  }
+}
